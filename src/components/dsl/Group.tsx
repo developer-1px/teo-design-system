@@ -24,6 +24,18 @@ export function Group({
   // direction 스타일
   const directionStyle = getGroupDirectionStyle(direction);
 
+  // purpose별 추가 스타일
+  const purposeGroupStyles = {
+    navigation: 'items-center',
+    action: 'items-center',
+    form: 'flex-col space-y-2',
+    content: 'flex-col space-y-2',
+    list: 'flex-col space-y-1',
+    media: 'items-start',
+    status: 'items-center flex-wrap',
+    info: 'flex-col space-y-2',
+  };
+
   return (
     <LayoutProvider
       value={{
@@ -33,7 +45,11 @@ export function Group({
       }}
     >
       <div
-        className={cn(directionStyle, className)}
+        className={cn(
+          directionStyle,
+          purposeGroupStyles[purpose],
+          className
+        )}
         data-dsl-component="group"
         data-purpose={purpose}
         data-prominence={computedProminence}

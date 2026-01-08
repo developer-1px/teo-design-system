@@ -16,11 +16,11 @@ const roleElements = {
 } as const;
 
 const roleStyles = {
-  header: 'border-b border-border',
-  main: 'flex-1',
-  sidebar: 'border-r border-border',
-  footer: 'border-t border-border',
-  aside: '',
+  header: 'bg-layer-2 border-b border-border shadow-sm',
+  main: 'flex-1 bg-layer-0',
+  sidebar: 'bg-layer-2 border-r border-border',
+  footer: 'bg-layer-2 border-t border-border shadow-sm',
+  aside: 'bg-layer-1',
 };
 
 export function Region({ role, children, className }: RegionProps) {

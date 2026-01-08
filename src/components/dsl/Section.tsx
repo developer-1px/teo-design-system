@@ -27,7 +27,14 @@ export function Section({
     >
       <section
         id={id}
-        className={cn('py-4', className)}
+        className={cn(
+          'space-y-4',
+          // prominence에 따른 여백
+          prominence === 1 && 'py-6',
+          prominence === 2 && 'py-4',
+          prominence === 3 && 'py-2',
+          className
+        )}
         data-dsl-component="section"
         data-prominence={prominence}
       >

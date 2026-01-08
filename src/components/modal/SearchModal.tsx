@@ -3,6 +3,7 @@ import { Layout } from '@/components/ui/Layout';
 import { Button } from '@/components/ui/Button';
 import { Search, File, Folder, Command, Hash } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNavigableCursor, useModalShortcut, KeyboardContext, useKeyboardContext } from '@/lib/keyboard';
 
 interface SearchResult {
   id: string;
@@ -27,18 +28,11 @@ const mockResults: SearchResult[] = [
 
 export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   const [query, setQuery] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [results, setResults] = useState<SearchResult[]>(mockResults);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { enableContext, disableContext } = useKeyboardContext();
 
-  useEffect(() => {
-    if (isOpen) {
-      inputRef.current?.focus();
-      setQuery('');
-      setSelectedIndex(0);
-    }
-  }, [isOpen]);
-
+  // 검색 결과 필터링
   useEffect(() => {
     if (query) {
       const filtered = mockResults.filter(
@@ -47,41 +41,38 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
           item.subtitle?.toLowerCase().includes(query.toLowerCase())
       );
       setResults(filtered);
-      setSelectedIndex(0);
     } else {
       setResults(mockResults);
     }
   }, [query]);
 
+  // 키보드 네비게이션 (useNavigableCursor 사용)
+  const { cursorIndex, getItemProps, selectCurrent } = useNavigableCursor({
+    type: 'list',
+    items: results,
+    onSelect: (result) => {
+      console.log('Selected:', result);
+      onClose();
+    },
+    enabled: isOpen,
+  });
+
+  // 모달 단축키 (ESC로 닫기)
+  useModalShortcut('escape', onClose, {
+    enabled: isOpen,
+    description: 'Close search modal',
+  });
+
+  // 모달 열림/닫힘에 따라 컨텍스트 관리
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isOpen) return;
-
-      switch (e.key) {
-        case 'Escape':
-          e.preventDefault();
-          onClose();
-          break;
-        case 'ArrowDown':
-          e.preventDefault();
-          setSelectedIndex((prev) => Math.min(prev + 1, results.length - 1));
-          break;
-        case 'ArrowUp':
-          e.preventDefault();
-          setSelectedIndex((prev) => Math.max(prev - 1, 0));
-          break;
-        case 'Enter':
-          e.preventDefault();
-          if (results[selectedIndex]) {
-            handleSelect(results[selectedIndex]);
-          }
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, results, selectedIndex]);
+    if (isOpen) {
+      enableContext(KeyboardContext.SEARCH_OPEN);
+      inputRef.current?.focus();
+      setQuery('');
+    } else {
+      disableContext(KeyboardContext.SEARCH_OPEN);
+    }
+  }, [isOpen, enableContext, disableContext]);
 
   const handleSelect = (result: SearchResult) => {
     console.log('Selected:', result);
@@ -146,11 +137,11 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                   <Button
                     key={result.id}
                     variant="ghost"
-                    onClick={() => handleSelect(result)}
+                    {...getItemProps(index)}
                     className={cn(
                       'w-full justify-start gap-3 px-4 py-2.5 h-auto',
                       {
-                        'bg-accent/10 hover:bg-accent/10': index === selectedIndex,
+                        'bg-accent/10 hover:bg-accent/10': index === cursorIndex,
                       }
                     )}
                   >
@@ -165,7 +156,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                         </div>
                       )}
                     </div>
-                    {index === selectedIndex && (
+                    {index === cursorIndex && (
                       <kbd className="px-2 py-0.5 text-xs bg-layer-0 text-text-tertiary rounded">
                         ↵
                       </kbd>
