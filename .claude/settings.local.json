@@ -11,7 +11,10 @@
       "Bash(cat:*)",
       "Read(//Users/user/Desktop/node_modules/.pnpm/tailwindcss@4.1.18/node_modules/tailwindcss/**)",
       "Bash(pnpm exec tailwindcss:*)",
-      "WebFetch(domain:m3.material.io)"
+      "WebFetch(domain:m3.material.io)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []

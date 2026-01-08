@@ -40,7 +40,7 @@ const getFileIcon = (node: FileNode) => {
     case 'json':
       return <FileJson {...iconProps} />;
     case 'markdown':
-      return <FileText {...iconProps} className="text-accent" />;
+      return <FileText {...iconProps} />;
     case 'text':
       return <FileType {...iconProps} />;
     default:
@@ -65,9 +65,8 @@ const FileTreeItem = ({ node, level, onFileClick }: FileTreeItemProps) => {
       <button
         onClick={handleClick}
         className={cn(
-          // Dense padding, rounded, no borders - using layer system
           'flex w-full items-center gap-1.5 rounded-md py-1 text-sm',
-          'layer-2-interactive',
+          'hover:bg-layer-0 transition-colors',
           'text-text-secondary hover:text-text',
           {
             'cursor-pointer': isFolder,
@@ -93,7 +92,7 @@ const FileTreeItem = ({ node, level, onFileClick }: FileTreeItemProps) => {
         <span className="flex-shrink-0">
           {isFolder ? (
             isOpen ? (
-              <FolderOpen size={16} className="text-accent" />
+              <FolderOpen size={16} className="text-text-secondary" />
             ) : (
               <Folder size={16} className="text-text-tertiary" />
             )

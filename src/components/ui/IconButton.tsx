@@ -5,29 +5,26 @@ export interface IconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'sm' | 'md' | 'lg';
   active?: boolean;
-  layer?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ className, size = 'md', active = false, layer = 2, ...props }, ref) => {
+  ({ className, size = 'md', active = false, ...props }, ref) => {
     return (
       <button
         ref={ref}
         className={cn(
-          // Base styles - square, rounded, no borders
           'inline-flex items-center justify-center rounded-md',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1',
+          'transition-colors',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
           'disabled:pointer-events-none disabled:opacity-50',
 
-          // Layer-specific hover
-          `layer-${layer}-interactive`,
-
-          // Active state - accent color background with left indicator
+          // Interactive states
           {
-            'text-accent accent-indicator': active,
+            'text-accent bg-accent/10': active,
+            'text-text-secondary hover:bg-layer-0 hover:text-text': !active,
           },
 
-          // Sizes - dense and square
+          // Sizes
           {
             'h-8 w-8': size === 'sm',
             'h-9 w-9': size === 'md',

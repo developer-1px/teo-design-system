@@ -1,0 +1,250 @@
+/**
+ * Focus & Keyboard Accessibility Styles
+ *
+ * PRINCIPLE: 키보드만으로 모든 기능 사용 가능해야 함
+ *
+ * 핵심 규칙:
+ * 1. 모든 인터랙티브 요소는 키보드로 접근 가능
+ * 2. 포커스 스타일은 절대 숨기지 않음
+ * 3. focus-visible 사용 (마우스는 안 보임, 키보드는 명확하게)
+ * 4. Tab, Enter, Space, Escape, Arrow keys 지원
+ */
+
+/* ============================================================================
+   FOCUS RING - 키보드 접근성의 핵심
+   ============================================================================ */
+
+/**
+ * 모든 포커스 가능한 요소에 기본 포커스 링 적용
+ * focus-visible: 마우스 클릭 시에는 안 보이고, 키보드 Tab 시에만 보임
+ */
+*:focus-visible {
+  outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
+  outline-offset: var(--focus-ring-offset);
+  transition: outline-offset 0.15s ease;
+}
+
+/**
+ * 버튼에 포커스 시
+ */
+button:focus-visible {
+  outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
+  outline-offset: var(--focus-ring-offset);
+}
+
+/**
+ * 링크에 포커스 시
+ */
+a:focus-visible {
+  outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+/**
+ * Input, Textarea, Select에 포커스 시
+ * border-color로 표현 (outline 대신)
+ */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none; /* border로 대체하므로 outline 제거 */
+  border-color: rgb(var(--accent));
+  box-shadow: 0 0 0 3px rgb(var(--accent) / 0.1);
+}
+
+/* ============================================================================
+   SKIP LINKS - 키보드 사용자를 위한 빠른 네비게이션
+   ============================================================================ */
+
+/**
+ * Skip to main content 링크
+ * Tab 키를 누르면 가장 먼저 나타남
+ */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: rgb(var(--accent));
+  color: rgb(var(--text-inverse));
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  z-index: 100;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ============================================================================
+   KEYBOARD NAVIGATION INDICATORS
+   ============================================================================ */
+
+/**
+ * 리스트에서 키보드로 선택된 항목
+ */
+[role='option'][aria-selected='true'],
+[role='menuitem'][aria-selected='true'] {
+  background-color: rgb(var(--accent-subtle));
+  color: rgb(var(--text-primary));
+}
+
+/**
+ * 현재 포커스된 리스트 항목
+ */
+[role='option']:focus,
+[role='menuitem']:focus {
+  background-color: rgb(var(--layer-2));
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: -2px;
+}
+
+/* ============================================================================
+   FOCUS TRAP - Modal, Dialog에서 포커스 가두기
+   ============================================================================ */
+
+/**
+ * Focus trap이 활성화되면 body 스크롤 막기
+ */
+body.focus-trap-active {
+  overflow: hidden;
+}
+
+/**
+ * Modal이 열렸을 때 뒤의 요소는 포커스 불가
+ */
+.focus-trap-inert {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ============================================================================
+   CUSTOM FOCUS STYLES - 컴포넌트별
+   ============================================================================ */
+
+/**
+ * IconButton에 포커스 시
+ */
+[data-component='icon-button']:focus-visible {
+  outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-md);
+}
+
+/**
+ * Tab에 포커스 시
+ */
+[role='tab']:focus-visible {
+  outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
+  outline-offset: -2px; /* Tab은 내부 outline */
+  border-radius: var(--radius-md);
+}
+
+/**
+ * Checkbox, Radio에 포커스 시
+ */
+input[type='checkbox']:focus-visible,
+input[type='radio']:focus-visible {
+  outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
+  outline-offset: 2px;
+}
+
+/* ============================================================================
+   ACCESSIBILITY UTILITIES
+   ============================================================================ */
+
+/**
+ * 시각적으로는 숨기지만 스크린 리더에서는 읽힘
+ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/**
+ * 포커스 시에만 나타남 (skip link 등에 사용)
+ */
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ============================================================================
+   KEYBOARD HINTS - 사용자에게 키보드 단축키 표시
+   ============================================================================ */
+
+/**
+ * 키보드 단축키 표시 (예: Cmd+K)
+ */
+.kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+  color: rgb(var(--text-secondary));
+  background-color: rgb(var(--layer-1));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 0 rgb(var(--border));
+}
+
+/* Dark mode */
+[data-theme='dark'] .kbd {
+  box-shadow: none;
+}
+
+/* ============================================================================
+   REDUCED MOTION - 애니메이션 민감 사용자 배려
+   ============================================================================ */
+
+/**
+ * prefers-reduced-motion 설정한 사용자는 애니메이션 제거
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* 포커스 전환은 즉시 */
+  *:focus-visible {
+    transition: none;
+  }
+}
+
+/* ============================================================================
+   HIGH CONTRAST MODE - Windows High Contrast 지원
+   ============================================================================ */
+
+@media (prefers-contrast: high) {
+  *:focus-visible {
+    outline-width: 3px;
+    outline-offset: 3px;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    border-width: 2px;
+  }
+}

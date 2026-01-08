@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
+import { Button } from '@/components/ui/Button';
 import {
   X,
   Palette,
@@ -133,7 +134,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
           <select
             value={setting.value}
             onChange={(e) => handleSettingChange(setting.id, e.target.value)}
-            className="px-3 py-1.5 text-sm bg-layer-1 text-text rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
+            className="px-3 py-1.5 text-sm bg-layer-0 text-text rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
           >
             {setting.options?.map((option) => (
               <option key={option.value} value={option.value}>
@@ -152,7 +153,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
               'relative w-11 h-6 rounded-full',
               {
                 'bg-accent': setting.value,
-                'bg-layer-2': !setting.value,
+                'bg-layer-0': !setting.value,
               }
             )}
           >
@@ -205,53 +206,55 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
         onClick={onClose}
       />
 
-      <Layer
-        level={6}
-        rounded="lg"
+      <Layout
+        depth={6}
         className="relative w-full max-w-4xl h-[600px] flex flex-col overflow-hidden"
       >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 bg-layer-1">
-            <h2 className="text-lg font-semibold text-text">Settings</h2>
-            <button
-              onClick={onClose}
-              className="p-1.5 rounded-md layer-1-interactive"
-            >
-              <X size={18} className="text-text-secondary" />
-            </button>
-          </div>
+          <Layout depth={1} rounded={false} className="px-6 py-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-text">Settings</h2>
+              <Button
+                variant="ghost"
+                onClick={onClose}
+                className="h-auto p-1.5"
+              >
+                <X size={18} className="text-text-secondary" />
+              </Button>
+            </div>
+          </Layout>
 
           {/* Content */}
           <div className="flex flex-1 overflow-hidden">
             {/* Sidebar */}
-            <Layer
-              level={1}
+            <Layout
+              depth={1}
+              rounded={false}
               className="w-56 overflow-y-auto"
             >
               <div className="p-2">
                 {categories.map((category) => {
                   const Icon = category.icon;
                   return (
-                    <button
+                    <Button
                       key={category.id}
+                      variant="ghost"
                       onClick={() => setActiveCategory(category.id)}
                       className={cn(
-                        'w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm layer-1-interactive',
+                        'w-full justify-start gap-3 px-3 py-2 h-auto text-sm',
                         {
-                          'bg-accent/10 text-accent':
+                          'bg-accent/10 text-accent hover:bg-accent/10':
                             activeCategory === category.id,
-                          'text-text-secondary':
-                            activeCategory !== category.id,
                         }
                       )}
                     >
                       <Icon size={16} />
                       <span>{category.label}</span>
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
-            </Layer>
+            </Layout>
 
             {/* Settings Panel */}
             <div className="flex-1 overflow-y-auto p-6">
@@ -281,24 +284,23 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end gap-3 px-6 py-4 bg-layer-1">
-            <button
-              onClick={onClose}
-              className="px-4 py-2 text-sm rounded-md bg-layer-2 text-text layer-2-interactive"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={onClose}
-              className="px-4 py-2 text-sm rounded-md bg-accent text-white"
-              style={{ backgroundColor: 'rgb(var(--accent))' }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgb(var(--accent-hover))')}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(var(--accent))')}
-            >
-              Apply
-            </button>
-          </div>
-        </Layer>
+          <Layout depth={1} rounded={false} className="px-6 py-4">
+            <div className="flex items-center justify-end gap-3">
+              <Button
+                variant="ghost"
+                onClick={onClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="accent"
+                onClick={onClose}
+              >
+                Apply
+              </Button>
+            </div>
+          </Layout>
+        </Layout>
     </div>
   );
 };

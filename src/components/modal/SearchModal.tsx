@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
+import { Button } from '@/components/ui/Button';
 import { Search, File, Folder, Command, Hash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -93,9 +94,9 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
       case 'file':
         return <File {...iconProps} />;
       case 'folder':
-        return <Folder {...iconProps} className="text-accent" />;
+        return <Folder {...iconProps} />;
       case 'command':
-        return <Command {...iconProps} className="text-accent" />;
+        return <Command {...iconProps} />;
       case 'symbol':
         return <Hash {...iconProps} />;
     }
@@ -111,26 +112,27 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         onClick={onClose}
       />
 
-      <Layer
-        level={6}
-        rounded="lg"
+      <Layout
+        depth={6}
         className="relative w-full max-w-2xl overflow-hidden"
       >
           {/* Search Input */}
-          <div className="flex items-center gap-3 px-4 py-3 bg-layer-1">
-            <Search size={20} className="text-text-tertiary" />
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search files, commands, symbols..."
-              className="flex-1 bg-transparent text-text placeholder:text-text-tertiary focus:outline-none text-sm"
-            />
-            <kbd className="px-2 py-0.5 text-xs bg-layer-1 text-text-tertiary rounded">
-              ESC
-            </kbd>
-          </div>
+          <Layout depth={1} rounded={false} className="px-4 py-3">
+            <div className="flex items-center gap-3">
+              <Search size={20} className="text-text-tertiary" />
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search files, commands, symbols..."
+                className="flex-1 bg-transparent text-text placeholder:text-text-tertiary focus:outline-none text-sm"
+              />
+              <kbd className="px-2 py-0.5 text-xs bg-layer-0 text-text-tertiary rounded">
+                ESC
+              </kbd>
+            </div>
+          </Layout>
 
           {/* Results */}
           <div className="max-h-[400px] overflow-y-auto">
@@ -141,13 +143,14 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
             ) : (
               <div className="py-2">
                 {results.map((result, index) => (
-                  <button
+                  <Button
                     key={result.id}
+                    variant="ghost"
                     onClick={() => handleSelect(result)}
                     className={cn(
-                      'w-full flex items-center gap-3 px-4 py-2.5 text-left layer-6-interactive',
+                      'w-full justify-start gap-3 px-4 py-2.5 h-auto',
                       {
-                        'bg-accent/10': index === selectedIndex,
+                        'bg-accent/10 hover:bg-accent/10': index === selectedIndex,
                       }
                     )}
                   >
@@ -163,34 +166,36 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                       )}
                     </div>
                     {index === selectedIndex && (
-                      <kbd className="px-2 py-0.5 text-xs bg-layer-1 text-text-tertiary rounded">
+                      <kbd className="px-2 py-0.5 text-xs bg-layer-0 text-text-tertiary rounded">
                         ↵
                       </kbd>
                     )}
-                  </button>
+                  </Button>
                 ))}
               </div>
             )}
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between px-4 py-2 bg-layer-1">
-            <div className="flex items-center gap-4 text-xs text-text-tertiary">
-              <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-layer-2 rounded">↑</kbd>
-                <kbd className="px-1.5 py-0.5 bg-layer-2 rounded">↓</kbd>
-                navigate
-              </span>
-              <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-layer-2 rounded">↵</kbd>
-                select
-              </span>
+          <Layout depth={1} rounded={false} className="px-4 py-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4 text-xs text-text-tertiary">
+                <span className="flex items-center gap-1">
+                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↑</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↓</kbd>
+                  navigate
+                </span>
+                <span className="flex items-center gap-1">
+                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↵</kbd>
+                  select
+                </span>
+              </div>
+              <div className="text-xs text-text-tertiary">
+                {results.length} results
+              </div>
             </div>
-            <div className="text-xs text-text-tertiary">
-              {results.length} results
-            </div>
-          </div>
-        </Layer>
+          </Layout>
+        </Layout>
     </div>
   );
 };

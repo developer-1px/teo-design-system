@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { X, FileCode, FileJson, FileType } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Layout } from '@/components/ui/Layout';
+import { Button } from '@/components/ui/Button';
 
 interface Tab {
   id: string;
@@ -49,15 +51,15 @@ export const EditorTabs = ({ onTabChange }: EditorTabsProps) => {
   };
 
   return (
-    <div className="flex items-center bg-layer-2 overflow-x-auto">
+    <Layout depth={2} rounded={false} className="flex items-center overflow-x-auto">
       {tabs.map((tab) => (
-        <div
+        <Button
           key={tab.id}
+          variant="ghost"
           className={cn(
-            'flex items-center gap-1.5 px-3 py-1.5 text-sm',
-            'layer-2-interactive group cursor-pointer',
+            'gap-1.5 px-3 py-2 text-sm h-auto rounded-none group',
             {
-              'bg-layer-3': activeTab === tab.id,
+              'bg-layer-3 hover:bg-layer-3': activeTab === tab.id,
               'text-text': activeTab === tab.id,
               'text-text-secondary': activeTab !== tab.id,
             }
@@ -69,14 +71,15 @@ export const EditorTabs = ({ onTabChange }: EditorTabsProps) => {
           {tab.isDirty && (
             <span className="w-1.5 h-1.5 rounded-full bg-accent" />
           )}
-          <button
+          <Button
+            variant="ghost"
             onClick={(e) => handleCloseTab(tab.id, e)}
-            className="opacity-0 group-hover:opacity-100 layer-3-interactive rounded p-0.5"
+            className="opacity-0 group-hover:opacity-100 h-auto p-0.5"
           >
-            <X size={16} />
-          </button>
-        </div>
+            <X size={14} />
+          </Button>
+        </Button>
       ))}
-    </div>
+    </Layout>
   );
 };
