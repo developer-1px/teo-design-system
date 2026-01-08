@@ -1,5 +1,6 @@
 import { HTMLAttributes, forwardRef, ReactNode, CSSProperties } from 'react';
 import { cn } from '@/lib/utils';
+import { ProminenceProvider } from './ProminenceContext';
 
 /**
  * Layout System - 모든 OS 앱에서 사용 가능한 범용 레이아웃
@@ -185,26 +186,28 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
     };
 
     return (
-      <div
-        ref={ref}
-        className={cn(
-          depthStyles[depth],
-          variantStyles[variant],
-          roundedClass,
-          clickableClass,
-          floatingClass,
-          directionClass,
-          templateClass,
-          gapClass,
-          resizable && 'resize',
-          className
-        )}
-        style={customStyle}
-        data-layout-variant={variant}
-        data-layout-depth={depth}
-        data-interactive={clickable ? 'true' : undefined}
-        {...props}
-      />
+      <ProminenceProvider value={{ depth }}>
+        <div
+          ref={ref}
+          className={cn(
+            depthStyles[depth],
+            variantStyles[variant],
+            roundedClass,
+            clickableClass,
+            floatingClass,
+            directionClass,
+            templateClass,
+            gapClass,
+            resizable && 'resize',
+            className
+          )}
+          style={customStyle}
+          data-layout-variant={variant}
+          data-layout-depth={depth}
+          data-interactive={clickable ? 'true' : undefined}
+          {...props}
+        />
+      </ProminenceProvider>
     );
   }
 );

@@ -6,4 +6,8 @@
 export { ColorSwatch } from './ColorSwatch';
 export { TokenTable } from './TokenTable';
 export { LayerDemo } from './LayerDemo';
+export { LayoutDemo } from './LayoutDemo';
 export { ShadowVsBorderGuide } from './ShadowVsBorderGuide';
+export { ProminenceDemo } from './ProminenceDemo';
+export { DocsSidebar } from './DocsSidebar';
+export { DocsViewer } from './DocsViewer';

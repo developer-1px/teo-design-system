@@ -141,7 +141,7 @@ body[data-debug-mode="2"] .debug-box-label {
 
 body[data-debug-mode="2"]::before {
   background: rgba(59, 130, 246, 0.95) !important;
-  content: 'DEBUG: BUTTONS' !important;
+  content: 'DEBUG: BTN' !important;
 }
 
 body[data-debug-mode="2"] #debug-panel-toggle {
@@ -367,7 +367,7 @@ const blockingEvents = ['keydown', 'keypress', 'keyup', 'input'];
 
 blockingEvents.forEach(eventType => {
   window.addEventListener(eventType, (event) => {
-    if (!debugMode) return;
+    if (debugMode === 0) return;
 
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
@@ -403,20 +403,23 @@ blockingEvents.forEach(eventType => {
 // =============================================================================
 
 function findInteractiveElements() {
-  const selectors = [
-    'button',
-    'a',
-    'input',
-    'textarea',
-    'select',
-    '[role="button"]',
-    '[role="link"]',
-    '[role="tab"]',
-    '[role="menuitem"]',
-    '[onclick]',
-    '[tabindex]:not([tabindex="-1"])',
-    '[data-interactive="true"]',
-  ];
+  // 디버그 레벨 2일 때는 Button만
+  const selectors = debugMode === 2
+    ? ['button', '[role="button"]']
+    : [
+        'button',
+        'a',
+        'input',
+        'textarea',
+        'select',
+        '[role="button"]',
+        '[role="link"]',
+        '[role="tab"]',
+        '[role="menuitem"]',
+        '[onclick]',
+        '[tabindex]:not([tabindex="-1"])',
+        '[data-interactive="true"]',
+      ];
 
   const elements = document.querySelectorAll(selectors.join(','));
 
@@ -509,7 +512,7 @@ function updateBoxPosition(box, element) {
 }
 
 function updateOverlay() {
-  if (!debugMode) return;
+  if (debugMode === 0) return;
 
   // 현재 인터랙티브 요소들 찾기
   interactiveElements = findInteractiveElements();
@@ -548,31 +551,11 @@ function scheduleOverlayUpdate() {
 // =============================================================================
 
 function toggleDebugMode() {
-  debugMode = !debugMode;
+  // 0 -> 1 -> 2 -> 0 순환
+  debugMode = (debugMode + 1) % 3;
 
-  if (debugMode) {
-    toggleButton.textContent = 'Debug ON';
-    toggleButton.classList.add('active');
-    document.body.setAttribute('data-debug-mode', 'true');
-
-    // 오버레이 레이어 추가
-    document.body.appendChild(overlayLayer);
-    updateOverlay();
-
-    // 스크롤/리사이즈 시 업데이트
-    window.addEventListener('scroll', scheduleOverlayUpdate, true);
-    window.addEventListener('resize', scheduleOverlayUpdate);
-
-    // DOM 변경 감지 (MutationObserver)
-    const observer = new MutationObserver(scheduleOverlayUpdate);
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['style', 'class'],
-    });
-    window.__debugOverlayObserver = observer;
-  } else {
+  if (debugMode === 0) {
+    // Debug OFF
     toggleButton.textContent = 'Debug OFF';
     toggleButton.classList.remove('active');
     document.body.removeAttribute('data-debug-mode');
@@ -599,6 +582,41 @@ function toggleDebugMode() {
 
     clearOverlay();
     closePanel();
+  } else if (debugMode === 1) {
+    // Debug Level 1: All components (녹색)
+    toggleButton.textContent = 'Debug: ALL';
+    toggleButton.classList.add('active');
+    document.body.setAttribute('data-debug-mode', '1');
+
+    // 오버레이 레이어 추가
+    if (!overlayLayer.parentNode) {
+      document.body.appendChild(overlayLayer);
+    }
+    updateOverlay();
+
+    // 스크롤/리사이즈 시 업데이트
+    window.addEventListener('scroll', scheduleOverlayUpdate, true);
+    window.addEventListener('resize', scheduleOverlayUpdate);
+
+    // DOM 변경 감지 (MutationObserver)
+    if (!window.__debugOverlayObserver) {
+      const observer = new MutationObserver(scheduleOverlayUpdate);
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['style', 'class'],
+      });
+      window.__debugOverlayObserver = observer;
+    }
+  } else if (debugMode === 2) {
+    // Debug Level 2: Buttons only (파란색)
+    toggleButton.textContent = 'Debug: BTN';
+    toggleButton.classList.add('active');
+    document.body.setAttribute('data-debug-mode', '2');
+
+    // 오버레이 업데이트 (Button만 표시)
+    updateOverlay();
   }
 }
 
