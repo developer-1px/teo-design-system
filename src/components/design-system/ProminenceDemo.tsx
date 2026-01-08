@@ -44,7 +44,6 @@ export const ProminenceDemo = () => {
               <div>Primary - 가장 중요한 내용 (배경 5%)</div>
             </Content>
             <Content prominence="secondary">
-              <Content prominence="secondary">
               <div>Secondary - 보조 내용 (배경 2.6%)</div>
             </Content>
             <Content prominence="tertiary">
