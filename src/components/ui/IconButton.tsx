@@ -21,7 +21,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           // Interactive states
           {
             'text-accent bg-accent/10': active,
-            'text-text-secondary hover:bg-layer-0 hover:text-text': !active,
+            'text-text-secondary hover:bg-black/5 hover:text-text active:bg-black/10': !active,
           },
 
           // Sizes

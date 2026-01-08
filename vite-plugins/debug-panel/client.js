@@ -12,7 +12,7 @@
 const root = '__ROOT__';
 const base = '__BASE__';
 
-let debugMode = false;
+let debugMode = 0; // 0: OFF, 1: All components, 2: Buttons only
 let currentTarget;
 let hasPanel = false;
 
@@ -109,6 +109,49 @@ style.innerHTML = `
   }
 }
 
+/* 디버그 레벨 2 (Button만) - 파란색 */
+body[data-debug-mode="2"] .debug-interactive-box {
+  border: 1px solid rgba(59, 130, 246, 0.25) !important;
+  background: rgba(59, 130, 246, 0.03) !important;
+}
+
+body[data-debug-mode="2"] .debug-interactive-box.hover {
+  border-color: rgba(59, 130, 246, 0.7) !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+body[data-debug-mode="2"] .debug-interactive-box.pulse {
+  animation: debug-pulse-blue 0.6s ease-out !important;
+}
+
+@keyframes debug-pulse-blue {
+  0% {
+    border-color: rgba(59, 130, 246, 0.9) !important;
+    background: rgba(59, 130, 246, 0.2) !important;
+  }
+  100% {
+    border-color: rgba(59, 130, 246, 0.25) !important;
+    background: rgba(59, 130, 246, 0.03) !important;
+  }
+}
+
+body[data-debug-mode="2"] .debug-box-label {
+  background: rgba(59, 130, 246, 0.95) !important;
+}
+
+body[data-debug-mode="2"]::before {
+  background: rgba(59, 130, 246, 0.95) !important;
+  content: 'DEBUG: BUTTONS' !important;
+}
+
+body[data-debug-mode="2"] #debug-panel-toggle {
+  background: rgb(59, 130, 246) !important;
+}
+
+body[data-debug-mode="2"] #debug-panel-toggle:hover {
+  background: rgb(37, 99, 235) !important;
+}
+
 /* 요소 태그 라벨 - Compact */
 .debug-box-label {
   position: absolute !important;
@@ -134,20 +177,25 @@ style.innerHTML = `
 }
 
 /* 디버그 모드에서 모든 요소를 검사 모드 커서로 변경 */
-body[data-debug-mode="true"],
-body[data-debug-mode="true"] * {
+body[data-debug-mode="1"],
+body[data-debug-mode="1"] *,
+body[data-debug-mode="2"],
+body[data-debug-mode="2"] * {
   cursor: crosshair !important;
 }
 
 /* 디버그 토글 버튼과 패널만 일반 커서 */
-body[data-debug-mode="true"] #debug-panel-toggle,
-body[data-debug-mode="true"] #debug-panel,
-body[data-debug-mode="true"] #debug-panel * {
+body[data-debug-mode="1"] #debug-panel-toggle,
+body[data-debug-mode="1"] #debug-panel,
+body[data-debug-mode="1"] #debug-panel *,
+body[data-debug-mode="2"] #debug-panel-toggle,
+body[data-debug-mode="2"] #debug-panel,
+body[data-debug-mode="2"] #debug-panel * {
   cursor: pointer !important;
 }
 
 /* 디버그 모드 활성화 오버레이 - Compact */
-body[data-debug-mode="true"]::before {
+body[data-debug-mode="1"]::before {
   content: 'DEBUG';
   position: fixed;
   top: 8px;

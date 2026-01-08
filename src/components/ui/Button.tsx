@@ -41,15 +41,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           // Variants
           {
             // Accent - Primary CTA (화면당 1개만!)
-            'bg-accent text-white hover:bg-accent/90':
+            'bg-accent text-white hover:bg-accent/90 active:bg-accent/80':
               variant === 'accent',
 
             // Ghost - Secondary action
-            'bg-transparent text-text hover:bg-layer-0':
+            'bg-transparent text-text hover:bg-black/5 active:bg-black/10':
               variant === 'ghost',
 
             // Outline - Dangerous action
-            'border border-border bg-transparent text-text hover:bg-layer-0':
+            'border border-border bg-transparent text-text hover:bg-black/5 active:bg-black/10':
               variant === 'outline',
           },
 
