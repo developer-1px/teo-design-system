@@ -1,0 +1,32 @@
+@import 'tailwindcss/theme' layer(theme);
+@import 'tailwindcss/preflight' layer(base);
+@import 'tailwindcss/utilities' layer(utilities);
+
+@import './styles/themes.css';
+@import './styles/markdown.css';
+@import './styles/mdx.css';
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(var(--layer-0));
+  color: rgb(var(--text-primary));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+/*
+  Note: Layer 관련 유틸리티 클래스들
+  - bg-layer-{0-6}: themes.css에 명시적으로 정의됨
+  - shadow-layer-{0-6}: Tailwind config로 자동 생성
+  - z-layer-{0-6}: Tailwind config로 자동 생성
+
+  Accent indicator는 themes.css에 정의되어 있습니다.
+*/

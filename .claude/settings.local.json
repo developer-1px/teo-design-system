@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm add:*)",
+      "Bash(pnpm run lint)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm dev)",
+      "WebSearch",
+      "WebFetch(domain:www.jetbrains.com)",
+      "Bash(pnpm install:*)",
+      "Bash(cat:*)",
+      "Read(//Users/user/Desktop/node_modules/.pnpm/tailwindcss@4.1.18/node_modules/tailwindcss/**)",
+      "Bash(pnpm exec tailwindcss:*)",
+      "WebFetch(domain:m3.material.io)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

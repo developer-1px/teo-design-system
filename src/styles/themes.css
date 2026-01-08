@@ -1,0 +1,597 @@
+/**
+ * Theme System - CSS Variables
+ *
+ * 사용법:
+ * - Light/Dark: data-theme="light" | "dark"
+ * - Color Scheme: data-color-scheme="emerald" | "blue" | "purple"
+ * - Density: data-density="compact" | "normal" | "comfortable"
+ */
+
+/* ============================================================================
+   BASE THEME (LIGHT)
+   ============================================================================ */
+
+:root {
+  /* ============================================================================
+     7-LAYER DEPTH SYSTEM - 면으로 깊이를 표현하는 계층 구조
+     ============================================================================
+     원칙:
+     1. 각 레이어는 독립적이고 명확한 용도를 가짐
+     2. 숫자가 클수록 더 위에 떠있음 (사용자에게 가까움)
+     3. 색상 차이 + 그림자 조합으로 깊이감 표현
+     4. Border 대신 면의 차이로만 구분
+  ============================================================================ */
+
+  /* Layer 0 - Background (배경) */
+  /* 용도: 전체 앱 배경, 가장 깊숙한 층 */
+  --layer-0: 248 248 249; /* #f8f8f9 - 연한 쿨 그레이 */
+
+  /* Layer 1 - Sunken (함몰) */
+  /* 용도: Input fields, Terminal, 눌린 느낌의 영역 */
+  --layer-1: 239 240 242; /* #eff0f2 - 쿨 그레이 */
+
+  /* Layer 2 - Base Surface (기본 표면) */
+  /* 용도: Sidebar, Panel의 기본 배경 */
+  --layer-2: 245 246 247; /* #f5f6f7 - 은은한 쿨 그레이 */
+
+  /* Layer 3 - Primary Surface (주요 표면) */
+  /* 용도: Editor, Main Content Area */
+  --layer-3: 252 252 253; /* #fcfcfd - 거의 흰색 */
+
+  /* Layer 4 - Elevated (부각) */
+  /* 용도: Toolbar, Active Tab, Toolbar Button */
+  --layer-4: 254 254 255; /* #fefeff - 아주 연한 쿨 화이트 */
+
+  /* Layer 5 - Floating (떠있음) */
+  /* 용도: Dropdown, Popover, Context Menu */
+  --layer-5: 255 255 255; /* #ffffff - 순백 */
+
+  /* Layer 6 - Overlay (오버레이) */
+  /* 용도: Modal, Dialog, Toast */
+  --layer-6: 255 255 255; /* #ffffff - 순백 */
+
+  /* Layer Tone Variations - 같은 레이어 내에서 면 구분 */
+  --layer-2-warm: 243 244 245; /* #f3f4f5 - Workspace Nav (따뜻한 느낌) */
+  --layer-2-cool: 246 247 249; /* #f6f7f9 - File Tree (차가운 느낌) */
+  --layer-2-neutral: 245 246 247; /* #f5f6f7 - AI Chat (중성) */
+
+  --layer-3-warm: 251 251 252; /* #fbfbfc - Editor Tabs */
+  --layer-3-cool: 253 253 254; /* #fdfdfe - Editor */
+  --layer-3-neutral: 252 252 253; /* #fcfcfd - Right Panel */
+
+  /* Text Colors */
+  --text-primary: 23 23 23; /* #171717 */
+  --text-secondary: 82 82 82; /* #525252 */
+  --text-tertiary: 163 163 163; /* #a3a3a3 */
+  --text-inverse: 255 255 255; /* #ffffff */
+
+  /* Border */
+  --border: 229 229 229; /* #e5e5e5 */
+  --border-subtle: 245 245 245; /* #f5f5f5 */
+
+  /* Accent - Default Emerald (더 선명하게) */
+  --accent: 5 150 105; /* #059669 - 더 진한 emerald */
+  --accent-hover: 4 120 87; /* #047857 */
+  --accent-active: 6 95 70; /* #065f46 */
+  --accent-subtle: 209 250 229; /* #d1fae5 */
+
+  /* Secondary Accent - Orange for contrast */
+  --accent-secondary: 249 115 22; /* #f97316 - 명확한 orange */
+  --accent-secondary-hover: 234 88 12; /* #ea580c */
+  --accent-secondary-active: 194 65 12; /* #c2410c */
+  --accent-secondary-subtle: 255 237 213; /* #ffedd5 */
+
+  /* ============================================================================
+     ELEVATION SHADOWS - 은은하고 고급스러운 그림자
+     ============================================================================
+     디자인 원칙:
+     1. 떠있는 요소만 그림자 사용 (TopToolbar, Menu, Modal, Panel)
+     2. 면으로 구분되는 요소는 그림자 불필요 (Sidebar, Editor)
+     3. Material Design 3의 subtle elevation 참고
+     4. 투명도를 낮춰 은은하게 표현
+  ============================================================================ */
+
+  /* Elevation 1 - 매우 은은함 (TopToolbar, BottomPanel) */
+  --elevation-1: 0px 1px 2px 0px rgb(0 0 0 / 0.04),
+                 0px 1px 3px 1px rgb(0 0 0 / 0.03);
+
+  /* Elevation 2 - 중간 (Dropdown, Menu) */
+  --elevation-2: 0px 2px 4px 0px rgb(0 0 0 / 0.06),
+                 0px 2px 8px 2px rgb(0 0 0 / 0.04);
+
+  /* Elevation 3 - 강함 (Modal, Dialog) */
+  --elevation-3: 0px 4px 8px 0px rgb(0 0 0 / 0.08),
+                 0px 4px 16px 4px rgb(0 0 0 / 0.06);
+
+  /* Semantic Colors (고정값) */
+  --success: 34 197 94; /* #22c55e */
+  --warning: 245 158 11; /* #f59e0b */
+  --error: 239 68 68; /* #ef4444 */
+  --info: 59 130 246; /* #3b82f6 */
+
+  /* ============================================================================
+     7-LAYER SHADOW SYSTEM - 큰 blur + 낮은 opacity로 부드럽지만 명확한 깊이
+     ============================================================================ */
+  --shadow-color: 0 0 0;
+
+  /* Layer 0 - Background: Shadow 없음 */
+  --shadow-layer-0: none;
+
+  /* Layer 1 - Sunken: Inset shadow로 함몰감 표현 */
+  --shadow-layer-1: inset 0 2px 4px rgba(var(--shadow-color), 0.06);
+
+  /* Layer 2 - Base Surface: Shadow 없음 (색상 차이만으로 구분) */
+  --shadow-layer-2: none;
+
+  /* Layer 3 - Primary Surface: 매우 은은한 그림자 (주요 작업 공간) */
+  --shadow-layer-3: 0 1px 2px rgba(var(--shadow-color), 0.03),
+                     0 2px 8px rgba(var(--shadow-color), 0.02);
+
+  /* Layer 4 - Elevated: 이중 그림자로 명확히 떠있음 */
+  --shadow-layer-4: 0 1px 3px rgba(var(--shadow-color), 0.05),
+                     0 4px 12px rgba(var(--shadow-color), 0.04);
+
+  /* Layer 5 - Floating: 강한 그림자, 떠있는 느낌 */
+  --shadow-layer-5: 0 2px 8px rgba(var(--shadow-color), 0.08),
+                     0 8px 24px rgba(var(--shadow-color), 0.06);
+
+  /* Layer 6 - Overlay: 최강 그림자, 모달/다이얼로그 */
+  --shadow-layer-6: 0 4px 16px rgba(var(--shadow-color), 0.12),
+                     0 16px 64px rgba(var(--shadow-color), 0.10);
+
+  /* ============================================================================
+     BORDER RADIUS SYSTEM - 모든 요소에 적용
+     ============================================================================
+     원칙: 모든 면에 border-radius를 사용하여 부드러운 느낌
+     예외: 전체 화면 영역 (App container), 정렬이 필요한 경우만 제외
+  ============================================================================ */
+
+  /* Radius Scale */
+  --radius-none: 0; /* 예외적으로만 사용 */
+  --radius-sm: 4px; /* 작은 요소: Icon, Badge, Small Button */
+  --radius-md: 6px; /* 기본: Button, Input, Tab */
+  --radius-lg: 8px; /* 패널: Sidebar, Panel, Card */
+  --radius-xl: 10px; /* 큰 패널: Modal, Dialog */
+  --radius-2xl: 12px; /* 특수: Image, Media */
+  --radius-full: 9999px; /* Circle: Avatar, Dot */
+
+  /* Spacing Unit (Density) */
+  --spacing-unit: 1;
+}
+
+/* ============================================================================
+   DARK THEME
+   ============================================================================ */
+
+[data-theme='dark'] {
+  /* ============================================================================
+     7-LAYER DEPTH SYSTEM - DARK MODE
+     ============================================================================
+     Dark에서는 색상 차이를 Light보다 크게 → 더 명확한 계층 구분
+  ============================================================================ */
+
+  /* Layer 0 - Background */
+  --layer-0: 10 10 10; /* #0a0a0a - 가장 어두운 배경 */
+
+  /* Layer 1 - Sunken */
+  --layer-1: 18 18 18; /* #121212 - 함몰된 영역 */
+
+  /* Layer 2 - Base Surface */
+  --layer-2: 26 26 26; /* #1a1a1a - 사이드바 기본 */
+
+  /* Layer 3 - Primary Surface */
+  --layer-3: 34 34 34; /* #222222 - 에디터 */
+
+  /* Layer 4 - Elevated */
+  --layer-4: 42 42 42; /* #2a2a2a - 툴바 */
+
+  /* Layer 5 - Floating */
+  --layer-5: 50 50 50; /* #323232 - 드롭다운 */
+
+  /* Layer 6 - Overlay */
+  --layer-6: 58 58 58; /* #3a3a3a - 모달 */
+
+  /* Layer Tone Variations - Dark Mode */
+  --layer-2-warm: 24 24 24; /* #181818 */
+  --layer-2-cool: 26 26 26; /* #1a1a1a */
+  --layer-2-neutral: 25 25 25; /* #191919 */
+
+  --layer-3-warm: 32 32 32; /* #202020 */
+  --layer-3-cool: 34 34 34; /* #222222 */
+  --layer-3-neutral: 33 33 33; /* #212121 */
+
+  /* Text Colors - Dark Mode */
+  --text-primary: 250 250 250; /* #fafafa */
+  --text-secondary: 163 163 163; /* #a3a3a3 */
+  --text-tertiary: 115 115 115; /* #737373 */
+  --text-inverse: 23 23 23; /* #171717 */
+
+  /* Border - Dark Mode */
+  --border: 64 64 64; /* #404040 */
+  --border-subtle: 38 38 38; /* #262626 */
+
+  /* Accent Subtle - Dark Mode */
+  --accent-subtle: 6 78 59; /* #064e3b */
+
+  /* Secondary Accent - Dark Mode */
+  --accent-secondary-subtle: 124 45 18; /* #7c2d12 */
+}
+
+/* ============================================================================
+   COLOR SCHEMES
+   ============================================================================ */
+
+/* Blue Scheme */
+[data-color-scheme='blue'] {
+  --accent: 59 130 246; /* #3b82f6 */
+  --accent-hover: 37 99 235; /* #2563eb */
+  --accent-active: 29 78 216; /* #1d4ed8 */
+  --accent-subtle: 219 234 254; /* #dbeafe */
+}
+
+[data-theme='dark'][data-color-scheme='blue'] {
+  --accent-subtle: 30 58 138; /* #1e3a8a */
+}
+
+/* Purple Scheme */
+[data-color-scheme='purple'] {
+  --accent: 168 85 247; /* #a855f7 */
+  --accent-hover: 147 51 234; /* #9333ea */
+  --accent-active: 126 34 206; /* #7e22ce */
+  --accent-subtle: 243 232 255; /* #f3e8ff */
+}
+
+[data-theme='dark'][data-color-scheme='purple'] {
+  --accent-subtle: 88 28 135; /* #581c87 */
+}
+
+/* Red Scheme */
+[data-color-scheme='red'] {
+  --accent: 239 68 68; /* #ef4444 */
+  --accent-hover: 220 38 38; /* #dc2626 */
+  --accent-active: 185 28 28; /* #b91c1c */
+  --accent-subtle: 254 226 226; /* #fee2e2 */
+}
+
+[data-theme='dark'][data-color-scheme='red'] {
+  --accent-subtle: 127 29 29; /* #7f1d1d */
+}
+
+/* ============================================================================
+   DENSITY MODES
+   ============================================================================ */
+
+/* Compact Mode */
+[data-density='compact'] {
+  --spacing-unit: 0.75;
+}
+
+/* Comfortable Mode */
+[data-density='comfortable'] {
+  --spacing-unit: 1.25;
+}
+
+/* Normal Mode (default) */
+[data-density='normal'] {
+  --spacing-unit: 1;
+}
+
+/* ============================================================================
+   UTILITY CLASSES USING VARIABLES
+   ============================================================================ */
+
+/* Layer Background Classes - 명시적 정의 */
+.bg-layer-0 {
+  background-color: rgb(var(--layer-0));
+}
+
+.bg-layer-1 {
+  background-color: rgb(var(--layer-1));
+}
+
+.bg-layer-2 {
+  background-color: rgb(var(--layer-2));
+}
+
+.bg-layer-3 {
+  background-color: rgb(var(--layer-3));
+}
+
+.bg-layer-4 {
+  background-color: rgb(var(--layer-4));
+}
+
+.bg-layer-5 {
+  background-color: rgb(var(--layer-5));
+}
+
+.bg-layer-6 {
+  background-color: rgb(var(--layer-6));
+}
+
+/* Accent Indicator - minimal approach with background only */
+/* 원칙: 오직 background-color만 사용 */
+.accent-indicator {
+  background-color: rgb(var(--accent) / 0.15);
+}
+
+/* Text Color Classes */
+.text-accent {
+  color: rgb(var(--accent));
+}
+
+.text-accent-secondary {
+  color: rgb(var(--accent-secondary));
+}
+
+.text-success {
+  color: rgb(var(--success));
+}
+
+.text-warning {
+  color: rgb(var(--warning));
+}
+
+.text-error {
+  color: rgb(var(--error));
+}
+
+.text-info {
+  color: rgb(var(--info));
+}
+
+.text-text {
+  color: rgb(var(--text-primary));
+}
+
+.text-text-secondary {
+  color: rgb(var(--text-secondary));
+}
+
+.text-text-tertiary {
+  color: rgb(var(--text-tertiary));
+}
+
+/* Background Color Classes */
+.bg-accent {
+  background-color: rgb(var(--accent));
+}
+
+.bg-accent-secondary {
+  background-color: rgb(var(--accent-secondary));
+}
+
+.bg-success {
+  background-color: rgb(var(--success));
+}
+
+.bg-warning {
+  background-color: rgb(var(--warning));
+}
+
+.bg-error {
+  background-color: rgb(var(--error));
+}
+
+.bg-info {
+  background-color: rgb(var(--info));
+}
+
+/* Border Color Classes */
+.border {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.border-border {
+  border-color: rgb(var(--border));
+}
+
+.border-accent {
+  border-color: rgb(var(--accent));
+}
+
+.border-success {
+  border-color: rgb(var(--success));
+}
+
+.border-warning {
+  border-color: rgb(var(--warning));
+}
+
+.border-error {
+  border-color: rgb(var(--error));
+}
+
+/* ============================================================================
+   SURFACE DIFFERENTIATION - Same Layer, Adjacent Surfaces
+   ============================================================================ */
+
+/* Layer 2 Tone Classes */
+.bg-layer-2-warm {
+  background-color: rgb(var(--layer-2-warm));
+}
+
+.bg-layer-2-cool {
+  background-color: rgb(var(--layer-2-cool));
+}
+
+.bg-layer-2-neutral {
+  background-color: rgb(var(--layer-2-neutral));
+}
+
+/* Boundary Shadows - 확실하지만 은은한 경계 표시 */
+/* 원칙: 선이 아닌 그림자, 더 넓은 blur로 부드럽게 */
+.boundary-shadow-left {
+  box-shadow: inset 2px 0 4px -2px rgba(0, 0, 0, 0.06);
+}
+
+.boundary-shadow-right {
+  box-shadow: inset -2px 0 4px -2px rgba(0, 0, 0, 0.06);
+}
+
+.boundary-shadow-top {
+  box-shadow: inset 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+}
+
+.boundary-shadow-bottom {
+  box-shadow: inset 0 -2px 4px -2px rgba(0, 0, 0, 0.06);
+}
+
+/* Dark mode boundary shadows - 더 명확하게 */
+[data-theme='dark'] .boundary-shadow-left {
+  box-shadow: inset 2px 0 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .boundary-shadow-right {
+  box-shadow: inset -2px 0 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .boundary-shadow-top {
+  box-shadow: inset 0 2px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .boundary-shadow-bottom {
+  box-shadow: inset 0 -2px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ============================================================================
+   GLOBAL BASE STYLES - Minimal Tailwind 원칙
+   ============================================================================
+   컨셉: 모든 요소에 기본 스타일을 적용하여 tailwind 클래스 최소화
+   원칙: border-radius를 모든 요소에 기본 적용
+============================================================================ */
+
+/* 모든 버튼에 기본 스타일 */
+button {
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+/* Layer별 Hover 색상 규칙 */
+/* Layer 0 (배경): Layer 1로 */
+.layer-0-interactive:hover {
+  background-color: rgb(var(--layer-1));
+}
+
+/* Layer 1 (함몰): Layer 2로 */
+.layer-1-interactive:hover {
+  background-color: rgb(var(--layer-2));
+}
+
+/* Layer 2 (기본 표면): Layer 3으로 */
+.layer-2-interactive:hover {
+  background-color: rgb(var(--layer-3));
+}
+
+/* Layer 3 (주요 표면): Layer 2로 (어두워짐) */
+.layer-3-interactive:hover {
+  background-color: rgb(var(--layer-2));
+}
+
+/* Layer 4 (부각): Layer 3으로 (어두워짐) */
+.layer-4-interactive:hover {
+  background-color: rgb(var(--layer-3));
+}
+
+/* Layer 5 (떠있음): Layer 4로 (어두워짐) */
+.layer-5-interactive:hover {
+  background-color: rgb(var(--layer-4));
+}
+
+/* Layer 6 (최상위): Layer 5로 (어두워짐) */
+.layer-6-interactive:hover {
+  background-color: rgb(var(--layer-5));
+}
+
+/* 모든 input, textarea에 기본 스타일 */
+input,
+textarea,
+select {
+  border-radius: var(--radius-md);
+  background-color: rgb(var(--layer-1));
+  color: rgb(var(--text-primary));
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  ring: 1px solid rgb(var(--accent));
+}
+
+/* 모든 패널/카드형 요소에 기본 radius */
+[class*='panel'],
+[class*='sidebar'],
+[class*='toolbar'],
+[class*='dropdown'],
+[class*='menu'],
+[class*='card'] {
+  border-radius: var(--radius-lg);
+}
+
+/* 작은 요소들 (아이콘, 뱃지) */
+[class*='icon'],
+[class*='badge'],
+[class*='chip'],
+[class*='tag'] {
+  border-radius: var(--radius-sm);
+}
+
+/* 이미지, 미디어 */
+img,
+video {
+  border-radius: var(--radius-lg);
+}
+
+/* 코드 블록 */
+pre,
+code {
+  border-radius: var(--radius-md);
+}
+
+/* 구분선 */
+hr {
+  border-color: rgb(var(--border));
+  opacity: 1;
+}
+
+/* 링크 */
+a {
+  color: rgb(var(--accent));
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: rgb(var(--accent-hover));
+}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--layer-0));
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--text-tertiary));
+}
+
+/* Selection */
+::selection {
+  background-color: rgb(var(--accent-subtle));
+  color: rgb(var(--text-primary));
+}
+

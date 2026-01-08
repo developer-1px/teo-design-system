@@ -1,0 +1,405 @@
+import { ColorSwatch } from '@/components/design-system/ColorSwatch';
+import { TokenTable } from '@/components/design-system/TokenTable';
+import { LayerDemo } from '@/components/design-system/LayerDemo';
+import { ShadowVsBorderGuide } from '@/components/design-system/ShadowVsBorderGuide';
+import { Layer } from '@/components/ui/Layer';
+
+# 7-Layer Design System
+
+면으로 깊이를 표현하는 계층 구조 디자인 시스템입니다. Border 없이 색상 차이와 그림자만으로 깊이감을 표현합니다.
+
+---
+
+## Design Philosophy
+
+<Layer level={2} rounded="lg" className="p-6 my-6">
+  <div className="grid md:grid-cols-2 gap-6">
+    <div>
+      <h3 className="text-lg font-semibold text-text mb-3">✨ Core Principles</h3>
+      <ul className="space-y-2 text-text-secondary text-sm">
+        <li>• 각 레이어는 독립적이고 명확한 용도</li>
+        <li>• 숫자가 클수록 사용자에게 가까움</li>
+        <li>• Border 없이 면의 차이로만 구분</li>
+        <li>• 색상 + 그림자 조합으로 깊이 표현</li>
+      </ul>
+    </div>
+    <div>
+      <h3 className="text-lg font-semibold text-text mb-3">🎨 Visual Hierarchy</h3>
+      <ul className="space-y-2 text-text-secondary text-sm">
+        <li>• Layer 0-1: Background & Sunken</li>
+        <li>• Layer 2-3: Base & Primary Surface</li>
+        <li>• Layer 4-5: Elevated & Floating</li>
+        <li>• Layer 6: Modal & Overlay</li>
+      </ul>
+    </div>
+  </div>
+</Layer>
+
+---
+
+## Layer Tokens
+
+### Interactive Demo
+
+<LayerDemo variant="nested" className="my-8" />
+
+<div className="my-6 text-sm text-text-secondary">
+  💡 **Tip:** 각 레이어는 위로 갈수록 사용자에게 가까워집니다. 이는 물리적 깊이감을 시각적으로 표현합니다.
+</div>
+
+---
+
+## Color Swatches
+
+### Layer Colors
+
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-8">
+  <ColorSwatch
+    name="Layer 0"
+    varName="--layer-0"
+    description="App Background"
+  />
+  <ColorSwatch
+    name="Layer 1"
+    varName="--layer-1"
+    description="Sunken (Input)"
+  />
+  <ColorSwatch
+    name="Layer 2"
+    varName="--layer-2"
+    description="Base Surface"
+  />
+  <ColorSwatch
+    name="Layer 3"
+    varName="--layer-3"
+    description="Primary Surface"
+  />
+  <ColorSwatch
+    name="Layer 4"
+    varName="--layer-4"
+    description="Elevated (Toolbar)"
+  />
+  <ColorSwatch
+    name="Layer 5"
+    varName="--layer-5"
+    description="Floating (Dropdown)"
+  />
+  <ColorSwatch
+    name="Layer 6"
+    varName="--layer-6"
+    description="Overlay (Modal)"
+  />
+</div>
+
+### Accent Colors
+
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-8">
+  <ColorSwatch
+    name="Accent Primary"
+    varName="--accent"
+    description="Primary actions (Emerald)"
+  />
+  <ColorSwatch
+    name="Accent Hover"
+    varName="--accent-hover"
+    description="Hover state"
+  />
+  <ColorSwatch
+    name="Accent Secondary"
+    varName="--accent-secondary"
+    description="Secondary actions (Orange)"
+  />
+  <ColorSwatch
+    name="Accent Secondary Hover"
+    varName="--accent-secondary-hover"
+    description="Hover state"
+  />
+</div>
+
+### Semantic State Colors
+
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-8">
+  <ColorSwatch
+    name="Success"
+    varName="--success"
+    description="Success states"
+  />
+  <ColorSwatch
+    name="Warning"
+    varName="--warning"
+    description="Warning states"
+  />
+  <ColorSwatch
+    name="Error"
+    varName="--error"
+    description="Error states"
+  />
+  <ColorSwatch
+    name="Info"
+    varName="--info"
+    description="Info states"
+  />
+</div>
+
+### Text Colors
+
+<div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-8">
+  <ColorSwatch
+    name="Text Primary"
+    varName="--text-primary"
+    description="Main text color"
+  />
+  <ColorSwatch
+    name="Text Secondary"
+    varName="--text-secondary"
+    description="Secondary text"
+  />
+  <ColorSwatch
+    name="Text Tertiary"
+    varName="--text-tertiary"
+    description="Disabled/placeholder"
+  />
+</div>
+
+### Border Colors
+
+<div className="grid grid-cols-2 gap-4 my-8">
+  <ColorSwatch
+    name="Border"
+    varName="--border"
+    description="Standard borders"
+  />
+  <ColorSwatch
+    name="Border Subtle"
+    varName="--border-subtle"
+    description="Subtle dividers"
+  />
+</div>
+
+---
+
+## Token Reference Tables
+
+### Layer Tokens
+
+<TokenTable
+  title="Layer Colors"
+  tokens={[
+    { name: 'bg-layer-0', value: '--layer-0', description: 'App background, deepest layer', preview: 'color' },
+    { name: 'bg-layer-1', value: '--layer-1', description: 'Sunken elements (inputs, terminals)', preview: 'color' },
+    { name: 'bg-layer-2', value: '--layer-2', description: 'Base surface (sidebar, panels)', preview: 'color' },
+    { name: 'bg-layer-3', value: '--layer-3', description: 'Primary surface (editor, content)', preview: 'color' },
+    { name: 'bg-layer-4', value: '--layer-4', description: 'Elevated (toolbar, active tab)', preview: 'color' },
+    { name: 'bg-layer-5', value: '--layer-5', description: 'Floating (dropdown, popover)', preview: 'color' },
+    { name: 'bg-layer-6', value: '--layer-6', description: 'Overlay (modal, dialog)', preview: 'color' },
+  ]}
+  className="my-8"
+/>
+
+### Shadow Tokens
+
+<TokenTable
+  title="Elevation Shadows"
+  tokens={[
+    { name: 'shadow-layer-0', value: '--shadow-layer-0', description: 'No shadow', preview: 'shadow' },
+    { name: 'shadow-layer-1', value: '--shadow-layer-1', description: 'Inset shadow', preview: 'shadow' },
+    { name: 'shadow-layer-2', value: '--shadow-layer-2', description: 'Base elevation', preview: 'shadow' },
+    { name: 'shadow-layer-3', value: '--shadow-layer-3', description: 'Primary elevation', preview: 'shadow' },
+    { name: 'shadow-layer-4', value: '--shadow-layer-4', description: 'Elevated shadow', preview: 'shadow' },
+    { name: 'shadow-layer-5', value: '--shadow-layer-5', description: 'Floating shadow', preview: 'shadow' },
+    { name: 'shadow-layer-6', value: '--shadow-layer-6', description: 'Modal shadow', preview: 'shadow' },
+  ]}
+  className="my-8"
+/>
+
+---
+
+## Usage Examples
+
+### Basic Layer Component
+
+```tsx
+import { Layer } from '@/components/ui/Layer';
+
+// Layer 2 - Base Surface (Sidebar)
+<Layer level={2} rounded="lg" className="p-4">
+  <h2>Sidebar Content</h2>
+</Layer>
+
+// Layer 3 - Primary Surface (Editor)
+<Layer level={3} rounded="lg" className="p-6">
+  <CodeEditor />
+</Layer>
+
+// Layer 5 - Floating (Dropdown)
+<Layer level={5} rounded="md" className="p-2">
+  <DropdownMenu />
+</Layer>
+```
+
+### Custom Background Color
+
+```tsx
+// Use warm variant for navigation
+<Layer level={2} rounded="md" className="bg-layer-2-warm">
+  <WorkspaceNav />
+</Layer>
+
+// Use cool variant for content panels
+<Layer level={2} rounded="md" className="bg-layer-2-cool">
+  <FileTree />
+</Layer>
+```
+
+### Stacking Layers
+
+```tsx
+<Layer level={0} className="app-container">
+  {/* Background */}
+
+  <Layer level={2} className="sidebar">
+    {/* Sidebar */}
+
+    <Layer level={3} className="editor">
+      {/* Editor */}
+
+      <Layer level={5} className="dropdown">
+        {/* Dropdown appears on top */}
+      </Layer>
+    </Layer>
+  </Layer>
+
+  <Layer level={6} className="modal">
+    {/* Modal overlays everything */}
+  </Layer>
+</Layer>
+```
+
+---
+
+## Interactive Stacking Demo
+
+<div className="my-8">
+  <div className="mb-4">
+    <h3 className="text-lg font-semibold text-text mb-2">Side by Side View</h3>
+    <p className="text-sm text-text-secondary">각 레이어를 개별적으로 확인할 수 있습니다</p>
+  </div>
+  <LayerDemo variant="side-by-side" />
+</div>
+
+<div className="my-8">
+  <div className="mb-4">
+    <h3 className="text-lg font-semibold text-text mb-2">Stacked View</h3>
+    <p className="text-sm text-text-secondary">레이어가 어떻게 겹쳐지는지 확인할 수 있습니다</p>
+  </div>
+  <LayerDemo variant="stacked" />
+</div>
+
+---
+
+## Shadow vs Border - When to Use Each
+
+<div className="my-8">
+  <ShadowVsBorderGuide />
+</div>
+
+---
+
+## Best Practices
+
+<Layer level={2} rounded="lg" className="p-6 my-8">
+  <h3 className="text-lg font-semibold text-text mb-4">✅ Do's</h3>
+  <ul className="space-y-2 text-text-secondary text-sm mb-6">
+    <li>✓ Use consistent layer levels across similar components</li>
+    <li>✓ Follow the semantic meaning of each layer</li>
+    <li>✓ Combine layers with appropriate shadows</li>
+    <li>✓ Test in both light and dark modes</li>
+  </ul>
+
+  <h3 className="text-lg font-semibold text-text mb-4">❌ Don'ts</h3>
+  <ul className="space-y-2 text-text-secondary text-sm">
+    <li>✗ Don't skip layer levels arbitrarily</li>
+    <li>✗ Don't add manual borders between layers</li>
+    <li>✗ Don't use layer colors outside Layer component</li>
+    <li>✗ Don't override shadow values manually</li>
+  </ul>
+</Layer>
+
+---
+
+## Design System Integration
+
+### TailwindCSS Configuration
+
+The layer system is configured in `tailwind.config.js`:
+
+```js
+theme: {
+  extend: {
+    colors: {
+      'layer-0': 'rgb(var(--layer-0) / <alpha-value>)',
+      'layer-1': 'rgb(var(--layer-1) / <alpha-value>)',
+      'layer-2': 'rgb(var(--layer-2) / <alpha-value>)',
+      // ... layer-3 to layer-6
+    },
+    boxShadow: {
+      'layer-0': 'var(--shadow-layer-0)',
+      'layer-1': 'var(--shadow-layer-1)',
+      // ... layer-2 to layer-6
+    }
+  }
+}
+```
+
+### CSS Variables
+
+All layer tokens are defined as CSS custom properties in `src/styles/design-tokens.css`:
+
+```css
+:root[data-theme="light"] {
+  --layer-0: 246 246 246; /* #f6f6f6 */
+  --layer-1: 242 242 242; /* #f2f2f2 */
+  --layer-2: 255 255 255; /* #ffffff */
+  /* ... */
+}
+
+:root[data-theme="dark"] {
+  --layer-0: 28 28 28;    /* #1c1c1c */
+  --layer-1: 24 24 24;    /* #181818 */
+  --layer-2: 43 43 43;    /* #2b2b2b */
+  /* ... */
+}
+```
+
+---
+
+## Resources
+
+<div className="grid md:grid-cols-3 gap-4 my-8">
+  <Layer level={2} rounded="lg" className="p-4 hover:scale-105 transition-transform cursor-pointer">
+    <div className="text-sm font-semibold text-text mb-2">📐 Figma Kit</div>
+    <div className="text-xs text-text-secondary">
+      Complete design tokens and components for Figma
+    </div>
+  </Layer>
+
+  <Layer level={2} rounded="lg" className="p-4 hover:scale-105 transition-transform cursor-pointer">
+    <div className="text-sm font-semibold text-text mb-2">📚 Storybook</div>
+    <div className="text-xs text-text-secondary">
+      Interactive component documentation with live examples
+    </div>
+  </Layer>
+
+  <Layer level={2} rounded="lg" className="p-4 hover:scale-105 transition-transform cursor-pointer">
+    <div className="text-sm font-semibold text-text mb-2">🎨 Theme Editor</div>
+    <div className="text-xs text-text-secondary">
+      Customize and preview your own color schemes
+    </div>
+  </Layer>
+</div>
+
+---
+
+<div className="text-center py-8 text-text-secondary text-sm">
+  Built with ❤️ using React, TypeScript, and TailwindCSS 4.x
+</div>
