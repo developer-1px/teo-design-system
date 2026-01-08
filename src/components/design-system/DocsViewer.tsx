@@ -4,16 +4,17 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
 import { FileText, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { DocItem } from '@/lib/docs-config';
+import type { DocItem } from '@/lib/docs-loader';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkFrontmatter from 'remark-frontmatter';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import '@/styles/markdown.css';
+import { LayoutDemo } from './LayoutDemo';
 
 interface DocsViewerProps {
   doc: DocItem | null;
@@ -58,7 +59,7 @@ export const DocsViewer = ({ doc }: DocsViewerProps) => {
   // 문서가 선택되지 않은 경우
   if (!doc) {
     return (
-      <Layer level={3} className="flex flex-1 items-center justify-center">
+      <Layout depth={3} className="flex flex-1 items-center justify-center">
         <div className="text-center">
           <FileText size={48} className="mx-auto mb-4 text-text-tertiary" />
           <p className="text-base font-medium text-text-primary mb-2">
@@ -68,26 +69,26 @@ export const DocsViewer = ({ doc }: DocsViewerProps) => {
             왼쪽 사이드바에서 문서를 선택하면 내용이 표시됩니다
           </p>
         </div>
-      </Layer>
+      </Layout>
     );
   }
 
   // 로딩 중
   if (isLoading) {
     return (
-      <Layer level={3} className="flex flex-1 items-center justify-center">
+      <Layout depth={3} className="flex flex-1 items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-sm text-text-secondary">문서를 불러오는 중...</p>
         </div>
-      </Layer>
+      </Layout>
     );
   }
 
   // 에러 발생
   if (error) {
     return (
-      <Layer level={3} className="flex flex-1 items-center justify-center">
+      <Layout depth={3} className="flex flex-1 items-center justify-center">
         <div className="text-center max-w-md">
           <AlertCircle size={48} className="mx-auto mb-4 text-semantic-error" />
           <p className="text-base font-medium text-text-primary mb-2">
@@ -95,24 +96,26 @@ export const DocsViewer = ({ doc }: DocsViewerProps) => {
           </p>
           <p className="text-sm text-text-tertiary">{error}</p>
         </div>
-      </Layer>
+      </Layout>
     );
   }
 
   return (
-    <Layer level={3} className="flex flex-1 flex-col overflow-hidden">
+    <Layout depth={3} className="flex flex-1 flex-col overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 px-6 py-4 border-b border-border">
-        {doc.icon && <doc.icon size={20} className="text-accent" />}
-        <div className="flex-1 min-w-0">
-          <h1 className="text-lg font-semibold text-text-primary truncate">
-            {doc.title}
-          </h1>
-          <p className="text-sm text-text-tertiary truncate">
-            {doc.description}
-          </p>
+      <Layout depth={2} rounded={false} className="px-6 py-4">
+        <div className="flex items-center gap-3">
+          {doc.icon && <doc.icon size={20} className="text-text-secondary" />}
+          <div className="flex-1 min-w-0">
+            <h1 className="text-lg font-semibold text-text-primary truncate">
+              {doc.title}
+            </h1>
+            <p className="text-sm text-text-tertiary truncate">
+              {doc.description}
+            </p>
+          </div>
         </div>
-      </div>
+      </Layout>
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
@@ -120,52 +123,74 @@ export const DocsViewer = ({ doc }: DocsViewerProps) => {
           <MarkdownContent content={content} />
         </div>
       </div>
-    </Layer>
+    </Layout>
   );
 };
 
 /**
  * MarkdownContent - 마크다운 텍스트를 렌더링
  * react-markdown으로 풍부한 마크다운 렌더링
+ *
+ * 특수 마커 지원:
+ * - <!-- INTERACTIVE:LayoutDemo --> : LayoutDemo 컴포넌트 삽입
  */
 interface MarkdownContentProps {
   content: string;
 }
 
 const MarkdownContent = ({ content }: MarkdownContentProps) => {
+  // 인터랙티브 컴포넌트 마커 감지
+  const hasLayoutDemo = content.includes('<!-- INTERACTIVE:LayoutDemo -->');
+
+  // 마커가 있으면 콘텐츠를 분할
+  const parts = hasLayoutDemo
+    ? content.split('<!-- INTERACTIVE:LayoutDemo -->')
+    : [content];
+
   return (
     <div className="markdown-content max-w-4xl mx-auto">
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkFrontmatter]}
-        rehypePlugins={[rehypeHighlight, rehypeRaw]}
-        components={{
-          // 코드 블록 스타일링
-          code: ({ node, inline, className, children, ...props }) => {
-            return inline ? (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            ) : (
-              <code className={cn(className, 'hljs')} {...props}>
-                {children}
-              </code>
-            );
-          },
-          // 링크는 새 탭에서 열기
-          a: ({ node, children, href, ...props }) => (
-            <a
-              href={href}
-              target={href?.startsWith('http') ? '_blank' : undefined}
-              rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-              {...props}
-            >
-              {children}
-            </a>
-          ),
-        }}
-      >
-        {content}
-      </ReactMarkdown>
+      {parts.map((part, index) => (
+        <div key={index}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm, remarkFrontmatter]}
+            rehypePlugins={[rehypeHighlight, rehypeRaw]}
+            components={{
+              // 코드 블록 스타일링
+              code: ({ node, inline, className, children, ...props }) => {
+                return inline ? (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                ) : (
+                  <code className={cn(className, 'hljs')} {...props}>
+                    {children}
+                  </code>
+                );
+              },
+              // 링크는 새 탭에서 열기
+              a: ({ node, children, href, ...props }) => (
+                <a
+                  href={href}
+                  target={href?.startsWith('http') ? '_blank' : undefined}
+                  rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  {...props}
+                >
+                  {children}
+                </a>
+              ),
+            }}
+          >
+            {part}
+          </ReactMarkdown>
+
+          {/* 마커 위치에 인터랙티브 컴포넌트 삽입 */}
+          {hasLayoutDemo && index < parts.length - 1 && (
+            <div className="my-8">
+              <LayoutDemo />
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

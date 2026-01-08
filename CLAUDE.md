@@ -34,24 +34,56 @@ This is a **design-system-driven IDE UI Kit** built with React 19, TypeScript, a
 
 ## Design System Architecture
 
+### ⭐ NEW: Purpose-Based Design (Why-Based System)
+
+**Core Concept**: Developers specify "why" (purpose + prominence), system handles "how" (tokens, semantics, accessibility).
+
+```tsx
+// ❌ How-based (old)
+<button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold">
+  Save
+</button>
+
+// ✅ Why-based (new)
+<Group purpose="action" prominence={1}>
+  <Item>Save</Item>
+</Group>
+```
+
+**Developer's Job**:
+1. **Grouping**: What's the role? → `purpose` (navigation, action, form, content, list, media, status, info)
+2. **Prominence**: How important? → `prominence` (1: Primary, 2: Secondary, 3: Tertiary)
+
+**System's Job**:
+- Suggest appropriate UI patterns
+- Apply tokens automatically
+- Generate semantic HTML
+- Set up keyboard accessibility
+
+**See**: [docs/PURPOSE_BASED_DESIGN.md](docs/PURPOSE_BASED_DESIGN.md) for complete guide.
+
+---
+
 ### Core Philosophy
 
-The design system follows three fundamental principles:
+The design system follows these fundamental principles:
 
-1. **Use the weakest visual means first**: Background color difference → Border → Shadow → Accent color
-2. **Limit accent usage**: Maximum 1-2 accent uses per screen (primary CTA, focus states only)
-3. **Document all exceptions**: Any deviation from rules must include inline comment explaining why
+1. **Purpose-first**: Define "why it exists" before "how it looks"
+2. **Use the weakest visual means first**: Background color difference → Border → Shadow → Accent color
+3. **Limit accent usage**: Maximum 1-2 accent uses per screen (primary CTA, focus states only)
+4. **Minimal tokens**: Only 16 tokens (6 colors, 4 sizes, 2 weights, 4 spacings)
+5. **Document all exceptions**: Any deviation from rules must include inline comment explaining why
 
-### 7-Layer System
+### Layout System (범용 레이아웃)
 
-The codebase uses a **layer-based depth system** instead of arbitrary background colors. All layers are defined in:
+The codebase uses a **Layout system** that combines depth (visual hierarchy) with layout patterns (grid, flex, stack, scroll). This unified system works across all OS apps. All layouts are defined in:
+- **Component**: `src/components/ui/Layout.tsx`
 - **Design tokens**: `src/design-system/tokens.ts`
-- **Tailwind config**: `tailwind.config.js` (CSS variable references)
-- **Component**: `src/components/ui/Layer.tsx`
+- **Grid templates**: `src/styles/themes.css` (CSS variables)
 
-**Layer hierarchy** (0 = base, 6 = highest):
+#### Depth Hierarchy (0 = base, 6 = highest)
 
-| Level | Purpose | Background | Shadow | Z-Index | Example Use Cases |
+| Depth | Purpose | Background | Shadow | Z-Index | Example Use Cases |
 |-------|---------|------------|--------|---------|-------------------|
 | 0 | App base | `#fafafa` | none | 0 | Application background |
 | 1 | Sunken | `#f5f5f5` | inset | 10 | Input fields, terminal |
@@ -62,9 +94,36 @@ The codebase uses a **layer-based depth system** instead of arbitrary background
 | 6 | Overlay | `#ffffff` | strongest | 60 | Modals, dialogs |
 
 **Critical rules**:
-- NEVER reverse layer levels (dark inside light)
+- NEVER reverse depth levels (dark inside light)
 - NEVER exceed 4 levels of nesting
-- Layers 2-6 use **same background color** with **different shadows** for depth
+- Depths 2-6 use **same background color** with **different shadows** for depth
+
+#### Layout Variants
+
+| Variant | Purpose | Use Case |
+|---------|---------|----------|
+| `surface` | Basic container (default) | Simple panels, cards |
+| `grid` | CSS Grid layout | Bento Grid, IDE layouts, structured layouts |
+| `flex` | Flexbox layout | Headers, toolbars, dynamic alignment |
+| `stack` | Vertical/horizontal stack (scrollable) | File lists, scrollable menus |
+| `scroll` | Pure scroll container | Long content areas |
+
+#### Layout.Island (독립 UI 영역)
+
+Islands are independent UI regions within a layout (e.g., cells in a Bento Grid):
+
+```tsx
+<Layout variant="grid" template="sidebar-content">
+  <Layout.Island area="sidebar" variant="scroll">
+    <Navigation />
+  </Layout.Island>
+  <Layout.Island area="content" variant="flex">
+    <Main />
+  </Layout.Island>
+</Layout>
+```
+
+**Backward compatibility**: `Layer` is aliased to `Layout` for compatibility.
 
 ### Theme System
 
@@ -90,24 +149,60 @@ All design values are centralized in `src/design-system/tokens.ts`:
 
 ### Component Patterns
 
-#### Layer Component
+#### Layout Component
 
 ```tsx
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
 
-// ✅ Correct usage
-<Layer level={2} className="p-4">
+// ✅ Basic usage (surface variant)
+<Layout depth={2} rounded="lg" className="p-4">
   <h2>Panel</h2>
-  <Layer level={1} rounded className="p-2">
+  <Layout depth={1} rounded className="p-2">
     <input />
-  </Layer>
-</Layer>
+  </Layout>
+</Layout>
 
-// ❌ Wrong - level reversal
-<Layer level={1}>
-  <Layer level={2} /> {/* Light inside dark */}
-</Layer>
+// ✅ Grid layout with Islands
+<Layout variant="grid" template="sidebar-content" gap={4}>
+  <Layout.Island area="sidebar" variant="scroll">
+    <FileTree />
+  </Layout.Island>
+  <Layout.Island area="content" variant="flex">
+    <Editor />
+  </Layout.Island>
+</Layout>
+
+// ✅ Bento Grid (Dashboard)
+<Layout variant="grid" template="dashboard" gap={3}>
+  <Layout.Island className="col-span-2 row-span-2">
+    <Chart />
+  </Layout.Island>
+  <Layout.Island>
+    <StatsCard />
+  </Layout.Island>
+</Layout>
+
+// ✅ Stack (scrollable list)
+<Layout variant="stack" direction="vertical" depth={1} className="h-96">
+  {items.map(item => (
+    <Layout key={item.id} depth={2} clickable>
+      {item.title}
+    </Layout>
+  ))}
+</Layout>
+
+// ❌ Wrong - depth reversal
+<Layout depth={1}>
+  <Layout depth={2} /> {/* Light inside dark - NEVER */}
+</Layout>
 ```
+
+**Key Props**:
+- `depth`: Visual hierarchy (0-6)
+- `variant`: Layout type (surface | grid | flex | stack | scroll)
+- `template`: Predefined grid template (ide | sidebar-content | dashboard | split | custom)
+- `resizable`: Enable user resizing
+- `gap`: Spacing between children (0, 1, 2, 3, 4, 6, 8, 12, 16, 24)
 
 #### Button Component
 
@@ -235,7 +330,15 @@ Before implementing any UI:
 
 ## Key Documentation
 
+**Start Here (New Approach)**:
+- **[docs/PURPOSE_BASED_DESIGN.md](docs/PURPOSE_BASED_DESIGN.md)** ⭐ Why-based design system (NEW)
+- **[docs/PROMINENCE_SYSTEM.md](docs/PROMINENCE_SYSTEM.md)** - Prominence system detailed guide
+
+**Core System**:
+- **[docs/LAYOUT_SYSTEM.md](docs/LAYOUT_SYSTEM.md)** - Complete Layout system guide (with interactive demos)
 - **[docs/DESIGN_PRINCIPLES.md](docs/DESIGN_PRINCIPLES.md)** - Complete design system rules (15 parts)
+
+**Reference**:
 - **[docs/DESIGN_SYSTEM_SUMMARY.md](docs/DESIGN_SYSTEM_SUMMARY.md)** - Quick reference
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Before/After code examples
 - **[README.md](README.md)** - Project overview and component API

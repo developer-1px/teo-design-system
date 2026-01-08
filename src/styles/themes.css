@@ -157,6 +157,28 @@
 
   /* Spacing Unit (Density) */
   --spacing-unit: 1;
+
+  /* ============================================================================
+     LAYOUT GRID TEMPLATES - 사전 정의된 레이아웃 패턴
+     ============================================================================
+     용도: Layout variant="grid" template="xxx" 사용 시
+  ============================================================================ */
+
+  /* IDE 레이아웃: Nav | Sidebar | Editor | Terminal */
+  --grid-template-ide:
+    "nav sidebar editor rightbar rightnav" auto
+    "nav sidebar editor rightbar rightnav" 1fr
+    "nav terminal terminal terminal rightnav" 200px
+    / 60px 250px 1fr 300px 60px;
+
+  /* Sidebar-Content 레이아웃 */
+  --grid-template-sidebar-content: "sidebar content" / 250px 1fr;
+
+  /* Split 레이아웃 (2분할) */
+  --grid-template-split: "left right" / 1fr 1fr;
+
+  /* Dashboard 레이아웃 (Bento Grid) */
+  /* 참고: Bento는 보통 auto-fit/auto-fill로 동적 생성하므로 별도 정의 불필요 */
 }
 
 /* ============================================================================

@@ -1,44 +1,59 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 
+/**
+ * Button - 디자인 시스템 전용 버튼 컴포넌트
+ *
+ * 핵심 원칙:
+ * 1. 모든 클릭 가능한 요소는 이 컴포넌트만 사용
+ * 2. <button> 태그 직접 사용 금지
+ * 3. 정해진 variant만 사용 가능
+ * 4. 인라인 요소에 shadow 사용 금지
+ * 5. border + background 동시 사용 금지 (outline 제외)
+ */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * variant - 버튼 스타일
+   * - accent: Primary action (화면당 최대 1-2개)
+   * - ghost: Secondary action (배경 없음)
+   * - outline: Dangerous action (border만)
+   */
   variant?: 'accent' | 'ghost' | 'outline';
+
+  /**
+   * size - 버튼 크기
+   */
   size?: 'sm' | 'md' | 'lg';
-  layer?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'ghost', size = 'md', layer = 4, ...props }, ref) => {
+  ({ className, variant = 'ghost', size = 'md', children, ...props }, ref) => {
     return (
       <button
         ref={ref}
         className={cn(
-          // Base styles - dense with rounded corners
-          'inline-flex items-center justify-center rounded-md font-medium',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
+          // Base styles
+          'inline-flex items-center justify-center gap-2 rounded-md font-medium',
+          'transition-colors',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
           'disabled:pointer-events-none disabled:opacity-50',
 
-          // Variants - using layer system
-          // PRINCIPLE: 인라인 요소(버튼)에는 그림자 사용 금지
-          // PRINCIPLE: border + background 동시 사용 금지 (outline 제외)
+          // Variants
           {
-            // Accent variant - primary action, 화면당 1개만
-            'bg-accent text-text-inverse hover:bg-accent-hover active:bg-accent-active':
+            // Accent - Primary CTA (화면당 1개만!)
+            'bg-accent text-white hover:bg-accent/90 active:bg-accent/80':
               variant === 'accent',
 
-            // Ghost variant - secondary action, 배경 없음
-            'bg-transparent text-text-primary':
+            // Ghost - Secondary action
+            'bg-transparent text-text hover:bg-black/5 active:bg-black/10':
               variant === 'ghost',
 
-            // Outline variant - dangerous action, border만 사용
-            'border border-border bg-transparent text-text-primary':
+            // Outline - Dangerous action
+            'border border-border bg-transparent text-text hover:bg-black/5 active:bg-black/10':
               variant === 'outline',
           },
 
-          // Layer-specific hover for ghost and outline variants
-          variant !== 'accent' && `layer-${layer}-interactive`,
-
-          // Sizes - dense spacing
+          // Sizes
           {
             'h-7 px-3 text-xs': size === 'sm',
             'h-9 px-4 text-sm': size === 'md',
@@ -48,7 +63,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className
         )}
         {...props}
-      />
+      >
+        {children}
+      </button>
     );
   }
 );

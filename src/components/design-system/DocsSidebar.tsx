@@ -4,7 +4,8 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
+import { Button } from '@/components/ui/Button';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { DocCategory, DocItem } from '@/lib/docs-loader';
@@ -38,14 +39,16 @@ export const DocsSidebar = ({ categories, activeDocId, onDocSelect }: DocsSideba
   };
 
   return (
-    <Layer level={2} className="flex w-64 flex-col overflow-hidden">
+    <Layout depth={2} className="flex w-64 flex-col overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <h2 className="text-sm font-semibold text-text-primary">문서</h2>
-        <span className="text-xs text-text-tertiary">
-          {categories.reduce((sum, cat) => sum + cat.docs.length, 0)}개
-        </span>
-      </div>
+      <Layout depth={1} rounded={false} className="px-4 py-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-text-primary">문서</h2>
+          <span className="text-xs text-text-tertiary">
+            {categories.reduce((sum, cat) => sum + cat.docs.length, 0)}개
+          </span>
+        </div>
+      </Layout>
 
       {/* Categories & Docs */}
       <div className="flex-1 overflow-y-auto py-2">
@@ -56,13 +59,10 @@ export const DocsSidebar = ({ categories, activeDocId, onDocSelect }: DocsSideba
           return (
             <div key={category.id} className="mb-1">
               {/* Category Header */}
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => toggleCategory(category.id)}
-                className={cn(
-                  'w-full flex items-center gap-2 px-3 py-2 text-left',
-                  'layer-2-interactive rounded-md mx-1',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent'
-                )}
+                className="w-full justify-start gap-2 px-3 py-2 mx-1 h-auto"
               >
                 {/* Chevron */}
                 <span className="flex-shrink-0 text-text-tertiary">
@@ -87,7 +87,7 @@ export const DocsSidebar = ({ categories, activeDocId, onDocSelect }: DocsSideba
                 <span className="flex-shrink-0 text-xs text-text-tertiary">
                   {category.docs.length}
                 </span>
-              </button>
+              </Button>
 
               {/* Document List */}
               {isExpanded && (
@@ -97,16 +97,14 @@ export const DocsSidebar = ({ categories, activeDocId, onDocSelect }: DocsSideba
                     const isActive = activeDocId === doc.id;
 
                     return (
-                      <button
+                      <Button
                         key={doc.id}
+                        variant="ghost"
                         onClick={() => onDocSelect(doc.id)}
                         className={cn(
-                          'w-full flex items-center gap-2 px-3 py-2 text-left rounded-md',
-                          'layer-2-interactive',
-                          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                          'w-full justify-start gap-2 px-3 py-2 h-auto',
                           {
-                            'bg-accent/10 text-accent': isActive,
-                            'text-text-secondary': !isActive,
+                            'bg-accent/10 text-accent hover:bg-accent/10': isActive,
                           }
                         )}
                       >
@@ -137,7 +135,7 @@ export const DocsSidebar = ({ categories, activeDocId, onDocSelect }: DocsSideba
                             </div>
                           )}
                         </div>
-                      </button>
+                      </Button>
                     );
                   })}
                 </div>
@@ -146,6 +144,6 @@ export const DocsSidebar = ({ categories, activeDocId, onDocSelect }: DocsSideba
           );
         })}
       </div>
-    </Layer>
+    </Layout>
   );
 };

@@ -3,7 +3,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
 import { IconButton } from '@/components/ui/IconButton';
 import { RightBar } from '@/components/ui/RightBar';
 import { RightNav } from '@/components/workspace/RightNav';
@@ -78,11 +78,11 @@ export const IDEPage = () => {
   const activeFile = openFiles.find((f) => f.path === activeFilePath);
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <Layout depth={0} className="flex h-full w-full flex-col">
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left Side - Workspace Navigation */}
-        <Layer level={2} rounded="md" className="flex flex-col bg-layer-2-warm">
+        <Layout depth={2} className="flex flex-col">
           <div className="flex-1">
             <WorkspaceNav onViewChange={setCurrentView} />
           </div>
@@ -91,7 +91,6 @@ export const IDEPage = () => {
           <div className="p-1.5">
             <IconButton
               size="md"
-              layer={2}
               active={showBottomPanel}
               onClick={() => setShowBottomPanel(!showBottomPanel)}
               title="Terminal"
@@ -99,28 +98,28 @@ export const IDEPage = () => {
               <Terminal size={20} />
             </IconButton>
           </div>
-        </Layer>
+        </Layout>
 
-        {/* Right Content Area */}
-        <div className="flex flex-1 overflow-hidden flex-col">
-          <div className="flex flex-1 overflow-hidden">
-            {/* File Tree Sidebar */}
-            {currentView === 'files' && (
-              <Layer level={2} rounded="md" className="flex w-64 flex-col overflow-hidden bg-layer-2-cool boundary-shadow-left">
-                <div className="flex items-center justify-between px-3 py-1.5">
-                  <h2 className="text-xs font-semibold uppercase tracking-wide text-text-tertiary">
-                    Explorer
-                  </h2>
-                </div>
-                <div className="flex-1 overflow-y-auto px-2">
-                  <FileTree data={fileTreeData} onFileClick={handleFileClick} />
-                </div>
-              </Layer>
-            )}
+        {/* File Tree Sidebar */}
+        {currentView === 'files' && (
+          <Layout depth={2} className="flex w-64 flex-col overflow-hidden">
+            <Layout depth={1} rounded={false} className="px-3 py-2">
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-text-tertiary">
+                Explorer
+              </h2>
+            </Layout>
+            <div className="flex-1 overflow-y-auto px-2">
+              <FileTree data={fileTreeData} onFileClick={handleFileClick} />
+            </div>
+          </Layout>
+        )}
 
-            {/* Editor Area */}
+        {/* Editor Area with Bottom Panel */}
+        <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
+          {/* Editor */}
+          <div className="flex-1 flex flex-col min-h-0">
             {currentView === 'files' && (
-              <div className="flex flex-1 flex-col min-w-0">
+              <>
                 {openFiles.length > 0 && <EditorTabs />}
 
                 {activeFile ? (
@@ -136,34 +135,18 @@ export const IDEPage = () => {
                     />
                   )
                 ) : (
-                  <Layer level={3} rounded="lg" className="flex-1 flex items-center justify-center">
+                  <Layout depth={3} className="flex-1 flex items-center justify-center">
                     <div className="text-center text-text-tertiary">
                       <p className="text-sm">No file open</p>
                       <p className="text-xs mt-1">
                         Select a file from the explorer to start editing
                       </p>
                     </div>
-                  </Layer>
+                  </Layout>
                 )}
-              </div>
+              </>
             )}
-
-            {/* Right Sidebar */}
-            <RightBar
-              view={rightPanelView}
-              projectName="ide-ui-kit"
-              currentBranch="main"
-              onOpenSettings={() => setShowSettingsModal(true)}
-            />
           </div>
-
-          {/* Right Navigation */}
-          <Layer level={2} rounded="md" className="flex flex-col bg-layer-2-warm">
-            <RightNav
-              onViewChange={setRightPanelView}
-              onClose={() => setRightPanelView(null)}
-            />
-          </Layer>
 
           {/* Bottom Panel - Terminal */}
           <BottomPanel
@@ -172,6 +155,22 @@ export const IDEPage = () => {
             height={200}
           />
         </div>
+
+        {/* Right Sidebar */}
+        <RightBar
+          view={rightPanelView}
+          projectName="ide-ui-kit"
+          currentBranch="main"
+          onOpenSettings={() => setShowSettingsModal(true)}
+        />
+
+        {/* Right Navigation */}
+        <Layout depth={2} className="flex flex-col">
+          <RightNav
+            onViewChange={setRightPanelView}
+            onClose={() => setRightPanelView(null)}
+          />
+        </Layout>
       </div>
 
       {/* Modals */}
@@ -183,6 +182,6 @@ export const IDEPage = () => {
         isOpen={showSettingsModal}
         onClose={() => setShowSettingsModal(false)}
       />
-    </div>
+    </Layout>
   );
 };

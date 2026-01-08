@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
+import { Button } from '@/components/ui/Button';
 import { Search, File, Folder, Command, Hash } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNavigableCursor, useModalShortcut, KeyboardContext, useKeyboardContext } from '@/lib/keyboard';
 
 interface SearchResult {
   id: string;
@@ -26,18 +28,11 @@ const mockResults: SearchResult[] = [
 
 export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   const [query, setQuery] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [results, setResults] = useState<SearchResult[]>(mockResults);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { enableContext, disableContext } = useKeyboardContext();
 
-  useEffect(() => {
-    if (isOpen) {
-      inputRef.current?.focus();
-      setQuery('');
-      setSelectedIndex(0);
-    }
-  }, [isOpen]);
-
+  // 검색 결과 필터링
   useEffect(() => {
     if (query) {
       const filtered = mockResults.filter(
@@ -46,41 +41,38 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
           item.subtitle?.toLowerCase().includes(query.toLowerCase())
       );
       setResults(filtered);
-      setSelectedIndex(0);
     } else {
       setResults(mockResults);
     }
   }, [query]);
 
+  // 키보드 네비게이션 (useNavigableCursor 사용)
+  const { cursorIndex, getItemProps, selectCurrent } = useNavigableCursor({
+    type: 'list',
+    items: results,
+    onSelect: (result) => {
+      console.log('Selected:', result);
+      onClose();
+    },
+    enabled: isOpen,
+  });
+
+  // 모달 단축키 (ESC로 닫기)
+  useModalShortcut('escape', onClose, {
+    enabled: isOpen,
+    description: 'Close search modal',
+  });
+
+  // 모달 열림/닫힘에 따라 컨텍스트 관리
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isOpen) return;
-
-      switch (e.key) {
-        case 'Escape':
-          e.preventDefault();
-          onClose();
-          break;
-        case 'ArrowDown':
-          e.preventDefault();
-          setSelectedIndex((prev) => Math.min(prev + 1, results.length - 1));
-          break;
-        case 'ArrowUp':
-          e.preventDefault();
-          setSelectedIndex((prev) => Math.max(prev - 1, 0));
-          break;
-        case 'Enter':
-          e.preventDefault();
-          if (results[selectedIndex]) {
-            handleSelect(results[selectedIndex]);
-          }
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, results, selectedIndex]);
+    if (isOpen) {
+      enableContext(KeyboardContext.SEARCH_OPEN);
+      inputRef.current?.focus();
+      setQuery('');
+    } else {
+      disableContext(KeyboardContext.SEARCH_OPEN);
+    }
+  }, [isOpen, enableContext, disableContext]);
 
   const handleSelect = (result: SearchResult) => {
     console.log('Selected:', result);
@@ -93,9 +85,9 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
       case 'file':
         return <File {...iconProps} />;
       case 'folder':
-        return <Folder {...iconProps} className="text-accent" />;
+        return <Folder {...iconProps} />;
       case 'command':
-        return <Command {...iconProps} className="text-accent" />;
+        return <Command {...iconProps} />;
       case 'symbol':
         return <Hash {...iconProps} />;
     }
@@ -111,26 +103,27 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         onClick={onClose}
       />
 
-      <Layer
-        level={6}
-        rounded="lg"
+      <Layout
+        depth={6}
         className="relative w-full max-w-2xl overflow-hidden"
       >
           {/* Search Input */}
-          <div className="flex items-center gap-3 px-4 py-3 bg-layer-1">
-            <Search size={20} className="text-text-tertiary" />
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search files, commands, symbols..."
-              className="flex-1 bg-transparent text-text placeholder:text-text-tertiary focus:outline-none text-sm"
-            />
-            <kbd className="px-2 py-0.5 text-xs bg-layer-1 text-text-tertiary rounded">
-              ESC
-            </kbd>
-          </div>
+          <Layout depth={1} rounded={false} className="px-4 py-3">
+            <div className="flex items-center gap-3">
+              <Search size={20} className="text-text-tertiary" />
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search files, commands, symbols..."
+                className="flex-1 bg-transparent text-text placeholder:text-text-tertiary focus:outline-none text-sm"
+              />
+              <kbd className="px-2 py-0.5 text-xs bg-layer-0 text-text-tertiary rounded">
+                ESC
+              </kbd>
+            </div>
+          </Layout>
 
           {/* Results */}
           <div className="max-h-[400px] overflow-y-auto">
@@ -141,13 +134,14 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
             ) : (
               <div className="py-2">
                 {results.map((result, index) => (
-                  <button
+                  <Button
                     key={result.id}
-                    onClick={() => handleSelect(result)}
+                    variant="ghost"
+                    {...getItemProps(index)}
                     className={cn(
-                      'w-full flex items-center gap-3 px-4 py-2.5 text-left layer-6-interactive',
+                      'w-full justify-start gap-3 px-4 py-2.5 h-auto',
                       {
-                        'bg-accent/10': index === selectedIndex,
+                        'bg-accent/10 hover:bg-accent/10': index === cursorIndex,
                       }
                     )}
                   >
@@ -162,35 +156,37 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                         </div>
                       )}
                     </div>
-                    {index === selectedIndex && (
-                      <kbd className="px-2 py-0.5 text-xs bg-layer-1 text-text-tertiary rounded">
+                    {index === cursorIndex && (
+                      <kbd className="px-2 py-0.5 text-xs bg-layer-0 text-text-tertiary rounded">
                         ↵
                       </kbd>
                     )}
-                  </button>
+                  </Button>
                 ))}
               </div>
             )}
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between px-4 py-2 bg-layer-1">
-            <div className="flex items-center gap-4 text-xs text-text-tertiary">
-              <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-layer-2 rounded">↑</kbd>
-                <kbd className="px-1.5 py-0.5 bg-layer-2 rounded">↓</kbd>
-                navigate
-              </span>
-              <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-layer-2 rounded">↵</kbd>
-                select
-              </span>
+          <Layout depth={1} rounded={false} className="px-4 py-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4 text-xs text-text-tertiary">
+                <span className="flex items-center gap-1">
+                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↑</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↓</kbd>
+                  navigate
+                </span>
+                <span className="flex items-center gap-1">
+                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↵</kbd>
+                  select
+                </span>
+              </div>
+              <div className="text-xs text-text-tertiary">
+                {results.length} results
+              </div>
             </div>
-            <div className="text-xs text-text-tertiary">
-              {results.length} results
-            </div>
-          </div>
-        </Layer>
+          </Layout>
+        </Layout>
     </div>
   );
 };

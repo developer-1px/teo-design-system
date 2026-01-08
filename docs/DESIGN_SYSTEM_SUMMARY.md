@@ -4,29 +4,82 @@
 
 ## 📚 생성된 문서
 
-1. **[DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md)** (주요 문서)
+### 핵심 문서
+
+1. **[PURPOSE_BASED_DESIGN.md](PURPOSE_BASED_DESIGN.md)** ⭐ 새로운 접근법
+   - Why 기반 디자인 시스템
+   - Purpose (목적) + Prominence (주목도) 시스템
+   - 16개 토큰으로 디자인 완성
+   - 시멘틱/접근성 자동화
+
+2. **[PROMINENCE_SYSTEM.md](PROMINENCE_SYSTEM.md)**
+   - 주목도 시스템 상세 가이드
+   - 수학적 공식 (투명도, 크기, 여백)
+   - Depth × Prominence 조합
+   - Content 컴포넌트 사용법
+
+3. **[DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md)**
    - 15개 파트로 구성된 완전한 디자인 원칙
    - AI와 개발자가 일관된 판단을 내릴 수 있는 규칙 체계
    - 체크리스트, 린트 규칙, 예제 포함
 
-2. **[README.md](../README.md)**
+### 참고 문서
+
+4. **[LAYOUT_SYSTEM.md](LAYOUT_SYSTEM.md)**
+   - Layout 시스템 완벽 가이드
+   - Grid, Flex, Stack, Scroll 패턴
+   - Depth 기반 계층 구조
+
+5. **[README.md](../README.md)**
    - 프로젝트 개요 및 Quick Start
    - 디자인 시스템 사용법 요약
    - Component API 문서
 
-3. **[EXAMPLES.md](EXAMPLES.md)**
+6. **[EXAMPLES.md](EXAMPLES.md)**
    - 실전 코드 예제 모음
    - Before/After 비교
    - 7가지 주요 패턴 예제
 
-4. **[src/design-system/tokens.ts](../src/design-system/tokens.ts)**
+7. **[src/design-system/tokens.ts](../src/design-system/tokens.ts)**
    - 모든 디자인 값의 단일 진실 공급원
    - TypeScript 타입 포함
    - Validation 헬퍼 함수
 
 ---
 
-## 🎯 핵심 원칙 3가지
+## 🎯 핵심 철학
+
+### Purpose-Based Design (Why 기반)
+
+**기존 방식:**
+```tsx
+// ❌ How를 일일이 결정
+<button className="bg-blue-500 px-4 py-2 rounded shadow-md font-semibold">
+  Save
+</button>
+```
+
+**새로운 방식:**
+```tsx
+// ✅ Why만 설명
+<Group purpose="action" prominence={1}>
+  <Item>Save</Item>
+</Group>
+```
+
+개발자가 하는 일:
+1. **그룹화**: 이 영역의 역할은? → `purpose`
+2. **주목도**: 얼마나 중요한가? → `prominence`
+
+시스템이 하는 일:
+- 적절한 UI 패턴 제안
+- 토큰 자동 적용
+- 시멘틱 HTML 생성
+- 키보드 접근성 설정
+
+---
+
+## 🎯 핵심 원칙
 
 ### 1. 약한 수단부터 사용
 
@@ -59,6 +112,44 @@
 ---
 
 ## 🏗️ 주요 시스템
+
+### Purpose System (목적 기반)
+
+**8가지 Purpose:**
+
+| Purpose | 의미 | 예시 |
+|---------|------|------|
+| `navigation` | 이동 | 메뉴, 탭, 브레드크럼 |
+| `action` | 실행 | CTA, 버튼 그룹, 툴바 |
+| `form` | 입력 | 입력 필드, 검색바 |
+| `content` | 정보 전달 | 텍스트, 아티클 |
+| `list` | 항목 나열 | 카드 리스트, 테이블 |
+| `media` | 시각 콘텐츠 | 이미지, 비디오 |
+| `status` | 상태 표시 | 알림, 뱃지, 프로그레스 |
+| `info` | 부가 정보 | 힌트, 툴팁, 캡션 |
+
+**자동화:**
+- Purpose + Prominence → 적절한 UI 패턴 제안
+- 시멘틱 HTML 자동 생성
+- 키보드 접근성 자동 설정
+
+---
+
+### Prominence System (주목도)
+
+**3단계:**
+
+| 레벨 | 의미 | 색상 | 크기 | Weight |
+|------|------|------|------|--------|
+| **1** | Primary | `foreground-1` | `text-lg~xl` | `600` |
+| **2** | Secondary | `foreground-1` | `text-md` | `400` |
+| **3** | Tertiary | `foreground-2~3` | `text-sm` | `400` |
+
+**상대적 주목도:**
+- 자식의 prominence는 부모 맥락에서 해석됨
+- `Section(p:1) > Group(p:1)` > `Section(p:2) > Group(p:1)`
+
+---
 
 ### Layer System (6 levels)
 
@@ -137,24 +228,51 @@
 
 ### Typography System
 
-**Font Weight:**
+**Font Weight (2단계만):**
 ```
-400 (regular), 500 (medium), 600 (semibold)
-금지: 300 이하, 700 이상
+400 (normal)  // 기본
+600 (bold)    // 강조
 ```
 
-**Font Size:**
+**Font Size (4단계만):**
 ```
-12px → text-xs   // 라벨, 캡션
-14px → text-sm   // 본문
-16px → text-base // 강조 본문
-20px → text-xl   // 제목
-24px → text-2xl  // 페이지 제목
+text-sm:  0.875rem  // 캡션, 메타 정보
+text-md:  1rem      // 본문
+text-lg:  1.25rem   // 소제목
+text-xl:  1.5rem    // 제목
 ```
 
 **제한:**
 - 한 화면에 3-4가지까지만 사용
-- 같은 위계에서 다른 weight 금지
+- prominence가 weight과 size를 자동 결정
+
+---
+
+### Minimal Token System
+
+**총 16개 토큰:**
+
+```typescript
+// Color (6개)
+foreground-1, foreground-2, foreground-3
+background, surface
+accent
+
+// Typography (6개)
+text-sm, text-md, text-lg, text-xl
+weight-normal, weight-bold
+
+// Spacing (4개)
+space-xs: 4px
+space-sm: 8px
+space-md: 16px
+space-lg: 32px
+```
+
+**디자인 결정 자동화:**
+- prominence가 색상, 크기, weight 결정
+- purpose가 UI 패턴 결정
+- 개발자는 토큰을 직접 선택하지 않음
 
 ---
 

@@ -5,6 +5,7 @@ import { IDEPage } from '@/components/pages/IDEPage';
 import { PPTPage } from '@/components/pages/PPTPage';
 import { JSONPage } from '@/components/pages/JSONPage';
 import { DesignPage } from '@/components/pages/DesignPage';
+import { DSLDemoPage } from '@/components/pages/DSLDemoPage';
 import { initializeTheme } from '@/lib/theme';
 import { useApp } from '@/lib/app-context';
 
@@ -29,6 +30,8 @@ function App() {
         return <JSONPage />;
       case 'calendar':
         return <IDEPage />;
+      case 'dsl':
+        return <DSLDemoPage />;
       default:
         return <IDEPage />;
     }

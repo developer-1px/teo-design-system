@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
 import { DocsSidebar } from '@/components/design-system/DocsSidebar';
 import { DocsViewer } from '@/components/design-system/DocsViewer';
 import {
@@ -48,17 +48,17 @@ export const DesignPage = () => {
 
   if (isLoading) {
     return (
-      <Layer level={0} className="flex h-full w-full items-center justify-center">
+      <Layout depth={0} className="flex h-full w-full items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-sm text-text-secondary">문서를 불러오는 중...</p>
         </div>
-      </Layer>
+      </Layout>
     );
   }
 
   return (
-    <Layer level={0} className="flex h-full w-full">
+    <Layout depth={0} className="flex h-full w-full">
       {/* Sidebar */}
       <DocsSidebar
         categories={categories}
@@ -68,6 +68,6 @@ export const DesignPage = () => {
 
       {/* Main Content */}
       <DocsViewer doc={activeDoc || null} />
-    </Layer>
+    </Layout>
   );
 };

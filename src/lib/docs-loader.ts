@@ -21,7 +21,6 @@ export interface DocItem {
   filePath: string;
   icon: LucideIcon;
   category: string;
-  order: number;
 }
 
 export interface DocCategory {
@@ -32,69 +31,36 @@ export interface DocCategory {
 }
 
 /**
- * 파일명에서 카테고리 추론
+ * 파일 경로에서 카테고리 추출 (폴더 구조 기반)
+ * /docs/category/file.md → 'category'
+ * /docs/file.md → 'root'
  */
-const getCategoryFromFilename = (filename: string): string => {
-  const lower = filename.toLowerCase();
-
-  if (
-    lower.includes('design_principles') ||
-    lower.includes('design_system') ||
-    lower.includes('design_decisions') ||
-    lower.includes('layer_system')
-  ) {
-    return 'design-system';
+const getCategoryFromPath = (path: string): string => {
+  const parts = path.split('/').filter(Boolean);
+  // /docs/category/file.md -> ['docs', 'category', 'file.md']
+  if (parts.length > 2) {
+    return parts[1]; // 'category'
   }
-
-  if (lower.includes('example') || lower.includes('naming') || lower.includes('convention')) {
-    return 'examples';
-  }
-
-  if (lower.includes('violation') || lower.includes('report') || lower.includes('fix')) {
-    return 'reports';
-  }
-
-  return 'other';
+  return 'root'; // 루트 폴더 파일
 };
 
 /**
- * 파일명에서 아이콘 추론
+ * 카테고리 ID에서 아이콘 추출 (폴더명 기반)
  */
-const getIconFromFilename = (filename: string): LucideIcon => {
-  const lower = filename.toLowerCase();
-
-  if (lower.includes('principles')) return BookOpen;
-  if (lower.includes('layer')) return Layers;
-  if (lower.includes('example')) return Code;
-  if (lower.includes('violation')) return AlertCircle;
-  if (lower.includes('fix') || lower.includes('summary')) return CheckCircle;
-  if (lower.includes('decision')) return FileText;
-  if (lower.includes('design_system')) return Palette;
-
-  return FileText;
-};
-
-/**
- * 파일명에서 정렬 순서 추론
- */
-const getOrderFromFilename = (filename: string): number => {
-  const lower = filename.toLowerCase();
-
-  // 디자인 시스템 카테고리
-  if (lower.includes('design_principles')) return 1;
-  if (lower.includes('7_layer') || lower.includes('layer_system')) return 2;
-  if (lower.includes('design_system_summary')) return 3;
-  if (lower.includes('design_decisions')) return 4;
-
-  // 예제 카테고리
-  if (lower.includes('examples')) return 1;
-  if (lower.includes('naming')) return 2;
-
-  // 리포트 카테고리
-  if (lower.includes('violations_report')) return 1;
-  if (lower.includes('fix_summary')) return 2;
-
-  return 99;
+const getIconFromCategory = (category: string): LucideIcon => {
+  switch (category) {
+    case 'design-system':
+    case 'design':
+      return Palette;
+    case 'examples':
+      return Code;
+    case 'reports':
+      return AlertCircle;
+    case 'guides':
+      return BookOpen;
+    default:
+      return FileText;
+  }
 };
 
 /**
@@ -134,28 +100,19 @@ const extractMetadataFromContent = (
 };
 
 /**
- * 카테고리 정보
+ * 카테고리 ID에서 표시 이름 생성
  */
-const categoryInfo: Record<
-  string,
-  { title: string; icon: LucideIcon }
-> = {
-  'design-system': {
-    title: '디자인 시스템',
-    icon: Palette,
-  },
-  examples: {
-    title: '예제 & 가이드',
-    icon: Code,
-  },
-  reports: {
-    title: '검토 리포트',
-    icon: AlertCircle,
-  },
-  other: {
-    title: '기타',
-    icon: FileText,
-  },
+const getCategoryTitle = (categoryId: string): string => {
+  // 루트 폴더는 "전체 문서"
+  if (categoryId === 'root') {
+    return '전체 문서';
+  }
+
+  // 폴더명을 그대로 사용 (대문자 변환)
+  return categoryId
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 };
 
 /**
@@ -164,34 +121,40 @@ const categoryInfo: Record<
 export const loadDocsFromFiles = async (): Promise<DocCategory[]> => {
   const docs: DocItem[] = [];
 
-  // Vite의 import.meta.glob으로 docs 폴더의 모든 .md 파일 가져오기
-  const mdFiles = import.meta.glob('../../docs/*.md', {
+  // Vite의 import.meta.glob으로 docs 폴더의 모든 .md 파일 가져오기 (재귀적)
+  // file-loader.ts와 동일한 방식 사용
+  const mdFiles = import.meta.glob('/docs/**/*.md', {
     query: '?raw',
     import: 'default',
-    eager: true
   });
 
-  for (const [path, content] of Object.entries(mdFiles)) {
+  for (const [path, loader] of Object.entries(mdFiles)) {
     try {
+      // 동적으로 파일 로드
+      const content = await loader() as string;
+
+      // 타입 체크: content가 문자열인지 확인
+      if (typeof content !== 'string') {
+        console.error(`Failed to load ${path}: content is not a string`, typeof content, content);
+        continue;
+      }
+
       const filename = path.split('/').pop() || '';
       const id = filename.replace('.md', '').toLowerCase();
 
-      // 파일명에서 메타데이터 추론
-      const category = getCategoryFromFilename(filename);
-      const icon = getIconFromFilename(filename);
-      const order = getOrderFromFilename(filename);
+      // 폴더 경로에서 카테고리 추출 (하드코딩 없음)
+      const category = getCategoryFromPath(path);
 
       // 파일 내용에서 제목과 설명 추출
-      const { title, description } = extractMetadataFromContent(content as string);
+      const { title, description } = extractMetadataFromContent(content);
 
       docs.push({
         id,
         title: title || filename.replace('.md', '').replace(/_/g, ' '),
         description: description || '문서 설명',
-        filePath: `/docs/${filename}`,
-        icon,
+        filePath: path, // 실제 파일 경로 유지
+        icon: FileText, // 모든 문서에 동일한 아이콘
         category,
-        order,
       });
     } catch (error) {
       console.error(`Failed to load ${path}:`, error);
@@ -208,29 +171,26 @@ export const loadDocsFromFiles = async (): Promise<DocCategory[]> => {
     categoriesMap.get(doc.category)!.push(doc);
   });
 
-  // 카테고리 배열 생성
+  // 카테고리 배열 생성 (폴더 구조 기반, 하드코딩 없음)
   const categories: DocCategory[] = [];
 
   for (const [categoryId, categoryDocs] of categoriesMap.entries()) {
-    const info = categoryInfo[categoryId] || categoryInfo.other;
-
-    // 문서를 order 순으로 정렬
-    categoryDocs.sort((a, b) => a.order - b.order);
+    // 문서를 title 알파벳 순으로 정렬
+    categoryDocs.sort((a, b) => a.title.localeCompare(b.title));
 
     categories.push({
       id: categoryId,
-      title: info.title,
-      icon: info.icon,
+      title: getCategoryTitle(categoryId),
+      icon: getIconFromCategory(categoryId),
       docs: categoryDocs,
     });
   }
 
-  // 카테고리 순서: design-system, examples, reports, other
-  const categoryOrder = ['design-system', 'examples', 'reports', 'other'];
+  // 카테고리를 알파벳 순으로 정렬 (root는 맨 앞)
   categories.sort((a, b) => {
-    const aIndex = categoryOrder.indexOf(a.id);
-    const bIndex = categoryOrder.indexOf(b.id);
-    return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+    if (a.id === 'root') return -1;
+    if (b.id === 'root') return 1;
+    return a.id.localeCompare(b.id);
   });
 
   return categories;

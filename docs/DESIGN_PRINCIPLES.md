@@ -2,6 +2,49 @@
 
 > **목적**: AI와 개발자가 일관된 디자인 판단을 내릴 수 있는 실행 가능한 규칙
 
+> 💡 **새로운 접근법**: [PURPOSE_BASED_DESIGN.md](PURPOSE_BASED_DESIGN.md)에서 Why 기반 디자인 시스템을 확인하세요.
+
+---
+
+## 0. Purpose-Based Design (Why 기반)
+
+### 철학
+
+**기존 방식**: "이 버튼은 파란색이고, 16px이고, bold다" (How)
+**새로운 방식**: "이건 사용자가 행동을 취하는 영역이고, 가장 중요하다" (Why)
+
+### 개발자가 하는 일
+
+1. **그룹화**: 이 영역의 역할은? → `purpose` (navigation, action, form, content, list, media, status, info)
+2. **주목도**: 얼마나 중요한가? → `prominence` (1: Primary, 2: Secondary, 3: Tertiary)
+
+### 시스템이 하는 일
+
+- 적절한 UI 패턴 제안
+- 토큰 자동 적용 (색상, 크기, 간격)
+- 시멘틱 HTML 생성
+- 키보드 접근성 설정
+
+### 예시
+
+```tsx
+// ❌ How 기반 (기존)
+<button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold">
+  시작하기
+</button>
+
+// ✅ Why 기반 (새로운)
+<Group purpose="action" prominence={1}>
+  <Item>시작하기</Item>
+</Group>
+```
+
+**결과**: 시스템이 purpose="action" + prominence={1}을 보고 자동으로:
+- Primary Button 스타일 적용
+- `<button>` 태그 생성
+- focus 상태 설정
+- Enter/Space 키보드 동작 설정
+
 ---
 
 ## 1. 핵심 철학
