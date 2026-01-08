@@ -2,6 +2,8 @@
 
 **디자인을 못하는 사람을 위한 Design 시스템**
 
+> 💡 **새로운 접근법**: [PURPOSE_BASED_DESIGN.md](PURPOSE_BASED_DESIGN.md)에서 Purpose + Prominence 조합을 확인하세요.
+
 ## 핵심 개념
 
 ### 문제 정의
@@ -14,9 +16,30 @@
 ### 해결 방법
 
 **주목도(Prominence)를 공식화**하여:
-- 개발자는 **그룹화(Layout depth) + 주목도(prominence)**만 지정
+- 개발자는 **그룹화(Layout depth) + 주목도(prominence) + 목적(purpose)**만 지정
 - 부모 Layout의 depth에 따라 주목도별 스타일이 **자동으로 결정**됨
+- 목적(purpose)에 따라 적절한 UI 패턴이 **자동으로 제안**됨
 - 디자인 고민 없이 일관된 UI 구현 가능
+
+### Why 기반 디자인
+
+```tsx
+// ❌ How를 일일이 결정
+<div className="bg-white p-4">
+  <h2 className="text-lg font-semibold">제목</h2>
+  <button className="bg-blue-500 px-4 py-2">저장</button>
+</div>
+
+// ✅ Why만 설명
+<Section prominence={1}>
+  <Group purpose="content" prominence={1}>
+    <Item>제목</Item>
+  </Group>
+  <Group purpose="action" prominence={1}>
+    <Item>저장</Item>
+  </Group>
+</Section>
+```
 
 ## 주목도 레벨
 
@@ -339,12 +362,25 @@ function Content({ prominence }: { prominence?: ProminenceLevel }) {
 ### 개발자가 해야 할 일
 
 1. **Layout으로 그룹화** (depth 지정)
-2. **Content로 주목도 지정** (prominence 지정)
+2. **Purpose 지정** (이 영역의 역할은?)
+3. **Prominence 지정** (얼마나 중요한가?)
 
 ### 시스템이 자동으로 하는 일
 
 1. depth × prominence 조합으로 스타일 계산
-2. 텍스트 색상, 폰트 크기, 여백 등 자동 적용
-3. 일관된 시각적 계층 구조 유지
+2. purpose에 따라 적절한 UI 패턴 제안
+3. 텍스트 색상, 폰트 크기, 여백 등 자동 적용
+4. 시멘틱 HTML 생성 (navigation → `<nav>`, action → `<button>` 등)
+5. 키보드 접근성 설정 (탭 순서, focus 상태 등)
+6. 일관된 시각적 계층 구조 유지
 
-**디자인 고민 없이 prominence만 지정하면 끝!**
+**디자인 고민 없이 purpose + prominence만 지정하면 끝!**
+
+---
+
+## 다음 단계
+
+더 완전한 시스템을 원한다면:
+- **[PURPOSE_BASED_DESIGN.md](PURPOSE_BASED_DESIGN.md)** - Purpose + Prominence 조합
+- **[LAYOUT_SYSTEM.md](LAYOUT_SYSTEM.md)** - Layout 시스템 완벽 가이드
+- **[DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md)** - 전체 디자인 원칙

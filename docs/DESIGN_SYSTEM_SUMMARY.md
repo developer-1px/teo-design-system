@@ -228,24 +228,51 @@
 
 ### Typography System
 
-**Font Weight:**
+**Font Weight (2단계만):**
 ```
-400 (regular), 500 (medium), 600 (semibold)
-금지: 300 이하, 700 이상
+400 (normal)  // 기본
+600 (bold)    // 강조
 ```
 
-**Font Size:**
+**Font Size (4단계만):**
 ```
-12px → text-xs   // 라벨, 캡션
-14px → text-sm   // 본문
-16px → text-base // 강조 본문
-20px → text-xl   // 제목
-24px → text-2xl  // 페이지 제목
+text-sm:  0.875rem  // 캡션, 메타 정보
+text-md:  1rem      // 본문
+text-lg:  1.25rem   // 소제목
+text-xl:  1.5rem    // 제목
 ```
 
 **제한:**
 - 한 화면에 3-4가지까지만 사용
-- 같은 위계에서 다른 weight 금지
+- prominence가 weight과 size를 자동 결정
+
+---
+
+### Minimal Token System
+
+**총 16개 토큰:**
+
+```typescript
+// Color (6개)
+foreground-1, foreground-2, foreground-3
+background, surface
+accent
+
+// Typography (6개)
+text-sm, text-md, text-lg, text-xl
+weight-normal, weight-bold
+
+// Spacing (4개)
+space-xs: 4px
+space-sm: 8px
+space-md: 16px
+space-lg: 32px
+```
+
+**디자인 결정 자동화:**
+- prominence가 색상, 크기, weight 결정
+- purpose가 UI 패턴 결정
+- 개발자는 토큰을 직접 선택하지 않음
 
 ---
 

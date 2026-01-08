@@ -34,13 +34,45 @@ This is a **design-system-driven IDE UI Kit** built with React 19, TypeScript, a
 
 ## Design System Architecture
 
+### ⭐ NEW: Purpose-Based Design (Why-Based System)
+
+**Core Concept**: Developers specify "why" (purpose + prominence), system handles "how" (tokens, semantics, accessibility).
+
+```tsx
+// ❌ How-based (old)
+<button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold">
+  Save
+</button>
+
+// ✅ Why-based (new)
+<Group purpose="action" prominence={1}>
+  <Item>Save</Item>
+</Group>
+```
+
+**Developer's Job**:
+1. **Grouping**: What's the role? → `purpose` (navigation, action, form, content, list, media, status, info)
+2. **Prominence**: How important? → `prominence` (1: Primary, 2: Secondary, 3: Tertiary)
+
+**System's Job**:
+- Suggest appropriate UI patterns
+- Apply tokens automatically
+- Generate semantic HTML
+- Set up keyboard accessibility
+
+**See**: [docs/PURPOSE_BASED_DESIGN.md](docs/PURPOSE_BASED_DESIGN.md) for complete guide.
+
+---
+
 ### Core Philosophy
 
-The design system follows three fundamental principles:
+The design system follows these fundamental principles:
 
-1. **Use the weakest visual means first**: Background color difference → Border → Shadow → Accent color
-2. **Limit accent usage**: Maximum 1-2 accent uses per screen (primary CTA, focus states only)
-3. **Document all exceptions**: Any deviation from rules must include inline comment explaining why
+1. **Purpose-first**: Define "why it exists" before "how it looks"
+2. **Use the weakest visual means first**: Background color difference → Border → Shadow → Accent color
+3. **Limit accent usage**: Maximum 1-2 accent uses per screen (primary CTA, focus states only)
+4. **Minimal tokens**: Only 16 tokens (6 colors, 4 sizes, 2 weights, 4 spacings)
+5. **Document all exceptions**: Any deviation from rules must include inline comment explaining why
 
 ### Layout System (범용 레이아웃)
 
@@ -298,8 +330,15 @@ Before implementing any UI:
 
 ## Key Documentation
 
+**Start Here (New Approach)**:
+- **[docs/PURPOSE_BASED_DESIGN.md](docs/PURPOSE_BASED_DESIGN.md)** ⭐ Why-based design system (NEW)
+- **[docs/PROMINENCE_SYSTEM.md](docs/PROMINENCE_SYSTEM.md)** - Prominence system detailed guide
+
+**Core System**:
 - **[docs/LAYOUT_SYSTEM.md](docs/LAYOUT_SYSTEM.md)** - Complete Layout system guide (with interactive demos)
 - **[docs/DESIGN_PRINCIPLES.md](docs/DESIGN_PRINCIPLES.md)** - Complete design system rules (15 parts)
+
+**Reference**:
 - **[docs/DESIGN_SYSTEM_SUMMARY.md](docs/DESIGN_SYSTEM_SUMMARY.md)** - Quick reference
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Before/After code examples
 - **[README.md](README.md)** - Project overview and component API

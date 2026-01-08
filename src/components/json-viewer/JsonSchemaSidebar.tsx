@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
-import { Layer } from '@/components/ui/Layer';
+import { Layout } from '@/components/ui/Layout';
+import { Content, ContentGroup } from '@/components/ui/Content';
+import { Button } from '@/components/ui/Button';
 import { generateTypeScriptInterface, analyzeJsonSchema } from '@/utils/json-schema';
 import { Code, Info, ChevronRight, ChevronDown } from 'lucide-react';
 
@@ -49,72 +51,97 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
 
   if (!schema.typescript) {
     return (
-      <Layer
-        level={2}
+      <Layout
+        depth={2}
         rounded="md"
         className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden"
       >
         <div className="px-4 py-3">
-          <h3 className="text-sm font-semibold text-text-primary flex items-center gap-2">
-            <Code size={16} />
-            Schema
-          </h3>
+          <Content prominence="primary">
+            <h3 className="flex items-center gap-2">
+              <Code size={16} />
+              Schema
+            </h3>
+          </Content>
         </div>
         <div className="flex-1 flex items-center justify-center px-4 py-8">
-          <p className="text-xs text-text-tertiary text-center">
-            No data to analyze
-          </p>
+          <Content prominence="tertiary">
+            <p className="text-center">
+              No data to analyze
+            </p>
+          </Content>
         </div>
-      </Layer>
+      </Layout>
     );
   }
 
   return (
-    <Layer
-      level={2}
+    <Layout
+      depth={2}
       rounded="md"
       className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden"
     >
       {/* Header */}
-      <div className="px-3 py-2 flex items-center gap-2">
-        <Code size={14} className="text-text-tertiary" />
-        <span className="text-xs font-medium text-text-secondary">Schema</span>
+      <div className="px-3 py-2">
+        <Content prominence="secondary">
+          <div className="flex items-center gap-2">
+            <Code size={14} />
+            Schema
+          </div>
+        </Content>
       </div>
 
       <div className="flex-1 overflow-y-auto">
         {/* Schema Info Section */}
         {schema.analysis && (
           <div>
-            <button
+            <Button
+              variant="ghost"
               onClick={() => toggleSection('analysis')}
-              className="w-full px-3 py-2 flex items-center justify-between hover:bg-layer-3"
+              className="w-full justify-start px-3 py-2 h-auto rounded-none"
             >
-              <div className="flex items-center gap-1.5">
-                {expandedSections.has('analysis') ? (
-                  <ChevronDown size={12} className="text-text-tertiary" />
-                ) : (
-                  <ChevronRight size={12} className="text-text-tertiary" />
-                )}
-                <Info size={12} className="text-text-tertiary" />
-                <span className="text-xs text-text-secondary">Analysis</span>
-              </div>
-            </button>
+              <Content prominence="secondary">
+                <div className="flex items-center gap-1.5">
+                  {expandedSections.has('analysis') ? (
+                    <ChevronDown size={12} />
+                  ) : (
+                    <ChevronRight size={12} />
+                  )}
+                  <Info size={12} />
+                  Analysis
+                </div>
+              </Content>
+            </Button>
             {expandedSections.has('analysis') && (
-              <div className="px-3 pb-2 space-y-1 text-xs">
-                <div className="flex justify-between px-2 py-0.5">
-                  <span className="text-text-tertiary">Properties</span>
-                  <span className="text-text-primary font-mono">{schema.analysis.totalKeys}</span>
-                </div>
-                <div className="flex justify-between px-2 py-0.5">
-                  <span className="text-text-tertiary">Depth</span>
-                  <span className="text-text-primary font-mono">{schema.analysis.depth}</span>
-                </div>
-                <div className="flex justify-between px-2 py-0.5">
-                  <span className="text-text-tertiary">Types</span>
-                  <span className="text-text-primary font-mono text-xs">
-                    {Array.from(schema.analysis.types).join(', ')}
-                  </span>
-                </div>
+              <div className="px-3 pb-2">
+                <ContentGroup gap={4}>
+                  <div className="flex justify-between px-2">
+                    <Content prominence="tertiary">
+                      <span>Properties</span>
+                    </Content>
+                    <Content prominence="primary">
+                      <span className="font-mono">{schema.analysis.totalKeys}</span>
+                    </Content>
+                  </div>
+                  <div className="flex justify-between px-2">
+                    <Content prominence="tertiary">
+                      <span>Depth</span>
+                    </Content>
+                    <Content prominence="primary">
+                      <span className="font-mono">{schema.analysis.depth}</span>
+                    </Content>
+                  </div>
+                  <div className="flex justify-between px-2">
+                    <Content prominence="tertiary">
+                      <span>Types</span>
+                    </Content>
+                    <Content prominence="primary">
+                      <span className="font-mono">
+                        {Array.from(schema.analysis.types).join(', ')}
+                      </span>
+                    </Content>
+                  </div>
+                </ContentGroup>
               </div>
             )}
           </div>
@@ -122,29 +149,34 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
 
         {/* TypeScript Interface Section */}
         <div>
-          <button
+          <Button
+            variant="ghost"
             onClick={() => toggleSection('typescript')}
-            className="w-full px-3 py-2 flex items-center justify-between hover:bg-layer-3"
+            className="w-full justify-start px-3 py-2 h-auto rounded-none"
           >
-            <div className="flex items-center gap-1.5">
-              {expandedSections.has('typescript') ? (
-                <ChevronDown size={12} className="text-text-tertiary" />
-              ) : (
-                <ChevronRight size={12} className="text-text-tertiary" />
-              )}
-              <Code size={12} className="text-text-tertiary" />
-              <span className="text-xs text-text-secondary">Interface</span>
-            </div>
-          </button>
+            <Content prominence="secondary">
+              <div className="flex items-center gap-1.5">
+                {expandedSections.has('typescript') ? (
+                  <ChevronDown size={12} />
+                ) : (
+                  <ChevronRight size={12} />
+                )}
+                <Code size={12} />
+                Interface
+              </div>
+            </Content>
+          </Button>
           {expandedSections.has('typescript') && (
             <div className="px-3 pb-2">
-              <pre className="text-xs font-mono text-text-primary whitespace-pre overflow-x-auto bg-layer-3 p-2 rounded">
-                {schema.typescript}
-              </pre>
+              <Content prominence="primary">
+                <pre className="font-mono whitespace-pre overflow-x-auto bg-layer-3 p-2 rounded">
+                  {schema.typescript}
+                </pre>
+              </Content>
             </div>
           )}
         </div>
       </div>
-    </Layer>
+    </Layout>
   );
 };

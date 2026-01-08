@@ -6,16 +6,40 @@
 
 이 프로젝트는 **AI와 개발자가 일관된 디자인 판단**을 내릴 수 있도록 명확한 규칙 기반 디자인 시스템을 따릅니다.
 
+### ⭐ 새로운 접근법: Purpose-Based Design
+
+**Why 기반 디자인 시스템** - "어떻게"가 아닌 "왜"를 설명하면 시스템이 알아서 해결합니다.
+
+```tsx
+// ❌ How 기반 (기존)
+<button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold">
+  시작하기
+</button>
+
+// ✅ Why 기반 (새로운)
+<Group purpose="action" prominence={1}>
+  <Item>시작하기</Item>
+</Group>
+```
+
+**개발자가 하는 일**: 그룹화 + 목적 + 주목도만 지정
+**시스템이 하는 일**: UI 패턴, 토큰, 시멘틱, 접근성 자동 적용
+
 ### 핵심 문서
 
-- **[DESIGN_PRINCIPLES.md](./DESIGN_PRINCIPLES.md)** - 모든 디자인 결정의 기준이 되는 원칙 문서
-- **[src/design-system/tokens.ts](./src/design-system/tokens.ts)** - 디자인 토큰 (색상, 간격, 타이포그래피 등)
+- **[PURPOSE_BASED_DESIGN.md](./docs/PURPOSE_BASED_DESIGN.md)** ⭐ Why 기반 디자인 시스템 (새로운)
+- **[PROMINENCE_SYSTEM.md](./docs/PROMINENCE_SYSTEM.md)** - 주목도 시스템 가이드
+- **[DESIGN_PRINCIPLES.md](./docs/DESIGN_PRINCIPLES.md)** - 모든 디자인 결정의 기준
+- **[LAYOUT_SYSTEM.md](./docs/LAYOUT_SYSTEM.md)** - Layout 시스템 완벽 가이드
+- **[src/design-system/tokens.ts](./src/design-system/tokens.ts)** - 디자인 토큰 (16개만!)
 
-### 핵심 원칙 3가지
+### 핵심 원칙
 
-1. **약한 수단부터 사용**: 배경색 차이 → 선 → 그림자 → accent 색상
-2. **화면당 accent는 1-2개만**: 강조가 희소해야 의미가 있음
-3. **예외는 문서화 필수**: 규칙을 어길 때는 반드시 이유 명시
+1. **Purpose 기반**: "왜 존재하는가?"를 먼저 정의 (navigation, action, form, content 등)
+2. **Prominence로 주목도 표현**: 1(Primary), 2(Secondary), 3(Tertiary)
+3. **약한 수단부터 사용**: 배경색 차이 → 선 → 그림자 → accent 색상
+4. **화면당 accent는 1-2개만**: 강조가 희소해야 의미가 있음
+5. **미니멀 토큰**: 16개 토큰으로 모든 디자인 완성
 
 ## 🚀 Quick Start
 
