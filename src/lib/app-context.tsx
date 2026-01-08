@@ -3,9 +3,9 @@
  */
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Code, Presentation, FileText, Palette, Target, Calendar } from 'lucide-react';
+import { Code, Presentation, FileText, Palette, Target, Calendar, Layers } from 'lucide-react';
 
-export type AppType = 'ide' | 'ppt' | 'notion' | 'figma' | 'linear' | 'calendar';
+export type AppType = 'ide' | 'ppt' | 'notion' | 'figma' | 'linear' | 'calendar' | 'dsl';
 
 import type { LucideIcon } from 'lucide-react';
 
@@ -66,6 +66,14 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     description: 'Schedule & Events',
     accentColor: '#ef4444',
     colorScheme: 'red',
+  },
+  dsl: {
+    type: 'dsl',
+    name: 'DSL',
+    icon: Layers,
+    description: 'TSX Design System',
+    accentColor: '#059669',
+    colorScheme: 'emerald',
   },
 };
 
