@@ -164,7 +164,6 @@ export const IDEPage = () => {
               onClose={() => setRightPanelView(null)}
             />
           </Layer>
-        </div>
 
           {/* Bottom Panel - Terminal */}
           <BottomPanel
