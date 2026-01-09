@@ -575,22 +575,33 @@ Before implementing any UI:
 
 ## Key Documentation
 
-**IDDL Documentation** (Primary):
-- **[README.md](README.md)** ⭐ IDDL overview and philosophy
-- **[spec/iddl-spec-1.0.1.md](spec/iddl-spec-1.0.1.md)** - Official IDDL specification
-- **[apps/docs/](apps/docs/)** - Complete IDDL learning curriculum (34 documents)
-  - Level 0: Getting Started (3 docs, 30min)
-  - Level 1: Core Attributes (5 docs, 1hr)
-  - Level 2: Structure Understanding (5 docs, 1hr)
-  - Level 3: Data Interaction (5 docs, 1.5hr)
-  - Level 4: Practical Patterns (5 docs, 2hr)
-  - Level 5: Advanced Topics (5 docs, 2hr)
+**IDDL Specification** (Primary):
+- **[docs/index.md](docs/index.md)** ⭐ IDDL Specification overview
+- **[docs/2-areas/spec/iddl-spec-1.0.1.md](docs/2-areas/spec/iddl-spec-1.0.1.md)** - Official IDDL specification v1.0.1
+- **[docs/2-areas/spec/iddl-coverage-analysis.md](docs/2-areas/spec/iddl-coverage-analysis.md)** - Implementation coverage analysis
+- **[docs/2-areas/spec/minimal-renderer-guide.md](docs/2-areas/spec/minimal-renderer-guide.md)** - Minimal IDDL renderer guide
+- **[docs/2-areas/spec/renderer-improvement-roadmap.md](docs/2-areas/spec/renderer-improvement-roadmap.md)** - Renderer improvement roadmap
 
-**Design System** (Reference):
-- **[docs/PURPOSE_BASED_DESIGN.md](docs/PURPOSE_BASED_DESIGN.md)** - Why-based design system
-- **[docs/PROMINENCE_SYSTEM.md](docs/PROMINENCE_SYSTEM.md)** - Prominence system guide
-- **[docs/LAYOUT_SYSTEM.md](docs/LAYOUT_SYSTEM.md)** - Layout system guide
-- **[docs/DESIGN_PRINCIPLES.md](docs/DESIGN_PRINCIPLES.md)** - Design rules (15 parts)
+**IDDL Core Reference** (Areas - Continuously Maintained):
+- **[docs/2-areas/core/3-reference/component-role-mapping.md](docs/2-areas/core/3-reference/component-role-mapping.md)** - Component taxonomy and role mapping
+- **[docs/2-areas/core/3-reference/field-reference.md](docs/2-areas/core/3-reference/field-reference.md)** - Field component API (21 data types)
+- **[docs/2-areas/core/3-reference/page-v2-spec.md](docs/2-areas/core/3-reference/page-v2-spec.md)** - Page component API (layouts & navigation)
+
+**IDDL Patterns** (Areas - Best Practices):
+- **[docs/2-areas/patterns/01-behavior-patterns.md](docs/2-areas/patterns/01-behavior-patterns.md)** - Behavior patterns
+- **[docs/2-areas/patterns/02-accessibility-patterns.md](docs/2-areas/patterns/02-accessibility-patterns.md)** - Accessibility patterns
+- **[docs/2-areas/patterns/03-data-patterns.md](docs/2-areas/patterns/03-data-patterns.md)** - Data patterns
+- **[docs/2-areas/patterns/04-composition-patterns.md](docs/2-areas/patterns/04-composition-patterns.md)** - Composition patterns
+- **[docs/2-areas/patterns/05-state-patterns.md](docs/2-areas/patterns/05-state-patterns.md)** - State patterns
+- **[docs/2-areas/patterns/06-animation-patterns.md](docs/2-areas/patterns/06-animation-patterns.md)** - Animation patterns
+- **[docs/2-areas/patterns/07-layout-patterns.md](docs/2-areas/patterns/07-layout-patterns.md)** - Layout patterns
+- **[docs/2-areas/patterns/08-performance-patterns.md](docs/2-areas/patterns/08-performance-patterns.md)** - Performance patterns
+
+**Active Projects** (1-project - In Progress):
+- **[docs/1-project/1-type-role-aria-mapping-1.md](docs/1-project/1-type-role-aria-mapping-1.md)** - Type/Role/ARIA mapping
+- **[docs/1-project/2-react-redender.md](docs/1-project/2-react-redender.md)** - React renderer implementation
+- **[docs/1-project/3-how-to-renderer.md](docs/1-project/3-how-to-renderer.md)** - Renderer how-to guide
+- **[docs/1-project/4-headless-hook.md](docs/1-project/4-headless-hook.md)** - Headless hooks implementation roadmap
 
 ## Code Conventions
 
