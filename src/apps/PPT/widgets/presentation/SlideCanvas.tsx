@@ -1,5 +1,5 @@
-import { Section } from '@/components/dsl/Section';
-import { renderMarkdownContent } from '@/utils/markdown-parser.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { renderMarkdownContent } from '@/apps/PPT/lib/markdown-parser';
 import type { Slide } from './SlideList.tsx';
 
 interface SlideCanvasProps {
@@ -13,21 +13,22 @@ export const SlideCanvas = ({ slide }: SlideCanvasProps) => {
       <Section
         role="Container"
         prominence="Primary"
-       
         className="flex flex-1 items-center justify-center"
       >
         <div className="text-center text-text-tertiary">
           <p className="text-sm">슬라이드를 선택하세요</p>
-          <p className="mt-1 text-xs">
-            왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요
-          </p>
+          <p className="mt-1 text-xs">왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요</p>
         </div>
       </Section>
     );
   }
 
   return (
-    <Section role="Container" prominence="Primary" className="relative flex flex-1 flex-col overflow-hidden">
+    <Section
+      role="Container"
+      prominence="Primary"
+      className="relative flex flex-1 flex-col overflow-hidden"
+    >
       {/* Canvas Container - Maintains aspect ratio */}
       <div className="flex flex-1 items-center justify-center p-6">
         {/* Slide Canvas - 16:9 aspect ratio */}

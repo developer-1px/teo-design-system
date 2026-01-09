@@ -9,16 +9,15 @@
  *   - Section[Aside]: 오른쪽 포맷 사이드바
  */
 
-import { useState, useEffect } from 'react';
-import { Section } from '@/components/dsl/Section';
-import { SlideList, type Slide } from './SlideList.tsx';
-import { DSLSlideCanvas } from './DSLSlideCanvas.tsx';
-import { PresentationToolbar } from './PresentationToolbar.tsx';
-import { FormatSidebar } from './FormatSidebar.tsx';
-import { parseMarkdownSlides } from '@/utils/markdown-parser.tsx';
-
+import { useEffect, useState } from 'react';
 // ai-era-slides.md 파일 import
 import aiEraSlides from '@/../apps/ppt/ai-era-slides.md?raw';
+import { Section } from '@/components/Section/Section.tsx';
+import { parseMarkdownSlides } from '@/apps/PPT/lib/markdown-parser';
+import { DSLSlideCanvas } from './DSLSlideCanvas.tsx';
+import { FormatSidebar } from './FormatSidebar.tsx';
+import { PresentationToolbar } from './PresentationToolbar.tsx';
+import { type Slide, SlideList } from './SlideList.tsx';
 
 // 초기 샘플 슬라이드 데이터 (fallback)
 const fallbackSlides: Slide[] = [
@@ -168,11 +167,7 @@ export const PresentationView = () => {
       />
 
       {/* Section[Container]: Main Content Area */}
-      <Section
-        role="Container"
-        prominence="Tertiary"
-        className="flex flex-1 overflow-hidden"
-      >
+      <Section role="Container" prominence="Tertiary" className="flex flex-1 overflow-hidden">
         {/* Section[Navigator]: Left Slide List */}
         <Section
           role="Navigator"
@@ -189,11 +184,7 @@ export const PresentationView = () => {
         </Section>
 
         {/* Section[Container]: Center Canvas */}
-        <Section
-          role="Container"
-          prominence="Tertiary"
-          className="flex-1"
-        >
+        <Section role="Container" prominence="Tertiary" className="flex-1">
           <DSLSlideCanvas
             slide={activeSlide}
             currentIndex={currentIndex}

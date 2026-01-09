@@ -13,10 +13,7 @@ export function CodeViewer({ sourceCode }: CodeViewerProps) {
     <div className="p-6">
       <Highlight theme={themes.vsLight} code={sourceCode} language="tsx">
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre
-            className={`${className} p-4 rounded-lg overflow-auto text-sm`}
-            style={style}
-          >
+          <pre className={`${className} p-4 rounded-lg overflow-auto text-sm`} style={style}>
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line })}>
                 <span className="inline-block w-8 text-right mr-4 text-gray-400 select-none">

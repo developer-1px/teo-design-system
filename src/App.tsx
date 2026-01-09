@@ -10,20 +10,20 @@
  *     - KeyboardDebugPanel: 개발 도구
  */
 
-import { Router, Route, Redirect } from 'wouter';
+import { Redirect, Route, Router } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
-import { FloatingBar } from '@/components/ui/FloatingBar';
-import { AppIDE } from '@/apps/IDE/AppIDE';
-import { AppPPT } from '@/apps/PPT/AppPPT';
-import { AppJSON } from '@/apps/JSON/AppJSON';
-import { AppEMOJI } from '@/apps/EMOJI/AppEMOJI';
 import { AppDOCS } from '@/apps/DOCS/AppDOCS';
 import { AppDSLBuilder } from '@/apps/DSLBuilder/AppDSLBuilder';
+import { AppEMOJI } from '@/apps/EMOJI/AppEMOJI';
+import { AppIDE } from '@/apps/IDE/AppIDE';
+import { AppJSON } from '@/apps/JSON/AppJSON';
+import { AppPPT } from '@/apps/PPT/AppPPT';
 import { AppShowcase } from '@/apps/showcase/AppShowcase';
 import { AppTokens } from '@/apps/tokens/AppTokens';
-import { CommandPalette } from '@/components/modal/CommandPalette';
 import { KeyboardDebugPanel } from '@/components/dev/KeyboardDebugPanel';
-import { AppProvider } from '@/lib/app-context';
+import { CommandPalette } from '@/components/Overlay/CommandPalette';
+import { FloatingBar } from '@/apps/IDE/widgets/FloatingBar';
+import { AppProvider } from '@/shared/contexts/app-context';
 
 function App() {
   // Note: Theme initialization moved to main.tsx (before React renders)

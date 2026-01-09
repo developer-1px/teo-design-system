@@ -395,7 +395,7 @@ const ui = renderIDDL(iddlSpec);
 ### 빠른 참조
 
 - **[API Reference](./apps/docs/06-reference/api-reference.md)** - 전체 스펙 요약
-- **[Specification v1.0.1](./spec/iddl-spec-1.0.1.md)** - 공식 스펙 문서
+- **[Specification v1.0.1](docs/2-areas/spec/iddl-spec-1.0.1.md)** - 공식 스펙 문서
 
 ---
 
@@ -666,7 +666,7 @@ IDDL은 다음에서 영감을 받았습니다:
 
 ## 📬 Contact
 
-- **Specification**: [IDDL Spec v1.0.1](./spec/iddl-spec-1.0.1.md)
+- **Specification**: [IDDL Spec v1.0.1](docs/2-areas/spec/iddl-spec-1.0.1.md)
 - **Documentation**: [Full Docs](./apps/docs/)
 - **Issues**: GitHub Issues
 

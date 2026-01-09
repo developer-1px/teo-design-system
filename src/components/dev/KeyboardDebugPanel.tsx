@@ -7,13 +7,12 @@
  * - 검색 가능한 단축키 cheatsheet
  */
 
-import { useState, useMemo } from 'react';
-import { Search, X, AlertTriangle, Keyboard } from 'lucide-react';
-import { useKeyboardContext } from '@/lib/keyboard';
-import { PRIORITY } from '@/lib/keyboard/types';
-import { Section } from '@/components/dsl/Section';
-import { IconButton } from '@/components/ui';
-import { useGlobalShortcut } from '@/lib/keyboard';
+import { AlertTriangle, Keyboard, Search, X } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { useGlobalShortcut, useKeyboardContext } from '@/shared/lib/keyboard';
+import { PRIORITY } from '@/shared/lib/keyboard/types.ts';
 
 export const KeyboardDebugPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -103,15 +102,9 @@ export const KeyboardDebugPanel = () => {
         <div className="flex items-center justify-between p-4 border-b border-default">
           <div className="flex items-center gap-2">
             <Keyboard size={20} className="text-accent" />
-            <h2 className="text-sm font-semibold text">
-              Keyboard Debug Panel
-            </h2>
+            <h2 className="text-sm font-semibold text">Keyboard Debug Panel</h2>
           </div>
-          <IconButton
-            title="Close debug panel"
-            size="sm"
-            onClick={() => setIsOpen(false)}
-          >
+          <IconButton title="Close debug panel" size="sm" onClick={() => setIsOpen(false)}>
             <X size={16} />
           </IconButton>
         </div>
@@ -147,8 +140,8 @@ export const KeyboardDebugPanel = () => {
                     <div key={key}>
                       <code className="text-xs bg-surface-sunken px-1 rounded">
                         {shortcuts[0].key}
-                      </code>
-                      {' '}has {shortcuts.length} handlers in{' '}
+                      </code>{' '}
+                      has {shortcuts.length} handlers in{' '}
                       <code className="text-xs bg-surface-sunken px-1 rounded">
                         {shortcuts[0].context}
                       </code>
@@ -172,11 +165,7 @@ export const KeyboardDebugPanel = () => {
               className="flex-1 bg-transparent border-0 outline-none text-sm text placeholder:text-subtle"
             />
             {searchQuery && (
-              <IconButton
-                title="Clear search"
-                size="sm"
-                onClick={() => setSearchQuery('')}
-              >
+              <IconButton title="Clear search" size="sm" onClick={() => setSearchQuery('')}>
                 <X size={14} />
               </IconButton>
             )}
@@ -207,28 +196,24 @@ export const KeyboardDebugPanel = () => {
                             <kbd className="px-2 py-0.5 text-xs font-mono bg-surface-raised border border-default rounded">
                               {shortcut.key}
                             </kbd>
-                            <span className="text-xs text-subtle">
-                              {contextStr}
-                            </span>
+                            <span className="text-xs text-subtle">{contextStr}</span>
                           </div>
-                        {shortcut.description && (
-                          <p className="text-xs text-muted">
-                            {shortcut.description}
-                          </p>
-                        )}
+                          {shortcut.description && (
+                            <p className="text-xs text-muted">{shortcut.description}</p>
+                          )}
+                        </div>
+                        <div className="flex-shrink-0">
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded ${
+                              shortcut.enabled === false
+                                ? 'bg-semantic-error/10 text-semantic-error'
+                                : 'bg-accent/10 text-accent'
+                            }`}
+                          >
+                            {shortcut.enabled === false ? 'Disabled' : 'Active'}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex-shrink-0">
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded ${
-                            shortcut.enabled === false
-                              ? 'bg-semantic-error/10 text-semantic-error'
-                              : 'bg-accent/10 text-accent'
-                          }`}
-                        >
-                          {shortcut.enabled === false ? 'Disabled' : 'Active'}
-                        </span>
-                      </div>
-                    </div>
                     );
                   })}
                 </div>
@@ -238,9 +223,7 @@ export const KeyboardDebugPanel = () => {
 
           {filteredShortcuts.length === 0 && (
             <div className="text-center py-8 text-subtle text-sm">
-              {searchQuery
-                ? 'No shortcuts match your search'
-                : 'No shortcuts registered'}
+              {searchQuery ? 'No shortcuts match your search' : 'No shortcuts registered'}
             </div>
           )}
         </div>
@@ -252,9 +235,7 @@ export const KeyboardDebugPanel = () => {
               {filteredShortcuts.length} / {allShortcuts.length} shortcuts
             </span>
             <div className="flex items-center gap-2">
-              <kbd className="px-2 py-0.5 bg-surface-base border border-default rounded">
-                ⌘⇧K
-              </kbd>
+              <kbd className="px-2 py-0.5 bg-surface-base border border-default rounded">⌘⇧K</kbd>
               <span>to toggle</span>
             </div>
           </div>

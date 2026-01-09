@@ -2,16 +2,21 @@
  * Preview - 컴포넌트 렌더링 영역
  */
 
-import { useState, Suspense, lazy, useMemo } from 'react';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Action } from '@/components/atoms/Action';
-import { Text } from '@/components/atoms/Text';
-import type { ComponentMetadata, PropValue, MockData, FileTreeNode } from '@/apps/showcase/widgets/parser/types';
-import { MarkdownDocs } from '@/apps/showcase/widgets/components/MarkdownDocs';
-import { PropsPanel } from '@/apps/showcase/widgets/components/PropsPanel';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { CodeViewer } from '@/apps/showcase/widgets/components/CodeViewer';
 import { ComponentRenderer } from '@/apps/showcase/widgets/components/ComponentRenderer';
+import { MarkdownDocs } from '@/apps/showcase/widgets/components/MarkdownDocs';
+import { PropsPanel } from '@/apps/showcase/widgets/components/PropsPanel';
+import type {
+  ComponentMetadata,
+  FileTreeNode,
+  MockData,
+  PropValue,
+} from '@/apps/showcase/widgets/parser/types';
+import { Action } from '@/components/Item/Action/Action';
+import { Group } from '@/components/Group/Group.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Item/Text/Text';
 
 interface PreviewProps {
   node: FileTreeNode | null;
@@ -20,7 +25,7 @@ interface PreviewProps {
 type Tab = 'preview' | 'code';
 
 export function Preview({ node }: PreviewProps) {
-  const metadata  = node?.metadata || null;
+  const metadata = node?.metadata || null;
   const [activeTab, setActiveTab] = useState<Tab>('preview');
   const [propValues, setPropValues] = useState<Record<string, PropValue>>({});
   const [mockData, setMockData] = useState<MockData>({});
@@ -113,7 +118,13 @@ export function Preview({ node }: PreviewProps) {
             {/* Component Preview */}
             <Section role="Container" prominence="Hero" data-theme={darkMode ? 'dark' : 'light'}>
               {node?.componentModule ? (
-                <Suspense fallback={<Text role="Body" prominence="Tertiary">Loading...</Text>}>
+                <Suspense
+                  fallback={
+                    <Text role="Body" prominence="Tertiary">
+                      Loading...
+                    </Text>
+                  }
+                >
                   <ComponentRenderer
                     key={metadata.filePath}
                     metadata={metadata}
@@ -139,9 +150,7 @@ export function Preview({ node }: PreviewProps) {
               metadata={metadata}
               propValues={propValues}
               mockData={mockData}
-              onPropChange={(name, value) =>
-                setPropValues((prev) => ({ ...prev, [name]: value }))
-              }
+              onPropChange={(name, value) => setPropValues((prev) => ({ ...prev, [name]: value }))}
               onMockChange={setMockData}
             />
           </Group>

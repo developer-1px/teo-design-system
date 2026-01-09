@@ -19,11 +19,16 @@ pnpm build
 
 # Preview production build
 pnpm preview
+
+# Build Vite plugins (when modified)
+pnpm build:iddl-inspector   # Build IDDL Inspector client
 ```
 
 ## Project Overview
 
 This is a **design-system-driven IDE UI Kit** built with React 19, TypeScript, and TailwindCSS 4.x. The project emphasizes **rule-based design decisions** to enable consistent UI development by both AI and human developers.
+
+**Core Innovation**: IDDL (Intent-Driven Design Language) - a TSX-based DSL where developers declare "why" (purpose + prominence) instead of "how" (colors + sizes). The system automatically handles tokens, semantics, and accessibility.
 
 ### Tech Stack
 - **React 19** with TypeScript for type-safe components
@@ -31,6 +36,7 @@ This is a **design-system-driven IDE UI Kit** built with React 19, TypeScript, a
 - **TailwindCSS 4.x** with PostCSS and custom design tokens
 - **CodeMirror 6** for code editing functionality
 - **Lucide React** for consistent iconography
+- **IDDL v1.0.1** - Custom TSX-based DSL for intent-driven UI
 
 ## Design System Architecture
 
@@ -78,7 +84,7 @@ The design system follows these fundamental principles:
 
 The codebase uses a **Layout system** that combines depth (visual hierarchy) with layout patterns (grid, flex, stack, scroll). This unified system works across all OS apps. All layouts are defined in:
 - **Component**: `src/components/ui/Layout.tsx`
-- **Design tokens**: `src/design-system/tokens.ts`
+- **Design tokens**: `src/shared/config/tokens.ts`
 - **Grid templates**: `src/styles/themes.css` (CSS variables)
 
 #### Depth Hierarchy (0 = base, 6 = highest)
@@ -127,7 +133,7 @@ Islands are independent UI regions within a layout (e.g., cells in a Bento Grid)
 
 ### Theme System
 
-The project supports **three independent theme axes** (see `src/lib/theme.ts`):
+The project supports **three independent theme axes** (see `src/shared/lib/theme.ts`):
 
 1. **Theme**: `light` | `dark`
 2. **Color Scheme**: `emerald` | `blue` | `purple` | `red` (accent color variants)
@@ -137,7 +143,7 @@ All theme values are applied via CSS custom properties using `data-*` attributes
 
 ### Design Tokens
 
-All design values are centralized in `src/design-system/tokens.ts`:
+All design values are centralized in `src/shared/config/tokens.ts`:
 
 - **Colors**: `accent`, `layer`, `text`, `border`, `semantic`
 - **Shadows**: `shadow.0` through `shadow.6` (mapped to layers)
@@ -239,6 +245,102 @@ import { Files } from 'lucide-react';
 </IconButton>
 ```
 
+## IDDL (Intent-Driven Design Language)
+
+### Core Concept
+
+IDDL is a **TSX-based DSL** where you declare **intent** instead of implementation:
+
+```tsx
+// ❌ Traditional: How-based (implementation details)
+<button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold">
+  Save
+</button>
+
+// ✅ IDDL: Why-based (intent declaration)
+<Action prominence="Primary" intent="Positive">
+  Save
+</Action>
+```
+
+**Developer declares**: Purpose + Prominence
+**System handles**: Tokens, Semantics, Accessibility, Keyboard Navigation
+
+### IDDL Component Hierarchy
+
+```
+Page (Root - Application level)
+ └─ Section (Layout regions: Header, Sidebar, Editor, Panel)
+     └─ Group (Logical grouping: Form, Card, Toolbar, List, Grid)
+         └─ Primitives (Atomic elements)
+             ├─ Text (Static content: Title, Body, Label, Code)
+             ├─ Field (Data binding: text, number, date, select, etc.)
+             └─ Action (Interactions: buttons, links)
+
+Overlay (Floating UI: Dialog, Drawer, Popover, Toast, Tooltip)
+```
+
+### Key IDDL Props
+
+All IDDL components share these core props:
+
+- **`role`**: What is it? (e.g., `Container`, `Form`, `Toolbar`, `Navigator`)
+- **`prominence`**: How important? (`Hero` | `Primary` | `Secondary` | `Tertiary`)
+- **`intent`**: What meaning? (`Neutral` | `Brand` | `Positive` | `Caution` | `Critical` | `Info`)
+- **`density`**: How spacious? (`Comfortable` | `Standard` | `Compact`)
+
+### IDDL Component Examples
+
+```tsx
+// Page - Application root
+<Page role="App" title="My IDE" layout="studio">
+  <Section role="ActivityBar">...</Section>
+  <Section role="PrimarySidebar">...</Section>
+  <Section role="Editor">...</Section>
+</Page>
+
+// Section - Layout regions
+<Section role="Container" prominence="Secondary">
+  <Group role="Form">...</Group>
+</Section>
+
+// Group - Logical grouping
+<Group role="Toolbar" prominence="Primary">
+  <Action prominence="Primary" intent="Positive">Save</Action>
+  <Action prominence="Secondary">Cancel</Action>
+</Group>
+
+// Primitives - Atomic elements
+<Text role="Title" prominence="Primary">Welcome</Text>
+<Field label="Email" model="user.email" dataType="email" required />
+<Action prominence="Primary" intent="Brand" behavior={{ action: "submit" }}>
+  Submit
+</Action>
+```
+
+### IDDL Type Reference
+
+**See**: `src/components/dsl/types.ts` for complete type definitions
+
+**Specification**: `spec/iddl-spec-1.0.1.md` for official IDDL spec
+
+## IDDL Inspector (Debugging Tool)
+
+Press **Cmd+D** (Mac) or **Ctrl+D** (Windows) in dev mode to toggle the IDDL Inspector.
+
+**What it shows**:
+- Complete React component tree in JSX format
+- Only React components (HTML elements filtered out)
+- Wrapper components (Memo, ForwardRef) are transparent
+- IDDL-relevant props only (role, prominence, intent, density, layout)
+
+**Implementation**:
+- Vite plugin: `vite-plugins/iddl-inspector/`
+- React Fiber traversal: `vite-plugins/iddl-inspector/client/inspector.ts`
+- Build: `pnpm build:iddl-inspector`
+
+**Use case**: Quickly understand component hierarchy when debugging or refactoring IDDL structures.
+
 ## File Structure
 
 ### Modified FSD 2.1 Architecture (Pages-First, No Barrel Exports)
@@ -251,9 +353,28 @@ import { Files } from 'lucide-react';
 
 ```
 src/
+├── shared/               # ⭐ Shared utilities (FSD-compliant)
+│   ├── lib/             # Common libraries
+│   │   ├── utils.ts     # Utility functions (cn, etc.)
+│   │   ├── theme.ts     # Theme management system
+│   │   └── keyboard/    # Keyboard navigation & shortcuts
+│   │       ├── KeyboardProvider.tsx
+│   │       ├── useShortcut.ts
+│   │       ├── useFocusScope.ts
+│   │       ├── useNavigableCursor.ts
+│   │       ├── useTreeNavigation.ts
+│   │       ├── types.ts
+│   │       └── index.ts  # EXCEPTION: keyboard re-exports only
+│   ├── contexts/        # Global contexts
+│   │   └── app-context.tsx  # App type switching
+│   └── config/          # Design tokens & configuration
+│       ├── tokens.ts             # Design system tokens
+│       └── prominence-tokens.ts  # Prominence system tokens
 ├── apps/                 # Application modules (FSD 2.1)
 │   ├── IDE/
 │   │   ├── AppIDE.tsx           # ✅ Entry point (root level, easy to find)
+│   │   ├── lib/                 # IDE-specific utilities
+│   │   │   └── file-loader.ts
 │   │   ├── pages/               # Page-level components
 │   │   │   └── ide/
 │   │   │       └── IDEPage.tsx
@@ -264,31 +385,68 @@ src/
 │   │       └── sidebar/
 │   ├── JSON/
 │   │   ├── AppJSON.tsx          # ✅ Entry point
+│   │   ├── lib/                 # JSON-specific utilities
+│   │   │   └── json-schema.ts
 │   │   ├── pages/
 │   │   │   ├── json/
 │   │   │   ├── server-products/
 │   │   │   └── server-products-dsl/
 │   │   └── widgets/
 │   │       └── json-viewer/
-│   └── PPT/
-│       ├── AppPPT.tsx           # ✅ Entry point
+│   ├── PPT/
+│   │   ├── AppPPT.tsx           # ✅ Entry point
+│   │   ├── lib/                 # PPT-specific utilities
+│   │   │   ├── markdown-parser.tsx
+│   │   │   └── markdown-to-dsl.tsx
+│   │   ├── pages/
+│   │   │   └── ppt/
+│   │   └── widgets/
+│   │       └── presentation/
+│   ├── EMOJI/
+│   │   ├── AppEmoji.tsx
+│   │   ├── lib/
+│   │   │   └── emoji-designer/  # Emoji designer utilities
+│   │   ├── pages/
+│   │   └── widgets/
+│   ├── DSLBuilder/
+│   │   ├── AppDSLBuilder.tsx
+│   │   ├── lib/
+│   │   │   └── dsl-builder/     # DSL builder utilities
+│   │   ├── pages/
+│   │   └── widgets/
+│   └── DOCS/
+│       ├── AppDocs.tsx
+│       ├── lib/
+│       │   └── docs-scanner.ts
 │       ├── pages/
-│       │   └── ppt/
 │       └── widgets/
-│           └── presentation/
 ├── components/           # Shared UI components
 │   ├── ui/              # Base UI components (Layer, Button, IconButton, etc.)
 │   ├── workspace/       # Workspace navigation components
 │   ├── modal/           # Modal dialogs (Settings, Search)
-│   └── dsl/             # DSL system components
-├── design-system/
-│   ├── tokens.ts        # Single source of truth for design values
-│   └── layer-system.md  # Layer system documentation
-├── lib/
-│   ├── utils.ts         # Utility functions (cn, etc.)
-│   └── theme.ts         # Theme management system
-└── utils/
-    └── file-loader.ts   # File loading utilities
+│   ├── dsl/             # IDDL DSL components (Page, Section, Group, Text, Field, Action, Overlay)
+│   │   ├── Page.tsx     # Root application component
+│   │   ├── Section.tsx  # Layout regions (ActivityBar, Sidebar, Editor, Panel)
+│   │   ├── Group.tsx    # Logical grouping (Form, Card, Toolbar, List)
+│   │   ├── Text.tsx     # Static content (Title, Body, Label, Code)
+│   │   ├── Field.tsx    # Data binding (text, number, select, etc.)
+│   │   ├── Action.tsx   # Interactions (buttons, links)
+│   │   ├── Overlay.tsx  # Floating UI (Dialog, Drawer, Popover)
+│   │   ├── types.ts     # IDDL type definitions
+│   │   └── styles.ts    # IDDL styling utilities
+│   └── atoms/           # Primitive UI elements
+├── vite-plugins/        # Custom Vite plugins
+│   └── iddl-inspector/  # IDDL Inspector debugging tool
+│       ├── index.ts     # Vite plugin entry
+│       ├── client/      # Client-side code (injected into browser)
+│       │   ├── index.ts
+│       │   ├── inspector.ts  # React Fiber tree traversal
+│       │   ├── ui.ts         # Inspector UI
+│       │   └── keyboard.ts   # Cmd+D handler
+│       └── client.js    # Built bundle (generated)
+└── spec/
+    ├── iddl-spec-1.0.1.md          # IDDL official specification
+    └── iddl-coverage-analysis.md   # Implementation coverage
 ```
 
 **Import Convention:**
@@ -301,6 +459,14 @@ import { AppIDE } from '@/apps/IDE';  // NO index.ts!
 
 // ✅ Direct import from specific file
 import { IDEPage } from '@/apps/IDE/pages/ide/IDEPage';
+
+// ✅ IDDL components (NO barrel export - direct imports)
+import { Page } from '@/components/dsl/Page';
+import { Section } from '@/components/dsl/Section';
+import { Group } from '@/components/dsl/Group';
+import { Action } from '@/components/dsl/Action';
+import { Text } from '@/components/dsl/Text';
+import { Field } from '@/components/dsl/Field';
 ```
 
 **Naming Convention:**
@@ -313,6 +479,38 @@ import { IDEPage } from '@/apps/IDE/pages/ide/IDEPage';
 - **Path alias**: `@/*` maps to `./src/*` (configured in `vite.config.ts`)
 - **MDX support**: Enabled via `@mdx-js/rollup` with `remarkGfm` and `remarkFrontmatter`
 - **Prettier**: Single quotes, 80 char line width, 2 space tabs
+- **Vite plugins**: `iddlInspector()` plugin enabled (see `vite.config.ts`)
+
+## Vite Plugin Development
+
+### Building Plugins
+
+When modifying Vite plugins (e.g., IDDL Inspector), rebuild the client bundle:
+
+```bash
+pnpm build:iddl-inspector
+```
+
+This compiles `vite-plugins/iddl-inspector/client/` into `vite-plugins/iddl-inspector/client.js` (IIFE bundle).
+
+### IDDL Inspector Architecture
+
+**Vite Plugin** (`vite-plugins/iddl-inspector/index.ts`):
+- Injects client script into HTML during dev mode
+- Patches React 19's jsx-dev-runtime to enable `_debugSource`
+- Provides virtual module for client code
+
+**Client** (`vite-plugins/iddl-inspector/client/`):
+- `inspector.ts`: Traverses React Fiber tree, converts to JSX format
+- `ui.ts`: Renders central textarea with component tree
+- `keyboard.ts`: Handles Cmd+D / Ctrl+D toggle
+- `index.ts`: Entry point, initializes inspector
+
+**Key Implementation Details**:
+- Filters out HTML DOM elements (only shows React components)
+- Skips wrapper components (Unknown, Anonymous, Fragment)
+- Extracts component names from Memo/ForwardRef wrappers
+- Shows only IDDL-relevant props (role, prominence, intent, density, layout)
 
 ## Design Rules Enforcement
 
@@ -377,22 +575,88 @@ Before implementing any UI:
 
 ## Key Documentation
 
-**Start Here (New Approach)**:
-- **[docs/PURPOSE_BASED_DESIGN.md](docs/PURPOSE_BASED_DESIGN.md)** ⭐ Why-based design system (NEW)
-- **[docs/PROMINENCE_SYSTEM.md](docs/PROMINENCE_SYSTEM.md)** - Prominence system detailed guide
+**IDDL Specification** (Primary):
+- **[docs/index.md](docs/index.md)** ⭐ IDDL Specification overview
+- **[docs/2-areas/spec/iddl-spec-1.0.1.md](docs/2-areas/spec/iddl-spec-1.0.1.md)** - Official IDDL specification v1.0.1
+- **[docs/2-areas/spec/iddl-coverage-analysis.md](docs/2-areas/spec/iddl-coverage-analysis.md)** - Implementation coverage analysis
+- **[docs/2-areas/spec/minimal-renderer-guide.md](docs/2-areas/spec/minimal-renderer-guide.md)** - Minimal IDDL renderer guide
+- **[docs/2-areas/spec/renderer-improvement-roadmap.md](docs/2-areas/spec/renderer-improvement-roadmap.md)** - Renderer improvement roadmap
 
-**Core System**:
-- **[docs/LAYOUT_SYSTEM.md](docs/LAYOUT_SYSTEM.md)** - Complete Layout system guide (with interactive demos)
-- **[docs/DESIGN_PRINCIPLES.md](docs/DESIGN_PRINCIPLES.md)** - Complete design system rules (15 parts)
+**IDDL Core Reference** (Areas - Continuously Maintained):
+- **[docs/2-areas/core/3-reference/component-role-mapping.md](docs/2-areas/core/3-reference/component-role-mapping.md)** - Component taxonomy and role mapping
+- **[docs/2-areas/core/3-reference/field-reference.md](docs/2-areas/core/3-reference/field-reference.md)** - Field component API (21 data types)
+- **[docs/2-areas/core/3-reference/page-v2-spec.md](docs/2-areas/core/3-reference/page-v2-spec.md)** - Page component API (layouts & navigation)
 
-**Reference**:
-- **[docs/DESIGN_SYSTEM_SUMMARY.md](docs/DESIGN_SYSTEM_SUMMARY.md)** - Quick reference
-- **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Before/After code examples
-- **[README.md](README.md)** - Project overview and component API
+**IDDL Patterns** (Areas - Best Practices):
+- **[docs/2-areas/patterns/01-behavior-patterns.md](docs/2-areas/patterns/01-behavior-patterns.md)** - Behavior patterns
+- **[docs/2-areas/patterns/02-accessibility-patterns.md](docs/2-areas/patterns/02-accessibility-patterns.md)** - Accessibility patterns
+- **[docs/2-areas/patterns/03-data-patterns.md](docs/2-areas/patterns/03-data-patterns.md)** - Data patterns
+- **[docs/2-areas/patterns/04-composition-patterns.md](docs/2-areas/patterns/04-composition-patterns.md)** - Composition patterns
+- **[docs/2-areas/patterns/05-state-patterns.md](docs/2-areas/patterns/05-state-patterns.md)** - State patterns
+- **[docs/2-areas/patterns/06-animation-patterns.md](docs/2-areas/patterns/06-animation-patterns.md)** - Animation patterns
+- **[docs/2-areas/patterns/07-layout-patterns.md](docs/2-areas/patterns/07-layout-patterns.md)** - Layout patterns
+- **[docs/2-areas/patterns/08-performance-patterns.md](docs/2-areas/patterns/08-performance-patterns.md)** - Performance patterns
+
+**Active Projects** (1-project - In Progress):
+- **[docs/1-project/1-type-role-aria-mapping-1.md](docs/1-project/1-type-role-aria-mapping-1.md)** - Type/Role/ARIA mapping
+- **[docs/1-project/2-react-redender.md](docs/1-project/2-react-redender.md)** - React renderer implementation
+- **[docs/1-project/3-how-to-renderer.md](docs/1-project/3-how-to-renderer.md)** - Renderer how-to guide
+- **[docs/1-project/4-headless-hook.md](docs/1-project/4-headless-hook.md)** - Headless hooks implementation roadmap
+
+## Code Conventions
+
+### 🚫 No Barrel Exports
+
+**NEVER create `index.ts` or `index.tsx` files for re-exporting.**
+
+```tsx
+// ❌ WRONG - Do NOT create index.ts files
+// src/shared/index.ts
+export * from './lib/utils';
+export * from './lib/theme';
+
+// ❌ WRONG - Do NOT import from directories
+import { cn } from '@/shared';
+import { getThemeConfig } from '@/shared';
+
+// ✅ CORRECT - Direct imports from specific files
+import { cn } from '@/shared/lib/utils';
+import { getThemeConfig } from '@/shared/lib/theme';
+```
+
+**Rationale:**
+- Explicit imports make dependencies clear
+- Easier to track what's being used where
+- Better for tree-shaking and code splitting
+- Prevents circular dependency issues
+- IDE autocomplete works better with direct imports
+
+### Import Path Structure
+
+```tsx
+// Shared utilities (cross-app)
+import { cn } from '@/shared/lib/utils';
+import { useKeyboard } from '@/shared/lib/keyboard';
+import { useApp } from '@/shared/contexts/app-context';
+import { accent, spacing } from '@/shared/config/tokens';
+
+// App-specific libraries
+import { createNewDesign } from '@/apps/EMOJI/lib/emoji-designer/utils';
+import { generateId } from '@/apps/DSLBuilder/lib/dsl-builder/utils';
+import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
+
+// IDDL components (NO barrel exports)
+import { Page } from '@/components/dsl/Page';
+import { Section } from '@/components/dsl/Section';
+import { Group } from '@/components/dsl/Group';
+```
 
 ## Important Notes
 
 - This project is in **Korean** for documentation comments and UI text
+- **IDDL-first development**: Use IDDL DSL components (Page, Section, Group, Action, Text, Field) instead of traditional HTML/CSS when building UI
 - Design system adherence is **critical** - do not deviate without documenting exceptions
 - Always check `DESIGN_PRINCIPLES.md` before making visual decisions
 - When in doubt about layer levels, shadows, or accent usage - consult the design docs first
+- **No barrel exports**: NEVER create `index.ts` files - always import from specific files
+- **Cmd+D for debugging**: Use IDDL Inspector to understand component hierarchy during development

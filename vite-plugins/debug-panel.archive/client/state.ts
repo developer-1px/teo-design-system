@@ -7,12 +7,12 @@ import type { DebugMode } from './types';
 /**
  * Root path (injected by plugin)
  */
-export let root = '__ROOT__';
+export const root = '__ROOT__';
 
 /**
  * Base path (injected by plugin)
  */
-export let base = '__BASE__';
+export const base = '__BASE__';
 
 /**
  * Current debug mode

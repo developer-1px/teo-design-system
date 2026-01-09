@@ -2,13 +2,17 @@
  * PropsPanel - Props 인터랙티브 조작 패널 (IDDL)
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Field } from '@/components/atoms/Field';
-import { Text } from '@/components/atoms/Text';
-import type { ComponentMetadata, PropValue, MockData } from '@/apps/showcase/widgets/parser/types';
-import type { PropType } from '@/apps/showcase/widgets/parser/types';
-import type { DataType } from '@/components/atoms/Field';
+import type {
+  ComponentMetadata,
+  MockData,
+  PropType,
+  PropValue,
+} from '@/apps/showcase/widgets/parser/types';
+import type { DataType } from '@/components/Item/Field/Field';
+import { Field } from '@/components/Item/Field/Field';
+import { Group } from '@/components/Group/Group.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Item/Text/Text';
 
 interface PropsPanelProps {
   metadata: ComponentMetadata;
@@ -63,14 +67,21 @@ export function PropsPanel({
           const dataType = mapPropTypeToDataType(prop.type);
 
           // enum options 추출
-          const options = prop.type.kind === 'enum' && prop.type.values
-            ? prop.type.values.map((v) => ({ label: v, value: v }))
-            : undefined;
+          const options =
+            prop.type.kind === 'enum' && prop.type.values
+              ? prop.type.values.map((v) => ({ label: v, value: v }))
+              : undefined;
 
           // value 처리 (array/object는 JSON string으로 변환)
           let fieldValue = value;
-          if (dataType === 'textarea' && (prop.type.kind === 'array' || prop.type.kind === 'object')) {
-            fieldValue = typeof value === 'string' ? value : JSON.stringify(value || (prop.type.kind === 'array' ? [] : {}), null, 2);
+          if (
+            dataType === 'textarea' &&
+            (prop.type.kind === 'array' || prop.type.kind === 'object')
+          ) {
+            fieldValue =
+              typeof value === 'string'
+                ? value
+                : JSON.stringify(value || (prop.type.kind === 'array' ? [] : {}), null, 2);
           }
 
           return (
@@ -82,7 +93,10 @@ export function PropsPanel({
               options={options}
               onChange={(newValue) => {
                 // JSON parsing for array/object
-                if (dataType === 'textarea' && (prop.type.kind === 'array' || prop.type.kind === 'object')) {
+                if (
+                  dataType === 'textarea' &&
+                  (prop.type.kind === 'array' || prop.type.kind === 'object')
+                ) {
                   try {
                     onPropChange(name, JSON.parse(newValue as string));
                   } catch {

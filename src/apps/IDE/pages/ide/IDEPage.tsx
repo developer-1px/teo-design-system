@@ -13,23 +13,23 @@
  *     - Section[ActivityBar]: 우측 네비게이션 (v1.1.0)
  */
 
-import { useState, useEffect } from 'react';
-import { Page } from '@/components/dsl/Page';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/dsl/Text';
-import { Action } from '@/components/dsl/Action';
-import { RightBar } from '@/components/ui/RightBar';
-import { RightNav } from '@/components/workspace/RightNav';
-import { BottomPanel } from '@/components/ui/BottomPanel';
-import { WorkspaceNav } from '@/components/workspace/WorkspaceNav';
-import { FileTree, type FileNode } from '@/apps/IDE/widgets/file-tree/FileTree';
-import { EditorTabs } from '@/apps/IDE/widgets/editor/EditorTabs';
+import { useEffect, useState } from 'react';
 import { CodeEditor } from '@/apps/IDE/widgets/editor/CodeEditor';
 import { ComponentPreview } from '@/apps/IDE/widgets/editor/ComponentPreview';
-import { SearchModalDSL as SearchModal } from '@/components/modal/SearchModalDSL';
-import { SettingsModalDSL as SettingsModal } from '@/components/modal/SettingsModalDSL';
-import { getFilePaths, buildFileTree, loadFileContent } from '@/utils/file-loader';
+import { EditorTabs } from '@/apps/IDE/widgets/editor/EditorTabs';
+import { type FileNode, FileTree } from '@/apps/IDE/widgets/file-tree/FileTree';
+import { Action } from '@/components/Item/Action/Action';
+import { Group } from '@/components/Group/Group.tsx';
+import { SearchModalDSL as SearchModal } from '@/components/Overlay/SearchModalDSL';
+import { SettingsModalDSL as SettingsModal } from '@/components/Overlay/SettingsModalDSL';
+import { Page } from '@/components/Page/Page.tsx';
+import { RightBar } from '@/components/Section/role/RightBar.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Item/Text/Text';
+import { BottomPanel } from '@/apps/IDE/widgets/BottomPanel';
+import { RightNav } from '@/apps/IDE/widgets/workspace/RightNav';
+import { WorkspaceNav } from '@/apps/IDE/widgets/workspace/WorkspaceNav';
+import { buildFileTree, getFilePaths, loadFileContent } from '@/apps/IDE/lib/file-loader';
 
 interface OpenFile {
   path: string;
@@ -144,18 +144,16 @@ export const IDEPage = () => {
                 {/* Editor or Empty State */}
                 {activeFile ? (
                   activeFile.name.endsWith('.tsx') || activeFile.name.endsWith('.jsx') ? (
-                    <ComponentPreview
-                      path={activeFile.path}
-                      filename={activeFile.name}
-                    />
+                    <ComponentPreview path={activeFile.path} filename={activeFile.name} />
                   ) : (
-                    <CodeEditor
-                      content={activeFile.content}
-                      filename={activeFile.name}
-                    />
+                    <CodeEditor content={activeFile.content} filename={activeFile.name} />
                   )
                 ) : (
-                  <Section role="Container" prominence="Secondary" className="flex-1 flex items-center justify-center">
+                  <Section
+                    role="Container"
+                    prominence="Secondary"
+                    className="flex-1 flex items-center justify-center"
+                  >
                     <Group role="Card" direction="vertical" className="text-center">
                       <Text role="Body" prominence="Primary" content="No file open" />
                       <Text
@@ -189,22 +187,13 @@ export const IDEPage = () => {
 
         {/* IDDL Section[Navigator]: Right Navigation */}
         <Section role="ActivityBar">
-          <RightNav
-            onViewChange={setRightPanelView}
-            onClose={() => setRightPanelView(null)}
-          />
+          <RightNav onViewChange={setRightPanelView} onClose={() => setRightPanelView(null)} />
         </Section>
       </Section>
 
       {/* Modals */}
-      <SearchModal
-        isOpen={showSearchModal}
-        onClose={() => setShowSearchModal(false)}
-      />
-      <SettingsModal
-        isOpen={showSettingsModal}
-        onClose={() => setShowSettingsModal(false)}
-      />
+      <SearchModal isOpen={showSearchModal} onClose={() => setShowSearchModal(false)} />
+      <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} />
     </Page>
   );
 };

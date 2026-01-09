@@ -931,7 +931,7 @@ console.log('Data:', data);
 
 ## 참고
 
-- **전체 스펙**: [IDDL Specification v1.0.1](/spec/iddl-spec-1.0.1.md)
+- **전체 스펙**: [IDDL Specification v1.0.1](/docs/2-areas/spec/iddl-spec-1.0.1.md)
 - **API 레퍼런스**: [API Reference](./api-reference.md)
 - **Best Practices**: [Best Practices](../05-advanced/05-best-practices.md)
 

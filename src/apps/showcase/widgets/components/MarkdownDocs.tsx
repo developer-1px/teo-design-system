@@ -3,7 +3,7 @@
  */
 
 import ReactMarkdown from 'react-markdown';
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 
 interface MarkdownDocsProps {
   content: string;
@@ -11,7 +11,11 @@ interface MarkdownDocsProps {
 
 export function MarkdownDocs({ content }: MarkdownDocsProps) {
   return (
-    <Section role="Container" prominence="Secondary" className="p-4 rounded-lg prose prose-sm max-w-none">
+    <Section
+      role="Container"
+      prominence="Secondary"
+      className="p-4 rounded-lg prose prose-sm max-w-none"
+    >
       <ReactMarkdown>{content}</ReactMarkdown>
     </Section>
   );

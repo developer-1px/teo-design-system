@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Plugin } from 'vite';
 
@@ -43,8 +43,7 @@ export function debugPanel(): Plugin {
         const valueIndex = code.indexOf('value: null', defineIndex);
         if (valueIndex === -1) return;
 
-        let newCode =
-          code.slice(0, valueIndex) + 'value: source' + code.slice(valueIndex + 11);
+        let newCode = code.slice(0, valueIndex) + 'value: source' + code.slice(valueIndex + 11);
 
         if (code.includes('function ReactElement(type, key, self, source,')) {
           return newCode;
@@ -55,13 +54,10 @@ export function debugPanel(): Plugin {
           'maybeKey, isStaticChildren, source'
         );
 
-        newCode = newCode.replaceAll(
-          /(\w+)?,\s*debugStack,\s*debugTask/gu,
-          (m, previousArg) => {
-            if (previousArg === 'source') return m;
-            return m.replace('debugTask', 'debugTask, source');
-          }
-        );
+        newCode = newCode.replaceAll(/(\w+)?,\s*debugStack,\s*debugTask/gu, (m, previousArg) => {
+          if (previousArg === 'source') return m;
+          return m.replace('debugTask', 'debugTask, source');
+        });
 
         return newCode;
       },

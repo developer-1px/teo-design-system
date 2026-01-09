@@ -1,11 +1,11 @@
-import { Section } from '@/components/dsl/Section';
-import CodeMirror from '@uiw/react-codemirror';
-import { javascript } from '@codemirror/lang-javascript';
-import { json } from '@codemirror/lang-json';
 import { css } from '@codemirror/lang-css';
 import { html } from '@codemirror/lang-html';
+import { javascript } from '@codemirror/lang-javascript';
+import { json } from '@codemirror/lang-json';
 import { markdown } from '@codemirror/lang-markdown';
 import { EditorView } from '@codemirror/view';
+import CodeMirror from '@uiw/react-codemirror';
+import { Section } from '@/components/Section/Section.tsx';
 import { MarkdownViewer } from './MarkdownViewer.tsx';
 
 interface CodeEditorProps {

@@ -952,7 +952,7 @@ errorMessages: 에러 메시지
 
 ## 참고
 
-- **전체 스펙**: [IDDL Specification v1.0.1](/spec/iddl-spec-1.0.1.md)
+- **전체 스펙**: [IDDL Specification v1.0.1](/docs/2-areas/spec/iddl-spec-1.0.1.md)
 - **API 레퍼런스**: [API Reference](./api-reference.md)
 - **검증 가이드**: [Level 3-2: 검증과 에러 처리](../03-data-interaction/02-validation.md)
 

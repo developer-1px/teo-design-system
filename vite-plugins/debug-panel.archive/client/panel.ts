@@ -2,9 +2,9 @@
  * Debug Panel UI Manager
  */
 
+import { getMaxZIndex, getPropsForFiber } from './react-utils';
+import { isPanelShown, root, setHasPanel } from './state';
 import type { Layer } from './types';
-import { root, setHasPanel, isPanelShown } from './state';
-import { getPropsForFiber, getMaxZIndex } from './react-utils';
 
 /**
  * Panel Manager class
@@ -121,7 +121,10 @@ export class PanelManager {
   /**
    * Create props section with toggle
    */
-  private createPropsSection(props: Record<string, unknown>, count: number): {
+  private createPropsSection(
+    props: Record<string, unknown>,
+    count: number
+  ): {
     toggle: HTMLButtonElement;
     container: HTMLDivElement;
   } {

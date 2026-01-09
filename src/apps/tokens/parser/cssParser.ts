@@ -37,9 +37,14 @@ function inferTokenType(name: string): TokenType {
   if (name.startsWith('--spacing-')) return 'spacing';
   if (name.startsWith('--radius-')) return 'radius';
   if (name.startsWith('--shadow-')) return 'shadow';
-  if (name.startsWith('--button-') || name.startsWith('--input-') ||
-      name.startsWith('--panel-') || name.startsWith('--card-') ||
-      name.startsWith('--focus-')) return 'other';
+  if (
+    name.startsWith('--button-') ||
+    name.startsWith('--input-') ||
+    name.startsWith('--panel-') ||
+    name.startsWith('--card-') ||
+    name.startsWith('--focus-')
+  )
+    return 'other';
   return 'other';
 }
 
@@ -61,20 +66,21 @@ function extractCategory(name: string): string {
  */
 function tierNumberToType(num: number): TokenTier {
   switch (num) {
-    case 1: return 'primitive';
-    case 2: return 'semantic';
-    case 3: return 'component';
-    default: return 'primitive';
+    case 1:
+      return 'primitive';
+    case 2:
+      return 'semantic';
+    case 3:
+      return 'component';
+    default:
+      return 'primitive';
   }
 }
 
 /**
  * var() 참조를 해석하여 실제 값으로 변환
  */
-function resolveVarReferences(
-  value: string,
-  tokenMap: Map<string, Token>
-): string {
+function resolveVarReferences(value: string, tokenMap: Map<string, Token>): string {
   let resolved = value;
   let iterations = 0;
   const maxIterations = 10; // 순환 참조 방지

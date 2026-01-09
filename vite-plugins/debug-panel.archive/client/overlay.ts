@@ -2,21 +2,21 @@
  * Overlay Manager - Interactive element highlighting
  */
 
-import type { Layer } from './types';
-import { getDebugMode, setCurrentTarget, getCurrentTarget } from './state';
-import { getLayersForElement, getComponentNameForElement } from './react-utils';
 import {
-  getSelectorsForMode,
-  findInteractiveElements,
-  getIDDLComponentType,
-  calculateBoxPosition,
   applyBoxPosition,
+  calculateBoxPosition,
+  createOverlayBox,
   createOverlayLayer,
+  findInteractiveElements,
+  getBoxConfig,
+  getIDDLComponentType,
+  getSelectorsForMode,
   pulseBoxes,
   removeHoverFromBoxes,
-  getBoxConfig,
-  createOverlayBox,
 } from './overlay-utils';
+import { getComponentNameForElement, getLayersForElement } from './react-utils';
+import { getCurrentTarget, getDebugMode, setCurrentTarget } from './state';
+import type { Layer } from './types';
 
 /**
  * Overlay Manager class
@@ -110,7 +110,7 @@ export class OverlayManager {
     });
 
     // Create new boxes and update positions
-    this.interactiveElements.forEach(element => {
+    this.interactiveElements.forEach((element) => {
       let box = this.boxes.get(element);
 
       if (!box) {
@@ -172,7 +172,7 @@ export class OverlayManager {
     }
 
     // Remove all boxes
-    this.boxes.forEach(box => box.remove());
+    this.boxes.forEach((box) => box.remove());
     this.boxes.clear();
     this.interactiveElements = [];
 

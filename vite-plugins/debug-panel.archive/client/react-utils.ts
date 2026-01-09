@@ -2,8 +2,8 @@
  * React Fiber utilities for extracting component information
  */
 
-import type { Fiber, Layer, PropValue } from './types';
 import { root } from './state';
+import type { Fiber, Layer, PropValue } from './types';
 
 /**
  * Extract props from React Fiber instance
@@ -131,7 +131,7 @@ export function getComponentNameForElement(element: HTMLElement): string {
 
   // Add first class if exists
   if (element.className && typeof element.className === 'string') {
-    const firstClass = element.className.split(' ').filter(c => c.trim())[0];
+    const firstClass = element.className.split(' ').filter((c) => c.trim())[0];
     if (firstClass) {
       tagName += `.${firstClass}`;
     }

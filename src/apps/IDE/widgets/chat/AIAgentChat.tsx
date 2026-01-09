@@ -1,8 +1,8 @@
+import { Code, FileSearch, Send, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { Section } from '@/components/dsl/Section';
-import { IconButton } from '@/components/ui';
-import { Send, Sparkles, Code, FileSearch } from 'lucide-react';
-import { cn } from '@/lib/utils.ts';
+import { IconButton } from '@/components/Item/Action/role/IconButton';
+import { Section } from '@/components/Section/Section.tsx';
+import { cn } from '@/shared/lib/utils';
 
 interface Message {
   id: string;
@@ -21,7 +21,7 @@ export const AIAgentChat = ({ hideHeader = false, className = '' }: AIAgentChatP
     {
       id: '1',
       role: 'assistant',
-      content: 'Hi! I\'m your AI coding assistant. How can I help you today?',
+      content: "Hi! I'm your AI coding assistant. How can I help you today?",
       timestamp: new Date(Date.now() - 1000 * 60 * 5),
     },
     {
@@ -33,7 +33,8 @@ export const AIAgentChat = ({ hideHeader = false, className = '' }: AIAgentChatP
     {
       id: '3',
       role: 'assistant',
-      content: 'Sure! The layer system uses 6 levels (0-5) to create depth:\n\n• Layer 0: Base background\n• Layer 1: Sunken surfaces\n• Layer 2: Default surfaces\n• Layer 3: Elevated elements\n• Layer 4: Floating elements\n• Layer 5: Modals\n\nEach layer has specific colors and shadows defined in tailwind.config.js.',
+      content:
+        'Sure! The layer system uses 6 levels (0-5) to create depth:\n\n• Layer 0: Base background\n• Layer 1: Sunken surfaces\n• Layer 2: Default surfaces\n• Layer 3: Elevated elements\n• Layer 4: Floating elements\n• Layer 5: Modals\n\nEach layer has specific colors and shadows defined in tailwind.config.js.',
       timestamp: new Date(Date.now() - 1000 * 60 * 3),
     },
   ]);
@@ -57,7 +58,7 @@ export const AIAgentChat = ({ hideHeader = false, className = '' }: AIAgentChatP
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'I\'m processing your request...',
+        content: "I'm processing your request...",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, aiResponse]);
@@ -65,7 +66,7 @@ export const AIAgentChat = ({ hideHeader = false, className = '' }: AIAgentChatP
   };
 
   return (
-    <div className={cn("flex flex-col overflow-hidden h-full", className)}>
+    <div className={cn('flex flex-col overflow-hidden h-full', className)}>
       {!hideHeader && (
         <>
           {/* Header */}
@@ -105,9 +106,7 @@ export const AIAgentChat = ({ hideHeader = false, className = '' }: AIAgentChatP
                 'bg-accent/10': message.role === 'user',
               })}
             >
-              <div className="text-xs text-text whitespace-pre-wrap">
-                {message.content}
-              </div>
+              <div className="text-xs text-text whitespace-pre-wrap">{message.content}</div>
               <div className="mt-1 text-xs text-text-tertiary">
                 {message.timestamp.toLocaleTimeString([], {
                   hour: '2-digit',
@@ -131,7 +130,6 @@ export const AIAgentChat = ({ hideHeader = false, className = '' }: AIAgentChatP
         />
         <IconButton
           size="sm"
-         
           onClick={handleSend}
           className="bg-accent text-white hover:bg-accent-hover"
         >

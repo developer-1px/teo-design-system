@@ -2,12 +2,14 @@
  * ColorPalette - 색상 팔레트 선택
  */
 
-import { useState } from 'react';
-import { Group, Text } from '@/components/dsl';
-import { Button, Input } from '@/components/ui';
 import { Plus, Trash2 } from 'lucide-react';
-import { cn } from '@/lib/utils.ts';
-import type { PixelColor } from '@/lib/emoji-designer/types.ts';
+import { useState } from 'react';
+import { Button } from '@/components/Item/Action/role/Button';
+import { Input } from '@/components/Item/Field/role/Input';
+import { Group } from '@/components/Group/Group';
+import { Text } from '@/components/Item/Text/Text';
+import type { PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types.ts';
+import { cn } from '@/shared/lib/utils';
 
 export interface ColorPaletteProps {
   palette: PixelColor[];
@@ -87,7 +89,12 @@ export function ColorPalette({
 
       {/* Selected Color Info */}
       <div className="p-2 bg-layer-1 rounded-md">
-        <Text role="Label" prominence="Tertiary" className="text-xs mb-1" content="Selected Color" />
+        <Text
+          role="Label"
+          prominence="Tertiary"
+          className="text-xs mb-1"
+          content="Selected Color"
+        />
         <Text role="Body" prominence="Hero" className="font-mono text-xs" content={selectedColor} />
       </div>
     </div>

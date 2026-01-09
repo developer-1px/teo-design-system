@@ -1,63 +1,91 @@
-(function() {
-  "use strict";
+(() => {
   function getComponentName(fiber) {
-    if (!fiber) return "Unknown";
+    if (!fiber) return 'Unknown';
     const { type, elementType } = fiber;
-    if (typeof type === "string") {
+    if (typeof type === 'string') {
       return type;
     }
-    if (typeof type === "function") {
-      return type.displayName || type.name || "Anonymous";
+    if (typeof type === 'function') {
+      return type.displayName || type.name || 'Anonymous';
     }
-    if (typeof type === "symbol") {
+    if (typeof type === 'object' && type !== null) {
+      if (type.$$typeof) {
+        const symbolString = String(type.$$typeof);
+        if (symbolString.includes('context')) {
+          const contextName = type._context?.displayName;
+          if (contextName) return contextName;
+          return 'Provider';
+        }
+      }
+    }
+    if (typeof type === 'symbol') {
       const symbolString = type.toString();
-      if (symbolString.includes("Fragment")) return "Fragment";
-      if (symbolString.includes("Provider")) return "Provider";
-      if (symbolString.includes("Consumer")) return "Consumer";
-      if (symbolString.includes("Suspense")) return "Suspense";
-      return "React.SymbolComponent";
+      if (symbolString.includes('Fragment')) return 'Fragment';
+      if (symbolString.includes('Provider')) return 'Provider';
+      if (symbolString.includes('Consumer')) return 'Consumer';
+      if (symbolString.includes('Suspense')) return 'Suspense';
+      return 'React.SymbolComponent';
     }
     if (elementType) {
       if (elementType.displayName) return elementType.displayName;
       if (elementType.name) return elementType.name;
-      if (elementType.render && typeof elementType.render === "function") {
-        return elementType.render.displayName || elementType.render.name || "Unknown";
+      if (elementType.render && typeof elementType.render === 'function') {
+        return elementType.render.displayName || elementType.render.name || 'Unknown';
       }
-      if (elementType.type && typeof elementType.type === "function") {
-        return elementType.type.displayName || elementType.type.name || "Unknown";
+      if (elementType.type && typeof elementType.type === 'function') {
+        return elementType.type.displayName || elementType.type.name || 'Unknown';
       }
     }
-    return "Unknown";
+    return 'Unknown';
   }
   function propsToString(props) {
-    if (!props) return "";
+    if (!props) return '';
     const relevantProps = [];
     for (const key in props) {
-      if (key === "children" || key === "ref" || key === "key" || key === "className" || // HTML 관련 제외
-      key.startsWith("data-") || // HTML data attributes 제외
-      key.startsWith("aria-")) continue;
+      if (
+        key === 'children' ||
+        key === 'ref' ||
+        key === 'key' ||
+        key === 'className' || // HTML 관련 제외
+        key.startsWith('data-') || // HTML data attributes 제외
+        key.startsWith('aria-')
+      )
+        continue;
       const value = props[key];
-      if (typeof value === "function" || typeof value === "object" || value === void 0 || value === null) continue;
-      if (key === "role" || key === "prominence" || key === "intent" || key === "density" || key === "layout" || key === "id") {
-        if (typeof value === "string") {
+      if (
+        typeof value === 'function' ||
+        typeof value === 'object' ||
+        value === void 0 ||
+        value === null
+      )
+        continue;
+      if (
+        key === 'role' ||
+        key === 'prominence' ||
+        key === 'intent' ||
+        key === 'density' ||
+        key === 'layout' ||
+        key === 'id'
+      ) {
+        if (typeof value === 'string') {
           relevantProps.push(`${key}="${value}"`);
-        } else if (typeof value === "number" || typeof value === "boolean") {
+        } else if (typeof value === 'number' || typeof value === 'boolean') {
           relevantProps.push(`${key}={${value}}`);
         }
       }
     }
-    return relevantProps.length > 0 ? " " + relevantProps.join(" ") : "";
+    return relevantProps.length > 0 ? ' ' + relevantProps.join(' ') : '';
   }
   function isReactComponent(fiber) {
     if (!fiber) return false;
     const { type } = fiber;
-    if (typeof type === "string") {
+    if (typeof type === 'string') {
       return false;
     }
-    if (typeof type === "function") {
+    if (typeof type === 'function') {
       return true;
     }
-    if (typeof type === "object" && type !== null) {
+    if (typeof type === 'object' && type !== null) {
       return true;
     }
     return false;
@@ -66,10 +94,12 @@
     if (!fiber) return false;
     if (!isReactComponent(fiber)) return false;
     const name = getComponentName(fiber);
-    if (name === "Fragment") return false;
-    if (name.startsWith("React.")) return false;
-    if (name === "Provider" || name === "Consumer") return false;
-    if (name === "Unknown" || name === "Anonymous") return false;
+    if (name === 'Fragment') return false;
+    if (name.startsWith('React.')) return false;
+    if (name === 'Provider' || name === 'Consumer') {
+      return false;
+    }
+    if (name === 'Unknown' || name === 'Anonymous') return false;
     return true;
   }
   function countChildren(fiber) {
@@ -82,9 +112,9 @@
     return count;
   }
   function fiberToJSX(fiber, depth = 0) {
-    if (!fiber) return "";
-    const indent = "  ".repeat(depth);
-    let result = "";
+    if (!fiber) return '';
+    const indent = '  '.repeat(depth);
+    let result = '';
     if (shouldRenderFiber(fiber)) {
       const name = getComponentName(fiber);
       const props = propsToString(fiber.memoizedProps);
@@ -114,15 +144,13 @@
   }
   function inspectReactTree() {
     try {
-      const rootElement = document.getElementById("root");
+      const rootElement = document.getElementById('root');
       if (!rootElement) {
-        return "// Error: #root element not found";
+        return '// Error: #root element not found';
       }
-      const fiberKey = Object.keys(rootElement).find(
-        (key) => key.startsWith("__react")
-      );
+      const fiberKey = Object.keys(rootElement).find((key) => key.startsWith('__react'));
       if (!fiberKey) {
-        return "// Error: React Fiber not found (is this a React app?)";
+        return '// Error: React Fiber not found (is this a React app?)';
       }
       const fiberRoot = rootElement[fiberKey];
       let fiber = null;
@@ -139,10 +167,27 @@
         }
       }
       if (!fiber) {
-        return "// Error: Could not find React Fiber root node";
+        return (
+          '// Error: Could not find React Fiber root node\n// fiberRoot keys: ' +
+          Object.keys(fiberRoot || {}).join(', ')
+        );
       }
-      const jsx = fiberToJSX(fiber);
-      return jsx || "// Error: Empty tree";
+      if (fiber.child && !shouldRenderFiber(fiber)) {
+        fiber = fiber.child;
+      }
+      const jsx = fiberToJSX(fiber, 0);
+      if (!jsx || jsx.trim() === '') {
+        let debugInfo = '// Error: Empty tree\n';
+        debugInfo += '// Root fiber type: ' + typeof fiber?.type + '\n';
+        debugInfo += '// Root component name: ' + getComponentName(fiber) + '\n';
+        debugInfo += '// Has child: ' + !!fiber?.child + '\n';
+        if (fiber?.child) {
+          debugInfo += '// Child type: ' + typeof fiber.child.type + '\n';
+          debugInfo += '// Child name: ' + getComponentName(fiber.child) + '\n';
+        }
+        return debugInfo;
+      }
+      return jsx;
     } catch (error) {
       return `// Error: ${error.message}
 // Stack: ${error.stack}`;
@@ -152,8 +197,8 @@
   let container = null;
   let textarea = null;
   function createUI() {
-    const div = document.createElement("div");
-    div.id = "iddl-inspector";
+    const div = document.createElement('div');
+    div.id = 'iddl-inspector';
     div.style.cssText = `
     position: fixed;
     top: 50%;
@@ -165,7 +210,7 @@
     z-index: 999999;
     padding: 0;
   `;
-    const ta = document.createElement("textarea");
+    const ta = document.createElement('textarea');
     ta.readOnly = true;
     ta.spellcheck = false;
     ta.style.cssText = `
@@ -199,12 +244,12 @@
     }
     isVisible = true;
     const handleEscape = (e) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         hideInspector();
-        document.removeEventListener("keydown", handleEscape);
+        document.removeEventListener('keydown', handleEscape);
       }
     };
-    document.addEventListener("keydown", handleEscape);
+    document.addEventListener('keydown', handleEscape);
   }
   function hideInspector() {
     if (!isVisible || !container) return;
@@ -221,15 +266,15 @@
     }
   }
   function setupKeyboardHandler() {
-    document.addEventListener("keydown", (e) => {
+    document.addEventListener('keydown', (e) => {
       const isMac = /Mac/i.test(navigator.platform);
       const modKey = isMac ? e.metaKey : e.ctrlKey;
-      if (modKey && e.key === "d") {
+      if (modKey && e.key === 'd') {
         e.preventDefault();
         toggleInspector();
       }
     });
   }
   setupKeyboardHandler();
-  console.log("[IDDL Inspector] Ready. Press Cmd+D (Mac) or Ctrl+D (Win) to inspect React tree.");
+  console.log('[IDDL Inspector] Ready. Press Cmd+D (Mac) or Ctrl+D (Win) to inspect React tree.');
 })();

@@ -5,17 +5,21 @@
  * Storybook UI: Toolbar + Sidebar + Canvas + Addons Panel
  */
 
-import { useState, useEffect } from 'react';
-import { Page } from '@/components/dsl/Page';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
-import { Sidebar } from '@/apps/showcase/widgets/components/Sidebar';
-import { Toolbar, type BackgroundType, type ViewportSize } from '@/apps/showcase/widgets/components/Toolbar';
-import { Canvas } from '@/apps/showcase/widgets/components/Canvas';
+import { useEffect, useState } from 'react';
 import { AddonsPanel } from '@/apps/showcase/widgets/components/AddonsPanel';
-import type { FileTreeNode, PropValue } from '@/apps/showcase/widgets/parser/types';
+import { Canvas } from '@/apps/showcase/widgets/components/Canvas';
+import { Sidebar } from '@/apps/showcase/widgets/components/Sidebar';
+import {
+  type BackgroundType,
+  Toolbar,
+  type ViewportSize,
+} from '@/apps/showcase/widgets/components/Toolbar';
 import { parseComponent } from '@/apps/showcase/widgets/parser/parseComponent';
+import type { FileTreeNode, PropValue } from '@/apps/showcase/widgets/parser/types';
+import { Group } from '@/components/Group/Group.tsx';
+import { Page } from '@/components/Page/Page.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Item/Text/Text';
 
 // atoms 폴더 스캔
 // 1. 소스 코드 (파싱용)
@@ -51,8 +55,14 @@ export function ShowcaseApp() {
       const tree: FileTreeNode[] = [];
 
       // 디버깅: glob key 형식 확인
-      console.log('[ShowcaseApp] Source module keys (first 3):', Object.keys(atomsSourceModules).slice(0, 3));
-      console.log('[ShowcaseApp] Component module keys (first 3):', Object.keys(atomsComponentModules).slice(0, 3));
+      console.log(
+        '[ShowcaseApp] Source module keys (first 3):',
+        Object.keys(atomsSourceModules).slice(0, 3)
+      );
+      console.log(
+        '[ShowcaseApp] Component module keys (first 3):',
+        Object.keys(atomsComponentModules).slice(0, 3)
+      );
 
       for (const [rawPath, sourceLoader] of Object.entries(atomsSourceModules)) {
         // Query string 제거하여 정규화 (?raw 등)
@@ -69,7 +79,10 @@ export function ShowcaseApp() {
 
           if (!componentModule) {
             console.warn(`[ShowcaseApp] ✗ No componentModule found for: ${filePath}`);
-            console.log('[ShowcaseApp] Available keys:', Object.keys(atomsComponentModules).slice(0, 5));
+            console.log(
+              '[ShowcaseApp] Available keys:',
+              Object.keys(atomsComponentModules).slice(0, 5)
+            );
             console.log('[ShowcaseApp] Looking for exact match:', filePath);
           } else {
             console.log(`[ShowcaseApp] ✓ Found componentModule for: ${fileName}`);
@@ -180,11 +193,7 @@ export function ShowcaseApp() {
       {/* Main Content: 3-Column Layout */}
       <Section role="Container" prominence="Primary">
         {/* Left Sidebar - Component Tree */}
-        <Sidebar
-          fileTree={fileTree}
-          selectedFile={selectedFile}
-          onFileSelect={handleFileSelect}
-        />
+        <Sidebar fileTree={fileTree} selectedFile={selectedFile} onFileSelect={handleFileSelect} />
 
         {/* Center Canvas - Preview */}
         <Canvas

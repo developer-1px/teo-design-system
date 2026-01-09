@@ -3,13 +3,13 @@ export function setupCounter(element) {
   //TIP Try <shortcut actionId="GotoDeclaration"/> on <shortcut raw="counter"/> to see its usages. You can also use this shortcut to jump to a declaration – try it on <shortcut raw="counter"/> on line 13.
   let counter = 0;
 
-  const adjustCounterValue = value => {
+  const adjustCounterValue = (value) => {
     if (value >= 100) return value - 100;
     if (value <= -100) return value + 100;
     return value;
   };
 
-  const setCounter = value => {
+  const setCounter = (value) => {
     counter = adjustCounterValue(value);
     //TIP WebStorm has lots of inspections to help you catch issues in your project. It also has quick fixes to help you resolve them. Press <shortcut actionId="ShowIntentionActions"/> on <shortcut raw="text"/> and choose <b>Inline variable</b> to clean up the redundant code.
     const text = `${counter}`;
@@ -20,7 +20,7 @@ export function setupCounter(element) {
   document.getElementById('decreaseByOne').addEventListener('click', () => setCounter(counter - 1));
   document.getElementById('increaseByTwo').addEventListener('click', () => setCounter(counter + 2));
   //TIP In the app running in the browser, you’ll find that clicking <b>-2</b> doesn't work. To fix that, rewrite it using the code from lines 19 - 21 as examples of the logic.
-  document.getElementById('decreaseByTwo')
+  document.getElementById('decreaseByTwo');
 
   //TIP Let’s see how to review and commit your changes. Press <shortcut actionId="GotoAction"/> and look for <b>commit</b>. Try checking the diff for a file – double-click main.js to do that.
   setCounter(0);

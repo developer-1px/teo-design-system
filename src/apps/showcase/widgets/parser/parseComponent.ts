@@ -5,19 +5,14 @@
  */
 
 import ts from 'typescript';
-import type { ComponentMetadata, PropInfo, PropType, ImportInfo } from './types';
+import type { ComponentMetadata, ImportInfo, PropInfo, PropType } from './types';
 
 /**
  * 컴포넌트 소스 코드 파싱
  */
 export function parseComponent(sourceCode: string, filePath: string): ComponentMetadata {
   try {
-    const sourceFile = ts.createSourceFile(
-      filePath,
-      sourceCode,
-      ts.ScriptTarget.Latest,
-      true
-    );
+    const sourceFile = ts.createSourceFile(filePath, sourceCode, ts.ScriptTarget.Latest, true);
 
     const metadata: ComponentMetadata = {
       name: extractComponentName(filePath),
@@ -124,10 +119,7 @@ function extractImports(sourceFile: ts.SourceFile): ImportInfo[] {
  */
 function visitNode(node: ts.Node, metadata: ComponentMetadata) {
   // Export default
-  if (
-    ts.isExportAssignment(node) &&
-    !node.isExportEquals
-  ) {
+  if (ts.isExportAssignment(node) && !node.isExportEquals) {
     metadata.isDefaultExport = true;
   }
 

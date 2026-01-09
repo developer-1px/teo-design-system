@@ -2,10 +2,10 @@
  * ColorSwatch - 디자인 토큰 색상을 시각화하는 컴포넌트
  */
 
-import { Section } from '@/components/dsl/Section';
-import { cn } from '@/lib/utils';
+import { Check, Copy } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Copy, Check } from 'lucide-react';
+import { Section } from '@/components/Section/Section.tsx';
+import { cn } from '@/shared/lib/utils';
 
 interface ColorSwatchProps {
   name: string;
@@ -20,7 +20,7 @@ export const ColorSwatch = ({
   varName,
   description,
   className,
-  showCode = true
+  showCode = true,
 }: ColorSwatchProps) => {
   const [computedColor, setComputedColor] = useState<string>('');
   const [hexColor, setHexColor] = useState<string>('');
@@ -38,7 +38,7 @@ export const ColorSwatch = ({
       const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
       if (match) {
         const [, r, g, b] = match;
-        const hex = '#' + [r, g, b].map(x => parseInt(x).toString(16).padStart(2, '0')).join('');
+        const hex = '#' + [r, g, b].map((x) => parseInt(x).toString(16).padStart(2, '0')).join('');
         setHexColor(hex);
       }
     }
@@ -51,7 +51,7 @@ export const ColorSwatch = ({
   };
 
   return (
-    <Section role="Container" prominence="Secondary" className={cn("overflow-hidden", className)}>
+    <Section role="Container" prominence="Secondary" className={cn('overflow-hidden', className)}>
       {/* Color Preview */}
       <div
         className="h-32 relative group cursor-pointer"
@@ -79,9 +79,7 @@ export const ColorSwatch = ({
       <div className="p-4 space-y-2">
         <div>
           <h3 className="text-sm font-semibold text-text">{name}</h3>
-          {description && (
-            <p className="text-xs text-text-secondary mt-0.5">{description}</p>
-          )}
+          {description && <p className="text-xs text-text-secondary mt-0.5">{description}</p>}
         </div>
 
         {showCode && (

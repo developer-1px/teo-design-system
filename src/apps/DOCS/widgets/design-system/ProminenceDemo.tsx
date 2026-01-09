@@ -4,8 +4,8 @@
  * 주목도 시스템이 어떻게 작동하는지 시각적으로 보여줍니다.
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Content, ContentGroup } from '@/components/ui/Content';
+import { Section } from '@/components/Section/Section.tsx';
+import { Content, ContentGroup } from '@/components/Item/Text/role/Content';
 
 export const ProminenceDemo = () => {
   return (
@@ -155,19 +155,13 @@ export const ProminenceDemo = () => {
         <Section role="Container" prominence="Secondary" className="p-6">
           <ContentGroup direction="horizontal" gap={12}>
             <Content prominence="primary">
-              <button className="px-4 py-2 rounded bg-accent text-white">
-                Primary Action
-              </button>
+              <button className="px-4 py-2 rounded bg-accent text-white">Primary Action</button>
             </Content>
             <Content prominence="secondary">
-              <button className="px-4 py-2 rounded">
-                Secondary Action
-              </button>
+              <button className="px-4 py-2 rounded">Secondary Action</button>
             </Content>
             <Content prominence="tertiary">
-              <button className="px-4 py-2 rounded">
-                Cancel
-              </button>
+              <button className="px-4 py-2 rounded">Cancel</button>
             </Content>
           </ContentGroup>
         </Section>

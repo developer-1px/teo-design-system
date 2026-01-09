@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { defineConfig } from 'vite';
 
 /**
  * IDDL Inspector 클라이언트 빌드 설정

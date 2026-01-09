@@ -4,14 +4,14 @@
 
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import remarkFrontmatter from 'remark-frontmatter';
-import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
-import { cn } from '@/lib/utils.ts';
-import { Section } from '@/components/dsl/Section';
-import { ComponentsShowcase } from '@/apps/DOCS/widgets/docs/interactive/ComponentsShowcase';
+import rehypeRaw from 'rehype-raw';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkGfm from 'remark-gfm';
 import { AtomsShowcase } from '@/apps/DOCS/widgets/docs/interactive/AtomsShowcase';
+import { ComponentsShowcase } from '@/apps/DOCS/widgets/docs/interactive/ComponentsShowcase';
+import { Section } from '@/components/Section/Section.tsx';
+import { cn } from '@/shared/lib/utils';
 
 interface MarkdownRendererProps {
   content: string;
@@ -27,10 +27,7 @@ const INTERACTIVE_COMPONENTS: Record<string, React.ComponentType<any>> = {
   AtomsShowcase: AtomsShowcase,
 };
 
-export const MarkdownRenderer = ({
-  content,
-  className,
-}: MarkdownRendererProps) => {
+export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
   const [processedContent, setProcessedContent] = useState(content);
 
   useEffect(() => {
@@ -101,21 +98,14 @@ export const MarkdownRenderer = ({
           code: ({ node, inline, className, children, ...props }: any) => {
             const match = /language-(\w+)/.exec(className || '');
             return !inline && match ? (
-              <Section
-                role="Container" prominence="Primary"
-               
-                className="overflow-x-auto my-4"
-              >
+              <Section role="Container" prominence="Primary" className="overflow-x-auto my-4">
                 <code className={className} {...props}>
                   {children}
                 </code>
               </Section>
             ) : (
               <code
-                className={cn(
-                  'px-1.5 py-0.5 rounded text-sm bg-layer-1',
-                  className
-                )}
+                className={cn('px-1.5 py-0.5 rounded text-sm bg-layer-1', className)}
                 {...props}
               >
                 {children}
@@ -127,10 +117,7 @@ export const MarkdownRenderer = ({
           table: ({ node, children, ...props }: any) => (
             <div className="my-6 overflow-x-auto">
               <Section role="Container" prominence="Secondary">
-                <table
-                  className="w-full border-collapse"
-                  {...props}
-                >
+                <table className="w-full border-collapse" {...props}>
                   {children}
                 </table>
               </Section>
@@ -140,8 +127,8 @@ export const MarkdownRenderer = ({
           // 인용구
           blockquote: ({ node, children, ...props }: any) => (
             <Section
-              role="Container" prominence="Primary"
-             
+              role="Container"
+              prominence="Primary"
               className="my-4 pl-4 border-l-4 border-accent"
             >
               <blockquote className="text-text-secondary italic" {...props}>

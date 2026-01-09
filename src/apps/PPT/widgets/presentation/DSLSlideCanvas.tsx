@@ -5,9 +5,9 @@
  * 마크다운 콘텐츠를 DSL 컴포넌트로 변환하여 일관성 있는 디자인을 제공합니다.
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Text } from '@/components/dsl/Text';
-import { slideContentToDSL } from '@/utils/markdown-to-dsl';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Item/Text/Text';
+import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
 import type { Slide } from './SlideList';
 
 interface DSLSlideCanvasProps {
@@ -22,21 +22,22 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides }: DSLSlideCan
       <Section
         role="Container"
         prominence="Primary"
-       
         className="flex flex-1 items-center justify-center"
       >
         <div className="text-center text-text-tertiary">
           <p className="text-sm">슬라이드를 선택하세요</p>
-          <p className="mt-1 text-xs">
-            왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요
-          </p>
+          <p className="mt-1 text-xs">왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요</p>
         </div>
       </Section>
     );
   }
 
   return (
-    <Section role="Container" prominence="Primary" className="relative flex flex-1 flex-col overflow-hidden">
+    <Section
+      role="Container"
+      prominence="Primary"
+      className="relative flex flex-1 flex-col overflow-hidden"
+    >
       {/* Canvas Container - Maintains aspect ratio */}
       <div className="flex flex-1 items-center justify-center p-6">
         {/* Slide Canvas - 16:9 aspect ratio */}

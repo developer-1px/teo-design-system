@@ -4,8 +4,8 @@
  * Usage: vite build --config vite-plugins/build-client.config.ts
  */
 
-import { defineConfig } from 'vite';
 import path from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {

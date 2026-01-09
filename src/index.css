@@ -1,24 +1,24 @@
-@import 'tailwindcss/theme' layer(theme);
-@import 'tailwindcss/preflight' layer(base);
-@import 'tailwindcss/utilities' layer(utilities);
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/preflight" layer(base);
+@import "tailwindcss/utilities" layer(utilities);
 
-@import './styles/themes.css';
-@import './styles/markdown.css';
-@import './styles/mdx.css';
+@import "./styles/themes.css";
+@import "./styles/markdown.css";
+@import "./styles/mdx.css";
 
 body {
   margin: 0;
   padding: 0;
   /* background-color and color are defined in themes.css with TailwindCSS 4 tokens */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
 }
 
 /*

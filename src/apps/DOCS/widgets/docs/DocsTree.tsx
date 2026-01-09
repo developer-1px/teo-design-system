@@ -4,9 +4,9 @@
  * FileTree를 재사용하여 /apps/docs 폴더 구조를 표시
  */
 
-import { FileTree, FileNode } from '@/apps/IDE/widgets/file-tree/FileTree.tsx';
-import { getAllDocs, buildDocTree, DocNode } from '@/lib/docs-scanner.ts';
 import { useMemo } from 'react';
+import { type FileNode, FileTree } from '@/apps/IDE/widgets/file-tree/FileTree.tsx';
+import { buildDocTree, type DocNode, getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
 
 interface DocsTreeProps {
   onFileClick?: (path: string) => void;

@@ -1,23 +1,16 @@
+import { Bell, Clock, GitBranch, MessageSquare, User, X } from 'lucide-react';
 import { useState } from 'react';
-import { Section } from '@/components/dsl/Section';
-import { IconButton } from '@/components/ui';
-import {
-  User,
-  GitBranch,
-  MessageSquare,
-  Bell,
-  Clock,
-  X,
-} from 'lucide-react';
+import { IconButton } from '@/components/Item/Action/role/IconButton';
+import { Section } from '@/components/Section/Section.tsx';
 
 interface RightSidebarProps {
   onClose?: () => void;
 }
 
 export const RightSidebar = ({ onClose }: RightSidebarProps) => {
-  const [activeTab, setActiveTab] = useState<
-    'notifications' | 'git' | 'chat' | 'history'
-  >('notifications');
+  const [activeTab, setActiveTab] = useState<'notifications' | 'git' | 'chat' | 'history'>(
+    'notifications'
+  );
 
   return (
     <Section role="Container" prominence="Secondary" className="flex w-80 flex-col overflow-hidden">
@@ -98,15 +91,9 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
                 <div className="flex items-start gap-2">
                   <div className="mt-0.5 text-accent">{item.icon}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-text">
-                      {item.title}
-                    </div>
-                    <div className="text-xs text-text-secondary truncate">
-                      {item.desc}
-                    </div>
-                    <div className="mt-1 text-xs text-text-tertiary">
-                      {item.time}
-                    </div>
+                    <div className="text-sm font-medium text-text">{item.title}</div>
+                    <div className="text-xs text-text-secondary truncate">{item.desc}</div>
+                    <div className="mt-1 text-xs text-text-tertiary">{item.time}</div>
                   </div>
                 </div>
               </Section>
@@ -121,9 +108,7 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
             </h3>
             <Section role="Container" prominence="Tertiary" className="p-2">
               <div className="text-sm text-text-secondary">
-                <div className="mb-2 text-xs text-text-tertiary">
-                  Modified (3)
-                </div>
+                <div className="mb-2 text-xs text-text-tertiary">Modified (3)</div>
                 <div className="space-y-1 font-mono text-xs">
                   <div>src/App.tsx</div>
                   <div>src/components/ui/layer.tsx</div>
@@ -139,9 +124,7 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
             <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-tertiary">
               Team Chat
             </h3>
-            <div className="text-center text-text-tertiary text-sm py-6">
-              No messages yet
-            </div>
+            <div className="text-center text-text-tertiary text-sm py-6">No messages yet</div>
           </div>
         )}
 
@@ -157,9 +140,7 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
                   <div className="text-text-tertiary">2 minutes ago</div>
                 </div>
                 <div>
-                  <div className="font-medium text-text">
-                    Created layer.tsx
-                  </div>
+                  <div className="font-medium text-text">Created layer.tsx</div>
                   <div className="text-text-tertiary">5 minutes ago</div>
                 </div>
               </div>

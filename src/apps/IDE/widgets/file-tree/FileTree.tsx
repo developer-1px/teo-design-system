@@ -1,17 +1,17 @@
 import {
-  ChevronRight,
   ChevronDown,
-  Folder,
-  FolderOpen,
+  ChevronRight,
   File,
   FileCode,
   FileJson,
-  FileType,
   FileText,
+  FileType,
+  Folder,
+  FolderOpen,
 } from 'lucide-react';
-import { cn } from '@/lib/utils.ts';
-import { useTreeNavigation, TreeNode } from '@/lib/keyboard/useTreeNavigation.ts';
 import { useMemo } from 'react';
+import { type TreeNode, useTreeNavigation } from '@/shared/lib/keyboard/useTreeNavigation.ts';
+import { cn } from '@/shared/lib/utils';
 
 export interface FileNode {
   name: string;
@@ -92,11 +92,7 @@ export const FileTree = ({ data, onFileClick }: FileTreeProps) => {
   });
 
   if (!data || data.length === 0) {
-    return (
-      <div className="py-2 px-3 text-sm text-text-tertiary">
-        No files found
-      </div>
-    );
+    return <div className="py-2 px-3 text-sm text-text-tertiary">No files found</div>;
   }
 
   return (

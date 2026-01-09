@@ -33,7 +33,21 @@ function getComponentName(fiber: Fiber): string {
     return type.displayName || type.name || 'Anonymous';
   }
 
-  // React 내장 타입
+  // React 내장 타입 (Context.Provider 등)
+  if (typeof type === 'object' && type !== null) {
+    // Context Provider/Consumer
+    if (type.$$typeof) {
+      const symbolString = String(type.$$typeof);
+      if (symbolString.includes('context')) {
+        // Context에서 이름 추출 시도
+        const contextName = type._context?.displayName;
+        if (contextName) return contextName;
+        return 'Provider'; // 또는 'Consumer'
+      }
+    }
+  }
+
+  // React Symbol 타입
   if (typeof type === 'symbol') {
     const symbolString = type.toString();
     if (symbolString.includes('Fragment')) return 'Fragment';
@@ -78,7 +92,8 @@ function propsToString(props: any): string {
       key === 'className' || // HTML 관련 제외
       key.startsWith('data-') || // HTML data attributes 제외
       key.startsWith('aria-') // HTML aria attributes 제외
-    ) continue;
+    )
+      continue;
 
     const value = props[key];
 
@@ -88,7 +103,8 @@ function propsToString(props: any): string {
       typeof value === 'object' ||
       value === undefined ||
       value === null
-    ) continue;
+    )
+      continue;
 
     // IDDL 관련 중요한 props만 포함
     if (
@@ -153,8 +169,10 @@ function shouldRenderFiber(fiber: Fiber): boolean {
   // React 내부 컴포넌트는 스킵
   if (name.startsWith('React.')) return false;
 
-  // Context Provider/Consumer는 스킵 (의미 없음)
-  if (name === 'Provider' || name === 'Consumer') return false;
+  // Context Provider/Consumer는 스킵하되 자식은 표시
+  if (name === 'Provider' || name === 'Consumer') {
+    return false; // 자식만 렌더링
+  }
 
   // Unknown, Anonymous 컴포넌트는 스킵 (자식만 렌더링)
   if (name === 'Unknown' || name === 'Anonymous') return false;
@@ -208,7 +226,7 @@ function fiberToJSX(fiber: Fiber | null, depth: number = 0): string {
       result += `${indent}</${name}>\n`;
     }
   } else {
-    // Fragment 같은 경우 자식만 렌더링
+    // Fragment, Unknown, Anonymous 같은 경우 자식만 렌더링 (depth 유지)
     let child = fiber.child;
     while (child) {
       result += fiberToJSX(child, depth);
@@ -216,6 +234,7 @@ function fiberToJSX(fiber: Fiber | null, depth: number = 0): string {
     }
   }
 
+  // Sibling 처리는 while loop에서 이미 처리되므로 여기서는 하지 않음
   return result;
 }
 
@@ -231,9 +250,7 @@ export function inspectReactTree(): string {
     }
 
     // React Fiber Root 찾기
-    const fiberKey = Object.keys(rootElement).find(key =>
-      key.startsWith('__react')
-    );
+    const fiberKey = Object.keys(rootElement).find((key) => key.startsWith('__react'));
 
     if (!fiberKey) {
       return '// Error: React Fiber not found (is this a React app?)';
@@ -244,6 +261,7 @@ export function inspectReactTree(): string {
     // Fiber 트리의 시작점 찾기
     let fiber: Fiber | null = null;
 
+    // React 19 구조 탐색 (여러 경로 시도)
     if (fiberRoot?.child) {
       fiber = fiberRoot.child;
     } else if (fiberRoot?.current) {
@@ -259,13 +277,36 @@ export function inspectReactTree(): string {
     }
 
     if (!fiber) {
-      return '// Error: Could not find React Fiber root node';
+      return (
+        '// Error: Could not find React Fiber root node\n// fiberRoot keys: ' +
+        Object.keys(fiberRoot || {}).join(', ')
+      );
     }
 
-    // JSX 변환 시작
-    const jsx = fiberToJSX(fiber);
-    return jsx || '// Error: Empty tree';
+    // Fiber가 HostRoot면 child로 이동
+    if (fiber.child && !shouldRenderFiber(fiber)) {
+      fiber = fiber.child;
+    }
 
+    // JSX 변환 시작 (depth 0부터)
+    const jsx = fiberToJSX(fiber, 0);
+
+    if (!jsx || jsx.trim() === '') {
+      // 디버깅 정보 출력
+      let debugInfo = '// Error: Empty tree\n';
+      debugInfo += '// Root fiber type: ' + typeof fiber?.type + '\n';
+      debugInfo += '// Root component name: ' + getComponentName(fiber) + '\n';
+      debugInfo += '// Has child: ' + !!fiber?.child + '\n';
+
+      if (fiber?.child) {
+        debugInfo += '// Child type: ' + typeof fiber.child.type + '\n';
+        debugInfo += '// Child name: ' + getComponentName(fiber.child) + '\n';
+      }
+
+      return debugInfo;
+    }
+
+    return jsx;
   } catch (error: any) {
     return `// Error: ${error.message}\n// Stack: ${error.stack}`;
   }

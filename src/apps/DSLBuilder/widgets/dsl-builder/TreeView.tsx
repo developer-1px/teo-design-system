@@ -5,24 +5,24 @@
  * 키보드 네비게이션 지원 (Arrow keys, Enter, Space)
  */
 
-import { useState, useMemo } from 'react';
-import { cn } from '@/lib/utils.ts';
-import {
-  ChevronRight,
-  ChevronDown,
-  Plus,
-  FileText,
-  Layout,
-  Box,
-  Folder,
-  Type,
-  FormInput,
-  MousePointerClick,
-  Layers,
-} from 'lucide-react';
-import type { AnyDSLNode, DSLNodeType } from '@/lib/dsl-builder/types.ts';
 import type { LucideIcon } from 'lucide-react';
-import { useTreeNavigation, type TreeNode as KeyboardTreeNode } from '@/lib/keyboard';
+import {
+  Box,
+  ChevronDown,
+  ChevronRight,
+  FileText,
+  Folder,
+  FormInput,
+  Layers,
+  Layout,
+  MousePointerClick,
+  Plus,
+  Type,
+} from 'lucide-react';
+import { useMemo, useState } from 'react';
+import type { AnyDSLNode, DSLNodeType } from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
+import { type TreeNode as KeyboardTreeNode, useTreeNavigation } from '@/shared/lib/keyboard';
+import { cn } from '@/shared/lib/utils';
 
 export interface TreeViewProps {
   tree: AnyDSLNode;
@@ -70,7 +70,8 @@ function convertToKeyboardTreeNode(node: AnyDSLNode): KeyboardTreeNode {
     id: node.id,
     name: nodeLabels[node.type],
     type: hasChildren ? 'folder' : 'file',
-    children: (hasChildren && node.children) ? node.children.map(convertToKeyboardTreeNode) : undefined,
+    children:
+      hasChildren && node.children ? node.children.map(convertToKeyboardTreeNode) : undefined,
   };
 }
 
@@ -93,13 +94,7 @@ function flattenDSLTree(
   return result;
 }
 
-export function TreeView({
-  tree,
-  selectedId,
-  onSelect,
-  onAddChild,
-  onMove,
-}: TreeViewProps) {
+export function TreeView({ tree, selectedId, onSelect, onAddChild, onMove }: TreeViewProps) {
   const [draggedNode, setDraggedNode] = useState<AnyDSLNode | null>(null);
   const [showAddMenu, setShowAddMenu] = useState<string | null>(null);
 
@@ -129,10 +124,7 @@ export function TreeView({
   });
 
   // Flatten DSL tree for rendering
-  const flatDSLNodes = useMemo(
-    () => flattenDSLTree(tree, openFolderIds),
-    [tree, openFolderIds]
-  );
+  const flatDSLNodes = useMemo(() => flattenDSLTree(tree, openFolderIds), [tree, openFolderIds]);
 
   const handleDragStart = (node: AnyDSLNode) => {
     setDraggedNode(node);
@@ -212,11 +204,7 @@ export function TreeView({
                 }}
                 className="p-0.5 hover:bg-black/10 rounded"
               >
-                {isExpanded ? (
-                  <ChevronDown size={12} />
-                ) : (
-                  <ChevronRight size={12} />
-                )}
+                {isExpanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
               </button>
             ) : (
               <div className="w-4" />

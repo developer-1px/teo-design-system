@@ -9,19 +9,19 @@
  * - 반응형 뷰포트
  */
 
-import { Group } from '@/components/dsl/Group';
-import { Action } from '@/components/dsl/Action';
 import {
-  ZoomIn,
-  ZoomOut,
-  Maximize2,
   Grid3x3,
+  Maximize2,
+  Monitor,
   Paintbrush,
+  Ruler,
   Smartphone,
   Tablet,
-  Monitor,
-  Ruler
+  ZoomIn,
+  ZoomOut,
 } from 'lucide-react';
+import { Action } from '@/components/Item/Action/Action';
+import { Group } from '@/components/Group/Group.tsx';
 
 export type BackgroundType = 'transparent' | 'light' | 'dark' | 'grid';
 export type ViewportSize = 'mobile' | 'tablet' | 'desktop' | 'full';
@@ -52,7 +52,12 @@ export function Toolbar({
   onMeasureToggle,
 }: ToolbarProps) {
   return (
-    <Group role="Toolbar" layout="inline" density="Compact" className="px-4 py-2 border-b border-default">
+    <Group
+      role="Toolbar"
+      layout="inline"
+      density="Compact"
+      className="px-4 py-2 border-b border-default"
+    >
       {/* Zoom Controls */}
       <Group role="Toolbar" layout="inline" className="gap-1">
         <Action
@@ -109,12 +114,11 @@ export function Toolbar({
         <button
           onClick={() => onBackgroundChange('transparent')}
           className={`w-6 h-6 rounded border-2 transition-all ${
-            background === 'transparent'
-              ? 'border-primary'
-              : 'border-default hover:border-muted'
+            background === 'transparent' ? 'border-primary' : 'border-default hover:border-muted'
           }`}
           style={{
-            backgroundImage: 'linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc)',
+            backgroundImage:
+              'linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc)',
             backgroundSize: '8px 8px',
             backgroundPosition: '0 0, 4px 4px',
           }}
@@ -123,9 +127,7 @@ export function Toolbar({
         <button
           onClick={onGridToggle}
           className={`p-1 rounded transition-colors ${
-            showGrid
-              ? 'bg-primary text-inverse'
-              : 'text-muted hover:text hover:bg-surface-sunken'
+            showGrid ? 'bg-primary text-inverse' : 'text-muted hover:text hover:bg-surface-sunken'
           }`}
           title="Toggle grid"
         >
@@ -189,9 +191,7 @@ export function Toolbar({
       <button
         onClick={onMeasureToggle}
         className={`p-1 rounded transition-colors ${
-          showMeasure
-            ? 'bg-primary text-inverse'
-            : 'text-muted hover:text hover:bg-surface-sunken'
+          showMeasure ? 'bg-primary text-inverse' : 'text-muted hover:text hover:bg-surface-sunken'
         }`}
         title="Toggle measure"
       >

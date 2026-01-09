@@ -3,18 +3,24 @@
  */
 
 import { useState } from 'react';
-import { Page, Section, Group, Text, Field, Action, Overlay } from '@/components/dsl';
+import { Action } from '@/components/Item/Action/Action';
+import { Field } from '@/components/Item/Field/Field';
+import { Group } from '@/components/Group/Group';
+import { Overlay } from '@/components/Overlay/Overlay';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Text } from '@/components/Item/Text/Text';
 import type {
+  ActionNode,
   AnyDSLNode,
+  FieldNode,
+  GroupNode,
+  OverlayNode,
   PageNode,
   RegionNode,
   SectionNode,
-  GroupNode,
   TextNode,
-  FieldNode,
-  ActionNode,
-  OverlayNode,
-} from '@/lib/dsl-builder/types.ts';
+} from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
 
 // 노드 경로 정보
 export interface NodePath {
@@ -41,9 +47,7 @@ function renderNode(
 ): React.ReactNode {
   const isSelected = node.id === selectedId;
   const isHovered = node.id === hoveredNodeId;
-  const highlightClass = isSelected
-    ? 'outline outline-2 outline-accent outline-offset-2'
-    : '';
+  const highlightClass = isSelected ? 'outline outline-2 outline-accent outline-offset-2' : '';
 
   // 현재 노드의 경로 정보 생성
   const currentPath: NodePath = {

@@ -7,9 +7,9 @@
  * - 인터랙션 요소 제거 (클릭, 줌, 키보드 힌트 등)
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Text } from '@/components/dsl/Text';
-import { slideContentToDSL } from '@/utils/markdown-to-dsl';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Item/Text/Text';
+import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
 import type { Slide } from './SlideList';
 
 interface SlidePreviewProps {

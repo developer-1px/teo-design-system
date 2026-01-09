@@ -15,12 +15,17 @@
  * - Section[Main]: 데이터 테이블
  */
 
+import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
-import { type ColumnDef } from '@tanstack/react-table';
-import { Page, Section, Group, Field, Action, Text } from '@/components/dsl';
-import { DataTable } from '@/components/ui/DataTable';
-import { Badge } from '@/components/ui';
 import { JsonSchemaSidebarDSL } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL';
+import { Action } from '@/components/Item/Action/Action';
+import { Field } from '@/components/Item/Field/Field';
+import { Group } from '@/components/Group/Group';
+import { DataTable } from '@/components/Group/role/DataTable.tsx';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Badge } from '@/components/Item/Text/role/Badge';
+import { Text } from '@/components/Item/Text/Text';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
@@ -41,10 +46,10 @@ export const ServerProductsViewDSL = () => {
   const [visibleColumns, setVisibleColumns] = useState<string[]>([]);
 
   const [jsonData] = useState<JsonArray>(() => {
-    const firstArrayKey = Object.keys(testData).find(key =>
+    const firstArrayKey = Object.keys(testData).find((key) =>
       Array.isArray((testData as JsonObject)[key])
     );
-    return firstArrayKey ? (testData as JsonObject)[firstArrayKey] as JsonArray : [];
+    return firstArrayKey ? ((testData as JsonObject)[firstArrayKey] as JsonArray) : [];
   });
 
   // Column Keys (available columns from data)
@@ -127,9 +132,7 @@ export const ServerProductsViewDSL = () => {
 
         // IDDL Text로 렌더링
         if (value === null) {
-          return (
-            <Text role="Caption" prominence="Tertiary" className="italic" content="null" />
-          );
+          return <Text role="Caption" prominence="Tertiary" className="italic" content="null" />;
         }
         if (value === undefined) {
           return (
@@ -138,23 +141,29 @@ export const ServerProductsViewDSL = () => {
         }
         if (typeof value === 'boolean') {
           return (
-            <Text role="Body" prominence="Primary" className="text-accent" content={String(value)} />
+            <Text
+              role="Body"
+              prominence="Primary"
+              className="text-accent"
+              content={String(value)}
+            />
           );
         }
         if (typeof value === 'number') {
-          return (
-            <Text role="Body" prominence="Primary" content={String(value)} />
-          );
+          return <Text role="Body" prominence="Primary" content={String(value)} />;
         }
         if (typeof value === 'object') {
           return (
-            <Text role="Caption" prominence="Tertiary" className="font-mono" content={JSON.stringify(value)} />
+            <Text
+              role="Caption"
+              prominence="Tertiary"
+              className="font-mono"
+              content={JSON.stringify(value)}
+            />
           );
         }
 
-        return (
-          <Text role="Body" prominence="Primary" content={String(value)} />
-        );
+        return <Text role="Body" prominence="Primary" content={String(value)} />;
       },
     }));
   }, [data, visibleColumns]);
@@ -163,9 +172,7 @@ export const ServerProductsViewDSL = () => {
     <Page>
       <Section role="Container" className="flex flex-1 h-full gap-0 overflow-hidden">
         {/* Sidebar - Schema */}
-        {showSidebar && (
-          <JsonSchemaSidebarDSL data={data} interfaceName="Item" />
-        )}
+        {showSidebar && <JsonSchemaSidebarDSL data={data} interfaceName="Item" />}
 
         {/* Main Content Area */}
         <Section
@@ -174,15 +181,17 @@ export const ServerProductsViewDSL = () => {
           className="flex flex-col flex-1 h-full bg-layer-2-cool boundary-shadow-left rounded-md"
         >
           {/* Notion-style Control Bar */}
-          <Section
-            role="Header"
-            className="border-b border-border bg-layer-3"
-          >
-            <Group role="Toolbar" layout="inline" density="Compact" className="h-12 items-center justify-between px-3">
+          <Section role="Header" className="border-b border-border bg-layer-3">
+            <Group
+              role="Toolbar"
+              layout="inline"
+              density="Compact"
+              className="h-12 items-center justify-between px-3"
+            >
               {/* Left: Sidebar Toggle + Search + Filter */}
               <Group role="Toolbar" layout="inline" density="Compact" className="gap-2 flex-1">
                 <Action
-                  icon={showSidebar ? "PanelLeftClose" : "PanelLeft"}
+                  icon={showSidebar ? 'PanelLeftClose' : 'PanelLeft'}
                   prominence="Tertiary"
                   intent="Neutral"
                   onClick={() => setShowSidebar(!showSidebar)}
@@ -196,7 +205,9 @@ export const ServerProductsViewDSL = () => {
                   prominence="Secondary"
                   clearable
                   value={searchQuery}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSearchQuery(e.target.value)
+                  }
                   className="w-64"
                 />
 
@@ -205,12 +216,11 @@ export const ServerProductsViewDSL = () => {
                   model="filterColumn"
                   dataType="select"
                   prominence="Secondary"
-                  options={[
-                    { label: 'All columns', value: '' },
-                    ...columnOptions,
-                  ]}
+                  options={[{ label: 'All columns', value: '' }, ...columnOptions]}
                   value={filterColumn}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterColumn(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                    setFilterColumn(e.target.value)
+                  }
                   className="w-40"
                 />
               </Group>
@@ -227,23 +237,29 @@ export const ServerProductsViewDSL = () => {
                     { label: 'Tree', value: 'tree' },
                   ]}
                   value={viewType}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setViewType(e.target.value as 'table' | 'json' | 'tree')}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setViewType(e.target.value as 'table' | 'json' | 'tree')
+                  }
                 />
               </Group>
 
               {/* Right: Sort + Density */}
-              <Group role="Toolbar" layout="inline" density="Compact" className="gap-2 flex-1 justify-end">
+              <Group
+                role="Toolbar"
+                layout="inline"
+                density="Compact"
+                className="gap-2 flex-1 justify-end"
+              >
                 <Field
                   label="Sort by"
                   model="sortColumn"
                   dataType="select"
                   prominence="Secondary"
-                  options={[
-                    { label: 'None', value: '' },
-                    ...columnOptions,
-                  ]}
+                  options={[{ label: 'None', value: '' }, ...columnOptions]}
                   value={sortColumn}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortColumn(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                    setSortColumn(e.target.value)
+                  }
                   className="w-36"
                 />
 
@@ -256,11 +272,13 @@ export const ServerProductsViewDSL = () => {
                     { label: '↓', value: 'desc' },
                   ]}
                   value={sortDirection}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSortDirection(e.target.value as 'asc' | 'desc')}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSortDirection(e.target.value as 'asc' | 'desc')
+                  }
                 />
 
                 <Action
-                  icon={density === 'compact' ? "Maximize2" : "Minimize2"}
+                  icon={density === 'compact' ? 'Maximize2' : 'Minimize2'}
                   prominence="Tertiary"
                   intent="Neutral"
                   onClick={() => setDensity(density === 'compact' ? 'normal' : 'compact')}
@@ -271,7 +289,12 @@ export const ServerProductsViewDSL = () => {
           </Section>
 
           {/* Stats Bar */}
-          <Group role="Container" layout="inline" density="Compact" className="gap-2 px-3 py-2 bg-layer-2 border-b border-border">
+          <Group
+            role="Container"
+            layout="inline"
+            density="Compact"
+            className="gap-2 px-3 py-2 bg-layer-2 border-b border-border"
+          >
             <Badge variant="default" size="sm">
               {data.length} rows
             </Badge>

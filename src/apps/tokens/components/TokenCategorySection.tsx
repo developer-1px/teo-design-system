@@ -5,13 +5,13 @@
  * 전체 스크롤 페이지에서 사용되는 섹션 컴포넌트
  */
 
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
+import type { TokenCategory } from '@/apps/tokens/parser/types';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Item/Text/Text';
 import { ColorToken } from './ColorToken';
-import { SpacingToken } from './SpacingToken';
 import { RadiusToken } from './RadiusToken';
 import { ShadowToken } from './ShadowToken';
-import type { TokenCategory } from '@/apps/tokens/parser/types';
+import { SpacingToken } from './SpacingToken';
 
 export function TokenCategorySection({ category }: { category: TokenCategory }) {
   return (

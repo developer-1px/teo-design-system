@@ -5,11 +5,14 @@
  */
 
 import { useMemo, useState } from 'react';
-import { Page, Section, Group, Text } from '@/components/dsl';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui';
-import { DatabaseViewer } from '@/components/database';
+import { Group } from '@/components/Group/Group';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Group/role/Tabs';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Text } from '@/components/Item/Text/Text';
+import { DatabaseViewer } from '@/apps/JSON/widgets/database/DatabaseViewer';
+import type { JsonArray, JsonObject } from '@/apps/JSON/widgets/database/types';
 import testData from '@/test.json';
-import type { JsonObject, JsonArray } from '@/components/database';
 
 export const JSONPage = () => {
   // test.json에서 모든 배열 키 찾기
@@ -58,13 +61,27 @@ export const JSONPage = () => {
         {/* Header */}
         <Section prominence="Primary" className="border-b border-border bg-layer-2">
           <Group role="Container" className="px-6 py-4 gap-2">
-            <Text role="Title" prominence="Hero" className="text-2xl font-bold" content="JSON Database Viewer" />
-            <Text role="Body" prominence="Secondary" className="text-text-secondary" content={`${arrayDatasets.length}개의 데이터셋을 Notion 스타일로 표시`} />
+            <Text
+              role="Title"
+              prominence="Hero"
+              className="text-2xl font-bold"
+              content="JSON Database Viewer"
+            />
+            <Text
+              role="Body"
+              prominence="Secondary"
+              className="text-text-secondary"
+              content={`${arrayDatasets.length}개의 데이터셋을 Notion 스타일로 표시`}
+            />
           </Group>
         </Section>
 
         {/* Tabs for each array dataset */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="flex-1 flex flex-col min-h-0"
+        >
           <Section prominence="Primary" className="border-b border-border bg-layer-2">
             <TabsList className="px-6">
               {arrayDatasets.map((dataset) => (

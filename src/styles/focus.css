@@ -85,8 +85,8 @@ select:focus-visible {
 /**
  * 리스트에서 키보드로 선택된 항목
  */
-[role='option'][aria-selected='true'],
-[role='menuitem'][aria-selected='true'] {
+[role="option"][aria-selected="true"],
+[role="menuitem"][aria-selected="true"] {
   background-color: rgb(var(--accent-subtle));
   color: rgb(var(--text-primary));
 }
@@ -94,8 +94,8 @@ select:focus-visible {
 /**
  * 현재 포커스된 리스트 항목
  */
-[role='option']:focus,
-[role='menuitem']:focus {
+[role="option"]:focus,
+[role="menuitem"]:focus {
   background-color: rgb(var(--layer-2));
   outline: 2px solid rgb(var(--accent));
   outline-offset: -2px;
@@ -127,7 +127,7 @@ body.focus-trap-active {
 /**
  * IconButton에 포커스 시
  */
-[data-component='icon-button']:focus-visible {
+[data-component="icon-button"]:focus-visible {
   outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
   outline-offset: var(--focus-ring-offset);
   border-radius: var(--radius-md);
@@ -136,7 +136,7 @@ body.focus-trap-active {
 /**
  * Tab에 포커스 시
  */
-[role='tab']:focus-visible {
+[role="tab"]:focus-visible {
   outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
   outline-offset: -2px; /* Tab은 내부 outline */
   border-radius: var(--radius-md);
@@ -145,8 +145,8 @@ body.focus-trap-active {
 /**
  * Checkbox, Radio에 포커스 시
  */
-input[type='checkbox']:focus-visible,
-input[type='radio']:focus-visible {
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
   outline: var(--focus-ring-width) solid rgb(var(--focus-ring-color));
   outline-offset: 2px;
 }
@@ -195,7 +195,7 @@ input[type='radio']:focus-visible {
   display: inline-block;
   padding: 2px 6px;
   font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   line-height: 1;
   color: rgb(var(--text-secondary));
   background-color: rgb(var(--layer-1));
@@ -205,7 +205,7 @@ input[type='radio']:focus-visible {
 }
 
 /* Dark mode */
-[data-theme='dark'] .kbd {
+[data-theme="dark"] .kbd {
   box-shadow: none;
 }
 

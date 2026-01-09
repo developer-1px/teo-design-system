@@ -6,16 +6,16 @@
  * 전체 스크롤 방식으로 모든 토큰을 한 페이지에 표시
  */
 
-import { useState, useEffect, useMemo } from 'react';
-import { Page } from '@/components/dsl/Page';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
-import { Field } from '@/components/dsl/Field';
-import { parseCSSTokens } from '@/apps/tokens/parser/cssParser';
+import { useEffect, useMemo, useState } from 'react';
 import { TokenCategorySection } from '@/apps/tokens/components/TokenCategorySection';
 import { TokenTableOfContents } from '@/apps/tokens/components/TokenTableOfContents';
+import { parseCSSTokens } from '@/apps/tokens/parser/cssParser';
 import type { TokenCategory } from '@/apps/tokens/parser/types';
+import { Field } from '@/components/Item/Field/Field';
+import { Group } from '@/components/Group/Group.tsx';
+import { Page } from '@/components/Page/Page.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Item/Text/Text';
 
 // import.meta.glob으로 themes.css 로드
 const cssModules = import.meta.glob('/src/styles/themes.css', {
@@ -44,7 +44,10 @@ export function TokensApp() {
           // CSS 파싱
           const parsed = parseCSSTokens(cssContent);
           console.log(`[TokensApp] ✅ Parsed ${parsed.length} categories`);
-          console.log('[TokensApp] Categories:', parsed.map((c) => c.name));
+          console.log(
+            '[TokensApp] Categories:',
+            parsed.map((c) => c.name)
+          );
 
           setCategories(parsed);
         }
@@ -106,7 +109,12 @@ export function TokensApp() {
     return {
       total: totalTokens,
       byTier: { primitive: primitiveCount, semantic: semanticCount, component: componentCount },
-      byType: { color: colorCount, spacing: spacingCount, radius: radiusCount, shadow: shadowCount },
+      byType: {
+        color: colorCount,
+        spacing: spacingCount,
+        radius: radiusCount,
+        shadow: shadowCount,
+      },
     };
   }, [categories]);
 
