@@ -44,9 +44,9 @@ export const TopToolbar = ({
   const [showRunMenu, setShowRunMenu] = useState(false);
 
   return (
-    <Section role="Header" prominence="Hero" className="flex h-10 items-center px-3 gap-2">
+    <Section role="Header" prominence="Hero" layout="flex" direction="horizontal" align="center" padding="sm" gap="xs" height="40">
       {/* 1. Main Menu (Hamburger) */}
-      <div className="relative">
+      <Group role="Dropdown" position="relative">
         <Action
           role="IconButton"
           icon="Menu"
@@ -60,24 +60,29 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-            className="absolute top-full left-0 mt-1 w-56 py-1 z-50"
+            position="absolute"
+            top="full"
+            left="0"
+            width="224"
+            padding="xs"
+            elevation="high"
           >
             <MainMenuContent />
           </Section>
         )}
-      </div>
+      </Group>
 
       {/* 2. Project Widget */}
-      <div className="relative">
+      <Group role="Dropdown" position="relative">
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2"
+          gap="xs"
           onClick={() => setShowProjectMenu(!showProjectMenu)}
           onBlur={() => setTimeout(() => setShowProjectMenu(false), 200)}
         >
           <FolderOpenIcon size={16} />
-          <span className="font-medium">{projectName}</span>
+          <Text role="Body" prominence="Primary" content={projectName} />
           <ChevronDownIcon size={16} />
         </Button>
 
@@ -85,22 +90,27 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-            className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
+            position="absolute"
+            top="full"
+            left="0"
+            width="256"
+            padding="xs"
+            elevation="high"
           >
             <ProjectMenuContent />
           </Section>
         )}
-      </div>
+      </Group>
 
       {/* Divider */}
-      <div className="h-6 w-px bg-border" />
+      <Group role="Divider" orientation="vertical" height="24" />
 
       {/* 3. VCS Widget */}
-      <div className="relative">
+      <Group role="Dropdown" position="relative">
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2"
+          gap="xs"
           onClick={() => setShowVcsMenu(!showVcsMenu)}
           onBlur={() => setTimeout(() => setShowVcsMenu(false), 200)}
         >
@@ -113,19 +123,24 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-            className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
+            position="absolute"
+            top="full"
+            left="0"
+            width="256"
+            padding="xs"
+            elevation="high"
           >
             <VcsMenuContent />
           </Section>
         )}
-      </div>
+      </Group>
 
       {/* 4. Run Widget */}
-      <div className="relative">
+      <Group role="Dropdown" position="relative">
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2"
+          gap="xs"
           onClick={() => setShowRunMenu(!showRunMenu)}
           onBlur={() => setTimeout(() => setShowRunMenu(false), 200)}
         >
@@ -138,18 +153,23 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-            className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
+            position="absolute"
+            top="full"
+            left="0"
+            width="256"
+            padding="xs"
+            elevation="high"
           >
             <RunMenuContent />
           </Section>
         )}
-      </div>
+      </Group>
 
       {/* Spacer */}
-      <div className="flex-1" />
+      <Group role="Spacer" flex="1" />
 
       {/* Right Side Actions */}
-      <div className="flex items-center gap-1">
+      <Group role="Toolbar" direction="horizontal" align="center" gap="xs">
         {/* Panel Toggles */}
         {onToggleRightSidebar && (
           <Action
@@ -163,7 +183,7 @@ export const TopToolbar = ({
         )}
 
         {/* Divider */}
-        <div className="h-6 w-px bg-border mx-1" />
+        <Group role="Divider" orientation="vertical" height="24" margin="xs" />
 
         {/* Theme Toggle */}
         <ThemeToggleButton />
@@ -176,7 +196,7 @@ export const TopToolbar = ({
           density="Compact"
           onClick={onOpenSettings}
         />
-      </div>
+      </Group>
     </Section>
   );
 };

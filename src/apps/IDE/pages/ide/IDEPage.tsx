@@ -1,15 +1,15 @@
 /**
  * IDEPage - IDDL 기반 IDE 애플리케이션
  *
- * IDDL Structure (v4.0):
- * - Page role="App": 전체 애플리케이션 루트 (w-screen h-screen overflow-hidden)
+ * IDDL Structure (v5.0):
+ * - Page role="Application" layout="Studio": 전체 애플리케이션 루트
  *   - Section role="ActivityBar": 좌측 워크스페이스 네비게이션
  *   - Section role="PrimarySidebar": 파일 트리 사이드바
  *   - Section role="Editor": 에디터 영역
  *     - Group role="Container": 에디터 탭 + 코드 에디터
- *     - BottomPanel: 터미널
- *   - Section role="SecondarySidebar": 우측 사이드바
- *   - Section role="ActivityBar": 우측 네비게이션
+ *     - BottomPanel: 터미널/출력 패널
+ *   - Section role="SecondarySidebar": 우측 사이드바 (RightBar)
+ *   - Section role="Auxiliary": 우측 네비게이션 (RightNav)
  */
 
 import { useEffect, useState } from 'react';
@@ -169,7 +169,7 @@ export const IDEPage = () => {
       </Section>
 
       {/* IDDL Section[SecondarySidebar]: Right Sidebar */}
-      <Section role="Panel">
+      <Section role="SecondarySidebar">
         <RightBar
           view={rightPanelView}
           projectName="ide-ui-kit"
@@ -178,8 +178,8 @@ export const IDEPage = () => {
         />
       </Section>
 
-      {/* IDDL Section[ActivityBar]: Right Navigation */}
-      <Section role="SecondarySidebar">
+      {/* IDDL Section[Auxiliary]: Right Navigation */}
+      <Section role="Auxiliary">
         <RightNav onViewChange={setRightPanelView} onClose={() => setRightPanelView(null)} />
       </Section>
 
