@@ -145,13 +145,11 @@ export const PPTPage = () => {
 
   const handleSlidesCopy = (slidesToCopy: Slide[]) => {
     setClipboard([...slidesToCopy]);
-    console.log('[PPT] Copied', slidesToCopy.length, 'slides');
   };
 
   const handleSlidesCut = (slidesToCut: Slide[]) => {
     setClipboard([...slidesToCut]);
     handleSlidesDelete(slidesToCut);
-    console.log('[PPT] Cut', slidesToCut.length, 'slides');
   };
 
   const handleSlidesPaste = () => {
@@ -165,11 +163,10 @@ export const PPTPage = () => {
     }));
 
     setSlides([...slides, ...newSlides]);
-    console.log('[PPT] Pasted', newSlides.length, 'slides');
   };
 
   return (
-    <Page role="App" template="3-col" density="Compact">
+    <Page role="Application" layout="HolyGrail" density="Compact">
       {/* Header: Presentation Toolbar */}
       <Section role="Header">
         <PresentationToolbar

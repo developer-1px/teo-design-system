@@ -88,6 +88,8 @@ export function Accordion({
   children,
   className,
   computedDensity,
+  computedProminence,
+  computedIntent,
   mode = 'single',
   defaultValue,
   value: controlledValue,

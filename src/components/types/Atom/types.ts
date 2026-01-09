@@ -75,35 +75,48 @@ export type Intent =
   | 'Info'; // 참고 정보 (Blue)
 
 /**
- * Page Role - 페이지 유형
- * v4.0: Page는 role에 따라 두 가지 모드로 동작
- * - 'Content': 스크롤 가능한 콘텐츠 페이지 (기본값)
- * - 'App': 전체 화면, 스크롤 없는 애플리케이션 레이아웃
+ * Page Role - 페이지 물리법칙 (스크롤과 뷰포트의 행동 법칙)
+ * v5.0: "이 페이지는 어떻게 움직이는가?"
+ * - 'Application': 전체 화면, 스크롤 없음 (w-screen h-screen overflow-hidden)
+ * - 'Document': 스크롤 가능한 문서 페이지 (min-height: 100vh, 브라우저 스크롤)
+ * - 'Focus': 중앙 집중형 (로그인, 결제 등, 화면 정중앙에 배치)
+ * - 'Fullscreen': 전체화면 고정 (프레젠테이션, 키오스크, 스크롤 불가)
  */
-export type PageRole = 'Content' | 'App';
+export type PageRole = 'Application' | 'Document' | 'Focus' | 'Fullscreen';
 
 /**
- * Page Props (v3.0) - Content Page Container
- * Scrollable, max-width constrained, content container
+ * Page Layout - 공간 분할 패턴 (Section들의 지정석)
+ * v5.0: GridTemplate을 대체, "공간을 어떻게 나누었는가?"
+ * - 'Single': Header + Container + Footer (1단 기본형)
+ * - 'Sidebar': Navigator(좌) + Container(우) (2단 좌측 메뉴형)
+ * - 'Aside': Container(좌) + Aside(우) (2단 우측 정보형)
+ * - 'HolyGrail': Header + Navigator + Container + Aside + Footer (3단 완전체)
+ * - 'Split': PanelLeft + PanelRight (5:5 분할형, master-detail)
+ * - 'Studio': ActivityBar + PrimarySidebar + Editor + Panel + SecondarySidebar (IDE 전용)
+ * - 'Blank': 빈 캔버스 (dialog, custom)
+ */
+export type PageLayout = 'Single' | 'Sidebar' | 'Aside' | 'HolyGrail' | 'Split' | 'Studio' | 'Blank';
+
+/**
+ * Page Props (v5.0) - Application Root Container
  * v1.0.1: title, description, layout, breadcrumbs, condition 추가
  * v2.0: role, prominence, density, intent, maxWidth, centered, navigation, scrollable, loading, error 추가
  * v3.0: main 태그 제거, layout 단순화 (flex/grid만 지원)
  * v3.1: as prop 추가 (커스텀 컴포넌트 주입)
  * v4.0: role 추가 (Content vs App)
+ * v5.0: role 값 확장 (Application/Document/Focus/Fullscreen), template→layout 통합, direction 제거
  */
 export interface PageProps extends AsProp {
-  // Role (v4.0)
-  role?: PageRole; // 'Content' (default, scrollable page) | 'App' (full-screen, overflow-hidden)
+  // Role (v5.0) - "이 페이지는 어떻게 움직이는가?" (스크롤 물리법칙)
+  role?: PageRole; // 'Application' | 'Document' (default) | 'Focus' | 'Fullscreen'
 
-  // Layout Control (v3.0 simplified)
-  layout?: 'flex' | 'grid'; // v3.0: PageLayout → 'flex'|'grid'로 단순화
-  direction?: 'row' | 'column'; // v3.0: flex only
-  template?: GridTemplate; // v3.0: grid only
+  // Layout (v5.0) - "공간을 어떻게 나누었는가?" (Section 배치)
+  layout?: PageLayout; // 'Single' | 'Sidebar' | 'Aside' | 'HolyGrail' | 'Split' | 'Studio' | 'Blank'
   gap?: number; // v3.0: spacing between sections
 
   // Constraints (v3.0)
-  maxWidth?: MaxWidth; // v2.0: 컨텐츠 최대 너비 (Content role만 적용)
-  centered?: boolean; // v2.0: 컨텐츠 중앙 정렬 여부 (Content role만 적용)
+  maxWidth?: MaxWidth; // v2.0: 컨텐츠 최대 너비 (Document role만 적용)
+  centered?: boolean; // v2.0: 컨텐츠 중앙 정렬 여부 (Document/Focus role만 적용)
 
   // Meta (optional)
   title?: string; // v1.0.1
@@ -111,7 +124,7 @@ export interface PageProps extends AsProp {
   breadcrumbs?: Breadcrumb[]; // v1.0.1
 
   // Design Tokens (v2.0: IDDL 일관성)
-  prominence?: Prominence; // v2.0: Hero/Primary/Secondary/Tertiary
+  prominence?: Prominence; // v2.0: Hero/Standard/Strong/Subtle
   density?: Density; // v2.0: Comfortable/Standard/Compact (자식에게 전파)
   intent?: Intent; // v2.0: Neutral/Brand/Positive/Caution/Critical/Info
 
@@ -124,6 +137,12 @@ export interface PageProps extends AsProp {
   className?: string;
   onClick?: (e: React.MouseEvent) => void;
   condition?: string; // v1.0.1: 조건부 렌더링
+
+  // Deprecated props (v5.0) - 하위 호환성을 위해 유지
+  /** @deprecated Use `layout` instead of `template` */
+  template?: GridTemplate;
+  /** @deprecated direction is now determined by `role` and `layout` props */
+  direction?: 'row' | 'column';
 }
 
 /**
@@ -515,8 +534,46 @@ export type SectionRole =
   | 'SplitContainer'; // @deprecated Use Main with layout="flex"
 
 /**
- * Template별 유효한 Section Role 매핑 (v4.0)
- * Page template에 따라 사용 가능한 Section role이 결정됨
+ * Layout별 유효한 Section Role 매핑 (v5.0)
+ * Page layout에 따라 사용 가능한 Section role이 결정됨
+ */
+export const LAYOUT_SECTION_ROLES: Record<PageLayout, SectionRole[]> = {
+  // Single: Header + Container + Footer (1단 기본형)
+  Single: ['Header', 'Container', 'Footer', 'Main'],
+
+  // Sidebar: Navigator(좌) + Container(우) (2단 좌측 메뉴형)
+  Sidebar: ['Header', 'Footer', 'Navigator', 'Container', 'Main'],
+
+  // Aside: Container(좌) + Aside(우) (2단 우측 정보형)
+  Aside: ['Header', 'Footer', 'Container', 'Aside', 'Main'],
+
+  // HolyGrail: Header + Navigator + Container + Aside + Footer (3단 완전체)
+  HolyGrail: ['Header', 'Footer', 'Navigator', 'Container', 'Aside', 'Main', 'Region'],
+
+  // Split: PanelLeft + PanelRight (5:5 분할형, master-detail)
+  Split: ['Header', 'Footer', 'Master', 'Detail', 'Toolbar', 'Container', 'Main'],
+
+  // Studio: ActivityBar + PrimarySidebar + Editor + Panel + SecondarySidebar (IDE 전용)
+  Studio: [
+    'Header',
+    'Footer',
+    'Toolbar',
+    'ActivityBar',
+    'PrimarySidebar',
+    'SecondarySidebar',
+    'Editor',
+    'Panel',
+    'Auxiliary',
+    'Container',
+    'Main',
+  ],
+
+  // Blank: 빈 캔버스 (dialog, custom)
+  Blank: ['Container', 'Main', 'DialogHeader', 'DialogContent', 'DialogFooter'],
+};
+
+/**
+ * @deprecated TEMPLATE_SECTION_ROLES는 v5.0에서 LAYOUT_SECTION_ROLES로 대체되었습니다.
  */
 export const TEMPLATE_SECTION_ROLES: Record<string, SectionRole[]> = {
   // Universal roles (모든 template에서 사용 가능)
@@ -524,44 +581,73 @@ export const TEMPLATE_SECTION_ROLES: Record<string, SectionRole[]> = {
 
   // IDE/Studio Layout
   studio: [
-    'Header', 'Footer', 'Main', 'Container', // Universal
-    'Toolbar', 'ActivityBar', 'PrimarySidebar', 'SecondarySidebar',
-    'Editor', 'Panel', 'Auxiliary'
+    'Header',
+    'Footer',
+    'Main',
+    'Container', // Universal
+    'Toolbar',
+    'ActivityBar',
+    'PrimarySidebar',
+    'SecondarySidebar',
+    'Editor',
+    'Panel',
+    'Auxiliary',
   ],
 
   // Web Standard (Sidebar + Content)
   'sidebar-content': [
-    'Header', 'Footer', 'Main', 'Container', // Universal
-    'Navigator', 'Aside', 'Search', 'Region'
+    'Header',
+    'Footer',
+    'Main',
+    'Container', // Universal
+    'Navigator',
+    'Aside',
+    'Search',
+    'Region',
   ],
 
   // Master-Detail (List + Detail View)
   'master-detail': [
-    'Header', 'Footer', 'Main', 'Container', // Universal
-    'Master', 'Detail', 'Toolbar'
+    'Header',
+    'Footer',
+    'Main',
+    'Container', // Universal
+    'Master',
+    'Detail',
+    'Toolbar',
   ],
 
   // Dashboard (Stats + Charts + Activity)
   dashboard: [
-    'Header', 'Footer', 'Main', 'Container', // Universal
-    'Region' // Named regions for stats/charts/activity
+    'Header',
+    'Footer',
+    'Main',
+    'Container', // Universal
+    'Region', // Named regions for stats/charts/activity
   ],
 
   // Dialog/Modal
-  dialog: [
-    'DialogHeader', 'DialogContent', 'DialogFooter'
-  ],
+  dialog: ['DialogHeader', 'DialogContent', 'DialogFooter'],
 
   // 3-column (Left + Center + Right)
   '3-col': [
-    'Header', 'Footer', 'Main', 'Container', // Universal
-    'Navigator', 'Aside', 'Region'
+    'Header',
+    'Footer',
+    'Main',
+    'Container', // Universal
+    'Navigator',
+    'Aside',
+    'Region',
   ],
 
   // Presentation (Slide List + Canvas + Format Sidebar)
   presentation: [
-    'Header', 'Footer', 'Main', 'Container', // Universal
-    'Navigator', 'Aside'
+    'Header',
+    'Footer',
+    'Main',
+    'Container', // Universal
+    'Navigator',
+    'Aside',
   ],
 };
 
@@ -672,5 +758,7 @@ export interface LayoutContextValue {
   intent?: Intent;
   depth: number;
   mode?: 'view' | 'edit'; // Field 렌더링 모드
-  template?: GridTemplate; // v4.0: Page template (for Section role validation)
+  layout?: PageLayout; // v5.0: Page layout (for Section role validation)
+  /** @deprecated Use `layout` instead */
+  template?: GridTemplate; // v4.0: Deprecated, use `layout`
 }

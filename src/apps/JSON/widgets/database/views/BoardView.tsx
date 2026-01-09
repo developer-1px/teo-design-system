@@ -4,6 +4,7 @@
  */
 
 import { useMemo } from 'react';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { Group } from '@/components/types/Group/Group.tsx';
 import { Card } from '@/components/types/Group/role/Card.tsx';
 import { Badge } from '@/components/types/Atom/Text/role/Badge.tsx';
@@ -35,27 +36,26 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
   }, [data, viewConfig.group]);
 
   return (
-    <div className="h-full overflow-x-auto">
-      <div className="flex gap-4 p-4 h-full">
+    <Section role="Container" layout="scroll-horizontal" padding="md">
+      <Group role="Board" direction="horizontal" gap="md">
         {groupedData.map(([groupName, items]) => (
-          <div key={groupName} className="flex-shrink-0 w-80 flex flex-col">
+          <Group key={groupName} role="Column" layout="flex" direction="column" width="320">
             {/* 컬럼 헤더 */}
-            <div className="flex items-center justify-between mb-3 px-2">
-              <Group role="Container" direction="horizontal" className="items-center gap-2">
+            <Group role="Header" direction="horizontal" align="center" justify="between" padding="sm">
+              <Group role="Container" direction="horizontal" align="center" gap="xs">
                 <Text
                   role="Title"
-                  prominence="Hero"
-                  className="font-semibold"
+                  prominence="Primary"
                   content={groupName}
                 />
                 <Badge variant="default" size="sm">
                   {items.length}
                 </Badge>
               </Group>
-            </div>
+            </Group>
 
             {/* 카드 리스트 */}
-            <div className="flex-1 overflow-y-auto space-y-2">
+            <Group role="List" layout="scroll" flex="1" gap="sm">
               {items.map((item, index) => {
                 const keys = Object.keys(item).slice(0, 5); // 처음 5개 필드만
 
@@ -63,37 +63,36 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                   <Card
                     key={index}
                     padding="sm"
-                    className="cursor-pointer hover:shadow-md transition-shadow"
+                    interactive
                   >
-                    <Group role="Container" className="gap-2">
+                    <Group role="Container" gap="xs">
                       {keys.map((key) => {
                         const value = item[key];
                         if (value === null || value === undefined) return null;
 
                         return (
-                          <div key={key} className="flex flex-col gap-1">
-                            <Text role="Label" className="text-xs text-subtle" content={key} />
+                          <Group key={key} role="Field" gap="xs">
+                            <Text role="Label" prominence="Subtle" content={key} />
                             <Text
                               role="Body"
-                              prominence="Hero"
-                              className="text-sm"
+                              prominence="Primary"
                               content={
                                 typeof value === 'object'
                                   ? JSON.stringify(value).substring(0, 30) + '...'
                                   : String(value)
                               }
                             />
-                          </div>
+                          </Group>
                         );
                       })}
                     </Group>
                   </Card>
                 );
               })}
-            </div>
-          </div>
+            </Group>
+          </Group>
         ))}
-      </div>
-    </div>
+      </Group>
+    </Section>
   );
 };

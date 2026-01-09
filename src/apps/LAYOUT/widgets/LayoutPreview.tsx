@@ -105,7 +105,7 @@ function PreviewContent({ template, sections }: { template: GridTemplate; sectio
   };
 
   return (
-    <Page role="App" template={template} gap={0} className="w-full h-full">
+    <Page role="Application" layout={template as any} gap={0} className="w-full h-full">
       {sections.map((sectionRole, index) => (
         <Section
           key={`${sectionRole}-${index}`}

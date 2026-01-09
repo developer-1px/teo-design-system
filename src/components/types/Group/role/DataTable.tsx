@@ -43,7 +43,6 @@ export function DataTable<TData, TValue>({
   onRowDoubleClick,
   clearSelection,
 }: DataTableProps<TData, TValue>) {
-  console.log('🗂️ [DataTable] Render:', { columnsCount: columns.length, dataCount: data.length, density });
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -81,7 +80,6 @@ export function DataTable<TData, TValue>({
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const { rows } = table.getRowModel();
 
-  console.log('🗂️ [DataTable] Table model:', { rowCount: rows.length, headerGroups: table.getHeaderGroups().length });
 
   // 검색/정렬이 변경되면 선택 초기화
   useEffect(() => {
@@ -108,7 +106,6 @@ export function DataTable<TData, TValue>({
     type: 'list',
     items: rows,
     onSelect: (row) => {
-      console.log('Selected row:', row);
     },
   });
 

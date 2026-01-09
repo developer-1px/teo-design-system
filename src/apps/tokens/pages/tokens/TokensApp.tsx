@@ -33,21 +33,12 @@ export function TokensApp() {
   useEffect(() => {
     async function loadTokens() {
       try {
-        console.log('[TokensApp] 🔄 Loading themes.css...');
-
         // import.meta.glob으로 로드된 모듈들 순회
         for (const [path, loader] of Object.entries(cssModules)) {
-          console.log(`[TokensApp] 📄 Loading ${path}`);
           const cssContent = (await loader()) as string;
-          console.log(`[TokensApp] 📝 CSS length: ${cssContent.length} characters`);
 
           // CSS 파싱
           const parsed = parseCSSTokens(cssContent);
-          console.log(`[TokensApp] ✅ Parsed ${parsed.length} categories`);
-          console.log(
-            '[TokensApp] Categories:',
-            parsed.map((c) => c.name)
-          );
 
           setCategories(parsed);
         }
@@ -120,7 +111,7 @@ export function TokensApp() {
 
   if (loading) {
     return (
-      <Page role="App" layout="flex" direction="column">
+      <Page role="Document">
         <Section role="Container" prominence="Standard" density="Standard">
           <Group role="Container" layout="stack" gap={2}>
             <Text role="Body" prominence="Standard">
@@ -134,7 +125,7 @@ export function TokensApp() {
 
   if (error) {
     return (
-      <Page role="App" layout="flex" direction="column">
+      <Page role="Document">
         <Section role="Container" prominence="Standard" density="Standard">
           <Group role="Container" layout="stack" gap={2}>
             <Text role="Title" prominence="Hero" intent="Critical">
@@ -151,9 +142,7 @@ export function TokensApp() {
 
   return (
     <Page
-      role="App"
-      layout="flex"
-      direction="column"
+      role="Document"
       title="Design Tokens"
       description="3-Tier token architecture for consistent design system. Primitive tokens define raw values, semantic tokens map to purposes, and component tokens are pre-configured for UI elements."
       prominence="Standard"

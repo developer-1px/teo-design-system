@@ -23,29 +23,19 @@ export const JSONPage = () => {
 
   // JSON에서 첫 번째 배열 데이터 찾기
   const { data, arrayKey } = useMemo(() => {
-    console.log('🔍 [JSONPage] testData:', testData);
-    console.log('🔍 [JSONPage] testData keys:', Object.keys(testData));
 
     const firstArrayKey = Object.keys(testData).find((key) => {
       const value = (testData as JsonObject)[key];
       const isArray = Array.isArray(value);
-      console.log(`🔍 [JSONPage] key="${key}", isArray=${isArray}, length=${isArray ? value.length : 'N/A'}`);
       return isArray;
     });
 
-    console.log('🔍 [JSONPage] firstArrayKey:', firstArrayKey);
 
     if (firstArrayKey) {
       const arrayData = (testData as JsonObject)[firstArrayKey] as JsonArray;
-      console.log('✅ [JSONPage] Found array data:', {
-        key: firstArrayKey,
-        length: arrayData.length,
-        firstItem: arrayData[0],
-      });
       return { data: arrayData, arrayKey: firstArrayKey };
     }
 
-    console.log('❌ [JSONPage] No array found in testData');
     return { data: [], arrayKey: null };
   }, []);
 
@@ -58,7 +48,6 @@ export const JSONPage = () => {
     return jsonToTypeScript(data, interfaceName);
   }, [data, arrayKey]);
 
-  console.log('📊 [JSONPage] Final data:', { length: data.length, data });
 
   // 기본 viewConfig (모든 컬럼 표시)
   const viewConfig = useMemo(
@@ -83,7 +72,6 @@ export const JSONPage = () => {
 
   // Handle row double-click
   const handleRowDoubleClick = (row: JsonObject) => {
-    console.log('📋 [JSONPage] Row double-clicked:', row);
     setSelectedRow(row);
     setIsPanelOpen(true);
   };
@@ -96,12 +84,11 @@ export const JSONPage = () => {
 
   // Handle field change in FormView
   const handleFieldChange = (key: string, value: unknown) => {
-    console.log('✏️ [JSONPage] Field changed:', key, value);
     // TODO: Implement actual data update logic
   };
 
   return (
-    <Page role="App" template="sidebar-content" className="h-screen overflow-hidden">
+    <Page role="Application" layout="Sidebar" className="h-screen overflow-hidden">
       {/* Left Panel: TypeScript Interface */}
       <Section role="Navigator">
         <div className="h-full flex flex-col bg-surface-sunken border-r border-border-default">

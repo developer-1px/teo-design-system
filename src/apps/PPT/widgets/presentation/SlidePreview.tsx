@@ -43,7 +43,7 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
           <div className="flex h-full flex-col gap-6">
             {/* Title Area */}
             {slide.title && (
-              <div className="border-b border-text-primary/10 pb-4">
+              <div className="border-b border-text-primary/5 pb-4">
                 <Text
                   role="Title"
                   prominence="Hero"

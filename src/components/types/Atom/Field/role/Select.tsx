@@ -37,7 +37,7 @@ export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ className, options, placeholder, variant = 'default', error, ...props }, ref) => {
+  ({ className, options = [], placeholder, variant = 'default', error, ...props }, ref) => {
     return (
       <div className="relative">
         <select

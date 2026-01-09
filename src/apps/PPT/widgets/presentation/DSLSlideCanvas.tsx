@@ -46,7 +46,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides }: DSLSlideCan
               <div className="flex h-full flex-col gap-6">
                 {/* Title Area - DSL Text 컴포넌트 사용 */}
                 {slide.title && (
-                  <div className="border-b border-text-primary/10 pb-4">
+                  <div className="border-b border-text-primary/5 pb-4">
                     <Text
                       role="Title"
                       prominence="Hero"
@@ -72,7 +72,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides }: DSLSlideCan
 
       {/* Slide Number - Top left - IDDL */}
       {currentIndex !== undefined && totalSlides !== undefined && (
-        <Group role="Container" className="absolute left-3 top-3 backdrop-blur-sm">
+        <Group role="Container" className="absolute left-3 top-3 bg-white/80">
           <Text role="Caption" content={`${currentIndex + 1} / ${totalSlides}`} />
         </Group>
       )}
@@ -90,7 +90,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides }: DSLSlideCan
             { label: '125%', value: '125' },
             { label: '150%', value: '150' },
           ]}
-          className="backdrop-blur-sm"
+          className="bg-white/80"
         />
       </div>
 
@@ -99,7 +99,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides }: DSLSlideCan
         role="Container"
         layout="inline"
         density="Compact"
-        className="absolute bottom-3 left-1/2 -translate-x-1/2 backdrop-blur-sm"
+        className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/80"
       >
         <Group role="Inline" layout="inline" density="Compact">
           <Text role="Kbd" content="←" />

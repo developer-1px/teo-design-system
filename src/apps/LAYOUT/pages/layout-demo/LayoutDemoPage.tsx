@@ -27,7 +27,7 @@ export function LayoutDemoPage() {
   ]);
 
   return (
-    <Page role="App" template="studio">
+    <Page role="Application" layout="Studio">
       {/* 좌측: Template 선택기 */}
       <Section role="PrimarySidebar">
         <TemplateSelector

@@ -57,7 +57,7 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
         <div className="flex flex-col p-4 gap-6">
           {/* Text Formatting */}
           <Group role="Fieldset" layout="stack" direction="vertical" density="Compact" className="gap-3">
-            <div className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
+            <div className="text-xs font-medium text-text-secondary">
               텍스트
             </div>
 
@@ -95,7 +95,7 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
 
           {/* Background Formatting */}
           <Group role="Fieldset" layout="stack" direction="vertical" density="Compact" className="gap-3">
-            <div className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
+            <div className="text-xs font-medium text-text-secondary">
               배경
             </div>
 

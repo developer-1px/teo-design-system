@@ -12,13 +12,14 @@ import type { LayoutContextValue, GroupRole } from '@/components/types/Atom/type
  * IDDL Context
  * Section과 Group이 자동으로 이 Context를 제공
  * v4.1: template 추가 (Page template을 Section으로 전파)
+ * v5.0: layout 추가 (Page layout을 Section으로 전파)
  */
 export const IDDLContext = createContext<LayoutContextValue>({
   prominence: 'Standard',
   density: 'Standard',
   intent: 'Neutral',
   depth: 0,
-  template: undefined, // v4.1: Page template (Section role validation & config용)
+  layout: undefined, // v5.0: Page layout (Section role validation & config용)
 });
 
 /**

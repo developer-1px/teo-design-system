@@ -140,6 +140,7 @@ function renderNode(
       const pageNode = node as PageNode;
       return (
         <Page
+          role="Application"
           title={pageNode.title}
           description={pageNode.description}
           layout={pageNode.layout}

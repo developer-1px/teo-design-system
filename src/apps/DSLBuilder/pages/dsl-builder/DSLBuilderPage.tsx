@@ -240,7 +240,6 @@ export const DSLBuilderPage = () => {
   // Copy hierarchy to clipboard
   const copyHierarchyToClipboard = useCallback(async () => {
     if (!clickedNodePath || clickedNodePath.length === 0) {
-      console.log('No node clicked yet');
       return;
     }
 
@@ -248,7 +247,6 @@ export const DSLBuilderPage = () => {
 
     try {
       await navigator.clipboard.writeText(hierarchyText);
-      console.log('Copied hierarchy:', hierarchyText);
 
       // Show success indicator
       setShowCopySuccess(true);
@@ -281,7 +279,6 @@ export const DSLBuilderPage = () => {
             clipboard: selectedNode,
             clipboardAction: 'copy',
           }));
-          console.log('Copied:', selectedNode.type);
         }
       }
 
@@ -294,7 +291,6 @@ export const DSLBuilderPage = () => {
             clipboard: selectedNode,
             clipboardAction: 'cut',
           }));
-          console.log('Cut:', selectedNode.type);
         }
       }
 
@@ -335,7 +331,6 @@ export const DSLBuilderPage = () => {
             selectedNodeId: nodeToAdd.id,
           }));
 
-          console.log('Pasted:', nodeToAdd.type);
         }
       }
 
@@ -351,7 +346,6 @@ export const DSLBuilderPage = () => {
               tree: newTree,
               selectedNodeId: null,
             }));
-            console.log('Deleted:', selectedNode.type);
           }
         }
       }
@@ -374,7 +368,7 @@ export const DSLBuilderPage = () => {
   };
 
   return (
-    <Page role="App" template="studio" density="Compact">
+    <Page role="Application" layout="Studio" density="Compact">
       {/* Left Sidebar - Tree View */}
       <Section role="PrimarySidebar" className="flex flex-col">
         {/* Header */}

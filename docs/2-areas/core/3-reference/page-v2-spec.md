@@ -1,60 +1,87 @@
-# IDDL Page Component v2.0 Specification
+# IDDL Page Component v5.0 Specification
 
-**Version**: 2.0
-**Date**: 2026-01-09
-**Status**: Draft
+**Version**: 5.0
+**Date**: 2026-01-10
+**Status**: Stable
+**Breaking Changes**: No (backward compatible)
 
 ---
 
 ## Overview
 
-Page v2.0은 IDDL의 루트 컨테이너로서 **role 기반 아이덴티티**를 도입하여 페이지의 의도를 명확히 선언하고, design tokens(prominence, density, intent)를 통합하여 IDDL 일관성을 확보합니다.
+Page v5.0은 IDDL의 루트 컨테이너로서 **물리법칙(Physical Laws)**과 **공간 설계(Space Division)**를 명확히 분리하여 Why-based API를 완성합니다.
 
-### Key Changes from v1.0.1
+### Key Changes from v4.0
 
-| Feature | v1.0.1 | v2.0 |
-|---------|--------|------|
-| **Identity** | layout만으로 결정 | role로 정체성 선언 |
-| **Design Tokens** | 없음 | prominence/density/intent 추가 |
-| **Layout** | 6가지 옵션 | 10가지 옵션 (studio, masonry 등) |
-| **State Management** | 없음 | loading/error 상태 내장 |
-| **Navigation** | breadcrumbs만 | NavigationConfig 추가 |
-| **Max Width** | 고정 | role별 기본값 + override 가능 |
+| Feature | v4.0 | v5.0 |
+|---------|------|------|
+| **PageRole values** | "App", "Content" | "Application", "Document", "Focus", "Fullscreen" |
+| **Layout prop** | `template` (lowercase) | `layout` (PascalCase) |
+| **Props** | template, layout, direction | layout only (cleaner API) |
+| **Backward compat** | N/A | Deprecated props work with warnings |
+| **Section positioning** | gridArea prop | role-based (role-config.ts) |
+
+**Migration**: No breaking changes. Old code works with deprecation warnings.
 
 ---
 
-## PageRole
+## PageRole (물리법칙)
 
-페이지의 **의도적 정체성(Intent-driven Identity)**을 정의합니다.
+페이지가 **어떻게 움직이는가(How it moves)** - 스크롤, 뷰포트, 물리적 특성
 
 ### Role Types
 
 ```typescript
 export type PageRole =
-  | 'App'         // 애플리케이션 루트
-  | 'Document'    // 문서형 컨텐츠
-  | 'Dashboard'   // 데이터 대시보드
-  | 'Wizard'      // 단계별 프로세스
-  | 'Settings'    // 설정/환경설정
-  | 'Canvas'      // 작업 캔버스
-  | 'Gallery'     // 미디어 갤러리
-  | 'Feed';       // 무한 스크롤 피드
+  | 'Application'  // 풀스크린 앱 (스크롤 없음)
+  | 'Document'     // 스크롤 가능한 문서 (기본값)
+  | 'Focus'        // 중앙 집중 (로그인, 결제)
+  | 'Fullscreen';  // 고정 풀스크린 (프레젠테이션, 키오스크)
 ```
 
-### Role Defaults
+### Role Physical Laws
 
-각 role은 다음과 같은 기본값을 가집니다:
+각 role은 물리적 특성(viewport, scroll)을 정의합니다:
 
-| Role | Default Layout | Max Width | Scrollable | Typical Use Case |
-|------|---------------|-----------|------------|------------------|
-| **App** | `full` | none | ❌ | IDE, Studio, SaaS Dashboard |
-| **Document** | `single` | 1024px | ✅ | Article, Blog, Documentation |
-| **Dashboard** | `dashboard` | none | ✅ | Analytics, Admin Panel |
-| **Wizard** | `wizard` | 640px | ❌ | Onboarding, Multi-step Form |
-| **Settings** | `sidebar` | 1280px | ✅ | User Preferences, Configuration |
-| **Canvas** | `full` | none | ❌ | Design Tool, Editor |
-| **Gallery** | `masonry` | 1440px | ✅ | Photo Gallery, Portfolio |
-| **Feed** | `single` | 768px | ✅ | Social Feed, News Stream |
+| Role | Physical Laws | CSS Classes | Use Case |
+|------|---------------|-------------|----------|
+| **Application** | 풀스크린, 스크롤 없음 | `w-screen h-screen overflow-hidden` | IDE, Studio, Dashboard, Complex Apps |
+| **Document** | 스크롤 가능, min-height | `min-h-screen overflow-y-auto` | Articles, Docs, Forms, Settings |
+| **Focus** | 중앙 정렬, 고정 높이 | `h-screen flex items-center justify-center` | Login, Payment, Wizard |
+| **Fullscreen** | 고정 풀스크린, chrome 없음 | `w-screen h-screen overflow-hidden` | Presentation, Kiosk, Immersive |
+
+---
+
+## PageLayout (공간 설계)
+
+페이지 **공간을 어떻게 나누는가(How space is divided)** - Section 배치 패턴
+
+### Layout Types
+
+```typescript
+export type PageLayout =
+  | 'Single'      // 1컬럼 기본형 (Header + Container + Footer)
+  | 'Sidebar'     // 2컬럼 좌측 네비 (Navigator + Container)
+  | 'Aside'       // 2컬럼 우측 정보 (Container + Aside)
+  | 'HolyGrail'   // 3컬럼 완전형 (Header + Navigator + Container + Aside + Footer)
+  | 'Split'       // 50-50 분할 (Master + Detail)
+  | 'Studio'      // IDE 5컬럼 (ActivityBar + PrimarySidebar + Editor + Panel + SecondarySidebar)
+  | 'Blank';      // 빈 캔버스 (커스텀 레이아웃, 다이얼로그)
+```
+
+### Layout to Section Role Mapping (v5.0)
+
+각 layout은 허용되는 Section role을 정의합니다 (`LAYOUT_SECTION_ROLES` in `types.ts`):
+
+| Layout | Allowed Section Roles |
+|--------|-----------------------|
+| **Single** | Header, Container, Footer, Main |
+| **Sidebar** | Header, Footer, Navigator, Container, Main |
+| **Aside** | Header, Footer, Container, Aside, Main |
+| **HolyGrail** | Header, Footer, Navigator, Container, Aside, Main, Region |
+| **Split** | Header, Footer, Master, Detail, Toolbar, Container, Main |
+| **Studio** | Header, Footer, Toolbar, ActivityBar, PrimarySidebar, SecondarySidebar, Editor, Panel, Auxiliary, Container, Main |
+| **Blank** | Container, Main, DialogHeader, DialogContent, DialogFooter |
 
 ---
 
@@ -63,9 +90,9 @@ export type PageRole =
 ```typescript
 export interface PageProps {
   // ============================================
-  // Identity & Structure (v2.0)
+  // Identity & Physical Laws (v5.0)
   // ============================================
-  role?: PageRole;            // v2.0: 페이지 정체성 (기본값: 'Document')
+  role?: PageRole;            // v5.0: 물리법칙 (기본값: 'Document')
   title?: string;             // v1.0.1: 페이지 제목
   description?: string;       // v1.0.1: 페이지 설명
 
@@ -77,9 +104,10 @@ export interface PageProps {
   intent?: Intent;            // v2.0: Neutral/Brand/Positive/Caution/Critical/Info
 
   // ============================================
-  // Layout Control
+  // Space Division (v5.0)
   // ============================================
-  layout?: PageLayout;        // v1.0.1: role의 기본값 override 가능
+  layout?: PageLayout;        // v5.0: 공간 설계 (PascalCase: Studio, Sidebar, etc.)
+  gap?: number;               // v5.0: Section 간 간격
   maxWidth?: MaxWidth;        // v2.0: 컨텐츠 최대 너비
   centered?: boolean;         // v2.0: 컨텐츠 중앙 정렬 여부
 
@@ -87,12 +115,10 @@ export interface PageProps {
   // Navigation (v2.0)
   // ============================================
   breadcrumbs?: Breadcrumb[]; // v1.0.1: 경로 네비게이션
-  navigation?: NavigationConfig; // v2.0: 네비게이션 구성
 
   // ============================================
   // State & Behavior (v2.0)
   // ============================================
-  scrollable?: boolean;       // v2.0: 스크롤 가능 여부
   loading?: boolean;          // v2.0: 로딩 상태
   error?: string;             // v2.0: 에러 메시지
 
@@ -103,30 +129,15 @@ export interface PageProps {
   className?: string;
   onClick?: (e: React.MouseEvent) => void;
   condition?: string;         // v1.0.1: 조건부 렌더링
+
+  // ============================================
+  // Deprecated (v5.0) - Backward Compatibility
+  // ============================================
+  /** @deprecated Use `layout` instead of `template` */
+  template?: GridTemplate;
+  /** @deprecated direction is now determined by `role` and `layout` props */
+  direction?: 'row' | 'column';
 }
-```
-
----
-
-## PageLayout (확장)
-
-v2.0에서 4가지 새로운 layout 추가:
-
-```typescript
-export type PageLayout =
-  // v1.0.1
-  | 'single'      // 단일 컬럼 중앙 정렬
-  | 'sidebar'     // 좌측 사이드바 + 메인
-  | 'dashboard'   // 그리드 대시보드
-  | 'split'       // 2컬럼 분할
-  | 'wizard'      // 중앙 단계별
-  | 'full'        // 풀스크린 (no padding)
-
-  // v2.0 추가
-  | 'studio'      // IDE/Studio (multi-panel, flex)
-  | 'three-column' // 3컬럼 (nav-main-aside)
-  | 'masonry'     // Pinterest 스타일 (columns)
-  | 'timeline';   // 타임라인 (세로 흐름)
 ```
 
 ---
@@ -155,20 +166,22 @@ export interface NavigationConfig {
 
 ---
 
-## Usage Examples
+## Usage Examples (v5.0)
 
-### Example 1: App Role (IDE)
+### Example 1: Application Role (IDE)
 
 ```tsx
-<Page role="App" density="Compact" prominence="Standard">
-  <Section role="Navigator">...</Section>
-  <Section role="Container">...</Section>
+<Page role="Application" layout="Studio" density="Compact">
+  <Section role="ActivityBar">...</Section>
+  <Section role="PrimarySidebar">...</Section>
+  <Section role="Editor">...</Section>
+  <Section role="Panel">...</Section>
 </Page>
 ```
 
 **Result**:
-- Layout: `full` (no padding)
-- Overflow: `hidden` (h-screen w-screen)
+- Physical Laws: `w-screen h-screen overflow-hidden` (no scroll)
+- Layout: Dynamic CSS Grid based on Section roles
 - Scrollable: `false`
 - Max Width: `none`
 
@@ -185,7 +198,6 @@ export interface NavigationConfig {
   ]}
   maxWidth="lg"
   centered
-  prominence="Standard"
   density="Comfortable"
 >
   <Section role="Container">
@@ -195,74 +207,76 @@ export interface NavigationConfig {
 ```
 
 **Result**:
-- Layout: `single` (자동)
-- Max Width: `lg` (1024px, override)
+- Physical Laws: `min-h-screen overflow-y-auto` (scrollable)
+- Layout: Single column (default)
+- Max Width: `lg` (1024px)
 - Centered: `true`
-- Scrollable: `true`
 - Header: title + description + breadcrumbs
 
-### Example 3: Dashboard Role
+### Example 3: Focus Role (Login)
 
 ```tsx
 <Page
-  role="Dashboard"
-  title="Analytics Overview"
-  loading={isLoading}
-  error={error}
+  role="Focus"
+  title="Sign In"
+  centered
+  density="Standard"
+>
+  <Section role="Container">
+    <Group role="Form">
+      {/* 로그인 폼 */}
+    </Group>
+  </Section>
+</Page>
+```
+
+**Result**:
+- Physical Laws: `h-screen flex items-center justify-center`
+- Layout: Centered content only
+- Scrollable: `false`
+- Max Width: auto (constrained by content)
+
+### Example 4: Fullscreen Role (Presentation)
+
+```tsx
+<Page
+  role="Fullscreen"
   density="Compact"
 >
   <Section role="Container">
-    {/* 위젯 그리드 */}
+    {/* 프레젠테이션 슬라이드 */}
   </Section>
 </Page>
 ```
 
 **Result**:
-- Layout: `dashboard` (grid)
-- Loading/Error state 자동 렌더링
-- Scrollable: `true`
+- Physical Laws: `w-screen h-screen overflow-hidden`
+- Layout: Full canvas (no chrome)
+- Scrollable: `false`
+- Title/Breadcrumbs: hidden (immersive mode)
 
-### Example 4: Wizard Role
+### Example 5: Application with Sidebar Layout
 
 ```tsx
 <Page
-  role="Wizard"
-  title="Account Setup"
-  description="Step 2 of 5"
-  maxWidth="md"
-  centered
+  role="Application"
+  layout="Sidebar"
+  title="Settings"
+  density="Standard"
 >
+  <Section role="Navigator">
+    {/* 설정 네비게이션 */}
+  </Section>
   <Section role="Container">
-    {/* 단계별 폼 */}
+    {/* 설정 패널 */}
   </Section>
 </Page>
 ```
 
 **Result**:
-- Layout: `wizard`
-- Max Width: `md` (640px, override)
-- Scrollable: `false` (Wizard는 고정 높이)
-- Centered: `true`
-
-### Example 5: Gallery Role
-
-```tsx
-<Page
-  role="Gallery"
-  title="Portfolio"
-  layout="masonry"  // role 기본값과 동일
-  maxWidth="2xl"
->
-  <Section role="Container">
-    {/* Masonry 그리드 */}
-  </Section>
-</Page>
-```
-
-**Result**:
-- Layout: `masonry` (columns)
-- Max Width: `2xl` (1440px)
-- Scrollable: `true`
+- Physical Laws: `w-screen h-screen overflow-hidden`
+- Layout: 2-column with left navigation
+- Dynamic Grid: Navigator (250px) + Container (1fr)
 
 ---
 
@@ -320,98 +334,167 @@ Page는 LayoutProvider를 통해 prominence/density/intent를 하위 컴포넌�
 
 ---
 
-## Migration Guide (v1.0.1 → v2.0)
+## Migration Guide (v4.0 → v5.0)
 
-### Before (v1.0.1)
+### Changes Summary
+
+| Aspect | v4.0 | v5.0 |
+|--------|------|------|
+| PageRole values | "App", "Content" | "Application", "Document", "Focus", "Fullscreen" |
+| Layout prop name | `template` | `layout` |
+| Layout values | lowercase (studio, sidebar) | PascalCase (Studio, Sidebar) |
+| Section positioning | `gridArea` prop | `role` prop (auto-mapping) |
+
+### Before (v4.0)
 
 ```tsx
-<Page layout="full">
+<Page role="App" template="studio" density="Compact">
+  <Section gridArea="activitybar">...</Section>
+  <Section gridArea="sidebar">...</Section>
+  <Section gridArea="editor">...</Section>
+  <Section gridArea="panel">...</Section>
+</Page>
+```
+
+### After (v5.0) - Recommended
+
+```tsx
+<Page role="Application" layout="Studio" density="Compact">
+  <Section role="ActivityBar">...</Section>
+  <Section role="PrimarySidebar">...</Section>
+  <Section role="Editor">...</Section>
+  <Section role="Panel">...</Section>
+</Page>
+```
+
+### Backward Compatible (v5.0)
+
+```tsx
+// Old code still works with deprecation warnings
+<Page role="App" template="studio" density="Compact">
+  <Section gridArea="activitybar">...</Section>
+  <Section gridArea="sidebar">...</Section>
+  <Section gridArea="editor">...</Section>
+  <Section gridArea="panel">...</Section>
+</Page>
+
+// Automatic mapping:
+// role="App" → role="Application"
+// template="studio" → layout="Studio"
+// Section gridArea → role-based positioning (v4.1)
+```
+
+### Document Page Migration
+
+```tsx
+// Before (v4.0)
+<Page role="Content" title="Settings" maxWidth="lg" centered>
+  <Section role="Container">...</Section>
+</Page>
+
+// After (v5.0)
+<Page role="Document" title="Settings" maxWidth="lg" centered>
   <Section role="Container">...</Section>
 </Page>
 ```
 
-### After (v2.0) - Option 1: Explicit role
-
-```tsx
-<Page role="App">
-  <Section role="Container">...</Section>
-</Page>
-```
-
-### After (v2.0) - Option 2: Backward compatible
-
-```tsx
-<Page layout="full">  {/* role 없으면 기본값 'Document' + layout override */}
-  <Section role="Container">...</Section>
-</Page>
-```
-
-**Notes**:
-- role이 없으면 기본값 `'Document'`
-- layout이 명시되면 role의 기본 layout을 override
-- **Breaking Change 없음** - 기존 코드도 동작
+**Migration Notes**:
+- **No breaking changes**: Old code continues to work
+- Deprecation warnings will guide you to new API
+- Section `gridArea` prop deprecated in favor of `role` (v4.1)
+- Consider migrating incrementally - both APIs work simultaneously
 
 ---
 
-## Implementation Notes
+## Implementation Notes (v5.0)
 
-### CVA Variants
+### Role-Based Branching
 
 ```typescript
-const pageContainerVariants = cva('bg-surface-base flex flex-col', {
-  variants: {
-    role: {
-      App: 'h-screen w-screen overflow-hidden',
-      Document: 'h-full w-full overflow-y-auto',
-      // ...
-    },
-    prominence: {
-      Hero: 'bg-surface-raised',
-      Standard: 'bg-surface',
-      Strong: 'bg-surface-sunken',
-      Subtle: 'bg-surface-base',
-    },
-  },
-});
+// Page.tsx - Main component
+export function Page({ role = 'Document', layout, ... }: PageProps) {
+  // Backward compatibility: "App" → "Application", "Content" → "Document"
+  const normalizedRole: PageRole =
+    role === ('App' as any) ? 'Application'
+    : role === ('Content' as any) ? 'Document'
+    : role;
+
+  // v5.0: role="Application" → AppLayout renderer
+  if (normalizedRole === 'Application') {
+    return (
+      <LayoutProvider value={{ prominence, density, intent, depth: 0, mode: 'view', layout }}>
+        <AppLayout layout={layout} gap={gap} prominence={prominence} intent={intent}>
+          {children}
+        </AppLayout>
+      </LayoutProvider>
+    );
+  }
+
+  // Document/Focus/Fullscreen → DocumentPage renderer
+  return <DocumentPage role={normalizedRole} ... />;
+}
 ```
 
-### Role → Layout Mapping
+### Backward Compatibility Helpers
 
 ```typescript
-const roleToLayout: Record<PageRole, PageLayout> = {
-  App: 'full',
-  Document: 'single',
-  Dashboard: 'dashboard',
-  Wizard: 'wizard',
-  Settings: 'sidebar',
-  Canvas: 'full',
-  Gallery: 'masonry',
-  Feed: 'single',
-};
+// Convert deprecated template prop to layout prop
+function convertTemplateToLayout(template?: GridTemplate): PageLayout | undefined {
+  if (!template) return undefined;
+  const mapping: Record<GridTemplate, PageLayout> = {
+    studio: 'Studio',
+    'sidebar-content': 'Sidebar',
+    'master-detail': 'Split',
+    '3-col': 'HolyGrail',
+    dashboard: 'HolyGrail',
+    dialog: 'Blank',
+    presentation: 'HolyGrail',
+    custom: 'Blank',
+  };
+  return mapping[template];
+}
+
+// Usage in Page.tsx
+const layout = layoutProp || convertTemplateToLayout(template);
+```
+
+### Section Role Auto-Mapping (v4.1+)
+
+```typescript
+// Section roles automatically map to gridArea via role-config.ts
+import { getRoleConfig } from '@/components/types/Section/role-config';
+
+// Example: Section role="PrimarySidebar" → gridArea="sidebar"
+const config = getRoleConfig('PrimarySidebar', 'studio');
+// Returns: { gridArea: 'sidebar', defaultWidth: '250px', ... }
 ```
 
 ---
 
 ## Future Enhancements
 
-### Planned for v2.1
+### Planned for v5.1
 
-- [ ] **Auto Navigation**: role에 따라 navigation 자동 구성
-- [ ] **Responsive Breakpoints**: role별 반응형 레이아웃
-- [ ] **Skeleton Loading**: loading 상태의 skeleton UI
-- [ ] **Transition Animation**: 페이지 전환 애니메이션
+- [ ] **Focus role enhancements**: Better centered layout variants
+- [ ] **Fullscreen API integration**: Native browser fullscreen support
+- [ ] **Responsive Breakpoints**: Layout adapts to viewport size
+- [ ] **Skeleton Loading**: Automatic loading state UI
 
 ### Under Consideration
 
-- [ ] **SEO Metadata**: title/description을 `<head>`에 자동 주입
-- [ ] **Analytics**: role별 페이지 추적 이벤트
-- [ ] **A11y Enhancements**: role별 ARIA landmark 자동 설정
+- [ ] **SEO Metadata**: Auto-inject title/description to `<head>`
+- [ ] **Analytics**: Auto-track page role changes
+- [ ] **A11y Enhancements**: ARIA landmarks based on role
+- [ ] **Page Transitions**: Smooth transitions between roles
 
 ---
 
 ## References
 
-- **IDDL Spec v1.0.1**: `/spec/iddl-spec-1.0.1.md`
-- **Type Definitions**: `/src/components/dsl/types.ts`
-- **Implementation**: `/src/components/dsl/Page.tsx`
-- **Examples**: `/src/apps/*/pages/**/*.tsx`
+- **IDDL Spec v1.0.1**: `/docs/2-areas/spec/iddl-spec-1.0.1.md`
+- **Type Definitions**: `/src/components/types/Atom/types.ts`
+- **Page Implementation**: `/src/components/types/Page/Page.tsx`
+- **AppLayout Renderer**: `/src/components/types/Page/renderers/AppLayout.tsx`
+- **Section Role Config**: `/src/components/types/Section/role-config.ts`
+- **Dynamic Grid Hook**: `/src/components/types/Page/hooks/useDynamicGridTemplate.ts`
+- **Example Apps**: `/src/apps/*/pages/**/*.tsx`

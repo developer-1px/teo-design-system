@@ -65,9 +65,9 @@ export const DocsViewer = () => {
     : [];
 
   return (
-    <Page role="App" layout="grid" template="sidebar-content">
+    <Page role="Application" layout="Sidebar">
       {/* 상단 고정 헤더 */}
-      <Section role="Toolbar" prominence="Standard">
+      <Section role="Header" prominence="Standard">
         <Group role="Toolbar" layout="inline">
           <Text role="Title" content="문서" />
         </Group>

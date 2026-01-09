@@ -55,12 +55,13 @@ export interface DSLNode {
 /**
  * Page Node
  * v1.0.1: title, description, layout, breadcrumbs 추가
+ * v5.0: layout type changed to PageLayout
  */
 export interface PageNode extends DSLNode {
   type: 'page';
   title?: string;
   description?: string;
-  layout?: string;
+  layout?: import('@/components/types/Atom/types').PageLayout;
   breadcrumbs?: Breadcrumb[];
   className?: string;
 }

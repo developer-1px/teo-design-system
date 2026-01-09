@@ -122,7 +122,6 @@ function copyToClipboard(text: string) {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(
       () => {
-        console.log(`[TokenGrid] ✅ Copied to clipboard: ${text}`);
         // TODO: Toast 알림 추가 (Phase 2에서 구현)
       },
       (err) => {
@@ -140,7 +139,6 @@ function copyToClipboard(text: string) {
     textArea.select();
     try {
       document.execCommand('copy');
-      console.log(`[TokenGrid] ✅ Copied to clipboard (fallback): ${text}`);
     } catch (err) {
       console.error('[TokenGrid] ❌ Failed to copy (fallback):', err);
     }

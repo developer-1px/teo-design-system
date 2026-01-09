@@ -1,38 +1,48 @@
 /**
- * Page - Application Root (IDDL v4.0)
+ * Page - Application Root (IDDL v5.0)
  *
- * **Two modes**:
- * - role="Content" (default): Scrollable, max-width constrained, content container
- * - role="App": Full-screen, overflow-hidden, grid-based application layout
+ * **Why-based API**: "이 페이지는 어떻게 움직이는가?" + "공간을 어떻게 나누었는가?"
  *
- * **role="Content" 특징**:
- * - h-full (부모에 맞춤) - Full height
- * - overflow-y-auto - 스크롤 가능
- * - flex 또는 grid 레이아웃
- * - max-width, centered 지원
+ * **Four Page Types** (물리법칙):
+ * - type="Application": 전체 화면, 스크롤 없음 (w-screen h-screen overflow-hidden)
+ * - type="Document" (default): 스크롤 가능한 문서 페이지 (min-height: 100vh)
+ * - type="Focus": 중앙 집중형 (로그인, 결제 등, 화면 정중앙 배치)
+ * - type="Fullscreen": 전체화면 고정 (프레젠테이션, 키오스크, 스크롤 불가)
  *
- * **role="App" 특징**:
- * - w-screen h-screen - Full viewport
- * - overflow-hidden - 스크롤 없음
- * - **template prop으로 Section role 결정** (studio, sidebar-content, master-detail, etc.)
- * - Section들이 grid-area로 배치됨
+ * **Seven Page Layouts** (공간 분할):
+ * - layout="Single": Header + Container + Footer (1단 기본형)
+ * - layout="Sidebar": Navigator(좌) + Container(우) (2단 좌측 메뉴형)
+ * - layout="Aside": Container(좌) + Aside(우) (2단 우측 정보형)
+ * - layout="HolyGrail": Header + Navigator + Container + Aside + Footer (3단 완전체)
+ * - layout="Split": PanelLeft + PanelRight (5:5 분할형)
+ * - layout="Studio": ActivityBar + PrimarySidebar + Editor + Panel (IDE 전용)
+ * - layout="Blank": 빈 캔버스 (dialog, custom)
  *
- * **Template System (v4.0)**:
- * - `template="studio"` → ActivityBar, PrimarySidebar, Editor, Panel 등
- * - `template="sidebar-content"` → Navigator, Main, Aside 등
- * - `template="master-detail"` → Master, Detail 등
- * - Page template이 Section role을 결정하는 주체
+ * **Why-based Developer Experience**:
+ * ```tsx
+ * // ❌ Before (v4.0)
+ * <Page role="App" layout="grid" template="studio">
+ *
+ * // ✅ After (v5.0)
+ * <Page type="Application" layout="Studio">
+ * ```
  *
  * v1.0.1: title, description, layout, breadcrumbs, condition 추가
  * v2.0: role, prominence, density, intent, maxWidth, centered, navigation, scrollable, loading, error 추가
  * v3.0: main 태그 제거, layout 단순화 (flex/grid만 지원), role/navigation 제거
  * v4.0: Template-aware architecture, Section role validation
+ * v5.0: role→type, template→layout 통합, Focus/Fullscreen 추가, direction 제거
  */
 
 import { cva } from 'class-variance-authority';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
-import type { PageProps } from '@/components/types/Atom/types.ts';
+import type {
+  GridTemplate,
+  PageLayout,
+  PageProps,
+  PageRole,
+} from '@/components/types/Atom/types.ts';
 import { cn } from '@/shared/lib/utils.ts';
 import './grid-templates.css';
 
@@ -61,41 +71,18 @@ const pageContainerVariants = cva(
 );
 
 /**
- * Page layout variants (CVA)
+ * Document page content variants (v5.0)
+ * type="Document"일 때만 사용 (기존 role="Content")
  */
-const pageLayoutVariants = cva('w-full flex-1', {
+const documentPageVariants = cva('w-full flex-1 flex flex-col', {
   variants: {
-    layout: {
-      flex: 'flex',
-      grid: 'grid',
-    },
-    direction: {
-      row: 'flex-row',
-      column: 'flex-col',
+    centered: {
+      true: 'mx-auto',
+      false: '',
     },
   },
   defaultVariants: {
-    layout: 'flex',
-    direction: 'column',
-  },
-});
-
-/**
- * Grid template variants (Content role only)
- * v4.0: Template-aware, Section role과 1:1 대응
- */
-const contentGridTemplateVariants = cva('', {
-  variants: {
-    template: {
-      studio: 'grid-template-studio', // IDE/Studio layout
-      'sidebar-content': 'grid-template-sidebar', // Web standard (nav + content + aside)
-      'master-detail': '', // Master-Detail: 동적 계산
-      '3-col': 'grid-template-3col', // 3-column layout
-      dashboard: 'grid-template-dashboard', // Dashboard: auto-fit grid
-      dialog: '', // Dialog: 동적 계산
-      presentation: '', // Presentation: 동적 계산 (v4.0)
-      custom: '', // Custom: 사용자 정의
-    },
+    centered: false,
   },
 });
 
@@ -131,12 +118,28 @@ const maxWidthMap: Record<string, string> = {
   none: 'max-w-none',
 };
 
+/**
+ * Helper: GridTemplate → PageLayout 매핑 (하위 호환성)
+ */
+function convertTemplateToLayout(template?: GridTemplate): PageLayout | undefined {
+  if (!template) return undefined;
+  const mapping: Record<GridTemplate, PageLayout> = {
+    studio: 'Studio',
+    'sidebar-content': 'Sidebar',
+    'master-detail': 'Split',
+    '3-col': 'HolyGrail',
+    dashboard: 'HolyGrail', // Dashboard는 HolyGrail과 유사
+    dialog: 'Blank',
+    presentation: 'HolyGrail',
+    custom: 'Blank',
+  };
+  return mapping[template];
+}
+
 export function Page({
   as: Component = 'div',
-  role = 'Content',
-  layout = 'flex',
-  direction = 'column',
-  template,
+  role = 'Document',
+  layout: layoutProp,
   gap = 0,
   maxWidth,
   centered = false,
@@ -152,15 +155,25 @@ export function Page({
   className,
   onClick,
   condition,
+  // Deprecated props (v5.0) - 하위 호환성
+  template,
+  direction,
   ...rest
 }: PageProps) {
+  // 하위 호환성: "App" → "Application", "Content" → "Document"
+  const normalizedRole: PageRole =
+    role === ('App' as any) ? 'Application' : role === ('Content' as any) ? 'Document' : role;
+
+  // 하위 호환성: template → layout 매핑
+  const layout = layoutProp || convertTemplateToLayout(template);
+
   // 조건부 렌더링
   if (condition) {
     // TODO: condition 표현식 평가 구현
   }
 
-  // v4.0: role="App" → AppLayout 렌더러 사용 (Field 패턴과 동일)
-  if (role === 'App') {
+  // v5.0: role="Application" → AppLayout 렌더러 사용
+  if (normalizedRole === 'Application') {
     return (
       <LayoutProvider
         value={{
@@ -169,11 +182,11 @@ export function Page({
           intent,
           depth: 0,
           mode: 'view',
-          template, // v4.0: Pass template for Section role validation
+          layout, // v5.0: Pass layout for Section role validation
         }}
       >
         <AppLayout
-          template={template}
+          layout={layout}
           gap={gap}
           prominence={prominence}
           intent={intent}
@@ -186,7 +199,10 @@ export function Page({
     );
   }
 
-  // role="Content" (default): 기존 Content 페이지 로직
+  // TODO: role="Focus" → FocusLayout (v5.0)
+  // TODO: role="Fullscreen" → FullscreenLayout (v5.0)
+
+  // role="Document" (default): 기존 Content 페이지 로직
 
   // 로딩 상태 렌더링
   if (loading) {
@@ -242,12 +258,13 @@ export function Page({
         intent,
         depth: 0,
         mode: 'view',
-        template, // v4.0: Pass template for Section role validation
+        layout, // v5.0: Pass layout for Section role validation
       }}
     >
       <Component
         className={cn(pageContainerVariants({ prominence }), className)}
         data-dsl-component="page"
+        data-role={normalizedRole}
         data-layout={layout}
         data-prominence={prominence}
         data-density={density}
@@ -267,7 +284,7 @@ export function Page({
                       {crumb.label}
                     </a>
                   ) : (
-                    <span className="text-text-secondary">{crumb.label}</span>
+                    <span className="text-PrimarySidebartext-secondary">{crumb.label}</span>
                   )}
                 </li>
               ))}
@@ -286,14 +303,9 @@ export function Page({
         {/* Page Content */}
         <div
           className={cn(
-            pageLayoutVariants({
-              layout,
-              direction: layout === 'flex' ? direction : undefined,
-            }),
-            layout === 'grid' && template && contentGridTemplateVariants({ template }),
+            documentPageVariants({ centered }),
             getGapClass(gap),
-            maxWidthClass,
-            centered && 'mx-auto'
+            maxWidthClass
           )}
         >
           {children}

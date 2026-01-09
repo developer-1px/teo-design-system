@@ -74,19 +74,9 @@ export function ComponentRenderer({
       return;
     }
 
-    console.log(
-      `[ComponentRenderer] 🔄 Loading module for ${metadata.name} (${metadata.filePath})`
-    );
-
     // Vite glob loader를 사용하여 컴포넌트 로드
     componentModule()
       .then((module) => {
-        console.log(`[ComponentRenderer] Loaded module for ${metadata.name}:`, {
-          moduleKeys: Object.keys(module),
-          hasDefault: !!module.default,
-          hasNamedExport: !!module[metadata.name],
-        });
-
         // 컴포넌트 이름으로 export된 것을 먼저 찾고, 없으면 default export 사용
         const componentName = metadata.name;
         const comp = module[componentName] || module.default;
@@ -99,7 +89,6 @@ export function ComponentRenderer({
           return;
         }
 
-        console.log(`[ComponentRenderer] Setting component for ${metadata.name}:`, comp);
         setComponent(() => comp);
       })
       .catch((error) => {
@@ -115,8 +104,6 @@ export function ComponentRenderer({
     }
 
     const finalProps: Record<string, any> = {};
-
-    console.log(`[ComponentRenderer] ${metadata.name} - metadata.props:`, metadata.props);
 
     for (const [name, propInfo] of Object.entries(metadata.props)) {
       let value = propValues[name];
@@ -137,7 +124,6 @@ export function ComponentRenderer({
       }
     }
 
-    console.log(`[ComponentRenderer] ${metadata.name} - finalProps:`, finalProps);
     return finalProps;
   }, [metadata, propValues]);
 

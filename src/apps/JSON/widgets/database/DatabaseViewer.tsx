@@ -70,23 +70,25 @@ export const DatabaseViewer = ({
 
   return (
     <Page>
-      <Section role="Container" className="flex flex-col h-full overflow-hidden">
+      <Section role="Container" layout="flex" direction="column">
         {/* Header */}
-        <Section className="border-b border-default bg-surface">
-          <Group role="Container" className="px-6 py-4 gap-2">
+        <Section role="Header" border="bottom">
+          <Group role="Container" padding="lg" gap="sm">
             {title && (
-              <Text role="Title" prominence="Hero" className="text-2xl font-bold" content={title} />
+              <Text role="Title" prominence="Hero" content={title} />
             )}
-            {description && <Text role="Body" className="text-muted" content={description} />}
+            {description && <Text role="Body" prominence="Subtle" content={description} />}
           </Group>
 
           {/* Controls */}
           <Group
             role="Toolbar"
             direction="horizontal"
-            className="px-6 py-3 border-t border-default justify-between"
+            padding="md"
+            border="top"
+            justify="between"
           >
-            <Group role="navigation" direction="horizontal" className="items-center gap-4">
+            <Group role="navigation" direction="horizontal" align="center" gap="md">
               <ViewSwitcher
                 views={views}
                 activeView={activeViewId}
@@ -95,8 +97,8 @@ export const DatabaseViewer = ({
 
               {showStats && (
                 <>
-                  <Divider orientation="vertical" spacing="none" className="h-4" />
-                  <Group role="Info" direction="horizontal">
+                  <Divider orientation="vertical" spacing="none" />
+                  <Group role="Info" direction="horizontal" gap="xs">
                     <Badge variant="default" size="sm">
                       {stats.rows} rows
                     </Badge>
@@ -122,14 +124,14 @@ export const DatabaseViewer = ({
         </Section>
 
         {/* View Content */}
-        <div className="flex-1 min-h-0 bg-surface">
+        <Section role="Main" layout="flex" flex="1">
           {activeView.type === 'table' && (
             <TableView data={data} viewConfig={activeView} density={density} />
           )}
           {activeView.type === 'board' && <BoardView data={data} viewConfig={activeView} />}
           {activeView.type === 'gallery' && <GalleryView data={data} viewConfig={activeView} />}
           {activeView.type === 'list' && <ListView data={data} />}
-        </div>
+        </Section>
       </Section>
     </Page>
   );

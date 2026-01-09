@@ -423,10 +423,5 @@ export function debugInteractiveState({
   intent: Intent;
   config: InteractiveConfig;
 }) {
-  console.log('[Interactive State]', {
-    prominence,
-    intent,
-    config,
-    computedState: config.disabled ? 'disabled' : config.selected ? 'selected' : 'idle',
-  });
+  // Debug function removed
 }

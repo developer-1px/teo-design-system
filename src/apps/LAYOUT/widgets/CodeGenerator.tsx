@@ -24,7 +24,7 @@ import { Section } from '@/components/types/Section/Section';
 
 export function MyApp() {
   return (
-    <Page role="App" template="${template}">
+    <Page role="Application" layout="${template}">
 ${sections
   .map((sectionRole) => {
     return `      <Section role="${sectionRole}">

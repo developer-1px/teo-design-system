@@ -153,7 +153,7 @@ export const ServerProductsViewDSL = () => {
   }, [data, visibleColumns]);
 
   return (
-    <Page>
+    <Page role="Application">
       <Section role="Container" className="flex flex-1 h-full gap-0 overflow-hidden">
         {/* Sidebar - Schema */}
         {showSidebar && <JsonSchemaSidebarDSL data={data} interfaceName="Item" />}

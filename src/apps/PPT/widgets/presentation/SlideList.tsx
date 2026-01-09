@@ -126,28 +126,20 @@ export const SlideList = ({
                 intent="Neutral"
                 value={slide.id}
                 selectionModel={selectionModel}
-                className="relative cursor-move !bg-white border-2 border-border hover:border-border-emphasis data-[selected=true]:border-accent data-[selected=true]:ring-2 data-[selected=true]:ring-accent/30 transition-all"
+                className="cursor-move !bg-white border border-border hover:border-border-emphasis data-[selected=true]:border-accent data-[selected=true]:ring-1 data-[selected=true]:ring-accent/20 transition-all"
               >
-                {/* Slide Number */}
-                <Text role="Caption" prominence="Subtle" className="absolute left-1 top-1 z-10">
-                  {index + 1}
-                </Text>
+                {/* Slide Number + Thumbnail as one group */}
+                <div className="flex flex-col gap-1">
+                  {/* Slide Number */}
+                  <Text role="Caption" prominence="Subtle" className="px-1">
+                    {index + 1}
+                  </Text>
 
-                {/* Thumbnail */}
-                <div className="aspect-[16/9] w-full overflow-hidden rounded">
-                  <SlidePreview slide={slide} scale={0.15} />
+                  {/* Thumbnail */}
+                  <div className="aspect-[16/9] w-full overflow-hidden rounded">
+                    <SlidePreview slide={slide} scale={0.15} />
+                  </div>
                 </div>
-
-                {/* Delete Button */}
-                <Action
-                  icon="Trash2"
-                  intent="Critical"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onSlideDelete(slide.id);
-                  }}
-                  className="absolute right-1 top-1 z-10 opacity-0 group-hover:opacity-100"
-                />
               </Group>
             );
           }}
@@ -165,28 +157,20 @@ export const SlideList = ({
                 intent="Neutral"
                 value={slide.id}
                 selectionModel={selectionModel}
-                className="relative !bg-white border-2 border-border hover:border-border-emphasis data-[selected=true]:border-accent data-[selected=true]:ring-2 data-[selected=true]:ring-accent/30 transition-all"
+                className="!bg-white border border-border hover:border-border-emphasis data-[selected=true]:border-accent data-[selected=true]:ring-1 data-[selected=true]:ring-accent/20 transition-all"
               >
-                {/* Slide Number */}
-                <Text role="Caption" prominence="Subtle" className="absolute left-1 top-1 z-10">
-                  {index + 1}
-                </Text>
+                {/* Slide Number + Thumbnail as one group */}
+                <div className="flex flex-col gap-1">
+                  {/* Slide Number */}
+                  <Text role="Caption" prominence="Subtle" className="px-1">
+                    {index + 1}
+                  </Text>
 
-                {/* Thumbnail */}
-                <div className="aspect-[16/9] w-full overflow-hidden rounded">
-                  <SlidePreview slide={slide} scale={0.15} />
+                  {/* Thumbnail */}
+                  <div className="aspect-[16/9] w-full overflow-hidden rounded">
+                    <SlidePreview slide={slide} scale={0.15} />
+                  </div>
                 </div>
-
-                {/* Delete Button */}
-                <Action
-                  icon="Trash2"
-                  intent="Critical"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onSlideDelete(slide.id);
-                  }}
-                  className="absolute right-1 top-1 z-10 opacity-0 group-hover:opacity-100"
-                />
               </Group>
             );
           })}

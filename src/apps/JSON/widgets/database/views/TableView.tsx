@@ -24,28 +24,22 @@ export const TableView = ({
   onRowDoubleClick,
   clearSelection,
 }: TableViewProps) => {
-  console.log('📋 [TableView] Received data:', { length: data.length, viewConfig, density });
 
   // 검색어 상태
   const [searchQuery, setSearchQuery] = useState('');
 
   const columns = useMemo<ColumnDef<JsonObject>[]>(() => {
-    console.log('🔨 [TableView] Building columns...');
 
     if (data.length === 0) {
-      console.log('❌ [TableView] No data - returning empty columns');
       return [];
     }
 
     const firstItem = data[0] as JsonObject;
-    console.log('🔍 [TableView] First item:', firstItem);
-    console.log('🔍 [TableView] First item keys:', Object.keys(firstItem));
 
     const keys = viewConfig.properties
       ? viewConfig.properties.filter((p) => p.visible !== false).map((p) => p.key)
       : Object.keys(firstItem);
 
-    console.log('✅ [TableView] Column keys:', keys);
 
     return keys.map((key) => {
       const propConfig = viewConfig.properties?.find((p) => p.key === key);

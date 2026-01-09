@@ -77,7 +77,6 @@ export const CommandPalette = () => {
           description: 'Create a new file',
           icon: <File size={16} />,
           onSelect: () => {
-            console.log('New file');
             handleClose();
           },
           keywords: ['create', 'add'],
@@ -88,7 +87,6 @@ export const CommandPalette = () => {
           description: 'Create a new folder',
           icon: <Folder size={16} />,
           onSelect: () => {
-            console.log('New folder');
             handleClose();
           },
           keywords: ['create', 'add', 'directory'],
@@ -104,7 +102,6 @@ export const CommandPalette = () => {
           description: 'Open settings panel',
           icon: <Settings size={16} />,
           onSelect: () => {
-            console.log('Open settings');
             handleClose();
           },
         },
@@ -114,7 +111,6 @@ export const CommandPalette = () => {
           description: 'Show/hide terminal panel',
           icon: <Terminal size={16} />,
           onSelect: () => {
-            console.log('Toggle terminal');
             handleClose();
           },
         },
@@ -124,7 +120,6 @@ export const CommandPalette = () => {
           description: 'Open command palette (you are here)',
           icon: <Code size={16} />,
           onSelect: () => {
-            console.log('Already open');
           },
         },
       ],
@@ -192,7 +187,6 @@ export const CommandPalette = () => {
           description: 'Distraction-free mode',
           icon: <Minimize size={16} />,
           onSelect: () => {
-            console.log('Zen mode');
             handleClose();
           },
         },

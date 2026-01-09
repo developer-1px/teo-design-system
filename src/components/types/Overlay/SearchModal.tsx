@@ -62,7 +62,6 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     type: 'list',
     items: results,
     onSelect: (result) => {
-      console.log('Selected:', result);
       onClose();
     },
     enabled: isOpen,

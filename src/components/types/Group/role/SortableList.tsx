@@ -86,6 +86,8 @@ export function SortableList({
   children,
   className,
   computedDensity,
+  computedProminence,
+  computedIntent,
   Element,
   items = [],
   onReorder,

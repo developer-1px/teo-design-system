@@ -54,11 +54,6 @@ export function ShowcaseApp() {
     async function loadComponents() {
       const root: FileTreeNode[] = [];
 
-      console.log(
-        '[ShowcaseApp] Total source modules:',
-        Object.keys(componentSourceModules).length
-      );
-
       // 재귀적으로 폴더 찾기 또는 생성
       function findOrCreateFolder(
         nodes: FileTreeNode[],
@@ -112,7 +107,6 @@ export function ShowcaseApp() {
 
         // 파일이 루트에 있는 경우 스킵 (types.ts 같은 파일)
         if (folderPath.length === 0) {
-          console.log(`[ShowcaseApp] ⊗ Skipping root file: ${filePath}`);
           continue;
         }
 
@@ -188,7 +182,6 @@ export function ShowcaseApp() {
         }
       });
 
-      console.log('[ShowcaseApp] File tree built:', root.length, 'folders');
       setFileTree(root);
       setLoading(false);
 
@@ -271,7 +264,7 @@ export function ShowcaseApp() {
 
   if (loading) {
     return (
-      <Page role="App" layout="flex" className="items-center justify-center">
+      <Page role="Focus" className="items-center justify-center">
         <Group role="Container" prominence="Standard">
           <Text role="Body" prominence="Standard" content="Loading components..." />
         </Group>
@@ -280,7 +273,7 @@ export function ShowcaseApp() {
   }
 
   return (
-    <Page role="App" layout="grid" template="studio">
+    <Page role="Application" layout="Studio">
       {/* Top Toolbar */}
       <Section role="Toolbar" prominence="Standard">
         <Toolbar

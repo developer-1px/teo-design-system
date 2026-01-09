@@ -36,6 +36,8 @@ export function Toolbar({
   children,
   className,
   computedDensity,
+  computedProminence,
+  computedIntent,
   sticky = false,
   border = 'none',
   Element,

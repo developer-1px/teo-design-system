@@ -1,18 +1,19 @@
 /**
- * useDynamicGridTemplate - 동적 Grid Template 계산 Hook (v4.1)
+ * useDynamicGridTemplate - 동적 Grid Template 계산 Hook (v5.0)
  *
  * Children에서 role prop을 분석하여 자동으로 grid-template-areas를 생성합니다.
  * Holy Grail + IntelliJ 스타일 하이브리드 레이아웃 지원
  *
  * v4.1: role-config.ts 중앙 설정 사용 (role → gridArea 매핑 제거)
+ * v5.0: PageLayout 기반으로 변경 (template → layout)
  *
  * @example
  * const { gridTemplateAreas, gridTemplateColumns, gridTemplateRows } =
- *   useDynamicGridTemplate(children, template, sizes);
+ *   useDynamicGridTemplate(children, layout, sizes);
  */
 
 import { type ReactNode, useMemo } from 'react';
-import type { PresentationGridArea } from '@/components/types/Atom/types';
+import type { PageLayout, PresentationGridArea } from '@/components/types/Atom/types';
 import { getRoleConfig } from '@/components/types/Section/role-config';
 
 export interface GridSizes {
@@ -51,9 +52,9 @@ export interface DynamicGridTemplate {
 }
 
 /**
- * Children에서 사용된 role 추출 및 gridArea 변환 (v4.1)
+ * Children에서 사용된 role 추출 및 gridArea 변환 (v5.0)
  */
-function extractUsedAreas(children: ReactNode, template?: string): Set<string> {
+function extractUsedAreas(children: ReactNode, layout?: PageLayout): Set<string> {
   const areas = new Set<string>();
 
   const traverse = (node: ReactNode) => {
@@ -67,9 +68,11 @@ function extractUsedAreas(children: ReactNode, template?: string): Set<string> {
     if (typeof node === 'object' && 'props' in node) {
       const props = (node as any).props;
 
-      // v4.1: role 기반 gridArea 자동 계산 (role-config 사용)
+      // v5.0: role 기반 gridArea 자동 계산 (role-config 사용)
       if (props?.role) {
-        const config = getRoleConfig(props.role, template);
+        // layout을 소문자로 변환하여 template 호환성 유지
+        const templateHint = layout?.toLowerCase();
+        const config = getRoleConfig(props.role, templateHint);
         areas.add(config.gridArea);
       }
       // Backward compatibility: 명시적 gridArea prop도 지원
@@ -375,15 +378,15 @@ function generateGridTemplate(
 }
 
 /**
- * Main hook (v4.1: template-aware)
+ * Main hook (v5.0: layout-aware)
  */
 export function useDynamicGridTemplate(
   children: ReactNode,
-  template?: string,
+  layout?: PageLayout,
   sizes: GridSizes = {}
 ): DynamicGridTemplate {
   return useMemo(() => {
-    const usedAreas = extractUsedAreas(children, template);
+    const usedAreas = extractUsedAreas(children, layout);
 
     // If no areas specified, use default 3-column layout
     if (usedAreas.size === 0) {
@@ -395,5 +398,5 @@ export function useDynamicGridTemplate(
     }
 
     return generateGridTemplate(usedAreas, sizes);
-  }, [children, template, sizes]);
+  }, [children, layout, sizes]);
 }

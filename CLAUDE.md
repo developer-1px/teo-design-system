@@ -278,9 +278,11 @@ IDDL is a **TSX-based DSL** where you declare **intent** instead of implementati
 
 ```
 Page (Root - Application level)
- ├─ role="Content" (default): Scrollable content page with max-width
- └─ role="App": Full-screen app layout with CSS Grid
-      └─ Section (Layout regions with gridArea: activitybar, sidebar, editor, panel, rightbar)
+ ├─ role="Document" (default): Scrollable content page with max-width
+ ├─ role="Application": Full-screen app layout with CSS Grid
+ ├─ role="Focus": Centered content (login, payment)
+ └─ role="Fullscreen": Locked full-screen (presentation, kiosk)
+      └─ Section (Layout regions: Header, Sidebar, Editor, Panel, etc.)
           └─ Group (Logical grouping: Form, Card, Toolbar, List, Grid)
               └─ Item (IDDL Type - v4.0)
                   ├─ Text (Static content: Title, Body, Label, Code)
@@ -290,10 +292,17 @@ Page (Root - Application level)
 Overlay (Floating UI: Dialog, Drawer, Popover, Toast, Tooltip)
 ```
 
+**Key Changes in v5.0** (2026-01-10):
+- **PageRole renamed values**: "App" → "Application", "Content" → "Document"
+- **New PageRole values**: "Focus" (centered content), "Fullscreen" (locked viewport)
+- **template prop → layout prop**: Clearer naming with PascalCase values
+- **Removed redundant props**: layout="grid" implied by role="Application", direction removed
+- **Backward compatibility maintained**: Deprecated props still work with warnings
+
 **Key Changes in v4.0**:
 - **Item introduced as formal IDDL type**: All primitives (Text, Field, Action) are now under `Item` namespace
-- **Page role-based rendering**: `role="Content"` for scrollable pages, `role="App"` for full-screen layouts
-- **Dynamic grid template system**: Section `gridArea` props automatically generate CSS Grid layouts
+- **Page role-based rendering**: Different PageRole values for different page types
+- **Dynamic grid template system**: Section roles automatically generate CSS Grid layouts
 
 ### Key IDDL Props
 
@@ -307,24 +316,31 @@ All IDDL components share these core props:
 ### IDDL Component Examples
 
 ```tsx
-// Page - Application root (v4.0)
-// role="App": Full-screen layout with dynamic grid
-<Page role="App" template="studio" density="Compact">
-  <Section gridArea="activitybar">...</Section>
-  <Section gridArea="sidebar">...</Section>
-  <Section gridArea="editor">...</Section>
-  <Section gridArea="panel">...</Section>
+// Page - Application root (v5.0)
+// role="Application": Full-screen layout with dynamic grid
+<Page role="Application" layout="Studio" density="Compact">
+  <Section role="ActivityBar">...</Section>
+  <Section role="PrimarySidebar">...</Section>
+  <Section role="Editor">...</Section>
+  <Section role="Panel">...</Section>
 </Page>
 
-// role="Content": Scrollable content page (default)
-<Page role="Content" title="User Settings" maxWidth="lg" centered>
+// role="Document": Scrollable content page (default)
+<Page role="Document" title="User Settings" maxWidth="lg" centered>
   <Section role="Container">
     <Group role="Form">...</Group>
   </Section>
 </Page>
 
-// Section - Layout regions with gridArea (v4.0)
-<Section gridArea="sidebar" resizable={{ direction: 'horizontal', minSize: 200, maxSize: 400 }}>
+// role="Focus": Centered content (login, payment)
+<Page role="Focus" title="Sign In" centered>
+  <Section role="Container">
+    <Group role="Form">...</Group>
+  </Section>
+</Page>
+
+// Section - Layout regions with role-based positioning (v4.1)
+<Section role="PrimarySidebar" resizable={{ direction: 'horizontal', minSize: 200, maxSize: 400 }}>
   <Group role="List">...</Group>
 </Section>
 
@@ -427,56 +443,66 @@ export function TextField(props: FieldProps) {
 - **Selections**: select, radio, checkbox, multiselect
 - **Rich**: textarea, richtext, rating, color
 
-## Page Component Architecture (v4.0)
+## Page Component Architecture (v5.0)
 
 ### Role-Based Rendering Pattern
 
-Page v4.0 introduces **role-based rendering** similar to Field component's Headless + Renderer pattern:
+Page v5.0 refines **role-based rendering** with clearer PageRole values and unified layout prop:
 
 ```tsx
 // Page.tsx - Main component with role-based branching
-export function Page({ role = 'Content', ... }: PageProps) {
-  if (role === 'App') {
+export function Page({ role = 'Document', ... }: PageProps) {
+  if (role === 'Application') {
     return <AppLayout>...</AppLayout>;  // Full-screen grid layout
   }
-  // Default: Content page (scrollable, max-width constrained)
+  // Default: Document page (scrollable, max-width constrained)
   return <div className="h-full overflow-y-auto">...</div>;
 }
 ```
 
-### role="App" - Full-Screen Application Layout
+### PageRole Types (v5.0)
+
+| Role | Physical Laws | Use Case |
+|------|---------------|----------|
+| **Application** | Full-screen, no scroll (`w-screen h-screen overflow-hidden`) | IDE, Studio, Dashboard, Complex apps |
+| **Document** | Scrollable page (`min-h-screen overflow-y-auto`) | Articles, Docs, Forms, Settings |
+| **Focus** | Centered content (`flex items-center justify-center`) | Login, Payment, Single-task flows |
+| **Fullscreen** | Locked viewport (no scroll, no chrome) | Presentations, Kiosks, Immersive experiences |
+
+### role="Application" - Full-Screen Application Layout
 
 **Use case**: IDE, Studio, Dashboard, PPT apps
 
 **Features**:
 - `w-screen h-screen overflow-hidden` - No scrolling, fills viewport
-- Dynamic CSS Grid generation based on Section `gridArea` props
-- Supports multiple template patterns (studio, presentation, sidebar, 3-col)
+- Dynamic CSS Grid generation based on Section roles
+- Supports multiple layout patterns (Studio, HolyGrail, Sidebar, Split)
 
-**Grid Templates**:
+**Page Layouts** (v5.0):
 
-| Template | Grid Areas | Use Case |
-|----------|------------|----------|
-| `studio` | activitybar, sidebar, editor, panel, rightbar | IDE/Studio (IntelliJ-style) |
-| `presentation` | header, footer, left, right, main, corners | PPT/Presentation apps |
-| `sidebar` | nav, content | Documentation, Settings |
-| `3-col` | left, center, right | Dashboard with sidebars |
-| `dashboard` | auto-fit grid | Card-based dashboard |
+| Layout | Section Roles | Use Case |
+|--------|---------------|----------|
+| `Studio` | ActivityBar, PrimarySidebar, Editor, Panel, SecondarySidebar | IDE/Studio (IntelliJ-style) |
+| `HolyGrail` | Header, Navigator, Container, Aside, Footer | 3-column complete layout |
+| `Sidebar` | Navigator, Container | Documentation, Settings |
+| `Split` | Master, Detail | Master-detail views |
+| `Single` | Header, Container, Footer | Basic single-column |
+| `Blank` | Container | Custom layouts, dialogs |
 
-**Dynamic Grid System**:
+**Dynamic Grid System** (v5.0):
 
-The system analyzes children's `gridArea` props and automatically generates CSS Grid layout:
+The system automatically generates CSS Grid layout from Section roles:
 
 ```tsx
 // IDEPage.tsx
-<Page role="App" template="studio">
-  <Section gridArea="activitybar">...</Section>  // 48px
-  <Section gridArea="sidebar">...</Section>      // 250px
-  <Section gridArea="editor">...</Section>       // 1fr
-  <Section gridArea="panel">...</Section>        // 300px
+<Page role="Application" layout="Studio">
+  <Section role="ActivityBar">...</Section>  // Auto: 48px
+  <Section role="PrimarySidebar">...</Section>  // Auto: 250px
+  <Section role="Editor">...</Section>       // Auto: 1fr
+  <Section role="Panel">...</Section>        // Auto: 300px
 </Page>
 
-// Generates:
+// Generates CSS Grid based on role-config.ts mappings:
 // grid-template-areas: "activitybar sidebar editor panel"
 // grid-template-columns: 48px 250px 1fr 300px
 // grid-template-rows: 1fr
@@ -486,7 +512,7 @@ The system analyzes children's `gridArea` props and automatically generates CSS 
 
 ```tsx
 <Section
-  gridArea="sidebar"
+  role="PrimarySidebar"
   resizable={{
     direction: 'horizontal',
     minSize: 200,
@@ -501,22 +527,12 @@ The system analyzes children's `gridArea` props and automatically generates CSS 
 **Implementation**:
 - **AppLayout renderer**: `src/components/types/Page/renderers/AppLayout.tsx`
 - **Dynamic grid hook**: `src/components/types/Page/hooks/useDynamicGridTemplate.ts`
+- **Role config**: `src/components/types/Section/role-config.ts`
 - **Resizable hook**: `src/components/types/Page/hooks/useResizable.ts`
-- **CSS Grid rules**: `src/components/types/Page/grid-templates.css`
 
-**Critical CSS Rule** (v4.0):
-```css
-/* Grid areas override any width classes */
-[data-grid-area] {
-  width: 100% !important;
-  min-width: 0;
-  max-width: none !important;
-}
-```
+### role="Document" - Scrollable Content Page
 
-### role="Content" - Scrollable Content Page
-
-**Use case**: Documentation, Settings, Forms, Content pages
+**Use case**: Documentation, Settings, Forms, Content pages (default)
 
 **Features**:
 - `h-full overflow-y-auto` - Scrollable content
@@ -527,7 +543,7 @@ The system analyzes children's `gridArea` props and automatically generates CSS 
 **Example**:
 ```tsx
 <Page
-  role="Content"
+  role="Document"
   title="Settings"
   description="Configure your preferences"
   maxWidth="lg"
@@ -535,6 +551,42 @@ The system analyzes children's `gridArea` props and automatically generates CSS 
   breadcrumbs={[...]}
 >
   <Section role="Container">...</Section>
+</Page>
+```
+
+### role="Focus" - Centered Content (v5.0 NEW)
+
+**Use case**: Login, Payment, Single-task flows
+
+**Features**:
+- `flex items-center justify-center` - Centered layout
+- Minimal chrome, focus on primary task
+- Ideal for authentication, checkout, wizards
+
+**Example**:
+```tsx
+<Page role="Focus" title="Sign In">
+  <Section role="Container">
+    <Group role="Form">...</Group>
+  </Section>
+</Page>
+```
+
+### role="Fullscreen" - Locked Viewport (v5.0 NEW)
+
+**Use case**: Presentations, Kiosks, Immersive experiences
+
+**Features**:
+- `w-screen h-screen overflow-hidden` - No scroll, locked
+- No default chrome (title, breadcrumbs hidden)
+- Full control over viewport
+
+**Example**:
+```tsx
+<Page role="Fullscreen">
+  <Section role="Container">
+    {/* Presentation slides */}
+  </Section>
 </Page>
 ```
 

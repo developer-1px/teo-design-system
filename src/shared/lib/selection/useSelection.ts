@@ -161,7 +161,6 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
     clipboardRef.current = [...selectedItems];
     onCopy?.(selectedItems);
 
-    console.log('[Selection] Copied:', selectedItems.length, 'items');
   }, [selectedItems, onCopy]);
 
   // 잘라내기
@@ -171,7 +170,6 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
     clipboardRef.current = [...selectedItems];
     onCut?.(selectedItems);
 
-    console.log('[Selection] Cut:', selectedItems.length, 'items');
   }, [selectedItems, onCut]);
 
   // 붙여넣기
@@ -180,7 +178,6 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
 
     onPaste?.(clipboardRef.current);
 
-    console.log('[Selection] Pasted:', clipboardRef.current.length, 'items');
   }, [onPaste]);
 
   // 삭제
@@ -190,7 +187,6 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
     onDelete?.(selectedItems);
     clearSelection();
 
-    console.log('[Selection] Deleted:', selectedItems.length, 'items');
   }, [selectedItems, onDelete, clearSelection]);
 
   // 아이템 DOM 요소 등록 (focus management)

@@ -91,7 +91,6 @@ export function Action({
     switch (behavior.action) {
       case 'command':
         e.preventDefault();
-        console.log('[Action] Execute command:', behavior.command, behavior.args);
         // TODO: 실제 구현에서는 커맨드 시스템에 전달
         // commandRegistry.execute(behavior.command, behavior.args);
         break;
@@ -102,31 +101,26 @@ export function Action({
 
       case 'submit':
         e.preventDefault();
-        console.log('[Action] Submit form:', behavior.form);
         // TODO: form submit 로직
         break;
 
       case 'reset':
         e.preventDefault();
-        console.log('[Action] Reset form:', behavior.form);
         // TODO: form reset 로직
         break;
 
       case 'open':
         e.preventDefault();
-        console.log('[Action] Open overlay:', behavior.overlay);
         // TODO: overlay 열기 로직
         break;
 
       case 'close':
         e.preventDefault();
-        console.log('[Action] Close overlay:', behavior.overlay);
         // TODO: overlay 닫기 로직
         break;
 
       case 'toggle':
         e.preventDefault();
-        console.log('[Action] Toggle:', behavior.target);
         // TODO: toggle 로직
         break;
     }

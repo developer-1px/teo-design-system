@@ -142,7 +142,7 @@ export const EmojiDesignerPage = () => {
   };
 
   return (
-    <Page role="App" template="3-col" density="Compact">
+    <Page role="Application" layout="HolyGrail" density="Compact">
       {/* Header */}
       <Section role="Header" className="px-6 py-4">
         <Group role="Container" direction="horizontal" className="justify-between">

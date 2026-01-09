@@ -90,7 +90,7 @@ export const IDEPage = () => {
   const activeFile = openFiles.find((f) => f.path === activeFilePath);
 
   return (
-    <Page role="App" template="studio" density="Compact">
+    <Page role="Application" layout="Studio" density="Compact">
       {/* IDDL Section[ActivityBar]: Left Workspace Navigation */}
       <Section role="ActivityBar">
         <Group role="Container">

@@ -38,7 +38,7 @@
 import { cva } from 'class-variance-authority';
 import { type ReactNode } from 'react';
 import { useDynamicGridTemplate } from '@/components/types/Page/hooks/useDynamicGridTemplate';
-import type { GridTemplate, Intent, Prominence } from '@/components/types/Atom/types';
+import type { GridTemplate, Intent, PageLayout, Prominence } from '@/components/types/Atom/types';
 import { cn } from '@/shared/lib/utils';
 
 /**
@@ -117,11 +117,29 @@ function getGapClass(gap: number): string {
   return gapMap[gap] || 'gap-0';
 }
 
+/**
+ * Helper: GridTemplate → PageLayout 매핑 (하위 호환성, v5.0)
+ */
+function convertTemplateToLayout(template?: GridTemplate): PageLayout | undefined {
+  if (!template) return undefined;
+  const mapping: Record<GridTemplate, PageLayout> = {
+    studio: 'Studio',
+    'sidebar-content': 'Sidebar',
+    'master-detail': 'Split',
+    '3-col': 'HolyGrail',
+    dashboard: 'HolyGrail', // Dashboard는 HolyGrail과 유사
+    dialog: 'Blank',
+    presentation: 'HolyGrail',
+    custom: 'Blank',
+  };
+  return mapping[template];
+}
+
 export interface AppLayoutProps {
   /**
-   * Grid template type
+   * Page layout type (v5.0)
    */
-  template?: GridTemplate;
+  layout?: PageLayout;
 
   /**
    * Gap between grid areas
@@ -152,11 +170,17 @@ export interface AppLayoutProps {
    * Click handler
    */
   onClick?: (e: React.MouseEvent) => void;
+
+  /**
+   * @deprecated Use `layout` instead of `template`
+   */
+  template?: GridTemplate;
 }
 
 export function AppLayout(props: AppLayoutProps) {
   const {
-    template = 'studio',
+    layout: layoutProp,
+    template, // deprecated
     gap = 0,
     prominence = 'Standard',
     intent = 'Neutral',
@@ -165,34 +189,30 @@ export function AppLayout(props: AppLayoutProps) {
     onClick,
   } = props;
 
-  // v4.1: role 기반 동적 템플릿 계산 (template 전달)
-  const dynamicTemplate = useDynamicGridTemplate(children, template);
+  // v5.0: 하위 호환성 - template → layout 매핑
+  const layout = layoutProp || convertTemplateToLayout(template) || 'Studio';
 
-  // dashboard는 특수 케이스 (auto-fit grid)
-  const isDashboard = template === 'dashboard';
+  // v5.0: layout 기반 동적 템플릿 계산
+  const dynamicTemplate = useDynamicGridTemplate(children, layout);
 
-  // Inline style로 동적 grid 적용 (dashboard 제외)
-  const inlineStyle = !isDashboard
-    ? {
-        gridTemplateAreas: dynamicTemplate.gridTemplateAreas,
-        gridTemplateColumns: dynamicTemplate.gridTemplateColumns,
-        gridTemplateRows: dynamicTemplate.gridTemplateRows,
-      }
-    : undefined;
+  // Inline style로 동적 grid 적용
+  const inlineStyle = {
+    gridTemplateAreas: dynamicTemplate.gridTemplateAreas,
+    gridTemplateColumns: dynamicTemplate.gridTemplateColumns,
+    gridTemplateRows: dynamicTemplate.gridTemplateRows,
+  };
 
   return (
     <div
       className={cn(
         appLayoutVariants({ prominence, layout: 'grid' }),
-        isDashboard && gridTemplateVariants({ template: 'dashboard' }),
         getGapClass(gap),
         className
       )}
       style={inlineStyle}
       data-dsl-component="page"
-      data-role="app"
-      data-layout="grid"
-      data-template={template}
+      data-role="Application"
+      data-layout={layout}
       data-prominence={prominence}
       data-intent={intent}
       onClick={onClick}

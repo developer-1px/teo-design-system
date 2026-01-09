@@ -314,11 +314,6 @@ export const paddingVariants = cva('', {
  */
 export function debugSpacing(config: SpacingConfig) {
   const result = calculateSpacing(config);
-  console.log('[Spacing System]', {
-    input: config,
-    calculated: result,
-    formula: `${config.prominence || 'Standard'} × ${config.density || 'Standard'}`,
-  });
   return result;
 }
 
