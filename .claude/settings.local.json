@@ -32,7 +32,9 @@
       "Bash(\"$file\")",
       "Bash(done)",
       "Bash(echo:*)",
-      "Bash(do sed -i '' 's/ rounded=\"\"[^\"\"]*\"\"//g' \"$file\")"
+      "Bash(do sed -i '' 's/ rounded=\"\"[^\"\"]*\"\"//g' \"$file\")",
+      "Bash(pnpm lint:biome:*)",
+      "Bash(pnpm fix:*)"
     ],
     "deny": [],
     "ask": []

@@ -9,10 +9,14 @@
  * - 측정 도구
  */
 
+import type {
+  ComponentMetadata,
+  FileTreeNode,
+  PropValue,
+} from '@/apps/showcase/widgets/parser/types';
 import { Group } from '@/components/Group/Group.tsx';
-import type { BackgroundType, ViewportSize } from './Toolbar';
-import type { ComponentMetadata, PropValue, FileTreeNode } from '@/apps/showcase/widgets/parser/types';
 import { ComponentRenderer } from './ComponentRenderer';
+import type { BackgroundType, ViewportSize } from './Toolbar';
 
 interface CanvasProps {
   node: FileTreeNode | null;
@@ -51,14 +55,16 @@ export function Canvas({
         return { backgroundColor: '#1a1a1a' };
       case 'transparent':
         return {
-          backgroundImage: 'linear-gradient(45deg, #f5f5f5 25%, transparent 25%, transparent 75%, #f5f5f5 75%, #f5f5f5), linear-gradient(45deg, #f5f5f5 25%, transparent 25%, transparent 75%, #f5f5f5 75%, #f5f5f5)',
+          backgroundImage:
+            'linear-gradient(45deg, #f5f5f5 25%, transparent 25%, transparent 75%, #f5f5f5 75%, #f5f5f5), linear-gradient(45deg, #f5f5f5 25%, transparent 25%, transparent 75%, #f5f5f5 75%, #f5f5f5)',
           backgroundSize: '20px 20px',
           backgroundPosition: '0 0, 10px 10px',
         };
       case 'grid':
         return {
           backgroundColor: '#ffffff',
-          backgroundImage: 'linear-gradient(#e5e5e5 1px, transparent 1px), linear-gradient(90deg, #e5e5e5 1px, transparent 1px)',
+          backgroundImage:
+            'linear-gradient(#e5e5e5 1px, transparent 1px), linear-gradient(90deg, #e5e5e5 1px, transparent 1px)',
           backgroundSize: '20px 20px',
         };
       default:
@@ -67,15 +73,17 @@ export function Canvas({
   };
 
   // 격자 오버레이
-  const gridOverlay = showGrid && background !== 'grid' ? (
-    <div
-      className="absolute inset-0 pointer-events-none"
-      style={{
-        backgroundImage: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
-        backgroundSize: '20px 20px',
-      }}
-    />
-  ) : null;
+  const gridOverlay =
+    showGrid && background !== 'grid' ? (
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
+          backgroundSize: '20px 20px',
+        }}
+      />
+    ) : null;
 
   // 측정 도구
   const measureOverlay = showMeasure ? (
@@ -91,7 +99,10 @@ export function Canvas({
       {/* 세로 눈금자 */}
       <div className="absolute top-6 left-0 w-6 border-r border-default bg-surface">
         {Array.from({ length: 20 }).map((_, i) => (
-          <div key={i} className="h-[100px] border-b border-default text-[10px] text-muted text-center">
+          <div
+            key={i}
+            className="h-[100px] border-b border-default text-[10px] text-muted text-center"
+          >
             <span className="rotate-90 inline-block mt-10">{i * 100}</span>
           </div>
         ))}
@@ -123,16 +134,10 @@ export function Canvas({
         >
           {metadata && node ? (
             <div className="p-8 rounded-lg bg-surface-elevated shadow-md">
-              <ComponentRenderer
-                node={node}
-                propValues={propValues}
-                mockData={{}}
-              />
+              <ComponentRenderer node={node} propValues={propValues} mockData={{}} />
             </div>
           ) : (
-            <div className="p-12 text-center text-muted">
-              Select a component to preview
-            </div>
+            <div className="p-12 text-center text-muted">Select a component to preview</div>
           )}
         </div>
       </div>

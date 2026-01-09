@@ -4,8 +4,8 @@
  * react-hotkeys-hook을 래핑하여 우리의 컨텍스트 시스템과 통합
  */
 
-import { useEffect, useCallback, useRef } from 'react';
-import { useHotkeys, Options as HotkeysOptions } from 'react-hotkeys-hook';
+import { useCallback, useEffect, useRef } from 'react';
+import { type Options as HotkeysOptions, useHotkeys } from 'react-hotkeys-hook';
 import { useKeyboardContext } from './KeyboardProvider';
 import { KeyboardContext, PRIORITY } from './types';
 
@@ -49,8 +49,7 @@ export const useShortcut = (
     preventDefault = true,
   } = options;
 
-  const { isContextActive, registerShortcut, unregisterShortcut } =
-    useKeyboardContext();
+  const { isContextActive, registerShortcut, unregisterShortcut } = useKeyboardContext();
 
   // 핸들러 ref (재생성 방지)
   const callbackRef = useRef(callback);
@@ -82,10 +81,7 @@ export const useShortcut = (
   };
 
   // 단축키 등록
-  useHotkeys(keys, wrappedCallback, hotkeysOptions, [
-    wrappedCallback,
-    enabled,
-  ]);
+  useHotkeys(keys, wrappedCallback, hotkeysOptions, [wrappedCallback, enabled]);
 
   // KeyboardProvider에 등록 (디버그용)
   useEffect(() => {

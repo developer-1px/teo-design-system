@@ -1,6 +1,6 @@
-import { Section } from '@/components/Section/Section.tsx';
-import { ComponentType, useState, useEffect } from 'react';
 import { AlertCircle } from 'lucide-react';
+import { type ComponentType, useEffect, useState } from 'react';
+import { Section } from '@/components/Section/Section.tsx';
 
 interface ComponentPreviewProps {
   path: string;
@@ -31,7 +31,7 @@ export const ComponentPreview = ({ path, filename }: ComponentPreviewProps) => {
 
       // named export 찾기 (첫 번째 컴포넌트)
       const exportedComponents = Object.keys(module).filter(
-        key => typeof module[key] === 'function' && key !== 'default'
+        (key) => typeof module[key] === 'function' && key !== 'default'
       );
 
       if (exportedComponents.length > 0) {
@@ -48,16 +48,16 @@ export const ComponentPreview = ({ path, filename }: ComponentPreviewProps) => {
 
   if (error || !Component) {
     return (
-      <Section role="Container" prominence="Primary" className="flex-1 flex items-center justify-center">
+      <Section
+        role="Container"
+        prominence="Primary"
+        className="flex-1 flex items-center justify-center"
+      >
         <div className="text-center">
           <AlertCircle className="mx-auto mb-3 text-error" size={48} />
-          <p className="text-text-primary font-medium mb-1">
-            Cannot preview this component
-          </p>
+          <p className="text-text-primary font-medium mb-1">Cannot preview this component</p>
           <p className="text-text-tertiary text-sm mb-2">{filename}</p>
-          {error && (
-            <p className="text-xs text-error mt-2 font-mono">{error}</p>
-          )}
+          {error && <p className="text-xs text-error mt-2 font-mono">{error}</p>}
         </div>
       </Section>
     );
@@ -87,8 +87,8 @@ export const ComponentPreview = ({ path, filename }: ComponentPreviewProps) => {
         {/* Info */}
         <div className="mt-4 p-4 bg-layer-1 rounded-lg">
           <p className="text-xs text-text-tertiary">
-            <strong className="text-text-secondary">Note:</strong> This is a live preview of the component.
-            Some components may require props or context to render properly.
+            <strong className="text-text-secondary">Note:</strong> This is a live preview of the
+            component. Some components may require props or context to render properly.
           </p>
         </div>
       </div>

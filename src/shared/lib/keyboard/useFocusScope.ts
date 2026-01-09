@@ -4,9 +4,9 @@
  * 모달, 패널 등에서 포커스를 가두고 자동으로 복원
  */
 
-import { useEffect, useRef } from 'react';
 import { useFocusManager } from '@react-aria/focus';
-import { FocusScopeOptions } from './types';
+import { useEffect, useRef } from 'react';
+import type { FocusScopeOptions } from './types';
 
 /**
  * 포커스 스코프 훅

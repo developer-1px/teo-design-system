@@ -4,8 +4,8 @@
  * Arrow 키로 커서 이동, Enter로 선택 등 통합 처리
  */
 
-import { useState, useCallback, useEffect, useMemo } from 'react';
-import { NavigationOptions, CursorPosition } from './types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { CursorPosition, NavigationOptions } from './types';
 
 interface UseNavigableCursorReturn<T> {
   /** 현재 커서 인덱스 */
@@ -54,7 +54,7 @@ interface UseNavigableCursorReturn<T> {
  * ));
  * ```
  */
-export const useNavigableCursor = <T,>(
+export const useNavigableCursor = <T>(
   options: NavigationOptions<T>
 ): UseNavigableCursorReturn<T> => {
   const {

@@ -11,10 +11,10 @@
  *   - Group[Toolbar]: 우측 여백
  */
 
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Text/Text';
-import { Section } from '@/components/Section/Section.tsx';
 import { Action } from '@/components/Action/Action';
+import { Group } from '@/components/Group/Group.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Text/Text';
 
 interface PresentationToolbarProps {
   title?: string;
@@ -34,10 +34,7 @@ export const PresentationToolbar = ({
   canGoNext = true,
 }: PresentationToolbarProps) => {
   return (
-    <Section
-      role="Header"
-      className="border-b border-border bg-layer-4 shadow-sm"
-    >
+    <Section role="Header" className="border-b border-border bg-layer-4 shadow-sm">
       <Group
         role="Toolbar"
         layout="inline"

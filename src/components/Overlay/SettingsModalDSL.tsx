@@ -13,32 +13,21 @@
  *     - Group[Toolbar]: Cancel/Apply 버튼
  */
 
+import { Keyboard, Layers, Palette, Settings as SettingsIcon, Type } from 'lucide-react';
 import { useState } from 'react';
+import { Action } from '@/components/Action/Action';
+import { Field } from '@/components/Field/Field';
+import { Group } from '@/components/Group/Group.tsx';
 import { Overlay } from '@/components/Overlay/Overlay.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Group } from '@/components/Group/Group.tsx';
-import { Field } from '@/components/Field/Field';
-import { Action } from '@/components/Action/Action';
 import { Text } from '@/components/Text/Text';
-import {
-  Palette,
-  Type,
-  Layers,
-  Keyboard,
-  Settings as SettingsIcon,
-} from 'lucide-react';
 
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type SettingsCategory =
-  | 'appearance'
-  | 'editor'
-  | 'layers'
-  | 'keymap'
-  | 'general';
+type SettingsCategory = 'appearance' | 'editor' | 'layers' | 'keymap' | 'general';
 
 interface SettingsItem {
   id: string;
@@ -52,8 +41,7 @@ interface SettingsItem {
 }
 
 export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
-  const [activeCategory, setActiveCategory] =
-    useState<SettingsCategory>('appearance');
+  const [activeCategory, setActiveCategory] = useState<SettingsCategory>('appearance');
   const [settings, setSettings] = useState<Record<string, any>>({
     theme: 'light',
     colorScheme: 'emerald',
@@ -161,11 +149,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
     >
       {/* Header */}
       <Section role="DialogHeader" density="Compact">
-        <Text
-          role="Title"
-          prominence="Primary"
-          content="Settings"
-        />
+        <Text role="Title" prominence="Primary" content="Settings" />
       </Section>
 
       {/* Main Content */}
@@ -201,11 +185,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
             <Group role="Form" density="Compact">
               {getSettingsForCategory(activeCategory).map((setting) => (
                 <Group key={setting.id} role="Inline" layout="inline" density="Compact">
-                  <Text
-                    role="Label"
-                    prominence="Primary"
-                    content={setting.label}
-                  />
+                  <Text role="Label" prominence="Primary" content={setting.label} />
                   {setting.type === 'select' && (
                     <Field
                       model={setting.id}
@@ -271,18 +251,8 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
       {/* Footer */}
       <Section role="DialogFooter" density="Compact">
         <Group role="Toolbar" layout="inline" density="Compact">
-          <Action
-            label="Cancel"
-            prominence="Secondary"
-            intent="Neutral"
-            onClick={onClose}
-          />
-          <Action
-            label="Apply"
-            prominence="Primary"
-            intent="Brand"
-            onClick={onClose}
-          />
+          <Action label="Cancel" prominence="Secondary" intent="Neutral" onClick={onClose} />
+          <Action label="Apply" prominence="Primary" intent="Brand" onClick={onClose} />
         </Group>
       </Section>
     </Overlay>

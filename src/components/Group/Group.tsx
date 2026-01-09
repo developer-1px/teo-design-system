@@ -8,10 +8,10 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils.ts';
+import { Loader2 } from 'lucide-react';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext';
 import type { GroupProps, GroupRole } from '@/components/utils/types';
-import { Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils.ts';
 
 /**
  * Group container variants (CVA)
@@ -108,29 +108,29 @@ const groupStateVariants = cva('', {
  * Role → HTML 시맨틱 태그 매핑
  */
 const roleToTag: Record<GroupRole, string> = {
-  'Form': 'form',
-  'Fieldset': 'fieldset',
-  'List': 'ul',
-  'Table': 'table',
-  'Card': 'article',
-  'Toolbar': 'div',
-  'Container': 'div',
-  'Grid': 'div',
-  'Tabs': 'div',
-  'Steps': 'ol',
-  'Split': 'div',
-  'Inline': 'div',
+  Form: 'form',
+  Fieldset: 'fieldset',
+  List: 'ul',
+  Table: 'table',
+  Card: 'article',
+  Toolbar: 'div',
+  Container: 'div',
+  Grid: 'div',
+  Tabs: 'div',
+  Steps: 'ol',
+  Split: 'div',
+  Inline: 'div',
 };
 
 /**
  * Role → ARIA 속성 매핑
  */
 const roleToAria: Partial<Record<GroupRole, Record<string, string>>> = {
-  'Toolbar': { role: 'toolbar' },
-  'Tabs': { role: 'tablist' },
-  'Table': { role: 'table' },
-  'List': { role: 'list' },
-  'Grid': { role: 'grid' },
+  Toolbar: { role: 'toolbar' },
+  Tabs: { role: 'tablist' },
+  Table: { role: 'table' },
+  List: { role: 'list' },
+  Grid: { role: 'grid' },
 };
 
 export function Group({
@@ -140,7 +140,7 @@ export function Group({
   intent,
   children,
   className,
-  direction,  // @deprecated: layout을 사용하세요
+  direction, // @deprecated: layout을 사용하세요
   layout,
   state = 'idle',
   emptyContent,
@@ -177,19 +177,11 @@ export function Group({
   }
 
   if (state === 'error' && errorContent) {
-    return (
-      <div className={groupStateVariants({ state: 'error', className })}>
-        {errorContent}
-      </div>
-    );
+    return <div className={groupStateVariants({ state: 'error', className })}>{errorContent}</div>;
   }
 
   if (state === 'empty' && emptyContent) {
-    return (
-      <div className={groupStateVariants({ state: 'empty', className })}>
-        {emptyContent}
-      </div>
-    );
+    return <div className={groupStateVariants({ state: 'empty', className })}>{emptyContent}</div>;
   }
 
   // role에 따른 HTML 태그 결정
@@ -211,9 +203,16 @@ export function Group({
     >
       <Component
         className={groupVariants({
-          layout: computedLayout as 'stack' | 'inline' | 'grid' | 'table' | 'split' | 'tabs' | 'steps',
+          layout: computedLayout as
+            | 'stack'
+            | 'inline'
+            | 'grid'
+            | 'table'
+            | 'split'
+            | 'tabs'
+            | 'steps',
           role: role as GroupRole,
-          density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',  // v1.1.1
+          density: computedDensity as 'Compact' | 'Standard' | 'Comfortable', // v1.1.1
           className,
         })}
         {...ariaProps}

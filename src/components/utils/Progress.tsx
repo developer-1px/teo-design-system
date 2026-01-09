@@ -1,5 +1,5 @@
-import { forwardRef, HTMLAttributes } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Progress - 프로그레스 바
@@ -35,15 +35,7 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
   (
-    {
-      className,
-      value,
-      max = 100,
-      size = 'md',
-      variant = 'accent',
-      showLabel = false,
-      ...props
-    },
+    { className, value, max = 100, size = 'md', variant = 'accent', showLabel = false, ...props },
     ref
   ) => {
     const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
@@ -80,9 +72,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 
         {/* Label */}
         {showLabel && (
-          <div className="mt-1 text-xs text-muted text-right">
-            {Math.round(percentage)}%
-          </div>
+          <div className="mt-1 text-xs text-muted text-right">{Math.round(percentage)}%</div>
         )}
       </div>
     );

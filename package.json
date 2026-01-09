@@ -9,9 +9,15 @@
     "build:debug-panel": "vite build --config vite-plugins/build-client.config.ts",
     "build:iddl-inspector": "vite build --config vite-plugins/build-iddl-client.config.ts",
     "preview": "vite preview",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "lint:biome": "biome check .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "fix": "biome check --write .",
+    "check": "tsc --noEmit && biome check ."
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.11",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

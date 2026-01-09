@@ -9,11 +9,11 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
-import { useLayoutContext } from '@/components/context/IDDLContext';
-import type { FieldProps } from '@/components/utils/types';
 import { Star, X } from 'lucide-react';
 import { useState } from 'react';
+import { useLayoutContext } from '@/components/context/IDDLContext';
+import type { FieldProps } from '@/components/utils/types';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Field input variants (CVA)
@@ -60,14 +60,18 @@ const fieldViewVariants = cva('text-text', {
 /**
  * Rating button variants (CVA)
  */
-const ratingButtonVariants = cva(
-  'text-subtle hover:text-yellow-500 transition-colors'
-);
+const ratingButtonVariants = cva('text-subtle hover:text-yellow-500 transition-colors');
 
 /**
  * View Mode: 데이터를 텍스트로 표시
  */
-function FieldView({ label, model, value, prominence, className }: {
+function FieldView({
+  label,
+  model,
+  value,
+  prominence,
+  className,
+}: {
   label: string;
   model: string;
   value?: any;
@@ -111,10 +115,12 @@ function FieldEdit({
 }: FieldProps) {
   const [internalValue, setInternalValue] = useState('');
   const value = controlledValue !== undefined ? controlledValue : internalValue;
-  const setValue = controlledOnChange ? (newValue: any) => {
-    const event = typeof newValue === 'string' ? { target: { value: newValue } } : newValue;
-    controlledOnChange(event);
-  } : setInternalValue;
+  const setValue = controlledOnChange
+    ? (newValue: any) => {
+        const event = typeof newValue === 'string' ? { target: { value: newValue } } : newValue;
+        controlledOnChange(event);
+      }
+    : setInternalValue;
   const inputClassName = inputVariants();
 
   // clearable이 적용되는 타입인지 확인
@@ -129,9 +135,9 @@ function FieldEdit({
     switch (dataType) {
       case 'text':
       case 'password':
-      case 'email':  // v1.0.1
-      case 'url':    // v1.0.1
-      case 'phone':  // v1.0.1
+      case 'email': // v1.0.1
+      case 'url': // v1.0.1
+      case 'phone': // v1.0.1
         return (
           <div className="relative">
             <input
@@ -164,7 +170,7 @@ function FieldEdit({
         );
 
       case 'number':
-      case 'currency':  // v1.0.1
+      case 'currency': // v1.0.1
         return (
           <input
             type="number"
@@ -192,7 +198,7 @@ function FieldEdit({
           />
         );
 
-      case 'datetime':  // v1.0.1
+      case 'datetime': // v1.0.1
         return (
           <input
             type="datetime-local"
@@ -237,7 +243,7 @@ function FieldEdit({
           </select>
         );
 
-      case 'multiselect':  // v1.0.1
+      case 'multiselect': // v1.0.1
         return (
           <select
             name={model}
@@ -254,7 +260,7 @@ function FieldEdit({
           </select>
         );
 
-      case 'radio':  // v1.0.1
+      case 'radio': // v1.0.1
         return (
           <div className="flex flex-col gap-2">
             {options?.map((opt) => (
@@ -274,7 +280,7 @@ function FieldEdit({
           </div>
         );
 
-      case 'checkbox':  // v1.0.1 - 체크박스 그룹 (boolean과 다름)
+      case 'checkbox': // v1.0.1 - 체크박스 그룹 (boolean과 다름)
         return (
           <div className="flex flex-col gap-2">
             {options?.map((opt) => (
@@ -293,7 +299,7 @@ function FieldEdit({
           </div>
         );
 
-      case 'textarea':  // v1.0.1
+      case 'textarea': // v1.0.1
         return (
           <textarea
             name={model}
@@ -307,7 +313,7 @@ function FieldEdit({
           />
         );
 
-      case 'richtext':  // v1.0.1 - TODO: 실제 리치 텍스트 에디터 통합 필요
+      case 'richtext': // v1.0.1 - TODO: 실제 리치 텍스트 에디터 통합 필요
         return (
           <div>
             <textarea
@@ -318,9 +324,7 @@ function FieldEdit({
               className={inputClassName}
               data-model={model}
             />
-            <p className="text-xs text-subtle mt-1">
-              TODO: Rich text editor integration
-            </p>
+            <p className="text-xs text-subtle mt-1">TODO: Rich text editor integration</p>
           </div>
         );
 
@@ -331,23 +335,29 @@ function FieldEdit({
             name={model}
             accept="image/*"
             required={required}
-            className={cn(inputClassName, 'file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-accent file:text-white')}
+            className={cn(
+              inputClassName,
+              'file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-accent file:text-white'
+            )}
             data-model={model}
           />
         );
 
-      case 'file':  // v1.0.1 - 일반 파일
+      case 'file': // v1.0.1 - 일반 파일
         return (
           <input
             type="file"
             name={model}
             required={required}
-            className={cn(inputClassName, 'file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-accent file:text-white')}
+            className={cn(
+              inputClassName,
+              'file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-accent file:text-white'
+            )}
             data-model={model}
           />
         );
 
-      case 'color':  // v1.0.1
+      case 'color': // v1.0.1
         return (
           <input
             type="color"
@@ -358,7 +368,7 @@ function FieldEdit({
           />
         );
 
-      case 'range':  // v1.0.1
+      case 'range': // v1.0.1
         return (
           <div>
             <input
@@ -379,7 +389,7 @@ function FieldEdit({
           </div>
         );
 
-      case 'rating':  // v1.0.1 - 별점
+      case 'rating': // v1.0.1 - 별점
         return (
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -412,11 +422,7 @@ function FieldEdit({
 
   // boolean 타입은 라벨이 인라인으로 포함되어 있음
   if (dataType === 'boolean') {
-    return (
-      <div className={cn('flex flex-col gap-1', className)}>
-        {renderInput()}
-      </div>
-    );
+    return <div className={cn('flex flex-col gap-1', className)}>{renderInput()}</div>;
   }
 
   return (

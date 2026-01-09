@@ -98,7 +98,7 @@ export function findInteractiveElements(selectors: string[]): HTMLElement[] {
 
   const elements = document.querySelectorAll<HTMLElement>(selectors.join(','));
 
-  return Array.from(elements).filter(el => {
+  return Array.from(elements).filter((el) => {
     return !shouldExcludeElement(el) && isElementVisible(el);
   });
 }
@@ -116,7 +116,7 @@ export function createOverlayLayer(): HTMLElement {
  * Add pulse animation to boxes (Impure: DOM mutation)
  */
 export function pulseBoxes(boxes: HTMLElement[]): void {
-  boxes.forEach(box => {
+  boxes.forEach((box) => {
     box.classList.remove('pulse');
     // Force reflow to restart animation
     void box.offsetWidth;
@@ -125,7 +125,7 @@ export function pulseBoxes(boxes: HTMLElement[]): void {
 
   // Remove pulse class after animation
   setTimeout(() => {
-    boxes.forEach(box => {
+    boxes.forEach((box) => {
       box.classList.remove('pulse');
     });
   }, 600);
@@ -135,7 +135,7 @@ export function pulseBoxes(boxes: HTMLElement[]): void {
  * Remove hover class from all boxes (Impure: DOM mutation)
  */
 export function removeHoverFromBoxes(boxes: HTMLElement[]): void {
-  boxes.forEach(box => {
+  boxes.forEach((box) => {
     box.classList.remove('hover');
   });
 }

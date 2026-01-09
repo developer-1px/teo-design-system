@@ -4,11 +4,11 @@
  */
 
 import { useMemo } from 'react';
+import { Group } from '@/components/Group/Group';
 import { Card } from '@/components/Group/role/Card';
 import { Badge } from '@/components/Text/role/Badge';
-import { Group } from '@/components/Group/Group';
 import { Text } from '@/components/Text/Text';
-import type { JsonObject, JsonArray, ViewConfig } from '../types';
+import type { JsonArray, JsonObject, ViewConfig } from '../types';
 
 interface BoardViewProps {
   data: JsonArray;
@@ -42,7 +42,12 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
             {/* 컬럼 헤더 */}
             <div className="flex items-center justify-between mb-3 px-2">
               <Group role="Container" direction="horizontal" className="items-center gap-2">
-                <Text role="Title" prominence="Hero" className="font-semibold" content={groupName} />
+                <Text
+                  role="Title"
+                  prominence="Hero"
+                  className="font-semibold"
+                  content={groupName}
+                />
                 <Badge variant="default" size="sm">
                   {items.length}
                 </Badge>
@@ -55,7 +60,11 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                 const keys = Object.keys(item).slice(0, 5); // 처음 5개 필드만
 
                 return (
-                  <Card key={index} padding="sm" className="cursor-pointer hover:shadow-md transition-shadow">
+                  <Card
+                    key={index}
+                    padding="sm"
+                    className="cursor-pointer hover:shadow-md transition-shadow"
+                  >
                     <Group role="Container" className="gap-2">
                       {keys.map((key) => {
                         const value = item[key];
@@ -63,14 +72,21 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
 
                         return (
                           <div key={key} className="flex flex-col gap-1">
-                            <Text role="Label" prominence="Tertiary" className="text-xs text-subtle" content={key} />
+                            <Text
+                              role="Label"
+                              prominence="Tertiary"
+                              className="text-xs text-subtle"
+                              content={key}
+                            />
                             <Text
                               role="Body"
                               prominence="Hero"
                               className="text-sm"
-                              content={typeof value === 'object'
-                                ? JSON.stringify(value).substring(0, 30) + '...'
-                                : String(value)}
+                              content={
+                                typeof value === 'object'
+                                  ? JSON.stringify(value).substring(0, 30) + '...'
+                                  : String(value)
+                              }
                             />
                           </div>
                         );

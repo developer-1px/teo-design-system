@@ -2,9 +2,9 @@
  * ViewSwitcher - Notion 스타일 뷰 전환 UI
  */
 
+import { Kanban, LayoutGrid, List as ListIcon, Table } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/Group/role/Tabs';
-import { Table, LayoutGrid, List as ListIcon, Kanban } from 'lucide-react';
-import type { ViewType, ViewConfig } from '@/components/utils/types';
+import type { ViewConfig, ViewType } from '@/components/utils/types';
 
 interface ViewSwitcherProps {
   views: ViewConfig[];

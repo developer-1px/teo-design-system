@@ -7,23 +7,19 @@
  * 3. Density Selection
  */
 
-import { useState, useEffect } from 'react';
-import { Section } from '@/components/Section/Section.tsx';
+import { Moon as MoonIcon, Sun as SunIcon, X as XIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { IconButton } from '@/components/Action/role/IconButton';
+import { Section } from '@/components/Section/Section.tsx';
 import {
-  Sun as SunIcon,
-  Moon as MoonIcon,
-  X as XIcon,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import {
-  type Theme,
+  applyThemeConfig,
   type ColorScheme,
   type Density,
   getThemeConfig,
-  applyThemeConfig,
+  type Theme,
   toggleTheme as toggleThemeUtil,
-} from '@/lib/theme';
+} from '@/shared/lib/theme';
+import { cn } from '@/shared/lib/utils';
 
 interface ThemeSwitcherProps {
   onClose?: () => void;
@@ -76,9 +72,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
 
       {/* Light/Dark Toggle */}
       <div className="mb-6">
-        <div className="text-xs font-medium text-muted mb-2">
-          Appearance
-        </div>
+        <div className="text-xs font-medium text-muted mb-2">Appearance</div>
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => {
@@ -117,9 +111,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
 
       {/* Color Scheme */}
       <div className="mb-6">
-        <div className="text-xs font-medium text-muted mb-2">
-          Color Scheme
-        </div>
+        <div className="text-xs font-medium text-muted mb-2">Color Scheme</div>
         <div className="grid grid-cols-2 gap-2">
           {colorSchemes.map((scheme) => (
             <button
@@ -132,10 +124,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
                   : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
               )}
             >
-              <div
-                className="w-4 h-4 rounded-full"
-                style={{ backgroundColor: scheme.color }}
-              />
+              <div className="w-4 h-4 rounded-full" style={{ backgroundColor: scheme.color }} />
               <span>{scheme.label}</span>
             </button>
           ))}
@@ -144,9 +133,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
 
       {/* Density */}
       <div>
-        <div className="text-xs font-medium text-muted mb-2">
-          Density
-        </div>
+        <div className="text-xs font-medium text-muted mb-2">Density</div>
         <div className="space-y-1">
           {densities.map((density) => (
             <button
@@ -187,7 +174,10 @@ export const ThemeToggleButton = () => {
   };
 
   return (
-    <IconButton onClick={handleToggle} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
+    <IconButton
+      onClick={handleToggle}
+      title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+    >
       {theme === 'light' ? <MoonIcon size={16} /> : <SunIcon size={16} />}
     </IconButton>
   );

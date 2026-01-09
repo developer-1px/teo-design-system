@@ -3,11 +3,11 @@
  * 기존 DataTable 재사용
  */
 
+import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
-import { type ColumnDef } from '@tanstack/react-table';
 import { DataTable } from '@/components/Group/role/DataTable.tsx';
 import { Text } from '@/components/Text/Text';
-import type { JsonObject, JsonValue, JsonArray, ViewConfig } from '../types';
+import type { JsonArray, JsonObject, JsonValue, ViewConfig } from '../types';
 
 interface TableViewProps {
   data: JsonArray;
@@ -21,11 +21,11 @@ export const TableView = ({ data, viewConfig, density = 'compact' }: TableViewPr
 
     const firstItem = data[0] as JsonObject;
     const keys = viewConfig.properties
-      ? viewConfig.properties.filter(p => p.visible !== false).map(p => p.key)
+      ? viewConfig.properties.filter((p) => p.visible !== false).map((p) => p.key)
       : Object.keys(firstItem);
 
     return keys.map((key) => {
-      const propConfig = viewConfig.properties?.find(p => p.key === key);
+      const propConfig = viewConfig.properties?.find((p) => p.key === key);
 
       return {
         accessorKey: key,

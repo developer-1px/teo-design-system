@@ -32,10 +32,7 @@ export function findNodeById(tree: AnyDSLNode, id: string): AnyDSLNode | null {
 /**
  * Find parent node by child ID
  */
-export function findParentNode(
-  tree: AnyDSLNode,
-  childId: string
-): AnyDSLNode | null {
+export function findParentNode(tree: AnyDSLNode, childId: string): AnyDSLNode | null {
   if ('children' in tree && tree.children) {
     for (const child of tree.children) {
       if (child.id === childId) return tree;
@@ -51,11 +48,7 @@ export function findParentNode(
 /**
  * Add child node to parent
  */
-export function addChildNode(
-  tree: AnyDSLNode,
-  parentId: string,
-  child: AnyDSLNode
-): AnyDSLNode {
+export function addChildNode(tree: AnyDSLNode, parentId: string, child: AnyDSLNode): AnyDSLNode {
   if (tree.id === parentId && 'children' in tree) {
     return {
       ...tree,
@@ -116,11 +109,7 @@ export function updateNode(
 /**
  * Move node from one parent to another
  */
-export function moveNode(
-  tree: AnyDSLNode,
-  nodeId: string,
-  newParentId: string
-): AnyDSLNode {
+export function moveNode(tree: AnyDSLNode, nodeId: string, newParentId: string): AnyDSLNode {
   const node = findNodeById(tree, nodeId);
   if (!node) return tree;
 
@@ -172,9 +161,22 @@ export function createDefaultNode(type: DSLNodeType): AnyDSLNode {
     case 'text':
       return { id, type: 'text', role: 'Body', prominence: 'Primary', content: 'New Text' };
     case 'field':
-      return { id, type: 'field', label: 'Field', model: 'data.field', dataType: 'text', prominence: 'Primary' };
+      return {
+        id,
+        type: 'field',
+        label: 'Field',
+        model: 'data.field',
+        dataType: 'text',
+        prominence: 'Primary',
+      };
     case 'action':
-      return { id, type: 'action', label: 'Button', prominence: 'Primary', behavior: { action: 'command', command: 'noop' } };
+      return {
+        id,
+        type: 'action',
+        label: 'Button',
+        prominence: 'Primary',
+        behavior: { action: 'command', command: 'noop' },
+      };
     default:
       throw new Error(`Unknown node type: ${type}`);
   }

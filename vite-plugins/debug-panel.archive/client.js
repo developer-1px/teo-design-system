@@ -1,5 +1,4 @@
-(function() {
-  "use strict";
+(() => {
   const CSS_STYLES = `
 /* 레거시 스타일 (호환성 유지) */
 [data-debug-target] {
@@ -412,13 +411,13 @@ body[data-debug-mode="1"]::before {
 }
 `;
   function injectStyles() {
-    const style = document.createElement("style");
-    style.setAttribute("type", "text/css");
-    style.setAttribute("data-vite-dev-id", "debug-panel");
+    const style = document.createElement('style');
+    style.setAttribute('type', 'text/css');
+    style.setAttribute('data-vite-dev-id', 'debug-panel');
     style.innerHTML = CSS_STYLES;
     document.head.appendChild(style);
   }
-  let root = "__ROOT__";
+  const root = '__ROOT__';
   let debugMode = 0;
   let hasPanel = false;
   function setDebugMode(mode) {
@@ -441,11 +440,11 @@ body[data-debug-mode="1"]::before {
     delete props.__self;
     delete props.__source;
     if (props.children) {
-      if (typeof props.children === "object" && props.children !== null) {
+      if (typeof props.children === 'object' && props.children !== null) {
         if (Array.isArray(props.children)) {
           props.children = `[${props.children.length} children]`;
         } else if (props.children.$$typeof) {
-          props.children = "<ReactElement>";
+          props.children = '<ReactElement>';
         }
       }
     }
@@ -455,10 +454,11 @@ body[data-debug-mode="1"]::before {
     let fiber = getReactInstanceForElement(element);
     const layers = [];
     while (fiber) {
-      if (typeof fiber.type === "function") {
+      if (typeof fiber.type === 'function') {
         const path = getPath(fiber);
         if (path) {
-          const name = fiber.type.displayName ?? fiber.type.name ?? fiber.type.render?.name ?? "Anonymous";
+          const name =
+            fiber.type.displayName ?? fiber.type.name ?? fiber.type.render?.name ?? 'Anonymous';
           layers.push({ name, path, fiber });
         }
       }
@@ -469,28 +469,27 @@ body[data-debug-mode="1"]::before {
   function getPath(fiber) {
     const source = fiber._debugSource ?? fiber._debugInfo;
     if (!source) {
-      console.debug("[Debug Panel] No debug source for fiber", fiber);
+      console.debug('[Debug Panel] No debug source for fiber', fiber);
       return void 0;
     }
     const { columnNumber = 1, fileName, lineNumber = 1 } = source;
     return `${fileName}:${lineNumber}:${columnNumber}`;
   }
   function getReactInstanceForElement(element) {
-    if ("__REACT_DEVTOOLS_GLOBAL_HOOK__" in window) {
+    if ('__REACT_DEVTOOLS_GLOBAL_HOOK__' in window) {
       const { renderers } = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
       for (const renderer of renderers.values()) {
         try {
           const fiber = renderer.findFiberByHostInstance(element);
           if (fiber) return fiber;
-        } catch {
-        }
+        } catch {}
       }
     }
-    if ("_reactRootContainer" in element) {
+    if ('_reactRootContainer' in element) {
       return element._reactRootContainer._internalRoot.current.child;
     }
     for (const key in element) {
-      if (key.startsWith("__reactFiber")) {
+      if (key.startsWith('__reactFiber')) {
         return element[key];
       }
     }
@@ -506,13 +505,13 @@ body[data-debug-mode="1"]::before {
     if (element.id) {
       tagName += `#${element.id}`;
     }
-    if (element.className && typeof element.className === "string") {
-      const firstClass = element.className.split(" ").filter((c) => c.trim())[0];
+    if (element.className && typeof element.className === 'string') {
+      const firstClass = element.className.split(' ').filter((c) => c.trim())[0];
       if (firstClass) {
         tagName += `.${firstClass}`;
       }
     }
-    const role = element.getAttribute("role");
+    const role = element.getAttribute('role');
     if (role) {
       tagName += `[${role}]`;
     }
@@ -534,16 +533,16 @@ body[data-debug-mode="1"]::before {
         '[data-component-type="Item"]',
         '[data-component-type="Field"]',
         '[data-component-type="Text"]',
-        '[data-component-type="Overlay"]'
+        '[data-component-type="Overlay"]',
       ];
     }
     if (debugMode2 === 2) {
-      return ["button", '[role="button"]'];
+      return ['button', '[role="button"]'];
     }
     return [];
   }
   function shouldExcludeElement(element) {
-    if (element.closest("#debug-panel") || element.closest("#debug-overlay-layer")) {
+    if (element.closest('#debug-panel') || element.closest('#debug-overlay-layer')) {
       return true;
     }
     return false;
@@ -563,7 +562,7 @@ body[data-debug-mode="1"]::before {
       top: `${rect.top}px`,
       width: `${rect.width}px`,
       height: `${rect.height}px`,
-      borderRadius: computedStyle.borderRadius
+      borderRadius: computedStyle.borderRadius,
     };
   }
   function applyBoxPosition(box, position) {
@@ -575,25 +574,25 @@ body[data-debug-mode="1"]::before {
   }
   function findInteractiveElements(selectors) {
     if (selectors.length === 0) return [];
-    const elements = document.querySelectorAll(selectors.join(","));
+    const elements = document.querySelectorAll(selectors.join(','));
     return Array.from(elements).filter((el) => {
       return !shouldExcludeElement(el) && isElementVisible(el);
     });
   }
   function createOverlayLayer() {
-    const layer = document.createElement("div");
-    layer.id = "debug-overlay-layer";
+    const layer = document.createElement('div');
+    layer.id = 'debug-overlay-layer';
     return layer;
   }
   function pulseBoxes(boxes) {
     boxes.forEach((box) => {
-      box.classList.remove("pulse");
+      box.classList.remove('pulse');
       void box.offsetWidth;
-      box.classList.add("pulse");
+      box.classList.add('pulse');
     });
     setTimeout(() => {
       boxes.forEach((box) => {
-        box.classList.remove("pulse");
+        box.classList.remove('pulse');
       });
     }, 600);
   }
@@ -601,34 +600,34 @@ body[data-debug-mode="1"]::before {
     const iddlType = getIDDLComponentType(element);
     const displayName = iddlType || getComponentName(element);
     return {
-      baseClassName: "debug-interactive-box",
+      baseClassName: 'debug-interactive-box',
       iddlClassName: iddlType ? `debug-iddl-${iddlType.toLowerCase()}` : void 0,
       displayName,
-      datasetValue: iddlType || element.tagName.toLowerCase()
+      datasetValue: iddlType || element.tagName.toLowerCase(),
     };
   }
   function createOverlayBox(element, config, onClickCallback) {
-    const box = document.createElement("div");
+    const box = document.createElement('div');
     box.className = config.baseClassName;
     if (config.iddlClassName) {
       box.classList.add(config.iddlClassName);
     }
-    const label = document.createElement("div");
-    label.className = "debug-box-label";
+    const label = document.createElement('div');
+    label.className = 'debug-box-label';
     label.textContent = config.displayName;
     box.appendChild(label);
     box.dataset.debugBoxFor = config.datasetValue;
     if (onClickCallback) {
-      box.addEventListener("click", (event) => {
+      box.addEventListener('click', (event) => {
         event.stopPropagation();
         onClickCallback(element);
       });
     }
-    box.addEventListener("mouseenter", () => {
-      box.classList.add("hover");
+    box.addEventListener('mouseenter', () => {
+      box.classList.add('hover');
     });
-    box.addEventListener("mouseleave", () => {
-      box.classList.remove("hover");
+    box.addEventListener('mouseleave', () => {
+      box.classList.remove('hover');
     });
     return box;
   }
@@ -651,7 +650,7 @@ body[data-debug-mode="1"]::before {
      * Setup event listeners
      */
     setupEventListeners() {
-      this.layer.addEventListener("click", (event) => {
+      this.layer.addEventListener('click', (event) => {
         if (event.target === this.layer) {
           this.pulseAllBoxes();
         }
@@ -678,7 +677,7 @@ body[data-debug-mode="1"]::before {
       const box = createOverlayBox(element, config, (clickedElement) => {
         const layers = getLayersForElement(clickedElement);
         if (layers.length === 0) {
-          console.warn("[Debug Panel] No React component found for this element");
+          console.warn('[Debug Panel] No React component found for this element');
           return;
         }
         if (this.onBoxClickCallback) {
@@ -724,15 +723,15 @@ body[data-debug-mode="1"]::before {
         document.body.appendChild(this.layer);
       }
       this.updateOverlay();
-      window.addEventListener("scroll", this.scheduleUpdate, true);
-      window.addEventListener("resize", this.scheduleUpdate);
+      window.addEventListener('scroll', this.scheduleUpdate, true);
+      window.addEventListener('resize', this.scheduleUpdate);
       if (!this.observer) {
         this.observer = new MutationObserver(this.scheduleUpdate);
         this.observer.observe(document.body, {
           childList: true,
           subtree: true,
           attributes: true,
-          attributeFilter: ["style", "class"]
+          attributeFilter: ['style', 'class'],
         });
         window.__debugOverlayObserver = this.observer;
       }
@@ -747,8 +746,8 @@ body[data-debug-mode="1"]::before {
       this.boxes.forEach((box) => box.remove());
       this.boxes.clear();
       this.interactiveElements = [];
-      window.removeEventListener("scroll", this.scheduleUpdate, true);
-      window.removeEventListener("resize", this.scheduleUpdate);
+      window.removeEventListener('scroll', this.scheduleUpdate, true);
+      window.removeEventListener('resize', this.scheduleUpdate);
       if (this.observer) {
         this.observer.disconnect();
         delete window.__debugOverlayObserver;
@@ -776,8 +775,8 @@ body[data-debug-mode="1"]::before {
      * Create panel element
      */
     createPanel() {
-      const panel = document.createElement("div");
-      panel.id = "debug-panel";
+      const panel = document.createElement('div');
+      panel.id = 'debug-panel';
       return panel;
     }
     /**
@@ -789,31 +788,31 @@ body[data-debug-mode="1"]::before {
       const rect = target.getBoundingClientRect();
       if (rect.bottom < window.innerHeight / 2) {
         this.element.style.top = `${rect.bottom + 8}px`;
-        this.element.style.bottom = "";
+        this.element.style.bottom = '';
         this.element.style.maxHeight = `${window.innerHeight - rect.bottom - 24}px`;
       } else {
         this.element.style.bottom = `${window.innerHeight - rect.top + 8}px`;
-        this.element.style.top = "";
+        this.element.style.top = '';
         this.element.style.maxHeight = `${rect.top - 24}px`;
       }
       if (rect.left < window.innerWidth / 2) {
         this.element.style.left = `${rect.left}px`;
-        this.element.style.right = "";
+        this.element.style.right = '';
       } else {
         this.element.style.right = `${window.innerWidth - rect.right}px`;
-        this.element.style.left = "";
+        this.element.style.left = '';
       }
-      this.element.innerHTML = "";
-      const header = document.createElement("div");
-      header.id = "debug-panel-header";
-      const title = document.createElement("div");
-      title.id = "debug-panel-title";
-      title.textContent = "Component Hierarchy";
+      this.element.innerHTML = '';
+      const header = document.createElement('div');
+      header.id = 'debug-panel-header';
+      const title = document.createElement('div');
+      title.id = 'debug-panel-title';
+      title.textContent = 'Component Hierarchy';
       header.appendChild(title);
-      const closeBtn = document.createElement("button");
-      closeBtn.id = "debug-panel-close";
-      closeBtn.textContent = "×";
-      closeBtn.addEventListener("click", () => this.close());
+      const closeBtn = document.createElement('button');
+      closeBtn.id = 'debug-panel-close';
+      closeBtn.textContent = '×';
+      closeBtn.addEventListener('click', () => this.close());
       header.appendChild(closeBtn);
       this.element.appendChild(header);
       for (const layer of layers) {
@@ -829,15 +828,15 @@ body[data-debug-mode="1"]::before {
      * Create component item element
      */
     createComponentItem(layer) {
-      const item = document.createElement("div");
-      item.className = "debug-panel-item";
-      const componentName = document.createElement("div");
-      componentName.className = "debug-panel-component-name";
+      const item = document.createElement('div');
+      item.className = 'debug-panel-item';
+      const componentName = document.createElement('div');
+      componentName.className = 'debug-panel-component-name';
       componentName.textContent = `<${layer.name} />`;
       item.appendChild(componentName);
-      const filePath = document.createElement("div");
-      filePath.className = "debug-panel-file-path";
-      filePath.textContent = layer.path.replace(`${root}/`, "");
+      const filePath = document.createElement('div');
+      filePath.className = 'debug-panel-file-path';
+      filePath.textContent = layer.path.replace(`${root}/`, '');
       item.appendChild(filePath);
       if (layer.fiber) {
         const props = getPropsForFiber(layer.fiber);
@@ -854,22 +853,22 @@ body[data-debug-mode="1"]::before {
      * Create props section with toggle
      */
     createPropsSection(props, count) {
-      const toggle = document.createElement("button");
-      toggle.className = "debug-panel-props-toggle";
+      const toggle = document.createElement('button');
+      toggle.className = 'debug-panel-props-toggle';
       toggle.textContent = `Props (${count})`;
-      toggle.setAttribute("aria-expanded", "false");
-      const container = document.createElement("div");
-      container.className = "debug-panel-props-container";
-      container.style.display = "none";
-      const propsJson = document.createElement("pre");
-      propsJson.className = "debug-panel-props-json";
+      toggle.setAttribute('aria-expanded', 'false');
+      const container = document.createElement('div');
+      container.className = 'debug-panel-props-container';
+      container.style.display = 'none';
+      const propsJson = document.createElement('pre');
+      propsJson.className = 'debug-panel-props-json';
       propsJson.textContent = JSON.stringify(props, null, 2);
       container.appendChild(propsJson);
-      toggle.addEventListener("click", (e) => {
+      toggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        const isExpanded = toggle.getAttribute("aria-expanded") === "true";
-        toggle.setAttribute("aria-expanded", String(!isExpanded));
-        container.style.display = isExpanded ? "none" : "block";
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!isExpanded));
+        container.style.display = isExpanded ? 'none' : 'block';
       });
       return { toggle, container };
     }
@@ -898,12 +897,12 @@ body[data-debug-mode="1"]::before {
      * Setup keyboard event listeners
      */
     setupEventListeners() {
-      window.addEventListener("keydown", (event) => {
-        if ((event.metaKey || event.ctrlKey) && event.key === "d") {
+      window.addEventListener('keydown', (event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key === 'd') {
           event.preventDefault();
           this.toggleDebugMode();
         }
-        if (event.key === "Escape" && isPanelShown()) {
+        if (event.key === 'Escape' && isPanelShown()) {
           if (this.onPanelCloseCallback) {
             this.onPanelCloseCallback();
           }
@@ -915,7 +914,7 @@ body[data-debug-mode="1"]::before {
      * Setup keyboard event blocking
      */
     setupKeyboardBlocking() {
-      const blockingEvents = ["keydown", "keypress", "keyup", "input"];
+      const blockingEvents = ['keydown', 'keypress', 'keyup', 'input'];
       blockingEvents.forEach((eventType) => {
         window.addEventListener(
           eventType,
@@ -923,13 +922,13 @@ body[data-debug-mode="1"]::before {
             if (getDebugMode() === 0) return;
             const target = event.target;
             if (!(target instanceof HTMLElement)) return;
-            if (target.closest("#debug-panel")) {
+            if (target.closest('#debug-panel')) {
               return;
             }
-            if (eventType === "keydown" && (event.metaKey || event.ctrlKey) && event.key === "d") {
+            if (eventType === 'keydown' && (event.metaKey || event.ctrlKey) && event.key === 'd') {
               return;
             }
-            if (eventType === "keydown" && event.key === "Escape") {
+            if (eventType === 'keydown' && event.key === 'Escape') {
               return;
             }
             event.preventDefault();
@@ -949,14 +948,14 @@ body[data-debug-mode="1"]::before {
       const next = (current + 1) % 3;
       setDebugMode(next);
       if (next === 0) {
-        document.body.removeAttribute("data-debug-mode");
-        console.log("[Debug Panel] Debug mode OFF");
+        document.body.removeAttribute('data-debug-mode');
+        console.log('[Debug Panel] Debug mode OFF');
       } else if (next === 1) {
-        document.body.setAttribute("data-debug-mode", "1");
-        console.log("[Debug Panel] Debug mode: ALL");
+        document.body.setAttribute('data-debug-mode', '1');
+        console.log('[Debug Panel] Debug mode: ALL');
       } else if (next === 2) {
-        document.body.setAttribute("data-debug-mode", "2");
-        console.log("[Debug Panel] Debug mode: BTN");
+        document.body.setAttribute('data-debug-mode', '2');
+        console.log('[Debug Panel] Debug mode: BTN');
       }
       if (this.onDebugModeChangeCallback) {
         this.onDebugModeChangeCallback(next);
@@ -1007,8 +1006,8 @@ body[data-debug-mode="1"]::before {
     }
   }
   function init() {
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
         new DebugPanelApp();
       });
     } else {

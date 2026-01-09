@@ -9,7 +9,7 @@
 
 import { Section } from '@/components/Section/Section.tsx';
 import { Text } from '@/components/Text/Text';
-import { slideContentToDSL } from '@/utils/markdown-to-dsl';
+import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
 import type { Slide } from './SlideList';
 
 interface SlidePreviewProps {

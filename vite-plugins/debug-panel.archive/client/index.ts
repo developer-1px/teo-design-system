@@ -7,11 +7,11 @@
  * - Level 2: Button만 (파란색)
  */
 
-import { injectStyles } from './styles';
+import { KeyboardManager } from './keyboard';
 import { OverlayManager } from './overlay';
 import { PanelManager } from './panel';
-import { KeyboardManager } from './keyboard';
 import { getDebugMode } from './state';
+import { injectStyles } from './styles';
 
 /**
  * Main application class

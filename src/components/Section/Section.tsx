@@ -8,9 +8,9 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils.ts';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext';
 import type { SectionProps } from '@/components/utils/types';
+import { cn } from '@/lib/utils.ts';
 
 /**
  * Section variants (CVA)
@@ -30,12 +30,17 @@ const sectionVariants = cva('', {
       Aside: 'flex flex-col w-64 flex-shrink-0 border-l border-border-default overflow-y-auto',
 
       // IDE/Studio Specific (v1.1.0)
-      ActivityBar: 'flex flex-col w-12 flex-shrink-0 bg-surface-elevated border-r border-border-default overflow-hidden',
-      PrimarySidebar: 'flex flex-col w-64 flex-shrink-0 bg-surface border-r border-border-default overflow-y-auto',
-      SecondarySidebar: 'flex flex-col w-56 flex-shrink-0 bg-surface border-l border-border-default overflow-y-auto',
+      ActivityBar:
+        'flex flex-col w-12 flex-shrink-0 bg-surface-elevated border-r border-border-default overflow-hidden',
+      PrimarySidebar:
+        'flex flex-col w-64 flex-shrink-0 bg-surface border-r border-border-default overflow-y-auto',
+      SecondarySidebar:
+        'flex flex-col w-56 flex-shrink-0 bg-surface border-l border-border-default overflow-y-auto',
       Editor: 'flex-1 flex flex-col min-w-0 overflow-hidden bg-surface',
-      Panel: 'flex flex-col h-48 flex-shrink-0 bg-surface-sunken border-t border-border-default overflow-hidden',
-      Auxiliary: 'flex flex-col w-80 flex-shrink-0 bg-surface-cool border-l border-border-default overflow-y-auto',
+      Panel:
+        'flex flex-col h-48 flex-shrink-0 bg-surface-sunken border-t border-border-default overflow-hidden',
+      Auxiliary:
+        'flex flex-col w-80 flex-shrink-0 bg-surface-cool border-l border-border-default overflow-y-auto',
 
       // Dialog/Modal Specific (v1.1.1)
       DialogHeader: 'flex items-center border-b border-border-default',
@@ -97,17 +102,20 @@ const sectionVariants = cva('', {
     // ActivityBar는 고유 스타일 유지 (v1.1.0)
     {
       role: 'ActivityBar',
-      class: 'flex flex-col w-12 flex-shrink-0 bg-surface-elevated border-r border-border-default overflow-hidden',
+      class:
+        'flex flex-col w-12 flex-shrink-0 bg-surface-elevated border-r border-border-default overflow-hidden',
     },
     // PrimarySidebar는 고유 스타일 유지 (v1.1.0)
     {
       role: 'PrimarySidebar',
-      class: 'flex flex-col w-64 flex-shrink-0 bg-surface border-r border-border-default overflow-y-auto',
+      class:
+        'flex flex-col w-64 flex-shrink-0 bg-surface border-r border-border-default overflow-y-auto',
     },
     // SecondarySidebar는 고유 스타일 유지 (v1.1.0)
     {
       role: 'SecondarySidebar',
-      class: 'flex flex-col w-56 flex-shrink-0 bg-surface border-l border-border-default overflow-y-auto',
+      class:
+        'flex flex-col w-56 flex-shrink-0 bg-surface border-l border-border-default overflow-y-auto',
     },
     // Editor는 고유 스타일 유지 (v1.1.0)
     {
@@ -117,12 +125,14 @@ const sectionVariants = cva('', {
     // Panel은 고유 스타일 유지 (v1.1.0)
     {
       role: 'Panel',
-      class: 'flex flex-col h-48 flex-shrink-0 bg-surface-sunken border-t border-border-default overflow-hidden',
+      class:
+        'flex flex-col h-48 flex-shrink-0 bg-surface-sunken border-t border-border-default overflow-hidden',
     },
     // Auxiliary는 고유 스타일 유지 (v1.1.0)
     {
       role: 'Auxiliary',
-      class: 'flex flex-col w-80 flex-shrink-0 bg-surface-cool border-l border-border-default overflow-y-auto',
+      class:
+        'flex flex-col w-80 flex-shrink-0 bg-surface-cool border-l border-border-default overflow-y-auto',
     },
 
     // Dialog roles는 density에 따라 padding 조절 (v1.1.1)
@@ -193,36 +203,36 @@ const sectionVariants = cva('', {
  */
 const roleToTag: Record<string, string> = {
   // General Layout
-  'Main': 'main',
-  'Header': 'header',
-  'Footer': 'footer',
-  'Navigator': 'nav',
-  'Aside': 'aside',
-  'Container': 'section',
-  'SplitContainer': 'section',
+  Main: 'main',
+  Header: 'header',
+  Footer: 'footer',
+  Navigator: 'nav',
+  Aside: 'aside',
+  Container: 'section',
+  SplitContainer: 'section',
   // Dialog/Modal Specific
-  'DialogHeader': 'header',
-  'DialogFooter': 'footer',
-  'DialogContent': 'div',
+  DialogHeader: 'header',
+  DialogFooter: 'footer',
+  DialogContent: 'div',
   // IDE/Studio Specific
-  'ActivityBar': 'nav',
-  'PrimarySidebar': 'aside',
-  'SecondarySidebar': 'aside',
-  'Editor': 'main',
-  'Panel': 'section',
-  'Auxiliary': 'aside',
+  ActivityBar: 'nav',
+  PrimarySidebar: 'aside',
+  SecondarySidebar: 'aside',
+  Editor: 'main',
+  Panel: 'section',
+  Auxiliary: 'aside',
 };
 
 /**
  * Role → ARIA 속성 매핑
  */
 const roleToAria: Record<string, Record<string, string>> = {
-  'Navigator': { role: 'navigation' },
-  'ActivityBar': { role: 'navigation', 'aria-label': 'Activity Bar' },
-  'PrimarySidebar': { 'aria-label': 'Primary Sidebar' },
-  'SecondarySidebar': { 'aria-label': 'Secondary Sidebar' },
-  'Panel': { 'aria-label': 'Panel' },
-  'Auxiliary': { 'aria-label': 'Auxiliary Panel' },
+  Navigator: { role: 'navigation' },
+  ActivityBar: { role: 'navigation', 'aria-label': 'Activity Bar' },
+  PrimarySidebar: { 'aria-label': 'Primary Sidebar' },
+  SecondarySidebar: { 'aria-label': 'Secondary Sidebar' },
+  Panel: { 'aria-label': 'Panel' },
+  Auxiliary: { 'aria-label': 'Auxiliary Panel' },
 };
 
 export function Section({

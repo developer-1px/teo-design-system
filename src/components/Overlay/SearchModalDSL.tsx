@@ -14,16 +14,21 @@
  *     - Group[Toolbar]: 키보드 힌트
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { Command, File, Folder, Hash, Search } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Action } from '@/components/Action/Action';
+import { Field } from '@/components/Field/Field';
+import { Group } from '@/components/Group/Group.tsx';
 import { Overlay } from '@/components/Overlay/Overlay.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Group } from '@/components/Group/Group.tsx';
-import { Field } from '@/components/Field/Field';
-import { Action } from '@/components/Action/Action';
 import { Text } from '@/components/Text/Text';
-import { Search, File, Folder, Command, Hash } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useNavigableCursor, useModalShortcut, KeyboardContext, useKeyboardContext } from '@/lib/keyboard';
+import {
+  KeyboardContext,
+  useKeyboardContext,
+  useModalShortcut,
+  useNavigableCursor,
+} from '@/shared/lib/keyboard';
+import { cn } from '@/shared/lib/utils';
 
 interface SearchResult {
   id: string;
@@ -40,7 +45,13 @@ interface SearchModalProps {
 
 const mockResults: SearchResult[] = [
   { id: '1', type: 'file', title: 'App.tsx', subtitle: 'src/', path: '/src/App.tsx' },
-  { id: '2', type: 'file', title: 'Layer.tsx', subtitle: 'src/components/ui/', path: '/src/components/ui/Layer.tsx' },
+  {
+    id: '2',
+    type: 'file',
+    title: 'Layer.tsx',
+    subtitle: 'src/components/ui/',
+    path: '/src/components/ui/Layer.tsx',
+  },
   { id: '3', type: 'folder', title: 'components', subtitle: 'src/', path: '/src/components' },
   { id: '4', type: 'command', title: 'Open Settings', subtitle: 'Command' },
   { id: '5', type: 'symbol', title: 'LayerLevel', subtitle: 'Type in Layer.tsx' },
@@ -130,9 +141,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
             value={query}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
           />
-          <kbd className="px-2 py-0.5 text-xs bg-surface-base text-subtle rounded">
-            ESC
-          </kbd>
+          <kbd className="px-2 py-0.5 text-xs bg-surface-base text-subtle rounded">ESC</kbd>
         </Group>
       </Section>
 
@@ -153,32 +162,19 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
                 prominence="Secondary"
                 intent="Neutral"
                 {...getItemProps(index)}
-                className={cn(
-                  'w-full justify-start',
-                  {
-                    'bg-accent/10 hover:bg-accent/10': index === cursorIndex,
-                  }
-                )}
+                className={cn('w-full justify-start', {
+                  'bg-accent/10 hover:bg-accent/10': index === cursorIndex,
+                })}
               >
                 {getIcon(result.type)}
                 <div className="flex-1 min-w-0">
-                  <Text
-                    role="Body"
-                    prominence="Primary"
-                    content={result.title}
-                  />
+                  <Text role="Body" prominence="Primary" content={result.title} />
                   {result.subtitle && (
-                    <Text
-                      role="Caption"
-                      prominence="Tertiary"
-                      content={result.subtitle}
-                    />
+                    <Text role="Caption" prominence="Tertiary" content={result.subtitle} />
                   )}
                 </div>
                 {index === cursorIndex && (
-                  <kbd className="px-2 py-0.5 text-xs bg-surface-base text-subtle rounded">
-                    ↵
-                  </kbd>
+                  <kbd className="px-2 py-0.5 text-xs bg-surface-base text-subtle rounded">↵</kbd>
                 )}
               </Action>
             ))}
@@ -200,11 +196,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
               select
             </span>
           </Group>
-          <Text
-            role="Caption"
-            prominence="Tertiary"
-            content={`${results.length} results`}
-          />
+          <Text role="Caption" prominence="Tertiary" content={`${results.length} results`} />
         </Group>
       </Section>
     </Overlay>

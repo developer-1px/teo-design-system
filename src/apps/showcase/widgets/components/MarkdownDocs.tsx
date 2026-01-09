@@ -11,7 +11,11 @@ interface MarkdownDocsProps {
 
 export function MarkdownDocs({ content }: MarkdownDocsProps) {
   return (
-    <Section role="Container" prominence="Secondary" className="p-4 rounded-lg prose prose-sm max-w-none">
+    <Section
+      role="Container"
+      prominence="Secondary"
+      className="p-4 rounded-lg prose prose-sm max-w-none"
+    >
       <ReactMarkdown>{content}</ReactMarkdown>
     </Section>
   );

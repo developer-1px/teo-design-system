@@ -5,8 +5,6 @@
 
 export const ComponentsShowcase = () => {
   return (
-    <div className="p-4 text-center text-text-secondary">
-      ComponentsShowcase - Coming Soon
-    </div>
+    <div className="p-4 text-center text-text-secondary">ComponentsShowcase - Coming Soon</div>
   );
 };

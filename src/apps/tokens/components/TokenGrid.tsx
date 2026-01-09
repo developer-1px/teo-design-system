@@ -5,15 +5,15 @@
  * 디자인 시스템 서비스 스타일: 복사 기능, 코드 스니펫, 사용 예시
  */
 
-import { Section } from '@/components/Section/Section.tsx';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Text/Text';
+import type { TokenCategory } from '@/apps/tokens/parser/types';
 import { Action } from '@/components/Action/Action';
+import { Group } from '@/components/Group/Group.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Text/Text';
 import { ColorToken } from './ColorToken';
-import { SpacingToken } from './SpacingToken';
 import { RadiusToken } from './RadiusToken';
 import { ShadowToken } from './ShadowToken';
-import type { TokenCategory } from '@/apps/tokens/parser/types';
+import { SpacingToken } from './SpacingToken';
 
 export function TokenGrid({ category }: { category?: TokenCategory }) {
   if (!category) {

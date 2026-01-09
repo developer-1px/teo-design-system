@@ -1,5 +1,5 @@
-import { forwardRef, HTMLAttributes } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Skeleton - 로딩 스켈레톤
@@ -29,17 +29,7 @@ export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
-  (
-    {
-      className,
-      variant = 'rectangular',
-      width,
-      height,
-      animate = true,
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, variant = 'rectangular', width, height, animate = true, ...props }, ref) => {
     return (
       <div
         ref={ref}

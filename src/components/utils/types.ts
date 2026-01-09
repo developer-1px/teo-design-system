@@ -7,14 +7,14 @@
  * @see apps/docs/IDDL.spec.md
  */
 
-import { ReactNode, ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef, type ReactNode } from 'react';
 
 /**
  * Prominence - 주목도 레벨 (Visual Hierarchy)
  */
 export type Prominence =
-  | 'Hero'      // 최상위 강조 (거대함)
-  | 'Primary'   // 주요 (표준)
+  | 'Hero' // 최상위 강조 (거대함)
+  | 'Primary' // 주요 (표준)
   | 'Secondary' // 보조 (흐림)
   | 'Tertiary'; // 미약 (숨김/최소화)
 
@@ -23,44 +23,43 @@ export type Prominence =
  */
 export type Role =
   // For Structure (Section/Group)
-  | 'Container'  // 일반 컨테이너
-  | 'Navigator'  // 네비게이션
+  | 'Container' // 일반 컨테이너
+  | 'Navigator' // 네비게이션
   | 'Collection' // 리스트/그리드
-  | 'Form'       // 폼
-  | 'Toolbar'    // 툴바/액션 그룹
+  | 'Form' // 폼
+  | 'Toolbar' // 툴바/액션 그룹
   // For Atom (Item)
-  | 'Identity'   // 제목/이름
-  | 'Content'    // 본문/설명
-  | 'Control'    // 버튼/입력
-  | 'Status'     // 상태 표시
-  | 'Facet'      // 메타정보/라벨
-  | 'Separator'  // 구분선
+  | 'Identity' // 제목/이름
+  | 'Content' // 본문/설명
+  | 'Control' // 버튼/입력
+  | 'Status' // 상태 표시
+  | 'Facet' // 메타정보/라벨
+  | 'Separator' // 구분선
   // For Overlay
-  | 'Dialog'     // 모달
-  | 'Drawer'     // 사이드 패널
-  | 'Toast'      // 토스트 알림
-  | 'Tooltip';   // 툴팁
+  | 'Dialog' // 모달
+  | 'Drawer' // 사이드 패널
+  | 'Toast' // 토스트 알림
+  | 'Tooltip'; // 툴팁
 
 /**
  * Density - 정보 밀도 (Spatial Hierarchy)
  */
 export type Density =
   | 'Comfortable' // 넓은 여백 (마케팅, 대시보드)
-  | 'Standard'    // 표준 여백 (문서, 일반 뷰)
-  | 'Compact';    // 좁은 여백 (데이터 그리드, 전문가용)
+  | 'Standard' // 표준 여백 (문서, 일반 뷰)
+  | 'Compact'; // 좁은 여백 (데이터 그리드, 전문가용)
 
 /**
  * Intent - 의도/맥락 (Semantic Color)
  * v1.0.1: Success→Positive, Warning→Caution, Danger→Critical, Info 추가
  */
 export type Intent =
-  | 'Neutral'   // 기본 (Gray/Black)
-  | 'Brand'     // 브랜드 강조 (Primary Color)
-  | 'Positive'  // 긍정/성공 (Green) - v1.0.0의 Success
-  | 'Caution'   // 주의/경고 (Yellow/Orange) - v1.0.0의 Warning
-  | 'Critical'  // 위험/파괴 (Red) - v1.0.0의 Danger
-  | 'Info';     // 참고 정보 (Blue)
-
+  | 'Neutral' // 기본 (Gray/Black)
+  | 'Brand' // 브랜드 강조 (Primary Color)
+  | 'Positive' // 긍정/성공 (Green) - v1.0.0의 Success
+  | 'Caution' // 주의/경고 (Yellow/Orange) - v1.0.0의 Warning
+  | 'Critical' // 위험/파괴 (Red) - v1.0.0의 Danger
+  | 'Info'; // 참고 정보 (Blue)
 
 /**
  * Page Props
@@ -69,34 +68,34 @@ export type Intent =
  */
 export interface PageProps {
   // Identity & Structure (v2.0)
-  role?: PageRole;            // v2.0: 페이지 정체성 (기본값: role에 따라 layout 자동 결정)
-  title?: string;             // v1.0.1
-  description?: string;       // v1.0.1
+  role?: PageRole; // v2.0: 페이지 정체성 (기본값: role에 따라 layout 자동 결정)
+  title?: string; // v1.0.1
+  description?: string; // v1.0.1
 
   // Design Tokens (v2.0: IDDL 일관성)
-  prominence?: Prominence;    // v2.0: Hero/Primary/Secondary/Tertiary
-  density?: Density;          // v2.0: Comfortable/Standard/Compact (자식에게 전파)
-  intent?: Intent;            // v2.0: Neutral/Brand/Positive/Caution/Critical/Info
+  prominence?: Prominence; // v2.0: Hero/Primary/Secondary/Tertiary
+  density?: Density; // v2.0: Comfortable/Standard/Compact (자식에게 전파)
+  intent?: Intent; // v2.0: Neutral/Brand/Positive/Caution/Critical/Info
 
   // Layout Control
-  layout?: PageLayout;        // v1.0.1 (role의 기본값 override 가능)
-  maxWidth?: MaxWidth;        // v2.0: 컨텐츠 최대 너비
-  centered?: boolean;         // v2.0: 컨텐츠 중앙 정렬 여부
+  layout?: PageLayout; // v1.0.1 (role의 기본값 override 가능)
+  maxWidth?: MaxWidth; // v2.0: 컨텐츠 최대 너비
+  centered?: boolean; // v2.0: 컨텐츠 중앙 정렬 여부
 
   // Navigation (v2.0)
   breadcrumbs?: Breadcrumb[]; // v1.0.1
   navigation?: NavigationConfig; // v2.0: 네비게이션 구성
 
   // State & Behavior (v2.0)
-  scrollable?: boolean;       // v2.0: 스크롤 가능 여부 (기본값: role에 따라 결정)
-  loading?: boolean;          // v2.0: 로딩 상태
-  error?: string;             // v2.0: 에러 메시지
+  scrollable?: boolean; // v2.0: 스크롤 가능 여부 (기본값: role에 따라 결정)
+  loading?: boolean; // v2.0: 로딩 상태
+  error?: string; // v2.0: 에러 메시지
 
   // React Integration
   children: ReactNode;
   className?: string;
   onClick?: (e: React.MouseEvent) => void;
-  condition?: string;         // v1.0.1: 조건부 렌더링
+  condition?: string; // v1.0.1: 조건부 렌더링
 }
 
 /**
@@ -104,9 +103,9 @@ export interface PageProps {
  * v1.0.1: role 타입 변경, condition 추가
  */
 export interface SectionProps {
-  role?: SectionRole;         // v1.0.1: Role → SectionRole
+  role?: SectionRole; // v1.0.1: Role → SectionRole
   prominence?: Prominence;
-  density?: Density;          // v1.0.1: 명시적으로 추가됨 (자식에 전파)
+  density?: Density; // v1.0.1: 명시적으로 추가됨 (자식에 전파)
   intent?: Intent;
   children: ReactNode;
   className?: string;
@@ -118,7 +117,7 @@ export interface SectionProps {
    * - edit: 데이터를 입력 폼으로 표시
    */
   mode?: 'view' | 'edit';
-  condition?: string;         // v1.0.1: 조건부 렌더링
+  condition?: string; // v1.0.1: 조건부 렌더링
 }
 
 /**
@@ -126,18 +125,18 @@ export interface SectionProps {
  * v1.0.1: role 타입 변경, placement 확장, isOpen, dismissable, condition 추가
  */
 export interface OverlayProps {
-  id: string;                 // v1.0.1: 필수로 변경
-  role: OverlayRole;          // v1.0.1: role 확장
+  id: string; // v1.0.1: 필수로 변경
+  role: OverlayRole; // v1.0.1: role 확장
   prominence?: Prominence;
   density?: Density;
   intent?: Intent;
-  placement?: Placement;      // v1.0.1: Placement 타입으로 변경
+  placement?: Placement; // v1.0.1: Placement 타입으로 변경
   children: ReactNode;
   className?: string;
-  isOpen?: boolean;           // v1.0.1: open → isOpen으로 rename
-  dismissable?: boolean;      // v1.0.1: 외부 클릭으로 닫기 가능 여부
+  isOpen?: boolean; // v1.0.1: open → isOpen으로 rename
+  dismissable?: boolean; // v1.0.1: 외부 클릭으로 닫기 가능 여부
   onClose?: () => void;
-  condition?: string;         // v1.0.1: 조건부 렌더링
+  condition?: string; // v1.0.1: 조건부 렌더링
 }
 
 /**
@@ -145,7 +144,7 @@ export interface OverlayProps {
  * v1.0.1: role 타입 변경, layout, state, emptyContent, errorContent 추가
  */
 export interface GroupProps {
-  role: GroupRole;            // v1.0.1: Role → GroupRole
+  role: GroupRole; // v1.0.1: Role → GroupRole
   prominence?: Prominence;
   density?: Density;
   intent?: Intent;
@@ -155,12 +154,12 @@ export interface GroupProps {
    * @deprecated direction은 deprecated되었습니다. layout을 사용하세요.
    */
   direction?: 'horizontal' | 'vertical';
-  layout?: Layout;            // v1.0.1
-  state?: LoadState;          // v1.0.1
-  emptyContent?: ReactNode;   // v1.0.1
-  errorContent?: ReactNode;   // v1.0.1
+  layout?: Layout; // v1.0.1
+  state?: LoadState; // v1.0.1
+  emptyContent?: ReactNode; // v1.0.1
+  errorContent?: ReactNode; // v1.0.1
   onClick?: (e: React.MouseEvent) => void;
-  condition?: string;         // v1.0.1: 조건부 렌더링
+  condition?: string; // v1.0.1: 조건부 렌더링
 }
 
 // ============================================
@@ -180,38 +179,38 @@ export type TextRole = 'Title' | 'Body' | 'Label' | 'Caption' | 'Code';
 export type FieldDataType =
   | 'text'
   | 'number'
-  | 'currency'      // v1.0.1
+  | 'currency' // v1.0.1
   | 'date'
-  | 'datetime'      // v1.0.1
+  | 'datetime' // v1.0.1
   | 'boolean'
   | 'select'
-  | 'multiselect'   // v1.0.1
-  | 'radio'         // v1.0.1
-  | 'checkbox'      // v1.0.1
-  | 'textarea'      // v1.0.1
-  | 'richtext'      // v1.0.1
+  | 'multiselect' // v1.0.1
+  | 'radio' // v1.0.1
+  | 'checkbox' // v1.0.1
+  | 'textarea' // v1.0.1
+  | 'richtext' // v1.0.1
   | 'image'
-  | 'file'          // v1.0.1
+  | 'file' // v1.0.1
   | 'password'
-  | 'email'         // v1.0.1
-  | 'url'           // v1.0.1
-  | 'phone'         // v1.0.1
-  | 'color'         // v1.0.1
-  | 'rating'        // v1.0.1
-  | 'range';        // v1.0.1
+  | 'email' // v1.0.1
+  | 'url' // v1.0.1
+  | 'phone' // v1.0.1
+  | 'color' // v1.0.1
+  | 'rating' // v1.0.1
+  | 'range'; // v1.0.1
 
 /**
  * Field Constraints - 유효성 검사 규칙
  * v1.0.1 추가
  */
 export interface FieldConstraints {
-  min?: number;           // number, date, range
-  max?: number;           // number, date, range
-  minLength?: number;     // text, textarea
-  maxLength?: number;     // text, textarea
-  pattern?: string;       // regex pattern
+  min?: number; // number, date, range
+  max?: number; // number, date, range
+  minLength?: number; // text, textarea
+  maxLength?: number; // text, textarea
+  pattern?: string; // regex pattern
   patternMessage?: string; // pattern 실패 시 메시지
-  custom?: string;        // 커스텀 validator 함수명
+  custom?: string; // 커스텀 validator 함수명
 }
 
 /**
@@ -237,7 +236,7 @@ export interface TextProps {
   align?: 'left' | 'center' | 'right';
   className?: string;
   hidden?: boolean;
-  condition?: string;         // v1.0.1: 조건부 렌더링
+  condition?: string; // v1.0.1: 조건부 렌더링
 }
 
 /**
@@ -256,18 +255,18 @@ export interface FieldProps {
   // Constraints
   required?: boolean;
   options?: FieldOption[]; // For select/radio/checkbox type
-  constraints?: FieldConstraints;  // v1.0.1
+  constraints?: FieldConstraints; // v1.0.1
   // Dependencies
-  dependsOn?: string;              // v1.0.1
+  dependsOn?: string; // v1.0.1
   // View/Edit Config
   placeholder?: string;
-  modeOverride?: 'view' | 'edit';  // v1.0.1
-  clearable?: boolean;             // v1.0.2: 입력 내용 지우기 버튼 표시
+  modeOverride?: 'view' | 'edit'; // v1.0.1
+  clearable?: boolean; // v1.0.2: 입력 내용 지우기 버튼 표시
   hidden?: boolean;
-  condition?: string;              // v1.0.1: 조건부 렌더링
+  condition?: string; // v1.0.1: 조건부 렌더링
   // Controlled Component (React)
-  value?: any;                     // v1.0.2: controlled value
-  onChange?: (e: any) => void;     // v1.0.2: onChange handler
+  value?: any; // v1.0.2: controlled value
+  onChange?: (e: any) => void; // v1.0.2: onChange handler
 }
 
 /**
@@ -297,15 +296,15 @@ export interface ActionProps {
   // Behavior (v1.0.1: discriminated union)
   behavior?: ActionBehavior;
   // State
-  disabled?: boolean | string;  // v1.0.1: 표현식도 가능
+  disabled?: boolean | string; // v1.0.1: 표현식도 가능
   confirm?: string;
-  loading?: boolean;            // v1.0.1
+  loading?: boolean; // v1.0.1
   hidden?: boolean;
-  condition?: string;           // v1.0.1: 조건부 렌더링
+  condition?: string; // v1.0.1: 조건부 렌더링
   // Event handlers (practical addition for React usage)
   onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
   // Children (practical addition for complex content)
-  children?: ReactNode;         // v1.0.2: children이 있으면 label/icon 대신 렌더링
+  children?: ReactNode; // v1.0.2: children이 있으면 label/icon 대신 렌더링
 }
 
 // ============================================
@@ -319,16 +318,16 @@ export interface ActionProps {
 export type GroupRole =
   | 'Container'
   | 'Form'
-  | 'Fieldset'    // v1.0.1
+  | 'Fieldset' // v1.0.1
   | 'Toolbar'
-  | 'List'        // v1.0.1
-  | 'Grid'        // v1.0.1
-  | 'Table'       // v1.0.1
-  | 'Tabs'        // v1.0.1
-  | 'Steps'       // v1.0.1
-  | 'Split'       // v1.0.1
-  | 'Card'        // v1.0.1
-  | 'Inline';     // v1.0.1
+  | 'List' // v1.0.1
+  | 'Grid' // v1.0.1
+  | 'Table' // v1.0.1
+  | 'Tabs' // v1.0.1
+  | 'Steps' // v1.0.1
+  | 'Split' // v1.0.1
+  | 'Card' // v1.0.1
+  | 'Inline'; // v1.0.1
 
 /**
  * Layout - 레이아웃 방향
@@ -351,29 +350,37 @@ export type SectionRole =
   // General Layout
   | 'Container'
   | 'SplitContainer'
-  | 'Main'             // Main content area (<main> tag)
+  | 'Main' // Main content area (<main> tag)
   | 'Header'
   | 'Footer'
-  | 'Navigator'       // @deprecated Use PrimarySidebar for modern layouts
+  | 'Navigator' // @deprecated Use PrimarySidebar for modern layouts
   | 'Aside'
   // Dialog/Modal Specific (v1.1.1)
-  | 'DialogHeader'     // Modal header (density-aware padding)
-  | 'DialogFooter'     // Modal footer (density-aware padding)
-  | 'DialogContent'    // Modal main content (density-aware padding)
+  | 'DialogHeader' // Modal header (density-aware padding)
+  | 'DialogFooter' // Modal footer (density-aware padding)
+  | 'DialogContent' // Modal main content (density-aware padding)
   // IDE/Studio Specific (v1.1.0)
-  | 'ActivityBar'      // Narrow icon bar (48-64px, vertical)
-  | 'PrimarySidebar'   // Main sidebar (200-400px, file tree, etc)
+  | 'ActivityBar' // Narrow icon bar (48-64px, vertical)
+  | 'PrimarySidebar' // Main sidebar (200-400px, file tree, etc)
   | 'SecondarySidebar' // Secondary sidebar (200-400px, outline, etc)
-  | 'Editor'           // Main content/editor area (flex-grow)
-  | 'Panel'            // Bottom panel (terminal, console, debug)
-  | 'Auxiliary';       // Auxiliary panel (properties, AI, etc)
+  | 'Editor' // Main content/editor area (flex-grow)
+  | 'Panel' // Bottom panel (terminal, console, debug)
+  | 'Auxiliary'; // Auxiliary panel (properties, AI, etc)
 
 /**
  * Overlay Role - 오버레이 유형
  * v1.0.1: Popover, Sheet, Lightbox 추가
  * v1.0.2: Floating 추가 (persistent interactive overlays)
  */
-export type OverlayRole = 'Dialog' | 'Drawer' | 'Popover' | 'Toast' | 'Tooltip' | 'Sheet' | 'Lightbox' | 'Floating';
+export type OverlayRole =
+  | 'Dialog'
+  | 'Drawer'
+  | 'Popover'
+  | 'Toast'
+  | 'Tooltip'
+  | 'Sheet'
+  | 'Lightbox'
+  | 'Floating';
 
 /**
  * Placement - 오버레이 위치
@@ -402,24 +409,24 @@ export type PageLayout =
   | 'split'
   | 'wizard'
   | 'full'
-  | 'studio'        // v2.0: IDE/Studio (multi-panel)
-  | 'three-column'  // v2.0: 3컬럼 (nav-main-aside)
-  | 'masonry'       // v2.0: Pinterest 스타일
-  | 'timeline';     // v2.0: 타임라인 (세로 흐름)
+  | 'studio' // v2.0: IDE/Studio (multi-panel)
+  | 'three-column' // v2.0: 3컬럼 (nav-main-aside)
+  | 'masonry' // v2.0: Pinterest 스타일
+  | 'timeline'; // v2.0: 타임라인 (세로 흐름)
 
 /**
  * Page Role - 페이지의 의도적 정체성
  * v2.0 추가
  */
 export type PageRole =
-  | 'App'         // 애플리케이션 루트 (IDE, Studio, SaaS)
-  | 'Document'    // 문서형 컨텐츠 (Article, Blog, Docs)
-  | 'Dashboard'   // 데이터 대시보드 (Analytics, Admin)
-  | 'Wizard'      // 단계별 프로세스 (Onboarding, Setup)
-  | 'Settings'    // 설정/환경설정 (Preferences, Config)
-  | 'Canvas'      // 작업 캔버스 (Design, Editor)
-  | 'Gallery'     // 미디어 갤러리 (Photos, Portfolio)
-  | 'Feed';       // 무한 스크롤 피드 (Social, News)
+  | 'App' // 애플리케이션 루트 (IDE, Studio, SaaS)
+  | 'Document' // 문서형 컨텐츠 (Article, Blog, Docs)
+  | 'Dashboard' // 데이터 대시보드 (Analytics, Admin)
+  | 'Wizard' // 단계별 프로세스 (Onboarding, Setup)
+  | 'Settings' // 설정/환경설정 (Preferences, Config)
+  | 'Canvas' // 작업 캔버스 (Design, Editor)
+  | 'Gallery' // 미디어 갤러리 (Photos, Portfolio)
+  | 'Feed'; // 무한 스크롤 피드 (Social, News)
 
 /**
  * Max Width - 페이지 최대 너비

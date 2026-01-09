@@ -1,16 +1,16 @@
-import { useState } from 'react';
 import {
+  Bug,
   Files,
-  Search,
   GitBranch,
   Package,
-  Settings,
-  Bug,
-  Play,
   Palette,
-  Server,
+  Play,
   Presentation,
+  Search,
+  Server,
+  Settings,
 } from 'lucide-react';
+import { useState } from 'react';
 import { IconButton } from '@/components/Action/role/IconButton';
 
 interface WorkspaceNavProps {

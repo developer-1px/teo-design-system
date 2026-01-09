@@ -4,9 +4,9 @@
  * 마우스로 픽셀을 그릴 수 있는 캔버스
  */
 
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
+import type { PixelColor, PixelGrid } from '@/apps/EMOJI/lib/emoji-designer/types.ts';
 import { cn } from '@/lib/utils.ts';
-import type { PixelGrid, PixelColor } from '@/lib/emoji-designer/types.ts';
 
 export interface EmojiCanvasProps {
   grid: PixelGrid;
@@ -60,10 +60,7 @@ export function EmojiCanvas({
       onMouseLeave={() => setIsDrawing(false)}
     >
       <div
-        className={cn(
-          'grid gap-0 bg-white',
-          showGrid && 'border border-border'
-        )}
+        className={cn('grid gap-0 bg-white', showGrid && 'border border-border')}
         style={{
           gridTemplateColumns: `repeat(${size}, ${pixelSize}px)`,
           gridTemplateRows: `repeat(${size}, ${pixelSize}px)`,

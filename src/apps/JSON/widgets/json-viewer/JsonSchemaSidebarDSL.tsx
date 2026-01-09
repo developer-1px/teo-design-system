@@ -7,12 +7,12 @@
  * - prominence로 중요도 자동 조절
  */
 
+import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Section } from '@/components/Section/Section';
 import { Group } from '@/components/Group/Group';
+import { Section } from '@/components/Section/Section';
 import { Text } from '@/components/Text/Text';
-import { generateTypeScriptInterface, analyzeJsonSchema } from '@/utils/json-schema.ts';
-import { Code, Info, ChevronRight, ChevronDown } from 'lucide-react';
+import { analyzeJsonSchema, generateTypeScriptInterface } from '@/utils/json-schema.ts';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };
@@ -25,7 +25,7 @@ interface JsonSchemaSidebarDSLProps {
 
 export const JsonSchemaSidebarDSL = ({
   data,
-  interfaceName = 'Item'
+  interfaceName = 'Item',
 }: JsonSchemaSidebarDSLProps) => {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set(['analysis', 'typescript'])
@@ -75,7 +75,12 @@ export const JsonSchemaSidebarDSL = ({
 
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <Group role="Card">
-            <Text role="Body" prominence="Tertiary" className="text-center" content="No data to analyze" />
+            <Text
+              role="Body"
+              prominence="Tertiary"
+              className="text-center"
+              content="No data to analyze"
+            />
           </Group>
         </div>
       </Section>
@@ -121,17 +126,32 @@ export const JsonSchemaSidebarDSL = ({
                 <Group role="Card">
                   <div className="flex justify-between px-2">
                     <Text role="Label" prominence="Tertiary" content="Properties" />
-                    <Text role="Body" prominence="Hero" className="font-mono" content={String(schema.analysis.totalKeys)} />
+                    <Text
+                      role="Body"
+                      prominence="Hero"
+                      className="font-mono"
+                      content={String(schema.analysis.totalKeys)}
+                    />
                   </div>
 
                   <div className="flex justify-between px-2">
                     <Text role="Label" prominence="Tertiary" content="Depth" />
-                    <Text role="Body" prominence="Hero" className="font-mono" content={String(schema.analysis.depth)} />
+                    <Text
+                      role="Body"
+                      prominence="Hero"
+                      className="font-mono"
+                      content={String(schema.analysis.depth)}
+                    />
                   </div>
 
                   <div className="flex justify-between px-2">
                     <Text role="Label" prominence="Tertiary" content="Types" />
-                    <Text role="Body" prominence="Hero" className="font-mono" content={Array.from(schema.analysis.types).join(', ')} />
+                    <Text
+                      role="Body"
+                      prominence="Hero"
+                      className="font-mono"
+                      content={Array.from(schema.analysis.types).join(', ')}
+                    />
                   </div>
                 </Group>
               </div>

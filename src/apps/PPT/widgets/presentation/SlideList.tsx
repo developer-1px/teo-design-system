@@ -7,8 +7,8 @@
  *   - Group[List]: 슬라이드 썸네일 리스트
  */
 
-import { Group } from '@/components/Group/Group.tsx';
 import { Plus, Trash2 } from 'lucide-react';
+import { Group } from '@/components/Group/Group.tsx';
 import { cn } from '@/lib/utils.ts';
 import { SlidePreview } from './SlidePreview';
 
@@ -90,12 +90,7 @@ export const SlideList = ({
             </div>
 
             {/* Thumbnail Preview - Real slide content scaled down */}
-            <div
-              className={cn(
-                'aspect-[16/9] w-full overflow-hidden rounded',
-                'bg-layer-1'
-              )}
-            >
+            <div className={cn('aspect-[16/9] w-full overflow-hidden rounded', 'bg-layer-1')}>
               <SlidePreview slide={slide} scale={0.15} />
             </div>
 

@@ -1,5 +1,5 @@
-import { LabelHTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type LabelHTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Label - 폼 레이블
@@ -16,10 +16,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
     return (
       <label
         ref={ref}
-        className={cn(
-          'block text-sm font-medium text-text mb-1.5 cursor-pointer',
-          className
-        )}
+        className={cn('block text-sm font-medium text-text mb-1.5 cursor-pointer', className)}
         {...props}
       >
         {children}

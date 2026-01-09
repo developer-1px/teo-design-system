@@ -8,11 +8,11 @@
  */
 
 import { useState } from 'react';
-import { Section } from '@/components/Section/Section.tsx';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Text/Text';
-import { Field, type FieldOption } from '@/components/Field/Field';
 import { Action } from '@/components/Action/Action';
+import { Field, type FieldOption } from '@/components/Field/Field';
+import { Group } from '@/components/Group/Group.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Text/Text';
 
 export function AtomsShowcasePage() {
   // Form state for all field types
@@ -149,11 +149,7 @@ export function AtomsShowcasePage() {
                   prominence="Primary"
                   intent="Brand"
                 />
-                <Action
-                  label="Reset Form"
-                  behavior={{ action: 'reset' }}
-                  prominence="Secondary"
-                />
+                <Action label="Reset Form" behavior={{ action: 'reset' }} prominence="Secondary" />
               </form>
             </div>
 
@@ -184,29 +180,82 @@ export function AtomsShowcasePage() {
       {/* Field Component Showcase - View Mode */}
       <Section role="Container" mode="view" className="mb-12">
         <Group role="Card">
-          <Text role="Title" content="3. Field Component - View Mode (21 DataTypes)" prominence="Primary" />
+          <Text
+            role="Title"
+            content="3. Field Component - View Mode (21 DataTypes)"
+            prominence="Primary"
+          />
 
-          <Section role="Container" prominence="Tertiary" className="gap-4 p-4 rounded-lg grid-cols-2">
+          <Section
+            role="Container"
+            prominence="Tertiary"
+            className="gap-4 p-4 rounded-lg grid-cols-2"
+          >
             <Field label="Text" model="text" dataType="text" value={formData.text} />
             <Field label="Number" model="number" dataType="number" value={formData.number} />
-            <Field label="Currency" model="currency" dataType="currency" value={formData.currency} />
+            <Field
+              label="Currency"
+              model="currency"
+              dataType="currency"
+              value={formData.currency}
+            />
             <Field label="Date" model="date" dataType="date" value={formData.date} />
-            <Field label="DateTime" model="datetime" dataType="datetime" value={formData.datetime} />
+            <Field
+              label="DateTime"
+              model="datetime"
+              dataType="datetime"
+              value={formData.datetime}
+            />
             <Field label="Boolean" model="boolean" dataType="boolean" value={formData.boolean} />
-            <Field label="Select" model="select" dataType="select" value={formData.select} options={selectOptions} />
-            <Field label="Multiselect" model="multiselect" dataType="multiselect" value={formData.multiselect} options={selectOptions} />
-            <Field label="Radio" model="radio" dataType="radio" value={formData.radio} options={radioOptions} />
-            <Field label="Checkbox" model="checkbox" dataType="checkbox" value={formData.checkbox} options={checkboxOptions} />
+            <Field
+              label="Select"
+              model="select"
+              dataType="select"
+              value={formData.select}
+              options={selectOptions}
+            />
+            <Field
+              label="Multiselect"
+              model="multiselect"
+              dataType="multiselect"
+              value={formData.multiselect}
+              options={selectOptions}
+            />
+            <Field
+              label="Radio"
+              model="radio"
+              dataType="radio"
+              value={formData.radio}
+              options={radioOptions}
+            />
+            <Field
+              label="Checkbox"
+              model="checkbox"
+              dataType="checkbox"
+              value={formData.checkbox}
+              options={checkboxOptions}
+            />
             <Field label="Email" model="email" dataType="email" value={formData.email} />
             <Field label="URL" model="url" dataType="url" value={formData.url} />
             <Field label="Phone" model="phone" dataType="phone" value={formData.phone} />
             <Field label="Color" model="color" dataType="color" value={formData.color} />
             <Field label="Rating" model="rating" dataType="rating" value={formData.rating} />
-            <Field label="Range" model="range" dataType="range" value={formData.range} constraints={{ min: 0, max: 100 }} />
+            <Field
+              label="Range"
+              model="range"
+              dataType="range"
+              value={formData.range}
+              constraints={{ min: 0, max: 100 }}
+            />
           </Section>
 
           <Section role="Container" prominence="Tertiary" className="gap-4 p-4 rounded-lg mt-4">
-            <Field label="Textarea" model="textarea" dataType="textarea" value={formData.textarea} />
+            <Field
+              label="Textarea"
+              model="textarea"
+              dataType="textarea"
+              value={formData.textarea}
+            />
             <Field label="Password" model="password" dataType="password" value="********" />
           </Section>
         </Group>
@@ -217,7 +266,11 @@ export function AtomsShowcasePage() {
         <Group role="Card">
           <Text role="Title" content="4. Field Component - Edit Mode" prominence="Primary" />
 
-          <Section role="Container" prominence="Tertiary" className="gap-4 p-4 rounded-lg grid-cols-2">
+          <Section
+            role="Container"
+            prominence="Tertiary"
+            className="gap-4 p-4 rounded-lg grid-cols-2"
+          >
             <Field
               label="Text"
               model="text"

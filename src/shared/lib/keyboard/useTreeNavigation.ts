@@ -4,7 +4,7 @@
  * Left/Right로 접기/펼치기, Up/Down으로 노드 이동
  */
 
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export interface TreeNode {
   id: string;
@@ -81,15 +81,11 @@ const flattenTree = (
 /**
  * 트리 네비게이션 훅
  */
-export const useTreeNavigation = (
-  options: UseTreeNavigationOptions
-): UseTreeNavigationReturn => {
+export const useTreeNavigation = (options: UseTreeNavigationOptions): UseTreeNavigationReturn => {
   const { data, defaultOpenIds = [], onFileSelect, enabled = true } = options;
 
   const [cursorIndex, setCursorIndex] = useState(0);
-  const [openFolderIds, setOpenFolderIds] = useState<Set<string>>(
-    new Set(defaultOpenIds)
-  );
+  const [openFolderIds, setOpenFolderIds] = useState<Set<string>>(new Set(defaultOpenIds));
 
   // 플랫한 노드 리스트 생성
   const flatNodes = useMemo(() => {
@@ -158,9 +154,7 @@ export const useTreeNavigation = (
             toggleFolder(currentNode.id);
           } else if (currentNode.parentId) {
             // 부모 노드로 이동
-            const parentIndex = flatNodes.findIndex(
-              (n) => n.id === currentNode.parentId
-            );
+            const parentIndex = flatNodes.findIndex((n) => n.id === currentNode.parentId);
             if (parentIndex !== -1) {
               setCursorIndex(parentIndex);
             }

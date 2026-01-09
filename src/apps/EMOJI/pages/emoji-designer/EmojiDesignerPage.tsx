@@ -5,36 +5,28 @@
  * 완전히 DSL로 구성됨
  */
 
+import { Copy, Download, Droplet, Eraser, Paintbrush, Trash2, Upload } from 'lucide-react';
 import { useState } from 'react';
-import { Page } from '@/components/Page/Page';
-import { Section } from '@/components/Section/Section';
-import { Group } from '@/components/Group/Group';
-import { Text } from '@/components/Text/Text';
+import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
+import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
 import { Button } from '@/components/Action/role/Button';
 import { Input } from '@/components/Field/role/Input';
 import { Select } from '@/components/Field/role/Select';
 import { Switch } from '@/components/Field/role/Switch';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Group/role/Tabs';
-import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
-import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
-import {
-  Download,
-  Upload,
-  Paintbrush,
-  Eraser,
-  Droplet,
-  Trash2,
-  Copy,
-} from 'lucide-react';
-import type { DesignerState, PixelColor } from '@/lib/emoji-designer/types';
-import { PRESET_PALETTES } from '@/lib/emoji-designer/types';
+import { Group } from '@/components/Group/Group';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Group/role/Tabs';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Text } from '@/components/Text/Text';
+import type { DesignerState, PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types';
+import { PRESET_PALETTES } from '@/apps/EMOJI/lib/emoji-designer/types';
 import {
   createNewDesign,
-  floodFill,
   exportDesign,
+  floodFill,
   importDesign,
   resizeGrid,
-} from '@/lib/emoji-designer/utils';
+} from '@/apps/EMOJI/lib/emoji-designer/utils';
 
 export const EmojiDesignerPage = () => {
   const [state, setState] = useState<DesignerState>(() => ({
@@ -90,9 +82,7 @@ export const EmojiDesignerPage = () => {
 
   // Clear canvas
   const handleClear = () => {
-    const newGrid = state.design.grid.map((row) =>
-      row.map(() => '#FFFFFF00')
-    );
+    const newGrid = state.design.grid.map((row) => row.map(() => '#FFFFFF00'));
     handleGridChange(newGrid);
   };
 
@@ -162,7 +152,11 @@ export const EmojiDesignerPage = () => {
                 <Paintbrush size={24} />
                 <Text role="Title" prominence="Hero" content="Emoji Designer IDE" />
               </div>
-              <Text role="Body" prominence="Primary" content="JSON 기반 픽셀 아트 이모지 디자이너" />
+              <Text
+                role="Body"
+                prominence="Primary"
+                content="JSON 기반 픽셀 아트 이모지 디자이너"
+              />
             </div>
 
             <Group role="Toolbar" direction="horizontal">
@@ -197,7 +191,12 @@ export const EmojiDesignerPage = () => {
             {/* Design Info */}
             <Group role="Form">
               <div>
-                <Text role="Label" prominence="Primary" className="block mb-1.5" content="Emoji Name" />
+                <Text
+                  role="Label"
+                  prominence="Primary"
+                  className="block mb-1.5"
+                  content="Emoji Name"
+                />
                 <Input
                   value={state.design.name}
                   onChange={(e) =>
@@ -210,7 +209,12 @@ export const EmojiDesignerPage = () => {
               </div>
 
               <div>
-                <Text role="Label" prominence="Primary" className="block mb-1.5" content="Grid Size" />
+                <Text
+                  role="Label"
+                  prominence="Primary"
+                  className="block mb-1.5"
+                  content="Grid Size"
+                />
                 <Select
                   value={state.design.size}
                   onChange={(e) => handleResizeGrid(Number(e.target.value))}
@@ -223,7 +227,12 @@ export const EmojiDesignerPage = () => {
               </div>
 
               <div>
-                <Text role="Label" prominence="Primary" className="block mb-1.5" content="Preset Palette" />
+                <Text
+                  role="Label"
+                  prominence="Primary"
+                  className="block mb-1.5"
+                  content="Preset Palette"
+                />
                 <Select onChange={(e) => handleLoadPreset(e.target.value)}>
                   <option value="">Select preset...</option>
                   <option value="classic">Classic</option>
@@ -279,9 +288,7 @@ export const EmojiDesignerPage = () => {
               <Switch
                 label="Show Grid"
                 checked={state.showGrid}
-                onChange={(e) =>
-                  setState((prev) => ({ ...prev, showGrid: e.target.checked }))
-                }
+                onChange={(e) => setState((prev) => ({ ...prev, showGrid: e.target.checked }))}
               />
             </div>
           </Section>
@@ -292,9 +299,7 @@ export const EmojiDesignerPage = () => {
             <ColorPalette
               palette={state.design.palette}
               selectedColor={state.selectedColor}
-              onSelectColor={(color) =>
-                setState((prev) => ({ ...prev, selectedColor: color }))
-              }
+              onSelectColor={(color) => setState((prev) => ({ ...prev, selectedColor: color }))}
               onAddColor={handleAddColor}
               onRemoveColor={handleRemoveColor}
             />
@@ -306,9 +311,17 @@ export const EmojiDesignerPage = () => {
           {/* Toolbar */}
           <div className="h-12 bg-layer-2 border-b border-border flex items-center justify-between px-4">
             <Group role="Card" direction="horizontal">
-              <Text role="Body" prominence="Tertiary" content={`${state.design.size}x${state.design.size} pixels`} />
+              <Text
+                role="Body"
+                prominence="Tertiary"
+                content={`${state.design.size}x${state.design.size} pixels`}
+              />
               <Text role="Body" prominence="Tertiary" content="•" />
-              <Text role="Body" prominence="Tertiary" content={`${state.design.palette.length} colors`} />
+              <Text
+                role="Body"
+                prominence="Tertiary"
+                content={`${state.design.palette.length} colors`}
+              />
             </Group>
 
             <Tabs value={previewTab} onValueChange={setPreviewTab}>
@@ -446,17 +459,32 @@ export const EmojiDesignerPage = () => {
             <Group role="Card">
               <div className="flex justify-between">
                 <Text role="Label" prominence="Tertiary" content="ID" />
-                <Text role="Body" prominence="Hero" className="font-mono text-xs" content={state.design.id} />
+                <Text
+                  role="Body"
+                  prominence="Hero"
+                  className="font-mono text-xs"
+                  content={state.design.id}
+                />
               </div>
 
               <div className="flex justify-between">
                 <Text role="Label" prominence="Tertiary" content="Created" />
-                <Text role="Body" prominence="Hero" className="text-xs" content={new Date(state.design.createdAt).toLocaleString()} />
+                <Text
+                  role="Body"
+                  prominence="Hero"
+                  className="text-xs"
+                  content={new Date(state.design.createdAt).toLocaleString()}
+                />
               </div>
 
               <div className="flex justify-between">
                 <Text role="Label" prominence="Tertiary" content="Updated" />
-                <Text role="Body" prominence="Hero" className="text-xs" content={new Date(state.design.updatedAt).toLocaleString()} />
+                <Text
+                  role="Body"
+                  prominence="Hero"
+                  className="text-xs"
+                  content={new Date(state.design.updatedAt).toLocaleString()}
+                />
               </div>
             </Group>
           </Section>

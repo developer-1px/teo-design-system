@@ -2,11 +2,32 @@
  * App Context - 앱 타입 전환 및 관리 (Wouter 기반)
  */
 
-import { createContext, useContext, useEffect, ReactNode } from 'react';
+import {
+  Beaker,
+  Blocks,
+  BookOpen,
+  Calendar,
+  Code,
+  FileText,
+  Palette,
+  Presentation,
+  Smile,
+  Target,
+} from 'lucide-react';
+import { createContext, type ReactNode, useContext, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { Code, Presentation, FileText, Target, Calendar, Smile, BookOpen, Blocks, Beaker, Palette } from 'lucide-react';
 
-export type AppType = 'ide' | 'ppt' | 'notion' | 'linear' | 'calendar' | 'emoji' | 'design' | 'builder' | 'showcase' | 'tokens';
+export type AppType =
+  | 'ide'
+  | 'ppt'
+  | 'notion'
+  | 'linear'
+  | 'calendar'
+  | 'emoji'
+  | 'design'
+  | 'builder'
+  | 'showcase'
+  | 'tokens';
 
 import type { LucideIcon } from 'lucide-react';
 
@@ -124,11 +145,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     document.documentElement.setAttribute('data-color-scheme', config.colorScheme);
   }, [currentApp, config.colorScheme]);
 
-  return (
-    <AppContext.Provider value={{ currentApp, config }}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={{ currentApp, config }}>{children}</AppContext.Provider>;
 };
 
 export const useApp = () => {

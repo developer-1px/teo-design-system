@@ -9,10 +9,10 @@
  */
 
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils.ts';
-import { useLayoutContext } from '@/components/context/IDDLContext';
-import type { ActionProps, Prominence, Intent } from '@/components/utils/types';
 import * as Icons from 'lucide-react';
+import { useLayoutContext } from '@/components/context/IDDLContext';
+import type { ActionProps, Intent, Prominence } from '@/components/utils/types';
+import { cn } from '@/lib/utils.ts';
 
 /**
  * Action button variants (CVA)
@@ -26,8 +26,8 @@ const actionVariants = cva(
     variants: {
       // Prominence (size) - per minimal-renderer-guide.md Section 1.2
       prominence: {
-        Hero: 'py-3 px-6 text-lg font-medium gap-3',      // 12px 24px padding + radius
-        Primary: 'py-2 px-4 text-base font-medium gap-2',  // 8px 16px padding + radius
+        Hero: 'py-3 px-6 text-lg font-medium gap-3', // 12px 24px padding + radius
+        Primary: 'py-2 px-4 text-base font-medium gap-2', // 8px 16px padding + radius
         Secondary: 'py-2 px-4 text-base font-medium gap-2', // 8px 16px, no bg (조용히 존재)
         Tertiary: 'p-2 text-xs font-medium gap-1 opacity-60', // 8px padding, 아이콘만
       },
@@ -198,14 +198,15 @@ export function Action({
   // 부모 컨텍스트에서 상속
   const computedProminence = prominence ?? ctx.prominence ?? 'Primary';
   const computedIntent = intent ?? ctx.intent ?? 'Neutral';
-  const computedDensity = ctx.density ?? 'Standard';  // v1.1.1
+  const computedDensity = ctx.density ?? 'Standard'; // v1.1.1
 
   if (hidden) return null;
 
   // disabled 표현식 평가 (v1.0.1: boolean | string 지원)
-  const isDisabled = typeof disabled === 'string'
-    ? false  // TODO: 표현식 평가 구현
-    : (disabled ?? false);
+  const isDisabled =
+    typeof disabled === 'string'
+      ? false // TODO: 표현식 평가 구현
+      : (disabled ?? false);
 
   // 아이콘 컴포넌트 가져오기
   const IconComponent = icon ? (Icons as any)[icon] : null;
@@ -302,7 +303,7 @@ export function Action({
         prominence: computedProminence as Prominence,
         intent: computedIntent as Intent,
         loading,
-        density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',  // v1.1.1
+        density: computedDensity as 'Compact' | 'Standard' | 'Comfortable', // v1.1.1
         className,
       })}
       data-dsl-component="action"

@@ -2,17 +2,17 @@
  * RightBar - Right sidebar panel with different views
  */
 
-import { Section } from '@/components/Section/Section.tsx';
-import { Button } from '@/components/Action/role/Button';
-import { AIAgentChat } from '@/apps/IDE/widgets/chat/AIAgentChat.tsx';
 import {
+  Download,
+  FolderOpen,
   GitBranch,
   Play,
-  Download,
-  Upload,
-  FolderOpen,
   Settings as SettingsIcon,
+  Upload,
 } from 'lucide-react';
+import { AIAgentChat } from '@/apps/IDE/widgets/chat/AIAgentChat.tsx';
+import { Button } from '@/components/Action/role/Button';
+import { Section } from '@/components/Section/Section.tsx';
 
 interface RightBarProps {
   view: string | null;
@@ -45,7 +45,11 @@ export const RightBar = ({
   };
 
   return (
-    <Section role="Aside" prominence="Secondary" className="flex w-80 flex-col overflow-hidden bg-surface-cool boundary-shadow-left">
+    <Section
+      role="Aside"
+      prominence="Secondary"
+      className="flex w-80 flex-col overflow-hidden bg-surface-cool boundary-shadow-left"
+    >
       {renderContent()}
     </Section>
   );
@@ -105,16 +109,20 @@ const GitPanel = ({ currentBranch }: { currentBranch: string }) => {
         {/* Changes */}
         <div>
           <div className="text-xs font-semibold text-subtle mb-2">Changes</div>
-          <div className="text-xs text-muted px-2 py-4 text-center">
-            No changes detected
-          </div>
+          <div className="text-xs text-muted px-2 py-4 text-center">No changes detected</div>
         </div>
       </div>
     </div>
   );
 };
 
-const ProjectInfoPanel = ({ projectName, currentBranch }: { projectName: string; currentBranch: string }) => {
+const ProjectInfoPanel = ({
+  projectName,
+  currentBranch,
+}: {
+  projectName: string;
+  currentBranch: string;
+}) => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}

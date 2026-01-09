@@ -2,8 +2,8 @@
  * Keyboard event handlers
  */
 
+import { getDebugMode, isPanelShown, setDebugMode } from './state';
 import type { DebugMode } from './types';
-import { getDebugMode, setDebugMode, isPanelShown } from './state';
 
 /**
  * Keyboard Manager class
@@ -45,7 +45,7 @@ export class KeyboardManager {
   private setupKeyboardBlocking(): void {
     const blockingEvents = ['keydown', 'keypress', 'keyup', 'input'];
 
-    blockingEvents.forEach(eventType => {
+    blockingEvents.forEach((eventType) => {
       window.addEventListener(
         eventType,
         (event) => {
@@ -60,11 +60,7 @@ export class KeyboardManager {
           }
 
           // Allow Cmd+D / Ctrl+D (debug mode toggle)
-          if (
-            eventType === 'keydown' &&
-            (event.metaKey || event.ctrlKey) &&
-            event.key === 'd'
-          ) {
+          if (eventType === 'keydown' && (event.metaKey || event.ctrlKey) && event.key === 'd') {
             return;
           }
 

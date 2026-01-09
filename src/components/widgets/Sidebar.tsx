@@ -1,5 +1,5 @@
-import { HTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 export interface SidebarProps extends HTMLAttributes<HTMLDivElement> {
   side?: 'left' | 'right';

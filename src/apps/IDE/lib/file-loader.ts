@@ -102,7 +102,12 @@ export function buildFileTree(paths: string[]): FileNode[] {
 }
 
 function getFileIcon(filename: string): 'code' | 'json' | 'text' | 'markdown' | 'default' {
-  if (filename.endsWith('.tsx') || filename.endsWith('.ts') || filename.endsWith('.jsx') || filename.endsWith('.js')) {
+  if (
+    filename.endsWith('.tsx') ||
+    filename.endsWith('.ts') ||
+    filename.endsWith('.jsx') ||
+    filename.endsWith('.js')
+  ) {
     return 'code';
   }
   if (filename.endsWith('.json')) {

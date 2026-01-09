@@ -5,25 +5,25 @@
  * 키보드 단축키: cmd+c, cmd+x, cmd+v, delete
  */
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import { TreeView } from '@/apps/DSLBuilder/widgets/dsl-builder/TreeView';
+import { Check, Code, Download, Play, Upload } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { type NodePath, PreviewPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel';
 import { PropertyPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PropertyPanel';
-import { PreviewPanel, type NodePath } from '@/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel';
+import { TreeView } from '@/apps/DSLBuilder/widgets/dsl-builder/TreeView';
 import { Button } from '@/components/Action/role/Button';
 import { Select } from '@/components/Field/role/Select';
 import { Kbd } from '@/components/Text/role/Kbd';
-import { Play, Code, Download, Upload, Check } from 'lucide-react';
-import type { AnyDSLNode, DSLNodeType, BuilderState } from '@/lib/dsl-builder/types';
+import type { AnyDSLNode, BuilderState, DSLNodeType } from '@/apps/DSLBuilder/lib/dsl-builder/types';
 import {
-  generateId,
-  findNodeById,
   addChildNode,
-  removeNode,
-  updateNode,
-  moveNode,
   cloneNode,
   createDefaultNode,
-} from '@/lib/dsl-builder/utils';
+  findNodeById,
+  generateId,
+  moveNode,
+  removeNode,
+  updateNode,
+} from '@/apps/DSLBuilder/lib/dsl-builder/utils';
 
 // Import all JSON files from apps/dsl using Vite's glob import
 const templateFiles = import.meta.glob('/apps/dsl/*.json', { eager: true });
@@ -162,11 +162,8 @@ export const DSLBuilderPage = () => {
     e.target.value = '';
   };
 
-
   // Get selected node
-  const selectedNode = state.selectedNodeId
-    ? findNodeById(state.tree, state.selectedNodeId)
-    : null;
+  const selectedNode = state.selectedNodeId ? findNodeById(state.tree, state.selectedNodeId) : null;
 
   // Handle node selection
   const handleSelect = (id: string) => {
@@ -377,19 +374,12 @@ export const DSLBuilderPage = () => {
         {/* Header */}
         <div className="p-2 border-b border-border">
           <h2 className="text-sm font-semibold text-text">DSL Builder</h2>
-          <p className="text-xs text-text-tertiary mt-0.5">
-            Drag & drop to build layouts
-          </p>
+          <p className="text-xs text-text-tertiary mt-0.5">Drag & drop to build layouts</p>
 
           {/* Template Selector */}
           <div className="mt-2 space-y-1">
-            <label className="text-xs font-medium text-text-secondary">
-              Template
-            </label>
-            <Select
-              value={currentTemplateId}
-              onChange={(e) => loadTemplate(e.target.value)}
-            >
+            <label className="text-xs font-medium text-text-secondary">Template</label>
+            <Select value={currentTemplateId} onChange={(e) => loadTemplate(e.target.value)}>
               {templates.map((template) => (
                 <option key={template.id} value={template.id}>
                   {template.name}

@@ -78,9 +78,7 @@ function mergeTypes(types: TypeInfo[]): TypeInfo {
 
   // Check if all types are the same
   const firstType = types[0];
-  const allSame = types.every(
-    (t) => t.type === firstType.type && t.isArray === firstType.isArray
-  );
+  const allSame = types.every((t) => t.type === firstType.type && t.isArray === firstType.isArray);
 
   if (allSame && firstType.type === 'object' && firstType.properties) {
     // Merge object properties
@@ -142,11 +140,7 @@ export function generateTypeScriptInterface(
   const typeInfo = inferType(data);
   const interfaces: string[] = [];
 
-  function generateInterface(
-    name: string,
-    info: TypeInfo,
-    indent: number = 0
-  ): string {
+  function generateInterface(name: string, info: TypeInfo, indent: number = 0): string {
     const indentStr = '  '.repeat(indent);
 
     if (info.type === 'object' && info.properties) {

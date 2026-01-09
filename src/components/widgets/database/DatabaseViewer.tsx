@@ -4,21 +4,21 @@
  * 다양한 뷰로 JSON 데이터를 표시
  */
 
-import { useState, useMemo } from 'react';
+import { Maximize2, Minimize2 } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { IconButton } from '@/components/Action/role/IconButton';
+import { Group } from '@/components/Group/Group';
 import { Page } from '@/components/Page/Page';
 import { Section } from '@/components/Section/Section';
-import { Group } from '@/components/Group/Group';
-import { Text } from '@/components/Text/Text';
 import { Badge } from '@/components/Text/role/Badge';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { Text } from '@/components/Text/Text';
 import { Divider } from '@/components/utils/Divider';
-import { Maximize2, Minimize2 } from 'lucide-react';
+import type { DatabaseConfig, JsonArray } from '@/components/utils/types';
 import { ViewSwitcher } from './ViewSwitcher';
-import { TableView } from './views/TableView';
 import { BoardView } from './views/BoardView';
 import { GalleryView } from './views/GalleryView';
 import { ListView } from './views/ListView';
-import type { DatabaseConfig, JsonArray } from '@/components/utils/types';
+import { TableView } from './views/TableView';
 
 interface DatabaseViewerProps {
   data: JsonArray;
@@ -54,9 +54,7 @@ export const DatabaseViewer = ({
     ];
   }, [customViews]);
 
-  const [activeViewId, setActiveViewId] = useState(
-    defaultView || views[0]?.id || 'table'
-  );
+  const [activeViewId, setActiveViewId] = useState(defaultView || views[0]?.id || 'table');
 
   const activeView = views.find((v) => v.id === activeViewId) || views[0];
 
@@ -65,9 +63,8 @@ export const DatabaseViewer = ({
     if (data.length === 0) return { rows: 0, cols: 0 };
 
     const firstItem = data[0];
-    const cols = typeof firstItem === 'object' && firstItem !== null
-      ? Object.keys(firstItem).length
-      : 0;
+    const cols =
+      typeof firstItem === 'object' && firstItem !== null ? Object.keys(firstItem).length : 0;
 
     return { rows: data.length, cols };
   }, [data]);
@@ -87,7 +84,11 @@ export const DatabaseViewer = ({
           </Group>
 
           {/* Controls */}
-          <Group role="Toolbar" direction="horizontal" className="px-6 py-3 border-t border-default justify-between">
+          <Group
+            role="Toolbar"
+            direction="horizontal"
+            className="px-6 py-3 border-t border-default justify-between"
+          >
             <Group role="navigation" direction="horizontal" className="items-center gap-4">
               <ViewSwitcher
                 views={views}
@@ -128,15 +129,9 @@ export const DatabaseViewer = ({
           {activeView.type === 'table' && (
             <TableView data={data} viewConfig={activeView} density={density} />
           )}
-          {activeView.type === 'board' && (
-            <BoardView data={data} viewConfig={activeView} />
-          )}
-          {activeView.type === 'gallery' && (
-            <GalleryView data={data} viewConfig={activeView} />
-          )}
-          {activeView.type === 'list' && (
-            <ListView data={data} />
-          )}
+          {activeView.type === 'board' && <BoardView data={data} viewConfig={activeView} />}
+          {activeView.type === 'gallery' && <GalleryView data={data} viewConfig={activeView} />}
+          {activeView.type === 'list' && <ListView data={data} />}
         </div>
       </Section>
     </Page>

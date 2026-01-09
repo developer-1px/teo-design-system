@@ -1,4 +1,12 @@
-import { ReactNode, createContext, useContext, HTMLAttributes, useState, useRef, useEffect } from 'react';
+import {
+  createContext,
+  type HTMLAttributes,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { cn } from '@/lib/utils.ts';
 
 /**
@@ -124,7 +132,13 @@ export interface DropdownItemProps extends HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
 }
 
-export function DropdownItem({ className, disabled, onClick, children, ...props }: DropdownItemProps) {
+export function DropdownItem({
+  className,
+  disabled,
+  onClick,
+  children,
+  ...props
+}: DropdownItemProps) {
   const { setOpen } = useDropdownContext();
 
   return (
@@ -153,10 +167,5 @@ export function DropdownItem({ className, disabled, onClick, children, ...props 
  * DropdownSeparator - 드롭다운 구분선
  */
 export function DropdownSeparator({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={cn('my-1 h-px bg-border', className)}
-      {...props}
-    />
-  );
+  return <div className={cn('my-1 h-px bg-border', className)} {...props} />;
 }

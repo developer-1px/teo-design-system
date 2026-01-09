@@ -4,23 +4,23 @@
  * Cmd+K로 열기, 모든 액션/파일/설정에 빠르게 접근
  */
 
-import { useEffect, useState, useCallback } from 'react';
 import { Command } from 'cmdk';
 import {
-  Search,
+  Code,
   File,
   Folder,
-  Settings,
-  Code,
-  Terminal,
-  Sun,
-  Moon,
-  Monitor,
   Maximize,
   Minimize,
+  Monitor,
+  Moon,
+  Search,
+  Settings,
+  Sun,
+  Terminal,
 } from 'lucide-react';
-import { useGlobalShortcut, useKeyboardContext, KeyboardContext } from '@/lib/keyboard';
-import { getThemeConfig, applyThemeConfig, initializeTheme } from '@/lib/theme';
+import { useCallback, useEffect, useState } from 'react';
+import { KeyboardContext, useGlobalShortcut, useKeyboardContext } from '@/shared/lib/keyboard';
+import { applyThemeConfig, getThemeConfig, initializeTheme } from '@/shared/lib/theme';
 import './command-palette.css';
 
 interface CommandItem {
@@ -42,12 +42,16 @@ export const CommandPalette = () => {
   const { enableContext, disableContext } = useKeyboardContext();
 
   // Cmd+K로 열기
-  useGlobalShortcut('mod+k', () => {
-    setIsOpen((prev) => !prev);
-  }, {
-    description: 'Toggle command palette',
-    preventDefault: true,
-  });
+  useGlobalShortcut(
+    'mod+k',
+    () => {
+      setIsOpen((prev) => !prev);
+    },
+    {
+      description: 'Toggle command palette',
+      preventDefault: true,
+    }
+  );
 
   // 컨텍스트 관리
   useEffect(() => {
@@ -201,10 +205,7 @@ export const CommandPalette = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh]">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-        onClick={handleClose}
-      />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={handleClose} />
 
       {/* Command Dialog */}
       <Command.Dialog
@@ -215,17 +216,11 @@ export const CommandPalette = () => {
       >
         <div className="cmdk-header">
           <Search size={16} className="cmdk-search-icon" />
-          <Command.Input
-            className="cmdk-input"
-            placeholder="Search commands..."
-            autoFocus
-          />
+          <Command.Input className="cmdk-input" placeholder="Search commands..." autoFocus />
         </div>
 
         <Command.List className="cmdk-list">
-          <Command.Empty className="cmdk-empty">
-            No commands found
-          </Command.Empty>
+          <Command.Empty className="cmdk-empty">No commands found</Command.Empty>
 
           {commands.map((group) => (
             <Command.Group key={group.heading} heading={group.heading} className="cmdk-group">

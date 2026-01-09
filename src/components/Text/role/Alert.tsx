@@ -1,6 +1,6 @@
-import { HTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
-import { AlertCircle, CheckCircle, Info, AlertTriangle, X } from 'lucide-react';
+import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Alert - 알림 메시지
@@ -43,20 +43,16 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
           // Variants
           {
             // Info - blue
-            'bg-blue-50 border-blue-200 text-blue-900':
-              variant === 'info',
+            'bg-blue-50 border-blue-200 text-blue-900': variant === 'info',
 
             // Success - green
-            'bg-green-50 border-green-200 text-green-900':
-              variant === 'success',
+            'bg-green-50 border-green-200 text-green-900': variant === 'success',
 
             // Warning - yellow
-            'bg-yellow-50 border-yellow-200 text-yellow-900':
-              variant === 'warning',
+            'bg-yellow-50 border-yellow-200 text-yellow-900': variant === 'warning',
 
             // Error - red
-            'bg-red-50 border-red-200 text-red-900':
-              variant === 'error',
+            'bg-red-50 border-red-200 text-red-900': variant === 'error',
           },
 
           className
@@ -69,9 +65,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 
           {/* Content */}
           <div className="flex-1">
-            {title && (
-              <div className="font-semibold text-sm mb-1">{title}</div>
-            )}
+            {title && <div className="font-semibold text-sm mb-1">{title}</div>}
             <div className="text-sm font-normal">{children}</div>
           </div>
 

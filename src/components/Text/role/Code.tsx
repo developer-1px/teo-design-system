@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils.ts';
 
 /**
@@ -22,12 +22,9 @@ export const Code = forwardRef<HTMLElement, CodeProps>(
           'inline-block px-1.5 py-0.5 rounded text-sm font-mono',
           'border transition-colors',
           // Variant styles
-          variant === 'default' &&
-            'bg-surface text-text border-default',
-          variant === 'accent' &&
-            'bg-accent/10 text-accent border-accent/20',
-          variant === 'subtle' &&
-            'bg-surface-sunken text-muted border-transparent',
+          variant === 'default' && 'bg-surface text-text border-default',
+          variant === 'accent' && 'bg-accent/10 text-accent border-accent/20',
+          variant === 'subtle' && 'bg-surface-sunken text-muted border-transparent',
           className
         )}
         {...props}

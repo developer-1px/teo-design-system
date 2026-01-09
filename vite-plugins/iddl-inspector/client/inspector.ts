@@ -92,7 +92,8 @@ function propsToString(props: any): string {
       key === 'className' || // HTML 관련 제외
       key.startsWith('data-') || // HTML data attributes 제외
       key.startsWith('aria-') // HTML aria attributes 제외
-    ) continue;
+    )
+      continue;
 
     const value = props[key];
 
@@ -102,7 +103,8 @@ function propsToString(props: any): string {
       typeof value === 'object' ||
       value === undefined ||
       value === null
-    ) continue;
+    )
+      continue;
 
     // IDDL 관련 중요한 props만 포함
     if (
@@ -248,9 +250,7 @@ export function inspectReactTree(): string {
     }
 
     // React Fiber Root 찾기
-    const fiberKey = Object.keys(rootElement).find(key =>
-      key.startsWith('__react')
-    );
+    const fiberKey = Object.keys(rootElement).find((key) => key.startsWith('__react'));
 
     if (!fiberKey) {
       return '// Error: React Fiber not found (is this a React app?)';
@@ -277,7 +277,10 @@ export function inspectReactTree(): string {
     }
 
     if (!fiber) {
-      return '// Error: Could not find React Fiber root node\n// fiberRoot keys: ' + Object.keys(fiberRoot || {}).join(', ');
+      return (
+        '// Error: Could not find React Fiber root node\n// fiberRoot keys: ' +
+        Object.keys(fiberRoot || {}).join(', ')
+      );
     }
 
     // Fiber가 HostRoot면 child로 이동
@@ -291,12 +294,12 @@ export function inspectReactTree(): string {
     if (!jsx || jsx.trim() === '') {
       // 디버깅 정보 출력
       let debugInfo = '// Error: Empty tree\n';
-      debugInfo += '// Root fiber type: ' + (typeof fiber?.type) + '\n';
+      debugInfo += '// Root fiber type: ' + typeof fiber?.type + '\n';
       debugInfo += '// Root component name: ' + getComponentName(fiber) + '\n';
-      debugInfo += '// Has child: ' + (!!fiber?.child) + '\n';
+      debugInfo += '// Has child: ' + !!fiber?.child + '\n';
 
       if (fiber?.child) {
-        debugInfo += '// Child type: ' + (typeof fiber.child.type) + '\n';
+        debugInfo += '// Child type: ' + typeof fiber.child.type + '\n';
         debugInfo += '// Child name: ' + getComponentName(fiber.child) + '\n';
       }
 
@@ -304,7 +307,6 @@ export function inspectReactTree(): string {
     }
 
     return jsx;
-
   } catch (error: any) {
     return `// Error: ${error.message}\n// Stack: ${error.stack}`;
   }

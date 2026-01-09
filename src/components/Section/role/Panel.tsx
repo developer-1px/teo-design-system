@@ -1,4 +1,4 @@
-import { HTMLAttributes, forwardRef } from 'react';
+import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils.ts';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
@@ -15,13 +15,14 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(
   ({ className, elevated = false, sunken = false, scrollable = true, ...props }, ref) => {
-    const scrollableClass = scrollable === true
-      ? 'overflow-auto'
-      : scrollable === 'x'
-      ? 'overflow-x-auto overflow-y-hidden'
-      : scrollable === 'y'
-      ? 'overflow-y-auto overflow-x-hidden'
-      : '';
+    const scrollableClass =
+      scrollable === true
+        ? 'overflow-auto'
+        : scrollable === 'x'
+          ? 'overflow-x-auto overflow-y-hidden'
+          : scrollable === 'y'
+            ? 'overflow-y-auto overflow-x-hidden'
+            : '';
 
     return (
       <div

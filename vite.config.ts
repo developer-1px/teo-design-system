@@ -1,13 +1,10 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { iddlInspector } from './vite-plugins/iddl-inspector/index';
 import path from 'path';
+import { defineConfig } from 'vite';
+import { iddlInspector } from './vite-plugins/iddl-inspector/index';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    iddlInspector(),
-  ],
+  plugins: [react(), iddlInspector()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

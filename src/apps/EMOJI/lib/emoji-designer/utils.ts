@@ -2,15 +2,13 @@
  * Emoji Designer Utilities
  */
 
-import type { EmojiDesign, PixelGrid, PixelColor } from './types';
+import type { EmojiDesign, PixelColor, PixelGrid } from './types';
 
 /**
  * Create empty grid
  */
 export function createEmptyGrid(size: number, defaultColor = '#FFFFFF00'): PixelGrid {
-  return Array.from({ length: size }, () =>
-    Array.from({ length: size }, () => defaultColor)
-  );
+  return Array.from({ length: size }, () => Array.from({ length: size }, () => defaultColor));
 }
 
 /**
@@ -37,12 +35,7 @@ export function createNewDesign(
 /**
  * Set pixel color
  */
-export function setPixel(
-  grid: PixelGrid,
-  row: number,
-  col: number,
-  color: PixelColor
-): PixelGrid {
+export function setPixel(grid: PixelGrid, row: number, col: number, color: PixelColor): PixelGrid {
   const newGrid = grid.map((r) => [...r]);
   newGrid[row][col] = color;
   return newGrid;

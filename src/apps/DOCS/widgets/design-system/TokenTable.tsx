@@ -2,10 +2,10 @@
  * TokenTable - 디자인 토큰을 테이블 형식으로 표시
  */
 
-import { Section } from '@/components/Section/Section.tsx';
-import { cn } from '@/lib/utils';
 import { Copy } from 'lucide-react';
 import { useState } from 'react';
+import { Section } from '@/components/Section/Section.tsx';
+import { cn } from '@/shared/lib/utils';
 
 interface TokenRow {
   name: string;
@@ -38,7 +38,7 @@ export const TokenTable = ({ title, tokens, className }: TokenTableProps) => {
           <div
             className="w-10 h-10 rounded border border-border"
             style={{
-              backgroundColor: `var(${token.value})`
+              backgroundColor: `var(${token.value})`,
             }}
           />
         );
@@ -50,7 +50,7 @@ export const TokenTable = ({ title, tokens, className }: TokenTableProps) => {
               className="bg-accent rounded"
               style={{
                 width: `var(${token.value})`,
-                height: '1rem'
+                height: '1rem',
               }}
             />
             <span className="text-xs text-text-tertiary">
@@ -64,7 +64,7 @@ export const TokenTable = ({ title, tokens, className }: TokenTableProps) => {
           <span
             className="text-text"
             style={{
-              fontSize: `var(${token.value})`
+              fontSize: `var(${token.value})`,
             }}
           >
             Ag
@@ -76,7 +76,7 @@ export const TokenTable = ({ title, tokens, className }: TokenTableProps) => {
           <div
             className="w-10 h-10 rounded bg-layer-3"
             style={{
-              boxShadow: `var(${token.value})`
+              boxShadow: `var(${token.value})`,
             }}
           />
         );
@@ -87,7 +87,7 @@ export const TokenTable = ({ title, tokens, className }: TokenTableProps) => {
   };
 
   return (
-    <Section role="Container" prominence="Secondary" className={cn("overflow-hidden", className)}>
+    <Section role="Container" prominence="Secondary" className={cn('overflow-hidden', className)}>
       {title && (
         <div className="px-4 py-3 border-b border-border">
           <h3 className="text-sm font-semibold text-text">{title}</h3>
@@ -104,12 +104,12 @@ export const TokenTable = ({ title, tokens, className }: TokenTableProps) => {
               <th className="px-4 py-2 text-left text-xs font-semibold text-text-secondary">
                 Value
               </th>
-              {tokens.some(t => t.preview) && (
+              {tokens.some((t) => t.preview) && (
                 <th className="px-4 py-2 text-left text-xs font-semibold text-text-secondary">
                   Preview
                 </th>
               )}
-              {tokens.some(t => t.description) && (
+              {tokens.some((t) => t.description) && (
                 <th className="px-4 py-2 text-left text-xs font-semibold text-text-secondary">
                   Description
                 </th>
@@ -119,30 +119,21 @@ export const TokenTable = ({ title, tokens, className }: TokenTableProps) => {
           </thead>
           <tbody className="divide-y divide-border">
             {tokens.map((token, index) => (
-              <tr
-                key={index}
-                className="hover:bg-layer-1/50 transition-colors"
-              >
+              <tr key={index} className="hover:bg-layer-1/50 transition-colors">
                 <td className="px-4 py-3">
-                  <code className="text-xs text-text font-mono">
-                    {token.name}
-                  </code>
+                  <code className="text-xs text-text font-mono">{token.name}</code>
                 </td>
                 <td className="px-4 py-3">
                   <code className="text-xs text-accent font-mono bg-layer-1 px-2 py-1 rounded">
                     {token.value}
                   </code>
                 </td>
-                {tokens.some(t => t.preview) && (
-                  <td className="px-4 py-3">
-                    {renderPreview(token)}
-                  </td>
+                {tokens.some((t) => t.preview) && (
+                  <td className="px-4 py-3">{renderPreview(token)}</td>
                 )}
-                {tokens.some(t => t.description) && (
+                {tokens.some((t) => t.description) && (
                   <td className="px-4 py-3">
-                    <span className="text-xs text-text-secondary">
-                      {token.description}
-                    </span>
+                    <span className="text-xs text-text-secondary">{token.description}</span>
                   </td>
                 )}
                 <td className="px-4 py-3 text-right">

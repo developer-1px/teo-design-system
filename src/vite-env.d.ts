@@ -6,8 +6,11 @@ declare module '*.mdx' {
 }
 
 interface ImportMeta {
-  readonly glob: (pattern: string, options?: {
-    query?: string;
-    import?: string;
-  }) => Record<string, () => Promise<unknown>>;
+  readonly glob: (
+    pattern: string,
+    options?: {
+      query?: string;
+      import?: string;
+    }
+  ) => Record<string, () => Promise<unknown>>;
 }

@@ -7,15 +7,8 @@
  * - 우선순위 기반 단축키 실행
  */
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  ReactNode,
-  useMemo,
-} from 'react';
-import { KeyboardContext, ShortcutDefinition } from './types';
+import { createContext, type ReactNode, useCallback, useContext, useMemo, useState } from 'react';
+import { KeyboardContext, type ShortcutDefinition } from './types';
 
 interface KeyboardState {
   /** 현재 활성 컨텍스트 (스택) */
@@ -110,28 +103,26 @@ export const KeyboardProvider = ({
   );
 
   // 단축키 등록
-  const registerShortcut = useCallback((shortcut: ShortcutDefinition) => {
-    const existing = shortcuts.get(shortcut.key) || [];
-    shortcuts.set(shortcut.key, [...existing, shortcut]);
+  const registerShortcut = useCallback(
+    (shortcut: ShortcutDefinition) => {
+      const existing = shortcuts.get(shortcut.key) || [];
+      shortcuts.set(shortcut.key, [...existing, shortcut]);
 
-    // 충돌 감지 (같은 키에 같은 우선순위)
-    const conflicts = existing.filter(
-      (s) =>
-        s.priority === shortcut.priority &&
-        s.context === shortcut.context &&
-        s.enabled !== false
-    );
+      // 충돌 감지 (같은 키에 같은 우선순위)
+      const conflicts = existing.filter(
+        (s) =>
+          s.priority === shortcut.priority && s.context === shortcut.context && s.enabled !== false
+      );
 
-    if (conflicts.length > 0 && import.meta.env.DEV) {
-      console.warn(
-        `[KeyboardProvider] Potential conflict detected for key "${shortcut.key}":`,
-        {
+      if (conflicts.length > 0 && import.meta.env.DEV) {
+        console.warn(`[KeyboardProvider] Potential conflict detected for key "${shortcut.key}":`, {
           new: shortcut.description || 'unnamed',
           existing: conflicts.map((c) => c.description || 'unnamed'),
-        }
-      );
-    }
-  }, [shortcuts]);
+        });
+      }
+    },
+    [shortcuts]
+  );
 
   // 단축키 해제
   const unregisterShortcut = useCallback(
@@ -181,9 +172,5 @@ export const KeyboardProvider = ({
     ]
   );
 
-  return (
-    <KeyboardContextObj.Provider value={value}>
-      {children}
-    </KeyboardContextObj.Provider>
-  );
+  return <KeyboardContextObj.Provider value={value}>{children}</KeyboardContextObj.Provider>;
 };

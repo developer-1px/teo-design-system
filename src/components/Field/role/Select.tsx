@@ -1,6 +1,6 @@
-import { SelectHTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
+import { forwardRef, type SelectHTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Select - 단일 선택 드롭다운
@@ -55,12 +55,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             // Variants
             {
               // Default - layer-1 배경 (sunken)
-              'bg-surface-sunken px-3 py-2 border-0 shadow-inset':
-                variant === 'default',
+              'bg-surface-sunken px-3 py-2 border-0 shadow-inset': variant === 'default',
 
               // Ghost - 투명 배경
-              'bg-transparent px-2 py-1 border border-default':
-                variant === 'ghost',
+              'bg-transparent px-2 py-1 border border-default': variant === 'ghost',
             },
 
             // Error state

@@ -1,12 +1,12 @@
+import type { ColumnDef } from '@tanstack/react-table';
+import { Maximize2, Minimize2, PanelLeft, PanelLeftClose } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { type ColumnDef } from '@tanstack/react-table';
+import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
+import { IconButton } from '@/components/Action/role/IconButton';
+import { DataTable } from '@/components/Group/role/DataTable.tsx';
 import { Section } from '@/components/Section/Section.tsx';
 import { Content } from '@/components/Text/role/Content';
-import { DataTable } from '@/components/Group/role/DataTable.tsx';
-import { IconButton } from '@/components/Action/role/IconButton';
-import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
 import testData from '@/test.json';
-import { Maximize2, Minimize2, PanelLeftClose, PanelLeft } from 'lucide-react';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };
@@ -17,10 +17,10 @@ export const ServerProductsView = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [jsonData] = useState<JsonArray>(() => {
     // test.json에서 첫 번째 배열 찾기
-    const firstArrayKey = Object.keys(testData).find(key =>
+    const firstArrayKey = Object.keys(testData).find((key) =>
       Array.isArray((testData as JsonObject)[key])
     );
-    return firstArrayKey ? (testData as JsonObject)[firstArrayKey] as JsonArray : [];
+    return firstArrayKey ? ((testData as JsonObject)[firstArrayKey] as JsonArray) : [];
   });
 
   const data = useMemo(() => {
@@ -73,9 +73,7 @@ export const ServerProductsView = () => {
         if (typeof value === 'object') {
           return (
             <Content prominence="tertiary">
-              <span className="font-mono">
-                {JSON.stringify(value)}
-              </span>
+              <span className="font-mono">{JSON.stringify(value)}</span>
             </Content>
           );
         }
@@ -92,14 +90,12 @@ export const ServerProductsView = () => {
   return (
     <div className="flex flex-1 h-full gap-0 overflow-hidden">
       {/* Left Sidebar - Schema */}
-      {showSidebar && (
-        <JsonSchemaSidebar data={data} interfaceName="Item" />
-      )}
+      {showSidebar && <JsonSchemaSidebar data={data} interfaceName="Item" />}
 
       {/* Main Content */}
-      <Section role="Container"
+      <Section
+        role="Container"
         prominence="Secondary"
-       
         className="flex flex-col flex-1 h-full bg-layer-2-cool boundary-shadow-left"
       >
         {/* Header */}
@@ -116,7 +112,8 @@ export const ServerProductsView = () => {
             <div className="h-4 w-px bg-border-primary" />
             <Content prominence="tertiary">
               <span>
-                {data.length} {data.length === 1 ? 'row' : 'rows'} • {columns.length} {columns.length === 1 ? 'col' : 'cols'}
+                {data.length} {data.length === 1 ? 'row' : 'rows'} • {columns.length}{' '}
+                {columns.length === 1 ? 'col' : 'cols'}
               </span>
             </Content>
           </div>

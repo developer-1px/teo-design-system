@@ -1,30 +1,25 @@
-import { useState } from 'react';
-import { Section } from '@/components/Section/Section.tsx';
-import { Button } from '@/components/Action/role/Button';
 import {
-  X,
-  Palette,
-  Type,
-  Layers,
   Keyboard,
-  Settings as SettingsIcon,
+  Layers,
   Monitor,
   Moon,
+  Palette,
+  Settings as SettingsIcon,
   Sun,
+  Type,
+  X,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { Button } from '@/components/Action/role/Button';
+import { Section } from '@/components/Section/Section.tsx';
+import { cn } from '@/shared/lib/utils';
 
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type SettingsCategory =
-  | 'appearance'
-  | 'editor'
-  | 'layers'
-  | 'keymap'
-  | 'general';
+type SettingsCategory = 'appearance' | 'editor' | 'layers' | 'keymap' | 'general';
 
 interface SettingsItem {
   id: string;
@@ -35,8 +30,7 @@ interface SettingsItem {
 }
 
 export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
-  const [activeCategory, setActiveCategory] =
-    useState<SettingsCategory>('appearance');
+  const [activeCategory, setActiveCategory] = useState<SettingsCategory>('appearance');
   const [settings, setSettings] = useState<Record<string, any>>({
     theme: 'light',
     colorScheme: 'emerald',
@@ -146,25 +140,17 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
       case 'toggle':
         return (
           <button
-            onClick={() =>
-              handleSettingChange(setting.id, !setting.value)
-            }
-            className={cn(
-              'relative w-11 h-6 rounded-full',
-              {
-                'bg-accent': setting.value,
-                'bg-surface-base': !setting.value,
-              }
-            )}
+            onClick={() => handleSettingChange(setting.id, !setting.value)}
+            className={cn('relative w-11 h-6 rounded-full', {
+              'bg-accent': setting.value,
+              'bg-surface-base': !setting.value,
+            })}
           >
             <span
-              className={cn(
-                'absolute top-1 w-4 h-4 bg-white rounded-full',
-                {
-                  'left-6': setting.value,
-                  'left-1': !setting.value,
-                }
-              )}
+              className={cn('absolute top-1 w-4 h-4 bg-white rounded-full', {
+                'left-6': setting.value,
+                'left-1': !setting.value,
+              })}
             />
           </button>
         );
@@ -177,12 +163,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
               max={setting.id === 'fontSize' ? 20 : 2}
               step={setting.id === 'fontSize' ? 1 : 0.1}
               value={setting.value}
-              onChange={(e) =>
-                handleSettingChange(
-                  setting.id,
-                  parseFloat(e.target.value)
-                )
-              }
+              onChange={(e) => handleSettingChange(setting.id, parseFloat(e.target.value))}
               className="flex-1"
             />
             <span className="text-sm text-muted w-12 text-right">
@@ -201,106 +182,84 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-8">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/50"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
 
-      <Section role="Container"
+      <Section
+        role="Container"
         prominence="Hero"
         className="relative w-full max-w-4xl h-[600px] flex flex-col overflow-hidden"
       >
-          {/* Header */}
-          <Section role="Container" prominence="Tertiary" className="px-6 py-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-text">Settings</h2>
-              <Button
-                variant="ghost"
-                onClick={onClose}
-                className="h-auto p-1.5"
-              >
-                <X size={18} className="text-muted" />
-              </Button>
+        {/* Header */}
+        <Section role="Container" prominence="Tertiary" className="px-6 py-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-text">Settings</h2>
+            <Button variant="ghost" onClick={onClose} className="h-auto p-1.5">
+              <X size={18} className="text-muted" />
+            </Button>
+          </div>
+        </Section>
+
+        {/* Content */}
+        <div className="flex flex-1 overflow-hidden">
+          {/* Sidebar */}
+          <Section role="Container" prominence="Tertiary" className="w-56 overflow-y-auto">
+            <div className="p-2">
+              {categories.map((category) => {
+                const Icon = category.icon;
+                return (
+                  <Button
+                    key={category.id}
+                    variant="ghost"
+                    onClick={() => setActiveCategory(category.id)}
+                    className={cn('w-full justify-start gap-3 px-3 py-2 h-auto text-sm', {
+                      'bg-accent/10 text-accent hover:bg-accent/10': activeCategory === category.id,
+                    })}
+                  >
+                    <Icon size={16} />
+                    <span>{category.label}</span>
+                  </Button>
+                );
+              })}
             </div>
           </Section>
 
-          {/* Content */}
-          <div className="flex flex-1 overflow-hidden">
-            {/* Sidebar */}
-            <Section role="Container"
-              prominence="Tertiary"
-             
-              className="w-56 overflow-y-auto"
-            >
-              <div className="p-2">
-                {categories.map((category) => {
-                  const Icon = category.icon;
-                  return (
-                    <Button
-                      key={category.id}
-                      variant="ghost"
-                      onClick={() => setActiveCategory(category.id)}
-                      className={cn(
-                        'w-full justify-start gap-3 px-3 py-2 h-auto text-sm',
-                        {
-                          'bg-accent/10 text-accent hover:bg-accent/10':
-                            activeCategory === category.id,
-                        }
-                      )}
-                    >
-                      <Icon size={16} />
-                      <span>{category.label}</span>
-                    </Button>
-                  );
-                })}
-              </div>
-            </Section>
+          {/* Settings Panel */}
+          <div className="flex-1 overflow-y-auto p-6">
+            <h3 className="text-base font-semibold text-text mb-4">
+              {categories.find((c) => c.id === activeCategory)?.label}
+            </h3>
 
-            {/* Settings Panel */}
-            <div className="flex-1 overflow-y-auto p-6">
-              <h3 className="text-base font-semibold text-text mb-4">
-                {categories.find((c) => c.id === activeCategory)?.label}
-              </h3>
-
-              <div className="space-y-6">
-                {getSettingsForCategory(activeCategory).map((setting) => (
-                  <div key={setting.id} className="flex items-center justify-between">
-                    <div>
-                      <label className="text-sm font-medium text-text">
-                        {setting.label}
-                      </label>
-                    </div>
-                    <div className="w-64">{renderSettingControl(setting)}</div>
+            <div className="space-y-6">
+              {getSettingsForCategory(activeCategory).map((setting) => (
+                <div key={setting.id} className="flex items-center justify-between">
+                  <div>
+                    <label className="text-sm font-medium text-text">{setting.label}</label>
                   </div>
-                ))}
+                  <div className="w-64">{renderSettingControl(setting)}</div>
+                </div>
+              ))}
 
-                {getSettingsForCategory(activeCategory).length === 0 && (
-                  <div className="text-center text-subtle py-12">
-                    Settings for this category are coming soon...
-                  </div>
-                )}
-              </div>
+              {getSettingsForCategory(activeCategory).length === 0 && (
+                <div className="text-center text-subtle py-12">
+                  Settings for this category are coming soon...
+                </div>
+              )}
             </div>
           </div>
+        </div>
 
-          {/* Footer */}
-          <Section role="Container" prominence="Tertiary" className="px-6 py-4">
-            <div className="flex items-center justify-end gap-3">
-              <Button
-                variant="ghost"
-                onClick={onClose}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="accent"
-                onClick={onClose}
-              >
-                Apply
-              </Button>
-            </div>
-          </Section>
+        {/* Footer */}
+        <Section role="Container" prominence="Tertiary" className="px-6 py-4">
+          <div className="flex items-center justify-end gap-3">
+            <Button variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button variant="accent" onClick={onClose}>
+              Apply
+            </Button>
+          </div>
         </Section>
+      </Section>
     </div>
   );
 };

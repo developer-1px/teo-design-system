@@ -1,15 +1,15 @@
-import { Section } from '@/components/Section/Section.tsx';
-import { IconButton } from '@/components/Action/role/IconButton';
 import {
-  X as XIcon,
-  ChevronUp as ChevronUpIcon,
-  Terminal as TerminalIcon,
   AlertCircle as AlertCircleIcon,
-  FileOutput as FileOutputIcon,
   Bug as BugIcon,
+  ChevronUp as ChevronUpIcon,
+  FileOutput as FileOutputIcon,
+  Terminal as TerminalIcon,
+  X as XIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { IconButton } from '@/components/Action/role/IconButton';
+import { Section } from '@/components/Section/Section.tsx';
+import { cn } from '@/shared/lib/utils';
 
 interface BottomPanelProps {
   isOpen: boolean;
@@ -46,61 +46,59 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
         prominence="Tertiary"
         className="flex flex-col flex-1 overflow-hidden"
       >
-      {/* Tab Header */}
-      <div className="flex items-center justify-between px-2 py-1 bg-surface">
-        <div className="flex items-center gap-1">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={cn(
-                  'flex items-center gap-2 px-3 py-1 text-xs rounded-md hover:bg-surface-sunken/50 active:bg-surface-sunken transition-colors',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1',
-                  activeTab === tab.id
-                    ? 'bg-surface text'
-                    : 'text-muted'
-                )}
-              >
-                <Icon size={14} />
-                <span>{tab.label}</span>
-                {tab.count !== undefined && (
-                  <span
-                    className={cn(
-                      'px-1.5 py-0.5 text-xs rounded-full',
-                      activeTab === tab.id
-                        ? 'bg-accent text-white'
-                        : 'bg-surface-sunken text-subtle'
-                    )}
-                  >
-                    {tab.count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
+        {/* Tab Header */}
+        <div className="flex items-center justify-between px-2 py-1 bg-surface">
+          <div className="flex items-center gap-1">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={cn(
+                    'flex items-center gap-2 px-3 py-1 text-xs rounded-md hover:bg-surface-sunken/50 active:bg-surface-sunken transition-colors',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1',
+                    activeTab === tab.id ? 'bg-surface text' : 'text-muted'
+                  )}
+                >
+                  <Icon size={14} />
+                  <span>{tab.label}</span>
+                  {tab.count !== undefined && (
+                    <span
+                      className={cn(
+                        'px-1.5 py-0.5 text-xs rounded-full',
+                        activeTab === tab.id
+                          ? 'bg-accent text-white'
+                          : 'bg-surface-sunken text-subtle'
+                      )}
+                    >
+                      {tab.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center gap-1">
+            <IconButton size="sm" title="Maximize Panel">
+              <ChevronUpIcon size={16} />
+            </IconButton>
+            <IconButton size="sm" onClick={onClose} title="Close Panel">
+              <XIcon size={16} />
+            </IconButton>
+          </div>
         </div>
 
-        {/* Actions */}
-        <div className="flex items-center gap-1">
-          <IconButton size="sm" title="Maximize Panel">
-            <ChevronUpIcon size={16} />
-          </IconButton>
-          <IconButton size="sm" onClick={onClose} title="Close Panel">
-            <XIcon size={16} />
-          </IconButton>
+        {/* Panel Content */}
+        <div className="flex-1 overflow-auto p-2">
+          {activeTab === 'terminal' && <TerminalContent />}
+          {activeTab === 'problems' && <ProblemsContent />}
+          {activeTab === 'output' && <OutputContent />}
+          {activeTab === 'debug' && <DebugContent />}
         </div>
-      </div>
-
-      {/* Panel Content */}
-      <div className="flex-1 overflow-auto p-2">
-        {activeTab === 'terminal' && <TerminalContent />}
-        {activeTab === 'problems' && <ProblemsContent />}
-        {activeTab === 'output' && <OutputContent />}
-        {activeTab === 'debug' && <DebugContent />}
-      </div>
-    </Section>
+      </Section>
     </div>
   );
 };

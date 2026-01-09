@@ -13,10 +13,10 @@
  *   - Group[Info]: 안내 메시지
  */
 
-import { Section } from '@/components/Section/Section.tsx';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Text/Text';
 import { Field } from '@/components/Field/Field';
+import { Group } from '@/components/Group/Group.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Text/Text';
 
 interface FormatSidebarProps {
   isOpen: boolean;
@@ -26,23 +26,10 @@ export const FormatSidebar = ({ isOpen }: FormatSidebarProps) => {
   if (!isOpen) return null;
 
   return (
-    <Section
-      role="Aside"
-      prominence="Tertiary"
-      className="h-full w-full overflow-y-auto p-4"
-    >
+    <Section role="Aside" prominence="Tertiary" className="h-full w-full overflow-y-auto p-4">
       {/* Group[Fieldset]: Text Formatting */}
-      <Group
-        role="Fieldset"
-        layout="stack"
-        density="Compact"
-        className="gap-3"
-      >
-        <Text
-          role="Title"
-          prominence="Secondary"
-          content="텍스트"
-        />
+      <Group role="Fieldset" layout="stack" density="Compact" className="gap-3">
+        <Text role="Title" prominence="Secondary" content="텍스트" />
 
         {/* Font Family - IDDL Field[select] */}
         <Field
@@ -71,34 +58,15 @@ export const FormatSidebar = ({ isOpen }: FormatSidebarProps) => {
         />
 
         {/* Text Color - IDDL Field[color] */}
-        <Field
-          label="색상"
-          model="textColor"
-          dataType="color"
-          prominence="Secondary"
-        />
+        <Field label="색상" model="textColor" dataType="color" prominence="Secondary" />
       </Group>
 
       {/* Group[Fieldset]: Background Formatting */}
-      <Group
-        role="Fieldset"
-        layout="stack"
-        density="Compact"
-        className="gap-3 mt-6"
-      >
-        <Text
-          role="Title"
-          prominence="Secondary"
-          content="배경"
-        />
+      <Group role="Fieldset" layout="stack" density="Compact" className="gap-3 mt-6">
+        <Text role="Title" prominence="Secondary" content="배경" />
 
         {/* Background Color - IDDL Field[color] */}
-        <Field
-          label="배경색"
-          model="backgroundColor"
-          dataType="color"
-          prominence="Secondary"
-        />
+        <Field label="배경색" model="backgroundColor" dataType="color" prominence="Secondary" />
 
         {/* Preset Colors - IDDL Field[radio] */}
         <Field

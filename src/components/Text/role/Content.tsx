@@ -16,13 +16,13 @@
  * ```
  */
 
-import { HTMLAttributes, forwardRef, CSSProperties } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { type CSSProperties, forwardRef, type HTMLAttributes } from 'react';
 import { useProminence } from '@/components/context/ProminenceContext';
 import {
-  ProminenceLevel,
   calculateProminenceStyles,
+  type ProminenceLevel,
 } from '@/design-system/prominence-tokens.ts';
+import { cn } from '@/lib/utils.ts';
 
 export interface ContentProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -41,14 +41,7 @@ export interface ContentProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   (
-    {
-      className,
-      prominence = 'secondary',
-      as: Component = 'div',
-      style,
-      children,
-      ...props
-    },
+    { className, prominence = 'secondary', as: Component = 'div', style, children, ...props },
     ref
   ) => {
     // 부모 Layout의 depth 가져오기
@@ -127,16 +120,7 @@ export interface ContentGroupProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const ContentGroup = forwardRef<HTMLDivElement, ContentGroupProps>(
-  (
-    {
-      className,
-      gap = 8,
-      direction = 'vertical',
-      children,
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, gap = 8, direction = 'vertical', children, ...props }, ref) => {
     const gapClass = `gap-${gap / 4}`; // Tailwind: gap-1 = 4px, gap-2 = 8px, ...
     const directionClass = direction === 'horizontal' ? 'flex-row' : 'flex-col';
 

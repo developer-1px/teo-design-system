@@ -61,15 +61,34 @@ export const PRESET_PALETTES: Record<string, PixelColor[]> = {
   ],
 
   skin: [
-    '#FFDFC4', '#F0C9A0', '#E8B896', '#D1A684', '#C68B6B',
-    '#B87A5B', '#A56A4D', '#8D5A3F', '#724A32', '#5C3A26',
+    '#FFDFC4',
+    '#F0C9A0',
+    '#E8B896',
+    '#D1A684',
+    '#C68B6B',
+    '#B87A5B',
+    '#A56A4D',
+    '#8D5A3F',
+    '#724A32',
+    '#5C3A26',
     '#FFFFFF00', // transparent
   ],
 
   nature: [
-    '#228B22', '#32CD32', '#90EE90', '#006400', '#556B2F',
-    '#8B4513', '#D2691E', '#A0522D', '#CD853F', '#DEB887',
-    '#87CEEB', '#4682B4', '#1E90FF', '#191970',
+    '#228B22',
+    '#32CD32',
+    '#90EE90',
+    '#006400',
+    '#556B2F',
+    '#8B4513',
+    '#D2691E',
+    '#A0522D',
+    '#CD853F',
+    '#DEB887',
+    '#87CEEB',
+    '#4682B4',
+    '#1E90FF',
+    '#191970',
     '#FFFFFF00', // transparent
   ],
 };

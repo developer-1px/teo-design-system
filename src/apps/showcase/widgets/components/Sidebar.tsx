@@ -8,12 +8,12 @@
  */
 
 import { useState } from 'react';
-import { Section } from '@/components/Section/Section.tsx';
-import { Group } from '@/components/Group/Group.tsx';
-import { Action } from '@/components/Action/Action';
-import { Text } from '@/components/Text/Text';
-import { Field } from '@/components/Field/Field';
 import type { FileTreeNode } from '@/apps/showcase/widgets/parser/types';
+import { Action } from '@/components/Action/Action';
+import { Field } from '@/components/Field/Field';
+import { Group } from '@/components/Group/Group.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Text/Text';
 
 interface SidebarProps {
   fileTree: FileTreeNode[];
@@ -26,9 +26,7 @@ export function Sidebar({ fileTree, selectedFile, onFileSelect }: SidebarProps) 
 
   // Filter components by search query
   const filteredTree = searchQuery
-    ? fileTree.filter((node) =>
-        node.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    ? fileTree.filter((node) => node.name.toLowerCase().includes(searchQuery.toLowerCase()))
     : fileTree;
 
   return (

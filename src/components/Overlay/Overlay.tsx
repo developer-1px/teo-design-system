@@ -8,11 +8,11 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils.ts';
-import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext';
-import type { OverlayProps } from '@/components/utils/types';
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
+import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext';
+import type { OverlayProps } from '@/components/utils/types';
+import { cn } from '@/lib/utils.ts';
 
 /**
  * Overlay density variants (CVA) - for padding
@@ -71,32 +71,38 @@ const placementVariants = cva('', {
 /**
  * Drawer direction variants (CVA)
  */
-const drawerDirectionVariants = cva('fixed inset-y-0 bg-surface-overlay shadow-xl w-80 max-w-full overflow-auto', {
-  variants: {
-    direction: {
-      left: 'left-0',
-      right: 'right-0',
+const drawerDirectionVariants = cva(
+  'fixed inset-y-0 bg-surface-overlay shadow-xl w-80 max-w-full overflow-auto',
+  {
+    variants: {
+      direction: {
+        left: 'left-0',
+        right: 'right-0',
+      },
     },
-  },
-  defaultVariants: {
-    direction: 'right',
-  },
-});
+    defaultVariants: {
+      direction: 'right',
+    },
+  }
+);
 
 /**
  * Sheet direction variants (CVA)
  */
-const sheetDirectionVariants = cva('fixed bg-surface-overlay shadow-xl w-full max-h-[80vh] overflow-auto', {
-  variants: {
-    direction: {
-      top: 'top-0',
-      bottom: 'bottom-0',
+const sheetDirectionVariants = cva(
+  'fixed bg-surface-overlay shadow-xl w-full max-h-[80vh] overflow-auto',
+  {
+    variants: {
+      direction: {
+        top: 'top-0',
+        bottom: 'bottom-0',
+      },
     },
-  },
-  defaultVariants: {
-    direction: 'bottom',
-  },
-});
+    defaultVariants: {
+      direction: 'bottom',
+    },
+  }
+);
 
 export function Overlay({
   id,
@@ -167,7 +173,9 @@ export function Overlay({
           <div
             className={cn(
               'bg-surface-overlay rounded-lg shadow-xl max-w-lg w-full mx-4 max-h-[90vh] overflow-auto',
-              overlayDensityVariants({ density: computedDensity as 'Comfortable' | 'Standard' | 'Compact' }),
+              overlayDensityVariants({
+                density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
+              }),
               className
             )}
             role="dialog"
@@ -212,7 +220,9 @@ export function Overlay({
           <div
             className={cn(
               drawerDirectionVariants({ direction: drawerPlacement as 'left' | 'right' }),
-              overlayDensityVariants({ density: computedDensity as 'Comfortable' | 'Standard' | 'Compact' }),
+              overlayDensityVariants({
+                density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
+              }),
               className
             )}
             role="dialog"
@@ -256,7 +266,9 @@ export function Overlay({
           <div
             className={cn(
               sheetDirectionVariants({ direction: sheetPlacement as 'top' | 'bottom' }),
-              overlayDensityVariants({ density: computedDensity as 'Comfortable' | 'Standard' | 'Compact' }),
+              overlayDensityVariants({
+                density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
+              }),
               className
             )}
             role="dialog"
@@ -285,7 +297,9 @@ export function Overlay({
         className={cn(
           'absolute z-40 bg-surface-floating rounded-md shadow-lg border border-default',
           placementVariants({ placement }),
-          compactDensityVariants({ density: computedDensity as 'Comfortable' | 'Standard' | 'Compact' }),
+          compactDensityVariants({
+            density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
+          }),
           className
         )}
         data-dsl-component="overlay"
@@ -324,7 +338,9 @@ export function Overlay({
           'fixed z-50 bg-surface-overlay rounded-lg shadow-xl border border-default',
           'min-w-[300px] max-w-md',
           placementVariants({ placement }),
-          compactDensityVariants({ density: computedDensity as 'Comfortable' | 'Standard' | 'Compact' }),
+          compactDensityVariants({
+            density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
+          }),
           className
         )}
         data-dsl-component="overlay"
@@ -418,11 +434,7 @@ export function Overlay({
   if (role === 'Floating') {
     return (
       <div
-        className={cn(
-          'fixed z-50',
-          placementVariants({ placement }),
-          className
-        )}
+        className={cn('fixed z-50', placementVariants({ placement }), className)}
         data-dsl-component="overlay"
         data-role={role}
         data-overlay-id={id}

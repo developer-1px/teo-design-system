@@ -1,5 +1,5 @@
-import { forwardRef, HTMLAttributes } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Divider - 구분선
@@ -24,16 +24,7 @@ export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Divider = forwardRef<HTMLDivElement, DividerProps>(
-  (
-    {
-      className,
-      orientation = 'horizontal',
-      spacing = 'md',
-      label,
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, orientation = 'horizontal', spacing = 'md', label, ...props }, ref) => {
     if (label && orientation === 'horizontal') {
       return (
         <div

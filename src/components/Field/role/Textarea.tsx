@@ -1,5 +1,5 @@
-import { TextareaHTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type TextareaHTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Textarea - 여러 줄 텍스트 입력
@@ -44,12 +44,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           // Variants
           {
             // Default - layer-1 배경 (sunken)
-            'bg-surface-sunken px-3 py-2 border-0 shadow-inset':
-              variant === 'default',
+            'bg-surface-sunken px-3 py-2 border-0 shadow-inset': variant === 'default',
 
             // Ghost - 투명 배경
-            'bg-transparent px-2 py-1 border border-default':
-              variant === 'ghost',
+            'bg-transparent px-2 py-1 border border-default': variant === 'ghost',
           },
 
           // Error state

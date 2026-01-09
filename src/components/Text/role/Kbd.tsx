@@ -1,5 +1,5 @@
-import { forwardRef, HTMLAttributes } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Kbd - 키보드 단축키 표시

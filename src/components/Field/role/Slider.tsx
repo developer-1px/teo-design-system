@@ -1,5 +1,5 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+import { forwardRef, type InputHTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Slider - 범위 선택 슬라이더
@@ -70,9 +70,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(
 
         {/* Value Display */}
         {showValue && (
-          <div className="min-w-[3rem] text-right text-sm font-medium text-text">
-            {value}
-          </div>
+          <div className="min-w-[3rem] text-right text-sm font-medium text-text">{value}</div>
         )}
       </div>
     );

@@ -95,16 +95,16 @@
   color: var(--text-primary);
 }
 
-.cmdk-item[data-selected='true'] {
+.cmdk-item[data-selected="true"] {
   background: var(--accent);
   color: white;
 }
 
-.cmdk-item[data-selected='true'] .cmdk-item-description {
+.cmdk-item[data-selected="true"] .cmdk-item-description {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.cmdk-item[data-disabled='true'] {
+.cmdk-item[data-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -173,11 +173,11 @@
 }
 
 /* Dark Theme Adjustments */
-[data-theme='dark'] .cmdk-root {
+[data-theme="dark"] .cmdk-root {
   background: var(--layer-6);
 }
 
-[data-theme='dark'] .cmdk-item[data-selected='true'] {
+[data-theme="dark"] .cmdk-item[data-selected="true"] {
   background: var(--accent);
   color: white;
 }

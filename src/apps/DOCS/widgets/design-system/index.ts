@@ -4,6 +4,6 @@
  */
 
 export { ColorSwatch } from './ColorSwatch';
-export { TokenTable } from './TokenTable';
-export { ShadowVsBorderGuide } from './ShadowVsBorderGuide';
 export { ProminenceDemo } from './ProminenceDemo';
+export { ShadowVsBorderGuide } from './ShadowVsBorderGuide';
+export { TokenTable } from './TokenTable';

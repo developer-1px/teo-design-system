@@ -6,9 +6,9 @@
  */
 
 import { useState } from 'react';
+import type { Token } from '@/apps/tokens/parser/types';
 import { Group } from '@/components/Group/Group.tsx';
 import { Text } from '@/components/Text/Text';
-import type { Token } from '@/apps/tokens/parser/types';
 
 export function ColorToken({ token }: { token: Token }) {
   const [copied, setCopied] = useState(false);
@@ -70,7 +70,12 @@ export function ColorToken({ token }: { token: Token }) {
 
       {/* 토큰 정보 (compact) */}
       <div style={{ padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-        <Text role="Label" prominence="Primary" className="font-mono text-xs truncate" title={token.name}>
+        <Text
+          role="Label"
+          prominence="Primary"
+          className="font-mono text-xs truncate"
+          title={token.name}
+        >
           {token.name}
         </Text>
         <Text role="Caption" prominence="Secondary" className="font-mono text-xs">

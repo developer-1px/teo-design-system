@@ -6,22 +6,22 @@
  */
 
 import type {
-  Prominence,
-  Intent,
-  Density,
-  TextRole,
-  FieldDataType,
-  FieldConstraints,
-  FieldOption,
   ActionBehavior,
+  Breadcrumb,
+  Density,
+  FieldConstraints,
+  FieldDataType,
+  FieldOption,
   GroupRole,
+  Intent,
   Layout,
   LoadState,
-  SectionRole,
   OverlayRole,
-  Placement,
   PageLayout,
-  Breadcrumb,
+  Placement,
+  Prominence,
+  SectionRole,
+  TextRole,
 } from '@/components/utils/types';
 
 // Region is deprecated but still used in builder for backward compatibility
@@ -35,7 +35,7 @@ export type DSLNodeType =
   | 'page'
   | 'region'
   | 'section'
-  | 'overlay'     // v1.0.1
+  | 'overlay' // v1.0.1
   | 'group'
   // IDDL v1.0 - New Leaf Nodes
   | 'text'
@@ -50,7 +50,7 @@ export interface DSLNode {
   id: string;
   type: DSLNodeType;
   children?: AnyDSLNode[];
-  condition?: string;  // v1.0.1: 조건부 렌더링
+  condition?: string; // v1.0.1: 조건부 렌더링
 }
 
 /**
@@ -82,10 +82,10 @@ export interface RegionNode extends DSLNode {
  */
 export interface SectionNode extends DSLNode {
   type: 'section';
-  role?: SectionRole;       // v1.0.1
+  role?: SectionRole; // v1.0.1
   prominence?: Prominence;
-  density?: Density;        // v1.0.1
-  mode?: 'view' | 'edit';   // v1.0.1
+  density?: Density; // v1.0.1
+  mode?: 'view' | 'edit'; // v1.0.1
   className?: string;
 }
 
@@ -110,13 +110,13 @@ export interface OverlayNode extends DSLNode {
  */
 export interface GroupNode extends DSLNode {
   type: 'group';
-  role: GroupRole;          // v1.0.1: Purpose → GroupRole
+  role: GroupRole; // v1.0.1: Purpose → GroupRole
   prominence?: Prominence;
-  direction?: 'horizontal' | 'vertical';  // @deprecated
-  layout?: Layout;          // v1.0.1
-  state?: LoadState;        // v1.0.1
-  emptyContent?: string;    // v1.0.1: Simple string content
-  errorContent?: string;    // v1.0.1: Simple string content
+  direction?: 'horizontal' | 'vertical'; // @deprecated
+  layout?: Layout; // v1.0.1
+  state?: LoadState; // v1.0.1
+  emptyContent?: string; // v1.0.1: Simple string content
+  errorContent?: string; // v1.0.1: Simple string content
   className?: string;
 }
 
@@ -147,11 +147,11 @@ export interface FieldNode extends Omit<DSLNode, 'children'> {
   prominence?: Prominence;
   intent?: Intent;
   required?: boolean;
-  options?: FieldOption[];            // v1.0.1
-  constraints?: FieldConstraints;     // v1.0.1
-  dependsOn?: string;                 // v1.0.1
+  options?: FieldOption[]; // v1.0.1
+  constraints?: FieldConstraints; // v1.0.1
+  dependsOn?: string; // v1.0.1
   placeholder?: string;
-  modeOverride?: 'view' | 'edit';     // v1.0.1
+  modeOverride?: 'view' | 'edit'; // v1.0.1
   className?: string;
   hidden?: boolean;
 }
@@ -166,10 +166,10 @@ export interface ActionNode extends Omit<DSLNode, 'children'> {
   icon?: string;
   prominence?: Prominence;
   intent?: Intent;
-  behavior: ActionBehavior;           // v1.0.1: command/to/args → behavior
-  disabled?: boolean | string;        // v1.0.1: 표현식 지원
+  behavior: ActionBehavior; // v1.0.1: command/to/args → behavior
+  disabled?: boolean | string; // v1.0.1: 표현식 지원
   confirm?: string;
-  loading?: boolean;                  // v1.0.1
+  loading?: boolean; // v1.0.1
   className?: string;
   hidden?: boolean;
 }
@@ -179,7 +179,7 @@ export type AnyDSLNode =
   | PageNode
   | RegionNode
   | SectionNode
-  | OverlayNode       // v1.0.1
+  | OverlayNode // v1.0.1
   | GroupNode
   // IDDL v1.0 - New Leaf Nodes
   | TextNode

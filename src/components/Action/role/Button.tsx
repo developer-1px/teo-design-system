@@ -1,5 +1,5 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+import { type ButtonHTMLAttributes, forwardRef } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Button - 디자인 시스템 전용 버튼 컴포넌트
@@ -41,12 +41,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           // Variants
           {
             // Accent - Primary CTA (화면당 1개만!)
-            'bg-accent text-white hover:bg-accent/90 active:bg-accent/80':
-              variant === 'accent',
+            'bg-accent text-white hover:bg-accent/90 active:bg-accent/80': variant === 'accent',
 
             // Ghost - Secondary action
-            'bg-transparent text-text hover:bg-black/5 active:bg-black/10':
-              variant === 'ghost',
+            'bg-transparent text-text hover:bg-black/5 active:bg-black/10': variant === 'ghost',
 
             // Outline - Dangerous action
             'border border-default bg-transparent text-text hover:bg-black/5 active:bg-black/10':

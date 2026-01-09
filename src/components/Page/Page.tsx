@@ -8,10 +8,10 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils.ts';
-import { LayoutProvider } from '@/components/context/IDDLContext';
-import type { PageProps, PageRole, PageLayout } from '@/components/utils/types';
 import { ChevronRight, Loader2 } from 'lucide-react';
+import { LayoutProvider } from '@/components/context/IDDLContext';
+import type { PageLayout, PageProps, PageRole } from '@/components/utils/types';
+import { cn } from '@/lib/utils.ts';
 
 /**
  * Role별 기본 layout 매핑
@@ -32,13 +32,13 @@ const roleToLayout: Record<PageRole, PageLayout> = {
  */
 const roleToMaxWidth: Record<PageRole, string> = {
   App: 'none',
-  Document: 'max-w-4xl',        // 1024px
+  Document: 'max-w-4xl', // 1024px
   Dashboard: 'max-w-none',
-  Wizard: 'max-w-2xl',           // 640px
-  Settings: 'max-w-7xl',         // 1280px
+  Wizard: 'max-w-2xl', // 640px
+  Settings: 'max-w-7xl', // 1280px
   Canvas: 'max-w-none',
-  Gallery: 'max-w-screen-2xl',   // 1440px
-  Feed: 'max-w-3xl',             // 768px
+  Gallery: 'max-w-screen-2xl', // 1440px
+  Feed: 'max-w-3xl', // 768px
 };
 
 /**
@@ -153,7 +153,8 @@ export function Page({
         ? 'max-w-none'
         : `max-w-${maxWidth}`
     : roleToMaxWidth[role];
-  const computedScrollable = scrollable ?? (role !== 'App' && role !== 'Canvas' && role !== 'Wizard');
+  const computedScrollable =
+    scrollable ?? (role !== 'App' && role !== 'Canvas' && role !== 'Wizard');
 
   // 로딩 상태 렌더링
   if (loading) {
@@ -257,16 +258,8 @@ export function Page({
         {/* Page Header (v1.0.1) */}
         {(title || description) && (
           <header className="px-6 py-6 border-b border-border bg-surface">
-            {title && (
-              <h1 className="text-3xl font-semibold text-text-primary mb-2">
-                {title}
-              </h1>
-            )}
-            {description && (
-              <p className="text-base text-text-secondary">
-                {description}
-              </p>
-            )}
+            {title && <h1 className="text-3xl font-semibold text-text-primary mb-2">{title}</h1>}
+            {description && <p className="text-base text-text-secondary">{description}</p>}
           </header>
         )}
 

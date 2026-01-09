@@ -1,8 +1,8 @@
-import { Section } from '@/components/Section/Section.tsx';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import { Section } from '@/components/Section/Section.tsx';
 
 interface MarkdownViewerProps {
   content: string;
@@ -11,11 +11,7 @@ interface MarkdownViewerProps {
 
 export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
   return (
-    <Section
-      role="Container"
-      prominence="Primary"
-      className="flex-1 overflow-y-auto bg-layer-3"
-    >
+    <Section role="Container" prominence="Primary" className="flex-1 overflow-y-auto bg-layer-3">
       <div className="mx-auto max-w-4xl px-8 py-6">
         {/* File name header */}
         {filename && (
@@ -57,9 +53,7 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
               strong: ({ node, ...props }) => (
                 <strong className="font-semibold text-text" {...props} />
               ),
-              em: ({ node, ...props }) => (
-                <em className="italic text-text-secondary" {...props} />
-              ),
+              em: ({ node, ...props }) => <em className="italic text-text-secondary" {...props} />,
 
               // Links
               a: ({ node, ...props }) => (
@@ -73,14 +67,18 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
 
               // Lists
               ul: ({ node, ...props }) => (
-                <ul className="list-disc list-inside mb-4 text-text-secondary space-y-1" {...props} />
+                <ul
+                  className="list-disc list-inside mb-4 text-text-secondary space-y-1"
+                  {...props}
+                />
               ),
               ol: ({ node, ...props }) => (
-                <ol className="list-decimal list-inside mb-4 text-text-secondary space-y-1" {...props} />
+                <ol
+                  className="list-decimal list-inside mb-4 text-text-secondary space-y-1"
+                  {...props}
+                />
               ),
-              li: ({ node, ...props }) => (
-                <li className="leading-7" {...props} />
-              ),
+              li: ({ node, ...props }) => <li className="leading-7" {...props} />,
 
               // Code
               code: ({ node, className, children, ...props }) => {
@@ -96,10 +94,7 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
                   );
                 }
                 return (
-                  <code
-                    className={`${className} text-sm`}
-                    {...props}
-                  >
+                  <code className={`${className} text-sm`} {...props}>
                     {children}
                   </code>
                 );
@@ -117,9 +112,7 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
               ),
 
               // Horizontal rule
-              hr: ({ node, ...props }) => (
-                <hr className="border-border my-8" {...props} />
-              ),
+              hr: ({ node, ...props }) => <hr className="border-border my-8" {...props} />,
 
               // Tables
               table: ({ node, ...props }) => (
@@ -127,12 +120,8 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
                   <table className="min-w-full border-collapse" {...props} />
                 </div>
               ),
-              thead: ({ node, ...props }) => (
-                <thead className="bg-layer-1" {...props} />
-              ),
-              tbody: ({ node, ...props }) => (
-                <tbody {...props} />
-              ),
+              thead: ({ node, ...props }) => <thead className="bg-layer-1" {...props} />,
+              tbody: ({ node, ...props }) => <tbody {...props} />,
               tr: ({ node, ...props }) => (
                 <tr className="border-b border-border-subtle" {...props} />
               ),
@@ -145,10 +134,7 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
 
               // Images
               img: ({ node, ...props }) => (
-                <img
-                  className="max-w-full h-auto rounded-lg shadow-layer-3 my-4"
-                  {...props}
-                />
+                <img className="max-w-full h-auto rounded-lg shadow-layer-3 my-4" {...props} />
               ),
             }}
           >

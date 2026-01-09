@@ -6,8 +6,8 @@
  *   - PresentationView: 내부 컨텐츠
  */
 
-import { Page } from '@/components/Page/Page.tsx';
 import { PresentationView } from '@/apps/PPT/widgets/presentation/PresentationView';
+import { Page } from '@/components/Page/Page.tsx';
 
 export const PPTPage = () => {
   return (

@@ -1,6 +1,6 @@
-import { ImgHTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/lib/utils';
 import { User } from 'lucide-react';
+import { forwardRef, type ImgHTMLAttributes } from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Avatar - 사용자 아바타
@@ -37,16 +37,9 @@ export const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
         )}
       >
         {props.src ? (
-          <img
-            ref={ref}
-            alt={alt || 'Avatar'}
-            className="h-full w-full object-cover"
-            {...props}
-          />
+          <img ref={ref} alt={alt || 'Avatar'} className="h-full w-full object-cover" {...props} />
         ) : fallback ? (
-          <span className="font-medium text-muted">
-            {fallback.charAt(0).toUpperCase()}
-          </span>
+          <span className="font-medium text-muted">{fallback.charAt(0).toUpperCase()}</span>
         ) : (
           <User
             size={size === 'sm' ? 12 : size === 'md' ? 16 : size === 'lg' ? 20 : 24}

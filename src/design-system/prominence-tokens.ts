@@ -57,10 +57,7 @@ export const fontSizeScale: Record<ProminenceLevel, number> = {
  * @param prominence - 주목도 레벨
  * @returns 배경 강도 (0-1)
  */
-export function getBackgroundIntensity(
-  depth: number,
-  prominence: ProminenceLevel
-): number {
+export function getBackgroundIntensity(depth: number, prominence: ProminenceLevel): number {
   const config = {
     primary: { base: 0.02, depthMultiplier: 0.015 },
     secondary: { base: 0.01, depthMultiplier: 0.008 },
@@ -102,10 +99,7 @@ export const lineHeightScale: Record<ProminenceLevel, number> = {
  * @param prominence - 주목도 레벨
  * @returns 계산된 모든 스타일 값
  */
-export function calculateProminenceStyles(
-  depth: number,
-  prominence: ProminenceLevel
-) {
+export function calculateProminenceStyles(depth: number, prominence: ProminenceLevel) {
   return {
     textOpacity: textOpacity[prominence],
     fontWeight: fontWeight[prominence],

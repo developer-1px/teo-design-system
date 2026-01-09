@@ -1,11 +1,5 @@
+import { GitBranch, Info, Settings, Sparkles, X } from 'lucide-react';
 import { useState } from 'react';
-import {
-  Sparkles,
-  GitBranch,
-  Settings,
-  Info,
-  X,
-} from 'lucide-react';
 import { IconButton } from '@/components/Action/role/IconButton';
 
 interface RightNavProps {
@@ -63,11 +57,7 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
       </IconButton>
 
       {onClose && (
-        <IconButton
-          size="md"
-          onClick={onClose}
-          title="Close Sidebar"
-        >
+        <IconButton size="md" onClick={onClose} title="Close Sidebar">
           <X size={20} />
         </IconButton>
       )}

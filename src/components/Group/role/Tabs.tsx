@@ -1,5 +1,11 @@
-import { ReactNode, createContext, useContext, HTMLAttributes, ButtonHTMLAttributes } from 'react';
-import { cn } from '@/lib/utils';
+import {
+  type ButtonHTMLAttributes,
+  createContext,
+  type HTMLAttributes,
+  type ReactNode,
+  useContext,
+} from 'react';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Tabs Context

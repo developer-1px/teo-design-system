@@ -13,13 +13,13 @@
  * - 시스템 다크모드 변경 감지
  */
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
-import { Overlay } from '@/components/Overlay/Overlay.tsx';
-import { Group } from '@/components/Group/Group.tsx';
 import { Action } from '@/components/Action/Action';
-import { APP_CONFIGS, type AppType } from '@/lib/app-context';
-import { toggleTheme as toggleThemeUtil, getThemeConfig, type Theme } from '@/lib/theme';
+import { Group } from '@/components/Group/Group.tsx';
+import { Overlay } from '@/components/Overlay/Overlay.tsx';
+import { APP_CONFIGS, type AppType } from '@/shared/contexts/app-context';
+import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme';
 
 /**
  * Convert icon component to icon name string for Action component
@@ -72,13 +72,7 @@ export const FloatingBar = () => {
   }, []);
 
   return (
-    <Overlay
-      id="floating-bar"
-      role="Floating"
-      placement="bottom"
-      isOpen={true}
-      dismissable={false}
-    >
+    <Overlay id="floating-bar" role="Floating" placement="bottom" isOpen={true} dismissable={false}>
       <Group
         role="Toolbar"
         layout="inline"
@@ -97,7 +91,7 @@ export const FloatingBar = () => {
               behavior={{
                 action: 'command',
                 command: 'app.switch',
-                args: { type: app.type }
+                args: { type: app.type },
               }}
               className="rounded-full !p-1"
               onClick={(e) => {

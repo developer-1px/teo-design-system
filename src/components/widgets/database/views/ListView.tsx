@@ -5,8 +5,8 @@
 
 import { Group } from '@/components/Group/Group';
 import { Text } from '@/components/Text/Text';
-import type { JsonObject, JsonArray } from '../types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
+import type { JsonArray, JsonObject } from '../types';
 
 interface ListViewProps {
   data: JsonArray;
@@ -56,9 +56,11 @@ export const ListView = ({ data }: ListViewProps) => {
                         role="Body"
                         prominence="Primary"
                         className="text-sm truncate"
-                        content={typeof value === 'object'
-                          ? JSON.stringify(value).substring(0, 30)
-                          : String(value)}
+                        content={
+                          typeof value === 'object'
+                            ? JSON.stringify(value).substring(0, 30)
+                            : String(value)
+                        }
                       />
                     </div>
                   );
@@ -70,7 +72,12 @@ export const ListView = ({ data }: ListViewProps) => {
 
         {data.length === 0 && (
           <div className="flex items-center justify-center h-64">
-            <Text role="Body" prominence="Tertiary" className="text-subtle" content="데이터가 없습니다" />
+            <Text
+              role="Body"
+              prominence="Tertiary"
+              className="text-subtle"
+              content="데이터가 없습니다"
+            />
           </div>
         )}
       </div>

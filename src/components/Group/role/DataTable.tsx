@@ -1,19 +1,19 @@
 import {
+  type ColumnDef,
+  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
-  useReactTable,
-  getSortedRowModel,
   getFilteredRowModel,
-  type ColumnDef,
+  getSortedRowModel,
   type SortingState,
-  type ColumnFiltersState,
+  useReactTable,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useState, useRef, useMemo } from 'react';
-import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
-import { useNavigableCursor } from '@/lib/keyboard';
+import { ChevronDown, ChevronsUpDown, ChevronUp } from 'lucide-react';
+import { useMemo, useRef, useState } from 'react';
 import { SearchInput } from '@/components/Field/role/SearchInput';
 import { Kbd } from '@/components/Text/role/Kbd';
+import { useNavigableCursor } from '@/shared/lib/keyboard';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -75,9 +75,7 @@ export function DataTable<TData, TValue>({
       for (let i = 0; i < sampleSize; i++) {
         const row = data[i] as Record<string, unknown>;
         const value = row[accessorKey];
-        const valueLength = value === null || value === undefined
-          ? 1
-          : String(value).length;
+        const valueLength = value === null || value === undefined ? 1 : String(value).length;
         maxLength = Math.max(maxLength, valueLength);
       }
 
@@ -112,11 +110,7 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Table Container with Virtual Scrolling */}
-      <div
-        ref={tableContainerRef}
-        className="flex-1 overflow-auto"
-        style={{ contain: 'strict' }}
-      >
+      <div ref={tableContainerRef} className="flex-1 overflow-auto" style={{ contain: 'strict' }}>
         <div className="text-sm" style={{ minWidth: 'max-content' }}>
           {/* Header */}
           <div className="sticky top-0 z-10 bg-surface">
@@ -134,32 +128,29 @@ export function DataTable<TData, TValue>({
                       }`}
                       style={{ width: `${width}px`, minWidth: `${width}px` }}
                     >
-                    {header.isPlaceholder ? null : (
-                      <div
-                        className={
-                          header.column.getCanSort()
-                            ? 'flex items-center gap-1 cursor-pointer select-none hover:text-text transition-colors'
-                            : ''
-                        }
-                        onClick={header.column.getToggleSortingHandler()}
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {header.column.getCanSort() && (
-                          <span className="flex-shrink-0">
-                            {header.column.getIsSorted() === 'asc' ? (
-                              <ChevronUp size={12} className="text-accent" />
-                            ) : header.column.getIsSorted() === 'desc' ? (
-                              <ChevronDown size={12} className="text-accent" />
-                            ) : (
-                              <ChevronsUpDown size={12} className="opacity-30" />
-                            )}
-                          </span>
-                        )}
-                      </div>
-                    )}
+                      {header.isPlaceholder ? null : (
+                        <div
+                          className={
+                            header.column.getCanSort()
+                              ? 'flex items-center gap-1 cursor-pointer select-none hover:text-text transition-colors'
+                              : ''
+                          }
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {header.column.getCanSort() && (
+                            <span className="flex-shrink-0">
+                              {header.column.getIsSorted() === 'asc' ? (
+                                <ChevronUp size={12} className="text-accent" />
+                              ) : header.column.getIsSorted() === 'desc' ? (
+                                <ChevronDown size={12} className="text-accent" />
+                              ) : (
+                                <ChevronsUpDown size={12} className="opacity-30" />
+                              )}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -169,9 +160,7 @@ export function DataTable<TData, TValue>({
 
           {/* Virtual Rows */}
           {rows.length === 0 ? (
-            <div className="px-4 py-8 text-center text-subtle">
-              No results found.
-            </div>
+            <div className="px-4 py-8 text-center text-subtle">No results found.</div>
           ) : (
             <div
               style={{
@@ -192,7 +181,9 @@ export function DataTable<TData, TValue>({
                     className={`flex hover:bg-surface-raised absolute transition-colors ${
                       isCursor
                         ? 'bg-accent/10 ring-1 ring-accent/30'
-                        : isEven ? 'bg-surface' : 'bg-surface-sunken'
+                        : isEven
+                          ? 'bg-surface'
+                          : 'bg-surface-sunken'
                     }`}
                     style={{
                       height: `${virtualRow.size}px`,
@@ -201,7 +192,9 @@ export function DataTable<TData, TValue>({
                     }}
                   >
                     {row.getVisibleCells().map((cell) => {
-                      const accessorKey = String(cell.column.columnDef.accessorKey || cell.column.id);
+                      const accessorKey = String(
+                        cell.column.columnDef.accessorKey || cell.column.id
+                      );
                       const width = columnWidths[accessorKey] || 150;
 
                       return (
@@ -212,10 +205,7 @@ export function DataTable<TData, TValue>({
                           }`}
                           style={{ width: `${width}px`, minWidth: `${width}px` }}
                         >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </div>
                       );
                     })}
@@ -236,9 +226,7 @@ export function DataTable<TData, TValue>({
           {globalFilter && (
             <>
               <span>•</span>
-              <span>
-                Filtered from {data.length} total
-              </span>
+              <span>Filtered from {data.length} total</span>
             </>
           )}
         </div>

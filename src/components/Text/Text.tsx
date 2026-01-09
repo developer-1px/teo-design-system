@@ -9,9 +9,9 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils.ts';
 import { useLayoutContext } from '@/components/context/IDDLContext';
-import type { TextProps, TextRole, Prominence, Intent } from '@/components/utils/types';
+import type { Intent, Prominence, TextProps, TextRole } from '@/components/utils/types';
+import { cn } from '@/lib/utils.ts';
 
 /**
  * Role에 따른 HTML 태그 매핑
@@ -28,7 +28,7 @@ const getRoleElement = (role: TextRole, prominence?: string): keyof JSX.Intrinsi
       return 'p';
     case 'Label':
       return 'span';
-    case 'Caption':  // v1.0.1
+    case 'Caption': // v1.0.1
       return 'small';
     case 'Code':
       return 'code';
@@ -55,10 +55,10 @@ const textVariants = cva('', {
     },
     // Prominence (size/hierarchy) - per minimal-renderer-guide.md Section 1.3
     prominence: {
-      Hero: 'text-3xl font-semibold',        // text-3xl + font-semibold (30px) - 문서 제목
-      Primary: 'text-sm font-medium',        // text-sm + font-medium (14px) - Notion 스타일 헤더
-      Secondary: 'text-sm font-normal',      // text-sm + font-normal (14px)
-      Tertiary: 'text-xs opacity-60',        // text-xs + opacity 0.6 (12px)
+      Hero: 'text-3xl font-semibold', // text-3xl + font-semibold (30px) - 문서 제목
+      Primary: 'text-sm font-medium', // text-sm + font-medium (14px) - Notion 스타일 헤더
+      Secondary: 'text-sm font-normal', // text-sm + font-normal (14px)
+      Tertiary: 'text-xs opacity-60', // text-xs + opacity 0.6 (12px)
     },
     // Intent (semantic color)
     intent: {
@@ -114,21 +114,13 @@ const textVariants = cva('', {
   },
 });
 
-export function Text({
-  role,
-  content,
-  prominence,
-  intent,
-  align,
-  className,
-  hidden,
-}: TextProps) {
+export function Text({ role, content, prominence, intent, align, className, hidden }: TextProps) {
   const ctx = useLayoutContext();
 
   // 부모 컨텍스트에서 상속
   const computedProminence = prominence ?? ctx.prominence ?? 'Primary';
   const computedIntent = intent ?? ctx.intent ?? 'Neutral';
-  const computedDensity = ctx.density ?? 'Standard';  // v1.1.1
+  const computedDensity = ctx.density ?? 'Standard'; // v1.1.1
 
   if (hidden) return null;
 
@@ -142,7 +134,7 @@ export function Text({
         prominence: computedProminence as Prominence,
         intent: computedIntent as Intent,
         align,
-        density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',  // v1.1.1
+        density: computedDensity as 'Compact' | 'Standard' | 'Comfortable', // v1.1.1
         className,
       })}
       data-dsl-component="text"

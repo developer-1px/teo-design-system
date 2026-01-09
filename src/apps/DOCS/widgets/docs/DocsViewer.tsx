@@ -8,15 +8,15 @@
  * - 반응형 레이아웃
  */
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Action } from '@/components/Action/Action';
+import { Group } from '@/components/Group/Group';
 import { Page } from '@/components/Page/Page';
 import { Section } from '@/components/Section/Section';
-import { Group } from '@/components/Group/Group';
 import { Text } from '@/components/Text/Text';
-import { Action } from '@/components/Action/Action';
+import { getAllDocs } from '@/lib/docs-scanner.ts';
 import { DocsTree } from './DocsTree.tsx';
 import { MarkdownRenderer } from './MarkdownRenderer.tsx';
-import { getAllDocs } from '@/lib/docs-scanner.ts';
 
 export const DocsViewer = () => {
   const [selectedPath, setSelectedPath] = useState<string>('');
@@ -60,19 +60,13 @@ export const DocsViewer = () => {
 
   // 검색 필터링 (간단한 구현)
   const filteredDocs = searchQuery
-    ? getAllDocs().filter((doc) =>
-        doc.title.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    ? getAllDocs().filter((doc) => doc.title.toLowerCase().includes(searchQuery.toLowerCase()))
     : [];
 
   return (
     <Page layout="full">
       {/* 상단 고정 헤더 */}
-      <Section
-        role="Header"
-        prominence="Primary"
-        density="Compact"
-      >
+      <Section role="Header" prominence="Primary" density="Compact">
         <Group role="Toolbar" layout="inline">
           <Text role="Title" content="문서" prominence="Primary" />
         </Group>
@@ -109,7 +103,11 @@ export const DocsViewer = () => {
                     label={doc.title}
                     prominence="Tertiary"
                     intent="Neutral"
-                    behavior={{ action: 'command', command: 'docs.select', args: { path: doc.path } }}
+                    behavior={{
+                      action: 'command',
+                      command: 'docs.select',
+                      args: { path: doc.path },
+                    }}
                     onClick={(e) => {
                       e.preventDefault();
                       handleFileClick(doc.path);
@@ -117,11 +115,7 @@ export const DocsViewer = () => {
                   />
                 ))}
                 {filteredDocs.length === 0 && (
-                  <Text
-                    role="Body"
-                    content="검색 결과가 없습니다"
-                    prominence="Tertiary"
-                  />
+                  <Text role="Body" content="검색 결과가 없습니다" prominence="Tertiary" />
                 )}
               </Group>
             ) : (
@@ -139,9 +133,7 @@ export const DocsViewer = () => {
               <Group role="Container">
                 <Text
                   role="Title"
-                  content={
-                    getAllDocs().find((d) => d.path === selectedPath)?.title || '문서'
-                  }
+                  content={getAllDocs().find((d) => d.path === selectedPath)?.title || '문서'}
                   prominence="Hero"
                 />
               </Group>
@@ -149,11 +141,7 @@ export const DocsViewer = () => {
               {/* 문서 내용 */}
               <Group role="Container">
                 {isLoading ? (
-                  <Text
-                    role="Body"
-                    content="로딩 중..."
-                    prominence="Secondary"
-                  />
+                  <Text role="Body" content="로딩 중..." prominence="Secondary" />
                 ) : (
                   <MarkdownRenderer content={docContent} />
                 )}
@@ -161,11 +149,7 @@ export const DocsViewer = () => {
             </>
           ) : (
             <Group role="Container">
-              <Text
-                role="Title"
-                content="문서를 선택하세요"
-                prominence="Primary"
-              />
+              <Text role="Title" content="문서를 선택하세요" prominence="Primary" />
               <Text
                 role="Body"
                 content="왼쪽 사이드바에서 문서를 선택하면 내용이 표시됩니다"

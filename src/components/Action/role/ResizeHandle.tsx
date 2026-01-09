@@ -1,6 +1,6 @@
-import { HTMLAttributes, forwardRef } from 'react';
+import { GripHorizontal, GripVertical } from 'lucide-react';
+import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils.ts';
-import { GripVertical, GripHorizontal } from 'lucide-react';
 
 /**
  * ResizeHandle - 크기 조절 핸들
@@ -49,8 +49,12 @@ export const ResizeHandle = forwardRef<HTMLDivElement, ResizeHandleProps>(
         tabIndex={0}
         onKeyDown={(e) => {
           // Keyboard accessibility
-          if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' ||
-              e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+          if (
+            e.key === 'ArrowLeft' ||
+            e.key === 'ArrowRight' ||
+            e.key === 'ArrowUp' ||
+            e.key === 'ArrowDown'
+          ) {
             e.preventDefault();
             // TODO: Implement keyboard resize
           }

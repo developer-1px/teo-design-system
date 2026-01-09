@@ -8,9 +8,9 @@
  * @see spec/iddl-spec-1.0.1.md
  */
 
-import { Text } from '@/components/Text/Text';
-import { Group } from '@/components/Group/Group.tsx';
 import type { ReactNode } from 'react';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
 
 /**
  * 마크다운 라인 타입
@@ -133,36 +133,21 @@ export function markdownToDSL(markdown: string): ReactNode {
       case 'heading1':
         flushList();
         elements.push(
-          <Text
-            key={`h1-${key++}`}
-            role="Title"
-            prominence="Hero"
-            content={parsed.content}
-          />
+          <Text key={`h1-${key++}`} role="Title" prominence="Hero" content={parsed.content} />
         );
         break;
 
       case 'heading2':
         flushList();
         elements.push(
-          <Text
-            key={`h2-${key++}`}
-            role="Title"
-            prominence="Primary"
-            content={parsed.content}
-          />
+          <Text key={`h2-${key++}`} role="Title" prominence="Primary" content={parsed.content} />
         );
         break;
 
       case 'heading3':
         flushList();
         elements.push(
-          <Text
-            key={`h3-${key++}`}
-            role="Title"
-            prominence="Secondary"
-            content={parsed.content}
-          />
+          <Text key={`h3-${key++}`} role="Title" prominence="Secondary" content={parsed.content} />
         );
         break;
 
@@ -176,28 +161,17 @@ export function markdownToDSL(markdown: string): ReactNode {
             intent="Brand"
             className="border-l-4 border-accent bg-accent/5 pl-4 py-3 my-2"
           >
-            <Text
-              role="Body"
-              prominence="Primary"
-              content={parsed.content}
-              className="italic"
-            />
+            <Text role="Body" prominence="Primary" content={parsed.content} className="italic" />
           </Group>
         );
         break;
 
       case 'list':
         // 리스트 아이템 누적
-        listItems.push(
-          <Text
-            role="Body"
-            prominence="Secondary"
-            content={parsed.content}
-          />
-        );
+        listItems.push(<Text role="Body" prominence="Secondary" content={parsed.content} />);
         break;
 
-      case 'paragraph':
+      case 'paragraph': {
         flushList();
         const content = parseInlineMarkdown(parsed.content);
         elements.push(
@@ -210,6 +184,7 @@ export function markdownToDSL(markdown: string): ReactNode {
           />
         );
         break;
+      }
     }
   });
 

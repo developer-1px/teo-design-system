@@ -7,23 +7,23 @@
  * @see https://www.jetbrains.com/help/idea/new-ui.html
  */
 
-import { Section } from '@/components/Section/Section.tsx';
-import { IconButton } from '@/components/Action/role/IconButton';
-import { Button } from '@/components/Action/role/Button';
-import { ThemeToggleButton } from '@/components/widgets/ThemeSwitcher';
 import {
-  Menu as MenuIcon,
   ChevronDown as ChevronDownIcon,
+  Download as DownloadIcon,
+  FolderOpen as FolderOpenIcon,
   GitBranch as GitBranchIcon,
-  Play as PlayIcon,
-  Settings as SettingsIcon,
+  Menu as MenuIcon,
   PanelBottom as PanelBottomIcon,
   PanelRightOpen as PanelRightOpenIcon,
-  FolderOpen as FolderOpenIcon,
+  Play as PlayIcon,
+  Settings as SettingsIcon,
   Upload as UploadIcon,
-  Download as DownloadIcon,
 } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from '@/components/Action/role/Button';
+import { IconButton } from '@/components/Action/role/IconButton';
+import { Section } from '@/components/Section/Section.tsx';
+import { ThemeToggleButton } from '@/components/widgets/ThemeSwitcher';
 
 interface TopToolbarProps {
   projectName?: string;
@@ -53,7 +53,6 @@ export const TopToolbar = ({
       <div className="relative">
         <IconButton
           size="sm"
-         
           onClick={() => setShowMainMenu(!showMainMenu)}
           onBlur={() => setTimeout(() => setShowMainMenu(false), 200)}
           title="Main Menu (Alt+\)"
@@ -65,7 +64,6 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-           
             className="absolute top-full left-0 mt-1 w-56 py-1 z-50"
           >
             <MainMenuContent />
@@ -91,7 +89,6 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-           
             className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
           >
             <ProjectMenuContent />
@@ -120,7 +117,6 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-           
             className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
           >
             <VcsMenuContent />
@@ -146,7 +142,6 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-           
             className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
           >
             <RunMenuContent />
@@ -163,7 +158,6 @@ export const TopToolbar = ({
         {onToggleRightSidebar && (
           <IconButton
             size="sm"
-           
             active={showRightSidebar}
             onClick={onToggleRightSidebar}
             title="Toggle Right Sidebar"
@@ -179,12 +173,7 @@ export const TopToolbar = ({
         <ThemeToggleButton />
 
         {/* Settings */}
-        <IconButton
-          size="sm"
-         
-          title="Settings (⌘,)"
-          onClick={onOpenSettings}
-        >
+        <IconButton size="sm" title="Settings (⌘,)" onClick={onOpenSettings}>
           <SettingsIcon size={16} />
         </IconButton>
       </div>
@@ -210,9 +199,7 @@ const MainMenuContent = () => {
     <div className="py-1">
       {menuItems.map((menu) => (
         <div key={menu.label} className="px-2 py-1">
-          <div className="text-xs font-semibold text-subtle px-2 py-1">
-            {menu.label}
-          </div>
+          <div className="text-xs font-semibold text-subtle px-2 py-1">{menu.label}</div>
           {menu.items.map((item) => (
             <button
               key={item}
@@ -228,12 +215,7 @@ const MainMenuContent = () => {
 };
 
 const ProjectMenuContent = () => {
-  const recentProjects = [
-    'ide-ui-kit',
-    'design-system',
-    'react-dashboard',
-    'portfolio-2024',
-  ];
+  const recentProjects = ['ide-ui-kit', 'design-system', 'react-dashboard', 'portfolio-2024'];
 
   return (
     <div className="py-1">
@@ -245,9 +227,7 @@ const ProjectMenuContent = () => {
       </button>
       <div className="h-px bg-border my-1" />
       <div className="px-2 py-1">
-        <div className="text-xs font-semibold text-subtle px-2 py-1">
-          Recent Projects
-        </div>
+        <div className="text-xs font-semibold text-subtle px-2 py-1">Recent Projects</div>
         {recentProjects.map((project) => (
           <button
             key={project}
@@ -315,9 +295,7 @@ const RunMenuContent = () => {
       </button>
       <div className="h-px bg-border my-1" />
       <div className="px-2 py-1">
-        <div className="text-xs font-semibold text-subtle px-2 py-1">
-          Configurations
-        </div>
+        <div className="text-xs font-semibold text-subtle px-2 py-1">Configurations</div>
         {configurations.map((config) => (
           <button
             key={config.name}

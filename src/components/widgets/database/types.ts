@@ -10,10 +10,10 @@ export type ViewType = 'table' | 'board' | 'gallery' | 'list' | 'calendar' | 'ti
 
 export interface PropertyConfig {
   key: string;
-  name?: string;          // 표시할 이름
+  name?: string; // 표시할 이름
   type?: 'text' | 'number' | 'boolean' | 'date' | 'select' | 'multiSelect' | 'url' | 'email';
-  visible?: boolean;      // 표시 여부
-  width?: number;         // 컬럼 너비 (table용)
+  visible?: boolean; // 표시 여부
+  width?: number; // 컬럼 너비 (table용)
 }
 
 export interface FilterConfig {
@@ -28,7 +28,7 @@ export interface SortConfig {
 }
 
 export interface GroupConfig {
-  by: string;             // 그룹핑할 키
+  by: string; // 그룹핑할 키
   direction?: 'asc' | 'desc';
 }
 
@@ -42,12 +42,12 @@ export interface ViewConfig {
   sort?: SortConfig[];
   group?: GroupConfig;
   // View별 설정
-  cardSize?: 'sm' | 'md' | 'lg';           // Gallery용
-  showImage?: boolean;                      // Gallery용
-  imageKey?: string;                        // Gallery용
-  dateKey?: string;                         // Calendar용
-  startDateKey?: string;                    // Timeline용
-  endDateKey?: string;                      // Timeline용
+  cardSize?: 'sm' | 'md' | 'lg'; // Gallery용
+  showImage?: boolean; // Gallery용
+  imageKey?: string; // Gallery용
+  dateKey?: string; // Calendar용
+  startDateKey?: string; // Timeline용
+  endDateKey?: string; // Timeline용
 }
 
 export interface DatabaseConfig {

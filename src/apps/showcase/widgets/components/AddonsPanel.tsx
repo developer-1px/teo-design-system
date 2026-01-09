@@ -8,12 +8,16 @@
  */
 
 import { useState } from 'react';
+import type {
+  ComponentMetadata,
+  FileTreeNode,
+  PropValue,
+} from '@/apps/showcase/widgets/parser/types';
 import { Group } from '@/components/Group/Group.tsx';
 import { Text } from '@/components/Text/Text';
-import type { ComponentMetadata, PropValue, FileTreeNode } from '@/apps/showcase/widgets/parser/types';
-import { PropsPanel } from './PropsPanel';
-import { MarkdownDocs } from './MarkdownDocs';
 import { CodeViewer } from './CodeViewer';
+import { MarkdownDocs } from './MarkdownDocs';
+import { PropsPanel } from './PropsPanel';
 
 type AddonTab = 'controls' | 'docs' | 'code';
 
@@ -93,9 +97,7 @@ export function AddonsPanel({ node, propValues, onPropChange }: AddonsPanelProps
           </div>
         )}
 
-        {activeTab === 'code' && node && (
-          <CodeViewer node={node} />
-        )}
+        {activeTab === 'code' && node && <CodeViewer node={node} />}
       </div>
     </div>
   );

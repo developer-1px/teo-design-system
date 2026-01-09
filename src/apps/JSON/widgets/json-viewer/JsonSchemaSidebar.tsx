@@ -1,9 +1,9 @@
+import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { Button } from '@/components/Action/role/Button';
 import { Section } from '@/components/Section/Section.tsx';
 import { Content, ContentGroup } from '@/components/Text/role/Content';
-import { Button } from '@/components/Action/role/Button';
-import { generateTypeScriptInterface, analyzeJsonSchema } from '@/utils/json-schema.ts';
-import { Code, Info, ChevronRight, ChevronDown } from 'lucide-react';
+import { analyzeJsonSchema, generateTypeScriptInterface } from '@/utils/json-schema.ts';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };
@@ -51,9 +51,9 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
 
   if (!schema.typescript) {
     return (
-      <Section role="Container"
+      <Section
+        role="Container"
         prominence="Secondary"
-       
         className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden"
       >
         <div className="px-4 py-3">
@@ -66,9 +66,7 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
         </div>
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <Content prominence="tertiary">
-            <p className="text-center">
-              No data to analyze
-            </p>
+            <p className="text-center">No data to analyze</p>
           </Content>
         </div>
       </Section>
@@ -76,9 +74,9 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
   }
 
   return (
-    <Section role="Container"
+    <Section
+      role="Container"
       prominence="Secondary"
-     
       className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden"
     >
       {/* Header */}

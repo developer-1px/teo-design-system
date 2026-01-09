@@ -2,10 +2,10 @@
  * ComponentRenderer - 동적으로 컴포넌트 import 및 렌더링
  */
 
-import { createElement, useMemo, useState, useEffect } from 'react';
+import { createElement, useEffect, useMemo, useState } from 'react';
+import type { ComponentMetadata, MockData, PropValue } from '@/apps/showcase/widgets/parser/types';
 import { Group } from '@/components/Group/Group.tsx';
 import { Text } from '@/components/Text/Text';
-import type { ComponentMetadata, PropValue, MockData } from '@/apps/showcase/widgets/parser/types';
 
 interface ComponentRendererProps {
   metadata: ComponentMetadata;
@@ -70,7 +70,9 @@ export function ComponentRenderer({
       return;
     }
 
-    console.log(`[ComponentRenderer] 🔄 Loading module for ${metadata.name} (${metadata.filePath})`);
+    console.log(
+      `[ComponentRenderer] 🔄 Loading module for ${metadata.name} (${metadata.filePath})`
+    );
 
     // Vite glob loader를 사용하여 컴포넌트 로드
     componentModule()

@@ -2,20 +2,33 @@
  * PropertyPanel - DSL 노드 속성 편집 패널
  */
 
+import { Check, Copy } from 'lucide-react';
 import { useState } from 'react';
 import { FormField } from '@/components/Field/role/FormField';
 import { Input } from '@/components/Field/role/Input';
 import { Select } from '@/components/Field/role/Select';
-import { Copy, Check } from 'lucide-react';
-import type { AnyDSLNode, SectionNode, GroupNode } from '@/lib/dsl-builder/types.ts';
-import type { Prominence, GroupRole } from '@/components/utils/types';
+import type { GroupRole, Prominence } from '@/components/utils/types';
+import type { AnyDSLNode, GroupNode, SectionNode } from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
 
 export interface PropertyPanelProps {
   node: AnyDSLNode | null;
   onUpdate: (updates: Partial<AnyDSLNode>) => void;
 }
 
-const groupRoles: GroupRole[] = ['Container', 'Form', 'Fieldset', 'Toolbar', 'List', 'Grid', 'Table', 'Tabs', 'Steps', 'Split', 'Card', 'Inline'];
+const groupRoles: GroupRole[] = [
+  'Container',
+  'Form',
+  'Fieldset',
+  'Toolbar',
+  'List',
+  'Grid',
+  'Table',
+  'Tabs',
+  'Steps',
+  'Split',
+  'Card',
+  'Inline',
+];
 const prominences: Prominence[] = ['Hero', 'Primary', 'Secondary', 'Tertiary'];
 
 export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
@@ -61,9 +74,7 @@ export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
         <FormField label="Prominence">
           <Select
             value={(node as SectionNode).prominence || 'Primary'}
-            onChange={(e) =>
-              onUpdate({ prominence: e.target.value as Prominence })
-            }
+            onChange={(e) => onUpdate({ prominence: e.target.value as Prominence })}
           >
             {prominences.map((p) => (
               <option key={p} value={p}>
