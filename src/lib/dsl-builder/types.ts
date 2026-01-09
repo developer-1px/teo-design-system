@@ -22,7 +22,7 @@ import type {
   Placement,
   PageLayout,
   Breadcrumb,
-} from '@/components/dsl/types';
+} from '@/components/utils/types';
 
 // Region is deprecated but still used in builder for backward compatibility
 type RegionRole = 'main' | 'aside' | 'header' | 'footer' | 'nav';

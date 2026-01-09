@@ -11,10 +11,10 @@
  *   - Group[Toolbar]: 우측 여백
  */
 
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/dsl/Text';
-import { Section } from '@/components/dsl/Section';
-import { Action } from '@/components/dsl/Action';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
+import { Section } from '@/components/Section/Section.tsx';
+import { Action } from '@/components/Action/Action';
 
 interface PresentationToolbarProps {
   title?: string;

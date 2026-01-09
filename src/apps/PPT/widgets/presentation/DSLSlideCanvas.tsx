@@ -5,8 +5,8 @@
  * 마크다운 콘텐츠를 DSL 컴포넌트로 변환하여 일관성 있는 디자인을 제공합니다.
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Text } from '@/components/dsl/Text';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Text/Text';
 import { slideContentToDSL } from '@/utils/markdown-to-dsl';
 import type { Slide } from './SlideList';
 

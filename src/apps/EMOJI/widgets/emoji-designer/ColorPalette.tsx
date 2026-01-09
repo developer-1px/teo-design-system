@@ -3,8 +3,10 @@
  */
 
 import { useState } from 'react';
-import { Group, Text } from '@/components/dsl';
-import { Button, Input } from '@/components/ui';
+import { Group } from '@/components/Group/Group';
+import { Text } from '@/components/Text/Text';
+import { Button } from '@/components/Action/role/Button';
+import { Input } from '@/components/Field/role/Input';
 import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
 import type { PixelColor } from '@/lib/emoji-designer/types.ts';

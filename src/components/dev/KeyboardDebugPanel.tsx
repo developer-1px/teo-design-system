@@ -11,8 +11,8 @@ import { useState, useMemo } from 'react';
 import { Search, X, AlertTriangle, Keyboard } from 'lucide-react';
 import { useKeyboardContext } from '@/lib/keyboard';
 import { PRIORITY } from '@/lib/keyboard/types';
-import { Section } from '@/components/dsl/Section';
-import { IconButton } from '@/components/ui';
+import { Section } from '@/components/Section/Section.tsx';
+import { IconButton } from '@/components/Action/role/IconButton';
 import { useGlobalShortcut } from '@/lib/keyboard';
 
 export const KeyboardDebugPanel = () => {

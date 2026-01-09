@@ -6,8 +6,15 @@
  */
 
 import { useState } from 'react';
-import { Page, Section, Group, Text } from '@/components/dsl';
-import { Button, Input, Select, Switch, Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Group } from '@/components/Group/Group';
+import { Text } from '@/components/Text/Text';
+import { Button } from '@/components/Action/role/Button';
+import { Input } from '@/components/Field/role/Input';
+import { Select } from '@/components/Field/role/Select';
+import { Switch } from '@/components/Field/role/Switch';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Group/role/Tabs';
 import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
 import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
 import {

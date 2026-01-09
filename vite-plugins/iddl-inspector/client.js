@@ -9,6 +9,16 @@
     if (typeof type === "function") {
       return type.displayName || type.name || "Anonymous";
     }
+    if (typeof type === "object" && type !== null) {
+      if (type.$$typeof) {
+        const symbolString = String(type.$$typeof);
+        if (symbolString.includes("context")) {
+          const contextName = type._context?.displayName;
+          if (contextName) return contextName;
+          return "Provider";
+        }
+      }
+    }
     if (typeof type === "symbol") {
       const symbolString = type.toString();
       if (symbolString.includes("Fragment")) return "Fragment";
@@ -68,7 +78,9 @@
     const name = getComponentName(fiber);
     if (name === "Fragment") return false;
     if (name.startsWith("React.")) return false;
-    if (name === "Provider" || name === "Consumer") return false;
+    if (name === "Provider" || name === "Consumer") {
+      return false;
+    }
     if (name === "Unknown" || name === "Anonymous") return false;
     return true;
   }
@@ -139,10 +151,24 @@
         }
       }
       if (!fiber) {
-        return "// Error: Could not find React Fiber root node";
+        return "// Error: Could not find React Fiber root node\n// fiberRoot keys: " + Object.keys(fiberRoot || {}).join(", ");
       }
-      const jsx = fiberToJSX(fiber);
-      return jsx || "// Error: Empty tree";
+      if (fiber.child && !shouldRenderFiber(fiber)) {
+        fiber = fiber.child;
+      }
+      const jsx = fiberToJSX(fiber, 0);
+      if (!jsx || jsx.trim() === "") {
+        let debugInfo = "// Error: Empty tree\n";
+        debugInfo += "// Root fiber type: " + typeof fiber?.type + "\n";
+        debugInfo += "// Root component name: " + getComponentName(fiber) + "\n";
+        debugInfo += "// Has child: " + !!fiber?.child + "\n";
+        if (fiber?.child) {
+          debugInfo += "// Child type: " + typeof fiber.child.type + "\n";
+          debugInfo += "// Child name: " + getComponentName(fiber.child) + "\n";
+        }
+        return debugInfo;
+      }
+      return jsx;
     } catch (error) {
       return `// Error: ${error.message}
 // Stack: ${error.stack}`;

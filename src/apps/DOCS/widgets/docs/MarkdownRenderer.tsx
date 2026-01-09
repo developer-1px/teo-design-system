@@ -9,7 +9,7 @@ import remarkFrontmatter from 'remark-frontmatter';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
 import { cn } from '@/lib/utils.ts';
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 import { ComponentsShowcase } from '@/apps/DOCS/widgets/docs/interactive/ComponentsShowcase';
 import { AtomsShowcase } from '@/apps/DOCS/widgets/docs/interactive/AtomsShowcase';
 

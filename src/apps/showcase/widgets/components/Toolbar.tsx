@@ -9,8 +9,8 @@
  * - 반응형 뷰포트
  */
 
-import { Group } from '@/components/dsl/Group';
-import { Action } from '@/components/dsl/Action';
+import { Group } from '@/components/Group/Group.tsx';
+import { Action } from '@/components/Action/Action';
 import {
   ZoomIn,
   ZoomOut,

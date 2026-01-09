@@ -7,8 +7,8 @@
  * - 인터랙션 요소 제거 (클릭, 줌, 키보드 힌트 등)
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Text } from '@/components/dsl/Text';
+import { Section } from '@/components/Section/Section.tsx';
+import { Text } from '@/components/Text/Text';
 import { slideContentToDSL } from '@/utils/markdown-to-dsl';
 import type { Slide } from './SlideList';
 

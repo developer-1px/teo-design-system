@@ -2,13 +2,13 @@
  * PropsPanel - Props 인터랙티브 조작 패널 (IDDL)
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Field } from '@/components/atoms/Field';
-import { Text } from '@/components/atoms/Text';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Field } from '@/components/Field/Field';
+import { Text } from '@/components/Text/Text';
 import type { ComponentMetadata, PropValue, MockData } from '@/apps/showcase/widgets/parser/types';
 import type { PropType } from '@/apps/showcase/widgets/parser/types';
-import type { DataType } from '@/components/atoms/Field';
+import type { DataType } from '@/components/Field/Field';
 
 interface PropsPanelProps {
   metadata: ComponentMetadata;

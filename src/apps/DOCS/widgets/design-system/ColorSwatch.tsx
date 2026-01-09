@@ -2,7 +2,7 @@
  * ColorSwatch - 디자인 토큰 색상을 시각화하는 컴포넌트
  */
 
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { Copy, Check } from 'lucide-react';

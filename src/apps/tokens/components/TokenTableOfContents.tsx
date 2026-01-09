@@ -5,10 +5,10 @@
  * Figma Tokens, Material Design 스타일의 목차 네비게이션
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Action } from '@/components/dsl/Action';
-import { Text } from '@/components/atoms/Text';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Action } from '@/components/Action/Action';
+import { Text } from '@/components/Text/Text';
 import type { TokenCategory } from '@/apps/tokens/parser/types';
 
 export function TokenTableOfContents({ categories }: { categories: TokenCategory[] }) {

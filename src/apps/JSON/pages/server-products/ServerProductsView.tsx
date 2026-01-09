@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { type ColumnDef } from '@tanstack/react-table';
-import { Section } from '@/components/dsl/Section';
-import { Content } from '@/components/ui/Content';
-import { DataTable } from '@/components/ui/DataTable';
-import { IconButton } from '@/components/ui';
+import { Section } from '@/components/Section/Section.tsx';
+import { Content } from '@/components/Text/role/Content';
+import { DataTable } from '@/components/Group/role/DataTable.tsx';
+import { IconButton } from '@/components/Action/role/IconButton';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
 import testData from '@/test.json';
 import { Maximize2, Minimize2, PanelLeftClose, PanelLeft } from 'lucide-react';

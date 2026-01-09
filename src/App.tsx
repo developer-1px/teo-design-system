@@ -12,7 +12,7 @@
 
 import { Router, Route, Redirect } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
-import { FloatingBar } from '@/components/ui/FloatingBar';
+import { FloatingBar } from '@/components/widgets/FloatingBar';
 import { AppIDE } from '@/apps/IDE/AppIDE';
 import { AppPPT } from '@/apps/PPT/AppPPT';
 import { AppJSON } from '@/apps/JSON/AppJSON';
@@ -21,7 +21,7 @@ import { AppDOCS } from '@/apps/DOCS/AppDOCS';
 import { AppDSLBuilder } from '@/apps/DSLBuilder/AppDSLBuilder';
 import { AppShowcase } from '@/apps/showcase/AppShowcase';
 import { AppTokens } from '@/apps/tokens/AppTokens';
-import { CommandPalette } from '@/components/modal/CommandPalette';
+import { CommandPalette } from '@/components/Overlay/CommandPalette';
 import { KeyboardDebugPanel } from '@/components/dev/KeyboardDebugPanel';
 import { AppProvider } from '@/lib/app-context';
 

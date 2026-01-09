@@ -3,10 +3,12 @@
  */
 
 import { useState } from 'react';
-import { FormField, Input, Select } from '@/components/ui';
+import { FormField } from '@/components/Field/role/FormField';
+import { Input } from '@/components/Field/role/Input';
+import { Select } from '@/components/Field/role/Select';
 import { Copy, Check } from 'lucide-react';
 import type { AnyDSLNode, SectionNode, GroupNode } from '@/lib/dsl-builder/types.ts';
-import type { Prominence, GroupRole } from '@/components/dsl/types.ts';
+import type { Prominence, GroupRole } from '@/components/utils/types';
 
 export interface PropertyPanelProps {
   node: AnyDSLNode | null;

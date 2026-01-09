@@ -9,7 +9,7 @@
  * - 측정 도구
  */
 
-import { Group } from '@/components/dsl/Group';
+import { Group } from '@/components/Group/Group.tsx';
 import type { BackgroundType, ViewportSize } from './Toolbar';
 import type { ComponentMetadata, PropValue, FileTreeNode } from '@/apps/showcase/widgets/parser/types';
 import { ComponentRenderer } from './ComponentRenderer';

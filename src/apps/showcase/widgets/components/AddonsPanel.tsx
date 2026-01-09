@@ -8,8 +8,8 @@
  */
 
 import { useState } from 'react';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
 import type { ComponentMetadata, PropValue, FileTreeNode } from '@/apps/showcase/widgets/parser/types';
 import { PropsPanel } from './PropsPanel';
 import { MarkdownDocs } from './MarkdownDocs';

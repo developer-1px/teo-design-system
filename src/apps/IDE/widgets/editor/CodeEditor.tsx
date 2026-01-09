@@ -1,4 +1,4 @@
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { json } from '@codemirror/lang-json';

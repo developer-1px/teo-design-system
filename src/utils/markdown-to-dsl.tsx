@@ -8,8 +8,8 @@
  * @see spec/iddl-spec-1.0.1.md
  */
 
-import { Text } from '@/components/dsl/Text';
-import { Group } from '@/components/dsl/Group';
+import { Text } from '@/components/Text/Text';
+import { Group } from '@/components/Group/Group.tsx';
 import type { ReactNode } from 'react';
 
 /**

@@ -14,21 +14,21 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Page } from '@/components/dsl/Page';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/dsl/Text';
-import { Action } from '@/components/dsl/Action';
-import { RightBar } from '@/components/ui/RightBar';
-import { RightNav } from '@/components/workspace/RightNav';
-import { BottomPanel } from '@/components/ui/BottomPanel';
-import { WorkspaceNav } from '@/components/workspace/WorkspaceNav';
+import { Page } from '@/components/Page/Page.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
+import { Action } from '@/components/Action/Action';
+import { RightBar } from '@/components/Section/role/RightBar.tsx';
+import { RightNav } from '@/components/widgets/workspace/RightNav';
+import { BottomPanel } from '@/components/widgets/BottomPanel';
+import { WorkspaceNav } from '@/components/widgets/workspace/WorkspaceNav';
 import { FileTree, type FileNode } from '@/apps/IDE/widgets/file-tree/FileTree';
 import { EditorTabs } from '@/apps/IDE/widgets/editor/EditorTabs';
 import { CodeEditor } from '@/apps/IDE/widgets/editor/CodeEditor';
 import { ComponentPreview } from '@/apps/IDE/widgets/editor/ComponentPreview';
-import { SearchModalDSL as SearchModal } from '@/components/modal/SearchModalDSL';
-import { SettingsModalDSL as SettingsModal } from '@/components/modal/SettingsModalDSL';
+import { SearchModalDSL as SearchModal } from '@/components/Overlay/SearchModalDSL';
+import { SettingsModalDSL as SettingsModal } from '@/components/Overlay/SettingsModalDSL';
 import { getFilePaths, buildFileTree, loadFileContent } from '@/utils/file-loader';
 
 interface OpenFile {

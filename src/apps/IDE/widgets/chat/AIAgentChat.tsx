@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Section } from '@/components/dsl/Section';
-import { IconButton } from '@/components/ui';
+import { Section } from '@/components/Section/Section.tsx';
+import { IconButton } from '@/components/Action/role/IconButton';
 import { Send, Sparkles, Code, FileSearch } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
 

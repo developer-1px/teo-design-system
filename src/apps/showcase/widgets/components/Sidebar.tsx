@@ -8,11 +8,11 @@
  */
 
 import { useState } from 'react';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Action } from '@/components/atoms/Action';
-import { Text } from '@/components/atoms/Text';
-import { Field } from '@/components/atoms/Field';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Action } from '@/components/Action/Action';
+import { Text } from '@/components/Text/Text';
+import { Field } from '@/components/Field/Field';
 import type { FileTreeNode } from '@/apps/showcase/widgets/parser/types';
 
 interface SidebarProps {

@@ -10,7 +10,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 import { SlideList, type Slide } from './SlideList.tsx';
 import { DSLSlideCanvas } from './DSLSlideCanvas.tsx';
 import { PresentationToolbar } from './PresentationToolbar.tsx';

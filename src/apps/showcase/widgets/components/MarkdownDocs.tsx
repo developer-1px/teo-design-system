@@ -3,7 +3,7 @@
  */
 
 import ReactMarkdown from 'react-markdown';
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 
 interface MarkdownDocsProps {
   content: string;

@@ -13,10 +13,10 @@
  *   - Group[Info]: 안내 메시지
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/dsl/Text';
-import { Field } from '@/components/dsl/Field';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
+import { Field } from '@/components/Field/Field';
 
 interface FormatSidebarProps {
   isOpen: boolean;

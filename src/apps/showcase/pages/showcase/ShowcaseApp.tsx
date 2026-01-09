@@ -6,10 +6,10 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Page } from '@/components/dsl/Page';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
+import { Page } from '@/components/Page/Page.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
 import { Sidebar } from '@/apps/showcase/widgets/components/Sidebar';
 import { Toolbar, type BackgroundType, type ViewportSize } from '@/apps/showcase/widgets/components/Toolbar';
 import { Canvas } from '@/apps/showcase/widgets/components/Canvas';

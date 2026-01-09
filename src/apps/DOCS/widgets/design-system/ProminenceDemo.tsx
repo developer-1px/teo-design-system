@@ -4,8 +4,8 @@
  * 주목도 시스템이 어떻게 작동하는지 시각적으로 보여줍니다.
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Content, ContentGroup } from '@/components/ui/Content';
+import { Section } from '@/components/Section/Section.tsx';
+import { Content, ContentGroup } from '@/components/Text/role/Content';
 
 export const ProminenceDemo = () => {
   return (

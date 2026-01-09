@@ -2,7 +2,7 @@
  * TokenTable - 디자인 토큰을 테이블 형식으로 표시
  */
 
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 import { cn } from '@/lib/utils';
 import { Copy } from 'lucide-react';
 import { useState } from 'react';

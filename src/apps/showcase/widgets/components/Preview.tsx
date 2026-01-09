@@ -3,10 +3,10 @@
  */
 
 import { useState, Suspense, lazy, useMemo } from 'react';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Action } from '@/components/atoms/Action';
-import { Text } from '@/components/atoms/Text';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Action } from '@/components/Action/Action';
+import { Text } from '@/components/Text/Text';
 import type { ComponentMetadata, PropValue, MockData, FileTreeNode } from '@/apps/showcase/widgets/parser/types';
 import { MarkdownDocs } from '@/apps/showcase/widgets/components/MarkdownDocs';
 import { PropsPanel } from '@/apps/showcase/widgets/components/PropsPanel';

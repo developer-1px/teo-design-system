@@ -9,7 +9,11 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Page, Section, Group, Text, Action } from '@/components/dsl';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Group } from '@/components/Group/Group';
+import { Text } from '@/components/Text/Text';
+import { Action } from '@/components/Action/Action';
 import { DocsTree } from './DocsTree.tsx';
 import { MarkdownRenderer } from './MarkdownRenderer.tsx';
 import { getAllDocs } from '@/lib/docs-scanner.ts';

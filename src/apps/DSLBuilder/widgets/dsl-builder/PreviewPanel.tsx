@@ -3,7 +3,13 @@
  */
 
 import { useState } from 'react';
-import { Page, Section, Group, Text, Field, Action, Overlay } from '@/components/dsl';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Group } from '@/components/Group/Group';
+import { Text } from '@/components/Text/Text';
+import { Field } from '@/components/Field/Field';
+import { Action } from '@/components/Action/Action';
+import { Overlay } from '@/components/Overlay/Overlay';
 import type {
   AnyDSLNode,
   PageNode,

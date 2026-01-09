@@ -4,10 +4,10 @@
  * Tier별로 그룹화된 토큰 카테고리 목록을 표시합니다.
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Action } from '@/components/atoms/Action';
-import { Text } from '@/components/atoms/Text';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Action } from '@/components/Action/Action';
+import { Text } from '@/components/Text/Text';
 import type { TokenCategory } from '@/apps/tokens/parser/types';
 
 export function TokenSidebar({

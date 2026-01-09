@@ -1,4 +1,4 @@
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 import { ComponentType, useState, useEffect } from 'react';
 import { AlertCircle } from 'lucide-react';
 

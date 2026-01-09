@@ -8,7 +8,9 @@
  */
 
 import { useMemo, useState } from 'react';
-import { Section, Group, Text } from '@/components/dsl';
+import { Section } from '@/components/Section/Section';
+import { Group } from '@/components/Group/Group';
+import { Text } from '@/components/Text/Text';
 import { generateTypeScriptInterface, analyzeJsonSchema } from '@/utils/json-schema.ts';
 import { Code, Info, ChevronRight, ChevronDown } from 'lucide-react';
 

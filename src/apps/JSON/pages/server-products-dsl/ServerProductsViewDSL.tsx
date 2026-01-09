@@ -17,9 +17,14 @@
 
 import { useMemo, useState } from 'react';
 import { type ColumnDef } from '@tanstack/react-table';
-import { Page, Section, Group, Field, Action, Text } from '@/components/dsl';
-import { DataTable } from '@/components/ui/DataTable';
-import { Badge } from '@/components/ui';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Group } from '@/components/Group/Group';
+import { Field } from '@/components/Field/Field';
+import { Action } from '@/components/Action/Action';
+import { Text } from '@/components/Text/Text';
+import { DataTable } from '@/components/Group/role/DataTable.tsx';
+import { Badge } from '@/components/Text/role/Badge';
 import { JsonSchemaSidebarDSL } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL';
 import testData from '@/test.json';
 

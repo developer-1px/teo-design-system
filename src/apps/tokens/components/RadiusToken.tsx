@@ -5,8 +5,8 @@
  */
 
 import { useState } from 'react';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
 import type { Token } from '@/apps/tokens/parser/types';
 
 export function RadiusToken({ token }: { token: Token }) {

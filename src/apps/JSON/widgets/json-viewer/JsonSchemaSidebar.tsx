@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
-import { Section } from '@/components/dsl/Section';
-import { Content, ContentGroup } from '@/components/ui/Content';
-import { Button } from '@/components/ui';
+import { Section } from '@/components/Section/Section.tsx';
+import { Content, ContentGroup } from '@/components/Text/role/Content';
+import { Button } from '@/components/Action/role/Button';
 import { generateTypeScriptInterface, analyzeJsonSchema } from '@/utils/json-schema.ts';
 import { Code, Info, ChevronRight, ChevronDown } from 'lucide-react';
 

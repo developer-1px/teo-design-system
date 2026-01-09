@@ -5,8 +5,8 @@
  * 전체 스크롤 페이지에서 사용되는 섹션 컴포넌트
  */
 
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
 import { ColorToken } from './ColorToken';
 import { SpacingToken } from './SpacingToken';
 import { RadiusToken } from './RadiusToken';

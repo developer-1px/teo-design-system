@@ -7,7 +7,7 @@
  *   - Group[List]: 슬라이드 썸네일 리스트
  */
 
-import { Group } from '@/components/dsl/Group';
+import { Group } from '@/components/Group/Group.tsx';
 import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
 import { SlidePreview } from './SlidePreview';

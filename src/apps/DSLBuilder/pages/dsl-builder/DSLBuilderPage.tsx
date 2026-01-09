@@ -9,7 +9,9 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { TreeView } from '@/apps/DSLBuilder/widgets/dsl-builder/TreeView';
 import { PropertyPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PropertyPanel';
 import { PreviewPanel, type NodePath } from '@/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel';
-import { Button, Select, Kbd } from '@/components/ui';
+import { Button } from '@/components/Action/role/Button';
+import { Select } from '@/components/Field/role/Select';
+import { Kbd } from '@/components/Text/role/Kbd';
 import { Play, Code, Download, Upload, Check } from 'lucide-react';
 import type { AnyDSLNode, DSLNodeType, BuilderState } from '@/lib/dsl-builder/types';
 import {

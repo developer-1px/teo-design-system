@@ -3,8 +3,8 @@
  */
 
 import { createElement, useMemo, useState, useEffect } from 'react';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
 import type { ComponentMetadata, PropValue, MockData } from '@/apps/showcase/widgets/parser/types';
 
 interface ComponentRendererProps {

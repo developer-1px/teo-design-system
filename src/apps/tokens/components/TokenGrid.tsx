@@ -5,10 +5,10 @@
  * 디자인 시스템 서비스 스타일: 복사 기능, 코드 스니펫, 사용 예시
  */
 
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
-import { Action } from '@/components/dsl/Action';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
+import { Action } from '@/components/Action/Action';
 import { ColorToken } from './ColorToken';
 import { SpacingToken } from './SpacingToken';
 import { RadiusToken } from './RadiusToken';

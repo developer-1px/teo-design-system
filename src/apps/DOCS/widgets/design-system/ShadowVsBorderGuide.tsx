@@ -2,7 +2,7 @@
  * ShadowVsBorderGuide - Shadow와 Border를 언제 사용해야 하는지 보여주는 가이드
  */
 
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 import { Check, X } from 'lucide-react';
 
 interface ComparisonCardProps {

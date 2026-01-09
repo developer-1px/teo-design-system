@@ -1,4 +1,4 @@
-import { Section } from '@/components/dsl/Section';
+import { Section } from '@/components/Section/Section.tsx';
 import { renderMarkdownContent } from '@/utils/markdown-parser.tsx';
 import type { Slide } from './SlideList.tsx';
 

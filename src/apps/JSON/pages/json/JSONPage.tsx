@@ -5,11 +5,14 @@
  */
 
 import { useMemo, useState } from 'react';
-import { Page, Section, Group, Text } from '@/components/dsl';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui';
-import { DatabaseViewer } from '@/components/database';
+import { Page } from '@/components/Page/Page';
+import { Section } from '@/components/Section/Section';
+import { Group } from '@/components/Group/Group';
+import { Text } from '@/components/Text/Text';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Group/role/Tabs';
+import { DatabaseViewer } from '@/components/widgets/database/DatabaseViewer';
 import testData from '@/test.json';
-import type { JsonObject, JsonArray } from '@/components/database';
+import type { JsonObject, JsonArray } from '@/components/widgets/database/types';
 
 export const JSONPage = () => {
   // test.json에서 모든 배열 키 찾기

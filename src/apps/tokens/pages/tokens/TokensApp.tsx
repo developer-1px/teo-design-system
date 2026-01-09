@@ -7,11 +7,11 @@
  */
 
 import { useState, useEffect, useMemo } from 'react';
-import { Page } from '@/components/dsl/Page';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Text } from '@/components/atoms/Text';
-import { Field } from '@/components/dsl/Field';
+import { Page } from '@/components/Page/Page.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Text/Text';
+import { Field } from '@/components/Field/Field';
 import { parseCSSTokens } from '@/apps/tokens/parser/cssParser';
 import { TokenCategorySection } from '@/apps/tokens/components/TokenCategorySection';
 import { TokenTableOfContents } from '@/apps/tokens/components/TokenTableOfContents';
