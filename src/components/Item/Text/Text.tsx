@@ -9,9 +9,9 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { useLayoutContext } from '@/components/context/IDDLContext';
-import type { Intent, Prominence, TextProps, TextRole } from '@/components/utils/types';
-import { cn } from '@/lib/utils.ts';
+import { useLayoutContext } from '@/components/Unknown/context/IDDLContext.tsx';
+import type { Intent, Prominence, TextProps, TextRole } from '@/components/Unknown/utils/types.ts';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Role에 따른 HTML 태그 매핑

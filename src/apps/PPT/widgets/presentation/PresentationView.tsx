@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 // ai-era-slides.md 파일 import
 import aiEraSlides from '@/../apps/ppt/ai-era-slides.md?raw';
 import { Section } from '@/components/Section/Section.tsx';
-import { parseMarkdownSlides } from '@/utils/markdown-parser.tsx';
+import { parseMarkdownSlides } from '@/apps/PPT/lib/markdown-parser';
 import { DSLSlideCanvas } from './DSLSlideCanvas.tsx';
 import { FormatSidebar } from './FormatSidebar.tsx';
 import { PresentationToolbar } from './PresentationToolbar.tsx';

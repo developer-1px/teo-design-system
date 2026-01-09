@@ -18,14 +18,14 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebarDSL } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL';
-import { Action } from '@/components/Action/Action';
-import { Field } from '@/components/Field/Field';
+import { Action } from '@/components/Item/Action/Action';
+import { Field } from '@/components/Item/Field/Field';
 import { Group } from '@/components/Group/Group';
 import { DataTable } from '@/components/Group/role/DataTable.tsx';
 import { Page } from '@/components/Page/Page';
 import { Section } from '@/components/Section/Section';
-import { Badge } from '@/components/Text/role/Badge';
-import { Text } from '@/components/Text/Text';
+import { Badge } from '@/components/Item/Text/role/Badge';
+import { Text } from '@/components/Item/Text/Text';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;

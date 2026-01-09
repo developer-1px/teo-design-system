@@ -8,11 +8,11 @@
  */
 
 import { useState } from 'react';
-import { Action } from '@/components/Action/Action';
-import { Field, type FieldOption } from '@/components/Field/Field';
+import { Action } from '@/components/Item/Action/Action';
+import { Field, type FieldOption } from '@/components/Item/Field/Field';
 import { Group } from '@/components/Group/Group.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 export function AtomsShowcasePage() {
   // Form state for all field types

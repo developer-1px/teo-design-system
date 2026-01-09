@@ -11,8 +11,8 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { ChevronDown, ChevronsUpDown, ChevronUp } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
-import { SearchInput } from '@/components/Field/role/SearchInput';
-import { Kbd } from '@/components/Text/role/Kbd';
+import { SearchInput } from '@/components/Item/Field/role/SearchInput';
+import { Kbd } from '@/components/Item/Text/role/Kbd';
 import { useNavigableCursor } from '@/shared/lib/keyboard';
 
 interface DataTableProps<TData, TValue> {

@@ -1,8 +1,8 @@
 import { FileCode, FileJson, FileType, X } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/Action/role/Button';
+import { Button } from '@/components/Item/Action/role/Button';
 import { Section } from '@/components/Section/Section.tsx';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 interface Tab {
   id: string;

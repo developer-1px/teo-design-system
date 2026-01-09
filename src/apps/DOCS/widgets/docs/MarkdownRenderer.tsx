@@ -11,7 +11,7 @@ import remarkGfm from 'remark-gfm';
 import { AtomsShowcase } from '@/apps/DOCS/widgets/docs/interactive/AtomsShowcase';
 import { ComponentsShowcase } from '@/apps/DOCS/widgets/docs/interactive/ComponentsShowcase';
 import { Section } from '@/components/Section/Section.tsx';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 interface MarkdownRendererProps {
   content: string;

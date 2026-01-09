@@ -15,12 +15,12 @@
 
 import { Keyboard, Layers, Palette, Settings as SettingsIcon, Type } from 'lucide-react';
 import { useState } from 'react';
-import { Action } from '@/components/Action/Action';
-import { Field } from '@/components/Field/Field';
+import { Action } from '@/components/Item/Action/Action';
+import { Field } from '@/components/Item/Field/Field';
 import { Group } from '@/components/Group/Group.tsx';
 import { Overlay } from '@/components/Overlay/Overlay.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 interface SettingsModalProps {
   isOpen: boolean;

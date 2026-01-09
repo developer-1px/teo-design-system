@@ -9,10 +9,10 @@
 
 import { AlertTriangle, Keyboard, Search, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
 import { Section } from '@/components/Section/Section.tsx';
 import { useGlobalShortcut, useKeyboardContext } from '@/shared/lib/keyboard';
-import { PRIORITY } from '@/shared/lib/keyboard/types';
+import { PRIORITY } from '@/shared/lib/keyboard/types.ts';
 
 export const KeyboardDebugPanel = () => {
   const [isOpen, setIsOpen] = useState(false);

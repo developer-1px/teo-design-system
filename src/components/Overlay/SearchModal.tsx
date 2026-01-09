@@ -1,6 +1,6 @@
 import { Command, File, Folder, Hash, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/Action/role/Button';
+import { Button } from '@/components/Item/Action/role/Button';
 import { Section } from '@/components/Section/Section.tsx';
 import {
   KeyboardContext,

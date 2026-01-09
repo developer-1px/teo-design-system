@@ -7,7 +7,7 @@
 
 import type { TokenCategory } from '@/apps/tokens/parser/types';
 import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 import { ColorToken } from './ColorToken';
 import { RadiusToken } from './RadiusToken';
 import { ShadowToken } from './ShadowToken';

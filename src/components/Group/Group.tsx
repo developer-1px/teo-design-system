@@ -9,9 +9,9 @@
 
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
-import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext';
-import type { GroupProps, GroupRole } from '@/components/utils/types';
-import { cn } from '@/lib/utils.ts';
+import { LayoutProvider, useLayoutContext } from '@/components/Unknown/context/IDDLContext';
+import type { GroupProps, GroupRole } from '@/components/Unknown/utils/types';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Group container variants (CVA)

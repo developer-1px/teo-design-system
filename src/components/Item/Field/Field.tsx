@@ -11,9 +11,9 @@
 import { cva } from 'class-variance-authority';
 import { Star, X } from 'lucide-react';
 import { useState } from 'react';
-import { useLayoutContext } from '@/components/context/IDDLContext';
-import type { FieldProps } from '@/components/utils/types';
-import { cn } from '@/shared/lib/utils';
+import { useLayoutContext } from '@/components/Unknown/context/IDDLContext.tsx';
+import type { FieldProps } from '@/components/Unknown/utils/types.ts';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Field input variants (CVA)

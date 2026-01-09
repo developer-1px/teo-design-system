@@ -20,9 +20,9 @@ import { AppJSON } from '@/apps/JSON/AppJSON';
 import { AppPPT } from '@/apps/PPT/AppPPT';
 import { AppShowcase } from '@/apps/showcase/AppShowcase';
 import { AppTokens } from '@/apps/tokens/AppTokens';
-import { KeyboardDebugPanel } from '@/components/dev/KeyboardDebugPanel';
+import { KeyboardDebugPanel } from '@/components/Unknown/dev/KeyboardDebugPanel';
 import { CommandPalette } from '@/components/Overlay/CommandPalette';
-import { FloatingBar } from '@/components/widgets/FloatingBar';
+import { FloatingBar } from '@/components/Unknown/widgets/FloatingBar';
 import { AppProvider } from '@/shared/contexts/app-context';
 
 function App() {

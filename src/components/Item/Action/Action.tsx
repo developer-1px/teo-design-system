@@ -10,9 +10,9 @@
 
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as Icons from 'lucide-react';
-import { useLayoutContext } from '@/components/Unknown/context/IDDLContext';
-import type { ActionProps, Intent, Prominence } from '@/components/utils/types';
-import { cn } from '@/lib/utils.ts';
+import { useLayoutContext } from '@/components/Unknown/context/IDDLContext.tsx';
+import type { ActionProps, Intent, Prominence } from '@/components/Unknown/utils/types.ts';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Action button variants (CVA)

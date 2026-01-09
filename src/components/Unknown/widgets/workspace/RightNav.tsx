@@ -1,6 +1,6 @@
 import { GitBranch, Info, Settings, Sparkles, X } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
 
 interface RightNavProps {
   onViewChange?: (view: string | null) => void;

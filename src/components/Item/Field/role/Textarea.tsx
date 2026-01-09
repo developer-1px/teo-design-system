@@ -1,5 +1,5 @@
 import { forwardRef, type TextareaHTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Textarea - 여러 줄 텍스트 입력

@@ -1,5 +1,5 @@
 import { Section } from '@/components/Section/Section.tsx';
-import { renderMarkdownContent } from '@/utils/markdown-parser.tsx';
+import { renderMarkdownContent } from '@/apps/PPT/lib/markdown-parser';
 import type { Slide } from './SlideList.tsx';
 
 interface SlideCanvasProps {

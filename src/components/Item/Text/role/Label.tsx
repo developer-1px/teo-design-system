@@ -1,5 +1,5 @@
 import { forwardRef, type LabelHTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Label - 폼 레이블

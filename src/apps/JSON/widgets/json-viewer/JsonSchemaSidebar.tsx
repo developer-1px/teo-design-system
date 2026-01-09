@@ -1,9 +1,9 @@
 import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Button } from '@/components/Action/role/Button';
+import { Button } from '@/components/Item/Action/role/Button';
 import { Section } from '@/components/Section/Section.tsx';
-import { Content, ContentGroup } from '@/components/Text/role/Content';
-import { analyzeJsonSchema, generateTypeScriptInterface } from '@/utils/json-schema.ts';
+import { Content, ContentGroup } from '@/components/Item/Text/role/Content';
+import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };

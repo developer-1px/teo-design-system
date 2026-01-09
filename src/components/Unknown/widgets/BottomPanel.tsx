@@ -7,9 +7,9 @@ import {
   X as XIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 interface BottomPanelProps {
   isOpen: boolean;

@@ -14,7 +14,7 @@ import type {
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
 import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 import { CodeViewer } from './CodeViewer';
 import { MarkdownDocs } from './MarkdownDocs';
 import { PropsPanel } from './PropsPanel';

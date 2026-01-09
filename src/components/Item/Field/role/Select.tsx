@@ -1,6 +1,6 @@
 import { ChevronDown } from 'lucide-react';
 import { forwardRef, type SelectHTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Select - 단일 선택 드롭다운

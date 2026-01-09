@@ -11,8 +11,8 @@ import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Group } from '@/components/Group/Group';
 import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Text/Text';
-import { analyzeJsonSchema, generateTypeScriptInterface } from '@/utils/json-schema.ts';
+import { Text } from '@/components/Item/Text/Text';
+import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };

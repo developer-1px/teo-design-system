@@ -1,7 +1,7 @@
 import { Search, X } from 'lucide-react';
 import { forwardRef } from 'react';
-import { Input, type InputProps } from '@/components/Field/role/Input';
-import { cn } from '@/shared/lib/utils';
+import { Input, type InputProps } from '@/components/Item/Field/role/Input.tsx';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * SearchInput - 검색 입력 필드

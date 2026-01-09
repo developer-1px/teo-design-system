@@ -1,6 +1,6 @@
 import { GripHorizontal, GripVertical } from 'lucide-react';
 import { forwardRef, type HTMLAttributes } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * ResizeHandle - 크기 조절 핸들

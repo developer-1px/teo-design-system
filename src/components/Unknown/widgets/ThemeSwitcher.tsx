@@ -9,7 +9,7 @@
 
 import { Moon as MoonIcon, Sun as SunIcon, X as XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
 import { Section } from '@/components/Section/Section.tsx';
 import {
   applyThemeConfig,
@@ -18,8 +18,8 @@ import {
   getThemeConfig,
   type Theme,
   toggleTheme as toggleThemeUtil,
-} from '@/shared/lib/theme';
-import { cn } from '@/shared/lib/utils';
+} from '@/shared/lib/theme.ts';
+import { cn } from '@/shared/lib/utils.ts';
 
 interface ThemeSwitcherProps {
   onClose?: () => void;

@@ -2,10 +2,10 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { Maximize2, Minimize2, PanelLeft, PanelLeftClose } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { IconButton } from '@/components/Item/Action/role/IconButton';
 import { DataTable } from '@/components/Group/role/DataTable.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Content } from '@/components/Text/role/Content';
+import { Content } from '@/components/Item/Text/role/Content';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;

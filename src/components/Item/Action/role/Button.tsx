@@ -1,5 +1,5 @@
 import { type ButtonHTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Button - 디자인 시스템 전용 버튼 컴포넌트

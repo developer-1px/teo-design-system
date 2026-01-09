@@ -5,7 +5,7 @@
  */
 
 import { Section } from '@/components/Section/Section.tsx';
-import { Content, ContentGroup } from '@/components/Text/role/Content';
+import { Content, ContentGroup } from '@/components/Item/Text/role/Content';
 
 export const ProminenceDemo = () => {
   return (

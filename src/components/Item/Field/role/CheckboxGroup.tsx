@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import { cn } from '@/shared/lib/utils';
-import { Checkbox } from './Checkbox';
+import { cn } from '@/shared/lib/utils.ts';
+import { Checkbox } from './Checkbox.tsx';
 
 /**
  * CheckboxGroup - 체크박스 그룹 (다중 선택)

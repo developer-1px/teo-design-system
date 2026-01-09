@@ -17,12 +17,12 @@
  */
 
 import { type CSSProperties, forwardRef, type HTMLAttributes } from 'react';
-import { useProminence } from '@/components/context/ProminenceContext';
+import { useProminence } from '@/components/Unknown/context/ProminenceContext.tsx';
 import {
   calculateProminenceStyles,
   type ProminenceLevel,
-} from '@/shared/config/prominence-tokens';
-import { cn } from '@/lib/utils.ts';
+} from '@/shared/config/prominence-tokens.ts';
+import { cn } from '@/shared/lib/utils';
 
 export interface ContentProps extends HTMLAttributes<HTMLDivElement> {
   /**

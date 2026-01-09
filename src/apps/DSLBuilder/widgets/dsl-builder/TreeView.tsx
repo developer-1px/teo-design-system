@@ -22,7 +22,7 @@ import {
 import { useMemo, useState } from 'react';
 import type { AnyDSLNode, DSLNodeType } from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
 import { type TreeNode as KeyboardTreeNode, useTreeNavigation } from '@/shared/lib/keyboard';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 export interface TreeViewProps {
   tree: AnyDSLNode;

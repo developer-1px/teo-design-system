@@ -9,7 +9,7 @@
 
 import { Plus, Trash2 } from 'lucide-react';
 import { Group } from '@/components/Group/Group.tsx';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 import { SlidePreview } from './SlidePreview';
 
 export interface Slide {

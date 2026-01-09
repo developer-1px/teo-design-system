@@ -10,7 +10,7 @@
 
 import type { ReactNode } from 'react';
 import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 /**
  * 마크다운 라인 타입

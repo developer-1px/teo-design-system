@@ -18,17 +18,17 @@ import { CodeEditor } from '@/apps/IDE/widgets/editor/CodeEditor';
 import { ComponentPreview } from '@/apps/IDE/widgets/editor/ComponentPreview';
 import { EditorTabs } from '@/apps/IDE/widgets/editor/EditorTabs';
 import { type FileNode, FileTree } from '@/apps/IDE/widgets/file-tree/FileTree';
-import { Action } from '@/components/Action/Action';
+import { Action } from '@/components/Item/Action/Action';
 import { Group } from '@/components/Group/Group.tsx';
 import { SearchModalDSL as SearchModal } from '@/components/Overlay/SearchModalDSL';
 import { SettingsModalDSL as SettingsModal } from '@/components/Overlay/SettingsModalDSL';
 import { Page } from '@/components/Page/Page.tsx';
 import { RightBar } from '@/components/Section/role/RightBar.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
-import { BottomPanel } from '@/components/widgets/BottomPanel';
-import { RightNav } from '@/components/widgets/workspace/RightNav';
-import { WorkspaceNav } from '@/components/widgets/workspace/WorkspaceNav';
+import { Text } from '@/components/Item/Text/Text';
+import { BottomPanel } from '@/components/Unknown/widgets/BottomPanel';
+import { RightNav } from '@/components/Unknown/widgets/workspace/RightNav';
+import { WorkspaceNav } from '@/components/Unknown/widgets/workspace/WorkspaceNav';
 import { buildFileTree, getFilePaths, loadFileContent } from '@/apps/IDE/lib/file-loader';
 
 interface OpenFile {

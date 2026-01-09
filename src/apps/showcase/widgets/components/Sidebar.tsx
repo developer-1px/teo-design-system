@@ -9,11 +9,11 @@
 
 import { useState } from 'react';
 import type { FileTreeNode } from '@/apps/showcase/widgets/parser/types';
-import { Action } from '@/components/Action/Action';
-import { Field } from '@/components/Field/Field';
+import { Action } from '@/components/Item/Action/Action';
+import { Field } from '@/components/Item/Field/Field';
 import { Group } from '@/components/Group/Group.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 interface SidebarProps {
   fileTree: FileTreeNode[];

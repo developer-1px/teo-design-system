@@ -8,11 +8,11 @@ import type {
   PropType,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import type { DataType } from '@/components/Field/Field';
-import { Field } from '@/components/Field/Field';
+import type { DataType } from '@/components/Item/Field/Field';
+import { Field } from '@/components/Item/Field/Field';
 import { Group } from '@/components/Group/Group.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 interface PropsPanelProps {
   metadata: ComponentMetadata;

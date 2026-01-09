@@ -4,12 +4,12 @@
 
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/Action/role/Button';
-import { Input } from '@/components/Field/role/Input';
+import { Button } from '@/components/Item/Action/role/Button';
+import { Input } from '@/components/Item/Field/role/Input';
 import { Group } from '@/components/Group/Group';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 import type { PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types.ts';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 export interface ColorPaletteProps {
   palette: PixelColor[];

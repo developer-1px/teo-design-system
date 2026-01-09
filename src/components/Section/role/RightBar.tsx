@@ -11,7 +11,7 @@ import {
   Upload,
 } from 'lucide-react';
 import { AIAgentChat } from '@/apps/IDE/widgets/chat/AIAgentChat.tsx';
-import { Button } from '@/components/Action/role/Button';
+import { Button } from '@/components/Item/Action/role/Button';
 import { Section } from '@/components/Section/Section.tsx';
 
 interface RightBarProps {

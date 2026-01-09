@@ -6,7 +6,7 @@
 
 import { useRef, useState } from 'react';
 import type { PixelColor, PixelGrid } from '@/apps/EMOJI/lib/emoji-designer/types.ts';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 export interface EmojiCanvasProps {
   grid: PixelGrid;

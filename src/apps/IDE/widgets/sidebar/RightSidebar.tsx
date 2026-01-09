@@ -1,6 +1,6 @@
 import { Bell, Clock, GitBranch, MessageSquare, User, X } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { IconButton } from '@/components/Item/Action/role/IconButton';
 import { Section } from '@/components/Section/Section.tsx';
 
 interface RightSidebarProps {

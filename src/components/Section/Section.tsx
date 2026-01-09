@@ -8,9 +8,9 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext';
-import type { SectionProps } from '@/components/utils/types';
-import { cn } from '@/lib/utils.ts';
+import { LayoutProvider, useLayoutContext } from '@/components/Unknown/context/IDDLContext';
+import type { SectionProps } from '@/components/Unknown/utils/types';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Section variants (CVA)

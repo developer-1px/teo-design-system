@@ -3,10 +3,10 @@
  * 간단하고 컴팩트한 리스트
  */
 
-import { Group } from '@/components/Group/Group';
-import { Text } from '@/components/Text/Text';
-import { cn } from '@/shared/lib/utils';
-import type { JsonArray, JsonObject } from '../types';
+import { Group } from '@/components/Group/Group.tsx';
+import { Text } from '@/components/Item/Text/Text.tsx';
+import { cn } from '@/shared/lib/utils.ts';
+import type { JsonArray, JsonObject } from '../types.ts';
 
 interface ListViewProps {
   data: JsonArray;

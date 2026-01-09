@@ -9,9 +9,9 @@ import { Group } from '@/components/Group/Group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Group/role/Tabs';
 import { Page } from '@/components/Page/Page';
 import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Text/Text';
-import { DatabaseViewer } from '@/components/widgets/database/DatabaseViewer';
-import type { JsonArray, JsonObject } from '@/components/widgets/database/types';
+import { Text } from '@/components/Item/Text/Text';
+import { DatabaseViewer } from '@/components/Unknown/widgets/database/DatabaseViewer';
+import type { JsonArray, JsonObject } from '@/components/Unknown/widgets/database/types';
 import testData from '@/test.json';
 
 export const JSONPage = () => {

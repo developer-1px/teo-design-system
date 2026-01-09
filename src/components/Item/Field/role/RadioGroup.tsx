@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import { cn } from '@/shared/lib/utils';
-import { Radio } from './Radio';
+import { cn } from '@/shared/lib/utils.ts';
+import { Radio } from './Radio.tsx';
 
 /**
  * RadioGroup - 라디오 버튼 그룹 (단일 선택)

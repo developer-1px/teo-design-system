@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 import { forwardRef, type HTMLAttributes } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Tag - 제거 가능한 태그

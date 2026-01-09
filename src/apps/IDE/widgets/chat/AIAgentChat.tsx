@@ -1,8 +1,8 @@
 import { Code, FileSearch, Send, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { IconButton } from '@/components/Item/Action/role/IconButton';
 import { Section } from '@/components/Section/Section.tsx';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 interface Message {
   id: string;

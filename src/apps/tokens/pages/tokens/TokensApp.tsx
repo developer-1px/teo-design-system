@@ -11,11 +11,11 @@ import { TokenCategorySection } from '@/apps/tokens/components/TokenCategorySect
 import { TokenTableOfContents } from '@/apps/tokens/components/TokenTableOfContents';
 import { parseCSSTokens } from '@/apps/tokens/parser/cssParser';
 import type { TokenCategory } from '@/apps/tokens/parser/types';
-import { Field } from '@/components/Field/Field';
+import { Field } from '@/components/Item/Field/Field';
 import { Group } from '@/components/Group/Group.tsx';
 import { Page } from '@/components/Page/Page.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 // import.meta.glob으로 themes.css 로드
 const cssModules = import.meta.glob('/src/styles/themes.css', {

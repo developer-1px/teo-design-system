@@ -9,12 +9,12 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Action } from '@/components/Action/Action';
+import { Action } from '@/components/Item/Action/Action';
 import { Group } from '@/components/Group/Group';
 import { Page } from '@/components/Page/Page';
 import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Text/Text';
-import { getAllDocs } from '@/lib/docs-scanner.ts';
+import { Text } from '@/components/Item/Text/Text';
+import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
 import { DocsTree } from './DocsTree.tsx';
 import { MarkdownRenderer } from './MarkdownRenderer.tsx';
 

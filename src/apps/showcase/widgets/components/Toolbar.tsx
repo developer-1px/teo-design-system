@@ -20,7 +20,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
-import { Action } from '@/components/Action/Action';
+import { Action } from '@/components/Item/Action/Action';
 import { Group } from '@/components/Group/Group.tsx';
 
 export type BackgroundType = 'transparent' | 'light' | 'dark' | 'grid';

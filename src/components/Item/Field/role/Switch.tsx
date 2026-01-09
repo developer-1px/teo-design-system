@@ -1,5 +1,5 @@
 import { forwardRef, type InputHTMLAttributes } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Switch - 토글 스위치

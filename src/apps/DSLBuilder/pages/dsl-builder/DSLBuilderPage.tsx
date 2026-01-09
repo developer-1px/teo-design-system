@@ -10,9 +10,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { type NodePath, PreviewPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel';
 import { PropertyPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PropertyPanel';
 import { TreeView } from '@/apps/DSLBuilder/widgets/dsl-builder/TreeView';
-import { Button } from '@/components/Action/role/Button';
-import { Select } from '@/components/Field/role/Select';
-import { Kbd } from '@/components/Text/role/Kbd';
+import { Button } from '@/components/Item/Action/role/Button';
+import { Select } from '@/components/Item/Field/role/Select';
+import { Kbd } from '@/components/Item/Text/role/Kbd';
 import type { AnyDSLNode, BuilderState, DSLNodeType } from '@/apps/DSLBuilder/lib/dsl-builder/types';
 import {
   addChildNode,

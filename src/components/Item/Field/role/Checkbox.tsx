@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react';
 import { forwardRef, type InputHTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Checkbox - 체크박스

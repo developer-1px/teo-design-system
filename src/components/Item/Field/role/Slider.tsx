@@ -1,5 +1,5 @@
 import { forwardRef, type InputHTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Slider - 범위 선택 슬라이더

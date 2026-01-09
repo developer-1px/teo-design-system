@@ -9,9 +9,9 @@
 
 import { cva } from 'class-variance-authority';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { LayoutProvider } from '@/components/context/IDDLContext';
-import type { PageLayout, PageProps, PageRole } from '@/components/utils/types';
-import { cn } from '@/lib/utils.ts';
+import { LayoutProvider } from '@/components/Unknown/context/IDDLContext';
+import type { PageLayout, PageProps, PageRole } from '@/components/Unknown/utils/types';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Role별 기본 layout 매핑

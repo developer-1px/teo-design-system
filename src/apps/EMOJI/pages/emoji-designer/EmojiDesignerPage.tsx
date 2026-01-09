@@ -9,15 +9,15 @@ import { Copy, Download, Droplet, Eraser, Paintbrush, Trash2, Upload } from 'luc
 import { useState } from 'react';
 import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
 import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
-import { Button } from '@/components/Action/role/Button';
-import { Input } from '@/components/Field/role/Input';
-import { Select } from '@/components/Field/role/Select';
-import { Switch } from '@/components/Field/role/Switch';
+import { Button } from '@/components/Item/Action/role/Button';
+import { Input } from '@/components/Item/Field/role/Input';
+import { Select } from '@/components/Item/Field/role/Select';
+import { Switch } from '@/components/Item/Field/role/Switch';
 import { Group } from '@/components/Group/Group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Group/role/Tabs';
 import { Page } from '@/components/Page/Page';
 import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 import type { DesignerState, PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types';
 import { PRESET_PALETTES } from '@/apps/EMOJI/lib/emoji-designer/types';
 import {

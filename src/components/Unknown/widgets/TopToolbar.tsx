@@ -20,10 +20,10 @@ import {
   Upload as UploadIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/Action/role/Button';
-import { IconButton } from '@/components/Action/role/IconButton';
+import { Button } from '@/components/Item/Action/role/Button.tsx';
+import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { ThemeToggleButton } from '@/components/widgets/ThemeSwitcher';
+import { ThemeToggleButton } from '@/components/Unknown/widgets/ThemeSwitcher.tsx';
 
 interface TopToolbarProps {
   projectName?: string;

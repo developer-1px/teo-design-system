@@ -1,6 +1,6 @@
 import { forwardRef, type ReactNode } from 'react';
-import { Label } from '@/components/Text/role/Label';
-import { cn } from '@/lib/utils.ts';
+import { Label } from '@/components/Item/Text/role/Label.tsx';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * FormField - 폼 필드 컨테이너

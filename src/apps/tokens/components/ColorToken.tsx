@@ -8,7 +8,7 @@
 import { useState } from 'react';
 import type { Token } from '@/apps/tokens/parser/types';
 import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 export function ColorToken({ token }: { token: Token }) {
   const [copied, setCopied] = useState(false);

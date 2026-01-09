@@ -15,11 +15,11 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
-import { Action } from '@/components/Action/Action';
+import { Action } from '@/components/Item/Action/Action.tsx';
 import { Group } from '@/components/Group/Group.tsx';
 import { Overlay } from '@/components/Overlay/Overlay.tsx';
-import { APP_CONFIGS, type AppType } from '@/shared/contexts/app-context';
-import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme';
+import { APP_CONFIGS, type AppType } from '@/shared/contexts/app-context.tsx';
+import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme.ts';
 
 /**
  * Convert icon component to icon name string for Action component

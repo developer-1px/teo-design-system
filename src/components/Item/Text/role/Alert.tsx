@@ -1,6 +1,6 @@
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
 import { forwardRef, type HTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Alert - 알림 메시지

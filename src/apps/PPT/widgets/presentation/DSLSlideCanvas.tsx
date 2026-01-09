@@ -6,7 +6,7 @@
  */
 
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
 import type { Slide } from './SlideList';
 

@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   elevated?: boolean;

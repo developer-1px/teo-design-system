@@ -3,13 +3,13 @@
  */
 
 import { useState } from 'react';
-import { Action } from '@/components/Action/Action';
-import { Field } from '@/components/Field/Field';
+import { Action } from '@/components/Item/Action/Action';
+import { Field } from '@/components/Item/Field/Field';
 import { Group } from '@/components/Group/Group';
 import { Overlay } from '@/components/Overlay/Overlay';
 import { Page } from '@/components/Page/Page';
 import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 import type {
   ActionNode,
   AnyDSLNode,

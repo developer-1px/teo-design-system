@@ -1,5 +1,5 @@
 import { forwardRef, type InputHTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Radio - 라디오 버튼

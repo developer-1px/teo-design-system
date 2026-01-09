@@ -13,10 +13,10 @@ import type {
   MockData,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import { Action } from '@/components/Action/Action';
+import { Action } from '@/components/Item/Action/Action';
 import { Group } from '@/components/Group/Group.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 interface PreviewProps {
   node: FileTreeNode | null;

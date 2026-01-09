@@ -6,19 +6,19 @@
 
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { IconButton } from '@/components/Action/role/IconButton';
-import { Group } from '@/components/Group/Group';
-import { Page } from '@/components/Page/Page';
-import { Section } from '@/components/Section/Section';
-import { Badge } from '@/components/Text/role/Badge';
-import { Text } from '@/components/Text/Text';
-import { Divider } from '@/components/utils/Divider';
-import type { DatabaseConfig, JsonArray } from '@/components/utils/types';
-import { ViewSwitcher } from './ViewSwitcher';
-import { BoardView } from './views/BoardView';
-import { GalleryView } from './views/GalleryView';
-import { ListView } from './views/ListView';
-import { TableView } from './views/TableView';
+import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
+import { Group } from '@/components/Group/Group.tsx';
+import { Page } from '@/components/Page/Page.tsx';
+import { Section } from '@/components/Section/Section.tsx';
+import { Badge } from '@/components/Item/Text/role/Badge.tsx';
+import { Text } from '@/components/Item/Text/Text.tsx';
+import { Divider } from '@/components/Unknown/utils/Divider.tsx';
+import type { DatabaseConfig, JsonArray } from '@/components/Unknown/utils/types.ts';
+import { ViewSwitcher } from './ViewSwitcher.tsx';
+import { BoardView } from './views/BoardView.tsx';
+import { GalleryView } from './views/GalleryView.tsx';
+import { ListView } from './views/ListView.tsx';
+import { TableView } from './views/TableView.tsx';
 
 interface DatabaseViewerProps {
   data: JsonArray;

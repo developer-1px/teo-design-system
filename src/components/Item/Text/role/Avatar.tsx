@@ -1,6 +1,6 @@
 import { User } from 'lucide-react';
 import { forwardRef, type ImgHTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Avatar - 사용자 아바타

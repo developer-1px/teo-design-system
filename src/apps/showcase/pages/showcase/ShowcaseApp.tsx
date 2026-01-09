@@ -19,7 +19,7 @@ import type { FileTreeNode, PropValue } from '@/apps/showcase/widgets/parser/typ
 import { Group } from '@/components/Group/Group.tsx';
 import { Page } from '@/components/Page/Page.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Text/Text';
+import { Text } from '@/components/Item/Text/Text';
 
 // atoms 폴더 스캔
 // 1. 소스 코드 (파싱용)
