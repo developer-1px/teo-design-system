@@ -215,7 +215,7 @@ IDDL → Material UI
 
 ## 도움이 필요하신가요?
 
-- 📖 [전체 스펙 문서](/spec/iddl-spec-1.0.1.md)
+- 📖 [전체 스펙 문서](/docs/2-areas/spec/iddl-spec-1.0.1.md)
 - 🎯 [실전 예제 모음](../04-patterns/)
 - 📚 [API 레퍼런스](../06-reference/api-reference.md)
 
