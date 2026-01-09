@@ -52,6 +52,9 @@
 - `maxLength`: 최대 길이
 - `pattern`: 정규식
 
+**속성**:
+- `clearable`: 입력 내용 지우기 버튼 표시 (v1.0.2)
+
 ---
 
 ### textarea
@@ -144,6 +147,9 @@
 - `minLength`: 최소 길이
 - `pattern`: 정규식 (강도 검증)
 
+**속성**:
+- `clearable`: 입력 내용 지우기 버튼 표시 (v1.0.2)
+
 ---
 
 ### email
@@ -173,6 +179,9 @@
 
 **Constraints**:
 - `pattern`: 이메일 정규식 (기본 제공)
+
+**속성**:
+- `clearable`: 입력 내용 지우기 버튼 표시 (v1.0.2)
 
 **렌더링**:
 ```html
@@ -204,6 +213,9 @@
 
 **Constraints**:
 - `pattern`: URL 정규식 (기본 제공)
+
+**속성**:
+- `clearable`: 입력 내용 지우기 버튼 표시 (v1.0.2)
 
 **렌더링**:
 ```html
@@ -692,6 +704,9 @@ Yes
 
 **Constraints**:
 - `pattern`: E.164 형식 정규식
+
+**속성**:
+- `clearable`: 입력 내용 지우기 버튼 표시 (v1.0.2)
 
 **렌더링**:
 ```html

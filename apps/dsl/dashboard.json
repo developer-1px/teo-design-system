@@ -1,0 +1,294 @@
+{
+  "id": "page-dashboard-1",
+  "type": "page",
+  "children": [
+    {
+      "id": "region-header-1",
+      "type": "region",
+      "role": "header",
+      "className": "px-6 py-4",
+      "children": [
+        {
+          "id": "section-header-1",
+          "type": "section",
+          "prominence": 2,
+          "children": [
+            {
+              "id": "group-header-1",
+              "type": "group",
+              "purpose": "navigation",
+              "direction": "horizontal",
+              "className": "justify-between",
+              "children": [
+                {
+                  "id": "text-title-1",
+                  "type": "text",
+                  "role": "Title",
+                  "prominence": 1,
+                  "content": "Dashboard"
+                },
+                {
+                  "id": "group-actions-1",
+                  "type": "group",
+                  "purpose": "action",
+                  "direction": "horizontal",
+                  "children": [
+                    {
+                      "id": "action-btn-new",
+                      "type": "action",
+                      "label": "New Project",
+                      "prominence": 1,
+                      "behavior": { "action": "command", "command": "project.create" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "region-main-1",
+      "type": "region",
+      "role": "main",
+      "className": "flex gap-0",
+      "children": [
+        {
+          "id": "region-sidebar-1",
+          "type": "region",
+          "role": "sidebar",
+          "className": "w-64 p-4",
+          "children": [
+            {
+              "id": "section-nav-1",
+              "type": "section",
+              "prominence": 2,
+              "children": [
+                {
+                  "id": "group-nav-1",
+                  "type": "group",
+                  "purpose": "list",
+                  "children": [
+                    {
+                      "id": "text-nav-overview",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 1,
+                      "content": "icon:BarChart3 Overview"
+                    },
+                    {
+                      "id": "text-nav-analytics",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 2,
+                      "content": "icon:TrendingUp Analytics"
+                    },
+                    {
+                      "id": "text-nav-projects",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 2,
+                      "content": "icon:FolderOpen Projects"
+                    },
+                    {
+                      "id": "text-nav-settings",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 3,
+                      "content": "icon:Settings Settings"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-content-1",
+          "type": "section",
+          "prominence": 2,
+          "className": "flex-1 p-6",
+          "children": [
+            {
+              "id": "group-stats-1",
+              "type": "group",
+              "purpose": "content",
+              "className": "grid grid-cols-3 gap-6 mb-8",
+              "children": [
+                {
+                  "id": "section-stat-1",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-stat-1",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-stat-1-label",
+                          "type": "text",
+                          "role": "Label",
+                          "prominence": 3,
+                          "content": "Total Users"
+                        },
+                        {
+                          "id": "text-stat-1-value",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "12,345",
+                          "className": "text-3xl font-bold"
+                        },
+                        {
+                          "id": "text-stat-1-change",
+                          "type": "text",
+                          "role": "Caption",
+                          "prominence": 2,
+                          "content": "↑ 12% from last month",
+                          "className": "text-green-600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "section-stat-2",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-stat-2",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-stat-2-label",
+                          "type": "text",
+                          "role": "Label",
+                          "prominence": 3,
+                          "content": "Revenue"
+                        },
+                        {
+                          "id": "text-stat-2-value",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "$45,678",
+                          "className": "text-3xl font-bold"
+                        },
+                        {
+                          "id": "text-stat-2-change",
+                          "type": "text",
+                          "role": "Caption",
+                          "prominence": 2,
+                          "content": "↑ 8% from last month",
+                          "className": "text-green-600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "section-stat-3",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-stat-3",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-stat-3-label",
+                          "type": "text",
+                          "role": "Label",
+                          "prominence": 3,
+                          "content": "Active Projects"
+                        },
+                        {
+                          "id": "text-stat-3-value",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "23",
+                          "className": "text-3xl font-bold"
+                        },
+                        {
+                          "id": "text-stat-3-change",
+                          "type": "text",
+                          "role": "Caption",
+                          "prominence": 2,
+                          "content": "→ No change",
+                          "className": "text-gray-600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "section-recent-1",
+              "type": "section",
+              "prominence": 2,
+              "children": [
+                {
+                  "id": "group-recent-title-1",
+                  "type": "group",
+                  "purpose": "content",
+                  "children": [
+                    {
+                      "id": "text-recent-title",
+                      "type": "text",
+                      "role": "Title",
+                      "prominence": 1,
+                      "content": "Recent Activity"
+                    }
+                  ]
+                },
+                {
+                  "id": "group-recent-list-1",
+                  "type": "group",
+                  "purpose": "list",
+                  "className": "mt-4",
+                  "children": [
+                    {
+                      "id": "text-activity-1",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 1,
+                      "content": "New user registration: john@example.com"
+                    },
+                    {
+                      "id": "text-activity-2",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 2,
+                      "content": "Project 'Website Redesign' completed"
+                    },
+                    {
+                      "id": "text-activity-3",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 2,
+                      "content": "Invoice #1234 paid"
+                    },
+                    {
+                      "id": "text-activity-4",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 3,
+                      "content": "System backup completed"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

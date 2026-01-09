@@ -49,13 +49,20 @@ dataType은 **데이터의 본질**을 선언합니다. 구현이 아닌 의미�
   "label": "Name",
   "model": "user.name",
   "dataType": "text",
-  "placeholder": "Enter your name"
+  "placeholder": "Enter your name",
+  "clearable": true
 }
 ```
 
 **렌더링**:
 - **view**: `Teo`
-- **edit**: `<input type="text">`
+- **edit**: `<input type="text">` + 값이 있으면 clear 버튼 (X) 표시
+
+**clearable 속성** (v1.0.2):
+- `clearable={true}` 시 입력 필드 오른쪽에 X 버튼 표시
+- 버튼 클릭 시 필드 값을 빈 문자열로 초기화
+- 값이 없을 때는 X 버튼 숨김
+- text, password, email, url, phone 타입에서 지원
 
 ---
 

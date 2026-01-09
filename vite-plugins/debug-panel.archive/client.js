@@ -1,0 +1,1019 @@
+(function() {
+  "use strict";
+  const CSS_STYLES = `
+/* 레거시 스타일 (호환성 유지) */
+[data-debug-target] {
+  outline: 1px solid rgb(16, 185, 129) !important;
+  outline-offset: 1px !important;
+  cursor: pointer !important;
+}
+
+/* 디버그 오버레이 레이어 - 클릭 차단 */
+#debug-overlay-layer {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9997 !important;
+  pointer-events: auto !important;
+  overflow: hidden !important;
+  cursor: crosshair !important;
+}
+
+/* 인터랙티브 요소 박스 - Compact & Minimal */
+.debug-interactive-box {
+  position: absolute !important;
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+  background: rgba(16, 185, 129, 0.03) !important;
+  pointer-events: auto !important;
+  transition: all 0.08s ease !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+}
+
+/* Hover 상태 박스 */
+.debug-interactive-box.hover {
+  border-color: rgba(16, 185, 129, 0.7) !important;
+  background: rgba(16, 185, 129, 0.08) !important;
+  border-width: 1px !important;
+}
+
+/* Pulse 애니메이션 - Figma 스타일 */
+.debug-interactive-box.pulse {
+  animation: debug-pulse 0.6s ease-out !important;
+}
+
+@keyframes debug-pulse {
+  0% {
+    border-color: rgba(16, 185, 129, 0.9) !important;
+    background: rgba(16, 185, 129, 0.2) !important;
+  }
+  100% {
+    border-color: rgba(16, 185, 129, 0.25) !important;
+    background: rgba(16, 185, 129, 0.03) !important;
+  }
+}
+
+/* 디버그 레벨 2 (Button만) - 파란색 */
+body[data-debug-mode="2"] .debug-interactive-box {
+  border: 1px solid rgba(59, 130, 246, 0.25) !important;
+  background: rgba(59, 130, 246, 0.03) !important;
+}
+
+body[data-debug-mode="2"] .debug-interactive-box.hover {
+  border-color: rgba(59, 130, 246, 0.7) !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+body[data-debug-mode="2"] .debug-interactive-box.pulse {
+  animation: debug-pulse-blue 0.6s ease-out !important;
+}
+
+@keyframes debug-pulse-blue {
+  0% {
+    border-color: rgba(59, 130, 246, 0.9) !important;
+    background: rgba(59, 130, 246, 0.2) !important;
+  }
+  100% {
+    border-color: rgba(59, 130, 246, 0.25) !important;
+    background: rgba(59, 130, 246, 0.03) !important;
+  }
+}
+
+body[data-debug-mode="2"] .debug-box-label {
+  background: rgba(59, 130, 246, 0.95) !important;
+}
+
+body[data-debug-mode="2"]::before {
+  background: rgba(59, 130, 246, 0.95) !important;
+  content: 'DEBUG: BTN' !important;
+}
+
+/* IDDL Component Type Colors */
+/* Page - Purple */
+.debug-iddl-page {
+  border: 2px solid rgba(139, 92, 246, 0.4) !important;
+  background: rgba(139, 92, 246, 0.05) !important;
+}
+
+.debug-iddl-page.hover {
+  border-color: rgba(139, 92, 246, 0.8) !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+}
+
+.debug-iddl-page .debug-box-label {
+  background: rgba(139, 92, 246, 0.95) !important;
+  font-weight: 600 !important;
+}
+
+/* Section - Blue */
+.debug-iddl-section {
+  border: 2px solid rgba(59, 130, 246, 0.4) !important;
+  background: rgba(59, 130, 246, 0.05) !important;
+}
+
+.debug-iddl-section.hover {
+  border-color: rgba(59, 130, 246, 0.8) !important;
+  background: rgba(59, 130, 246, 0.12) !important;
+}
+
+.debug-iddl-section .debug-box-label {
+  background: rgba(59, 130, 246, 0.95) !important;
+  font-weight: 600 !important;
+}
+
+/* Group - Cyan */
+.debug-iddl-group {
+  border: 2px solid rgba(6, 182, 212, 0.4) !important;
+  background: rgba(6, 182, 212, 0.05) !important;
+}
+
+.debug-iddl-group.hover {
+  border-color: rgba(6, 182, 212, 0.8) !important;
+  background: rgba(6, 182, 212, 0.12) !important;
+}
+
+.debug-iddl-group .debug-box-label {
+  background: rgba(6, 182, 212, 0.95) !important;
+  font-weight: 500 !important;
+}
+
+/* Action - Orange */
+.debug-iddl-action {
+  border: 2px solid rgba(249, 115, 22, 0.4) !important;
+  background: rgba(249, 115, 22, 0.05) !important;
+}
+
+.debug-iddl-action.hover {
+  border-color: rgba(249, 115, 22, 0.8) !important;
+  background: rgba(249, 115, 22, 0.12) !important;
+}
+
+.debug-iddl-action .debug-box-label {
+  background: rgba(249, 115, 22, 0.95) !important;
+  font-weight: 500 !important;
+}
+
+/* Item - Green */
+.debug-iddl-item {
+  border: 1px solid rgba(34, 197, 94, 0.4) !important;
+  background: rgba(34, 197, 94, 0.05) !important;
+}
+
+.debug-iddl-item.hover {
+  border-color: rgba(34, 197, 94, 0.8) !important;
+  background: rgba(34, 197, 94, 0.12) !important;
+}
+
+.debug-iddl-item .debug-box-label {
+  background: rgba(34, 197, 94, 0.95) !important;
+}
+
+/* Field - Amber */
+.debug-iddl-field {
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  background: rgba(245, 158, 11, 0.05) !important;
+}
+
+.debug-iddl-field.hover {
+  border-color: rgba(245, 158, 11, 0.8) !important;
+  background: rgba(245, 158, 11, 0.12) !important;
+}
+
+.debug-iddl-field .debug-box-label {
+  background: rgba(245, 158, 11, 0.95) !important;
+}
+
+/* Text - Pink */
+.debug-iddl-text {
+  border: 1px solid rgba(236, 72, 153, 0.4) !important;
+  background: rgba(236, 72, 153, 0.05) !important;
+}
+
+.debug-iddl-text.hover {
+  border-color: rgba(236, 72, 153, 0.8) !important;
+  background: rgba(236, 72, 153, 0.12) !important;
+}
+
+.debug-iddl-text .debug-box-label {
+  background: rgba(236, 72, 153, 0.95) !important;
+}
+
+/* Overlay - Red */
+.debug-iddl-overlay {
+  border: 2px solid rgba(239, 68, 68, 0.4) !important;
+  background: rgba(239, 68, 68, 0.05) !important;
+}
+
+.debug-iddl-overlay.hover {
+  border-color: rgba(239, 68, 68, 0.8) !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+}
+
+.debug-iddl-overlay .debug-box-label {
+  background: rgba(239, 68, 68, 0.95) !important;
+  font-weight: 600 !important;
+}
+
+/* Debug mode 1 indicator */
+body[data-debug-mode="1"]::before {
+  background: rgba(139, 92, 246, 0.95) !important;
+  content: 'DEBUG: IDDL' !important;
+}
+
+/* 요소 태그 라벨 - Compact */
+.debug-box-label {
+  position: absolute !important;
+  top: -14px !important;
+  left: 0 !important;
+  padding: 1px 4px !important;
+  background: rgba(16, 185, 129, 0.95) !important;
+  color: white !important;
+  font-size: 9px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-weight: 500 !important;
+  border-radius: 2px !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  transition: opacity 0.1s !important;
+  pointer-events: none !important;
+  line-height: 1.4 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.debug-interactive-box.hover .debug-box-label {
+  opacity: 1 !important;
+}
+
+/* 디버그 모드에서 모든 요소를 검사 모드 커서로 변경 */
+body[data-debug-mode="1"],
+body[data-debug-mode="1"] *,
+body[data-debug-mode="2"],
+body[data-debug-mode="2"] * {
+  cursor: crosshair !important;
+}
+
+/* 디버그 패널만 일반 커서 */
+body[data-debug-mode="1"] #debug-panel,
+body[data-debug-mode="1"] #debug-panel *,
+body[data-debug-mode="2"] #debug-panel,
+body[data-debug-mode="2"] #debug-panel * {
+  cursor: pointer !important;
+}
+
+/* 디버그 모드 활성화 오버레이 - Compact */
+body[data-debug-mode="1"]::before {
+  content: 'DEBUG';
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+  padding: 3px 8px;
+  background: rgba(16, 185, 129, 0.95);
+  color: white;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  pointer-events: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* 패널 - Compact */
+#debug-panel {
+  position: fixed !important;
+  z-index: 9998 !important;
+  background: #ffffff !important;
+  border-radius: 6px !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  max-width: 400px !important;
+  max-height: 300px !important;
+  overflow: auto !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-size: 11px !important;
+}
+
+#debug-panel-header {
+  position: sticky !important;
+  top: 0 !important;
+  background: #fafafa !important;
+  padding: 6px 8px !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+#debug-panel-title {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #171717 !important;
+}
+
+#debug-panel-close {
+  background: transparent !important;
+  border: none !important;
+  color: #525252 !important;
+  cursor: pointer !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+#debug-panel-close:hover {
+  background: #f5f5f5 !important;
+  color: #171717 !important;
+}
+
+.debug-panel-item {
+  padding: 6px 8px !important;
+  border-bottom: 1px solid #f5f5f5 !important;
+  transition: background 0.1s !important;
+}
+
+.debug-panel-item:hover {
+  background: #fafafa !important;
+}
+
+.debug-panel-item:last-child {
+  border-bottom: none !important;
+}
+
+.debug-panel-component-name {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #171717 !important;
+  margin-bottom: 1px !important;
+  display: inline !important;
+  margin-right: 6px !important;
+}
+
+.debug-panel-file-path {
+  font-size: 10px !important;
+  color: #737373 !important;
+  word-break: break-all !important;
+  line-height: 1.3 !important;
+  display: inline !important;
+}
+
+/* Props 토글 버튼 */
+.debug-panel-props-toggle {
+  display: block !important;
+  width: 100% !important;
+  margin-top: 4px !important;
+  padding: 3px 6px !important;
+  background: #f5f5f5 !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 3px !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color: #525252 !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  transition: all 0.1s !important;
+}
+
+.debug-panel-props-toggle:hover {
+  background: #e5e5e5 !important;
+  color: #171717 !important;
+}
+
+.debug-panel-props-toggle[aria-expanded="true"] {
+  background: #e0f2fe !important;
+  border-color: #bae6fd !important;
+  color: #0369a1 !important;
+}
+
+/* Props 컨테이너 */
+.debug-panel-props-container {
+  margin-top: 4px !important;
+  padding: 6px !important;
+  background: #fafafa !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 3px !important;
+  overflow: auto !important;
+  max-height: 200px !important;
+}
+
+/* Props JSON */
+.debug-panel-props-json {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 9px !important;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+  line-height: 1.5 !important;
+  color: #404040 !important;
+  white-space: pre !important;
+  overflow-x: auto !important;
+}
+`;
+  function injectStyles() {
+    const style = document.createElement("style");
+    style.setAttribute("type", "text/css");
+    style.setAttribute("data-vite-dev-id", "debug-panel");
+    style.innerHTML = CSS_STYLES;
+    document.head.appendChild(style);
+  }
+  let root = "__ROOT__";
+  let debugMode = 0;
+  let hasPanel = false;
+  function setDebugMode(mode) {
+    debugMode = mode;
+  }
+  function setHasPanel(value) {
+    hasPanel = value;
+  }
+  function getDebugMode() {
+    return debugMode;
+  }
+  function isPanelShown() {
+    return hasPanel;
+  }
+  function getPropsForFiber(fiber) {
+    if (!fiber || !fiber.memoizedProps) return {};
+    const props = { ...fiber.memoizedProps };
+    delete props.key;
+    delete props.ref;
+    delete props.__self;
+    delete props.__source;
+    if (props.children) {
+      if (typeof props.children === "object" && props.children !== null) {
+        if (Array.isArray(props.children)) {
+          props.children = `[${props.children.length} children]`;
+        } else if (props.children.$$typeof) {
+          props.children = "<ReactElement>";
+        }
+      }
+    }
+    return props;
+  }
+  function getLayersForElement(element) {
+    let fiber = getReactInstanceForElement(element);
+    const layers = [];
+    while (fiber) {
+      if (typeof fiber.type === "function") {
+        const path = getPath(fiber);
+        if (path) {
+          const name = fiber.type.displayName ?? fiber.type.name ?? fiber.type.render?.name ?? "Anonymous";
+          layers.push({ name, path, fiber });
+        }
+      }
+      fiber = fiber.return;
+    }
+    return layers;
+  }
+  function getPath(fiber) {
+    const source = fiber._debugSource ?? fiber._debugInfo;
+    if (!source) {
+      console.debug("[Debug Panel] No debug source for fiber", fiber);
+      return void 0;
+    }
+    const { columnNumber = 1, fileName, lineNumber = 1 } = source;
+    return `${fileName}:${lineNumber}:${columnNumber}`;
+  }
+  function getReactInstanceForElement(element) {
+    if ("__REACT_DEVTOOLS_GLOBAL_HOOK__" in window) {
+      const { renderers } = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+      for (const renderer of renderers.values()) {
+        try {
+          const fiber = renderer.findFiberByHostInstance(element);
+          if (fiber) return fiber;
+        } catch {
+        }
+      }
+    }
+    if ("_reactRootContainer" in element) {
+      return element._reactRootContainer._internalRoot.current.child;
+    }
+    for (const key in element) {
+      if (key.startsWith("__reactFiber")) {
+        return element[key];
+      }
+    }
+    return void 0;
+  }
+  function getComponentNameForElement(element) {
+    const layers = getLayersForElement(element);
+    if (layers.length > 0) {
+      const componentName = layers[0].name;
+      return `<${componentName} />`;
+    }
+    let tagName = element.tagName.toLowerCase();
+    if (element.id) {
+      tagName += `#${element.id}`;
+    }
+    if (element.className && typeof element.className === "string") {
+      const firstClass = element.className.split(" ").filter((c) => c.trim())[0];
+      if (firstClass) {
+        tagName += `.${firstClass}`;
+      }
+    }
+    const role = element.getAttribute("role");
+    if (role) {
+      tagName += `[${role}]`;
+    }
+    return tagName;
+  }
+  function getMaxZIndex(target, current) {
+    const parent = target.parentElement;
+    if (!parent || parent === document.body) return current;
+    const zIndex = parseInt(window.getComputedStyle(parent).zIndex);
+    return getMaxZIndex(parent, isNaN(zIndex) ? current : Math.max(zIndex, current));
+  }
+  function getSelectorsForMode(debugMode2) {
+    if (debugMode2 === 1) {
+      return [
+        '[data-component-type="Page"]',
+        '[data-component-type="Section"]',
+        '[data-component-type="Group"]',
+        '[data-component-type="Action"]',
+        '[data-component-type="Item"]',
+        '[data-component-type="Field"]',
+        '[data-component-type="Text"]',
+        '[data-component-type="Overlay"]'
+      ];
+    }
+    if (debugMode2 === 2) {
+      return ["button", '[role="button"]'];
+    }
+    return [];
+  }
+  function shouldExcludeElement(element) {
+    if (element.closest("#debug-panel") || element.closest("#debug-overlay-layer")) {
+      return true;
+    }
+    return false;
+  }
+  function isElementVisible(element) {
+    const rect = element.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
+  }
+  function getIDDLComponentType(element) {
+    return element.dataset.componentType || null;
+  }
+  function calculateBoxPosition(element) {
+    const rect = element.getBoundingClientRect();
+    const computedStyle = window.getComputedStyle(element);
+    return {
+      left: `${rect.left}px`,
+      top: `${rect.top}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`,
+      borderRadius: computedStyle.borderRadius
+    };
+  }
+  function applyBoxPosition(box, position) {
+    box.style.left = position.left;
+    box.style.top = position.top;
+    box.style.width = position.width;
+    box.style.height = position.height;
+    box.style.borderRadius = position.borderRadius;
+  }
+  function findInteractiveElements(selectors) {
+    if (selectors.length === 0) return [];
+    const elements = document.querySelectorAll(selectors.join(","));
+    return Array.from(elements).filter((el) => {
+      return !shouldExcludeElement(el) && isElementVisible(el);
+    });
+  }
+  function createOverlayLayer() {
+    const layer = document.createElement("div");
+    layer.id = "debug-overlay-layer";
+    return layer;
+  }
+  function pulseBoxes(boxes) {
+    boxes.forEach((box) => {
+      box.classList.remove("pulse");
+      void box.offsetWidth;
+      box.classList.add("pulse");
+    });
+    setTimeout(() => {
+      boxes.forEach((box) => {
+        box.classList.remove("pulse");
+      });
+    }, 600);
+  }
+  function getBoxConfig(element, getComponentName) {
+    const iddlType = getIDDLComponentType(element);
+    const displayName = iddlType || getComponentName(element);
+    return {
+      baseClassName: "debug-interactive-box",
+      iddlClassName: iddlType ? `debug-iddl-${iddlType.toLowerCase()}` : void 0,
+      displayName,
+      datasetValue: iddlType || element.tagName.toLowerCase()
+    };
+  }
+  function createOverlayBox(element, config, onClickCallback) {
+    const box = document.createElement("div");
+    box.className = config.baseClassName;
+    if (config.iddlClassName) {
+      box.classList.add(config.iddlClassName);
+    }
+    const label = document.createElement("div");
+    label.className = "debug-box-label";
+    label.textContent = config.displayName;
+    box.appendChild(label);
+    box.dataset.debugBoxFor = config.datasetValue;
+    if (onClickCallback) {
+      box.addEventListener("click", (event) => {
+        event.stopPropagation();
+        onClickCallback(element);
+      });
+    }
+    box.addEventListener("mouseenter", () => {
+      box.classList.add("hover");
+    });
+    box.addEventListener("mouseleave", () => {
+      box.classList.remove("hover");
+    });
+    return box;
+  }
+  class OverlayManager {
+    constructor() {
+      this.interactiveElements = [];
+      this.boxes = /* @__PURE__ */ new Map();
+      this.updateTimer = null;
+      this.observer = null;
+      this.scheduleUpdate = () => {
+        if (this.updateTimer) {
+          cancelAnimationFrame(this.updateTimer);
+        }
+        this.updateTimer = requestAnimationFrame(() => this.updateOverlay());
+      };
+      this.layer = createOverlayLayer();
+      this.setupEventListeners();
+    }
+    /**
+     * Setup event listeners
+     */
+    setupEventListeners() {
+      this.layer.addEventListener("click", (event) => {
+        if (event.target === this.layer) {
+          this.pulseAllBoxes();
+        }
+      });
+    }
+    /**
+     * Pulse all boxes (animation)
+     */
+    pulseAllBoxes() {
+      pulseBoxes(Array.from(this.boxes.values()));
+    }
+    /**
+     * Find interactive elements based on debug mode
+     */
+    findInteractiveElementsForCurrentMode() {
+      const selectors = getSelectorsForMode(getDebugMode());
+      return findInteractiveElements(selectors);
+    }
+    /**
+     * Create overlay box for element
+     */
+    createOverlayBoxForElement(element) {
+      const config = getBoxConfig(element, getComponentNameForElement);
+      const box = createOverlayBox(element, config, (clickedElement) => {
+        const layers = getLayersForElement(clickedElement);
+        if (layers.length === 0) {
+          console.warn("[Debug Panel] No React component found for this element");
+          return;
+        }
+        if (this.onBoxClickCallback) {
+          this.onBoxClickCallback(clickedElement, layers);
+        }
+      });
+      return box;
+    }
+    /**
+     * Update box position to match element
+     */
+    updateBoxPosition(box, element) {
+      const position = calculateBoxPosition(element);
+      applyBoxPosition(box, position);
+    }
+    /**
+     * Update overlay
+     */
+    updateOverlay() {
+      if (getDebugMode() === 0) return;
+      this.interactiveElements = this.findInteractiveElementsForCurrentMode();
+      this.boxes.forEach((box, element) => {
+        if (!this.interactiveElements.includes(element)) {
+          box.remove();
+          this.boxes.delete(element);
+        }
+      });
+      this.interactiveElements.forEach((element) => {
+        let box = this.boxes.get(element);
+        if (!box) {
+          box = this.createOverlayBoxForElement(element);
+          this.layer.appendChild(box);
+          this.boxes.set(element, box);
+        }
+        this.updateBoxPosition(box, element);
+      });
+    }
+    /**
+     * Enable overlay
+     */
+    enable() {
+      if (!this.layer.parentNode) {
+        document.body.appendChild(this.layer);
+      }
+      this.updateOverlay();
+      window.addEventListener("scroll", this.scheduleUpdate, true);
+      window.addEventListener("resize", this.scheduleUpdate);
+      if (!this.observer) {
+        this.observer = new MutationObserver(this.scheduleUpdate);
+        this.observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["style", "class"]
+        });
+        window.__debugOverlayObserver = this.observer;
+      }
+    }
+    /**
+     * Disable overlay
+     */
+    disable() {
+      if (this.layer.parentNode) {
+        this.layer.parentNode.removeChild(this.layer);
+      }
+      this.boxes.forEach((box) => box.remove());
+      this.boxes.clear();
+      this.interactiveElements = [];
+      window.removeEventListener("scroll", this.scheduleUpdate, true);
+      window.removeEventListener("resize", this.scheduleUpdate);
+      if (this.observer) {
+        this.observer.disconnect();
+        delete window.__debugOverlayObserver;
+        this.observer = null;
+      }
+    }
+    /**
+     * Clear current target
+     */
+    clearTarget() {
+      return;
+    }
+    /**
+     * Set box click callback
+     */
+    onBoxClick(callback) {
+      this.onBoxClickCallback = callback;
+    }
+  }
+  class PanelManager {
+    constructor() {
+      this.element = this.createPanel();
+    }
+    /**
+     * Create panel element
+     */
+    createPanel() {
+      const panel = document.createElement("div");
+      panel.id = "debug-panel";
+      return panel;
+    }
+    /**
+     * Show panel at target position
+     */
+    show(target, layers) {
+      const zIndex = getMaxZIndex(target, 9997);
+      if (zIndex > 9997) this.element.style.zIndex = `${zIndex + 1}`;
+      const rect = target.getBoundingClientRect();
+      if (rect.bottom < window.innerHeight / 2) {
+        this.element.style.top = `${rect.bottom + 8}px`;
+        this.element.style.bottom = "";
+        this.element.style.maxHeight = `${window.innerHeight - rect.bottom - 24}px`;
+      } else {
+        this.element.style.bottom = `${window.innerHeight - rect.top + 8}px`;
+        this.element.style.top = "";
+        this.element.style.maxHeight = `${rect.top - 24}px`;
+      }
+      if (rect.left < window.innerWidth / 2) {
+        this.element.style.left = `${rect.left}px`;
+        this.element.style.right = "";
+      } else {
+        this.element.style.right = `${window.innerWidth - rect.right}px`;
+        this.element.style.left = "";
+      }
+      this.element.innerHTML = "";
+      const header = document.createElement("div");
+      header.id = "debug-panel-header";
+      const title = document.createElement("div");
+      title.id = "debug-panel-title";
+      title.textContent = "Component Hierarchy";
+      header.appendChild(title);
+      const closeBtn = document.createElement("button");
+      closeBtn.id = "debug-panel-close";
+      closeBtn.textContent = "×";
+      closeBtn.addEventListener("click", () => this.close());
+      header.appendChild(closeBtn);
+      this.element.appendChild(header);
+      for (const layer of layers) {
+        const item = this.createComponentItem(layer);
+        this.element.appendChild(item);
+      }
+      if (!isPanelShown()) {
+        document.body.appendChild(this.element);
+        setHasPanel(true);
+      }
+    }
+    /**
+     * Create component item element
+     */
+    createComponentItem(layer) {
+      const item = document.createElement("div");
+      item.className = "debug-panel-item";
+      const componentName = document.createElement("div");
+      componentName.className = "debug-panel-component-name";
+      componentName.textContent = `<${layer.name} />`;
+      item.appendChild(componentName);
+      const filePath = document.createElement("div");
+      filePath.className = "debug-panel-file-path";
+      filePath.textContent = layer.path.replace(`${root}/`, "");
+      item.appendChild(filePath);
+      if (layer.fiber) {
+        const props = getPropsForFiber(layer.fiber);
+        const propsKeys = Object.keys(props);
+        if (propsKeys.length > 0) {
+          const { toggle, container } = this.createPropsSection(props, propsKeys.length);
+          item.appendChild(toggle);
+          item.appendChild(container);
+        }
+      }
+      return item;
+    }
+    /**
+     * Create props section with toggle
+     */
+    createPropsSection(props, count) {
+      const toggle = document.createElement("button");
+      toggle.className = "debug-panel-props-toggle";
+      toggle.textContent = `Props (${count})`;
+      toggle.setAttribute("aria-expanded", "false");
+      const container = document.createElement("div");
+      container.className = "debug-panel-props-container";
+      container.style.display = "none";
+      const propsJson = document.createElement("pre");
+      propsJson.className = "debug-panel-props-json";
+      propsJson.textContent = JSON.stringify(props, null, 2);
+      container.appendChild(propsJson);
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!isExpanded));
+        container.style.display = isExpanded ? "none" : "block";
+      });
+      return { toggle, container };
+    }
+    /**
+     * Close panel
+     */
+    close() {
+      if (!isPanelShown()) return;
+      if (this.element.parentNode) {
+        document.body.removeChild(this.element);
+      }
+      setHasPanel(false);
+    }
+    /**
+     * Get panel element
+     */
+    getElement() {
+      return this.element;
+    }
+  }
+  class KeyboardManager {
+    constructor() {
+      this.setupEventListeners();
+    }
+    /**
+     * Setup keyboard event listeners
+     */
+    setupEventListeners() {
+      window.addEventListener("keydown", (event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key === "d") {
+          event.preventDefault();
+          this.toggleDebugMode();
+        }
+        if (event.key === "Escape" && isPanelShown()) {
+          if (this.onPanelCloseCallback) {
+            this.onPanelCloseCallback();
+          }
+        }
+      });
+      this.setupKeyboardBlocking();
+    }
+    /**
+     * Setup keyboard event blocking
+     */
+    setupKeyboardBlocking() {
+      const blockingEvents = ["keydown", "keypress", "keyup", "input"];
+      blockingEvents.forEach((eventType) => {
+        window.addEventListener(
+          eventType,
+          (event) => {
+            if (getDebugMode() === 0) return;
+            const target = event.target;
+            if (!(target instanceof HTMLElement)) return;
+            if (target.closest("#debug-panel")) {
+              return;
+            }
+            if (eventType === "keydown" && (event.metaKey || event.ctrlKey) && event.key === "d") {
+              return;
+            }
+            if (eventType === "keydown" && event.key === "Escape") {
+              return;
+            }
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+          },
+          true
+          // Capture phase
+        );
+      });
+    }
+    /**
+     * Toggle debug mode (0 -> 1 -> 2 -> 0)
+     */
+    toggleDebugMode() {
+      const current = getDebugMode();
+      const next = (current + 1) % 3;
+      setDebugMode(next);
+      if (next === 0) {
+        document.body.removeAttribute("data-debug-mode");
+        console.log("[Debug Panel] Debug mode OFF");
+      } else if (next === 1) {
+        document.body.setAttribute("data-debug-mode", "1");
+        console.log("[Debug Panel] Debug mode: ALL");
+      } else if (next === 2) {
+        document.body.setAttribute("data-debug-mode", "2");
+        console.log("[Debug Panel] Debug mode: BTN");
+      }
+      if (this.onDebugModeChangeCallback) {
+        this.onDebugModeChangeCallback(next);
+      }
+    }
+    /**
+     * Set debug mode change callback
+     */
+    onDebugModeChange(callback) {
+      this.onDebugModeChangeCallback = callback;
+    }
+    /**
+     * Set panel close callback
+     */
+    onPanelClose(callback) {
+      this.onPanelCloseCallback = callback;
+    }
+  }
+  class DebugPanelApp {
+    constructor() {
+      injectStyles();
+      this.overlay = new OverlayManager();
+      this.panel = new PanelManager();
+      this.keyboard = new KeyboardManager();
+      this.setupEventHandlers();
+    }
+    /**
+     * Setup event handlers between modules
+     */
+    setupEventHandlers() {
+      this.keyboard.onDebugModeChange((mode) => {
+        if (mode === 0) {
+          this.overlay.disable();
+          this.overlay.clearTarget();
+          this.panel.close();
+        } else if (mode === 1) {
+          this.overlay.enable();
+        } else if (mode === 2) {
+          this.overlay.updateOverlay();
+        }
+      });
+      this.keyboard.onPanelClose(() => {
+        this.panel.close();
+      });
+      this.overlay.onBoxClick((element, layers) => {
+        this.panel.show(element, layers);
+      });
+    }
+  }
+  function init() {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        new DebugPanelApp();
+      });
+    } else {
+      new DebugPanelApp();
+    }
+  }
+  init();
+})();

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Layout } from '@/components/ui/Layout';
-import { Button } from '@/components/ui/Button';
+import { Section } from '@/components/dsl/Section';
+import { Button } from '@/components/ui';
 import {
   X,
   Palette,
@@ -134,7 +134,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
           <select
             value={setting.value}
             onChange={(e) => handleSettingChange(setting.id, e.target.value)}
-            className="px-3 py-1.5 text-sm bg-layer-0 text-text rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
+            className="px-3 py-1.5 text-sm bg-surface-base text-text rounded-md focus:outline-none focus:ring-1 focus:ring-accent"
           >
             {setting.options?.map((option) => (
               <option key={option.value} value={option.value}>
@@ -153,7 +153,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
               'relative w-11 h-6 rounded-full',
               {
                 'bg-accent': setting.value,
-                'bg-layer-0': !setting.value,
+                'bg-surface-base': !setting.value,
               }
             )}
           >
@@ -185,7 +185,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
               }
               className="flex-1"
             />
-            <span className="text-sm text-text-secondary w-12 text-right">
+            <span className="text-sm text-muted w-12 text-right">
               {setting.value}
               {setting.id === 'fontSize' ? 'px' : ''}
             </span>
@@ -206,12 +206,12 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
         onClick={onClose}
       />
 
-      <Layout
-        depth={6}
+      <Section role="Container"
+        prominence="Hero"
         className="relative w-full max-w-4xl h-[600px] flex flex-col overflow-hidden"
       >
           {/* Header */}
-          <Layout depth={1} rounded={false} className="px-6 py-4">
+          <Section role="Container" prominence="Tertiary" className="px-6 py-4">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-text">Settings</h2>
               <Button
@@ -219,17 +219,17 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
                 onClick={onClose}
                 className="h-auto p-1.5"
               >
-                <X size={18} className="text-text-secondary" />
+                <X size={18} className="text-muted" />
               </Button>
             </div>
-          </Layout>
+          </Section>
 
           {/* Content */}
           <div className="flex flex-1 overflow-hidden">
             {/* Sidebar */}
-            <Layout
-              depth={1}
-              rounded={false}
+            <Section role="Container"
+              prominence="Tertiary"
+             
               className="w-56 overflow-y-auto"
             >
               <div className="p-2">
@@ -254,7 +254,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
                   );
                 })}
               </div>
-            </Layout>
+            </Section>
 
             {/* Settings Panel */}
             <div className="flex-1 overflow-y-auto p-6">
@@ -275,7 +275,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
                 ))}
 
                 {getSettingsForCategory(activeCategory).length === 0 && (
-                  <div className="text-center text-text-tertiary py-12">
+                  <div className="text-center text-subtle py-12">
                     Settings for this category are coming soon...
                   </div>
                 )}
@@ -284,7 +284,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
           </div>
 
           {/* Footer */}
-          <Layout depth={1} rounded={false} className="px-6 py-4">
+          <Section role="Container" prominence="Tertiary" className="px-6 py-4">
             <div className="flex items-center justify-end gap-3">
               <Button
                 variant="ghost"
@@ -299,8 +299,8 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
                 Apply
               </Button>
             </div>
-          </Layout>
-        </Layout>
+          </Section>
+        </Section>
     </div>
   );
 };

@@ -1,0 +1,42 @@
+{
+  "id": "page-simple-1",
+  "type": "page",
+  "children": [
+    {
+      "id": "region-main-1",
+      "type": "region",
+      "role": "main",
+      "className": "px-6 py-8",
+      "children": [
+        {
+          "id": "section-welcome-1",
+          "type": "section",
+          "prominence": 1,
+          "children": [
+            {
+              "id": "group-welcome-1",
+              "type": "group",
+              "purpose": "content",
+              "children": [
+                {
+                  "id": "text-title-1",
+                  "type": "text",
+                  "role": "Title",
+                  "prominence": 1,
+                  "content": "Welcome to DSL Builder"
+                },
+                {
+                  "id": "text-subtitle-1",
+                  "type": "text",
+                  "role": "Body",
+                  "prominence": 2,
+                  "content": "Start building your layout by dragging nodes in the tree or using the + button."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

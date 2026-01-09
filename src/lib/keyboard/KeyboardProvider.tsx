@@ -122,7 +122,7 @@ export const KeyboardProvider = ({
         s.enabled !== false
     );
 
-    if (conflicts.length > 0 && process.env.NODE_ENV === 'development') {
+    if (conflicts.length > 0 && import.meta.env.DEV) {
       console.warn(
         `[KeyboardProvider] Potential conflict detected for key "${shortcut.key}":`,
         {

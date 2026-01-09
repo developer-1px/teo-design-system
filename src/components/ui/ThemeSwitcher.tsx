@@ -8,8 +8,8 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Layer } from '@/components/ui/Layer';
-import { IconButton } from '@/components/ui/IconButton';
+import { Section } from '@/components/dsl/Section';
+import { IconButton } from '@/components/ui';
 import {
   Sun as SunIcon,
   Moon as MoonIcon,
@@ -63,7 +63,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
   };
 
   return (
-    <Layer level={4} rounded className="w-80 p-4 z-50">
+    <Section role="Container" prominence="Hero" className="w-80 p-4 z-50">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold">Theme Settings</h3>
@@ -76,7 +76,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
 
       {/* Light/Dark Toggle */}
       <div className="mb-6">
-        <div className="text-xs font-medium text-text-secondary mb-2">
+        <div className="text-xs font-medium text-muted mb-2">
           Appearance
         </div>
         <div className="grid grid-cols-2 gap-2">
@@ -89,8 +89,8 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
             className={cn(
               'flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm',
               config.theme === 'light'
-                ? 'bg-accent text-text-inverse'
-                : 'bg-layer-1 layer-4-interactive'
+                ? 'bg-primary text-inverse'
+                : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
             )}
           >
             <SunIcon size={16} />
@@ -105,8 +105,8 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
             className={cn(
               'flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm',
               config.theme === 'dark'
-                ? 'bg-accent text-text-inverse'
-                : 'bg-layer-1 layer-4-interactive'
+                ? 'bg-primary text-inverse'
+                : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
             )}
           >
             <MoonIcon size={16} />
@@ -117,7 +117,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
 
       {/* Color Scheme */}
       <div className="mb-6">
-        <div className="text-xs font-medium text-text-secondary mb-2">
+        <div className="text-xs font-medium text-muted mb-2">
           Color Scheme
         </div>
         <div className="grid grid-cols-2 gap-2">
@@ -128,8 +128,8 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
               className={cn(
                 'flex items-center gap-2 px-3 py-2 rounded-md text-sm',
                 config.colorScheme === scheme.value
-                  ? 'bg-accent text-text-inverse'
-                  : 'bg-layer-1 layer-4-interactive'
+                  ? 'bg-primary text-inverse'
+                  : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
               )}
             >
               <div
@@ -144,7 +144,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
 
       {/* Density */}
       <div>
-        <div className="text-xs font-medium text-text-secondary mb-2">
+        <div className="text-xs font-medium text-muted mb-2">
           Density
         </div>
         <div className="space-y-1">
@@ -155,8 +155,8 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
               className={cn(
                 'w-full flex items-center justify-between px-3 py-2 rounded-md text-sm',
                 config.density === density.value
-                  ? 'bg-accent text-text-inverse'
-                  : 'bg-layer-1 layer-4-interactive'
+                  ? 'bg-primary text-inverse'
+                  : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
               )}
             >
               <div>
@@ -170,7 +170,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
           ))}
         </div>
       </div>
-    </Layer>
+    </Section>
   );
 };
 
@@ -187,7 +187,7 @@ export const ThemeToggleButton = () => {
   };
 
   return (
-    <IconButton layer={4} onClick={handleToggle} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
+    <IconButton onClick={handleToggle} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
       {theme === 'light' ? <MoonIcon size={16} /> : <SunIcon size={16} />}
     </IconButton>
   );

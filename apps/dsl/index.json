@@ -1,0 +1,28 @@
+{
+  "templates": [
+    {
+      "id": "simple",
+      "name": "Simple Page",
+      "description": "A minimal starting template",
+      "file": "simple-page.json"
+    },
+    {
+      "id": "landing",
+      "name": "Landing Page",
+      "description": "Marketing landing page with hero and features",
+      "file": "landing-page.json"
+    },
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "description": "Admin dashboard with sidebar and stats",
+      "file": "dashboard.json"
+    },
+    {
+      "id": "form",
+      "name": "Form Example",
+      "description": "User registration form",
+      "file": "form-example.json"
+    }
+  ]
+}

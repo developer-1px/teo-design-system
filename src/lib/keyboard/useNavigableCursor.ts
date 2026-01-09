@@ -5,7 +5,7 @@
  */
 
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { NavigationOptions, CursorPosition, NavigationType } from './types';
+import { NavigationOptions, CursorPosition } from './types';
 
 interface UseNavigableCursorReturn<T> {
   /** 현재 커서 인덱스 */
@@ -68,11 +68,11 @@ export const useNavigableCursor = <T,>(
   } = options;
 
   const [cursorIndex, setCursorIndex] = useState(initialIndex);
-  const [cursorPosition, setCursorPosition] = useState<CursorPosition>({
-    index: initialIndex,
+  const cursorPosition: CursorPosition = {
+    index: cursorIndex,
     row: 0,
     col: 0,
-  });
+  };
 
   // 범위 체크
   const clampIndex = useCallback(

@@ -6,7 +6,7 @@ import {
   Info,
   X,
 } from 'lucide-react';
-import { IconButton } from '@/components/ui/IconButton';
+import { IconButton } from '@/components/ui';
 
 interface RightNavProps {
   onViewChange?: (view: string | null) => void;

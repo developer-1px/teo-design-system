@@ -1,0 +1,709 @@
+{
+  "id": "page-landing-1",
+  "type": "page",
+  "children": [
+    {
+      "id": "region-header-1",
+      "type": "region",
+      "role": "header",
+      "className": "px-6 py-4 border-b border-border",
+      "children": [
+        {
+          "id": "section-nav-1",
+          "type": "section",
+          "prominence": 2,
+          "children": [
+            {
+              "id": "group-nav-1",
+              "type": "group",
+              "purpose": "navigation",
+              "direction": "horizontal",
+              "className": "justify-between",
+              "children": [
+                {
+                  "id": "text-logo-1",
+                  "type": "text",
+                  "role": "Title",
+                  "prominence": 1,
+                  "content": "icon:Box MyApp"
+                },
+                {
+                  "id": "group-nav-links-1",
+                  "type": "group",
+                  "purpose": "navigation",
+                  "direction": "horizontal",
+                  "children": [
+                    {
+                      "id": "text-nav-home",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 1,
+                      "content": "Home"
+                    },
+                    {
+                      "id": "text-nav-features",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 2,
+                      "content": "Features"
+                    },
+                    {
+                      "id": "text-nav-pricing",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 2,
+                      "content": "Pricing"
+                    },
+                    {
+                      "id": "text-nav-about",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 2,
+                      "content": "About"
+                    },
+                    {
+                      "id": "action-nav-contact",
+                      "type": "action",
+                      "label": "Get Started",
+                      "prominence": 1,
+                      "behavior": { "action": "navigate", "href": "/get-started" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "region-main-1",
+      "type": "region",
+      "role": "main",
+      "className": "px-6",
+      "children": [
+        {
+          "id": "section-hero-1",
+          "type": "section",
+          "prominence": 1,
+          "className": "py-24",
+          "children": [
+            {
+              "id": "group-hero-content-1",
+              "type": "group",
+              "purpose": "content",
+              "className": "text-center max-w-4xl mx-auto",
+              "children": [
+                {
+                  "id": "text-hero-badge",
+                  "type": "text",
+                  "role": "Caption",
+                  "prominence": 2,
+                  "content": "icon:Sparkles New: Visual DSL Builder v2.0"
+                },
+                {
+                  "id": "text-hero-title",
+                  "type": "text",
+                  "role": "Title",
+                  "prominence": 1,
+                  "content": "Build Amazing Products with DSL",
+                  "className": "text-5xl font-bold mt-4"
+                },
+                {
+                  "id": "text-hero-subtitle",
+                  "type": "text",
+                  "role": "Body",
+                  "prominence": 2,
+                  "content": "The visual design system that helps you create beautiful, accessible layouts without writing code. Built for designers and developers.",
+                  "className": "text-xl mt-6"
+                }
+              ]
+            },
+            {
+              "id": "group-hero-cta-1",
+              "type": "group",
+              "purpose": "action",
+              "direction": "horizontal",
+              "className": "mt-8 justify-center",
+              "children": [
+                {
+                  "id": "action-cta-primary",
+                  "type": "action",
+                  "label": "Get Started Free",
+                  "icon": "Rocket",
+                  "prominence": 1,
+                  "behavior": { "action": "navigate", "href": "/signup" }
+                },
+                {
+                  "id": "action-cta-secondary",
+                  "type": "action",
+                  "label": "Watch Demo",
+                  "icon": "PlayCircle",
+                  "prominence": 2,
+                  "behavior": { "action": "navigate", "href": "/demo" }
+                }
+              ]
+            },
+            {
+              "id": "group-hero-stats-1",
+              "type": "group",
+              "purpose": "info",
+              "direction": "horizontal",
+              "className": "mt-12 justify-center gap-12",
+              "children": [
+                {
+                  "id": "group-stat-users",
+                  "type": "group",
+                  "purpose": "info",
+                  "children": [
+                    {
+                      "id": "text-stat-users-value",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 1,
+                      "content": "10,000+",
+                      "className": "text-3xl font-bold"
+                    },
+                    {
+                      "id": "text-stat-users-label",
+                      "type": "text",
+                      "role": "Label",
+                      "prominence": 3,
+                      "content": "Active Users"
+                    }
+                  ]
+                },
+                {
+                  "id": "group-stat-projects",
+                  "type": "group",
+                  "purpose": "info",
+                  "children": [
+                    {
+                      "id": "text-stat-projects-value",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 1,
+                      "content": "50,000+",
+                      "className": "text-3xl font-bold"
+                    },
+                    {
+                      "id": "text-stat-projects-label",
+                      "type": "text",
+                      "role": "Label",
+                      "prominence": 3,
+                      "content": "Projects Created"
+                    }
+                  ]
+                },
+                {
+                  "id": "group-stat-rating",
+                  "type": "group",
+                  "purpose": "info",
+                  "children": [
+                    {
+                      "id": "text-stat-rating-value",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 1,
+                      "content": "4.9/5",
+                      "className": "text-3xl font-bold"
+                    },
+                    {
+                      "id": "text-stat-rating-label",
+                      "type": "text",
+                      "role": "Label",
+                      "prominence": 3,
+                      "content": "User Rating"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-features-1",
+          "type": "section",
+          "prominence": 2,
+          "className": "py-24",
+          "children": [
+            {
+              "id": "group-features-title-1",
+              "type": "group",
+              "purpose": "content",
+              "className": "text-center mb-16",
+              "children": [
+                {
+                  "id": "text-features-subtitle",
+                  "type": "text",
+                  "role": "Caption",
+                  "prominence": 2,
+                  "content": "FEATURES"
+                },
+                {
+                  "id": "text-features-title",
+                  "type": "text",
+                  "role": "Title",
+                  "prominence": 1,
+                  "content": "Everything you need to build fast",
+                  "className": "text-4xl font-bold mt-2"
+                },
+                {
+                  "id": "text-features-desc",
+                  "type": "text",
+                  "role": "Body",
+                  "prominence": 2,
+                  "content": "Powerful features that help you ship faster and better",
+                  "className": "text-lg mt-4"
+                }
+              ]
+            },
+            {
+              "id": "group-features-grid-1",
+              "type": "group",
+              "purpose": "content",
+              "className": "grid grid-cols-3 gap-8",
+              "children": [
+                {
+                  "id": "section-feature-1",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-feature-1",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-feature-1-icon",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "icon:Zap",
+                          "className": "text-3xl mb-4"
+                        },
+                        {
+                          "id": "text-feature-1-title",
+                          "type": "text",
+                          "role": "Title",
+                          "prominence": 1,
+                          "content": "Lightning Fast"
+                        },
+                        {
+                          "id": "text-feature-1-desc",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 2,
+                          "content": "Build layouts 10x faster with our intuitive visual builder and real-time preview"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "section-feature-2",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-feature-2",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-feature-2-icon",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "icon:Palette",
+                          "className": "text-3xl mb-4"
+                        },
+                        {
+                          "id": "text-feature-2-title",
+                          "type": "text",
+                          "role": "Title",
+                          "prominence": 1,
+                          "content": "Design Consistency"
+                        },
+                        {
+                          "id": "text-feature-2-desc",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 2,
+                          "content": "Automatic styling based on purpose and prominence for consistent UI"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "section-feature-3",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-feature-3",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-feature-3-icon",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "icon:Download",
+                          "className": "text-3xl mb-4"
+                        },
+                        {
+                          "id": "text-feature-3-title",
+                          "type": "text",
+                          "role": "Title",
+                          "prominence": 1,
+                          "content": "Export & Share"
+                        },
+                        {
+                          "id": "text-feature-3-desc",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 2,
+                          "content": "Export your designs as JSON and share with your team instantly"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "section-feature-4",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-feature-4",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-feature-4-icon",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "icon:Code",
+                          "className": "text-3xl mb-4"
+                        },
+                        {
+                          "id": "text-feature-4-title",
+                          "type": "text",
+                          "role": "Title",
+                          "prominence": 1,
+                          "content": "Developer Friendly"
+                        },
+                        {
+                          "id": "text-feature-4-desc",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 2,
+                          "content": "Built on React and TypeScript with full type safety and modern tooling"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "section-feature-5",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-feature-5",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-feature-5-icon",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "icon:Accessibility",
+                          "className": "text-3xl mb-4"
+                        },
+                        {
+                          "id": "text-feature-5-title",
+                          "type": "text",
+                          "role": "Title",
+                          "prominence": 1,
+                          "content": "Accessible by Default"
+                        },
+                        {
+                          "id": "text-feature-5-desc",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 2,
+                          "content": "WCAG 2.1 compliant with semantic HTML and ARIA attributes built-in"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "section-feature-6",
+                  "type": "section",
+                  "prominence": 2,
+                  "children": [
+                    {
+                      "id": "group-feature-6",
+                      "type": "group",
+                      "purpose": "info",
+                      "children": [
+                        {
+                          "id": "text-feature-6-icon",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 1,
+                          "content": "icon:Users",
+                          "className": "text-3xl mb-4"
+                        },
+                        {
+                          "id": "text-feature-6-title",
+                          "type": "text",
+                          "role": "Title",
+                          "prominence": 1,
+                          "content": "Team Collaboration"
+                        },
+                        {
+                          "id": "text-feature-6-desc",
+                          "type": "text",
+                          "role": "Body",
+                          "prominence": 2,
+                          "content": "Real-time collaboration features for seamless teamwork and productivity"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "section-cta-1",
+          "type": "section",
+          "prominence": 1,
+          "className": "py-24",
+          "children": [
+            {
+              "id": "group-cta-content-1",
+              "type": "group",
+              "purpose": "content",
+              "className": "text-center max-w-3xl mx-auto",
+              "children": [
+                {
+                  "id": "text-cta-title",
+                  "type": "text",
+                  "role": "Title",
+                  "prominence": 1,
+                  "content": "Ready to get started?",
+                  "className": "text-4xl font-bold"
+                },
+                {
+                  "id": "text-cta-subtitle",
+                  "type": "text",
+                  "role": "Body",
+                  "prominence": 2,
+                  "content": "Join thousands of developers and designers using DSL to build better products faster",
+                  "className": "text-lg mt-4"
+                },
+                {
+                  "id": "group-cta-actions",
+                  "type": "group",
+                  "purpose": "action",
+                  "direction": "horizontal",
+                  "className": "mt-8 justify-center",
+                  "children": [
+                    {
+                      "id": "action-cta-btn-primary",
+                      "type": "action",
+                      "label": "Start Free Trial",
+                      "prominence": 1,
+                      "behavior": { "action": "navigate", "href": "/trial" }
+                    },
+                    {
+                      "id": "action-cta-btn-secondary",
+                      "type": "action",
+                      "label": "Talk to Sales",
+                      "prominence": 2,
+                      "behavior": { "action": "navigate", "href": "/contact-sales" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "region-footer-1",
+      "type": "region",
+      "role": "footer",
+      "className": "px-6 py-12 border-t border-border",
+      "children": [
+        {
+          "id": "section-footer-1",
+          "type": "section",
+          "prominence": 3,
+          "children": [
+            {
+              "id": "group-footer-content-1",
+              "type": "group",
+              "purpose": "content",
+              "className": "grid grid-cols-4 gap-8",
+              "children": [
+                {
+                  "id": "group-footer-brand",
+                  "type": "group",
+                  "purpose": "content",
+                  "children": [
+                    {
+                      "id": "text-footer-logo",
+                      "type": "text",
+                      "role": "Body",
+                      "prominence": 1,
+                      "content": "icon:Box MyApp"
+                    },
+                    {
+                      "id": "text-footer-tagline",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Build better, ship faster"
+                    }
+                  ]
+                },
+                {
+                  "id": "group-footer-product",
+                  "type": "group",
+                  "purpose": "navigation",
+                  "children": [
+                    {
+                      "id": "text-footer-product-title",
+                      "type": "text",
+                      "role": "Label",
+                      "prominence": 2,
+                      "content": "Product"
+                    },
+                    {
+                      "id": "text-footer-product-1",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Features"
+                    },
+                    {
+                      "id": "text-footer-product-2",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Pricing"
+                    },
+                    {
+                      "id": "text-footer-product-3",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Changelog"
+                    }
+                  ]
+                },
+                {
+                  "id": "group-footer-company",
+                  "type": "group",
+                  "purpose": "navigation",
+                  "children": [
+                    {
+                      "id": "text-footer-company-title",
+                      "type": "text",
+                      "role": "Label",
+                      "prominence": 2,
+                      "content": "Company"
+                    },
+                    {
+                      "id": "text-footer-company-1",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "About"
+                    },
+                    {
+                      "id": "text-footer-company-2",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Blog"
+                    },
+                    {
+                      "id": "text-footer-company-3",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Careers"
+                    }
+                  ]
+                },
+                {
+                  "id": "group-footer-legal",
+                  "type": "group",
+                  "purpose": "navigation",
+                  "children": [
+                    {
+                      "id": "text-footer-legal-title",
+                      "type": "text",
+                      "role": "Label",
+                      "prominence": 2,
+                      "content": "Legal"
+                    },
+                    {
+                      "id": "text-footer-legal-1",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Privacy"
+                    },
+                    {
+                      "id": "text-footer-legal-2",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Terms"
+                    },
+                    {
+                      "id": "text-footer-legal-3",
+                      "type": "text",
+                      "role": "Caption",
+                      "prominence": 3,
+                      "content": "Security"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "group-footer-bottom",
+              "type": "group",
+              "purpose": "content",
+              "className": "text-center mt-12 pt-8 border-t border-border",
+              "children": [
+                {
+                  "id": "text-footer-copyright",
+                  "type": "text",
+                  "role": "Caption",
+                  "prominence": 3,
+                  "content": "© 2025 MyApp. Built with DSL Design System. All rights reserved."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
