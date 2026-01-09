@@ -302,6 +302,7 @@ type ActionBehavior =
 | `type` | `'Group'` | ✓ | 노드 타입 식별자 |
 | `role` | `GroupRole` | ✓ | 기능적 역할 |
 | `children` | `Node[]` | ✓ | 자식 노드 배열 |
+| `value` | `string \| number` | | **선택 가능한 아이템의 고유 식별자** (v1.0.2)<br/>value가 있으면 Group은 선택 가능한 항목(Selectable Item)이 되며,<br/>hover, focus, selected 상태가 자동으로 관리됩니다.<br/>**멘탈 모델:** HTML의 `<option value="1">`과 동일 |
 | `density` | `Density` | | 내부 간격 |
 | `layout` | `Layout` | | 배치 방향 (role에 따라 기본값 다름) |
 | `state` | `LoadState` | | 데이터 로딩 상태 |
@@ -522,6 +523,86 @@ interface BaseNode {
 
 ---
 
+## 6.5. Selection Model (v1.0.2)
+
+**"선택 가능한 아이템 집합 관리"**
+
+Group이 선택 가능한 항목들을 관리할 때 사용하는 모델입니다.
+
+### 6.5.1. 개념
+
+**핵심 원칙:** "선택 가능한 모든 것은 value를 가진다"
+
+- Group에 `value` prop이 있으면 → 선택 가능한 항목(Selectable Item)
+- 부모 Group에 `selectionModel`을 전달하면 → 자식들의 선택 상태를 관리
+- **멘탈 모델:** HTML의 `<select>` 안의 `<option value="1">`과 동일
+
+### 6.5.2. Selection Model 인터페이스
+
+```typescript
+interface SelectionModel {
+  // 현재 선택된 값들의 집합
+  selectedValues: Set<string | number>;
+
+  // 특정 값이 선택되었는지 확인
+  isSelected: (value: string | number) => boolean;
+
+  // 선택 조작 (optional)
+  select?: (value: string | number) => void;
+  deselect?: (value: string | number) => void;
+  toggle?: (value: string | number) => void;
+
+  // 아이템 클릭 핸들러 (modifier keys 자동 처리)
+  handleItemClick?: (value: string | number, event: React.MouseEvent) => void;
+}
+```
+
+### 6.5.3. 자동 처리되는 기능
+
+Group에 `value`가 있고 부모에 `selectionModel`이 있으면 다음이 자동으로 처리됩니다:
+
+1. **Interactive States**: hover, focus, selected 스타일
+2. **ARIA Attributes**: `role="option"`, `aria-selected`, `tabIndex`
+3. **Event Handlers**: onClick (modifier keys 지원)
+4. **Keyboard Navigation**: 방향키, 엔터, 스페이스
+
+### 6.5.4. 사용 예시
+
+```tsx
+// 1. Selection Model 생성 (useSelection hook)
+const selection = useSelection({
+  items: slides,
+  getId: (slide) => slide.id,
+  onCopy: handleCopy,
+  onCut: handleCut,
+  onDelete: handleDelete,
+});
+
+// 2. 부모 Group에 selectionModel 전달
+<Group role="List" selectionModel={selection}>
+  {slides.map((slide) => (
+    // 3. 자식 Group에 value 지정 (선택 가능해짐)
+    <Group key={slide.id} role="Card" value={slide.id}>
+      <SlidePreview slide={slide} />
+    </Group>
+  ))}
+</Group>
+```
+
+**결과:**
+- 클릭: 단일 선택
+- Cmd/Ctrl + 클릭: 멀티 선택 (토글)
+- Shift + 클릭: 범위 선택
+- Cmd+C: 복사
+- Cmd+X: 잘라내기
+- Delete: 삭제
+- Cmd+A: 전체 선택
+- ESC: 선택 해제
+
+모두 자동으로 처리됩니다.
+
+---
+
 ## 7. TypeScript Interface Definition (Normative)
 
 ```typescript
@@ -533,7 +614,7 @@ interface BaseNode {
 // Design Tokens
 // ============================================
 
-export type Prominence = 'Hero' | 'Primary' | 'Secondary' | 'Tertiary';
+export type Prominence = 'Hero' | 'Standard' | 'Strong' | 'Subtle';
 export type Intent = 'Neutral' | 'Brand' | 'Positive' | 'Caution' | 'Critical' | 'Info';
 export type Density = 'Comfortable' | 'Standard' | 'Compact';
 
@@ -1217,16 +1298,16 @@ IDDL 스키마를 실제 UI로 변환하는 렌더러 구현 시 고려사항:
 ```typescript
 const prominenceToButton = {
   Hero: 'full-width solid with elevated shadow',
-  Primary: 'solid',
-  Secondary: 'outline',
-  Tertiary: 'ghost/link'
+  Standard: 'solid',
+  Strong: 'outline',
+  Subtle: 'ghost/link'
 };
 
 const prominenceToText = {
   Hero: 'display/h1',
-  Primary: 'h2/h3',
-  Secondary: 'h4/body-large',
-  Tertiary: 'body/caption'
+  Standard: 'h2/h3',
+  Strong: 'h4/body-large',
+  Subtle: 'body/caption'
 };
 ```
 
@@ -1286,3 +1367,121 @@ Requirements:
 
 Generate IDDL JSON:
 ```
+
+---
+
+## Appendix D: Section v4.1 Implementation Notes (2026-01-09)
+
+### D.1. Overview
+
+IDDL v4.1 구현에서 **Section Role Configuration 중앙화**를 도입했습니다. 이는 스펙의 변경이 아닌 구현 최적화이며, IDDL 스펙은 그대로 유지됩니다.
+
+### D.2. Key Changes
+
+#### Before (v4.0): Distributed Configuration
+
+```typescript
+// Section.tsx
+const roleToTag = { Header: 'header', ... };
+const roleToAria = { Navigator: { role: 'navigation' }, ... };
+
+// Renderer
+const roleStyles = {
+  PrimarySidebar: 'flex flex-col w-64 overflow-y-auto',
+  // ... hardcoded styles
+}[role];
+```
+
+#### After (v4.1): Centralized Configuration
+
+```typescript
+// role-config.ts (single source of truth)
+export const ROLE_CONFIGS = {
+  studio: {
+    PrimarySidebar: {
+      gridArea: 'sidebar',
+      overflow: 'auto',
+      htmlTag: 'aside',
+      ariaProps: { 'aria-label': 'Primary Sidebar' },
+      baseStyles: 'flex flex-col w-64 flex-shrink-0',
+    },
+  },
+};
+
+// Section.tsx (uses config)
+const config = getRoleConfig(role, template);
+```
+
+### D.3. Page Responsibility Principle
+
+```
+Page가 template을 정의하고, template + role 조합이 모든 Section 속성을 결정한다.
+```
+
+**주요 결정**:
+1. **Page가 결정**: gridArea, overflow (스크롤), layout
+2. **Section이 받음**: 외부에서 주입된 설정 적용
+3. **명시적 override 없음**: `overflow` prop 제공 안 함
+
+### D.4. Overflow Policy
+
+| Template | Role | Overflow | Reason |
+|----------|------|----------|--------|
+| studio | PrimarySidebar | `auto` | File tree scrolls |
+| studio | Editor | `hidden` | CodeMirror handles scroll |
+| studio | Panel | `auto` | Terminal output scrolls |
+| 3-col | Navigator | `auto` | Slide list scrolls |
+| 3-col | Main | `hidden` | Canvas handles scroll |
+| 3-col | Aside | `auto` | Property panel scrolls |
+| universal | Header/Footer | `hidden` | Fixed areas |
+
+### D.5. Implementation Files
+
+- **`role-config.ts`**: Central configuration for all Section roles
+  - Defines `gridArea`, `overflow`, `htmlTag`, `ariaProps`, `baseStyles`
+  - Supports 7 templates: studio, sidebar-content, 3-col, presentation, master-detail, dialog, universal
+
+- **`Section.tsx`**: Role configuration consumer
+  - Calls `getRoleConfig(role, template)`
+  - Passes configuration to renderers
+
+- **`useDynamicGridTemplate.ts`**: Grid template generator
+  - Uses `getRoleConfig()` to get gridArea
+  - Eliminates duplicate role → gridArea mapping
+
+### D.6. Benefits
+
+1. **Single Source of Truth**: All role properties in one place
+2. **Consistency**: Same role always has same configuration
+3. **Maintainability**: Change configuration in one place
+4. **Extensibility**: Add new templates by updating role-config only
+5. **Type Safety**: RoleConfig interface ensures type safety
+
+### D.7. Documentation
+
+상세한 v4.1 구현 문서:
+- **Section v4.1 스펙**: `/docs/2-areas/core/3-reference/section-v4.1-spec.md`
+- **Page-Section Overflow 정책**: `/docs/2-areas/core/3-reference/page-section-overflow-policy.md`
+- **아카이브된 v4.0 문서**: `/docs/4-archive/2026-01-09-v4.1-section-role-config/`
+
+### D.8. Migration Guide
+
+기존 코드는 변경 없이 작동합니다. v4.1은 내부 구현 최적화이며, IDDL 스펙 호환성이 유지됩니다.
+
+**변경 사항 없음**:
+```tsx
+// ✅ v4.0과 v4.1 모두 동일하게 작동
+<Page role="App" template="studio">
+  <Section role="PrimarySidebar">...</Section>
+  <Section role="Editor">...</Section>
+</Page>
+```
+
+**변경 사항 (내부 구현만)**:
+- Section.tsx: `getRoleConfig()` 사용
+- Renderer: 외부 주입받은 `baseStyles`, `overflowClass` 사용
+- useDynamicGridTemplate.ts: `getRoleConfig()` 사용
+
+---
+
+**Last Updated**: 2026-01-09 (v4.1 Implementation Notes)

@@ -18,14 +18,14 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebarDSL } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL';
-import { Action } from '@/components/Item/Action/Action';
-import { Field } from '@/components/Item/Field/Field';
-import { Group } from '@/components/Group/Group';
-import { DataTable } from '@/components/Group/role/DataTable.tsx';
-import { Page } from '@/components/Page/Page';
-import { Section } from '@/components/Section/Section';
-import { Badge } from '@/components/Item/Text/role/Badge';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group';
+import { DataTable } from '@/components/types/Group/role/DataTable.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Field } from '@/components/types/Atom/Field/Field';
+import { Badge } from '@/components/types/Atom/Text/role/Badge';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
@@ -132,38 +132,22 @@ export const ServerProductsViewDSL = () => {
 
         // IDDL Text로 렌더링
         if (value === null) {
-          return <Text role="Caption" prominence="Tertiary" className="italic" content="null" />;
+          return <Text role="Caption" prominence="Subtle" className="italic" content="null" />;
         }
         if (value === undefined) {
-          return (
-            <Text role="Caption" prominence="Tertiary" className="italic" content="undefined" />
-          );
+          return <Text role="Caption" prominence="Subtle" className="italic" content="undefined" />;
         }
         if (typeof value === 'boolean') {
-          return (
-            <Text
-              role="Body"
-              prominence="Primary"
-              className="text-accent"
-              content={String(value)}
-            />
-          );
+          return <Text role="Body" className="text-accent" content={String(value)} />;
         }
         if (typeof value === 'number') {
-          return <Text role="Body" prominence="Primary" content={String(value)} />;
+          return <Text role="Body" content={String(value)} />;
         }
         if (typeof value === 'object') {
-          return (
-            <Text
-              role="Caption"
-              prominence="Tertiary"
-              className="font-mono"
-              content={JSON.stringify(value)}
-            />
-          );
+          return <Text role="Caption" className="font-mono" content={JSON.stringify(value)} />;
         }
 
-        return <Text role="Body" prominence="Primary" content={String(value)} />;
+        return <Text role="Body" content={String(value)} />;
       },
     }));
   }, [data, visibleColumns]);
@@ -177,7 +161,6 @@ export const ServerProductsViewDSL = () => {
         {/* Main Content Area */}
         <Section
           role="Main"
-          prominence="Secondary"
           className="flex flex-col flex-1 h-full bg-layer-2-cool boundary-shadow-left rounded-md"
         >
           {/* Notion-style Control Bar */}
@@ -192,7 +175,6 @@ export const ServerProductsViewDSL = () => {
               <Group role="Toolbar" layout="inline" density="Compact" className="gap-2 flex-1">
                 <Action
                   icon={showSidebar ? 'PanelLeftClose' : 'PanelLeft'}
-                  prominence="Tertiary"
                   intent="Neutral"
                   onClick={() => setShowSidebar(!showSidebar)}
                   behavior={{ action: 'command', command: 'json.toggleSidebar' }}
@@ -202,7 +184,6 @@ export const ServerProductsViewDSL = () => {
                   model="search"
                   dataType="text"
                   placeholder="Search all fields..."
-                  prominence="Secondary"
                   clearable
                   value={searchQuery}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -215,7 +196,6 @@ export const ServerProductsViewDSL = () => {
                   label="Filter by"
                   model="filterColumn"
                   dataType="select"
-                  prominence="Secondary"
                   options={[{ label: 'All columns', value: '' }, ...columnOptions]}
                   value={filterColumn}
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -230,7 +210,6 @@ export const ServerProductsViewDSL = () => {
                 <Field
                   model="viewType"
                   dataType="radio"
-                  prominence="Secondary"
                   options={[
                     { label: 'Table', value: 'table' },
                     { label: 'JSON', value: 'json' },
@@ -254,7 +233,6 @@ export const ServerProductsViewDSL = () => {
                   label="Sort by"
                   model="sortColumn"
                   dataType="select"
-                  prominence="Secondary"
                   options={[{ label: 'None', value: '' }, ...columnOptions]}
                   value={sortColumn}
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -266,7 +244,6 @@ export const ServerProductsViewDSL = () => {
                 <Field
                   model="sortDirection"
                   dataType="radio"
-                  prominence="Secondary"
                   options={[
                     { label: '↑', value: 'asc' },
                     { label: '↓', value: 'desc' },
@@ -279,7 +256,6 @@ export const ServerProductsViewDSL = () => {
 
                 <Action
                   icon={density === 'compact' ? 'Maximize2' : 'Minimize2'}
-                  prominence="Tertiary"
                   intent="Neutral"
                   onClick={() => setDensity(density === 'compact' ? 'normal' : 'compact')}
                   behavior={{ action: 'command', command: 'json.toggleDensity' }}

@@ -1,0 +1,200 @@
+{
+  "type": "page",
+  "id": "user-profile-page",
+  "children": [
+    {
+      "type": "section",
+      "id": "profile-section",
+      "role": "Container",
+      "prominence": "Primary",
+      "mode": "view",
+      "children": [
+        {
+          "type": "group",
+          "id": "profile-header",
+          "role": "Container",
+          "prominence": "Hero",
+          "children": [
+            {
+              "type": "text",
+              "id": "page-title",
+              "role": "Title",
+              "content": "User Profile",
+              "prominence": "Hero",
+              "intent": "Brand"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "id": "profile-form",
+          "role": "Form",
+          "prominence": "Primary",
+          "density": "Standard",
+          "children": [
+            {
+              "type": "text",
+              "id": "section-title",
+              "role": "Title",
+              "content": "Basic Information",
+              "prominence": "Primary"
+            },
+            {
+              "type": "field",
+              "id": "username-field",
+              "label": "Username",
+              "model": "user.name",
+              "dataType": "text",
+              "required": true
+            },
+            {
+              "type": "field",
+              "id": "email-field",
+              "label": "Email",
+              "model": "user.email",
+              "dataType": "text",
+              "required": true
+            },
+            {
+              "type": "field",
+              "id": "bio-field",
+              "label": "Bio",
+              "model": "user.bio",
+              "dataType": "text",
+              "placeholder": "Tell us about yourself"
+            },
+            {
+              "type": "field",
+              "id": "birthdate-field",
+              "label": "Birth Date",
+              "model": "user.birthDate",
+              "dataType": "date"
+            },
+            {
+              "type": "field",
+              "id": "newsletter-field",
+              "label": "Subscribe to newsletter",
+              "model": "user.newsletter",
+              "dataType": "boolean"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "id": "profile-actions",
+          "role": "Toolbar",
+          "prominence": "Primary",
+          "direction": "horizontal",
+          "className": "flex justify-end gap-2",
+          "children": [
+            {
+              "type": "action",
+              "id": "cancel-button",
+              "label": "Cancel",
+              "prominence": "Secondary",
+              "intent": "Neutral",
+              "behavior": {
+                "action": "command",
+                "command": "profile.cancel"
+              }
+            },
+            {
+              "type": "action",
+              "id": "edit-button",
+              "label": "Edit Profile",
+              "icon": "Edit",
+              "prominence": "Primary",
+              "intent": "Brand",
+              "behavior": {
+                "action": "command",
+                "command": "profile.edit"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "account-settings-section",
+      "role": "Container",
+      "prominence": "Secondary",
+      "children": [
+        {
+          "type": "group",
+          "id": "settings-group",
+          "role": "Form",
+          "prominence": "Secondary",
+          "children": [
+            {
+              "type": "text",
+              "id": "settings-title",
+              "role": "Title",
+              "content": "Account Settings",
+              "prominence": "Primary"
+            },
+            {
+              "type": "field",
+              "id": "language-field",
+              "label": "Language",
+              "model": "user.language",
+              "dataType": "select",
+              "options": [
+                { "label": "English", "value": "en" },
+                { "label": "한국어", "value": "ko" },
+                { "label": "日本語", "value": "ja" }
+              ]
+            },
+            {
+              "type": "field",
+              "id": "theme-field",
+              "label": "Theme",
+              "model": "user.theme",
+              "dataType": "select",
+              "options": [
+                { "label": "Light", "value": "light" },
+                { "label": "Dark", "value": "dark" },
+                { "label": "Auto", "value": "auto" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "id": "danger-zone",
+          "role": "Container",
+          "prominence": "Tertiary",
+          "children": [
+            {
+              "type": "text",
+              "id": "danger-title",
+              "role": "Title",
+              "content": "Danger Zone",
+              "prominence": "Secondary",
+              "intent": "Critical"
+            },
+            {
+              "type": "text",
+              "id": "danger-description",
+              "role": "Body",
+              "content": "Once you delete your account, there is no going back. Please be certain.",
+              "prominence": "Secondary"
+            },
+            {
+              "type": "action",
+              "id": "delete-account-button",
+              "label": "Delete Account",
+              "prominence": "Secondary",
+              "intent": "Critical",
+              "behavior": {
+                "action": "command",
+                "command": "account.delete"
+              },
+              "confirm": "Are you sure you want to delete your account? This action cannot be undone."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

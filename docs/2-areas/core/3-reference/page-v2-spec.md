@@ -160,7 +160,7 @@ export interface NavigationConfig {
 ### Example 1: App Role (IDE)
 
 ```tsx
-<Page role="App" density="Compact" prominence="Primary">
+<Page role="App" density="Compact" prominence="Standard">
   <Section role="Navigator">...</Section>
   <Section role="Container">...</Section>
 </Page>
@@ -185,7 +185,7 @@ export interface NavigationConfig {
   ]}
   maxWidth="lg"
   centered
-  prominence="Secondary"
+  prominence="Standard"
   density="Comfortable"
 >
   <Section role="Container">
@@ -367,9 +367,9 @@ const pageContainerVariants = cva('bg-surface-base flex flex-col', {
     },
     prominence: {
       Hero: 'bg-surface-raised',
-      Primary: 'bg-surface',
-      Secondary: 'bg-surface-sunken',
-      Tertiary: 'bg-surface-base',
+      Standard: 'bg-surface',
+      Strong: 'bg-surface-sunken',
+      Subtle: 'bg-surface-base',
     },
   },
 });

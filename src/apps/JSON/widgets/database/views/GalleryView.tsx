@@ -2,9 +2,9 @@
  * GalleryView - Notion 스타일 Gallery (카드 그리드) 뷰
  */
 
-import { Group } from '@/components/Group/Group.tsx';
-import { Card } from '@/components/Group/role/Card.tsx';
-import { Text } from '@/components/Item/Text/Text.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Card } from '@/components/types/Group/role/Card.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import { cn } from '@/shared/lib/utils.ts';
 import type { JsonArray, JsonObject, ViewConfig } from '../types.ts';
 
@@ -71,15 +71,9 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
 
                   return (
                     <div key={key} className="flex flex-col gap-0.5">
-                      <Text
-                        role="Label"
-                        prominence="Tertiary"
-                        className="text-xs text-subtle"
-                        content={key}
-                      />
+                      <Text role="Label" className="text-xs text-subtle" content={key} />
                       <Text
                         role="Body"
-                        prominence="Primary"
                         className="text-sm line-clamp-1"
                         content={
                           typeof value === 'object'

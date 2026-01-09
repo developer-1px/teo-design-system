@@ -4,8 +4,8 @@
 
 import { createElement, useEffect, useMemo, useState } from 'react';
 import type { ComponentMetadata, MockData, PropValue } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text';
 
 interface ComponentRendererProps {
   metadata: ComponentMetadata;
@@ -51,22 +51,26 @@ function getDefaultValue(propType: any, componentName: string, propName: string)
 export function ComponentRenderer({
   metadata,
   propValues,
-  mockData,
+  mockData: _mockData,
   componentModule,
 }: ComponentRendererProps) {
   const [Component, setComponent] = useState<any>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     // 컴포넌트 변경 시 초기화
     setComponent(null);
+    setLoadError(null);
 
     if (!metadata) {
       console.error('[ComponentRenderer] No metadata provided');
+      setLoadError('메타데이터가 없습니다');
       return;
     }
 
     if (!componentModule) {
       console.error(`[ComponentRenderer] No componentModule provided for ${metadata.name}`);
+      setLoadError(`컴포넌트 모듈을 찾을 수 없습니다: ${metadata.name}`);
       return;
     }
 
@@ -89,6 +93,9 @@ export function ComponentRenderer({
 
         if (!comp) {
           console.error(`[ComponentRenderer] No export found for ${componentName}`, module);
+          setLoadError(
+            `컴포넌트를 찾을 수 없습니다: "${componentName}"\n사용 가능한 export: ${Object.keys(module).join(', ')}`
+          );
           return;
         }
 
@@ -97,6 +104,7 @@ export function ComponentRenderer({
       })
       .catch((error) => {
         console.error(`[ComponentRenderer] Failed to load ${metadata.name}:`, error);
+        setLoadError(`모듈 로드 실패: ${error.message}`);
       });
   }, [metadata?.filePath, componentModule]);
 
@@ -133,25 +141,46 @@ export function ComponentRenderer({
     return finalProps;
   }, [metadata, propValues]);
 
-  if (!Component) {
+  // 로드 에러 표시
+  if (loadError) {
     return (
-      <Group role="Container" prominence="Tertiary">
-        <Text role="Body" prominence="Tertiary">
-          Loading component...
-        </Text>
+      <Group role="Container" prominence="Standard" className="p-4 rounded-lg bg-surface">
+        <Group role="Container" gap={2}>
+          <Text role="Title" prominence="Strong" intent="Critical" content="모듈 로드 에러" />
+          <Text role="Body" prominence="Standard" intent="Critical" content={loadError} />
+        </Group>
       </Group>
     );
   }
 
+  // 로딩 중
+  if (!Component) {
+    return (
+      <Group role="Container">
+        <Text role="Body" prominence="Standard" content="Loading component..." />
+      </Group>
+    );
+  }
+
+  // 렌더링 시도
   try {
     return createElement(Component, props);
   } catch (error) {
-    console.error('Component render error:', error);
+    console.error('[ComponentRenderer] Render error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+
     return (
-      <Group role="Container" prominence="Primary">
-        <Text role="Body" prominence="Primary" intent="Critical">
-          Failed to render component: {String(error)}
-        </Text>
+      <Group role="Container" prominence="Standard" className="p-4 rounded-lg bg-surface">
+        <Group role="Container" gap={2}>
+          <Text role="Title" prominence="Strong" intent="Critical" content="렌더링 에러 (동기)" />
+          <Text role="Body" prominence="Standard" intent="Critical" content={errorMessage} />
+          {errorStack && (
+            <pre className="text-xs text-muted bg-surface-sunken p-3 rounded overflow-auto max-h-48 mt-2">
+              {errorStack}
+            </pre>
+          )}
+        </Group>
       </Group>
     );
   }

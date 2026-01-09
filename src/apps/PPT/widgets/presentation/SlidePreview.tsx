@@ -7,9 +7,9 @@
  * - 인터랙션 요소 제거 (클릭, 줌, 키보드 힌트 등)
  */
 
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
 import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Section } from '@/components/types/Section/Section.tsx';
 import type { Slide } from './SlideList';
 
 interface SlidePreviewProps {
@@ -36,7 +36,6 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
       >
         <Section
           role="Container"
-          prominence="Tertiary"
           className="h-full w-full overflow-hidden p-8"
           style={{ backgroundColor: slide.backgroundColor }}
         >
@@ -59,12 +58,7 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
               {slide.content ? (
                 slideContentToDSL(slide.content)
               ) : (
-                <Text
-                  role="Body"
-                  prominence="Tertiary"
-                  content="내용을 입력하세요"
-                  className="text-text-tertiary"
-                />
+                <Text role="Body" content="내용을 입력하세요" className="text-text-tertiary" />
               )}
             </div>
           </div>

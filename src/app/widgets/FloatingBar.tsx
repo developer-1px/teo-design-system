@@ -18,7 +18,7 @@ import { useLocation } from 'wouter';
 import { Group } from '@/components/types/Group/Group.tsx';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
 import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
-import { APP_CONFIGS, type AppType } from '@/shared/contexts/app-context.tsx';
+import { APP_CONFIGS, type AppType } from '@/app/contexts/app-context.tsx';
 import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme.ts';
 
 export const FloatingBar = () => {
@@ -66,6 +66,7 @@ export const FloatingBar = () => {
           return (
             <Action
               key={app.type}
+              role="IconButton"
               icon={app.iconName}
               prominence={isActive ? 'Standard' : 'Subtle'}
               intent={isActive ? 'Brand' : 'Neutral'}
@@ -74,7 +75,6 @@ export const FloatingBar = () => {
                 command: 'app.switch',
                 args: { type: app.type },
               }}
-              className="rounded-full !p-1"
               onClick={(e) => {
                 e.preventDefault();
                 handleAppSwitch(app.type);
@@ -88,10 +88,10 @@ export const FloatingBar = () => {
 
         {/* 테마 토글 버튼 */}
         <Action
+          role="IconButton"
           icon={theme === 'dark' ? 'Sun' : 'Moon'}
           intent="Neutral"
           behavior={{ action: 'command', command: 'theme.toggle' }}
-          className="rounded-full !p-1"
           onClick={(e) => {
             e.preventDefault();
             handleToggleTheme();

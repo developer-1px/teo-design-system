@@ -6,7 +6,7 @@
 
 ```tsx
 // 이게 고정됨 (스키마)
-<Action role="Button" prominence="Primary" intent="Critical">
+<Action role="Button" prominence="Standard" intent="Critical">
   삭제
 </Action>
 
@@ -26,8 +26,8 @@
 // 개발자는 항상 이렇게 씀
 <Section role="Header">
   <Group role="Toolbar">
-    <Action role="Button" prominence="Primary">저장</Action>
-    <Action role="Button" prominence="Secondary">취소</Action>
+    <Action role="Button" prominence="Standard">저장</Action>
+    <Action role="Button" prominence="Standard">취소</Action>
   </Group>
 </Section>
 
@@ -110,7 +110,7 @@ import { Section, Group, Action, Field, Text } from "@/iddl";
 function SettingsPage() {
   return (
     <Section role="Container">
-      <Text role="Title" prominence="Primary">설정</Text>
+      <Text role="Title" prominence="Standard">설정</Text>
       
       <Group role="Form">
         <Field 
@@ -131,10 +131,10 @@ function SettingsPage() {
       </Group>
       
       <Group role="Toolbar">
-        <Action role="Button" prominence="Primary" intent="Brand">
+        <Action role="Button" prominence="Standard" intent="Brand">
           저장
         </Action>
-        <Action role="Button" prominence="Secondary">
+        <Action role="Button" prominence="Standard">
           취소
         </Action>
       </Group>
@@ -305,8 +305,8 @@ type OverlayProps = BaseProps & { open?: boolean; onClose?: () => void; children
     </Group>
     
     <Group role="Toolbar">
-      <Action role="Button" prominence="Secondary">취소</Action>
-      <Action role="Button" prominence="Primary" intent="Brand">저장</Action>
+      <Action role="Button" prominence="Standard">취소</Action>
+      <Action role="Button" prominence="Standard" intent="Brand">저장</Action>
     </Group>
   </Group>
 </Section>
@@ -315,7 +315,7 @@ type OverlayProps = BaseProps & { open?: boolean; onClose?: () => void; children
   <Text role="Title">확인</Text>
   <Text role="Body">정말 삭제하시겠습니까?</Text>
   <Group role="Toolbar">
-    <Action role="Button" prominence="Secondary">취소</Action>
+    <Action role="Button" prominence="Standard">취소</Action>
     <Action role="Button" intent="Critical">삭제</Action>
   </Group>
 </Overlay>

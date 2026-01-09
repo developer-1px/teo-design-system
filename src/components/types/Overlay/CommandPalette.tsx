@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { KeyboardContext, useGlobalShortcut, useKeyboardContext } from '@/shared/lib/keyboard';
-import { applyThemeConfig, getThemeConfig, initializeTheme } from '@/shared/lib/theme';
+import { applyThemeConfig, getThemeConfig, initializeTheme } from '@/shared/lib/theme.ts';
 import './command-palette.css';
 
 interface CommandItem {

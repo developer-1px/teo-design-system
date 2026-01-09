@@ -5,7 +5,7 @@
  * @see docs/1-project/4-headless-hook.md
  */
 
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 export interface UseDisclosureOptions {
   defaultOpen?: boolean;

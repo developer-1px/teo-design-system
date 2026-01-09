@@ -5,10 +5,10 @@
  */
 
 import type { TokenCategory } from '@/apps/tokens/parser/types';
-import { Action } from '@/components/Item/Action/Action';
-import { Group } from '@/components/Group/Group.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 export function TokenSidebar({
   categories,
@@ -27,24 +27,20 @@ export function TokenSidebar({
   };
 
   return (
-    <Section role="Navigator" prominence="Secondary">
+    <Section role="Navigator">
       {/* 헤더 */}
-      <Group role="Container" prominence="Primary" gap={1}>
-        <Text role="Title" prominence="Primary">
-          Categories
-        </Text>
-        <Text role="Caption" prominence="Tertiary">
+      <Group role="Container" gap={1}>
+        <Text role="Title" content="Categories" />
+        <Text role="Caption" prominence="Subtle">
           {categories.length} categories
         </Text>
       </Group>
 
       {/* Tier 1: Primitive */}
       {tierGroups.primitive.length > 0 && (
-        <Group role="Container" prominence="Secondary" gap={1}>
-          <Text role="Label" prominence="Secondary">
-            Tier 1: Primitive
-          </Text>
-          <Group role="List" prominence="Tertiary" gap={0}>
+        <Group role="Container" gap={1}>
+          <Text role="Label" content="Tier 1: Primitive" />
+          <Group role="List" gap={0}>
             {tierGroups.primitive.map((cat) => (
               <Action
                 key={cat.name}
@@ -52,7 +48,7 @@ export function TokenSidebar({
                 behavior={{ action: 'command', command: 'selectCategory' }}
                 onClick={() => onSelect(cat.name)}
                 variant="list-item"
-                prominence={selectedCategory === cat.name ? 'Primary' : 'Secondary'}
+                prominence={selectedCategory === cat.name ? 'Standard' : 'Standard'}
                 intent={selectedCategory === cat.name ? 'Brand' : 'Neutral'}
               />
             ))}
@@ -62,11 +58,9 @@ export function TokenSidebar({
 
       {/* Tier 2: Semantic */}
       {tierGroups.semantic.length > 0 && (
-        <Group role="Container" prominence="Secondary" gap={1}>
-          <Text role="Label" prominence="Secondary">
-            Tier 2: Semantic
-          </Text>
-          <Group role="List" prominence="Tertiary" gap={0}>
+        <Group role="Container" gap={1}>
+          <Text role="Label" content="Tier 2: Semantic" />
+          <Group role="List" gap={0}>
             {tierGroups.semantic.map((cat) => (
               <Action
                 key={cat.name}
@@ -74,7 +68,7 @@ export function TokenSidebar({
                 behavior={{ action: 'command', command: 'selectCategory' }}
                 onClick={() => onSelect(cat.name)}
                 variant="list-item"
-                prominence={selectedCategory === cat.name ? 'Primary' : 'Secondary'}
+                prominence={selectedCategory === cat.name ? 'Standard' : 'Standard'}
                 intent={selectedCategory === cat.name ? 'Brand' : 'Neutral'}
               />
             ))}
@@ -84,11 +78,9 @@ export function TokenSidebar({
 
       {/* Tier 3: Component */}
       {tierGroups.component.length > 0 && (
-        <Group role="Container" prominence="Secondary" gap={1}>
-          <Text role="Label" prominence="Secondary">
-            Tier 3: Component
-          </Text>
-          <Group role="List" prominence="Tertiary" gap={0}>
+        <Group role="Container" gap={1}>
+          <Text role="Label" content="Tier 3: Component" />
+          <Group role="List" gap={0}>
             {tierGroups.component.map((cat) => (
               <Action
                 key={cat.name}
@@ -96,7 +88,7 @@ export function TokenSidebar({
                 behavior={{ action: 'command', command: 'selectCategory' }}
                 onClick={() => onSelect(cat.name)}
                 variant="list-item"
-                prominence={selectedCategory === cat.name ? 'Primary' : 'Secondary'}
+                prominence={selectedCategory === cat.name ? 'Standard' : 'Standard'}
                 intent={selectedCategory === cat.name ? 'Brand' : 'Neutral'}
               />
             ))}
@@ -105,8 +97,8 @@ export function TokenSidebar({
       )}
 
       {/* Footer */}
-      <Group role="Container" prominence="Tertiary" gap={0}>
-        <Text role="Caption" prominence="Tertiary">
+      <Group role="Container" gap={0}>
+        <Text role="Caption" prominence="Subtle">
           Auto-generated from themes.css
         </Text>
       </Group>

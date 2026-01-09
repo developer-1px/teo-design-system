@@ -14,10 +14,12 @@
  * v1.0.1: layout, state, emptyContent, errorContent, condition 추가, CVA 적용
  * v3.1: Interactive State Token System, Spacing Token System 통합
  * v4.0: 기능적 컴포넌트로 개념 명확화
+ * v1.0.4: Focus management 추가 (registerItemRef)
  */
 
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 import { GroupLayoutProvider, useGroupLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { GroupProps, GroupRole } from '@/components/types/Atom/types.ts';
 import { getInteractiveClasses } from '@/shared/config/interactive-tokens';
@@ -241,6 +243,20 @@ export function Group({
         }
       : {};
 
+  // v1.0.4: Focus management - ref 등록
+  const componentRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (value !== undefined && selectionModel?.registerItemRef && componentRef.current) {
+      selectionModel.registerItemRef(value, componentRef.current);
+
+      // Cleanup: ref 해제
+      return () => {
+        selectionModel.registerItemRef?.(value, null);
+      };
+    }
+  }, [value, selectionModel]);
+
   // State 렌더링 (v1.0.1)
   if (state === 'loading') {
     return (
@@ -386,6 +402,7 @@ export function Group({
       }}
     >
       <Component
+        ref={componentRef}
         className={cn(
           // Base role-based styles
           groupVariants({

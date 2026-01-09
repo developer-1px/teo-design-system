@@ -4,7 +4,7 @@
 
 import { Copy } from 'lucide-react';
 import { useState } from 'react';
-import { Section } from '@/components/Section/Section.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface TokenRow {
@@ -87,7 +87,7 @@ export const TokenTable = ({ title, tokens, className }: TokenTableProps) => {
   };
 
   return (
-    <Section role="Container" prominence="Secondary" className={cn('overflow-hidden', className)}>
+    <Section role="Container" className={cn('overflow-hidden', className)}>
       {title && (
         <div className="px-4 py-3 border-b border-border">
           <h3 className="text-sm font-semibold text-text">{title}</h3>

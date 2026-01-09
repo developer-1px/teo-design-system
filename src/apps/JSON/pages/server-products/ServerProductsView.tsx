@@ -1,11 +1,10 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { Maximize2, Minimize2, PanelLeft, PanelLeftClose } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
-import { IconButton } from '@/components/Item/Action/role/IconButton';
-import { DataTable } from '@/components/Group/role/DataTable.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Content } from '@/components/Item/Text/role/Content';
+import { DataTable } from '@/components/types/Group/role/DataTable.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Content } from '@/components/types/Atom/Text/role/Content';
+import { Section } from '@/components/types/Section/Section.tsx';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
@@ -95,20 +94,19 @@ export const ServerProductsView = () => {
       {/* Main Content */}
       <Section
         role="Container"
-        prominence="Secondary"
         className="flex flex-col flex-1 h-full bg-layer-2-cool boundary-shadow-left"
       >
         {/* Header */}
         <div className="flex items-center justify-between px-3 py-2">
           <div className="flex items-center gap-2">
-            <IconButton
-              size="sm"
+            <Action
+              role="IconButton"
+              icon={showSidebar ? 'PanelLeftClose' : 'PanelLeft'}
+              label={showSidebar ? 'Hide schema' : 'Show schema'}
+              density="Compact"
+              selected={showSidebar}
               onClick={() => setShowSidebar(!showSidebar)}
-              title={showSidebar ? 'Hide schema' : 'Show schema'}
-              active={showSidebar}
-            >
-              {showSidebar ? <PanelLeftClose size={16} /> : <PanelLeft size={16} />}
-            </IconButton>
+            />
             <div className="h-4 w-px bg-border-primary" />
             <Content prominence="tertiary">
               <span>
@@ -118,13 +116,13 @@ export const ServerProductsView = () => {
             </Content>
           </div>
           <div className="flex items-center gap-1">
-            <IconButton
-              size="sm"
+            <Action
+              role="IconButton"
+              icon={density === 'compact' ? 'Maximize2' : 'Minimize2'}
+              label={density === 'compact' ? 'Normal view' : 'Compact view'}
+              density="Compact"
               onClick={() => setDensity(density === 'compact' ? 'normal' : 'compact')}
-              title={density === 'compact' ? 'Normal view' : 'Compact view'}
-            >
-              {density === 'compact' ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
-            </IconButton>
+            />
           </div>
         </div>
 

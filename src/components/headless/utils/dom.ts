@@ -134,10 +134,7 @@ export function isInViewport(element: HTMLElement): boolean {
 /**
  * 요소를 뷰포트로 스크롤
  */
-export function scrollIntoView(
-  element: HTMLElement,
-  options?: ScrollIntoViewOptions
-): void {
+export function scrollIntoView(element: HTMLElement, options?: ScrollIntoViewOptions): void {
   element.scrollIntoView({
     block: 'nearest',
     inline: 'nearest',

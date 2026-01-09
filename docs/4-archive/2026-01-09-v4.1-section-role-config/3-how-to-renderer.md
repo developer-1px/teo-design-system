@@ -19,9 +19,9 @@ CVA로 끝남. 로직 없음.
 const cardStyles = cva("rounded border", {
   variants: {
     prominence: {
-      Primary: "shadow-md",
-      Secondary: "shadow-sm",
-      Tertiary: "shadow-none",
+      Standard: "shadow-md",
+      Strong: "shadow-sm",
+      Subtle: "shadow-none",
     },
   },
 });

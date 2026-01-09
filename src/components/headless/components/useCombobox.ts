@@ -6,7 +6,7 @@
  * @see docs/1-project/4-headless-hook.md
  */
 
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useDisclosure } from '../primitives/useDisclosure';
 
 export interface UseComboboxOptions<T> {
@@ -44,7 +44,10 @@ export interface UseComboboxReturn<T> {
     id: string;
   };
   /** Option에 적용할 props */
-  getOptionProps: (index: number, item: T) => {
+  getOptionProps: (
+    index: number,
+    item: T
+  ) => {
     role: 'option';
     id: string;
     'aria-selected': boolean;
@@ -67,7 +70,11 @@ export interface UseComboboxReturn<T> {
  * )}
  */
 export function useCombobox<T>(options: UseComboboxOptions<T>): UseComboboxReturn<T> {
-  const { items, itemToString = (item) => (item ? String(item) : ''), onSelectedItemChange } = options;
+  const {
+    items,
+    itemToString = (item) => (item ? String(item) : ''),
+    onSelectedItemChange,
+  } = options;
   const { isOpen, open, close } = useDisclosure();
   const [selectedItem, setSelectedItem] = useState<T | null>(null);
   const [inputValue, setInputValue] = useState('');

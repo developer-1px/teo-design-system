@@ -4,11 +4,15 @@
 
 import { Check, Copy } from 'lucide-react';
 import { useState } from 'react';
-import { FormField } from '@/components/Item/Field/role/FormField';
-import { Input } from '@/components/Item/Field/role/Input';
-import { Select } from '@/components/Item/Field/role/Select';
-import type { GroupRole, Prominence } from '@/components/Item/types';
-import type { AnyDSLNode, GroupNode, SectionNode } from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
+import type {
+  AnyDSLNode,
+  GroupNode,
+  SectionNode,
+} from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
+import { FormField } from '@/components/types/Atom/Field/role/FormField';
+import { Input } from '@/components/types/Atom/Field/role/Input';
+import { Select } from '@/components/types/Atom/Field/role/Select';
+import type { GroupRole, Prominence } from '@/components/types/Atom/types';
 
 export interface PropertyPanelProps {
   node: AnyDSLNode | null;
@@ -29,7 +33,7 @@ const groupRoles: GroupRole[] = [
   'Card',
   'Inline',
 ];
-const prominences: Prominence[] = ['Hero', 'Primary', 'Secondary', 'Tertiary'];
+const prominences: Prominence[] = ['Hero', 'Standard', 'Standard', 'Subtle'];
 
 export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
   const [copied, setCopied] = useState(false);
@@ -73,7 +77,7 @@ export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
       {node.type === 'section' && (
         <FormField label="Prominence">
           <Select
-            value={(node as SectionNode).prominence || 'Primary'}
+            value={(node as SectionNode).prominence || 'Standard'}
             onChange={(e) => onUpdate({ prominence: e.target.value as Prominence })}
           >
             {prominences.map((p) => (

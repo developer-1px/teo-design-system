@@ -178,7 +178,7 @@ export interface OverlayProps extends AsProp {
   intent?: Intent;
   placement?: Placement; // v1.0.1: Placement 타입으로 변경
   children: ReactNode;
-  className?: string;
+  className?: string; // Page가 레이아웃 제어 (너비, 높이 등)
   isOpen?: boolean; // v1.0.1: open → isOpen으로 rename
   dismissable?: boolean; // v1.0.1: 외부 클릭으로 닫기 가능 여부
   onClose?: () => void;
@@ -186,8 +186,30 @@ export interface OverlayProps extends AsProp {
 }
 
 /**
+ * Selection Model Interface (v1.0.2)
+ * Group이 선택 가능한 항목들을 관리할 때 사용하는 모델
+ * v1.0.4: Focus management 추가 (registerItemRef)
+ */
+export interface SelectionModel {
+  /** 현재 선택된 값들의 집합 */
+  selectedValues: Set<string | number>;
+  /** 특정 값이 선택되었는지 확인 */
+  isSelected: (value: string | number) => boolean;
+  /** 선택 조작 (optional) */
+  select?: (value: string | number) => void;
+  deselect?: (value: string | number) => void;
+  toggle?: (value: string | number) => void;
+  /** 아이템 클릭 핸들러 (modifier keys 자동 처리) */
+  handleItemClick?: (value: string | number, event: React.MouseEvent) => void;
+  /** 아이템 DOM 요소 등록 (focus management, v1.0.4) */
+  registerItemRef?: (value: string | number, element: HTMLElement | null) => void;
+}
+
+/**
  * Group Props
  * v1.0.1: role 타입 변경, layout, state, emptyContent, errorContent 추가
+ * v4.0: Accordion props 추가 (mode, defaultValue, value, onValueChange)
+ * v1.0.2: value, selectionModel 추가 (Selection 통합)
  */
 export interface GroupProps extends AsProp {
   role: GroupRole; // v1.0.1: Role → GroupRole
@@ -209,6 +231,31 @@ export interface GroupProps extends AsProp {
   clickable?: boolean; // v3.1: 클릭 가능 여부 (Interactive State Token System)
   condition?: string; // v1.0.1: 조건부 렌더링
   gap?: number; // v3.1: gap 오버라이드 (spacing token override)
+
+  /**
+   * v1.0.2: 선택 가능한 아이템의 고유 식별자
+   * value가 있으면 Group은 Selectable Item이 됩니다.
+   * 멘탈 모델: HTML의 <option value="1">과 동일
+   */
+  value?: string | number;
+
+  /**
+   * v1.0.2: Selection 관리 모델
+   * value를 가진 자식 Group들의 선택 상태를 관리합니다.
+   */
+  selectionModel?: SelectionModel;
+
+  // Accordion-specific props (v4.0)
+  mode?: 'single' | 'multiple'; // Accordion: 단일/다중 선택
+  defaultValue?: string | string[]; // Accordion: 초기 열린 아이템
+  /** Accordion controlled value (NOT for selection) */
+  accordionValue?: string | string[]; // Accordion: Controlled value
+  onValueChange?: (value: string | string[]) => void; // Accordion: Controlled callback
+
+  // SortableList-specific props (v4.0)
+  items?: any[]; // SortableList: 정렬 가능한 아이템 배열
+  onReorder?: (items: any[]) => void; // SortableList: 재정렬 콜백
+  renderItem?: (item: any, index: number) => ReactNode; // SortableList: 아이템 렌더 함수
 }
 
 // ============================================
@@ -322,6 +369,18 @@ export interface FieldProps extends AsProp {
 }
 
 /**
+ * Action Role - 액션의 렌더링 유형 (v4.0)
+ */
+export type ActionRole =
+  | 'Button' // 기본 버튼
+  | 'IconButton' // 아이콘 전용 버튼
+  | 'Link' // 링크 스타일
+  | 'MenuItem' // 메뉴 아이템
+  | 'ListItem' // 리스트 아이템 (선택 가능)
+  | 'Tab' // 탭 버튼
+  | 'Chip'; // 칩/태그 (토글 가능)
+
+/**
  * Action Behavior - discriminated union
  * v1.0.1: command/to/args → behavior로 통합
  */
@@ -338,8 +397,11 @@ export type ActionBehavior =
  * Action Props - 상호작용 트리거
  * v1.0.1: behavior, loading 추가
  * v3.1: selected, interactive config 추가 (Interactive State Token System)
+ * v4.0: role 추가 (renderer 패턴)
  */
 export interface ActionProps extends AsProp {
+  // Renderer (v4.0)
+  role?: ActionRole; // Button (default) | IconButton | Link | MenuItem | ListItem | Tab | Chip
   label?: string;
   icon?: string;
   // Styling
@@ -366,22 +428,35 @@ export interface ActionProps extends AsProp {
 // ============================================
 
 /**
- * Group Role - 그룹의 기능적 역할
+ * Group Role - 그룹의 기능적 역할 (v4.0: 기능 중심 분류)
  * v1.0.1: 많은 role 추가
+ * v4.0: 기능적 목적에 따른 분류, 시각적 요소 허용
+ *
+ * Group = 기능적 컴포넌트 (Functional Component)
+ * - 시각적 요소를 가질 수 있음 (배경, 보더, 패딩, 그림자)
+ * - Template 무관하게 독립적으로 동작
+ * - 재사용 가능한 UI 조합
  */
 export type GroupRole =
-  | 'Container'
-  | 'Form'
-  | 'Fieldset' // v1.0.1
-  | 'Toolbar'
-  | 'List' // v1.0.1
-  | 'Grid' // v1.0.1
-  | 'Table' // v1.0.1
-  | 'Tabs' // v1.0.1
-  | 'Steps' // v1.0.1
-  | 'Split' // v1.0.1
-  | 'Card' // v1.0.1
-  | 'Inline'; // v1.0.1
+  // 레이아웃 컨테이너 (Layout Containers)
+  | 'Container' // 일반 컨테이너 (기본값)
+  | 'Split' // 분할 레이아웃 (Resizable)
+  | 'Inline' // 인라인 그룹 (가로 정렬)
+  // 데이터 표시 (Data Display)
+  | 'List' // 항목 리스트 (<ul>, <ol>)
+  | 'SortableList' // 정렬 가능한 리스트 (Drag & Drop)
+  | 'Grid' // 그리드 레이아웃 (CSS Grid)
+  | 'Table' // 테이블 (<table>)
+  | 'Card' // 카드 UI (시각적 요소 있음)
+  // 입력 폼 (Forms)
+  | 'Form' // 폼 컨테이너 (<form>)
+  | 'Fieldset' // 필드 그룹 (<fieldset>)
+  // 액션 그룹 (Action Groups)
+  | 'Toolbar' // 툴바/액션 모음 (가로 정렬)
+  // 네비게이션 (Navigation)
+  | 'Tabs' // 탭 컨테이너
+  | 'Steps' // 단계별 진행
+  | 'Accordion'; // 아코디언 (펼침/접힘)
 
 /**
  * Layout - 레이아웃 방향
@@ -396,31 +471,99 @@ export type Layout = 'stack' | 'inline' | 'grid' | 'table' | 'split' | 'tabs' | 
 export type LoadState = 'idle' | 'loading' | 'error' | 'empty';
 
 /**
- * Section Role - 섹션의 배치 역할
+ * Section Role - 섹션의 배치 역할 (Template-aware v4.0)
  * v1.0.1: Aside 추가
  * v1.1.0: IDE/Studio 레이아웃 전용 role 추가
+ * v4.0: Template별로 그룹화, Page template의 named slot 역할
+ *
+ * **Section vs Group**:
+ * - Section: 시각적 영역 (배경, 보더, 패딩 있음) - Figma Section과 동일
+ * - Group: 투명 레이아웃 컨테이너 (시각적 요소 없음) - Figma Group과 동일
+ *
+ * **Template-aware**:
+ * - Section role은 Page template에 종속됨
+ * - 각 template은 특정 Section role 세트를 정의
+ * - 잘못된 조합 시 경고 (예: template="studio"인데 role="Master" 사용)
  */
 export type SectionRole =
-  // General Layout
-  | 'Container'
-  | 'SplitContainer'
-  | 'Main' // Main content area (<main> tag)
-  | 'Header'
-  | 'Footer'
-  | 'Navigator' // @deprecated Use PrimarySidebar for modern layouts
-  | 'Aside'
-  // Dialog/Modal Specific (v1.1.1)
-  | 'DialogHeader' // Modal header (density-aware padding)
-  | 'DialogFooter' // Modal footer (density-aware padding)
-  | 'DialogContent' // Modal main content (density-aware padding)
-  // IDE/Studio Specific (v1.1.0)
-  | 'Toolbar' // Top toolbar (v1.2.0)
-  | 'ActivityBar' // Narrow icon bar (48-64px, vertical)
-  | 'PrimarySidebar' // Main sidebar (200-400px, file tree, etc)
-  | 'SecondarySidebar' // Secondary sidebar (200-400px, outline, etc)
-  | 'Editor' // Main content/editor area (flex-grow)
-  | 'Panel' // Bottom panel (terminal, console, debug)
-  | 'Auxiliary'; // Auxiliary panel (properties, AI, etc)
+  // Universal (모든 template에서 사용 가능)
+  | 'Header' // 페이지 상단 (<header>)
+  | 'Footer' // 페이지 하단 (<footer>)
+  | 'Main' // 메인 콘텐츠 영역 (<main>)
+  | 'Container' // 일반 컨테이너 (<section>)
+  // Web Standard (Content Page - template="sidebar-content")
+  | 'Navigator' // 네비게이션 (<nav>)
+  | 'Aside' // 보조 사이드바 (<aside>)
+  | 'Search' // 검색 영역
+  | 'Region' // 명명된 영역
+  // IDE/Studio (template="studio")
+  | 'Toolbar' // 툴바 (<div>)
+  | 'ActivityBar' // 액티비티 바 (아이콘 세로 바)
+  | 'PrimarySidebar' // 주 사이드바 (파일 트리 등)
+  | 'SecondarySidebar' // 보조 사이드바 (아웃라인 등)
+  | 'Editor' // 에디터 영역
+  | 'Panel' // 하단 패널 (터미널, 콘솔 등)
+  | 'Auxiliary' // 보조 패널 (속성, AI 등)
+  // Master-Detail (template="master-detail")
+  | 'Master' // 마스터 리스트
+  | 'Detail' // 디테일 뷰
+  // Dialog (template="dialog")
+  | 'DialogHeader' // 다이얼로그 헤더
+  | 'DialogContent' // 다이얼로그 콘텐츠
+  | 'DialogFooter' // 다이얼로그 푸터
+  // Deprecated
+  | 'SplitContainer'; // @deprecated Use Main with layout="flex"
+
+/**
+ * Template별 유효한 Section Role 매핑 (v4.0)
+ * Page template에 따라 사용 가능한 Section role이 결정됨
+ */
+export const TEMPLATE_SECTION_ROLES: Record<string, SectionRole[]> = {
+  // Universal roles (모든 template에서 사용 가능)
+  universal: ['Header', 'Footer', 'Main', 'Container'],
+
+  // IDE/Studio Layout
+  studio: [
+    'Header', 'Footer', 'Main', 'Container', // Universal
+    'Toolbar', 'ActivityBar', 'PrimarySidebar', 'SecondarySidebar',
+    'Editor', 'Panel', 'Auxiliary'
+  ],
+
+  // Web Standard (Sidebar + Content)
+  'sidebar-content': [
+    'Header', 'Footer', 'Main', 'Container', // Universal
+    'Navigator', 'Aside', 'Search', 'Region'
+  ],
+
+  // Master-Detail (List + Detail View)
+  'master-detail': [
+    'Header', 'Footer', 'Main', 'Container', // Universal
+    'Master', 'Detail', 'Toolbar'
+  ],
+
+  // Dashboard (Stats + Charts + Activity)
+  dashboard: [
+    'Header', 'Footer', 'Main', 'Container', // Universal
+    'Region' // Named regions for stats/charts/activity
+  ],
+
+  // Dialog/Modal
+  dialog: [
+    'DialogHeader', 'DialogContent', 'DialogFooter'
+  ],
+
+  // 3-column (Left + Center + Right)
+  '3-col': [
+    'Header', 'Footer', 'Main', 'Container', // Universal
+    'Navigator', 'Aside', 'Region'
+  ],
+
+  // Presentation (Slide List + Canvas + Format Sidebar)
+  presentation: [
+    'Header', 'Footer', 'Main', 'Container', // Universal
+    'Navigator', 'Aside'
+  ],
+};
 
 /**
  * Overlay Role - 오버레이 유형
@@ -453,14 +596,17 @@ export type Placement =
   | 'bottom-right';
 
 /**
- * Grid Template - CSS Grid 템플릿
+ * Grid Template - CSS Grid 템플릿 (v4.0: Template-aware)
  * v3.0 추가 (App/Page의 layout="grid"일 때 사용)
+ * v4.0: Section role과 1:1 대응, template 선택 시 유효한 Section role 자동 결정
  */
 export type GridTemplate =
-  | 'studio' // IDE/Studio: toolbar(auto) + sidebar(250px) + editor(1fr) + panel(300px)
-  | 'sidebar' // Sidebar: nav(250px) + content(1fr)
-  | '3-col' // 3-column: left(250px) + center(1fr) + right(250px)
-  | 'dashboard' // Dashboard: auto-fit grid with minmax(300px, 1fr)
+  | 'studio' // IDE/Studio: ActivityBar + PrimarySidebar + Editor + Panel + Auxiliary
+  | 'sidebar-content' // Web Standard: Navigator + Main + Aside
+  | 'master-detail' // Master-Detail: Master list + Detail view
+  | '3-col' // 3-column: left + center + right
+  | 'dashboard' // Dashboard: auto-fit grid with named regions
+  | 'dialog' // Dialog: DialogHeader + DialogContent + DialogFooter
   | 'presentation' // Presentation: 동적 Holy Grail + 코너 패널 (v4.0)
   | 'custom'; // Custom: 사용자 정의 (className으로 직접 제어)
 
@@ -517,7 +663,7 @@ export interface Breadcrumb {
 }
 
 /**
- * Layout Context Value
+ * Layout Context Value (v4.0: template-aware)
  */
 export interface LayoutContextValue {
   prominence: Prominence;
@@ -526,4 +672,5 @@ export interface LayoutContextValue {
   intent?: Intent;
   depth: number;
   mode?: 'view' | 'edit'; // Field 렌더링 모드
+  template?: GridTemplate; // v4.0: Page template (for Section role validation)
 }

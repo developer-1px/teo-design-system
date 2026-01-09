@@ -7,23 +7,22 @@
  *     - Route: 각 앱별 라우트 (각 앱이 자체 Page 관리)
  *     - FloatingBar: 전역 앱 선택 바
  *     - CommandPalette: 전역 명령 팔레트
- *     - KeyboardDebugPanel: 개발 도구
  */
 
 import { Redirect, Route, Router } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
-import { AppDOCS } from '@/apps/DOCS/AppDOCS';
-import { AppDSLBuilder } from '@/apps/DSLBuilder/AppDSLBuilder';
-import { AppEMOJI } from '@/apps/EMOJI/AppEMOJI';
-import { AppIDE } from '@/apps/IDE/AppIDE';
-import { FloatingBar } from '@/apps/IDE/widgets/FloatingBar';
-import { AppJSON } from '@/apps/JSON/AppJSON';
-import { AppPPT } from '@/apps/PPT/AppPPT';
-import { AppShowcase } from '@/apps/showcase/AppShowcase';
-import { AppTokens } from '@/apps/tokens/AppTokens';
-import { KeyboardDebugPanel } from '@/components/dev/KeyboardDebugPanel';
-import { CommandPalette } from '@/components/types/Overlay/CommandPalette';
-import { AppProvider } from '@/shared/contexts/app-context';
+import { AppDOCS } from '@/apps/DOCS/AppDOCS.tsx';
+import { AppDSLBuilder } from '@/apps/DSLBuilder/AppDSLBuilder.tsx';
+import { AppEMOJI } from '@/apps/EMOJI/AppEMOJI.tsx';
+import { AppIDE } from '@/apps/IDE/AppIDE.tsx';
+import { FloatingBar } from '@/app/widgets/FloatingBar.tsx';
+import { AppJSON } from '@/apps/JSON/AppJSON.tsx';
+import { AppLayout } from '@/apps/LAYOUT/AppLayout.tsx';
+import { AppPPT } from '@/apps/PPT/AppPPT.tsx';
+import { AppShowcase } from '@/apps/showcase/AppShowcase.tsx';
+import { AppTokens } from '@/apps/tokens/AppTokens.tsx';
+import { CommandPalette } from '@/components/types/Overlay/CommandPalette.tsx';
+import { AppProvider } from '@/app/contexts/app-context.tsx';
 
 function App() {
   // Note: Theme initialization moved to main.tsx (before React renders)
@@ -35,13 +34,12 @@ function App() {
         <Route path="/ide" component={AppIDE} />
         <Route path="/ppt" component={AppPPT} />
         <Route path="/notion" component={AppJSON} />
-        <Route path="/linear" component={AppJSON} />
-        <Route path="/calendar" component={AppIDE} />
         <Route path="/emoji" component={AppEMOJI} />
         <Route path="/design" component={AppDOCS} />
         <Route path="/builder" component={AppDSLBuilder} />
         <Route path="/showcase" component={AppShowcase} />
         <Route path="/tokens" component={AppTokens} />
+        <Route path="/layout" component={AppLayout} />
 
         {/* Default redirect to IDE */}
         <Route path="/">
@@ -51,7 +49,6 @@ function App() {
         {/* 전역 UI 요소 (모든 앱에서 공통) */}
         <FloatingBar />
         <CommandPalette />
-        <KeyboardDebugPanel />
       </AppProvider>
     </Router>
   );

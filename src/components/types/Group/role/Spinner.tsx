@@ -1,6 +1,6 @@
 import { Loader2 } from 'lucide-react';
 import { forwardRef, type HTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Spinner - 로딩 스피너

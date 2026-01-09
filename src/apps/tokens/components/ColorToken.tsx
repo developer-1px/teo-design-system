@@ -1,5 +1,5 @@
 /**
- * ColorToken - 색상 토큰 시각화
+ * ColorToken - 색상 토큰 시각화 (Pure IDDL)
  *
  * 색상 스와치와 토큰 정보를 표시합니다.
  * 클릭 시 토큰 이름을 클립보드에 복사합니다.
@@ -7,8 +7,8 @@
 
 import { useState } from 'react';
 import type { Token } from '@/apps/tokens/parser/types';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text';
 
 export function ColorToken({ token }: { token: Token }) {
   const [copied, setCopied] = useState(false);
@@ -23,98 +23,74 @@ export function ColorToken({ token }: { token: Token }) {
   };
 
   return (
-    <Group role="Card" prominence="Primary" gap={0}>
+    <Group role="Card" layout="stack" gap={0} prominence="Standard" density="Compact">
       {/* 색상 스와치 (클릭 가능) */}
-      <div
+      <Group
+        role="Container"
+        clickable
         onClick={() => handleCopy(token.name)}
+        className="relative w-full h-20 rounded-md border border-border-muted cursor-pointer transition-transform hover:scale-[0.98]"
         style={{
-          width: '100%',
-          height: '80px',
           backgroundColor: token.resolvedValue,
-          borderRadius: '0.375rem',
-          border: '1px solid var(--color-border-muted)',
-          cursor: 'pointer',
-          position: 'relative',
-          transition: 'transform 100ms',
-        }}
-        onMouseDown={(e) => {
-          e.currentTarget.style.transform = 'scale(0.98)';
-        }}
-        onMouseUp={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
         }}
       >
         {/* 복사 완료 피드백 */}
         {copied && (
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              color: 'white',
-              padding: '0.5rem 1rem',
-              borderRadius: '0.375rem',
-              fontSize: '0.875rem',
-              fontWeight: 500,
-            }}
+          <Group
+            role="Container"
+            prominence="Standard"
+            className="absolute inset-0 flex items-center justify-center"
           >
-            Copied!
-          </div>
+            <Group
+              role="Card"
+              prominence="Hero"
+              className="bg-gray-900/80 text-white px-4 py-2 rounded-md"
+            >
+              <Text role="Label" content="Copied!" className="text-white font-medium" />
+            </Group>
+          </Group>
         )}
-      </div>
+      </Group>
 
-      {/* 토큰 정보 (compact) */}
-      <div style={{ padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+      {/* 토큰 정보 */}
+      <Group role="Container" layout="stack" gap={1} className="p-2">
         <Text
           role="Label"
-          prominence="Primary"
+          prominence="Standard"
+          content={token.name}
           className="font-mono text-xs truncate"
-          title={token.name}
-        >
-          {token.name}
-        </Text>
-        <Text role="Caption" prominence="Secondary" className="font-mono text-xs">
-          <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>
-            {token.resolvedValue.toUpperCase()}
-          </span>
-        </Text>
+        />
+        <Text
+          role="Caption"
+          prominence="Subtle"
+          content={token.resolvedValue.toUpperCase()}
+          className="font-mono text-xs font-semibold"
+        />
         {token.value !== token.resolvedValue && (
-          <Text role="Caption" prominence="Tertiary" className="font-mono text-xs truncate">
-            → {token.value}
-          </Text>
+          <Text
+            role="Caption"
+            prominence="Subtle"
+            content={`→ ${token.value}`}
+            className="font-mono text-xs truncate"
+          />
         )}
 
-        {/* CSS Variable (compact) */}
-        <div
+        {/* CSS Variable (clickable) */}
+        <Group
+          role="Container"
+          clickable
           onClick={() => handleCopy(`var(${token.name})`)}
-          style={{
-            backgroundColor: 'var(--color-surface-sunken)',
-            padding: '0.375rem',
-            borderRadius: '0.25rem',
-            fontFamily: 'monospace',
-            fontSize: '0.625rem',
-            cursor: 'pointer',
-            border: '1px solid var(--color-border-subtle)',
-            transition: 'background-color 100ms',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--color-surface-raised)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--color-surface-sunken)';
-          }}
-          title="Click to copy"
+          prominence="Strong"
+          className="bg-surface-sunken px-2 py-1.5 rounded border border-border-subtle cursor-pointer hover:bg-surface-raised transition-colors"
         >
-          <Text role="Caption" prominence="Primary" className="font-mono truncate">
-            var({token.name})
-          </Text>
-        </div>
-      </div>
+          <Text
+            role="Caption"
+            prominence="Standard"
+            content={`var(${token.name})`}
+            className="font-mono text-[10px] truncate"
+          />
+        </Group>
+      </Group>
     </Group>
   );
 }

@@ -12,11 +12,11 @@
 import { cva } from 'class-variance-authority';
 import { useState } from 'react';
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { FieldProps, FieldOption } from '@/components/types/Item/types.ts';
+import type { FieldProps, FieldOption } from '@/components/types/Atom/types.ts';
 import { cn } from '@/shared/lib/utils.ts';
 
 // Re-export types for convenience
-export type { FieldOption } from '@/components/types/Item/types.ts';
+export type { FieldOption } from '@/components/types/Atom/types.ts';
 
 // New Renderers (v2.0.0)
 import { TextField } from './renderers/TextField';
@@ -128,6 +128,10 @@ function FieldEdit(props: FieldProps) {
     intent,
   } = props;
 
+  // Get density from parent context
+  const ctx = useLayoutContext();
+  const computedDensity = props.density ?? ctx.density ?? 'Standard';
+
   // v2.0.0: New Renderer 사용 (text, email, url, phone, password)
   if (['text', 'email', 'url', 'phone', 'password'].includes(dataType)) {
     return (
@@ -137,6 +141,7 @@ function FieldEdit(props: FieldProps) {
         dataType={dataType as 'text' | 'email' | 'url' | 'phone' | 'password'}
         prominence={prominence}
         intent={intent}
+        density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
         constraints={constraints}
         clearable={clearable}
         required={required}
@@ -187,6 +192,7 @@ function FieldEdit(props: FieldProps) {
         options={options || []}
         prominence={prominence}
         intent={intent}
+        density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
         required={required}
         placeholder={placeholder}
         value={controlledValue}
@@ -475,6 +481,7 @@ export function Field({ as, ...props }: FieldProps) {
   // 부모 컨텍스트에서 상속
   const computedProminence = props.prominence ?? ctx.prominence ?? 'Primary';
   const computedIntent = props.intent ?? ctx.intent ?? 'Neutral';
+  const computedDensity = props.density ?? ctx.density ?? 'Standard';
 
   // modeOverride가 있으면 우선 사용 (v1.0.1)
   const mode = props.modeOverride ?? ctx.mode ?? 'view';
@@ -502,6 +509,7 @@ export function Field({ as, ...props }: FieldProps) {
         <FieldView
           label={props.label}
           model={props.model}
+          value={props.value}
           prominence={computedProminence}
           className={props.className}
         />

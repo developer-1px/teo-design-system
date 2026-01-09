@@ -3,6 +3,23 @@
  *
  * 모달, 드로어, 팝오버, 토스트, 툴팁 등 화면 위에 떠있는 UI 요소
  *
+ * **레이아웃 관리 원칙**:
+ * - Overlay는 순수하게 overlay 기능만 제공 (backdrop, positioning, dismissable 등)
+ * - 레이아웃(너비, 높이, 최대너비 등)은 **Page가 className을 통해 제어**
+ * - Overlay 자체에 size, width 같은 레이아웃 prop을 두지 않음
+ *
+ * @example
+ * ```tsx
+ * <Page role="App">
+ *   <Overlay
+ *     role="Drawer"
+ *     className="w-[800px]"  // Page가 레이아웃 제어
+ *   >
+ *     <FormView />
+ *   </Overlay>
+ * </Page>
+ * ```
+ *
  * v1.0.1: 신규 추가 (Dialog, Drawer, Popover, Toast, Tooltip, Sheet, Lightbox), CVA 적용
  * @see spec/iddl-spec-1.0.1.md#33-overlay-node
  */
@@ -10,9 +27,9 @@
 import { cva } from 'class-variance-authority';
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
-import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext';
-import type { OverlayProps } from '@/components/Item/types';
-import { cn } from '@/shared/lib/utils';
+import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
+import type { OverlayProps } from '@/components/types/Atom/types.ts';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Overlay density variants (CVA) - for padding
@@ -70,9 +87,11 @@ const placementVariants = cva('', {
 
 /**
  * Drawer direction variants (CVA)
+ *
+ * NOTE: 너비(width)는 포함하지 않음 - Page가 className으로 제어
  */
 const drawerDirectionVariants = cva(
-  'fixed inset-y-0 bg-surface-overlay shadow-xl w-80 max-w-full overflow-auto',
+  'fixed inset-y-0 bg-surface-overlay shadow-xl overflow-auto',
   {
     variants: {
       direction: {
@@ -105,9 +124,10 @@ const sheetDirectionVariants = cva(
 );
 
 export function Overlay({
+  as,
   id,
   role,
-  prominence = 'Primary',
+  prominence = 'Standard',
   density,
   intent,
   placement = 'center',
@@ -117,6 +137,7 @@ export function Overlay({
   dismissable = true,
   onClose,
   condition,
+  ...rest
 }: OverlayProps) {
   // 조건부 렌더링 (v1.0.1)
   // TODO: condition 표현식 평가 구현
@@ -154,6 +175,7 @@ export function Overlay({
 
   // Dialog
   if (role === 'Dialog') {
+    const ContentComponent = as || 'div';
     return (
       <div
         className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
@@ -170,7 +192,7 @@ export function Overlay({
             depth: parentCtx.depth + 1,
           }}
         >
-          <div
+          <ContentComponent
             className={cn(
               'bg-surface-overlay rounded-lg shadow-xl max-w-lg w-full mx-4 max-h-[90vh] overflow-auto',
               overlayDensityVariants({
@@ -181,6 +203,7 @@ export function Overlay({
             role="dialog"
             aria-modal="true"
             aria-labelledby={`${id}-title`}
+            {...rest}
           >
             {dismissable && onClose && (
               <button
@@ -192,7 +215,7 @@ export function Overlay({
               </button>
             )}
             {children}
-          </div>
+          </ContentComponent>
         </LayoutProvider>
       </div>
     );
@@ -200,6 +223,7 @@ export function Overlay({
 
   // Drawer
   if (role === 'Drawer') {
+    const ContentComponent = as || 'div';
     const drawerPlacement = placement === 'left' || placement === 'right' ? placement : 'right';
     return (
       <div
@@ -217,9 +241,11 @@ export function Overlay({
             depth: parentCtx.depth + 1,
           }}
         >
-          <div
+          <ContentComponent
             className={cn(
-              drawerDirectionVariants({ direction: drawerPlacement as 'left' | 'right' }),
+              drawerDirectionVariants({
+                direction: drawerPlacement as 'left' | 'right',
+              }),
               overlayDensityVariants({
                 density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
               }),
@@ -227,6 +253,7 @@ export function Overlay({
             )}
             role="dialog"
             aria-modal="true"
+            {...rest}
           >
             {dismissable && onClose && (
               <button
@@ -238,7 +265,7 @@ export function Overlay({
               </button>
             )}
             {children}
-          </div>
+          </ContentComponent>
         </LayoutProvider>
       </div>
     );
@@ -246,6 +273,7 @@ export function Overlay({
 
   // Sheet (similar to Drawer but full-width)
   if (role === 'Sheet') {
+    const ContentComponent = as || 'div';
     const sheetPlacement = placement === 'top' || placement === 'bottom' ? placement : 'bottom';
     return (
       <div
@@ -263,7 +291,7 @@ export function Overlay({
             depth: parentCtx.depth + 1,
           }}
         >
-          <div
+          <ContentComponent
             className={cn(
               sheetDirectionVariants({ direction: sheetPlacement as 'top' | 'bottom' }),
               overlayDensityVariants({
@@ -273,6 +301,7 @@ export function Overlay({
             )}
             role="dialog"
             aria-modal="true"
+            {...rest}
           >
             {dismissable && onClose && (
               <button
@@ -284,7 +313,7 @@ export function Overlay({
               </button>
             )}
             {children}
-          </div>
+          </ContentComponent>
         </LayoutProvider>
       </div>
     );
@@ -292,8 +321,9 @@ export function Overlay({
 
   // Popover
   if (role === 'Popover') {
+    const ContentComponent = as || 'div';
     return (
-      <div
+      <ContentComponent
         className={cn(
           'absolute z-40 bg-surface-floating rounded-md shadow-lg border border-default',
           placementVariants({ placement }),
@@ -306,6 +336,7 @@ export function Overlay({
         data-role={role}
         data-overlay-id={id}
         role="dialog"
+        {...rest}
       >
         <LayoutProvider
           value={{
@@ -326,14 +357,15 @@ export function Overlay({
           )}
           {children}
         </LayoutProvider>
-      </div>
+      </ContentComponent>
     );
   }
 
   // Toast
   if (role === 'Toast') {
+    const ContentComponent = as || 'div';
     return (
-      <div
+      <ContentComponent
         className={cn(
           'fixed z-50 bg-surface-overlay rounded-lg shadow-xl border border-default',
           'min-w-[300px] max-w-md',
@@ -347,6 +379,7 @@ export function Overlay({
         data-role={role}
         data-overlay-id={id}
         role="alert"
+        {...rest}
       >
         <LayoutProvider
           value={{
@@ -367,14 +400,15 @@ export function Overlay({
           )}
           {children}
         </LayoutProvider>
-      </div>
+      </ContentComponent>
     );
   }
 
   // Tooltip
   if (role === 'Tooltip') {
+    const ContentComponent = as || 'div';
     return (
-      <div
+      <ContentComponent
         className={cn(
           'absolute z-50 bg-gray-900 text-white text-xs rounded px-2 py-1 pointer-events-none',
           placementVariants({ placement }),
@@ -384,14 +418,16 @@ export function Overlay({
         data-role={role}
         data-overlay-id={id}
         role="tooltip"
+        {...rest}
       >
         {children}
-      </div>
+      </ContentComponent>
     );
   }
 
   // Lightbox
   if (role === 'Lightbox') {
+    const ContentComponent = as || 'div';
     return (
       <div
         className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
@@ -408,7 +444,10 @@ export function Overlay({
             depth: parentCtx.depth + 1,
           }}
         >
-          <div className={cn('max-w-7xl max-h-[90vh] overflow-auto', className)}>
+          <ContentComponent
+            className={cn('max-w-7xl max-h-[90vh] overflow-auto', className)}
+            {...rest}
+          >
             {dismissable && onClose && (
               <button
                 onClick={onClose}
@@ -419,7 +458,7 @@ export function Overlay({
               </button>
             )}
             {children}
-          </div>
+          </ContentComponent>
         </LayoutProvider>
       </div>
     );
@@ -432,12 +471,14 @@ export function Overlay({
   // - pointer-events 허용 (상호작용 가능)
   // - dismissable 지원하지 않음 (persistent)
   if (role === 'Floating') {
+    const ContentComponent = as || 'div';
     return (
-      <div
+      <ContentComponent
         className={cn('fixed z-50', placementVariants({ placement }), className)}
         data-dsl-component="overlay"
         data-role={role}
         data-overlay-id={id}
+        {...rest}
       >
         <LayoutProvider
           value={{
@@ -449,7 +490,7 @@ export function Overlay({
         >
           {children}
         </LayoutProvider>
-      </div>
+      </ContentComponent>
     );
   }
 

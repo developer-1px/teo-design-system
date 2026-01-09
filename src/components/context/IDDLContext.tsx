@@ -6,17 +6,19 @@
  */
 
 import { createContext, useContext } from 'react';
-import type { LayoutContextValue } from '@/components/Item/types.ts';
+import type { LayoutContextValue, GroupRole } from '@/components/types/Atom/types.ts';
 
 /**
  * IDDL Context
  * Section과 Group이 자동으로 이 Context를 제공
+ * v4.1: template 추가 (Page template을 Section으로 전파)
  */
 export const IDDLContext = createContext<LayoutContextValue>({
-  prominence: 'Primary',
+  prominence: 'Standard',
   density: 'Standard',
   intent: 'Neutral',
   depth: 0,
+  template: undefined, // v4.1: Page template (Section role validation & config용)
 });
 
 /**
@@ -47,3 +49,42 @@ export const IDDLProvider = IDDLContext.Provider;
 export const LayoutContext = IDDLContext;
 export const useLayoutContext = useIDDLContext;
 export const LayoutProvider = IDDLProvider;
+
+// ============================================
+// Group Context (GroupRole 전용)
+// ============================================
+
+/**
+ * GroupLayoutContextValue - Group 전용 Context 타입
+ * GroupRole을 그대로 사용하여 타입 안정성 확보
+ */
+export interface GroupLayoutContextValue {
+  prominence: LayoutContextValue['prominence'];
+  role?: GroupRole; // GroupRole 타입 사용
+  density?: LayoutContextValue['density'];
+  intent?: LayoutContextValue['intent'];
+  depth: number;
+  mode?: 'view' | 'edit';
+}
+
+/**
+ * GroupLayoutContext - Group 전용 Context
+ */
+export const GroupLayoutContext = createContext<GroupLayoutContextValue>({
+  prominence: 'Standard',
+  density: 'Standard',
+  intent: 'Neutral',
+  depth: 0,
+});
+
+/**
+ * useGroupLayoutContext - Group Context 가져오기
+ */
+export function useGroupLayoutContext(): GroupLayoutContextValue {
+  return useContext(GroupLayoutContext);
+}
+
+/**
+ * GroupLayoutProvider - Group 전용 Provider
+ */
+export const GroupLayoutProvider = GroupLayoutContext.Provider;

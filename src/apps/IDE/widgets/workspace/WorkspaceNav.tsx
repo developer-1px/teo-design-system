@@ -1,17 +1,5 @@
-import {
-  Bug,
-  Files,
-  GitBranch,
-  Package,
-  Palette,
-  Play,
-  Presentation,
-  Search,
-  Server,
-  Settings,
-} from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
 
 interface WorkspaceNavProps {
   onViewChange?: (view: string) => void;
@@ -27,97 +15,87 @@ export const WorkspaceNav = ({ onViewChange }: WorkspaceNavProps) => {
 
   return (
     <div className="flex flex-col gap-0.5 p-1.5">
-      <IconButton
-        size="md"
-        active={activeView === 'files'}
+      <Action
+        role="IconButton"
+        icon="Files"
+        label="Files"
+        selected={activeView === 'files'}
         onClick={() => handleViewChange('files')}
-        title="Files"
-      >
-        <Files size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'search'}
+      <Action
+        role="IconButton"
+        icon="Search"
+        label="Search"
+        selected={activeView === 'search'}
         onClick={() => handleViewChange('search')}
-        title="Search"
-      >
-        <Search size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'git'}
+      <Action
+        role="IconButton"
+        icon="GitBranch"
+        label="Source Control"
+        selected={activeView === 'git'}
         onClick={() => handleViewChange('git')}
-        title="Source Control"
-      >
-        <GitBranch size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'debug'}
+      <Action
+        role="IconButton"
+        icon="Bug"
+        label="Debug"
+        selected={activeView === 'debug'}
         onClick={() => handleViewChange('debug')}
-        title="Debug"
-      >
-        <Bug size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'extensions'}
+      <Action
+        role="IconButton"
+        icon="Package"
+        label="Extensions"
+        selected={activeView === 'extensions'}
         onClick={() => handleViewChange('extensions')}
-        title="Extensions"
-      >
-        <Package size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'run'}
+      <Action
+        role="IconButton"
+        icon="Play"
+        label="Run & Deploy"
+        selected={activeView === 'run'}
         onClick={() => handleViewChange('run')}
-        title="Run & Deploy"
-      >
-        <Play size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'tokens'}
+      <Action
+        role="IconButton"
+        icon="Palette"
+        label="Design Tokens"
+        selected={activeView === 'tokens'}
         onClick={() => handleViewChange('tokens')}
-        title="Design Tokens"
-      >
-        <Palette size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'servers'}
+      <Action
+        role="IconButton"
+        icon="Server"
+        label="JSON Viewer"
+        selected={activeView === 'servers'}
         onClick={() => handleViewChange('servers')}
-        title="JSON Viewer"
-      >
-        <Server size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'presentation'}
+      <Action
+        role="IconButton"
+        icon="Presentation"
+        label="Presentation"
+        selected={activeView === 'presentation'}
         onClick={() => handleViewChange('presentation')}
-        title="Presentation"
-      >
-        <Presentation size={20} />
-      </IconButton>
+      />
 
       <div className="flex-1" />
 
-      <IconButton
-        size="md"
-        active={activeView === 'settings'}
+      <Action
+        role="IconButton"
+        icon="Settings"
+        label="Settings"
+        selected={activeView === 'settings'}
         onClick={() => handleViewChange('settings')}
-        title="Settings"
-      >
-        <Settings size={20} />
-      </IconButton>
+      />
     </div>
   );
 };

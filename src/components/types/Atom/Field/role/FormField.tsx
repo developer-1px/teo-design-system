@@ -1,5 +1,5 @@
 import { forwardRef, type ReactNode } from 'react';
-import { Label } from '@/components/types/Item/Text/role/Label.tsx';
+import { Label } from '@/components/types/Atom/Text/role/Label.tsx';
 import { cn } from '@/shared/lib/utils.ts';
 
 /**

@@ -243,13 +243,13 @@ export function Field({ label, helperText, error, ...props }: FieldProps) {
       />
 
       {helperText && (
-        <Text role="Caption" id={helperTextId} prominence="Secondary">
+        <Text role="Caption" id={helperTextId} prominence="Standard">
           {helperText}
         </Text>
       )}
 
       {error && (
-        <Text role="Caption" id={errorId} prominence="Primary" intent="Critical">
+        <Text role="Caption" id={errorId} prominence="Standard" intent="Critical">
           {error}
         </Text>
       )}
@@ -474,7 +474,7 @@ export function VisuallyHidden({ children, ...props }: { children: React.ReactNo
 }
 
 // 사용 예제
-<Action prominence="Primary">
+<Action prominence="Standard">
   <IconX />
   <VisuallyHidden>Close modal</VisuallyHidden>
 </Action>

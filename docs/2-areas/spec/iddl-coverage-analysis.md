@@ -91,7 +91,7 @@ IDDL 1.0.1로 **표현 불가능**한 패턴들. Custom Node 확장이 필요.
 | 필드 개수 > 10 in list item | → `Group[Table]` + Compact density |
 | 필드 개수 ≤ 5 in list item | → `Group[List]` with Card |
 | `status` 필드 with enum | → Intent 매핑 (active→Positive, deleted→Critical) |
-| `createdAt`, `updatedAt` 필드 | → prominence: Secondary (메타 정보) |
+| `createdAt`, `updatedAt` 필드 | → prominence: Strong (메타 정보) |
 | `id`, `_id` 필드 | → hidden 또는 read-only |
 | FK 관계 (userId → User) | → Field[select] with lookup options |
 

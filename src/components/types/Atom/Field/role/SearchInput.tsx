@@ -1,6 +1,6 @@
 import { Search, X } from 'lucide-react';
 import { forwardRef } from 'react';
-import { Input, type InputProps } from '@/components/types/Item/Field/role/Input.tsx';
+import { Input, type InputProps } from '@/components/types/Atom/Field/role/Input.tsx';
 import { cn } from '@/shared/lib/utils.ts';
 
 /**

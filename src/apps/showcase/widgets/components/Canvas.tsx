@@ -14,8 +14,10 @@ import type {
   FileTreeNode,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/Group/Group.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text';
 import { ComponentRenderer } from './ComponentRenderer';
+import { ErrorBoundary } from './ErrorBoundary';
 import type { BackgroundType, ViewportSize } from './Toolbar';
 
 interface CanvasProps {
@@ -111,18 +113,19 @@ export function Canvas({
   ) : null;
 
   return (
-    <div className="relative flex-1 overflow-auto" style={getBackgroundStyle()}>
+    <div className="relative h-full w-full overflow-auto" style={getBackgroundStyle()}>
       {gridOverlay}
       {measureOverlay}
 
       {/* Canvas Content */}
       <div
-        className="min-h-full flex items-center justify-center p-12 transition-all"
+        className="min-h-full flex items-center justify-center transition-all"
         style={{
           transform: `scale(${zoom / 100})`,
           transformOrigin: 'top center',
-          paddingLeft: showMeasure ? '48px' : undefined,
-          paddingTop: showMeasure ? '48px' : undefined,
+          padding: '48px',
+          paddingLeft: showMeasure ? '64px' : '48px',
+          paddingTop: showMeasure ? '64px' : '48px',
         }}
       >
         <div
@@ -132,12 +135,25 @@ export function Canvas({
             maxWidth: '100%',
           }}
         >
-          {metadata && node ? (
-            <div className="p-8 rounded-lg bg-surface-elevated shadow-md">
-              <ComponentRenderer node={node} propValues={propValues} mockData={{}} />
-            </div>
+          {metadata && node?.componentModule ? (
+            <Group
+              role="Container"
+              prominence="Standard"
+              className="border border-border rounded-lg overflow-hidden bg-surface p-8"
+            >
+              <ErrorBoundary>
+                <ComponentRenderer
+                  metadata={metadata}
+                  propValues={propValues}
+                  mockData={{}}
+                  componentModule={node.componentModule}
+                />
+              </ErrorBoundary>
+            </Group>
           ) : (
-            <div className="p-12 text-center text-muted">Select a component to preview</div>
+            <Group role="Container" prominence="Standard" className="p-12 text-center">
+              <Text role="Body" prominence="Subtle" content="Select a component to preview" />
+            </Group>
           )}
         </div>
       </div>

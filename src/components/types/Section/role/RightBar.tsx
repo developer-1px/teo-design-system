@@ -11,8 +11,8 @@ import {
   Upload,
 } from 'lucide-react';
 import { AIAgentChat } from '@/apps/IDE/widgets/chat/AIAgentChat.tsx';
-import { Button } from '@/components/Item/Action/role/Button';
-import { Section } from '@/components/Section/Section.tsx';
+import { Button } from '@/components/types/Atom/Action/role/Button.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface RightBarProps {
   view: string | null;
@@ -47,7 +47,7 @@ export const RightBar = ({
   return (
     <Section
       role="Aside"
-      prominence="Secondary"
+      prominence="Standard"
       className="flex w-80 flex-col overflow-hidden bg-surface-cool boundary-shadow-left"
     >
       {renderContent()}

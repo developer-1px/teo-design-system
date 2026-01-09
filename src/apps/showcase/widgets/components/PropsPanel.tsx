@@ -8,11 +8,11 @@ import type {
   PropType,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import type { DataType } from '@/components/Item/Field/Field';
-import { Field } from '@/components/Item/Field/Field';
-import { Group } from '@/components/Group/Group.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import type { DataType } from '@/components/types/Atom/Field/Field';
+import { Field } from '@/components/types/Atom/Field/Field';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface PropsPanelProps {
   metadata: ComponentMetadata;
@@ -53,15 +53,15 @@ export function PropsPanel({
   onMockChange,
 }: PropsPanelProps) {
   return (
-    <Section role="Form" prominence="Secondary" gap={2}>
+    <Section role="Form" prominence="Standard" gap={2}>
       {/* Props Section */}
-      <Group role="Info" prominence="Primary">
-        <Text role="Label" prominence="Primary">
+      <Group role="Container" prominence="Standard">
+        <Text role="Label" prominence="Standard">
           Props
         </Text>
       </Group>
 
-      <Group role="Form" prominence="Secondary" gap={1}>
+      <Group role="Form" prominence="Standard" gap={1}>
         {Object.entries(metadata.props).map(([name, prop]) => {
           const value = propValues[name];
           const dataType = mapPropTypeToDataType(prop.type);
@@ -114,11 +114,11 @@ export function PropsPanel({
 
       {/* Mock Data Section */}
       {metadata.externalDeps.length > 0 && (
-        <Group role="Form" prominence="Tertiary" gap={1}>
-          <Text role="Label" prominence="Secondary">
+        <Group role="Form" gap={1}>
+          <Text role="Label" prominence="Standard">
             Mocks (External Dependencies)
           </Text>
-          <Text role="Caption" prominence="Tertiary">
+          <Text role="Caption" prominence="Subtle">
             This component uses: {metadata.externalDeps.join(', ')}
           </Text>
           <Field

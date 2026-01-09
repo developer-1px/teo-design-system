@@ -3,8 +3,8 @@
  * 간단하고 컴팩트한 리스트
  */
 
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Item/Text/Text.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import { cn } from '@/shared/lib/utils.ts';
 import type { JsonArray, JsonObject } from '../types.ts';
 
@@ -48,13 +48,11 @@ export const ListView = ({ data }: ListViewProps) => {
                     <div key={key} className="flex items-center gap-2 min-w-0">
                       <Text
                         role="Label"
-                        prominence="Tertiary"
                         className="text-xs text-subtle whitespace-nowrap"
                         content={`${key}:`}
                       />
                       <Text
                         role="Body"
-                        prominence="Primary"
                         className="text-sm truncate"
                         content={
                           typeof value === 'object'
@@ -72,12 +70,7 @@ export const ListView = ({ data }: ListViewProps) => {
 
         {data.length === 0 && (
           <div className="flex items-center justify-center h-64">
-            <Text
-              role="Body"
-              prominence="Tertiary"
-              className="text-subtle"
-              content="데이터가 없습니다"
-            />
+            <Text role="Body" className="text-subtle" content="데이터가 없습니다" />
           </div>
         )}
       </div>

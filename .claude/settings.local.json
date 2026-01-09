@@ -35,7 +35,10 @@
       "Bash(do sed -i '' 's/ rounded=\"\"[^\"\"]*\"\"//g' \"$file\")",
       "Bash(pnpm lint:biome:*)",
       "Bash(pnpm fix:*)",
-      "Bash(gh pr view:*)"
+      "Bash(gh pr view:*)",
+      "Bash(do sed -i '' 's/layout=\"\"full\"\"/layout=\"\"flex\"\" direction=\"\"column\"\"/g' \"$file\")",
+      "Bash(pnpm build:*)",
+      "Bash(gh pr list:*)"
     ],
     "deny": [],
     "ask": []

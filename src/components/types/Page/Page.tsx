@@ -1,172 +1,203 @@
 /**
- * Page - 최상위 페이지 컨테이너 (IDDL v2.0)
+ * Page - Application Root (IDDL v4.0)
  *
- * 전체 페이지를 감싸는 루트 컴포넌트
+ * **Two modes**:
+ * - role="Content" (default): Scrollable, max-width constrained, content container
+ * - role="App": Full-screen, overflow-hidden, grid-based application layout
  *
- * v1.0.1: title, description, layout, breadcrumbs, condition 추가, CVA 적용
- * v2.0: role 기반 variants, prominence/density/intent 통합, NavigationConfig 지원
+ * **role="Content" 특징**:
+ * - h-full (부모에 맞춤) - Full height
+ * - overflow-y-auto - 스크롤 가능
+ * - flex 또는 grid 레이아웃
+ * - max-width, centered 지원
+ *
+ * **role="App" 특징**:
+ * - w-screen h-screen - Full viewport
+ * - overflow-hidden - 스크롤 없음
+ * - **template prop으로 Section role 결정** (studio, sidebar-content, master-detail, etc.)
+ * - Section들이 grid-area로 배치됨
+ *
+ * **Template System (v4.0)**:
+ * - `template="studio"` → ActivityBar, PrimarySidebar, Editor, Panel 등
+ * - `template="sidebar-content"` → Navigator, Main, Aside 등
+ * - `template="master-detail"` → Master, Detail 등
+ * - Page template이 Section role을 결정하는 주체
+ *
+ * v1.0.1: title, description, layout, breadcrumbs, condition 추가
+ * v2.0: role, prominence, density, intent, maxWidth, centered, navigation, scrollable, loading, error 추가
+ * v3.0: main 태그 제거, layout 단순화 (flex/grid만 지원), role/navigation 제거
+ * v4.0: Template-aware architecture, Section role validation
  */
 
 import { cva } from 'class-variance-authority';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { LayoutProvider } from '@/components/context/IDDLContext';
-import type { PageLayout, PageProps, PageRole } from '@/components/Item/types';
-import { cn } from '@/shared/lib/utils';
+import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
+import type { PageProps } from '@/components/types/Atom/types.ts';
+import { cn } from '@/shared/lib/utils.ts';
+import './grid-templates.css';
 
-/**
- * Role별 기본 layout 매핑
- */
-const roleToLayout: Record<PageRole, PageLayout> = {
-  App: 'full',
-  Document: 'single',
-  Dashboard: 'dashboard',
-  Wizard: 'wizard',
-  Settings: 'sidebar',
-  Canvas: 'full',
-  Gallery: 'masonry',
-  Feed: 'single',
-};
-
-/**
- * Role별 기본 maxWidth
- */
-const roleToMaxWidth: Record<PageRole, string> = {
-  App: 'none',
-  Document: 'max-w-4xl', // 1024px
-  Dashboard: 'max-w-none',
-  Wizard: 'max-w-2xl', // 640px
-  Settings: 'max-w-7xl', // 1280px
-  Canvas: 'max-w-none',
-  Gallery: 'max-w-screen-2xl', // 1440px
-  Feed: 'max-w-3xl', // 768px
-};
+// Import App layout renderer
+import { AppLayout } from './renderers/AppLayout';
 
 /**
  * Page container variants (CVA)
+ * v3.1: text-base 추가 - 모든 하위 Text가 상속받도록 함 (text-* 최소화)
  */
-const pageContainerVariants = cva('bg-surface-base flex flex-col', {
-  variants: {
-    // Role-driven base styles
-    role: {
-      App: 'h-screen w-screen overflow-hidden',
-      Document: 'h-full w-full overflow-y-auto',
-      Dashboard: 'h-full w-full overflow-y-auto',
-      Wizard: 'h-full w-full overflow-hidden',
-      Settings: 'h-full w-full overflow-y-auto',
-      Canvas: 'h-screen w-screen overflow-hidden',
-      Gallery: 'h-full w-full overflow-y-auto',
-      Feed: 'h-full w-full overflow-y-auto',
+const pageContainerVariants = cva(
+  'h-full w-full overflow-y-auto bg-surface-base flex flex-col text-base text-text-primary',
+  {
+    variants: {
+      prominence: {
+        Hero: 'bg-surface-raised',
+        Standard: 'bg-surface',
+        Strong: 'bg-surface-sunken',
+        Subtle: 'bg-surface-base',
+      },
     },
-    // Prominence (visual hierarchy)
-    prominence: {
-      Hero: 'bg-surface-raised',
-      Primary: 'bg-surface',
-      Secondary: 'bg-surface-sunken',
-      Tertiary: 'bg-surface-base',
+    defaultVariants: {
+      prominence: 'Standard',
     },
-  },
-  defaultVariants: {
-    role: 'Document',
-    prominence: 'Primary',
-  },
-});
+  }
+);
 
 /**
  * Page layout variants (CVA)
  */
-const pageLayoutVariants = cva('flex-1', {
+const pageLayoutVariants = cva('w-full flex-1', {
   variants: {
     layout: {
-      single: 'p-6 mx-auto',
-      sidebar: 'p-6 grid grid-cols-[250px_1fr] gap-6',
-      dashboard: 'p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6',
-      split: 'p-6 grid grid-cols-2 gap-6',
-      wizard: 'p-6 mx-auto',
-      full: '', // Full layout: no padding, no constraints (for app root)
-      studio: 'flex gap-0 overflow-hidden', // v2.0: IDE/Studio
-      'three-column': 'grid grid-cols-[250px_1fr_250px] gap-0', // v2.0: 3컬럼
-      masonry: 'p-6 columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6', // v2.0: Masonry
-      timeline: 'p-6 max-w-4xl mx-auto', // v2.0: Timeline
+      flex: 'flex',
+      grid: 'grid',
     },
-    density: {
-      Comfortable: 'p-8',
-      Standard: 'p-6',
-      Compact: 'p-4',
+    direction: {
+      row: 'flex-row',
+      column: 'flex-col',
     },
   },
-  compoundVariants: [
-    // full과 studio는 padding 무시
-    {
-      layout: ['full', 'studio'],
-      class: '!p-0',
-    },
-  ],
   defaultVariants: {
-    layout: 'single',
-    density: 'Standard',
+    layout: 'flex',
+    direction: 'column',
   },
 });
 
+/**
+ * Grid template variants (Content role only)
+ * v4.0: Template-aware, Section role과 1:1 대응
+ */
+const contentGridTemplateVariants = cva('', {
+  variants: {
+    template: {
+      studio: 'grid-template-studio', // IDE/Studio layout
+      'sidebar-content': 'grid-template-sidebar', // Web standard (nav + content + aside)
+      'master-detail': '', // Master-Detail: 동적 계산
+      '3-col': 'grid-template-3col', // 3-column layout
+      dashboard: 'grid-template-dashboard', // Dashboard: auto-fit grid
+      dialog: '', // Dialog: 동적 계산
+      presentation: '', // Presentation: 동적 계산 (v4.0)
+      custom: '', // Custom: 사용자 정의
+    },
+  },
+});
+
+/**
+ * Gap utility - Convert number to Tailwind gap class
+ */
+function getGapClass(gap: number): string {
+  const gapMap: Record<number, string> = {
+    0: 'gap-0',
+    1: 'gap-1',
+    2: 'gap-2',
+    3: 'gap-3',
+    4: 'gap-4',
+    6: 'gap-6',
+    8: 'gap-8',
+    12: 'gap-12',
+    16: 'gap-16',
+    24: 'gap-24',
+  };
+  return gapMap[gap] || 'gap-0';
+}
+
+/**
+ * Max width mapping
+ */
+const maxWidthMap: Record<string, string> = {
+  sm: 'max-w-sm', // 640px
+  md: 'max-w-md', // 768px
+  lg: 'max-w-lg', // 1024px
+  xl: 'max-w-xl', // 1280px
+  '2xl': 'max-w-2xl', // 1536px
+  '4xl': 'max-w-4xl', // 2048px
+  none: 'max-w-none',
+};
+
 export function Page({
-  // Identity & Structure
-  role = 'Document',
-  title,
-  description,
-
-  // Design Tokens
-  prominence = 'Primary',
-  density = 'Standard',
-  intent = 'Neutral',
-
-  // Layout Control
-  layout,
+  as: Component = 'div',
+  role = 'Content',
+  layout = 'flex',
+  direction = 'column',
+  template,
+  gap = 0,
   maxWidth,
   centered = false,
-
-  // Navigation
+  title,
+  description,
   breadcrumbs,
-  navigation,
-
-  // State & Behavior
-  scrollable,
+  prominence = 'Standard',
+  density = 'Standard',
+  intent = 'Neutral',
   loading = false,
   error,
-
-  // React Integration
   children,
   className,
   onClick,
   condition,
+  ...rest
 }: PageProps) {
-  // 조건부 렌더링 (v1.0.1)
-  // TODO: condition 표현식 평가 구현
+  // 조건부 렌더링
   if (condition) {
-    // 현재는 조건부 렌더링 미구현
+    // TODO: condition 표현식 평가 구현
   }
 
-  // Role에 따른 기본값 계산
-  const computedLayout = layout || roleToLayout[role];
-  const computedMaxWidth = maxWidth
-    ? typeof maxWidth === 'number'
-      ? `max-w-[${maxWidth}px]`
-      : maxWidth === 'none'
-        ? 'max-w-none'
-        : `max-w-${maxWidth}`
-    : roleToMaxWidth[role];
-  const computedScrollable =
-    scrollable ?? (role !== 'App' && role !== 'Canvas' && role !== 'Wizard');
+  // v4.0: role="App" → AppLayout 렌더러 사용 (Field 패턴과 동일)
+  if (role === 'App') {
+    return (
+      <LayoutProvider
+        value={{
+          prominence,
+          density,
+          intent,
+          depth: 0,
+          mode: 'view',
+          template, // v4.0: Pass template for Section role validation
+        }}
+      >
+        <AppLayout
+          template={template}
+          gap={gap}
+          prominence={prominence}
+          intent={intent}
+          className={className}
+          onClick={onClick}
+        >
+          {children}
+        </AppLayout>
+      </LayoutProvider>
+    );
+  }
+
+  // role="Content" (default): 기존 Content 페이지 로직
 
   // 로딩 상태 렌더링
   if (loading) {
     return (
       <div
         className={cn(
-          pageContainerVariants({ role, prominence }),
+          pageContainerVariants({ prominence }),
           'items-center justify-center',
           className
         )}
         data-dsl-component="page"
-        data-role={role}
         data-state="loading"
       >
         <div className="flex flex-col items-center gap-4">
@@ -182,12 +213,11 @@ export function Page({
     return (
       <div
         className={cn(
-          pageContainerVariants({ role, prominence }),
+          pageContainerVariants({ prominence }),
           'items-center justify-center',
           className
         )}
         data-dsl-component="page"
-        data-role={role}
         data-state="error"
       >
         <div className="flex flex-col items-center gap-4 max-w-md text-center">
@@ -198,6 +228,12 @@ export function Page({
     );
   }
 
+  const maxWidthClass = maxWidth
+    ? typeof maxWidth === 'number'
+      ? `max-w-[${maxWidth}px]`
+      : maxWidthMap[maxWidth] || maxWidthMap.none
+    : undefined;
+
   return (
     <LayoutProvider
       value={{
@@ -206,36 +242,20 @@ export function Page({
         intent,
         depth: 0,
         mode: 'view',
+        template, // v4.0: Pass template for Section role validation
       }}
     >
-      <div
-        className={cn(
-          pageContainerVariants({ role, prominence }),
-          computedScrollable && 'overflow-y-auto',
-          className
-        )}
+      <Component
+        className={cn(pageContainerVariants({ prominence }), className)}
         data-dsl-component="page"
-        data-role={role}
-        data-layout={computedLayout}
+        data-layout={layout}
         data-prominence={prominence}
         data-density={density}
         data-intent={intent}
         onClick={onClick}
+        {...rest}
       >
-        {/* Navigation Header (v2.0) */}
-        {navigation?.header?.show && (
-          <header
-            className={cn(
-              'px-6 py-3 border-b border-border bg-surface',
-              navigation.header.sticky && 'sticky top-0 z-10',
-              navigation.header.transparent && 'bg-transparent border-transparent'
-            )}
-          >
-            {/* Placeholder for future header content */}
-          </header>
-        )}
-
-        {/* Breadcrumbs (v1.0.1) */}
+        {/* Breadcrumbs */}
         {breadcrumbs && breadcrumbs.length > 0 && (
           <nav className="px-6 py-3 border-b border-border bg-surface" aria-label="Breadcrumb">
             <ol className="flex items-center gap-2 text-sm">
@@ -255,7 +275,7 @@ export function Page({
           </nav>
         )}
 
-        {/* Page Header (v1.0.1) */}
+        {/* Page Header */}
         {(title || description) && (
           <header className="px-6 py-6 border-b border-border bg-surface">
             {title && <h1 className="text-3xl font-semibold text-text-primary mb-2">{title}</h1>}
@@ -263,29 +283,22 @@ export function Page({
           </header>
         )}
 
-        {/* Page Content with Layout */}
-        <main
+        {/* Page Content */}
+        <div
           className={cn(
-            pageLayoutVariants({ layout: computedLayout, density }),
-            computedMaxWidth,
+            pageLayoutVariants({
+              layout,
+              direction: layout === 'flex' ? direction : undefined,
+            }),
+            layout === 'grid' && template && contentGridTemplateVariants({ template }),
+            getGapClass(gap),
+            maxWidthClass,
             centered && 'mx-auto'
           )}
         >
           {children}
-        </main>
-
-        {/* Navigation Footer (v2.0) */}
-        {navigation?.footer?.show && (
-          <footer
-            className={cn(
-              'px-6 py-3 border-t border-border bg-surface',
-              navigation.footer.sticky && 'sticky bottom-0 z-10'
-            )}
-          >
-            {/* Placeholder for future footer content */}
-          </footer>
-        )}
-      </div>
+        </div>
+      </Component>
     </LayoutProvider>
   );
 }

@@ -395,7 +395,7 @@ export function Stack({
 }
 
 // 사용 예제
-<Stack direction="vertical" gap={16} align="start">
+<Stack gap={16} align="start">
   <h2>Title</h2>
   <p>Description</p>
   <button>Action</button>
@@ -776,25 +776,25 @@ import { Section } from '@/components/dsl/Section';
 
 export function IDDLLayout() {
   return (
-    <Section role="Page" prominence="Primary">
+    <Section role="Page" prominence="Standard">
       {/* Header */}
-      <Group role="Navigation" prominence="Primary" gap={2}>
+      <Group role="Navigation" prominence="Standard" gap={2}>
         <span>Logo</span>
         <nav>Menu</nav>
       </Group>
 
       {/* Main Content */}
-      <Group role="Container" prominence="Primary" gap={4}>
-        <Section role="Sidebar" prominence="Secondary">
+      <Group role="Container" prominence="Standard" gap={4}>
+        <Section role="Sidebar" prominence="Standard">
           Sidebar
         </Section>
-        <Section role="Main" prominence="Primary">
+        <Section role="Main" prominence="Standard">
           Main Content
         </Section>
       </Group>
 
       {/* Footer */}
-      <Group role="Footer" prominence="Tertiary">
+      <Group role="Footer" prominence="Subtle">
         Footer
       </Group>
     </Section>

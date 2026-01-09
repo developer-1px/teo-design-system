@@ -6,13 +6,12 @@ import {
   Beaker,
   Blocks,
   BookOpen,
-  Calendar,
   Code,
   FileText,
+  LayoutGrid,
   Palette,
   Presentation,
   Smile,
-  Target,
 } from 'lucide-react';
 import { createContext, type ReactNode, useContext, useEffect } from 'react';
 import { useLocation } from 'wouter';
@@ -21,13 +20,12 @@ export type AppType =
   | 'ide'
   | 'ppt'
   | 'notion'
-  | 'linear'
-  | 'calendar'
   | 'emoji'
   | 'design'
   | 'builder'
   | 'showcase'
-  | 'tokens';
+  | 'tokens'
+  | 'layout';
 
 import type { LucideIcon } from 'lucide-react';
 
@@ -69,24 +67,6 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     accentColor: '#000000',
     colorScheme: 'purple',
   },
-  linear: {
-    type: 'linear',
-    name: 'Linear',
-    icon: Target,
-    iconName: 'Target',
-    description: 'Issue Tracking',
-    accentColor: '#3b82f6',
-    colorScheme: 'blue',
-  },
-  calendar: {
-    type: 'calendar',
-    name: 'Calendar',
-    icon: Calendar,
-    iconName: 'Calendar',
-    description: 'Schedule & Events',
-    accentColor: '#ef4444',
-    colorScheme: 'red',
-  },
   emoji: {
     type: 'emoji',
     name: 'Emoji',
@@ -105,15 +85,6 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     accentColor: '#059669',
     colorScheme: 'emerald',
   },
-  builder: {
-    type: 'builder',
-    name: 'DSL Builder',
-    icon: Blocks,
-    iconName: 'Blocks',
-    description: 'Visual DSL Layout Builder',
-    accentColor: '#8b5cf6',
-    colorScheme: 'purple',
-  },
   showcase: {
     type: 'showcase',
     name: 'Showcase',
@@ -131,6 +102,24 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     description: 'Design Tokens & Theme System',
     accentColor: '#8b5cf6',
     colorScheme: 'purple',
+  },
+  builder: {
+    type: 'builder',
+    name: 'DSL Builder',
+    icon: Blocks,
+    iconName: 'Blocks',
+    description: 'Visual DSL Layout Builder',
+    accentColor: '#8b5cf6',
+    colorScheme: 'purple',
+  },
+  layout: {
+    type: 'layout',
+    name: 'Layout Demo',
+    icon: LayoutGrid,
+    iconName: 'LayoutGrid',
+    description: 'Page Template & Section Demo',
+    accentColor: '#06b6d4',
+    colorScheme: 'blue',
   },
 };
 

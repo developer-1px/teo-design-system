@@ -1,127 +1,165 @@
 /**
- * JSONPage - Notion Database 스타일 JSON Viewer
+ * JSONPage - Minimal JSON DataTable Viewer with TypeScript Interface Generator
  *
- * test.json의 모든 배열을 탭으로 분리하여 표시
+ * JSON에서 첫 번째 배열을 찾아 DataTable로 표시
+ * 왼쪽 패널에 TypeScript interface 생성
  */
 
 import { useMemo, useState } from 'react';
-import { Group } from '@/components/Group/Group';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Group/role/Tabs';
-import { Page } from '@/components/Page/Page';
-import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Item/Text/Text';
-import { DatabaseViewer } from '@/apps/JSON/widgets/database/DatabaseViewer';
+import { Copy, Check } from 'lucide-react';
 import type { JsonArray, JsonObject } from '@/apps/JSON/widgets/database/types';
-import testData from '@/test.json';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
+import { TableView } from '@/apps/JSON/widgets/database/views/TableView';
+import { jsonToTypeScript } from '@/apps/JSON/lib/json-to-typescript';
+import { Overlay } from '@/components/types/Overlay/Overlay';
+import { FormView } from '@/apps/JSON/widgets/json-viewer/FormView';
+import testData from '@/apps/JSON/config/test.json';
 
 export const JSONPage = () => {
-  // test.json에서 모든 배열 키 찾기
-  const arrayDatasets = useMemo(() => {
-    const datasets: { key: string; data: JsonArray; displayName: string }[] = [];
+  const [copied, setCopied] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<JsonObject | null>(null);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
-    Object.keys(testData).forEach((key) => {
+  // JSON에서 첫 번째 배열 데이터 찾기
+  const { data, arrayKey } = useMemo(() => {
+    console.log('🔍 [JSONPage] testData:', testData);
+    console.log('🔍 [JSONPage] testData keys:', Object.keys(testData));
+
+    const firstArrayKey = Object.keys(testData).find((key) => {
       const value = (testData as JsonObject)[key];
-      if (Array.isArray(value)) {
-        // 키 이름을 사람이 읽기 쉽게 변환
-        const displayName = key
-          .replace(/([A-Z])/g, ' $1') // camelCase를 공백으로
-          .replace(/List$/, '') // 끝의 List 제거
-          .trim()
-          .split(' ')
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-
-        datasets.push({ key, data: value, displayName });
-      }
+      const isArray = Array.isArray(value);
+      console.log(`🔍 [JSONPage] key="${key}", isArray=${isArray}, length=${isArray ? value.length : 'N/A'}`);
+      return isArray;
     });
 
-    return datasets;
+    console.log('🔍 [JSONPage] firstArrayKey:', firstArrayKey);
+
+    if (firstArrayKey) {
+      const arrayData = (testData as JsonObject)[firstArrayKey] as JsonArray;
+      console.log('✅ [JSONPage] Found array data:', {
+        key: firstArrayKey,
+        length: arrayData.length,
+        firstItem: arrayData[0],
+      });
+      return { data: arrayData, arrayKey: firstArrayKey };
+    }
+
+    console.log('❌ [JSONPage] No array found in testData');
+    return { data: [], arrayKey: null };
   }, []);
 
-  const [activeTab, setActiveTab] = useState(arrayDatasets[0]?.key || '');
+  // TypeScript interface 생성
+  const tsInterface = useMemo(() => {
+    if (data.length === 0) return '// No data';
+    const interfaceName = arrayKey
+      ? arrayKey.charAt(0).toUpperCase() + arrayKey.slice(1).replace(/s$/, '')
+      : 'Item';
+    return jsonToTypeScript(data, interfaceName);
+  }, [data, arrayKey]);
 
-  if (arrayDatasets.length === 0) {
-    return (
-      <Page>
-        <Section role="Container" className="flex items-center justify-center h-full">
-          <Text
-            role="Body"
-            prominence="Primary"
-            className="text-text-secondary"
-            content="No array data found in test.json"
-          />
-        </Section>
-      </Page>
-    );
-  }
+  console.log('📊 [JSONPage] Final data:', { length: data.length, data });
+
+  // 기본 viewConfig (모든 컬럼 표시)
+  const viewConfig = useMemo(
+    () => ({
+      id: 'table',
+      type: 'table' as const,
+      name: 'Table',
+    }),
+    []
+  );
+
+  // Copy to clipboard
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(tsInterface);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  // Handle row double-click
+  const handleRowDoubleClick = (row: JsonObject) => {
+    console.log('📋 [JSONPage] Row double-clicked:', row);
+    setSelectedRow(row);
+    setIsPanelOpen(true);
+  };
+
+  // Handle panel close
+  const handlePanelClose = () => {
+    setIsPanelOpen(false);
+    setSelectedRow(null);
+  };
+
+  // Handle field change in FormView
+  const handleFieldChange = (key: string, value: unknown) => {
+    console.log('✏️ [JSONPage] Field changed:', key, value);
+    // TODO: Implement actual data update logic
+  };
 
   return (
-    <Page>
-      <Section role="Container" className="flex flex-col h-full overflow-hidden">
-        {/* Header */}
-        <Section prominence="Primary" className="border-b border-border bg-layer-2">
-          <Group role="Container" className="px-6 py-4 gap-2">
-            <Text
-              role="Title"
-              prominence="Hero"
-              className="text-2xl font-bold"
-              content="JSON Database Viewer"
-            />
-            <Text
-              role="Body"
-              prominence="Secondary"
-              className="text-text-secondary"
-              content={`${arrayDatasets.length}개의 데이터셋을 Notion 스타일로 표시`}
-            />
-          </Group>
-        </Section>
+    <Page role="App" template="sidebar-content" className="h-screen overflow-hidden">
+      {/* Left Panel: TypeScript Interface */}
+      <Section role="Navigator">
+        <div className="h-full flex flex-col bg-surface-sunken border-r border-border-default">
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border-default bg-surface">
+            <h2 className="text-sm font-semibold text-text-primary">TypeScript Interface</h2>
+            <button
+              onClick={handleCopy}
+              className="p-1.5 rounded hover:bg-surface-elevated transition-colors"
+              title="Copy to clipboard"
+            >
+              {copied ? (
+                <Check size={16} className="text-green-600" />
+              ) : (
+                <Copy size={16} className="text-text-secondary" />
+              )}
+            </button>
+          </div>
 
-        {/* Tabs for each array dataset */}
-        <Tabs
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="flex-1 flex flex-col min-h-0"
-        >
-          <Section prominence="Primary" className="border-b border-border bg-layer-2">
-            <TabsList className="px-6">
-              {arrayDatasets.map((dataset) => (
-                <TabsTrigger key={dataset.key} value={dataset.key}>
-                  {dataset.displayName}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Section>
-
-          {arrayDatasets.map((dataset) => (
-            <TabsContent key={dataset.key} value={dataset.key} className="flex-1 min-h-0">
-              <DatabaseViewer
-                data={dataset.data}
-                title={dataset.displayName}
-                description={`${dataset.data.length}개의 항목`}
-                views={[
-                  { id: 'table', type: 'table', name: 'Table' },
-                  {
-                    id: 'board',
-                    type: 'board',
-                    name: 'Board',
-                    group: { by: 'status' }, // status 필드로 그룹핑 (있으면)
-                  },
-                  {
-                    id: 'gallery',
-                    type: 'gallery',
-                    name: 'Gallery',
-                    cardSize: 'md',
-                    showImage: false,
-                  },
-                  { id: 'list', type: 'list', name: 'List' },
-                ]}
-                defaultView="table"
-                showStats={true}
-              />
-            </TabsContent>
-          ))}
-        </Tabs>
+          {/* Interface Code */}
+          <div className="flex-1 overflow-auto p-4">
+            <pre className="text-xs font-mono text-text-primary whitespace-pre">
+              {tsInterface}
+            </pre>
+          </div>
+        </div>
       </Section>
+
+      {/* Main: Table View */}
+      <Section role="Main">
+        <TableView
+          data={data}
+          viewConfig={viewConfig}
+          density="compact"
+          onRowDoubleClick={handleRowDoubleClick}
+          clearSelection={!isPanelOpen}
+        />
+      </Section>
+
+      {/* Overlay Panel: Detail Form View */}
+      <Overlay
+        id="detail-view-drawer"
+        role="Drawer"
+        placement="right"
+        className="w-[800px]"
+        isOpen={isPanelOpen}
+        onClose={handlePanelClose}
+        dismissable={true}
+      >
+        {selectedRow && (
+          <FormView
+            data={selectedRow}
+            onChange={handleFieldChange}
+            onClose={handlePanelClose}
+            readOnly={false}
+          />
+        )}
+      </Overlay>
     </Page>
   );
 };

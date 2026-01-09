@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import { KeyboardProvider } from '@/shared/lib/keyboard';
 import { initializeTheme } from '@/shared/lib/theme';
+import App from './app/App.tsx';
 import './index.css';
 
 // Initialize theme BEFORE React renders

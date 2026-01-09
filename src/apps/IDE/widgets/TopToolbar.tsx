@@ -12,18 +12,14 @@ import {
   Download as DownloadIcon,
   FolderOpen as FolderOpenIcon,
   GitBranch as GitBranchIcon,
-  Menu as MenuIcon,
-  PanelBottom as PanelBottomIcon,
-  PanelRightOpen as PanelRightOpenIcon,
   Play as PlayIcon,
-  Settings as SettingsIcon,
   Upload as UploadIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/Item/Action/role/Button.tsx';
-import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
-import { Section } from '@/components/Section/Section.tsx';
 import { ThemeToggleButton } from '@/apps/IDE/widgets/ThemeSwitcher.tsx';
+import { Button } from '@/components/types/Atom/Action/role/Button.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface TopToolbarProps {
   projectName?: string;
@@ -51,14 +47,14 @@ export const TopToolbar = ({
     <Section role="Header" prominence="Hero" className="flex h-10 items-center px-3 gap-2">
       {/* 1. Main Menu (Hamburger) */}
       <div className="relative">
-        <IconButton
-          size="sm"
+        <Action
+          role="IconButton"
+          icon="Menu"
+          label="Main Menu (Alt+\)"
+          density="Compact"
           onClick={() => setShowMainMenu(!showMainMenu)}
           onBlur={() => setTimeout(() => setShowMainMenu(false), 200)}
-          title="Main Menu (Alt+\)"
-        >
-          <MenuIcon size={16} />
-        </IconButton>
+        />
 
         {showMainMenu && (
           <Section
@@ -156,14 +152,14 @@ export const TopToolbar = ({
       <div className="flex items-center gap-1">
         {/* Panel Toggles */}
         {onToggleRightSidebar && (
-          <IconButton
-            size="sm"
-            active={showRightSidebar}
+          <Action
+            role="IconButton"
+            icon="PanelRightOpen"
+            label="Toggle Right Sidebar"
+            density="Compact"
+            selected={showRightSidebar}
             onClick={onToggleRightSidebar}
-            title="Toggle Right Sidebar"
-          >
-            <PanelRightOpenIcon size={16} />
-          </IconButton>
+          />
         )}
 
         {/* Divider */}
@@ -173,9 +169,13 @@ export const TopToolbar = ({
         <ThemeToggleButton />
 
         {/* Settings */}
-        <IconButton size="sm" title="Settings (⌘,)" onClick={onOpenSettings}>
-          <SettingsIcon size={16} />
-        </IconButton>
+        <Action
+          role="IconButton"
+          icon="Settings"
+          label="Settings (⌘,)"
+          density="Compact"
+          onClick={onOpenSettings}
+        />
       </div>
     </Section>
   );

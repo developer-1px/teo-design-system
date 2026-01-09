@@ -6,7 +6,7 @@
  * @see docs/1-project/3-how-to-renderer.md (useTree 예제 참고)
  */
 
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 export interface TreeNode {
   id: string;
@@ -37,7 +37,10 @@ export interface UseTreeReturn {
     role: 'tree';
   };
   /** TreeItem에 적용할 props */
-  getItemProps: (node: TreeNode, level: number) => {
+  getItemProps: (
+    node: TreeNode,
+    level: number
+  ) => {
     role: 'treeitem';
     'aria-expanded': boolean | undefined;
     'aria-selected': boolean;

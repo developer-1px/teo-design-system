@@ -9,8 +9,8 @@
 
 import { Moon as MoonIcon, Sun as SunIcon, X as XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
-import { Section } from '@/components/Section/Section.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import {
   applyThemeConfig,
   type ColorScheme,
@@ -64,9 +64,13 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold">Theme Settings</h3>
         {onClose && (
-          <IconButton size="sm" onClick={onClose} title="Close">
-            <XIcon size={16} />
-          </IconButton>
+          <Action
+            role="IconButton"
+            icon="X"
+            label="Close"
+            density="Compact"
+            onClick={onClose}
+          />
         )}
       </div>
 
@@ -174,11 +178,12 @@ export const ThemeToggleButton = () => {
   };
 
   return (
-    <IconButton
+    <Action
+      role="IconButton"
+      icon={theme === 'light' ? 'Moon' : 'Sun'}
+      label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      density="Compact"
       onClick={handleToggle}
-      title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-    >
-      {theme === 'light' ? <MoonIcon size={16} /> : <SunIcon size={16} />}
-    </IconButton>
+    />
   );
 };

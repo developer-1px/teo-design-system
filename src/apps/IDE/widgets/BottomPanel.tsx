@@ -1,14 +1,12 @@
 import {
   AlertCircle as AlertCircleIcon,
   Bug as BugIcon,
-  ChevronUp as ChevronUpIcon,
   FileOutput as FileOutputIcon,
   Terminal as TerminalIcon,
-  X as XIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
-import { Section } from '@/components/Section/Section.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils.ts';
 
 interface BottomPanelProps {
@@ -41,11 +39,7 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
 
   return (
     <div style={{ height: `${height}px` }} className="flex flex-col overflow-hidden">
-      <Section
-        role="Container"
-        prominence="Tertiary"
-        className="flex flex-col flex-1 overflow-hidden"
-      >
+      <Section role="Container" className="flex flex-col flex-1 overflow-hidden">
         {/* Tab Header */}
         <div className="flex items-center justify-between px-2 py-1 bg-surface">
           <div className="flex items-center gap-1">
@@ -82,12 +76,19 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
 
           {/* Actions */}
           <div className="flex items-center gap-1">
-            <IconButton size="sm" title="Maximize Panel">
-              <ChevronUpIcon size={16} />
-            </IconButton>
-            <IconButton size="sm" onClick={onClose} title="Close Panel">
-              <XIcon size={16} />
-            </IconButton>
+            <Action
+              role="IconButton"
+              icon="ChevronUp"
+              label="Maximize Panel"
+              density="Compact"
+            />
+            <Action
+              role="IconButton"
+              icon="X"
+              label="Close Panel"
+              density="Compact"
+              onClick={onClose}
+            />
           </div>
         </div>
 

@@ -6,11 +6,10 @@
  * @see docs/1-project/4-headless-hook.md
  */
 
-// Primitives - 기본 빌딩 블록
-export * from './primitives';
-
 // Components - IDDL 컴포넌트별 훅
 export * from './components';
+// Primitives - 기본 빌딩 블록
+export * from './primitives';
 
 // Utilities - 공통 유틸리티
 export * from './utils';

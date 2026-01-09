@@ -16,19 +16,19 @@
 
 import { Command, File, Folder, Hash, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Action } from '@/components/Item/Action/Action';
-import { Field } from '@/components/Item/Field/Field';
-import { Group } from '@/components/Group/Group.tsx';
-import { Overlay } from '@/components/Overlay/Overlay.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Field } from '@/components/types/Atom/Field/Field.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
+import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import {
   KeyboardContext,
   useKeyboardContext,
   useModalShortcut,
   useNavigableCursor,
 } from '@/shared/lib/keyboard';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 interface SearchResult {
   id: string;
@@ -150,7 +150,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
         {results.length === 0 ? (
           <Text
             role="Body"
-            prominence="Tertiary"
+            prominence="Subtle"
             align="center"
             content={`No results found for "${query}"`}
           />
@@ -159,7 +159,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
             {results.map((result, index) => (
               <Action
                 key={result.id}
-                prominence="Secondary"
+                prominence="Standard"
                 intent="Neutral"
                 {...getItemProps(index)}
                 className={cn('w-full justify-start', {
@@ -168,9 +168,9 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
               >
                 {getIcon(result.type)}
                 <div className="flex-1 min-w-0">
-                  <Text role="Body" prominence="Primary" content={result.title} />
+                  <Text role="Body" prominence="Standard" content={result.title} />
                   {result.subtitle && (
-                    <Text role="Caption" prominence="Tertiary" content={result.subtitle} />
+                    <Text role="Caption" prominence="Subtle" content={result.subtitle} />
                   )}
                 </div>
                 {index === cursorIndex && (
@@ -196,7 +196,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
               select
             </span>
           </Group>
-          <Text role="Caption" prominence="Tertiary" content={`${results.length} results`} />
+          <Text role="Caption" prominence="Subtle" content={`${results.length} results`} />
         </Group>
       </Section>
     </Overlay>

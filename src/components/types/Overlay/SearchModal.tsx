@@ -1,14 +1,14 @@
 import { Command, File, Folder, Hash, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/Item/Action/role/Button';
-import { Section } from '@/components/Section/Section.tsx';
+import { Button } from '@/components/types/Atom/Action/role/Button.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import {
   KeyboardContext,
   useKeyboardContext,
   useModalShortcut,
   useNavigableCursor,
 } from '@/shared/lib/keyboard';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 interface SearchResult {
   id: string;
@@ -112,7 +112,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         className="relative w-full max-w-2xl overflow-hidden"
       >
         {/* Search Input */}
-        <Section role="Container" prominence="Tertiary" className="px-4 py-3">
+        <Section role="Container" prominence="Subtle" className="px-4 py-3">
           <div className="flex items-center gap-3">
             <Search size={20} className="text-subtle" />
             <input
@@ -161,7 +161,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         </div>
 
         {/* Footer */}
-        <Section role="Footer" prominence="Tertiary" className="px-4 py-2">
+        <Section role="Footer" prominence="Subtle" className="px-4 py-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4 text-xs text-subtle">
               <span className="flex items-center gap-1">

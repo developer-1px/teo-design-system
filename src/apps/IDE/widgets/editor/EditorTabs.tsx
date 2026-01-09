@@ -1,7 +1,7 @@
 import { FileCode, FileJson, FileType, X } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/Item/Action/role/Button';
-import { Section } from '@/components/Section/Section.tsx';
+import { Button } from '@/components/types/Atom/Action/role/Button';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface Tab {
@@ -51,7 +51,7 @@ export const EditorTabs = ({ onTabChange }: EditorTabsProps) => {
   };
 
   return (
-    <Section role="Container" prominence="Secondary" className="flex items-center overflow-x-auto">
+    <Section role="Container" className="flex items-center overflow-x-auto">
       {tabs.map((tab) => (
         <Button
           key={tab.id}

@@ -9,26 +9,58 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { ChevronDown, ChevronsUpDown, ChevronUp } from 'lucide-react';
-import { useMemo, useRef, useState } from 'react';
-import { SearchInput } from '@/components/Item/Field/role/SearchInput';
-import { Kbd } from '@/components/Item/Text/role/Kbd';
+import { ChevronDown, ChevronsUpDown, ChevronUp, Grid3x3, Rows3 } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { SearchInput } from '@/components/types/Atom/Field/role/SearchInput.tsx';
+import { Kbd } from '@/components/types/Atom/Text/role/Kbd.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
 import { useNavigableCursor } from '@/shared/lib/keyboard';
+
+type SelectionMode = 'row' | 'cell';
+
+interface CellPosition {
+  rowIndex: number;
+  colIndex: number;
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   density?: 'compact' | 'normal';
+  searchQuery?: string; // 검색어 (외부에서 주입 가능)
+  onSearchChange?: (query: string) => void; // 검색어 변경 콜백
+  onRowDoubleClick?: (row: TData) => void; // 행 더블클릭 콜백
+  clearSelection?: boolean; // 선택 초기화 트리거
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   density = 'compact',
+  searchQuery: externalSearchQuery,
+  onSearchChange,
+  onRowDoubleClick,
+  clearSelection,
 }: DataTableProps<TData, TValue>) {
+  console.log('🗂️ [DataTable] Render:', { columnsCount: columns.length, dataCount: data.length, density });
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [globalFilter, setGlobalFilter] = useState('');
+  const [internalGlobalFilter, setInternalGlobalFilter] = useState('');
+  const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
+  const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null);
+
+  // Selection mode state
+  const [selectionMode, setSelectionMode] = useState<SelectionMode>('row');
+  const [selectedCell, setSelectedCell] = useState<CellPosition | null>(null);
+
+  // 외부에서 제어되는 경우 externalSearchQuery 사용, 아니면 내부 상태 사용
+  const globalFilter = externalSearchQuery ?? internalGlobalFilter;
+  const setGlobalFilter = (value: string) => {
+    setInternalGlobalFilter(value);
+    onSearchChange?.(value);
+  };
 
   const table = useReactTable({
     data,
@@ -49,6 +81,28 @@ export function DataTable<TData, TValue>({
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const { rows } = table.getRowModel();
 
+  console.log('🗂️ [DataTable] Table model:', { rowCount: rows.length, headerGroups: table.getHeaderGroups().length });
+
+  // 검색/정렬이 변경되면 선택 초기화
+  useEffect(() => {
+    setSelectedRowIndex(null);
+    setSelectedCell(null);
+  }, [globalFilter, sorting]);
+
+  // 외부에서 선택 초기화 요청시
+  useEffect(() => {
+    if (clearSelection) {
+      setSelectedRowIndex(null);
+      setSelectedCell(null);
+    }
+  }, [clearSelection]);
+
+  // 선택 모드 변경시 선택 초기화
+  useEffect(() => {
+    setSelectedRowIndex(null);
+    setSelectedCell(null);
+  }, [selectionMode]);
+
   // 키보드 네비게이션 (행 선택)
   const { cursorIndex, getItemProps } = useNavigableCursor({
     type: 'list',
@@ -57,6 +111,86 @@ export function DataTable<TData, TValue>({
       console.log('Selected row:', row);
     },
   });
+
+  // Cell 선택 모드 키보드 네비게이션
+  useEffect(() => {
+    if (selectionMode !== 'cell') return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedCell) {
+        // 선택된 셀이 없으면 첫 셀 선택
+        if (rows.length > 0 && columns.length > 0) {
+          setSelectedCell({ rowIndex: 0, colIndex: 0 });
+        }
+        return;
+      }
+
+      const { rowIndex, colIndex } = selectedCell;
+      const maxRowIndex = rows.length - 1;
+      const maxColIndex = columns.length - 1;
+
+      let newRowIndex = rowIndex;
+      let newColIndex = colIndex;
+
+      switch (e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          newRowIndex = Math.max(0, rowIndex - 1);
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          newRowIndex = Math.min(maxRowIndex, rowIndex + 1);
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          newColIndex = Math.max(0, colIndex - 1);
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          newColIndex = Math.min(maxColIndex, colIndex + 1);
+          break;
+        case 'Home':
+          e.preventDefault();
+          if (e.ctrlKey || e.metaKey) {
+            // Ctrl/Cmd+Home: 첫 셀
+            newRowIndex = 0;
+            newColIndex = 0;
+          } else {
+            // Home: 행의 첫 열
+            newColIndex = 0;
+          }
+          break;
+        case 'End':
+          e.preventDefault();
+          if (e.ctrlKey || e.metaKey) {
+            // Ctrl/Cmd+End: 마지막 셀
+            newRowIndex = maxRowIndex;
+            newColIndex = maxColIndex;
+          } else {
+            // End: 행의 마지막 열
+            newColIndex = maxColIndex;
+          }
+          break;
+        default:
+          return;
+      }
+
+      if (newRowIndex !== rowIndex || newColIndex !== colIndex) {
+        setSelectedCell({ rowIndex: newRowIndex, colIndex: newColIndex });
+
+        // Scroll into view
+        const cellElement = document.querySelector(
+          `[data-cell-row="${newRowIndex}"][data-cell-col="${newColIndex}"]`
+        );
+        if (cellElement) {
+          cellElement.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectionMode, selectedCell, rows.length, columns.length]);
 
   // Calculate optimal width for each column based on content
   const columnWidths = useMemo(() => {
@@ -98,22 +232,45 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="flex flex-col h-full">
-      {/* Search Input */}
-      <div className="px-3 py-2">
-        <SearchInput
-          placeholder="Search all columns..."
-          value={globalFilter ?? ''}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          onClear={() => setGlobalFilter('')}
-          variant="ghost"
-        />
-      </div>
+      {/* Toolbar: Search Input + Selection Mode */}
+      <Group role="Toolbar" layout="inline" density="Compact" className="px-3 py-2 gap-2">
+        {/* Search Input */}
+        <div className="flex-1">
+          <SearchInput
+            placeholder="Search all columns..."
+            value={globalFilter ?? ''}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            onClear={() => setGlobalFilter('')}
+            variant="ghost"
+          />
+        </div>
+
+        {/* Selection Mode Toggle */}
+        <Group role="Inline" layout="inline" density="Compact" className="gap-1">
+          <Action
+            icon={Rows3}
+            prominence={selectionMode === 'row' ? 'Primary' : 'Secondary'}
+            intent={selectionMode === 'row' ? 'Brand' : 'Neutral'}
+            onClick={() => setSelectionMode('row')}
+            title="Row selection mode"
+          />
+          <Action
+            icon={Grid3x3}
+            prominence={selectionMode === 'cell' ? 'Primary' : 'Secondary'}
+            intent={selectionMode === 'cell' ? 'Brand' : 'Neutral'}
+            onClick={() => setSelectionMode('cell')}
+            title="Cell selection mode"
+          />
+        </Group>
+      </Group>
 
       {/* Table Container with Virtual Scrolling */}
       <div ref={tableContainerRef} className="flex-1 overflow-auto" style={{ contain: 'strict' }}>
         <div className="text-sm" style={{ minWidth: 'max-content' }}>
           {/* Header */}
-          <div className="sticky top-0 z-10 bg-surface">
+          <div className={`sticky top-0 z-10 bg-surface/95 backdrop-blur-sm transition-colors ${
+            hoveredRowIndex !== null ? 'bg-accent/5' : ''
+          }`}>
             {table.getHeaderGroups().map((headerGroup) => (
               <div key={headerGroup.id} className="flex">
                 {headerGroup.headers.map((header) => {
@@ -172,16 +329,45 @@ export function DataTable<TData, TValue>({
                 const row = rows[virtualRow.index];
                 const isEven = virtualRow.index % 2 === 0;
                 const isCursor = virtualRow.index === cursorIndex;
+                const isSelected = virtualRow.index === selectedRowIndex;
                 const itemProps = getItemProps(virtualRow.index);
+
+                const isHovered = virtualRow.index === hoveredRowIndex;
 
                 return (
                   <div
                     key={row.id}
-                    {...itemProps}
-                    className={`flex hover:bg-surface-raised absolute transition-colors ${
-                      isCursor
-                        ? 'bg-accent/10 ring-1 ring-accent/30'
-                        : isEven
+                    {...(selectionMode === 'row' ? itemProps : {})}
+                    onMouseEnter={() => setHoveredRowIndex(virtualRow.index)}
+                    onMouseLeave={() => setHoveredRowIndex(null)}
+                    onDoubleClick={() => {
+                      if (selectionMode === 'row') {
+                        setSelectedRowIndex(virtualRow.index);
+                        if (onRowDoubleClick) {
+                          onRowDoubleClick(row.original);
+                        }
+                      }
+                    }}
+                    className={`flex absolute transition-colors ${
+                      selectionMode === 'row' ? 'cursor-pointer' : ''
+                    } ${
+                      // Row 선택 모드
+                      selectionMode === 'row'
+                        ? // 선택된 행: 고정 스타일 (hover 없음)
+                          isSelected
+                          ? 'bg-accent/10 ring-2 ring-accent ring-inset'
+                          : // Hover된 행: 얇은 반투명 배경
+                            isHovered
+                            ? 'bg-black/[0.02]'
+                            : // 키보드 커서: focus outline만
+                              isCursor
+                              ? 'ring-2 ring-accent ring-inset'
+                              : // 일반 행: zebra striping만
+                                isEven
+                                ? 'bg-surface'
+                                : 'bg-surface-sunken'
+                        : // Cell 선택 모드: zebra striping만
+                          isEven
                           ? 'bg-surface'
                           : 'bg-surface-sunken'
                     }`}
@@ -191,17 +377,34 @@ export function DataTable<TData, TValue>({
                       width: '100%',
                     }}
                   >
-                    {row.getVisibleCells().map((cell) => {
+                    {row.getVisibleCells().map((cell, colIndex) => {
                       const accessorKey = String(
                         cell.column.columnDef.accessorKey || cell.column.id
                       );
                       const width = columnWidths[accessorKey] || 150;
+                      const isCellSelected =
+                        selectionMode === 'cell' &&
+                        selectedCell?.rowIndex === virtualRow.index &&
+                        selectedCell?.colIndex === colIndex;
 
                       return (
                         <div
                           key={cell.id}
-                          className={`text-text whitespace-nowrap overflow-hidden text-ellipsis flex items-center ${
+                          data-cell-row={virtualRow.index}
+                          data-cell-col={colIndex}
+                          onClick={() => {
+                            if (selectionMode === 'cell') {
+                              setSelectedCell({ rowIndex: virtualRow.index, colIndex });
+                            }
+                          }}
+                          className={`text-text whitespace-nowrap overflow-hidden text-ellipsis flex items-center transition-colors ${
                             density === 'compact' ? 'px-2 py-0.5 text-xs' : 'px-3 py-1.5 text-sm'
+                          } ${
+                            selectionMode === 'cell' ? 'cursor-pointer hover:bg-black/[0.02]' : ''
+                          } ${
+                            isCellSelected
+                              ? 'bg-accent/10 ring-2 ring-accent ring-inset !font-medium'
+                              : ''
                           }`}
                           style={{ width: `${width}px`, minWidth: `${width}px` }}
                         >
@@ -229,16 +432,40 @@ export function DataTable<TData, TValue>({
               <span>Filtered from {data.length} total</span>
             </>
           )}
+          {selectionMode === 'cell' && selectedCell && (
+            <>
+              <span>•</span>
+              <span>
+                Cell: R{selectedCell.rowIndex + 1}, C{selectedCell.colIndex + 1}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Keyboard Navigation Hint */}
         <div className="flex items-center gap-2 text-xs text-subtle">
-          <span>Navigate:</span>
-          <Kbd size="sm">↑</Kbd>
-          <Kbd size="sm">↓</Kbd>
-          <span>•</span>
-          <span>Select:</span>
-          <Kbd size="sm">↵</Kbd>
+          {selectionMode === 'row' ? (
+            <>
+              <span>Navigate:</span>
+              <Kbd size="sm">↑</Kbd>
+              <Kbd size="sm">↓</Kbd>
+              <span>•</span>
+              <span>Select:</span>
+              <Kbd size="sm">↵</Kbd>
+            </>
+          ) : (
+            <>
+              <span>Navigate:</span>
+              <Kbd size="sm">↑</Kbd>
+              <Kbd size="sm">↓</Kbd>
+              <Kbd size="sm">←</Kbd>
+              <Kbd size="sm">→</Kbd>
+              <span>•</span>
+              <span>Jump:</span>
+              <Kbd size="sm">Home</Kbd>
+              <Kbd size="sm">End</Kbd>
+            </>
+          )}
         </div>
       </div>
     </div>

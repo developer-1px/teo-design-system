@@ -1,6 +1,5 @@
-import { GitBranch, Info, Settings, Sparkles, X } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
 
 interface RightNavProps {
   onViewChange?: (view: string | null) => void;
@@ -18,48 +17,47 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
 
   return (
     <div className="flex flex-col gap-0.5 p-1.5">
-      <IconButton
-        size="md"
-        active={activeView === 'ai'}
+      <Action
+        role="IconButton"
+        icon="Sparkles"
+        label="AI Assistant"
+        selected={activeView === 'ai'}
         onClick={() => handleViewChange('ai')}
-        title="AI Assistant"
-      >
-        <Sparkles size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'git'}
+      <Action
+        role="IconButton"
+        icon="GitBranch"
+        label="Git Info"
+        selected={activeView === 'git'}
         onClick={() => handleViewChange('git')}
-        title="Git Info"
-      >
-        <GitBranch size={20} />
-      </IconButton>
+      />
 
-      <IconButton
-        size="md"
-        active={activeView === 'info'}
+      <Action
+        role="IconButton"
+        icon="Info"
+        label="Project Info"
+        selected={activeView === 'info'}
         onClick={() => handleViewChange('info')}
-        title="Project Info"
-      >
-        <Info size={20} />
-      </IconButton>
+      />
 
       <div className="flex-1" />
 
-      <IconButton
-        size="md"
-        active={activeView === 'settings'}
+      <Action
+        role="IconButton"
+        icon="Settings"
+        label="Settings"
+        selected={activeView === 'settings'}
         onClick={() => handleViewChange('settings')}
-        title="Settings"
-      >
-        <Settings size={20} />
-      </IconButton>
+      />
 
       {onClose && (
-        <IconButton size="md" onClick={onClose} title="Close Sidebar">
-          <X size={20} />
-        </IconButton>
+        <Action
+          role="IconButton"
+          icon="X"
+          label="Close Sidebar"
+          onClick={onClose}
+        />
       )}
     </div>
   );

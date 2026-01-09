@@ -6,10 +6,10 @@
  */
 
 import type { TokenCategory } from '@/apps/tokens/parser/types';
-import { Action } from '@/components/Item/Action/Action';
-import { Group } from '@/components/Group/Group.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { ColorToken } from './ColorToken';
 import { RadiusToken } from './RadiusToken';
 import { ShadowToken } from './ShadowToken';
@@ -18,31 +18,27 @@ import { SpacingToken } from './SpacingToken';
 export function TokenGrid({ category }: { category?: TokenCategory }) {
   if (!category) {
     return (
-      <Section role="Container" prominence="Tertiary">
-        <Group role="Container" prominence="Tertiary">
-          <Text role="Body" prominence="Tertiary">
-            Select a category to view tokens
-          </Text>
+      <Section role="Container">
+        <Group role="Container">
+          <Text role="Body" content="Select a category to view tokens" />
         </Group>
       </Section>
     );
   }
 
   return (
-    <Section role="Container" prominence="Primary">
+    <Section role="Container">
       {/* 카테고리 헤더 */}
-      <Group role="Container" prominence="Primary" gap={2}>
-        <Group role="Container" prominence="Primary" gap={1}>
-          <Text role="Title" prominence="Primary">
-            {category.name}
-          </Text>
-          <Group role="Container" prominence="Tertiary" gap={0}>
-            <Text role="Caption" prominence="Tertiary">
+      <Group role="Container" gap={2}>
+        <Group role="Container" gap={1}>
+          <Text role="Title" content="{category.name}" />
+          <Group role="Container" gap={0}>
+            <Text role="Caption" prominence="Subtle">
               Tier: {category.tier.charAt(0).toUpperCase() + category.tier.slice(1)} | Type:{' '}
               {category.type} | Tokens: {category.tokens.length}
             </Text>
             {category.description && (
-              <Text role="Caption" prominence="Tertiary">
+              <Text role="Caption" prominence="Subtle">
                 {category.description}
               </Text>
             )}
@@ -50,16 +46,12 @@ export function TokenGrid({ category }: { category?: TokenCategory }) {
         </Group>
 
         {/* 카테고리 설명 */}
-        <Group role="Container" prominence="Secondary" gap={1}>
-          <Text role="Label" prominence="Secondary">
-            Usage Guide
-          </Text>
-          <Text role="Body" prominence="Secondary">
-            {getTierDescription(category.tier)}
-          </Text>
+        <Group role="Container" gap={1}>
+          <Text role="Label" content="Usage Guide" />
+          <Text role="Body" content="{getTierDescription(category.tier)}" />
           {category.type === 'color' && (
-            <Group role="Container" prominence="Tertiary" gap={0}>
-              <Text role="Caption" prominence="Tertiary">
+            <Group role="Container" gap={0}>
+              <Text role="Caption" prominence="Subtle">
                 💡 Tip: Click any color swatch to copy the token name to clipboard
               </Text>
             </Group>
@@ -88,16 +80,13 @@ export function TokenGrid({ category }: { category?: TokenCategory }) {
               return <ShadowToken key={token.name} token={token} />;
             default:
               return (
-                <Group key={token.name} role="Card" prominence="Primary" gap={1}>
-                  <Text role="Label" prominence="Primary">
-                    {token.name}
-                  </Text>
-                  <Text role="Caption" prominence="Tertiary">
+                <Group key={token.name} role="Card" gap={1}>
+                  <Text role="Label" content="{token.name}" />
+                  <Text role="Caption" prominence="Subtle">
                     {token.resolvedValue}
                   </Text>
                   <Action
                     label="Copy"
-                    prominence="Secondary"
                     intent="Neutral"
                     onClick={() => copyToClipboard(token.name)}
                   />

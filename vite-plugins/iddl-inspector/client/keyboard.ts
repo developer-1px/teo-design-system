@@ -1,10 +1,10 @@
 /**
  * IDDL Inspector Keyboard Handler
  *
- * Cmd+D (Mac) / Ctrl+D (Windows)로 Inspector 토글
+ * Cmd+D (Mac) / Ctrl+D (Windows)로 Element Inspector 토글
  */
 
-import { toggleInspector } from './ui';
+import { toggleInspectMode } from './element-inspector';
 
 /**
  * 키보드 이벤트 리스너 등록
@@ -17,7 +17,7 @@ export function setupKeyboardHandler(): void {
 
     if (modKey && e.key === 'd') {
       e.preventDefault();
-      toggleInspector();
+      toggleInspectMode();
     }
   });
 }

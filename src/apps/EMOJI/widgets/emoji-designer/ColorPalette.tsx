@@ -4,11 +4,11 @@
 
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/Item/Action/role/Button';
-import { Input } from '@/components/Item/Field/role/Input';
-import { Group } from '@/components/Group/Group';
-import { Text } from '@/components/Item/Text/Text';
 import type { PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types.ts';
+import { Group } from '@/components/types/Group/Group';
+import { Button } from '@/components/types/Atom/Action/role/Button';
+import { Input } from '@/components/types/Atom/Field/role/Input';
+import { Text } from '@/components/types/Atom/Text/Text';
 import { cn } from '@/shared/lib/utils';
 
 export interface ColorPaletteProps {
@@ -89,12 +89,7 @@ export function ColorPalette({
 
       {/* Selected Color Info */}
       <div className="p-2 bg-layer-1 rounded-md">
-        <Text
-          role="Label"
-          prominence="Tertiary"
-          className="text-xs mb-1"
-          content="Selected Color"
-        />
+        <Text role="Label" className="text-xs mb-1" content="Selected Color" />
         <Text role="Body" prominence="Hero" className="font-mono text-xs" content={selectedColor} />
       </div>
     </div>

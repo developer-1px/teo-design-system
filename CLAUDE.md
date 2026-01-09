@@ -79,6 +79,8 @@ The design system follows these fundamental principles:
 3. **Limit accent usage**: Maximum 1-2 accent uses per screen (primary CTA, focus states only)
 4. **Minimal tokens**: Only 16 tokens (6 colors, 4 sizes, 2 weights, 4 spacings)
 5. **Document all exceptions**: Any deviation from rules must include inline comment explaining why
+6. **Text inheritance (v3.1)**: App/Page root에 `text-base text-text-primary` 설정 → 모든 하위 Text가 자동 상속 → `text-*` className 최소화
+7. **Minimal IDDL (v3.1)**: role 기반으로 일관되게 정리, 수동 className 최소화, `selected` prop 사용
 
 ### Layout System (범용 레이아웃)
 
@@ -189,7 +191,7 @@ import { Layout } from '@/components/ui/Layout';
 </Layout>
 
 // ✅ Stack (scrollable list)
-<Layout variant="stack" direction="vertical" depth={1} className="h-96">
+<Layout variant="stack" depth={1} className="h-96">
   {items.map(item => (
     <Layout key={item.id} depth={2} clickable>
       {item.title}
@@ -263,22 +265,35 @@ IDDL is a **TSX-based DSL** where you declare **intent** instead of implementati
 </Action>
 ```
 
-**Developer declares**: Purpose + Prominence
-**System handles**: Tokens, Semantics, Accessibility, Keyboard Navigation
+**Developer declares**: Purpose + Prominence + Selected
+**System handles**: Tokens, Semantics, Accessibility, Keyboard Navigation, Interactive States (hover/active/focus), Spacing (gap/padding)
+
+**v3.1 Updates:**
+- **Interactive State Token System**: `prominence × intent × state → className` (hover, active, selected, disabled, focus 자동 생성)
+- **Spacing Token System**: `prominence × density → gap/padding` (수동 spacing 제거)
+- **Text Inheritance**: App/Page root에서 font 설정 → 모든 하위 Text 자동 상속
+- **Minimal IDDL**: `selected` prop으로 선택 상태 표현, 수동 className 최소화
 
 ### IDDL Component Hierarchy
 
 ```
 Page (Root - Application level)
- └─ Section (Layout regions: Header, Sidebar, Editor, Panel)
-     └─ Group (Logical grouping: Form, Card, Toolbar, List, Grid)
-         └─ Primitives (Atomic elements)
-             ├─ Text (Static content: Title, Body, Label, Code)
-             ├─ Field (Data binding: text, number, date, select, etc.)
-             └─ Action (Interactions: buttons, links)
+ ├─ role="Content" (default): Scrollable content page with max-width
+ └─ role="App": Full-screen app layout with CSS Grid
+      └─ Section (Layout regions with gridArea: activitybar, sidebar, editor, panel, rightbar)
+          └─ Group (Logical grouping: Form, Card, Toolbar, List, Grid)
+              └─ Item (IDDL Type - v4.0)
+                  ├─ Text (Static content: Title, Body, Label, Code)
+                  ├─ Field (Data binding: text, number, date, select, etc.)
+                  └─ Action (Interactions: buttons, links)
 
 Overlay (Floating UI: Dialog, Drawer, Popover, Toast, Tooltip)
 ```
+
+**Key Changes in v4.0**:
+- **Item introduced as formal IDDL type**: All primitives (Text, Field, Action) are now under `Item` namespace
+- **Page role-based rendering**: `role="Content"` for scrollable pages, `role="App"` for full-screen layouts
+- **Dynamic grid template system**: Section `gridArea` props automatically generate CSS Grid layouts
 
 ### Key IDDL Props
 
@@ -292,16 +307,25 @@ All IDDL components share these core props:
 ### IDDL Component Examples
 
 ```tsx
-// Page - Application root
-<Page role="App" title="My IDE" layout="studio">
-  <Section role="ActivityBar">...</Section>
-  <Section role="PrimarySidebar">...</Section>
-  <Section role="Editor">...</Section>
+// Page - Application root (v4.0)
+// role="App": Full-screen layout with dynamic grid
+<Page role="App" template="studio" density="Compact">
+  <Section gridArea="activitybar">...</Section>
+  <Section gridArea="sidebar">...</Section>
+  <Section gridArea="editor">...</Section>
+  <Section gridArea="panel">...</Section>
 </Page>
 
-// Section - Layout regions
-<Section role="Container" prominence="Secondary">
-  <Group role="Form">...</Group>
+// role="Content": Scrollable content page (default)
+<Page role="Content" title="User Settings" maxWidth="lg" centered>
+  <Section role="Container">
+    <Group role="Form">...</Group>
+  </Section>
+</Page>
+
+// Section - Layout regions with gridArea (v4.0)
+<Section gridArea="sidebar" resizable={{ direction: 'horizontal', minSize: 200, maxSize: 400 }}>
+  <Group role="List">...</Group>
 </Section>
 
 // Group - Logical grouping
@@ -310,7 +334,7 @@ All IDDL components share these core props:
   <Action prominence="Secondary">Cancel</Action>
 </Group>
 
-// Primitives - Atomic elements
+// Item primitives (v4.0)
 <Text role="Title" prominence="Primary">Welcome</Text>
 <Field label="Email" model="user.email" dataType="email" required />
 <Action prominence="Primary" intent="Brand" behavior={{ action: "submit" }}>
@@ -320,9 +344,199 @@ All IDDL components share these core props:
 
 ### IDDL Type Reference
 
-**See**: `src/components/dsl/types.ts` for complete type definitions
+**See**: `src/components/types/Item/types.ts` for complete type definitions (v4.0 location)
 
-**Specification**: `spec/iddl-spec-1.0.1.md` for official IDDL spec
+**Specification**: `docs/2-areas/spec/iddl-spec-1.0.1.md` for official IDDL spec
+
+## IDDL Component Architecture Patterns (v4.0)
+
+### Field Component: Headless + Renderer Pattern
+
+Field v4.0 uses a **separation of concerns** pattern:
+
+**Structure**:
+```
+Field.tsx (Main component)
+  ├─ headless/           # Logic hooks (NO UI)
+  │   ├─ useTextField.ts      # Text input logic
+  │   ├─ useNumberField.ts    # Number input logic
+  │   ├─ useSelectField.ts    # Select dropdown logic
+  │   ├─ useRadioField.ts     # Radio group logic
+  │   └─ useRatingField.ts    # Star rating logic
+  ├─ renderers/          # UI components (NO logic)
+  │   ├─ TextField.tsx        # Text input UI with CVA
+  │   ├─ NumberField.tsx      # Number input UI with CVA
+  │   ├─ SelectField.tsx      # Select dropdown UI with CVA
+  │   └─ RadioField.tsx       # Radio group UI with CVA
+  └─ role/               # Primitive field variants
+      ├─ Input.tsx
+      ├─ Select.tsx
+      ├─ Checkbox.tsx
+      └─ Radio.tsx
+```
+
+**Pattern**:
+```tsx
+// Field.tsx - Main component with dataType branching
+export function Field({ dataType, ...props }: FieldProps) {
+  if (dataType === 'text') {
+    return <TextField {...props} />;
+  }
+  if (dataType === 'number') {
+    return <NumberField {...props} />;
+  }
+  // ... other dataTypes
+}
+
+// headless/useTextField.ts - Pure logic hook
+export function useTextField(props: UseTextFieldProps) {
+  const [value, setValue] = useState(props.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    props.onChange?.(e.target.value);
+  };
+  return {
+    inputProps: () => ({ value, onChange: handleChange, ... }),
+    labelProps: () => ({ htmlFor: id, ... }),
+    // ... other prop getters
+  };
+}
+
+// renderers/TextField.tsx - UI component using hook + CVA
+export function TextField(props: FieldProps) {
+  const field = useTextField(props);
+  return (
+    <div className={fieldContainerVariants({ prominence, intent })}>
+      <label {...field.labelProps()}>{props.label}</label>
+      <input {...field.inputProps()} className={inputVariants({ prominence, intent, state })} />
+    </div>
+  );
+}
+```
+
+**Benefits**:
+- Logic is testable without UI rendering
+- UI can be swapped (Material, Ant Design, etc.)
+- CVA variants handle all styling consistently
+- Headless hooks can be reused across different renderers
+
+**Supported dataTypes** (21 total):
+- **Text inputs**: text, email, password, url, tel, search
+- **Numbers**: number, currency, percentage
+- **Dates**: date, time, datetime, month, week, daterange
+- **Selections**: select, radio, checkbox, multiselect
+- **Rich**: textarea, richtext, rating, color
+
+## Page Component Architecture (v4.0)
+
+### Role-Based Rendering Pattern
+
+Page v4.0 introduces **role-based rendering** similar to Field component's Headless + Renderer pattern:
+
+```tsx
+// Page.tsx - Main component with role-based branching
+export function Page({ role = 'Content', ... }: PageProps) {
+  if (role === 'App') {
+    return <AppLayout>...</AppLayout>;  // Full-screen grid layout
+  }
+  // Default: Content page (scrollable, max-width constrained)
+  return <div className="h-full overflow-y-auto">...</div>;
+}
+```
+
+### role="App" - Full-Screen Application Layout
+
+**Use case**: IDE, Studio, Dashboard, PPT apps
+
+**Features**:
+- `w-screen h-screen overflow-hidden` - No scrolling, fills viewport
+- Dynamic CSS Grid generation based on Section `gridArea` props
+- Supports multiple template patterns (studio, presentation, sidebar, 3-col)
+
+**Grid Templates**:
+
+| Template | Grid Areas | Use Case |
+|----------|------------|----------|
+| `studio` | activitybar, sidebar, editor, panel, rightbar | IDE/Studio (IntelliJ-style) |
+| `presentation` | header, footer, left, right, main, corners | PPT/Presentation apps |
+| `sidebar` | nav, content | Documentation, Settings |
+| `3-col` | left, center, right | Dashboard with sidebars |
+| `dashboard` | auto-fit grid | Card-based dashboard |
+
+**Dynamic Grid System**:
+
+The system analyzes children's `gridArea` props and automatically generates CSS Grid layout:
+
+```tsx
+// IDEPage.tsx
+<Page role="App" template="studio">
+  <Section gridArea="activitybar">...</Section>  // 48px
+  <Section gridArea="sidebar">...</Section>      // 250px
+  <Section gridArea="editor">...</Section>       // 1fr
+  <Section gridArea="panel">...</Section>        // 300px
+</Page>
+
+// Generates:
+// grid-template-areas: "activitybar sidebar editor panel"
+// grid-template-columns: 48px 250px 1fr 300px
+// grid-template-rows: 1fr
+```
+
+**Resizable Panels** (v4.0):
+
+```tsx
+<Section
+  gridArea="sidebar"
+  resizable={{
+    direction: 'horizontal',
+    minSize: 200,
+    maxSize: 400
+  }}
+  collapsible
+>
+  ...
+</Section>
+```
+
+**Implementation**:
+- **AppLayout renderer**: `src/components/types/Page/renderers/AppLayout.tsx`
+- **Dynamic grid hook**: `src/components/types/Page/hooks/useDynamicGridTemplate.ts`
+- **Resizable hook**: `src/components/types/Page/hooks/useResizable.ts`
+- **CSS Grid rules**: `src/components/types/Page/grid-templates.css`
+
+**Critical CSS Rule** (v4.0):
+```css
+/* Grid areas override any width classes */
+[data-grid-area] {
+  width: 100% !important;
+  min-width: 0;
+  max-width: none !important;
+}
+```
+
+### role="Content" - Scrollable Content Page
+
+**Use case**: Documentation, Settings, Forms, Content pages
+
+**Features**:
+- `h-full overflow-y-auto` - Scrollable content
+- `max-width` constraint with optional centering
+- Support for breadcrumbs, title, description
+- Loading and error states
+
+**Example**:
+```tsx
+<Page
+  role="Content"
+  title="Settings"
+  description="Configure your preferences"
+  maxWidth="lg"
+  centered
+  breadcrumbs={[...]}
+>
+  <Section role="Container">...</Section>
+</Page>
+```
 
 ## IDDL Inspector (Debugging Tool)
 
@@ -424,17 +638,43 @@ src/
 │   ├── ui/              # Base UI components (Layer, Button, IconButton, etc.)
 │   ├── workspace/       # Workspace navigation components
 │   ├── modal/           # Modal dialogs (Settings, Search)
-│   ├── dsl/             # IDDL DSL components (Page, Section, Group, Text, Field, Action, Overlay)
-│   │   ├── Page.tsx     # Root application component
-│   │   ├── Section.tsx  # Layout regions (ActivityBar, Sidebar, Editor, Panel)
-│   │   ├── Group.tsx    # Logical grouping (Form, Card, Toolbar, List)
-│   │   ├── Text.tsx     # Static content (Title, Body, Label, Code)
-│   │   ├── Field.tsx    # Data binding (text, number, select, etc.)
-│   │   ├── Action.tsx   # Interactions (buttons, links)
-│   │   ├── Overlay.tsx  # Floating UI (Dialog, Drawer, Popover)
-│   │   ├── types.ts     # IDDL type definitions
-│   │   └── styles.ts    # IDDL styling utilities
-│   └── atoms/           # Primitive UI elements
+│   ├── types/           # ⭐ IDDL Components (v4.0 structure)
+│   │   ├── Page/        # Root application component
+│   │   │   ├── Page.tsx              # Main Page component with role branching
+│   │   │   ├── renderers/            # Role-specific renderers
+│   │   │   │   └── AppLayout.tsx     # Full-screen app layout renderer
+│   │   │   ├── hooks/                # Layout logic hooks
+│   │   │   │   ├── useDynamicGridTemplate.ts  # Dynamic grid generation
+│   │   │   │   └── useResizable.ts            # Resizable panel logic
+│   │   │   ├── components/           # Layout components
+│   │   │   │   └── ResizeHandle.tsx  # Drag handle for resizing
+│   │   │   └── grid-templates.css    # CSS Grid definitions
+│   │   ├── Section/     # Layout regions (ActivityBar, Sidebar, Editor, Panel)
+│   │   │   ├── Section.tsx
+│   │   │   └── role/    # Section role variants (Panel, Toolbar, RightBar)
+│   │   ├── Group/       # Logical grouping (Form, Card, Toolbar, List)
+│   │   │   ├── Group.tsx
+│   │   │   └── role/    # Group role variants (Card, Tabs, DataTable, etc.)
+│   │   ├── Item/        # ⭐ IDDL Primitives (v4.0)
+│   │   │   ├── types.ts             # All IDDL type definitions
+│   │   │   ├── Text/                # Static content
+│   │   │   │   ├── Text.tsx
+│   │   │   │   └── role/            # Text roles (Title, Body, Label, Code, Badge, Alert, Avatar, Kbd)
+│   │   │   ├── Field/               # Data binding (Headless + Renderer pattern)
+│   │   │   │   ├── Field.tsx        # Main Field component with dataType branching
+│   │   │   │   ├── headless/        # Logic hooks (useTextField, useNumberField, etc.)
+│   │   │   │   ├── renderers/       # UI renderers (TextField, NumberField, SelectField, etc.)
+│   │   │   │   └── role/            # Field role variants (Input, Select, Checkbox, Radio, etc.)
+│   │   │   └── Action/              # Interactions
+│   │   │       ├── Action.tsx
+│   │   │       └── role/            # Action roles (Button, IconButton, ResizeHandle)
+│   │   └── Overlay/     # Floating UI (Dialog, Drawer, Popover, Tooltip)
+│   │       ├── Overlay.tsx
+│   │       ├── CommandPalette.tsx
+│   │       ├── SearchModal.tsx
+│   │       ├── SettingsModal.tsx
+│   │       └── role/    # Overlay role variants (Tooltip)
+│   └── context/         # React contexts (IDDL Context, Layout Provider)
 ├── vite-plugins/        # Custom Vite plugins
 │   └── iddl-inspector/  # IDDL Inspector debugging tool
 │       ├── index.ts     # Vite plugin entry
@@ -460,13 +700,13 @@ import { AppIDE } from '@/apps/IDE';  // NO index.ts!
 // ✅ Direct import from specific file
 import { IDEPage } from '@/apps/IDE/pages/ide/IDEPage';
 
-// ✅ IDDL components (NO barrel export - direct imports)
-import { Page } from '@/components/dsl/Page';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
-import { Action } from '@/components/dsl/Action';
-import { Text } from '@/components/dsl/Text';
-import { Field } from '@/components/dsl/Field';
+// ✅ IDDL components (NO barrel export - direct imports from types/ v4.0)
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
+import { Group } from '@/components/types/Group/Group';
+import { Action } from '@/components/types/Item/Action/Action';
+import { Text } from '@/components/types/Item/Text/Text';
+import { Field } from '@/components/types/Item/Field/Field';
 ```
 
 **Naming Convention:**
@@ -575,6 +815,8 @@ Before implementing any UI:
 
 ## Key Documentation
 
+**IMPORTANT**: Ignore `docs/4-archive/` directory - it contains outdated/deprecated documentation that should not be referenced.
+
 **IDDL Specification** (Primary):
 - **[docs/index.md](docs/index.md)** ⭐ IDDL Specification overview
 - **[docs/2-areas/spec/iddl-spec-1.0.1.md](docs/2-areas/spec/iddl-spec-1.0.1.md)** - Official IDDL specification v1.0.1
@@ -645,16 +887,24 @@ import { createNewDesign } from '@/apps/EMOJI/lib/emoji-designer/utils';
 import { generateId } from '@/apps/DSLBuilder/lib/dsl-builder/utils';
 import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
 
-// IDDL components (NO barrel exports)
-import { Page } from '@/components/dsl/Page';
-import { Section } from '@/components/dsl/Section';
-import { Group } from '@/components/dsl/Group';
+// IDDL components (NO barrel exports - from types/ v4.0)
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
+import { Group } from '@/components/types/Group/Group';
+import { Action } from '@/components/types/Item/Action/Action';
+import { Text } from '@/components/types/Item/Text/Text';
+import { Field } from '@/components/types/Item/Field/Field';
 ```
 
 ## Important Notes
 
 - This project is in **Korean** for documentation comments and UI text
 - **IDDL-first development**: Use IDDL DSL components (Page, Section, Group, Action, Text, Field) instead of traditional HTML/CSS when building UI
+- **ALL UI MUST USE IDDL**: NEVER use raw HTML/Tailwind for layout or design. Use IDDL components from `@/components/types/`:
+  - ❌ `<div className="flex">` - WRONG
+  - ✅ `<Group role="Toolbar" layout="inline">` - CORRECT
+  - If a role doesn't exist, register it in the IDDL component and extend it
+  - If customization is needed, add a new role variant to the IDDL component
 - Design system adherence is **critical** - do not deviate without documenting exceptions
 - Always check `DESIGN_PRINCIPLES.md` before making visual decisions
 - When in doubt about layer levels, shadows, or accent usage - consult the design docs first

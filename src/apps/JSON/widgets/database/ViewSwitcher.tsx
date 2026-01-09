@@ -3,8 +3,8 @@
  */
 
 import { Kanban, LayoutGrid, List as ListIcon, Table } from 'lucide-react';
-import { Tabs, TabsList, TabsTrigger } from '@/components/Group/role/Tabs.tsx';
-import type { ViewConfig, ViewType } from '@/components/Item/types.ts';
+import { Tabs, TabsList, TabsTrigger } from '@/components/types/Group/role/Tabs.tsx';
+import type { ViewConfig, ViewType } from '@/components/types/Atom/types.ts';
 
 interface ViewSwitcherProps {
   views: ViewConfig[];

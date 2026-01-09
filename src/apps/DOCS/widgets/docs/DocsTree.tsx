@@ -5,8 +5,8 @@
  */
 
 import { useMemo } from 'react';
-import { type FileNode, FileTree } from '@/apps/IDE/widgets/file-tree/FileTree.tsx';
 import { buildDocTree, type DocNode, getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
+import { type FileNode, FileTree } from '@/apps/IDE/widgets/file-tree/FileTree.tsx';
 
 interface DocsTreeProps {
   onFileClick?: (path: string) => void;

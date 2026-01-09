@@ -13,10 +13,10 @@ import type {
   MockData,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import { Action } from '@/components/Item/Action/Action';
-import { Group } from '@/components/Group/Group.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface PreviewProps {
   node: FileTreeNode | null;
@@ -70,11 +70,9 @@ export function Preview({ node }: PreviewProps) {
 
   if (!metadata) {
     return (
-      <Section role="Container" prominence="Tertiary">
-        <Group role="Info">
-          <Text role="Body" prominence="Tertiary">
-            Select a component to preview
-          </Text>
+      <Section role="Container">
+        <Group role="Card">
+          <Text role="Body">Select a component to preview</Text>
         </Group>
       </Section>
     );
@@ -83,48 +81,41 @@ export function Preview({ node }: PreviewProps) {
   return (
     <Section role="Container" split="vertical">
       {/* Top Bar */}
-      <Section role="navigation" prominence="Tertiary">
-        <Group role="Action" gap={2}>
+      <Section role="navigation">
+        <Group role="Toolbar" gap={2}>
           <Action
             label="Preview"
             behavior={{ action: 'command', command: 'switchTab' }}
             onClick={() => setActiveTab('preview')}
-            prominence={activeTab === 'preview' ? 'Primary' : 'Secondary'}
+            prominence={activeTab === 'preview' ? 'Standard' : 'Standard'}
             intent={activeTab === 'preview' ? 'Brand' : 'Neutral'}
           />
           <Action
             label="Code"
             behavior={{ action: 'command', command: 'switchTab' }}
             onClick={() => setActiveTab('code')}
-            prominence={activeTab === 'code' ? 'Primary' : 'Secondary'}
+            prominence={activeTab === 'code' ? 'Standard' : 'Standard'}
             intent={activeTab === 'code' ? 'Brand' : 'Neutral'}
           />
           <Action
             label={darkMode ? '🌙' : '☀️'}
             behavior={{ action: 'command', command: 'toggleDarkMode' }}
             onClick={() => setDarkMode(!darkMode)}
-            prominence="Tertiary"
           />
         </Group>
       </Section>
 
       {/* Content */}
-      <Section role="Container" prominence="Primary">
+      <Section role="Container" prominence="Standard">
         {activeTab === 'preview' ? (
-          <Group role="Container" prominence="Primary" gap={2}>
+          <Group role="Container" prominence="Standard" gap={2}>
             {/* Markdown Docs */}
             {metadata.description && <MarkdownDocs content={metadata.description} />}
 
             {/* Component Preview */}
             <Section role="Container" prominence="Hero" data-theme={darkMode ? 'dark' : 'light'}>
               {node?.componentModule ? (
-                <Suspense
-                  fallback={
-                    <Text role="Body" prominence="Tertiary">
-                      Loading...
-                    </Text>
-                  }
-                >
+                <Suspense fallback={<Text role="Body">Loading...</Text>}>
                   <ComponentRenderer
                     key={metadata.filePath}
                     metadata={metadata}
@@ -134,11 +125,11 @@ export function Preview({ node }: PreviewProps) {
                   />
                 </Suspense>
               ) : (
-                <Group role="Info" prominence="Primary">
-                  <Text role="Body" prominence="Primary" intent="Critical">
+                <Group role="Card" prominence="Standard">
+                  <Text role="Body" prominence="Standard" intent="Critical">
                     Error: Component module not found for {metadata.name}.
                   </Text>
-                  <Text role="Caption" prominence="Tertiary">
+                  <Text role="Caption" prominence="Subtle">
                     Check browser console for details.
                   </Text>
                 </Group>

@@ -1,5 +1,5 @@
 import { forwardRef, type ReactNode, useState } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Tooltip - 툴팁

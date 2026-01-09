@@ -9,7 +9,7 @@
  * @see docs/1-project/4-headless-hook.md
  */
 
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export interface UseListNavigationOptions {
   /** 아이템 개수 */
@@ -60,9 +60,7 @@ export interface UseListNavigationReturn {
  *   </div>
  * ))}
  */
-export function useListNavigation(
-  options: UseListNavigationOptions
-): UseListNavigationReturn {
+export function useListNavigation(options: UseListNavigationOptions): UseListNavigationReturn {
   const { itemCount, loop = true, multiSelect = false, onSelectionChange } = options;
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
