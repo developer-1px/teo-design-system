@@ -9,12 +9,13 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Action } from '@/components/Item/Action/Action';
-import { Group } from '@/components/Group/Group';
-import { Page } from '@/components/Page/Page';
-import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Item/Text/Text';
 import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
+import { Group } from '@/components/types/Group/Group';
+import { Action } from '@/components/types/Item/Action/Action';
+import { Field } from '@/components/types/Item/Field/Field';
+import { Text } from '@/components/types/Item/Text/Text';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 import { DocsTree } from './DocsTree.tsx';
 import { MarkdownRenderer } from './MarkdownRenderer.tsx';
 
@@ -64,100 +65,85 @@ export const DocsViewer = () => {
     : [];
 
   return (
-    <Page layout="full">
+    <Page role="App" layout="grid" template="sidebar-content">
       {/* 상단 고정 헤더 */}
-      <Section role="Header" prominence="Primary" density="Compact">
+      <Section role="Toolbar" prominence="Standard" gridArea="toolbar">
         <Group role="Toolbar" layout="inline">
-          <Text role="Title" content="문서" prominence="Primary" />
+          <Text role="Title" content="문서" />
         </Group>
       </Section>
 
-      {/* 메인 레이아웃: 사이드바 + 콘텐츠 */}
-      <Section role="Container" className="flex h-[calc(100vh-57px)] overflow-hidden">
-        {/* 사이드바 - 네비게이션 */}
-        <Section
-          role="Navigator"
-          prominence="Secondary"
-          density="Compact"
-          className="flex flex-col"
-        >
-          {/* 검색 */}
-          <Group role="Form">
-            {/* TODO: Field에 clearable 기능 필요 - 요구사항 문서 참조 */}
-            <input
-              type="text"
-              placeholder="문서 검색..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </Group>
+      {/* 사이드바 - 네비게이션 */}
+      <Section role="PrimarySidebar" prominence="Standard" gridArea="sidebar" layout="flex" direction="column">
+        {/* 검색 */}
+        <Group role="Form">
+          <Field
+            label=""
+            dataType="text"
+            placeholder="문서 검색..."
+            model={searchQuery}
+            onChange={(value) => setSearchQuery(value as string)}
+          />
+        </Group>
 
-          {/* 문서 트리 */}
-          <Group role="List" layout="stack" className="flex-1 overflow-y-auto">
-            {searchQuery ? (
-              // 검색 결과
-              <Group role="List" layout="stack">
-                {filteredDocs.map((doc) => (
-                  <Action
-                    key={doc.path}
-                    label={doc.title}
-                    prominence="Tertiary"
-                    intent="Neutral"
-                    behavior={{
-                      action: 'command',
-                      command: 'docs.select',
-                      args: { path: doc.path },
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleFileClick(doc.path);
-                    }}
-                  />
-                ))}
-                {filteredDocs.length === 0 && (
-                  <Text role="Body" content="검색 결과가 없습니다" prominence="Tertiary" />
-                )}
-              </Group>
-            ) : (
-              // 트리 구조
-              <DocsTree onFileClick={handleFileClick} />
-            )}
-          </Group>
-        </Section>
-
-        {/* 메인 콘텐츠 영역 */}
-        <Section role="Container" prominence="Primary" className="flex-1 overflow-y-auto">
-          {selectedPath ? (
-            <>
-              {/* 문서 제목 */}
-              <Group role="Container">
-                <Text
-                  role="Title"
-                  content={getAllDocs().find((d) => d.path === selectedPath)?.title || '문서'}
-                  prominence="Hero"
+        {/* 문서 트리 - 스크롤 가능 영역 */}
+        <Section role="Container" layout="scroll">
+          {searchQuery ? (
+            // 검색 결과
+            <Group role="List" layout="stack">
+              {filteredDocs.map((doc) => (
+                <Action
+                  key={doc.path}
+                  label={doc.title}
+                  intent="Neutral"
+                  behavior={{
+                    action: 'command',
+                    command: 'docs.select',
+                    args: { path: doc.path },
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleFileClick(doc.path);
+                  }}
                 />
-              </Group>
-
-              {/* 문서 내용 */}
-              <Group role="Container">
-                {isLoading ? (
-                  <Text role="Body" content="로딩 중..." prominence="Secondary" />
-                ) : (
-                  <MarkdownRenderer content={docContent} />
-                )}
-              </Group>
-            </>
-          ) : (
-            <Group role="Container">
-              <Text role="Title" content="문서를 선택하세요" prominence="Primary" />
-              <Text
-                role="Body"
-                content="왼쪽 사이드바에서 문서를 선택하면 내용이 표시됩니다"
-                prominence="Secondary"
-              />
+              ))}
+              {filteredDocs.length === 0 && <Text role="Body" content="검색 결과가 없습니다" />}
             </Group>
+          ) : (
+            // 트리 구조
+            <DocsTree onFileClick={handleFileClick} />
           )}
         </Section>
+      </Section>
+
+      {/* 메인 콘텐츠 영역 */}
+      <Section role="Editor" prominence="Standard" gridArea="editor" layout="scroll">
+        {selectedPath ? (
+          <>
+            {/* 문서 제목 */}
+            <Group role="Container">
+              <Text
+                role="Title"
+                content={getAllDocs().find((d) => d.path === selectedPath)?.title || '문서'}
+                prominence="Hero"
+              />
+            </Group>
+
+            {/* 문서 내용 */}
+            <Group role="Container">
+              {isLoading ? (
+                <Text role="Body" content="로딩 중..." />
+              ) : (
+                <MarkdownRenderer content={docContent} />
+              )}
+            </Group>
+          </>
+        ) : (
+          <Group role="Container">
+            <Text role="Title" content="문서를 선택하세요" />
+            <Text role="Body" content="왼쪽 사이드바에서 문서를 선택하면 내용이 표시됩니다" />
+          </Group>
+        )}
       </Section>
     </Page>
   );
