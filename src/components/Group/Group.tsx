@@ -9,8 +9,8 @@
 
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
-import { LayoutProvider, useLayoutContext } from '@/components/Unknown/context/IDDLContext';
-import type { GroupProps, GroupRole } from '@/components/Unknown/utils/types';
+import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext';
+import type { GroupProps, GroupRole } from '@/components/Item/types';
 import { cn } from '@/shared/lib/utils';
 
 /**

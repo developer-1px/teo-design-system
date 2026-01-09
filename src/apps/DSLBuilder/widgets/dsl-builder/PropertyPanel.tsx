@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { FormField } from '@/components/Item/Field/role/FormField';
 import { Input } from '@/components/Item/Field/role/Input';
 import { Select } from '@/components/Item/Field/role/Select';
-import type { GroupRole, Prominence } from '@/components/Unknown/utils/types';
+import type { GroupRole, Prominence } from '@/components/Item/types';
 import type { AnyDSLNode, GroupNode, SectionNode } from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
 
 export interface PropertyPanelProps {

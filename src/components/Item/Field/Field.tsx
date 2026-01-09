@@ -11,8 +11,8 @@
 import { cva } from 'class-variance-authority';
 import { Star, X } from 'lucide-react';
 import { useState } from 'react';
-import { useLayoutContext } from '@/components/Unknown/context/IDDLContext.tsx';
-import type { FieldProps } from '@/components/Unknown/utils/types.ts';
+import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
+import type { FieldProps } from '@/components/Item/types.ts';
 import { cn } from '@/shared/lib/utils.ts';
 
 /**

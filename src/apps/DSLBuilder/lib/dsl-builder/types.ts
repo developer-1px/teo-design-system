@@ -22,7 +22,7 @@ import type {
   Prominence,
   SectionRole,
   TextRole,
-} from '@/components/Unknown/utils/types';
+} from '@/components/Item/types';
 
 // Region is deprecated but still used in builder for backward compatibility
 type RegionRole = 'main' | 'aside' | 'header' | 'footer' | 'nav';

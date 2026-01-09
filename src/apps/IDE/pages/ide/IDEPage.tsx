@@ -26,9 +26,9 @@ import { Page } from '@/components/Page/Page.tsx';
 import { RightBar } from '@/components/Section/role/RightBar.tsx';
 import { Section } from '@/components/Section/Section.tsx';
 import { Text } from '@/components/Item/Text/Text';
-import { BottomPanel } from '@/components/Unknown/widgets/BottomPanel';
-import { RightNav } from '@/components/Unknown/widgets/workspace/RightNav';
-import { WorkspaceNav } from '@/components/Unknown/widgets/workspace/WorkspaceNav';
+import { BottomPanel } from '@/apps/IDE/widgets/BottomPanel';
+import { RightNav } from '@/apps/IDE/widgets/workspace/RightNav';
+import { WorkspaceNav } from '@/apps/IDE/widgets/workspace/WorkspaceNav';
 import { buildFileTree, getFilePaths, loadFileContent } from '@/apps/IDE/lib/file-loader';
 
 interface OpenFile {

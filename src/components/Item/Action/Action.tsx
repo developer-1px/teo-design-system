@@ -10,8 +10,8 @@
 
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as Icons from 'lucide-react';
-import { useLayoutContext } from '@/components/Unknown/context/IDDLContext.tsx';
-import type { ActionProps, Intent, Prominence } from '@/components/Unknown/utils/types.ts';
+import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
+import type { ActionProps, Intent, Prominence } from '@/components/Item/types.ts';
 import { cn } from '@/shared/lib/utils';
 
 /**

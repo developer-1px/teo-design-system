@@ -9,8 +9,8 @@
  */
 
 import { cva } from 'class-variance-authority';
-import { useLayoutContext } from '@/components/Unknown/context/IDDLContext.tsx';
-import type { Intent, Prominence, TextProps, TextRole } from '@/components/Unknown/utils/types.ts';
+import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
+import type { Intent, Prominence, TextProps, TextRole } from '@/components/Item/types.ts';
 import { cn } from '@/shared/lib/utils';
 
 /**

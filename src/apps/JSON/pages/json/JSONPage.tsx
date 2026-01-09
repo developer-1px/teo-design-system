@@ -10,8 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Group/rol
 import { Page } from '@/components/Page/Page';
 import { Section } from '@/components/Section/Section';
 import { Text } from '@/components/Item/Text/Text';
-import { DatabaseViewer } from '@/components/Unknown/widgets/database/DatabaseViewer';
-import type { JsonArray, JsonObject } from '@/components/Unknown/widgets/database/types';
+import { DatabaseViewer } from '@/apps/JSON/widgets/database/DatabaseViewer';
+import type { JsonArray, JsonObject } from '@/apps/JSON/widgets/database/types';
 import testData from '@/test.json';
 
 export const JSONPage = () => {

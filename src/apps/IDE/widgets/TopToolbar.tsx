@@ -23,7 +23,7 @@ import { useState } from 'react';
 import { Button } from '@/components/Item/Action/role/Button.tsx';
 import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
 import { Section } from '@/components/Section/Section.tsx';
-import { ThemeToggleButton } from '@/components/Unknown/widgets/ThemeSwitcher.tsx';
+import { ThemeToggleButton } from '@/apps/IDE/widgets/ThemeSwitcher.tsx';
 
 interface TopToolbarProps {
   projectName?: string;

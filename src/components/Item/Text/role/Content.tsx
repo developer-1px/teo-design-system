@@ -17,7 +17,7 @@
  */
 
 import { type CSSProperties, forwardRef, type HTMLAttributes } from 'react';
-import { useProminence } from '@/components/Unknown/context/ProminenceContext.tsx';
+import { useProminence } from '@/components/context/ProminenceContext.tsx';
 import {
   calculateProminenceStyles,
   type ProminenceLevel,

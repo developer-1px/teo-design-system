@@ -6,7 +6,7 @@
  */
 
 import { createContext, useContext } from 'react';
-import type { LayoutContextValue } from '@/components/Unknown/utils/types.ts';
+import type { LayoutContextValue } from '@/components/Item/types.ts';
 
 /**
  * IDDL Context

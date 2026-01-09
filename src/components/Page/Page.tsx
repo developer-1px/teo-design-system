@@ -9,8 +9,8 @@
 
 import { cva } from 'class-variance-authority';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { LayoutProvider } from '@/components/Unknown/context/IDDLContext';
-import type { PageLayout, PageProps, PageRole } from '@/components/Unknown/utils/types';
+import { LayoutProvider } from '@/components/context/IDDLContext';
+import type { PageLayout, PageProps, PageRole } from '@/components/Item/types';
 import { cn } from '@/shared/lib/utils';
 
 /**

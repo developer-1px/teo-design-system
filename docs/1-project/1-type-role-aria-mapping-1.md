@@ -1,5 +1,49 @@
 ## 통합 최종본
 
+### IDDL Component Hierarchy
+
+IDDL은 다음과 같은 계층 구조를 가집니다:
+
+```
+Page
+└── Section (레이아웃 영역)
+    └── Group (컨테이너)
+        └── Item (UI 프리미티브 그룹)
+            ├── Action (상호작용)
+            ├── Field (데이터 입력)
+            └── Text (정적 콘텐츠)
+```
+
+**Item**은 Action, Field, Text를 그룹화하는 타입으로, UI의 원자적 구성 요소(atomic primitives)를 담당합니다. Item은 사용자 상호작용, 데이터 표시, 데이터 입력을 처리하는 가장 작은 단위의 빌딩 블록입니다.
+
+---
+
+### 0. Item
+
+Item은 UI 프리미티브(Action, Field, Text)를 그룹화하는 타입입니다. Item 타입은 컴포넌트 자체가 아니라 **개념적 분류(conceptual grouping)**로 사용됩니다.
+
+**특징**:
+- **원자적 구성 요소**: 더 이상 쪼갤 수 없는 가장 작은 UI 단위
+- **단일 책임**: 각 Item은 하나의 명확한 역할을 수행 (상호작용 / 입력 / 표시)
+- **재사용 가능**: 다양한 Group과 Section에서 재사용 가능
+- **독립적 렌더링**: 부모 컨텍스트 없이도 독립적으로 렌더링 가능
+
+**Item 하위 타입**:
+- **Action**: 사용자 상호작용 트리거 (버튼, 링크 등)
+- **Field**: 데이터 입력 및 수정 (input, select 등)
+- **Text**: 정적 콘텐츠 표시 (텍스트, 라벨 등)
+
+**파일 구조**:
+```
+src/components/Item/
+├── Action/      # 상호작용 컴포넌트
+├── Field/       # 데이터 입력 컴포넌트
+├── Text/        # 정적 콘텐츠 컴포넌트
+└── types.ts     # 공통 타입 정의
+```
+
+---
+
 ### 1. Action
 
 | Role | FE Component | HTML Tag | ARIA Role | 필수 속성 / 비고 |
@@ -145,13 +189,14 @@
 
 ## 최종 카운트
 
-| Type | Role 개수 |
-|---|---|
-| Action | 9 |
-| Text | 10 |
-| Field | 7 dataType × 다수 control |
-| Group | 31 |
-| Section | 8 |
-| Overlay | 12 |
+| Type | Role 개수 | 비고 |
+|---|---|---|
+| **Item** | - | 개념적 분류 (Action, Field, Text의 상위 그룹) |
+| Action | 9 | 상호작용 트리거 |
+| Text | 10 | 정적 콘텐츠 표시 |
+| Field | 7 dataType × 다수 control | 데이터 입력 |
+| Group | 31 | 컨테이너 |
+| Section | 8 | 레이아웃 영역 |
+| Overlay | 12 | 오버레이 |
 
-이제 빠진 거 없을 거야.
+**전체 계층 구조**: Page → Section → Group → Item → {Action, Field, Text}
