@@ -18,7 +18,7 @@
 
 ## 🗂️ 8개 패턴 목록
 
-### [01. Behavior Patterns](./01-behavior-patterns.md)
+### [01. Behavior Patterns](01-behavior-patterns.md)
 **컴포넌트 동작과 인터랙션 패턴**
 
 - **Focus Management**: FocusTrap, RestoreFocus
@@ -30,7 +30,7 @@
 
 ---
 
-### [02. Accessibility Patterns](./02-accessibility-patterns.md)
+### [02. Accessibility Patterns](02-accessibility-patterns.md)
 **WCAG 2.1 AA 준수를 위한 접근성 패턴**
 
 - **Live Regions**: LiveAnnouncer, StatusMessages
@@ -42,7 +42,7 @@
 
 ---
 
-### [03. Data Patterns](./03-data-patterns.md)
+### [03. Data Patterns](03-data-patterns.md)
 **대용량 데이터 처리와 변환 패턴**
 
 - **Virtualization**: VirtualList, VirtualGrid
@@ -54,7 +54,7 @@
 
 ---
 
-### [04. Composition Patterns](./04-composition-patterns.md)
+### [04. Composition Patterns](04-composition-patterns.md)
 **컴포넌트 조합과 재사용 패턴**
 
 - **Compound Components**: Tabs, Accordion (Context 공유)
@@ -66,7 +66,7 @@
 
 ---
 
-### [05. State Patterns](./05-state-patterns.md)
+### [05. State Patterns](05-state-patterns.md)
 **상태 관리 전략과 패턴**
 
 - **Controlled/Uncontrolled**: Form 컴포넌트 상태
@@ -79,7 +79,7 @@
 
 ---
 
-### [06. Animation Patterns](./06-animation-patterns.md)
+### [06. Animation Patterns](06-animation-patterns.md)
 **UI 애니메이션과 트랜지션 패턴**
 
 - **Presence**: Mount/Unmount 애니메이션
@@ -93,7 +93,7 @@
 
 ---
 
-### [07. Layout Patterns](./07-layout-patterns.md)
+### [07. Layout Patterns](07-layout-patterns.md)
 **반응형 레이아웃 구성 패턴**
 
 - **Responsive**: Breakpoint-based, Container Queries
@@ -106,7 +106,7 @@
 
 ---
 
-### [08. Performance Patterns](./08-performance-patterns.md)
+### [08. Performance Patterns](08-performance-patterns.md)
 **React 성능 최적화 패턴**
 
 - **Memoization**: React.memo, useMemo, useCallback

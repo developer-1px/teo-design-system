@@ -21,7 +21,7 @@ import { useProminence } from '@/components/context/ProminenceContext';
 import {
   calculateProminenceStyles,
   type ProminenceLevel,
-} from '@/design-system/prominence-tokens.ts';
+} from '@/shared/config/prominence-tokens';
 import { cn } from '@/lib/utils.ts';
 
 export interface ContentProps extends HTMLAttributes<HTMLDivElement> {

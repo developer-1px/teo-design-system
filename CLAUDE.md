@@ -84,7 +84,7 @@ The design system follows these fundamental principles:
 
 The codebase uses a **Layout system** that combines depth (visual hierarchy) with layout patterns (grid, flex, stack, scroll). This unified system works across all OS apps. All layouts are defined in:
 - **Component**: `src/components/ui/Layout.tsx`
-- **Design tokens**: `src/design-system/tokens.ts`
+- **Design tokens**: `src/shared/config/tokens.ts`
 - **Grid templates**: `src/styles/themes.css` (CSS variables)
 
 #### Depth Hierarchy (0 = base, 6 = highest)
@@ -133,7 +133,7 @@ Islands are independent UI regions within a layout (e.g., cells in a Bento Grid)
 
 ### Theme System
 
-The project supports **three independent theme axes** (see `src/lib/theme.ts`):
+The project supports **three independent theme axes** (see `src/shared/lib/theme.ts`):
 
 1. **Theme**: `light` | `dark`
 2. **Color Scheme**: `emerald` | `blue` | `purple` | `red` (accent color variants)
@@ -143,7 +143,7 @@ All theme values are applied via CSS custom properties using `data-*` attributes
 
 ### Design Tokens
 
-All design values are centralized in `src/design-system/tokens.ts`:
+All design values are centralized in `src/shared/config/tokens.ts`:
 
 - **Colors**: `accent`, `layer`, `text`, `border`, `semantic`
 - **Shadows**: `shadow.0` through `shadow.6` (mapped to layers)
@@ -353,9 +353,28 @@ Press **Cmd+D** (Mac) or **Ctrl+D** (Windows) in dev mode to toggle the IDDL Ins
 
 ```
 src/
+├── shared/               # ⭐ Shared utilities (FSD-compliant)
+│   ├── lib/             # Common libraries
+│   │   ├── utils.ts     # Utility functions (cn, etc.)
+│   │   ├── theme.ts     # Theme management system
+│   │   └── keyboard/    # Keyboard navigation & shortcuts
+│   │       ├── KeyboardProvider.tsx
+│   │       ├── useShortcut.ts
+│   │       ├── useFocusScope.ts
+│   │       ├── useNavigableCursor.ts
+│   │       ├── useTreeNavigation.ts
+│   │       ├── types.ts
+│   │       └── index.ts  # EXCEPTION: keyboard re-exports only
+│   ├── contexts/        # Global contexts
+│   │   └── app-context.tsx  # App type switching
+│   └── config/          # Design tokens & configuration
+│       ├── tokens.ts             # Design system tokens
+│       └── prominence-tokens.ts  # Prominence system tokens
 ├── apps/                 # Application modules (FSD 2.1)
 │   ├── IDE/
 │   │   ├── AppIDE.tsx           # ✅ Entry point (root level, easy to find)
+│   │   ├── lib/                 # IDE-specific utilities
+│   │   │   └── file-loader.ts
 │   │   ├── pages/               # Page-level components
 │   │   │   └── ide/
 │   │   │       └── IDEPage.tsx
@@ -366,18 +385,41 @@ src/
 │   │       └── sidebar/
 │   ├── JSON/
 │   │   ├── AppJSON.tsx          # ✅ Entry point
+│   │   ├── lib/                 # JSON-specific utilities
+│   │   │   └── json-schema.ts
 │   │   ├── pages/
 │   │   │   ├── json/
 │   │   │   ├── server-products/
 │   │   │   └── server-products-dsl/
 │   │   └── widgets/
 │   │       └── json-viewer/
-│   └── PPT/
-│       ├── AppPPT.tsx           # ✅ Entry point
+│   ├── PPT/
+│   │   ├── AppPPT.tsx           # ✅ Entry point
+│   │   ├── lib/                 # PPT-specific utilities
+│   │   │   ├── markdown-parser.tsx
+│   │   │   └── markdown-to-dsl.tsx
+│   │   ├── pages/
+│   │   │   └── ppt/
+│   │   └── widgets/
+│   │       └── presentation/
+│   ├── EMOJI/
+│   │   ├── AppEmoji.tsx
+│   │   ├── lib/
+│   │   │   └── emoji-designer/  # Emoji designer utilities
+│   │   ├── pages/
+│   │   └── widgets/
+│   ├── DSLBuilder/
+│   │   ├── AppDSLBuilder.tsx
+│   │   ├── lib/
+│   │   │   └── dsl-builder/     # DSL builder utilities
+│   │   ├── pages/
+│   │   └── widgets/
+│   └── DOCS/
+│       ├── AppDocs.tsx
+│       ├── lib/
+│       │   └── docs-scanner.ts
 │       ├── pages/
-│       │   └── ppt/
 │       └── widgets/
-│           └── presentation/
 ├── components/           # Shared UI components
 │   ├── ui/              # Base UI components (Layer, Button, IconButton, etc.)
 │   ├── workspace/       # Workspace navigation components
@@ -393,15 +435,6 @@ src/
 │   │   ├── types.ts     # IDDL type definitions
 │   │   └── styles.ts    # IDDL styling utilities
 │   └── atoms/           # Primitive UI elements
-├── design-system/
-│   ├── tokens.ts        # Single source of truth for design values
-│   └── layer-system.md  # Layer system documentation
-├── lib/
-│   ├── utils.ts         # Utility functions (cn, etc.)
-│   ├── theme.ts         # Theme management system
-│   └── dsl-builder/     # IDDL builder utilities
-├── utils/
-│   └── file-loader.ts   # File loading utilities
 ├── vite-plugins/        # Custom Vite plugins
 │   └── iddl-inspector/  # IDDL Inspector debugging tool
 │       ├── index.ts     # Vite plugin entry
@@ -559,6 +592,54 @@ Before implementing any UI:
 - **[docs/LAYOUT_SYSTEM.md](docs/LAYOUT_SYSTEM.md)** - Layout system guide
 - **[docs/DESIGN_PRINCIPLES.md](docs/DESIGN_PRINCIPLES.md)** - Design rules (15 parts)
 
+## Code Conventions
+
+### 🚫 No Barrel Exports
+
+**NEVER create `index.ts` or `index.tsx` files for re-exporting.**
+
+```tsx
+// ❌ WRONG - Do NOT create index.ts files
+// src/shared/index.ts
+export * from './lib/utils';
+export * from './lib/theme';
+
+// ❌ WRONG - Do NOT import from directories
+import { cn } from '@/shared';
+import { getThemeConfig } from '@/shared';
+
+// ✅ CORRECT - Direct imports from specific files
+import { cn } from '@/shared/lib/utils';
+import { getThemeConfig } from '@/shared/lib/theme';
+```
+
+**Rationale:**
+- Explicit imports make dependencies clear
+- Easier to track what's being used where
+- Better for tree-shaking and code splitting
+- Prevents circular dependency issues
+- IDE autocomplete works better with direct imports
+
+### Import Path Structure
+
+```tsx
+// Shared utilities (cross-app)
+import { cn } from '@/shared/lib/utils';
+import { useKeyboard } from '@/shared/lib/keyboard';
+import { useApp } from '@/shared/contexts/app-context';
+import { accent, spacing } from '@/shared/config/tokens';
+
+// App-specific libraries
+import { createNewDesign } from '@/apps/EMOJI/lib/emoji-designer/utils';
+import { generateId } from '@/apps/DSLBuilder/lib/dsl-builder/utils';
+import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
+
+// IDDL components (NO barrel exports)
+import { Page } from '@/components/dsl/Page';
+import { Section } from '@/components/dsl/Section';
+import { Group } from '@/components/dsl/Group';
+```
+
 ## Important Notes
 
 - This project is in **Korean** for documentation comments and UI text
@@ -566,5 +647,5 @@ Before implementing any UI:
 - Design system adherence is **critical** - do not deviate without documenting exceptions
 - Always check `DESIGN_PRINCIPLES.md` before making visual decisions
 - When in doubt about layer levels, shadows, or accent usage - consult the design docs first
-- **No barrel exports**: Always import from specific files, never use `index.ts`
+- **No barrel exports**: NEVER create `index.ts` files - always import from specific files
 - **Cmd+D for debugging**: Use IDDL Inspector to understand component hierarchy during development

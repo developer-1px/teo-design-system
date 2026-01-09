@@ -556,5 +556,5 @@ return (
 - **Focus Management**: https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_focus_vs_selection
 
 ### 관련 문서
-- [Accessibility Patterns](./02-accessibility-patterns.md)
+- [Accessibility Patterns](02-accessibility-patterns.md)
 - [Component Role Mapping](../component-role-mapping.md)

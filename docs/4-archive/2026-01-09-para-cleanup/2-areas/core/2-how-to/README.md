@@ -129,4 +129,4 @@ How-to Guides는 **문제 해결 중심**의 가이드입니다:
 
 - [Tutorials](../1-tutorials/) - 처음 배우기
 - [Reference](../3-reference/) - API 레퍼런스
-- [Patterns](../../patterns/) - React 패턴
+- [Patterns](../../../../../2-areas/patterns/) - React 패턴

@@ -58,5 +58,5 @@ Resources는 다음과 같은 자료입니다:
 ## 🔗 관련 문서
 
 - [2-areas/core](../2-areas/core/) - IDDL 코어 문서
-- [2-areas/patterns](../2-areas/patterns/) - React 패턴
+- [2-areas/patterns](../../../2-areas/patterns/) - React 패턴
 - [inbox](../inbox/) - 새로 받은 보고서/자료

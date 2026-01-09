@@ -646,5 +646,5 @@ export function VisuallyHidden({ children, ...props }: { children: React.ReactNo
 - **JAWS** (스크린리더): https://www.freedomscientific.com/products/software/jaws/
 
 ### 관련 문서
-- [Behavior Patterns](./01-behavior-patterns.md)
+- [Behavior Patterns](01-behavior-patterns.md)
 - [Component Role Mapping](../component-role-mapping.md)

@@ -76,5 +76,5 @@
 ## 🔗 관련 문서
 
 - [Core: Explanation](../core/4-explanation/) - IDDL 개념 설명
-- [Patterns](../patterns/) - React 패턴 백과사전
+- [Patterns](../../../../2-areas/patterns/) - React 패턴 백과사전
 - [Resources](../../3-resources/) - 외부 참고 자료

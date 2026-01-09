@@ -952,5 +952,5 @@ interface LoginFormData {
 - **React TypeScript Cheatsheet - Polymorphic**: https://react-typescript-cheatsheet.netlify.app/docs/advanced/patterns_by_usecase/#polymorphic-components
 
 ### 관련 문서
-- [Behavior Patterns](./01-behavior-patterns.md)
+- [Behavior Patterns](01-behavior-patterns.md)
 - [Component Role Mapping](../component-role-mapping.md)

@@ -785,5 +785,5 @@ reportWebVitals();
 - **webpack-bundle-analyzer**: https://github.com/webpack-contrib/webpack-bundle-analyzer
 
 ### 관련 문서
-- [Data Patterns](./03-data-patterns.md)
-- [State Patterns](./05-state-patterns.md)
+- [Data Patterns](03-data-patterns.md)
+- [State Patterns](05-state-patterns.md)

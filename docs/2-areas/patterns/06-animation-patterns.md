@@ -757,5 +757,5 @@ export function AnimatedComponent() {
 - **Web.dev - Animations**: https://web.dev/animations/
 
 ### 관련 문서
-- [Behavior Patterns](./01-behavior-patterns.md)
-- [Accessibility Patterns](./02-accessibility-patterns.md)
+- [Behavior Patterns](01-behavior-patterns.md)
+- [Accessibility Patterns](02-accessibility-patterns.md)

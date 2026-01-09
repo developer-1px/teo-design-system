@@ -665,5 +665,5 @@ function DataTable<T>({ items, columns }: { items: T[]; columns: Column<T>[] }) 
 - **react-virtualized**: https://github.com/bvaughn/react-virtualized
 
 ### 관련 문서
-- [Performance Patterns](./08-performance-patterns.md)
+- [Performance Patterns](08-performance-patterns.md)
 - [Component Role Mapping](../component-role-mapping.md)

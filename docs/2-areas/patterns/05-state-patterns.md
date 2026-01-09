@@ -795,5 +795,5 @@ function Counter() {
 - **React Docs - Managing State**: https://react.dev/learn/managing-state
 
 ### 관련 문서
-- [Behavior Patterns](./01-behavior-patterns.md)
-- [Composition Patterns](./04-composition-patterns.md)
+- [Behavior Patterns](01-behavior-patterns.md)
+- [Composition Patterns](04-composition-patterns.md)
