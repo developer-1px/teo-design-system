@@ -241,16 +241,46 @@ import { Files } from 'lucide-react';
 
 ## File Structure
 
+### Modified FSD 2.1 Architecture (Pages-First, No Barrel Exports)
+
+**Core Principles:**
+- **No barrel exports** (`index.ts`/`index.tsx` files are NOT used)
+- **App prefix for entry points** (e.g., `AppIDE.tsx`, `AppJSON.tsx`)
+- **Pages-first** structure with progressive complexity
+- **Direct imports** from specific files (no re-exports)
+
 ```
 src/
-├── components/
+├── apps/                 # Application modules (FSD 2.1)
+│   ├── IDE/
+│   │   ├── AppIDE.tsx           # ✅ Entry point (root level, easy to find)
+│   │   ├── pages/               # Page-level components
+│   │   │   └── ide/
+│   │   │       └── IDEPage.tsx
+│   │   └── widgets/             # Complex UI blocks
+│   │       ├── editor/
+│   │       ├── file-tree/
+│   │       ├── chat/
+│   │       └── sidebar/
+│   ├── JSON/
+│   │   ├── AppJSON.tsx          # ✅ Entry point
+│   │   ├── pages/
+│   │   │   ├── json/
+│   │   │   ├── server-products/
+│   │   │   └── server-products-dsl/
+│   │   └── widgets/
+│   │       └── json-viewer/
+│   └── PPT/
+│       ├── AppPPT.tsx           # ✅ Entry point
+│       ├── pages/
+│       │   └── ppt/
+│       └── widgets/
+│           └── presentation/
+├── components/           # Shared UI components
 │   ├── ui/              # Base UI components (Layer, Button, IconButton, etc.)
 │   ├── workspace/       # Workspace navigation components
-│   ├── editor/          # Code editor and preview components
-│   ├── file-tree/       # File tree components
-│   ├── chat/            # AI chat interface
 │   ├── modal/           # Modal dialogs (Settings, Search)
-│   └── sidebar/         # Sidebar components
+│   └── dsl/             # DSL system components
 ├── design-system/
 │   ├── tokens.ts        # Single source of truth for design values
 │   └── layer-system.md  # Layer system documentation
@@ -260,6 +290,23 @@ src/
 └── utils/
     └── file-loader.ts   # File loading utilities
 ```
+
+**Import Convention:**
+```tsx
+// ✅ Direct import from entry point
+import { AppIDE } from '@/apps/IDE/AppIDE';
+
+// ❌ Never use barrel exports
+import { AppIDE } from '@/apps/IDE';  // NO index.ts!
+
+// ✅ Direct import from specific file
+import { IDEPage } from '@/apps/IDE/pages/ide/IDEPage';
+```
+
+**Naming Convention:**
+- Entry points: `App{Name}.tsx` (e.g., `AppIDE.tsx`, `AppJSON.tsx`)
+- Pages: `{Name}Page.tsx` (e.g., `IDEPage.tsx`, `JSONPage.tsx`)
+- Widgets: Descriptive names (e.g., `FileTree.tsx`, `CodeEditor.tsx`)
 
 ## Configuration
 

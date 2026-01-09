@@ -1,16 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { AppProvider } from './lib/app-context';
 import { KeyboardProvider } from './lib/keyboard';
+import { initializeTheme } from './lib/theme';
 import './index.css';
 
+// Initialize theme BEFORE React renders
+// This ensures data-theme attribute is set on first paint
+initializeTheme();
+
+// Note: AppProvider moved inside App.tsx (needs to be inside Router context)
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AppProvider>
-      <KeyboardProvider>
-        <App />
-      </KeyboardProvider>
-    </AppProvider>
+    <KeyboardProvider>
+      <App />
+    </KeyboardProvider>
   </React.StrictMode>
 );

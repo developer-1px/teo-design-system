@@ -72,27 +72,27 @@ export function getBackgroundIntensity(
 }
 
 /**
- * 주목도별 여백/간격 배율
- * - primary: 100% (표준 여백)
- * - secondary: 75% (조금 줄어듦)
- * - tertiary: 50% (더 줄어듦)
+ * 주목도별 여백/간격 배율 (Compact Density 적용)
+ * - primary: 60% (조밀한 여백)
+ * - secondary: 50% (더 조밀함)
+ * - tertiary: 30% (최소 여백)
  */
 export const spacingScale: Record<ProminenceLevel, number> = {
-  primary: 1.0,
-  secondary: 0.75,
-  tertiary: 0.5,
+  primary: 0.6,
+  secondary: 0.5,
+  tertiary: 0.3,
 };
 
 /**
- * 주목도별 라인 높이 배율
- * - primary: 1.5 (여유 있는 행간)
- * - secondary: 1.4 (표준 행간)
- * - tertiary: 1.3 (좁은 행간)
+ * 주목도별 라인 높이 배율 (Compact Density 적용)
+ * - primary: 1.4 (조밀한 행간)
+ * - secondary: 1.3 (더 조밀한 행간)
+ * - tertiary: 1.2 (최소 행간)
  */
 export const lineHeightScale: Record<ProminenceLevel, number> = {
-  primary: 1.5,
-  secondary: 1.4,
-  tertiary: 1.3,
+  primary: 1.4,
+  secondary: 1.3,
+  tertiary: 1.2,
 };
 
 /**

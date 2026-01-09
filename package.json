@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:debug-panel": "vite build --config vite-plugins/build-client.config.ts",
+    "build:iddl-inspector": "vite build --config vite-plugins/build-iddl-client.config.ts",
     "preview": "vite preview",
     "lint": "tsc --noEmit"
   },
@@ -35,10 +37,13 @@
     "@react-aria/focus": "^3.21.3",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.13.18",
+    "@typescript-eslint/typescript-estree": "^8.52.0",
     "@uiw/react-codemirror": "^4.25.4",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "lucide-react": "^0.562.0",
+    "prism-react-renderer": "^2.4.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-hotkeys-hook": "^5.2.1",
@@ -47,6 +52,7 @@
     "rehype-raw": "^7.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "wouter": "^3.9.0"
   }
 }

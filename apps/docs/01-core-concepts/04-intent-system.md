@@ -16,9 +16,10 @@
 |--------|------|------|-----------|
 | **Neutral** | Gray/Black | 기본, 중립 | 일반 텍스트, 기본 버튼 |
 | **Brand** | Primary Color | 브랜드, 주요 액션 | CTA 버튼, 강조 요소 |
-| **Success** | Green | 성공, 긍정, 완료 | 성공 메시지, 완료 상태 |
-| **Warning** | Yellow/Orange | 주의, 경고 | 경고 메시지, 주의 필요 |
-| **Danger** | Red | 위험, 오류, 파괴 | 삭제 버튼, 에러 메시지 |
+| **Positive** | Green | 성공, 긍정, 완료 | 성공 메시지, 완료 상태 |
+| **Caution** | Yellow/Orange | 주의, 경고 | 경고 메시지, 주의 필요 |
+| **Critical** | Red | 위험, 오류, 파괴 | 삭제 버튼, 에러 메시지 |
+| **Info** | Blue | 참고 정보, 도움말 | 툴팁, 안내 메시지 |
 
 ---
 
@@ -53,7 +54,7 @@ active: #1d4ed8
 
 ---
 
-### Success
+### Positive
 ```css
 text: #ffffff
 background: #10b981 (Green)
@@ -68,7 +69,7 @@ active: #047857
 
 ---
 
-### Warning
+### Caution
 ```css
 text: #000000
 background: #f59e0b (Orange)
@@ -83,7 +84,7 @@ active: #b45309
 
 ---
 
-### Danger
+### Critical
 ```css
 text: #ffffff
 background: #ef4444 (Red)
@@ -98,6 +99,21 @@ active: #b91c1c
 
 ---
 
+### Info
+```css
+text: #ffffff
+background: #3b82f6 (Blue)
+hover: #2563eb
+active: #1d4ed8
+```
+
+**사용:**
+- 도움말 툴팁
+- 안내 메시지
+- 정보 알림
+
+---
+
 ## Role별 Intent 적용
 
 ### Control (버튼)
@@ -106,7 +122,7 @@ active: #b91c1c
 { "role": "Control", "intent": "Brand", "label": "Get Started" }
 
 // 파괴적 액션
-{ "role": "Control", "intent": "Danger", "label": "Delete" }
+{ "role": "Control", "intent": "Critical", "label": "Delete" }
 
 // 중립 액션
 { "role": "Control", "intent": "Neutral", "label": "Cancel" }
@@ -115,13 +131,13 @@ active: #b91c1c
 ### Status (상태 표시)
 ```json
 // 성공 상태
-{ "role": "Status", "intent": "Success", "label": "Active" }
+{ "role": "Status", "intent": "Positive", "label": "Active" }
 
 // 경고 상태
-{ "role": "Status", "intent": "Warning", "label": "Pending" }
+{ "role": "Status", "intent": "Caution", "label": "Pending" }
 
 // 오류 상태
-{ "role": "Status", "intent": "Danger", "label": "Failed" }
+{ "role": "Status", "intent": "Critical", "label": "Failed" }
 ```
 
 ### Overlay (알림)
@@ -130,7 +146,7 @@ active: #b91c1c
 {
   "type": "Overlay",
   "role": "Toast",
-  "intent": "Success",
+  "intent": "Positive",
   "children": [
     { "role": "Identity", "label": "Success" },
     { "role": "Content", "label": "Your changes have been saved" }
@@ -169,12 +185,12 @@ Intent는 Prominence와 독립적으로 작동합니다:
 ### 1. 의미론적 사용
 ```
 ✅ Correct:
-- Success: 성공적인 완료 상태
-- Danger: 삭제, 파괴적 액션
+- Positive: 성공적인 완료 상태
+- Critical: 삭제, 파괴적 액션
 
 ❌ Wrong:
-- Success: 단순히 녹색이 필요해서
-- Danger: 단순히 빨간색이 필요해서
+- Positive: 단순히 녹색이 필요해서
+- Critical: 단순히 빨간색이 필요해서
 ```
 
 ### 2. Intent 사용 빈도
@@ -182,7 +198,7 @@ Intent는 Prominence와 독립적으로 작동합니다:
 페이지당 권장 사용량:
 - Neutral: 무제한 (기본)
 - Brand: 1-2개 (주요 CTA)
-- Success/Warning/Danger: 필요시에만
+- Positive/Caution/Critical/Info: 필요시에만
 ```
 
 ### 3. 대비되는 Intent 사용
@@ -197,7 +213,7 @@ Intent는 Prominence와 독립적으로 작동합니다:
       "role": "Toolbar",
       "children": [
         { "role": "Control", "intent": "Neutral", "label": "Cancel" },
-        { "role": "Control", "intent": "Danger", "label": "Delete" }
+        { "role": "Control", "intent": "Critical", "label": "Delete" }
       ]
     }
   ]
@@ -225,7 +241,7 @@ Intent는 색상만으로 의미를 전달하지 않습니다:
 ```json
 {
   "role": "Status",
-  "intent": "Success",
+  "intent": "Positive",
   "icon": "CheckCircle",  // 시각적 아이콘 추가
   "label": "Completed"    // 명확한 텍스트
 }
@@ -253,9 +269,9 @@ Intent는 색상만으로 의미를 전달하지 않습니다:
   "type": "Group",
   "role": "Container",
   "children": [
-    { "role": "Status", "intent": "Success", "label": "✓ 5 completed" },
-    { "role": "Status", "intent": "Warning", "label": "⚠ 2 pending" },
-    { "role": "Status", "intent": "Danger", "label": "✕ 1 failed" }
+    { "role": "Status", "intent": "Positive", "label": "✓ 5 completed" },
+    { "role": "Status", "intent": "Caution", "label": "⚠ 2 pending" },
+    { "role": "Status", "intent": "Critical", "label": "✕ 1 failed" }
   ]
 }
 ```
@@ -279,7 +295,7 @@ Intent는 색상만으로 의미를 전달하지 않습니다:
         {
           "role": "Content",
           "prominence": "Secondary",
-          "intent": "Danger",
+          "intent": "Critical",
           "label": "This action cannot be undone"
         },
         {
@@ -287,7 +303,7 @@ Intent는 색상만으로 의미를 전달하지 않습니다:
           "role": "Toolbar",
           "children": [
             { "role": "Control", "intent": "Neutral", "label": "Cancel" },
-            { "role": "Control", "intent": "Danger", "label": "Delete" }
+            { "role": "Control", "intent": "Critical", "label": "Delete" }
           ]
         }
       ]
@@ -303,10 +319,11 @@ Intent는 색상만으로 의미를 전달하지 않습니다:
 | Intent | 사용 맥락 | 색상 | 사용 빈도 | 중요도 |
 |--------|----------|------|----------|--------|
 | Neutral | 기본, 중립 | Gray | 무제한 | 낮음 |
-| Brand | 주요 액션, 강조 | Blue | 1-2개 | 높음 |
-| Success | 성공, 완료 | Green | 필요시 | 중간 |
-| Warning | 주의, 경고 | Orange | 필요시 | 중간 |
-| Danger | 위험, 파괴 | Red | 필요시 | 높음 |
+| Brand | 주요 액션, 강조 | Primary | 1-2개 | 높음 |
+| Positive | 성공, 완료, 긍정 | Green | 필요시 | 중간 |
+| Caution | 주의, 경고, 대기 | Orange | 필요시 | 중간 |
+| Critical | 위험, 에러, 파괴 | Red | 필요시 | 높음 |
+| Info | 참고, 도움말 | Blue | 필요시 | 낮음 |
 
 ---
 
@@ -317,15 +334,17 @@ Intent 색상은 Dark Mode에서 자동으로 조정됩니다:
 ```css
 /* Light Mode */
 --intent-brand: #3b82f6;
---intent-success: #10b981;
---intent-warning: #f59e0b;
---intent-danger: #ef4444;
+--intent-positive: #10b981;
+--intent-caution: #f59e0b;
+--intent-critical: #ef4444;
+--intent-info: #3b82f6;
 
 /* Dark Mode */
---intent-brand: #60a5fa;     /* 밝은 Blue */
---intent-success: #34d399;   /* 밝은 Green */
---intent-warning: #fbbf24;   /* 밝은 Orange */
---intent-danger: #f87171;    /* 밝은 Red */
+--intent-brand: #60a5fa;      /* 밝은 Blue */
+--intent-positive: #34d399;   /* 밝은 Green */
+--intent-caution: #fbbf24;    /* 밝은 Orange */
+--intent-critical: #f87171;   /* 밝은 Red */
+--intent-info: #60a5fa;       /* 밝은 Blue */
 ```
 
 ---

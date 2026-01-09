@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Layout } from '@/components/ui/Layout';
-import { Button } from '@/components/ui/Button';
+import { Section } from '@/components/dsl/Section';
+import { Button } from '@/components/ui';
 import { Search, File, Folder, Command, Hash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigableCursor, useModalShortcut, KeyboardContext, useKeyboardContext } from '@/lib/keyboard';
@@ -47,7 +47,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   }, [query]);
 
   // 키보드 네비게이션 (useNavigableCursor 사용)
-  const { cursorIndex, getItemProps, selectCurrent } = useNavigableCursor({
+  const { cursorIndex, getItemProps } = useNavigableCursor({
     type: 'list',
     items: results,
     onSelect: (result) => {
@@ -74,13 +74,8 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     }
   }, [isOpen, enableContext, disableContext]);
 
-  const handleSelect = (result: SearchResult) => {
-    console.log('Selected:', result);
-    onClose();
-  };
-
   const getIcon = (type: SearchResult['type']) => {
-    const iconProps = { size: 16, className: 'text-text-tertiary' };
+    const iconProps = { size: 16, className: 'text-subtle' };
     switch (type) {
       case 'file':
         return <File {...iconProps} />;
@@ -103,32 +98,33 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         onClick={onClose}
       />
 
-      <Layout
-        depth={6}
+      <Section
+        role="Container"
+        prominence="Hero"
         className="relative w-full max-w-2xl overflow-hidden"
       >
           {/* Search Input */}
-          <Layout depth={1} rounded={false} className="px-4 py-3">
+          <Section role="Container" prominence="Tertiary" className="px-4 py-3">
             <div className="flex items-center gap-3">
-              <Search size={20} className="text-text-tertiary" />
+              <Search size={20} className="text-subtle" />
               <input
                 ref={inputRef}
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search files, commands, symbols..."
-                className="flex-1 bg-transparent text-text placeholder:text-text-tertiary focus:outline-none text-sm"
+                className="flex-1 bg-transparent text-text placeholder:text-subtle focus:outline-none text-sm"
               />
-              <kbd className="px-2 py-0.5 text-xs bg-layer-0 text-text-tertiary rounded">
+              <kbd className="px-2 py-0.5 text-xs bg-surface-base text-subtle rounded">
                 ESC
               </kbd>
             </div>
-          </Layout>
+          </Section>
 
           {/* Results */}
           <div className="max-h-[400px] overflow-y-auto">
             {results.length === 0 ? (
-              <div className="py-12 text-center text-text-tertiary text-sm">
+              <div className="py-12 text-center text-subtle text-sm">
                 No results found for "{query}"
               </div>
             ) : (
@@ -151,13 +147,13 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                         {result.title}
                       </div>
                       {result.subtitle && (
-                        <div className="text-xs text-text-tertiary truncate">
+                        <div className="text-xs text-subtle truncate">
                           {result.subtitle}
                         </div>
                       )}
                     </div>
                     {index === cursorIndex && (
-                      <kbd className="px-2 py-0.5 text-xs bg-layer-0 text-text-tertiary rounded">
+                      <kbd className="px-2 py-0.5 text-xs bg-surface-base text-subtle rounded">
                         ↵
                       </kbd>
                     )}
@@ -168,25 +164,25 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
           </div>
 
           {/* Footer */}
-          <Layout depth={1} rounded={false} className="px-4 py-2">
+          <Section role="Footer" prominence="Tertiary" className="px-4 py-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4 text-xs text-text-tertiary">
+              <div className="flex items-center gap-4 text-xs text-subtle">
                 <span className="flex items-center gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↑</kbd>
-                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↓</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↑</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↓</kbd>
                   navigate
                 </span>
                 <span className="flex items-center gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-layer-0 rounded">↵</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↵</kbd>
                   select
                 </span>
               </div>
-              <div className="text-xs text-text-tertiary">
+              <div className="text-xs text-subtle">
                 {results.length} results
               </div>
             </div>
-          </Layout>
-        </Layout>
+          </Section>
+        </Section>
     </div>
   );
 };

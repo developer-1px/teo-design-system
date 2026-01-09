@@ -12,7 +12,7 @@ interface TypeInfo {
 /**
  * Infer TypeScript type from JSON value
  */
-function inferType(value: JsonValue, key?: string): TypeInfo {
+function inferType(value: JsonValue): TypeInfo {
   // null
   if (value === null) {
     return { type: 'null', isArray: false, isOptional: true };

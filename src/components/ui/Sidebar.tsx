@@ -14,7 +14,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
         className={cn(
           // Base sidebar - Layer 2 surface
           // PRINCIPLE: 선 대신 배경색 차이로 구분
-          'flex flex-col bg-layer-2',
+          'flex flex-col bg-surface',
           'transition-all duration-200',
 
           // Collapsed state

@@ -1,619 +1,414 @@
 /**
- * Theme System - CSS Variables
+ * TailwindCSS 4 Design System - 3-Tier Token Architecture
  *
- * 사용법:
- * - Light/Dark: data-theme="light" | "dark"
- * - Color Scheme: data-color-scheme="emerald" | "blue" | "purple"
- * - Density: data-density="compact" | "normal" | "comfortable"
+ * Tier 1: Primitive Tokens - 기본 원자 값 (색상, 간격, 반경)
+ * Tier 2: Semantic Tokens - 의미론적 역할 (surface, text, border)
+ * Tier 3: Component Tokens - 컴포넌트별 토큰 (button, input, panel)
+ *
+ * IDDL Integration:
+ * - Prominence → Surface levels
+ * - Intent → Semantic colors
+ * - Density → Spacing multiplier
  */
 
-/* ============================================================================
-   BASE THEME (LIGHT)
-   ============================================================================ */
-
-:root {
+@theme {
   /* ============================================================================
-     7-LAYER DEPTH SYSTEM - 면으로 깊이를 표현하는 계층 구조
-     ============================================================================
-     원칙:
-     1. 각 레이어는 독립적이고 명확한 용도를 가짐
-     2. 숫자가 클수록 더 위에 떠있음 (사용자에게 가까움)
-     3. 색상 차이 + 그림자 조합으로 깊이감 표현
-     4. Border 대신 면의 차이로만 구분
-  ============================================================================ */
+     TIER 1: PRIMITIVE TOKENS
+     기본 색상 팔레트 - 모든 토큰의 기초
+     ============================================================================ */
 
-  /* Layer 0 - Background (배경) */
-  /* 용도: 전체 앱 배경, 가장 깊숙한 층 */
-  --layer-0: 248 248 249; /* #f8f8f9 - 연한 쿨 그레이 */
+  /* Gray Scale (Neutral) */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #d4d4d4;
+  --color-gray-400: #a3a3a3;
+  --color-gray-500: #737373;
+  --color-gray-600: #525252;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+  --color-gray-900: #171717;
+  --color-gray-950: #0a0a0a;
 
-  /* Layer 1 - Sunken (함몰) */
-  /* 용도: Input fields, Terminal, 눌린 느낌의 영역 */
-  --layer-1: 239 240 242; /* #eff0f2 - 쿨 그레이 */
+  /* Emerald (Primary/Brand) */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
 
-  /* Layer 2 - Base Surface (기본 표면) */
-  /* 용도: Sidebar, Panel의 기본 배경 */
-  --layer-2: 245 246 247; /* #f5f6f7 - 은은한 쿨 그레이 */
+  /* Blue (Alternative Brand) */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-600: #3b82f6;
+  --color-blue-700: #2563eb;
+  --color-blue-900: #1e3a8a;
 
-  /* Layer 3 - Primary Surface (주요 표면) */
-  /* 용도: Editor, Main Content Area */
-  --layer-3: 252 252 253; /* #fcfcfd - 거의 흰색 */
+  /* Purple (Alternative Brand) */
+  --color-purple-50: #faf5ff;
+  --color-purple-100: #f3e8ff;
+  --color-purple-600: #a855f7;
+  --color-purple-700: #9333ea;
+  --color-purple-900: #581c87;
 
-  /* Layer 4 - Elevated (부각) */
-  /* 용도: Toolbar, Active Tab, Toolbar Button */
-  --layer-4: 254 254 255; /* #fefeff - 아주 연한 쿨 화이트 */
+  /* Red (Alternative Brand) */
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-600: #ef4444;
+  --color-red-700: #dc2626;
+  --color-red-900: #7f1d1d;
 
-  /* Layer 5 - Floating (떠있음) */
-  /* 용도: Dropdown, Popover, Context Menu */
-  --layer-5: 255 255 255; /* #ffffff - 순백 */
+  /* Semantic Primitives */
+  --color-green-600: #22c55e;
+  --color-orange-600: #f59e0b;
+  --color-rose-600: #e11d48;
+  --color-sky-600: #0284c7;
 
-  /* Layer 6 - Overlay (오버레이) */
-  /* 용도: Modal, Dialog, Toast */
-  --layer-6: 255 255 255; /* #ffffff - 순백 */
+  /* Spacing Primitives */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
 
-  /* Layer Tone Variations - 같은 레이어 내에서 면 구분 */
-  --layer-2-warm: 243 244 245; /* #f3f4f5 - Workspace Nav (따뜻한 느낌) */
-  --layer-2-cool: 246 247 249; /* #f6f7f9 - File Tree (차가운 느낌) */
-  --layer-2-neutral: 245 246 247; /* #f5f6f7 - AI Chat (중성) */
+  /* Radius Primitives */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
 
-  --layer-3-warm: 251 251 252; /* #fbfbfc - Editor Tabs */
-  --layer-3-cool: 253 253 254; /* #fdfdfe - Editor */
-  --layer-3-neutral: 252 252 253; /* #fcfcfd - Right Panel */
+  /* Shadow Primitives */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
-  /* Text Colors */
-  --text-primary: 23 23 23; /* #171717 */
-  --text-secondary: 82 82 82; /* #525252 */
-  --text-tertiary: 163 163 163; /* #a3a3a3 */
-  --text-inverse: 255 255 255; /* #ffffff */
+  /* ============================================================================
+     TIER 2: SEMANTIC TOKENS
+     의미론적 역할 기반 토큰 - Primitive를 참조
+     ============================================================================ */
+
+  /* Surface (Background layers - 7-Layer System mapping) */
+  --color-surface-base: var(--color-gray-50);      /* Layer 0: App background */
+  --color-surface-sunken: var(--color-gray-100);   /* Layer 1: Inputs, terminals */
+  --color-surface: white;                          /* Layer 2: Sidebar, panels */
+  --color-surface-raised: white;                   /* Layer 3: Editor, main content */
+  --color-surface-elevated: white;                 /* Layer 4: Toolbars, active tabs */
+  --color-surface-floating: white;                 /* Layer 5: Dropdowns, popovers */
+  --color-surface-overlay: white;                  /* Layer 6: Modals, dialogs */
+
+  /* Text (IDDL Text prominence) */
+  --color-text: var(--color-gray-900);             /* Primary text */
+  --color-text-muted: var(--color-gray-600);       /* Secondary text */
+  --color-text-subtle: var(--color-gray-400);      /* Tertiary text */
+  --color-text-inverse: white;                     /* On dark backgrounds */
 
   /* Border */
-  --border: 229 229 229; /* #e5e5e5 */
-  --border-subtle: 245 245 245; /* #f5f5f5 */
+  --color-border-default: var(--color-gray-200);   /* Standard borders */
+  --color-border-muted: var(--color-gray-100);     /* Subtle borders */
+  --color-border-strong: var(--color-gray-300);    /* Emphasized borders */
 
-  /* Accent - Default Emerald (더 선명하게) */
-  --accent: 5 150 105; /* #059669 - 더 진한 emerald */
-  --accent-hover: 4 120 87; /* #047857 */
-  --accent-active: 6 95 70; /* #065f46 */
-  --accent-subtle: 209 250 229; /* #d1fae5 */
+  /* Primary (Brand - IDDL Intent: Brand) */
+  --color-primary: var(--color-emerald-600);
+  --color-primary-hover: var(--color-emerald-700);
+  --color-primary-subtle: var(--color-emerald-100);
+  --color-on-primary: white;                       /* Text on primary background */
 
-  /* Secondary Accent - Orange for contrast */
-  --accent-secondary: 249 115 22; /* #f97316 - 명확한 orange */
-  --accent-secondary-hover: 234 88 12; /* #ea580c */
-  --accent-secondary-active: 194 65 12; /* #c2410c */
-  --accent-secondary-subtle: 255 237 213; /* #ffedd5 */
+  /* Accent (Alias for Primary - backward compatibility) */
+  --color-accent: var(--color-primary);
+  --color-accent-hover: var(--color-primary-hover);
+  --color-accent-subtle: var(--color-primary-subtle);
+  --color-on-accent: var(--color-on-primary);
 
-  /* ============================================================================
-     ELEVATION SHADOWS - 은은하고 고급스러운 그림자
-     ============================================================================
-     디자인 원칙:
-     1. 떠있는 요소만 그림자 사용 (TopToolbar, Menu, Modal, Panel)
-     2. 면으로 구분되는 요소는 그림자 불필요 (Sidebar, Editor)
-     3. Material Design 3의 subtle elevation 참고
-     4. 투명도를 낮춰 은은하게 표현
-  ============================================================================ */
+  /* Semantic States (IDDL Intent mapping) */
+  --color-success: var(--color-green-600);         /* Positive */
+  --color-success-hover: #16a34a;                  /* green-700 */
+  --color-warning: var(--color-orange-600);        /* Caution */
+  --color-warning-hover: #d97706;                  /* orange-700 */
+  --color-error: var(--color-rose-600);            /* Critical */
+  --color-error-hover: #be123c;                    /* rose-700 */
+  --color-info: var(--color-sky-600);              /* Info */
+  --color-info-hover: #0369a1;                     /* sky-700 */
 
-  /* Elevation 1 - 매우 은은함 (TopToolbar, BottomPanel) */
-  --elevation-1: 0px 1px 2px 0px rgb(0 0 0 / 0.04),
-                 0px 1px 3px 1px rgb(0 0 0 / 0.03);
-
-  /* Elevation 2 - 중간 (Dropdown, Menu) */
-  --elevation-2: 0px 2px 4px 0px rgb(0 0 0 / 0.06),
-                 0px 2px 8px 2px rgb(0 0 0 / 0.04);
-
-  /* Elevation 3 - 강함 (Modal, Dialog) */
-  --elevation-3: 0px 4px 8px 0px rgb(0 0 0 / 0.08),
-                 0px 4px 16px 4px rgb(0 0 0 / 0.06);
-
-  /* Semantic Colors (고정값) */
-  --success: 34 197 94; /* #22c55e */
-  --warning: 245 158 11; /* #f59e0b */
-  --error: 239 68 68; /* #ef4444 */
-  --info: 59 130 246; /* #3b82f6 */
+  /* Interactive States */
+  --color-hover: var(--color-gray-100);
+  --color-active: var(--color-gray-200);
+  --color-focus: var(--color-primary);
 
   /* ============================================================================
-     7-LAYER SHADOW SYSTEM - 큰 blur + 낮은 opacity로 부드럽지만 명확한 깊이
+     TIER 3: COMPONENT TOKENS
+     컴포넌트별 토큰 - Semantic을 참조
      ============================================================================ */
-  --shadow-color: 0 0 0;
 
-  /* Layer 0 - Background: Shadow 없음 */
-  --shadow-layer-0: none;
+  /* Button */
+  --button-bg-primary: var(--color-primary);
+  --button-bg-primary-hover: var(--color-primary-hover);
+  --button-text-primary: var(--color-on-primary);
+  --button-bg-secondary: var(--color-surface-elevated);
+  --button-border-secondary: var(--color-border-default);
+  --button-radius: var(--radius-md);
 
-  /* Layer 1 - Sunken: Inset shadow로 함몰감 표현 */
-  --shadow-layer-1: inset 0 2px 4px rgba(var(--shadow-color), 0.06);
+  /* Input */
+  --input-bg: var(--color-surface-sunken);
+  --input-border: var(--color-border-default);
+  --input-border-focus: var(--color-focus);
+  --input-text: var(--color-text);
+  --input-placeholder: var(--color-text-subtle);
+  --input-radius: var(--radius-md);
 
-  /* Layer 2 - Base Surface: Shadow 없음 (색상 차이만으로 구분) */
-  --shadow-layer-2: none;
+  /* Panel */
+  --panel-bg: var(--color-surface);
+  --panel-bg-elevated: var(--color-surface-elevated);
+  --panel-border: var(--color-border-muted);
+  --panel-shadow: var(--shadow-sm);
+  --panel-radius: var(--radius-lg);
 
-  /* Layer 3 - Primary Surface: 매우 은은한 그림자 (주요 작업 공간) */
-  --shadow-layer-3: 0 1px 2px rgba(var(--shadow-color), 0.03),
-                     0 2px 8px rgba(var(--shadow-color), 0.02);
+  /* Card */
+  --card-bg: var(--color-surface-elevated);
+  --card-border: var(--color-border-default);
+  --card-shadow: var(--shadow-md);
+  --card-radius: var(--radius-lg);
 
-  /* Layer 4 - Elevated: 이중 그림자로 명확히 떠있음 */
-  --shadow-layer-4: 0 1px 3px rgba(var(--shadow-color), 0.05),
-                     0 4px 12px rgba(var(--shadow-color), 0.04);
+  /* Focus Ring (Accessibility) */
+  --focus-ring-color: var(--color-primary);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
 
-  /* Layer 5 - Floating: 강한 그림자, 떠있는 느낌 */
-  --shadow-layer-5: 0 2px 8px rgba(var(--shadow-color), 0.08),
-                     0 8px 24px rgba(var(--shadow-color), 0.06);
-
-  /* Layer 6 - Overlay: 최강 그림자, 모달/다이얼로그 */
-  --shadow-layer-6: 0 4px 16px rgba(var(--shadow-color), 0.12),
-                     0 16px 64px rgba(var(--shadow-color), 0.10);
-
-  /* ============================================================================
-     BORDER RADIUS SYSTEM - 모든 요소에 적용
-     ============================================================================
-     원칙: 모든 면에 border-radius를 사용하여 부드러운 느낌
-     예외: 전체 화면 영역 (App container), 정렬이 필요한 경우만 제외
-  ============================================================================ */
-
-  /* Radius Scale */
-  --radius-none: 0; /* 예외적으로만 사용 */
-  --radius-sm: 4px; /* 작은 요소: Icon, Badge, Small Button */
-  --radius-md: 6px; /* 기본: Button, Input, Tab */
-  --radius-lg: 8px; /* 패널: Sidebar, Panel, Card */
-  --radius-xl: 10px; /* 큰 패널: Modal, Dialog */
-  --radius-2xl: 12px; /* 특수: Image, Media */
-  --radius-full: 9999px; /* Circle: Avatar, Dot */
-
-  /* Spacing Unit (Density) */
-  --spacing-unit: 1;
-
-  /* ============================================================================
-     LAYOUT GRID TEMPLATES - 사전 정의된 레이아웃 패턴
-     ============================================================================
-     용도: Layout variant="grid" template="xxx" 사용 시
-  ============================================================================ */
-
-  /* IDE 레이아웃: Nav | Sidebar | Editor | Terminal */
-  --grid-template-ide:
-    "nav sidebar editor rightbar rightnav" auto
-    "nav sidebar editor rightbar rightnav" 1fr
-    "nav terminal terminal terminal rightnav" 200px
-    / 60px 250px 1fr 300px 60px;
-
-  /* Sidebar-Content 레이아웃 */
-  --grid-template-sidebar-content: "sidebar content" / 250px 1fr;
-
-  /* Split 레이아웃 (2분할) */
-  --grid-template-split: "left right" / 1fr 1fr;
-
-  /* Dashboard 레이아웃 (Bento Grid) */
-  /* 참고: Bento는 보통 auto-fit/auto-fill로 동적 생성하므로 별도 정의 불필요 */
+  /* Density Multiplier (IDDL Density) */
+  --density: 1;
 }
 
 /* ============================================================================
    DARK THEME
    ============================================================================ */
 
+/**
+ * Note: TailwindCSS 4의 @theme은 최상위에서만 사용 가능
+ * media query와 data-theme 셀렉터는 일반 CSS 변수 오버라이드 사용
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Surface - Dark mode (7-Layer System) */
+    --color-surface-base: var(--color-gray-950);
+    --color-surface-sunken: var(--color-gray-900);
+    --color-surface: var(--color-gray-900);
+    --color-surface-raised: var(--color-gray-800);
+    --color-surface-elevated: var(--color-gray-800);
+    --color-surface-floating: var(--color-gray-700);
+    --color-surface-overlay: var(--color-gray-700);
+
+    /* Text - Dark mode */
+    --color-text: var(--color-gray-50);
+    --color-text-muted: var(--color-gray-400);
+    --color-text-subtle: var(--color-gray-500);
+    --color-text-inverse: var(--color-gray-900);
+
+    /* Border - Dark mode */
+    --color-border-default: var(--color-gray-700);
+    --color-border-muted: var(--color-gray-800);
+    --color-border-strong: var(--color-gray-600);
+
+    /* Primary subtle - Dark mode */
+    --color-primary-subtle: var(--color-emerald-900);
+
+    /* Interactive States - Dark mode */
+    --color-hover: var(--color-gray-800);
+    --color-active: var(--color-gray-700);
+  }
+}
+
+/* Manual theme toggle - 사용자 선택 테마가 시스템 자동 감지보다 우선 */
+
+/* 사용자가 명시적으로 라이트 테마를 선택한 경우 */
+[data-theme='light'] {
+  --color-surface-base: var(--color-gray-50);
+  --color-surface-sunken: var(--color-gray-100);
+  --color-surface: white;
+  --color-surface-raised: white;
+  --color-surface-elevated: white;
+  --color-surface-floating: white;
+  --color-surface-overlay: white;
+
+  --color-text: var(--color-gray-900);
+  --color-text-muted: var(--color-gray-600);
+  --color-text-subtle: var(--color-gray-400);
+  --color-text-inverse: white;
+
+  --color-border-default: var(--color-gray-200);
+  --color-border-muted: var(--color-gray-100);
+  --color-border-strong: var(--color-gray-300);
+
+  --color-primary-subtle: var(--color-emerald-100);
+
+  --color-hover: var(--color-gray-100);
+  --color-active: var(--color-gray-200);
+}
+
+/* 사용자가 명시적으로 다크 테마를 선택한 경우 */
 [data-theme='dark'] {
-  /* ============================================================================
-     7-LAYER DEPTH SYSTEM - DARK MODE
-     ============================================================================
-     Dark에서는 색상 차이를 Light보다 크게 → 더 명확한 계층 구분
-  ============================================================================ */
+  --color-surface-base: var(--color-gray-950);
+  --color-surface-sunken: var(--color-gray-900);
+  --color-surface: var(--color-gray-900);
+  --color-surface-raised: var(--color-gray-800);
+  --color-surface-elevated: var(--color-gray-800);
+  --color-surface-floating: var(--color-gray-700);
+  --color-surface-overlay: var(--color-gray-700);
 
-  /* Layer 0 - Background */
-  --layer-0: 10 10 10; /* #0a0a0a - 가장 어두운 배경 */
+  --color-text: var(--color-gray-50);
+  --color-text-muted: var(--color-gray-400);
+  --color-text-subtle: var(--color-gray-500);
+  --color-text-inverse: var(--color-gray-900);
 
-  /* Layer 1 - Sunken */
-  --layer-1: 18 18 18; /* #121212 - 함몰된 영역 */
+  --color-border-default: var(--color-gray-700);
+  --color-border-muted: var(--color-gray-800);
+  --color-border-strong: var(--color-gray-600);
 
-  /* Layer 2 - Base Surface */
-  --layer-2: 26 26 26; /* #1a1a1a - 사이드바 기본 */
+  --color-primary-subtle: var(--color-emerald-900);
 
-  /* Layer 3 - Primary Surface */
-  --layer-3: 34 34 34; /* #222222 - 에디터 */
-
-  /* Layer 4 - Elevated */
-  --layer-4: 42 42 42; /* #2a2a2a - 툴바 */
-
-  /* Layer 5 - Floating */
-  --layer-5: 50 50 50; /* #323232 - 드롭다운 */
-
-  /* Layer 6 - Overlay */
-  --layer-6: 58 58 58; /* #3a3a3a - 모달 */
-
-  /* Layer Tone Variations - Dark Mode */
-  --layer-2-warm: 24 24 24; /* #181818 */
-  --layer-2-cool: 26 26 26; /* #1a1a1a */
-  --layer-2-neutral: 25 25 25; /* #191919 */
-
-  --layer-3-warm: 32 32 32; /* #202020 */
-  --layer-3-cool: 34 34 34; /* #222222 */
-  --layer-3-neutral: 33 33 33; /* #212121 */
-
-  /* Text Colors - Dark Mode */
-  --text-primary: 250 250 250; /* #fafafa */
-  --text-secondary: 163 163 163; /* #a3a3a3 */
-  --text-tertiary: 115 115 115; /* #737373 */
-  --text-inverse: 23 23 23; /* #171717 */
-
-  /* Border - Dark Mode */
-  --border: 64 64 64; /* #404040 */
-  --border-subtle: 38 38 38; /* #262626 */
-
-  /* Accent Subtle - Dark Mode */
-  --accent-subtle: 6 78 59; /* #064e3b */
-
-  /* Secondary Accent - Dark Mode */
-  --accent-secondary-subtle: 124 45 18; /* #7c2d12 */
+  --color-hover: var(--color-gray-800);
+  --color-active: var(--color-gray-700);
 }
 
 /* ============================================================================
-   COLOR SCHEMES
+   COLOR SCHEME VARIANTS
    ============================================================================ */
 
-/* Blue Scheme */
 [data-color-scheme='blue'] {
-  --accent: 59 130 246; /* #3b82f6 */
-  --accent-hover: 37 99 235; /* #2563eb */
-  --accent-active: 29 78 216; /* #1d4ed8 */
-  --accent-subtle: 219 234 254; /* #dbeafe */
+  --color-primary: var(--color-blue-600);
+  --color-primary-hover: var(--color-blue-700);
+  --color-primary-subtle: var(--color-blue-100);
 }
 
 [data-theme='dark'][data-color-scheme='blue'] {
-  --accent-subtle: 30 58 138; /* #1e3a8a */
+  --color-primary-subtle: var(--color-blue-900);
 }
 
-/* Purple Scheme */
 [data-color-scheme='purple'] {
-  --accent: 168 85 247; /* #a855f7 */
-  --accent-hover: 147 51 234; /* #9333ea */
-  --accent-active: 126 34 206; /* #7e22ce */
-  --accent-subtle: 243 232 255; /* #f3e8ff */
+  --color-primary: var(--color-purple-600);
+  --color-primary-hover: var(--color-purple-700);
+  --color-primary-subtle: var(--color-purple-100);
 }
 
 [data-theme='dark'][data-color-scheme='purple'] {
-  --accent-subtle: 88 28 135; /* #581c87 */
+  --color-primary-subtle: var(--color-purple-900);
 }
 
-/* Red Scheme */
 [data-color-scheme='red'] {
-  --accent: 239 68 68; /* #ef4444 */
-  --accent-hover: 220 38 38; /* #dc2626 */
-  --accent-active: 185 28 28; /* #b91c1c */
-  --accent-subtle: 254 226 226; /* #fee2e2 */
+  --color-primary: var(--color-red-600);
+  --color-primary-hover: var(--color-red-700);
+  --color-primary-subtle: var(--color-red-100);
 }
 
 [data-theme='dark'][data-color-scheme='red'] {
-  --accent-subtle: 127 29 29; /* #7f1d1d */
+  --color-primary-subtle: var(--color-red-900);
 }
 
 /* ============================================================================
-   DENSITY MODES
+   DENSITY MODES (IDDL Density)
    ============================================================================ */
 
-/* Compact Mode */
 [data-density='compact'] {
-  --spacing-unit: 0.75;
+  --density: 0.75;
 }
 
-/* Comfortable Mode */
 [data-density='comfortable'] {
-  --spacing-unit: 1.25;
+  --density: 1.25;
 }
 
-/* Normal Mode (default) */
-[data-density='normal'] {
-  --spacing-unit: 1;
+[data-density='standard'] {
+  --density: 1;
 }
 
 /* ============================================================================
-   UTILITY CLASSES USING VARIABLES
+   GLOBAL STYLES
    ============================================================================ */
 
-/* Layer Background Classes - 명시적 정의 */
-.bg-layer-0 {
-  background-color: rgb(var(--layer-0));
+* {
+  border-color: var(--color-border-default);
 }
 
-.bg-layer-1 {
-  background-color: rgb(var(--layer-1));
+body {
+  background-color: var(--color-surface-base);
+  color: var(--color-text);
 }
 
-.bg-layer-2 {
-  background-color: rgb(var(--layer-2));
-}
-
-.bg-layer-3 {
-  background-color: rgb(var(--layer-3));
-}
-
-.bg-layer-4 {
-  background-color: rgb(var(--layer-4));
-}
-
-.bg-layer-5 {
-  background-color: rgb(var(--layer-5));
-}
-
-.bg-layer-6 {
-  background-color: rgb(var(--layer-6));
-}
-
-/* Accent Indicator - minimal approach with background only */
-/* 원칙: 오직 background-color만 사용 */
-.accent-indicator {
-  background-color: rgb(var(--accent) / 0.15);
-}
-
-/* Text Color Classes */
-.text-accent {
-  color: rgb(var(--accent));
-}
-
-.text-accent-secondary {
-  color: rgb(var(--accent-secondary));
-}
-
-.text-success {
-  color: rgb(var(--success));
-}
-
-.text-warning {
-  color: rgb(var(--warning));
-}
-
-.text-error {
-  color: rgb(var(--error));
-}
-
-.text-info {
-  color: rgb(var(--info));
-}
-
-.text-text {
-  color: rgb(var(--text-primary));
-}
-
-.text-text-secondary {
-  color: rgb(var(--text-secondary));
-}
-
-.text-text-tertiary {
-  color: rgb(var(--text-tertiary));
-}
-
-/* Background Color Classes */
-.bg-accent {
-  background-color: rgb(var(--accent));
-}
-
-.bg-accent-secondary {
-  background-color: rgb(var(--accent-secondary));
-}
-
-.bg-success {
-  background-color: rgb(var(--success));
-}
-
-.bg-warning {
-  background-color: rgb(var(--warning));
-}
-
-.bg-error {
-  background-color: rgb(var(--error));
-}
-
-.bg-info {
-  background-color: rgb(var(--info));
-}
-
-/* Border Color Classes */
-.border {
-  border-width: 1px;
-  border-style: solid;
-}
-
-.border-border {
-  border-color: rgb(var(--border));
-}
-
-.border-accent {
-  border-color: rgb(var(--accent));
-}
-
-.border-success {
-  border-color: rgb(var(--success));
-}
-
-.border-warning {
-  border-color: rgb(var(--warning));
-}
-
-.border-error {
-  border-color: rgb(var(--error));
-}
-
-/* ============================================================================
-   SURFACE DIFFERENTIATION - Same Layer, Adjacent Surfaces
-   ============================================================================ */
-
-/* Layer 2 Tone Classes */
-.bg-layer-2-warm {
-  background-color: rgb(var(--layer-2-warm));
-}
-
-.bg-layer-2-cool {
-  background-color: rgb(var(--layer-2-cool));
-}
-
-.bg-layer-2-neutral {
-  background-color: rgb(var(--layer-2-neutral));
-}
-
-/* Boundary Shadows - 확실하지만 은은한 경계 표시 */
-/* 원칙: 선이 아닌 그림자, 더 넓은 blur로 부드럽게 */
-.boundary-shadow-left {
-  box-shadow: inset 2px 0 4px -2px rgba(0, 0, 0, 0.06);
-}
-
-.boundary-shadow-right {
-  box-shadow: inset -2px 0 4px -2px rgba(0, 0, 0, 0.06);
-}
-
-.boundary-shadow-top {
-  box-shadow: inset 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-}
-
-.boundary-shadow-bottom {
-  box-shadow: inset 0 -2px 4px -2px rgba(0, 0, 0, 0.06);
-}
-
-/* Dark mode boundary shadows - 더 명확하게 */
-[data-theme='dark'] .boundary-shadow-left {
-  box-shadow: inset 2px 0 6px -2px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme='dark'] .boundary-shadow-right {
-  box-shadow: inset -2px 0 6px -2px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme='dark'] .boundary-shadow-top {
-  box-shadow: inset 0 2px 6px -2px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme='dark'] .boundary-shadow-bottom {
-  box-shadow: inset 0 -2px 6px -2px rgba(0, 0, 0, 0.3);
-}
-
-
-/* ============================================================================
-   GLOBAL BASE STYLES - Minimal Tailwind 원칙
-   ============================================================================
-   컨셉: 모든 요소에 기본 스타일을 적용하여 tailwind 클래스 최소화
-   원칙: border-radius를 모든 요소에 기본 적용
-============================================================================ */
-
-/* 모든 버튼에 기본 스타일 */
 button {
-  border-radius: var(--radius-md);
+  border-radius: var(--button-radius);
   cursor: pointer;
 }
 
-/* Layer별 Hover 색상 규칙 */
-/* Layer 0 (배경): Layer 1로 */
-.layer-0-interactive:hover {
-  background-color: rgb(var(--layer-1));
-}
-
-/* Layer 1 (함몰): Layer 2로 */
-.layer-1-interactive:hover {
-  background-color: rgb(var(--layer-2));
-}
-
-/* Layer 2 (기본 표면): Layer 3으로 */
-.layer-2-interactive:hover {
-  background-color: rgb(var(--layer-3));
-}
-
-/* Layer 3 (주요 표면): Layer 2로 (어두워짐) */
-.layer-3-interactive:hover {
-  background-color: rgb(var(--layer-2));
-}
-
-/* Layer 4 (부각): Layer 3으로 (어두워짐) */
-.layer-4-interactive:hover {
-  background-color: rgb(var(--layer-3));
-}
-
-/* Layer 5 (떠있음): Layer 4로 (어두워짐) */
-.layer-5-interactive:hover {
-  background-color: rgb(var(--layer-4));
-}
-
-/* Layer 6 (최상위): Layer 5로 (어두워짐) */
-.layer-6-interactive:hover {
-  background-color: rgb(var(--layer-5));
-}
-
-/* 모든 input, textarea에 기본 스타일 */
 input,
 textarea,
 select {
-  border-radius: var(--radius-md);
-  background-color: rgb(var(--layer-1));
-  color: rgb(var(--text-primary));
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  border-radius: var(--input-radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  ring: 1px solid rgb(var(--accent));
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 10%, transparent);
 }
 
-/* 모든 패널/카드형 요소에 기본 radius */
-[class*='panel'],
-[class*='sidebar'],
-[class*='toolbar'],
-[class*='dropdown'],
-[class*='menu'],
-[class*='card'] {
-  border-radius: var(--radius-lg);
-}
-
-/* 작은 요소들 (아이콘, 뱃지) */
-[class*='icon'],
-[class*='badge'],
-[class*='chip'],
-[class*='tag'] {
-  border-radius: var(--radius-sm);
-}
-
-/* 이미지, 미디어 */
 img,
 video {
   border-radius: var(--radius-lg);
 }
 
-/* 코드 블록 */
 pre,
 code {
   border-radius: var(--radius-md);
 }
 
-/* 구분선 */
 hr {
-  border-color: rgb(var(--border));
-  opacity: 1;
+  border-color: var(--color-border-default);
 }
 
-/* 링크 */
 a {
-  color: rgb(var(--accent));
+  color: var(--color-primary);
   transition: color 0.15s ease;
 }
 
 a:hover {
-  color: rgb(var(--accent-hover));
+  color: var(--color-primary-hover);
 }
 
-/* 스크롤바 스타일링 */
+::selection {
+  background-color: var(--color-primary-subtle);
+  color: var(--color-text);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(var(--layer-0));
+  background: var(--color-surface-base);
   border-radius: var(--radius-sm);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--border));
+  background: var(--color-border-default);
   border-radius: var(--radius-sm);
   transition: background-color 0.15s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--text-tertiary));
+  background: var(--color-text-subtle);
 }
-
-/* Selection */
-::selection {
-  background-color: rgb(var(--accent-subtle));
-  color: rgb(var(--text-primary));
-}
-

@@ -1,5 +1,5 @@
-import { Layer } from '@/components/ui/Layer';
-import { IconButton } from '@/components/ui/IconButton';
+import { Section } from '@/components/dsl/Section';
+import { IconButton } from '@/components/ui';
 import {
   X as XIcon,
   ChevronUp as ChevronUpIcon,
@@ -40,13 +40,14 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
   if (!isOpen) return null;
 
   return (
-    <Layer
-      level={1}
-      className="flex flex-col overflow-hidden"
-      style={{ height: `${height}px` }}
-    >
+    <div style={{ height: `${height}px` }} className="flex flex-col overflow-hidden">
+      <Section
+        role="Container"
+        prominence="Tertiary"
+        className="flex flex-col flex-1 overflow-hidden"
+      >
       {/* Tab Header */}
-      <div className="flex items-center justify-between px-2 py-1 bg-layer-2">
+      <div className="flex items-center justify-between px-2 py-1 bg-surface">
         <div className="flex items-center gap-1">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -55,11 +56,11 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'flex items-center gap-2 px-3 py-1 text-xs rounded-md layer-1-interactive',
+                  'flex items-center gap-2 px-3 py-1 text-xs rounded-md hover:bg-surface-sunken/50 active:bg-surface-sunken transition-colors',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1',
                   activeTab === tab.id
-                    ? 'bg-layer-2 text-text-primary'
-                    : 'text-text-secondary'
+                    ? 'bg-surface text'
+                    : 'text-muted'
                 )}
               >
                 <Icon size={14} />
@@ -70,7 +71,7 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
                       'px-1.5 py-0.5 text-xs rounded-full',
                       activeTab === tab.id
                         ? 'bg-accent text-white'
-                        : 'bg-layer-1 text-text-tertiary'
+                        : 'bg-surface-sunken text-subtle'
                     )}
                   >
                     {tab.count}
@@ -83,10 +84,10 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
 
         {/* Actions */}
         <div className="flex items-center gap-1">
-          <IconButton size="sm" layer={1} title="Maximize Panel">
+          <IconButton size="sm" title="Maximize Panel">
             <ChevronUpIcon size={16} />
           </IconButton>
-          <IconButton size="sm" layer={1} onClick={onClose} title="Close Panel">
+          <IconButton size="sm" onClick={onClose} title="Close Panel">
             <XIcon size={16} />
           </IconButton>
         </div>
@@ -99,7 +100,8 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
         {activeTab === 'output' && <OutputContent />}
         {activeTab === 'debug' && <DebugContent />}
       </div>
-    </Layer>
+    </Section>
+    </div>
   );
 };
 
@@ -107,16 +109,16 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
 const TerminalContent = () => {
   return (
     <div className="font-mono text-sm">
-      <div className="text-text-secondary mb-2">
+      <div className="text-muted mb-2">
         <span className="text-accent">user@macbook</span>
-        <span className="text-text-tertiary"> ~ </span>
+        <span className="text-subtle"> ~ </span>
         <span>$</span>
       </div>
       <div className="space-y-1">
         <div>
           <span className="text-accent">$</span> pnpm dev
         </div>
-        <div className="text-text-secondary">
+        <div className="text-muted">
           <div>VITE v5.4.21 ready in 390 ms</div>
           <div>➜ Local: http://localhost:5175/</div>
         </div>
@@ -156,7 +158,7 @@ const ProblemsContent = () => {
       {problems.map((problem, idx) => (
         <button
           key={idx}
-          className="w-full flex items-start gap-3 px-2 py-1.5 rounded layer-1-interactive text-left text-sm"
+          className="w-full flex items-start gap-3 px-2 py-1.5 rounded hover:bg-surface-sunken/50 active:bg-surface-sunken transition-colors text-left text-sm"
         >
           <AlertCircleIcon
             size={16}
@@ -166,8 +168,8 @@ const ProblemsContent = () => {
             )}
           />
           <div className="flex-1 min-w-0">
-            <div className="text-text-primary">{problem.message}</div>
-            <div className="text-xs text-text-tertiary mt-0.5">
+            <div className="text">{problem.message}</div>
+            <div className="text-xs text-subtle mt-0.5">
               {problem.file}:{problem.line}:{problem.col}
             </div>
           </div>
@@ -181,10 +183,10 @@ const ProblemsContent = () => {
 const OutputContent = () => {
   return (
     <div className="font-mono text-xs space-y-0.5">
-      <div className="text-text-tertiary">[12:34:56] Starting compilation...</div>
-      <div className="text-text-secondary">[12:34:57] Compiling TypeScript...</div>
+      <div className="text-subtle">[12:34:56] Starting compilation...</div>
+      <div className="text-muted">[12:34:57] Compiling TypeScript...</div>
       <div className="text-green-600">[12:34:58] Compilation successful</div>
-      <div className="text-text-secondary">[12:34:58] Watching for file changes...</div>
+      <div className="text-muted">[12:34:58] Watching for file changes...</div>
     </div>
   );
 };
@@ -193,8 +195,8 @@ const OutputContent = () => {
 const DebugContent = () => {
   return (
     <div className="font-mono text-sm space-y-1">
-      <div className="text-text-tertiary">Debug console is empty</div>
-      <div className="text-text-tertiary text-xs">Start debugging to see output here</div>
+      <div className="text-subtle">Debug console is empty</div>
+      <div className="text-subtle text-xs">Start debugging to see output here</div>
     </div>
   );
 };

@@ -11,6 +11,8 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useState, useRef, useMemo } from 'react';
 import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
+import { useNavigableCursor } from '@/lib/keyboard';
+import { SearchInput, Kbd } from '@/components/ui';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -46,6 +48,15 @@ export function DataTable<TData, TValue>({
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const { rows } = table.getRowModel();
 
+  // 키보드 네비게이션 (행 선택)
+  const { cursorIndex, getItemProps } = useNavigableCursor({
+    type: 'list',
+    items: rows,
+    onSelect: (row) => {
+      console.log('Selected row:', row);
+    },
+  });
+
   // Calculate optimal width for each column based on content
   const columnWidths = useMemo(() => {
     const widths: Record<string, number> = {};
@@ -80,7 +91,7 @@ export function DataTable<TData, TValue>({
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => tableContainerRef.current,
-    estimateSize: () => (density === 'compact' ? 28 : 40),
+    estimateSize: () => (density === 'compact' ? 24 : 36),
     overscan: 10,
   });
 
@@ -89,13 +100,13 @@ export function DataTable<TData, TValue>({
   return (
     <div className="flex flex-col h-full">
       {/* Search Input */}
-      <div className="px-4 py-2">
-        <input
-          type="text"
+      <div className="px-3 py-2">
+        <SearchInput
           placeholder="Search all columns..."
           value={globalFilter ?? ''}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          className="w-full px-3 py-1.5 text-sm bg-layer-3 border-0 rounded focus:outline-none focus:ring-1 focus:ring-accent text-text-primary placeholder:text-text-tertiary"
+          onClear={() => setGlobalFilter('')}
+          variant="ghost"
         />
       </div>
 
@@ -107,7 +118,7 @@ export function DataTable<TData, TValue>({
       >
         <div className="text-sm" style={{ minWidth: 'max-content' }}>
           {/* Header */}
-          <div className="sticky top-0 z-10 bg-layer-2">
+          <div className="sticky top-0 z-10 bg-surface">
             {table.getHeaderGroups().map((headerGroup) => (
               <div key={headerGroup.id} className="flex">
                 {headerGroup.headers.map((header) => {
@@ -117,8 +128,8 @@ export function DataTable<TData, TValue>({
                   return (
                     <div
                       key={header.id}
-                      className={`text-left font-medium text-text-tertiary whitespace-nowrap ${
-                        density === 'compact' ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'
+                      className={`text-left font-medium text-muted whitespace-nowrap ${
+                        density === 'compact' ? 'px-2 py-1 text-xs' : 'px-3 py-1.5 text-sm'
                       }`}
                       style={{ width: `${width}px`, minWidth: `${width}px` }}
                     >
@@ -126,7 +137,7 @@ export function DataTable<TData, TValue>({
                       <div
                         className={
                           header.column.getCanSort()
-                            ? 'flex items-center gap-1.5 cursor-pointer select-none hover:text-text-secondary'
+                            ? 'flex items-center gap-1 cursor-pointer select-none hover:text-text transition-colors'
                             : ''
                         }
                         onClick={header.column.getToggleSortingHandler()}
@@ -157,7 +168,7 @@ export function DataTable<TData, TValue>({
 
           {/* Virtual Rows */}
           {rows.length === 0 ? (
-            <div className="px-4 py-8 text-center text-text-tertiary">
+            <div className="px-4 py-8 text-center text-subtle">
               No results found.
             </div>
           ) : (
@@ -170,11 +181,17 @@ export function DataTable<TData, TValue>({
               {virtualItems.map((virtualRow) => {
                 const row = rows[virtualRow.index];
                 const isEven = virtualRow.index % 2 === 0;
+                const isCursor = virtualRow.index === cursorIndex;
+                const itemProps = getItemProps(virtualRow.index);
+
                 return (
                   <div
                     key={row.id}
-                    className={`flex hover:bg-layer-3 absolute ${
-                      isEven ? 'bg-layer-2' : 'bg-layer-1'
+                    {...itemProps}
+                    className={`flex hover:bg-surface-raised absolute transition-colors ${
+                      isCursor
+                        ? 'bg-accent/10 ring-1 ring-accent/30'
+                        : isEven ? 'bg-surface' : 'bg-surface-sunken'
                     }`}
                     style={{
                       height: `${virtualRow.size}px`,
@@ -189,8 +206,8 @@ export function DataTable<TData, TValue>({
                       return (
                         <div
                           key={cell.id}
-                          className={`text-text-primary whitespace-nowrap overflow-hidden text-ellipsis flex items-center ${
-                            density === 'compact' ? 'px-3 py-1 text-xs' : 'px-4 py-2 text-sm'
+                          className={`text-text whitespace-nowrap overflow-hidden text-ellipsis flex items-center ${
+                            density === 'compact' ? 'px-2 py-0.5 text-xs' : 'px-3 py-1.5 text-sm'
                           }`}
                           style={{ width: `${width}px`, minWidth: `${width}px` }}
                         >
@@ -210,8 +227,8 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Status Bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-layer-1">
-        <div className="flex items-center gap-2 text-xs text-text-tertiary">
+      <div className="flex items-center justify-between px-3 py-1.5 bg-surface-sunken border-t border-default">
+        <div className="flex items-center gap-2 text-xs text-subtle">
           <span>
             Showing {virtualItems.length} of {rows.length} rows
           </span>
@@ -223,6 +240,16 @@ export function DataTable<TData, TValue>({
               </span>
             </>
           )}
+        </div>
+
+        {/* Keyboard Navigation Hint */}
+        <div className="flex items-center gap-2 text-xs text-subtle">
+          <span>Navigate:</span>
+          <Kbd size="sm">↑</Kbd>
+          <Kbd size="sm">↓</Kbd>
+          <span>•</span>
+          <span>Select:</span>
+          <Kbd size="sm">↵</Kbd>
         </div>
       </div>
     </div>

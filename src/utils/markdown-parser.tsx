@@ -79,7 +79,6 @@ export function renderMarkdownContent(content: string): React.ReactNode[] {
   const lines = content.split('\n');
   const elements: React.ReactNode[] = [];
   let currentList: string[] = [];
-  let inQuote = false;
 
   const flushList = () => {
     if (currentList.length > 0) {
@@ -102,7 +101,6 @@ export function renderMarkdownContent(content: string): React.ReactNode[] {
     // Empty line
     if (!trimmed) {
       flushList();
-      inQuote = false;
       return;
     }
 
@@ -118,7 +116,6 @@ export function renderMarkdownContent(content: string): React.ReactNode[] {
           {parseInlineMarkdown(quoteText)}
         </blockquote>
       );
-      inQuote = true;
       return;
     }
 

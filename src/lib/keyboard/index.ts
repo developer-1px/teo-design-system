@@ -11,6 +11,7 @@ export { KeyboardProvider, useKeyboardContext } from './KeyboardProvider';
 export { useShortcut, useGlobalShortcut, useModalShortcut } from './useShortcut';
 export { useFocusScope, useFocusNavigation } from './useFocusScope';
 export { useNavigableCursor } from './useNavigableCursor';
+export { useTreeNavigation, type TreeNode } from './useTreeNavigation';
 
 // Types
 export {

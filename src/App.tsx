@@ -1,52 +1,59 @@
-import { useEffect } from 'react';
-import { Layer } from '@/components/ui/Layer';
+/**
+ * App.tsx - IDDL 기반 루트 애플리케이션 (Wouter 라우팅)
+ *
+ * IDDL Structure:
+ * - Router (Wouter): Hash-based routing
+ *   - AppProvider: 앱 타입별 테마 관리
+ *     - Route: 각 앱별 라우트 (각 앱이 자체 Page 관리)
+ *     - FloatingBar: 전역 앱 선택 바
+ *     - CommandPalette: 전역 명령 팔레트
+ *     - KeyboardDebugPanel: 개발 도구
+ */
+
+import { Router, Route, Redirect } from 'wouter';
+import { useHashLocation } from 'wouter/use-hash-location';
 import { FloatingBar } from '@/components/ui/FloatingBar';
-import { IDEPage } from '@/components/pages/IDEPage';
-import { PPTPage } from '@/components/pages/PPTPage';
-import { JSONPage } from '@/components/pages/JSONPage';
-import { DesignPage } from '@/components/pages/DesignPage';
-import { DSLDemoPage } from '@/components/pages/DSLDemoPage';
-import { initializeTheme } from '@/lib/theme';
-import { useApp } from '@/lib/app-context';
+import { AppIDE } from '@/apps/IDE/AppIDE';
+import { AppPPT } from '@/apps/PPT/AppPPT';
+import { AppJSON } from '@/apps/JSON/AppJSON';
+import { AppEMOJI } from '@/apps/EMOJI/AppEMOJI';
+import { AppDOCS } from '@/apps/DOCS/AppDOCS';
+import { AppDSLBuilder } from '@/apps/DSLBuilder/AppDSLBuilder';
+import { AppShowcase } from '@/apps/showcase/AppShowcase';
+import { AppTokens } from '@/apps/tokens/AppTokens';
+import { CommandPalette } from '@/components/modal/CommandPalette';
+import { KeyboardDebugPanel } from '@/components/dev/KeyboardDebugPanel';
+import { AppProvider } from '@/lib/app-context';
 
 function App() {
-  const { currentApp } = useApp();
-
-  useEffect(() => {
-    initializeTheme();
-  }, []);
-
-  const renderPage = () => {
-    switch (currentApp) {
-      case 'ide':
-        return <IDEPage />;
-      case 'ppt':
-        return <PPTPage />;
-      case 'notion':
-        return <JSONPage />;
-      case 'figma':
-        return <DesignPage />;
-      case 'linear':
-        return <JSONPage />;
-      case 'calendar':
-        return <IDEPage />;
-      case 'dsl':
-        return <DSLDemoPage />;
-      default:
-        return <IDEPage />;
-    }
-  };
+  // Note: Theme initialization moved to main.tsx (before React renders)
 
   return (
-    <Layer level={0} className="flex h-screen w-screen flex-col overflow-hidden">
-      {/* Main Content */}
-      <div className="flex-1 overflow-hidden">
-        {renderPage()}
-      </div>
+    <Router hook={useHashLocation}>
+      <AppProvider>
+        {/* Wouter Routes - 각 앱이 자체 Page/Section 관리 */}
+        <Route path="/ide" component={AppIDE} />
+        <Route path="/ppt" component={AppPPT} />
+        <Route path="/notion" component={AppJSON} />
+        <Route path="/linear" component={AppJSON} />
+        <Route path="/calendar" component={AppIDE} />
+        <Route path="/emoji" component={AppEMOJI} />
+        <Route path="/design" component={AppDOCS} />
+        <Route path="/builder" component={AppDSLBuilder} />
+        <Route path="/showcase" component={AppShowcase} />
+        <Route path="/tokens" component={AppTokens} />
 
-      {/* FloatingBar */}
-      <FloatingBar />
-    </Layer>
+        {/* Default redirect to IDE */}
+        <Route path="/">
+          <Redirect to="/ide" />
+        </Route>
+
+        {/* 전역 UI 요소 (모든 앱에서 공통) */}
+        <FloatingBar />
+        <CommandPalette />
+        <KeyboardDebugPanel />
+      </AppProvider>
+    </Router>
   );
 }
 

@@ -1,11 +1,12 @@
 /**
- * App Context - 앱 타입 전환 및 관리
+ * App Context - 앱 타입 전환 및 관리 (Wouter 기반)
  */
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Code, Presentation, FileText, Palette, Target, Calendar, Layers } from 'lucide-react';
+import { createContext, useContext, useEffect, ReactNode } from 'react';
+import { useLocation } from 'wouter';
+import { Code, Presentation, FileText, Target, Calendar, Smile, BookOpen, Blocks, Beaker, Palette } from 'lucide-react';
 
-export type AppType = 'ide' | 'ppt' | 'notion' | 'figma' | 'linear' | 'calendar' | 'dsl';
+export type AppType = 'ide' | 'ppt' | 'notion' | 'linear' | 'calendar' | 'emoji' | 'design' | 'builder' | 'showcase' | 'tokens';
 
 import type { LucideIcon } from 'lucide-react';
 
@@ -43,14 +44,6 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     accentColor: '#000000',
     colorScheme: 'purple',
   },
-  figma: {
-    type: 'figma',
-    name: 'Design',
-    icon: Palette,
-    description: 'Design & Prototyping',
-    accentColor: '#a855f7',
-    colorScheme: 'purple',
-  },
   linear: {
     type: 'linear',
     name: 'Linear',
@@ -67,50 +60,72 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     accentColor: '#ef4444',
     colorScheme: 'red',
   },
-  dsl: {
-    type: 'dsl',
-    name: 'DSL',
-    icon: Layers,
-    description: 'TSX Design System',
+  emoji: {
+    type: 'emoji',
+    name: 'Emoji',
+    icon: Smile,
+    description: 'Pixel Art Emoji Designer',
+    accentColor: '#f59e0b',
+    colorScheme: 'orange',
+  },
+  design: {
+    type: 'design',
+    name: 'Design System',
+    icon: BookOpen,
+    description: 'Docs, Components, DSL & Builder',
     accentColor: '#059669',
     colorScheme: 'emerald',
+  },
+  builder: {
+    type: 'builder',
+    name: 'DSL Builder',
+    icon: Blocks,
+    description: 'Visual DSL Layout Builder',
+    accentColor: '#8b5cf6',
+    colorScheme: 'purple',
+  },
+  showcase: {
+    type: 'showcase',
+    name: 'Showcase',
+    icon: Beaker,
+    description: 'Component Showcase & Testing',
+    accentColor: '#ec4899',
+    colorScheme: 'pink',
+  },
+  tokens: {
+    type: 'tokens',
+    name: 'Tokens',
+    icon: Palette,
+    description: 'Design Tokens & Theme System',
+    accentColor: '#8b5cf6',
+    colorScheme: 'purple',
   },
 };
 
 interface AppContextType {
   currentApp: AppType;
   config: AppConfig;
-  setApp: (app: AppType) => void;
+  // setApp removed - use setLocation from wouter instead
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [currentApp, setCurrentApp] = useState<AppType>('ide');
+  // Note: This must be used inside Router context to access useLocation
+  const [location] = useLocation();
 
-  const config = APP_CONFIGS[currentApp];
+  // Extract app type from URL path (예: "/ide" → "ide", "/" → "ide")
+  const currentApp = (location.replace(/^\//, '') || 'ide') as AppType;
+  const config = APP_CONFIGS[currentApp] || APP_CONFIGS.ide;
 
-  const setApp = (app: AppType) => {
-    setCurrentApp(app);
-
-    // Update document attributes for theming
-    document.documentElement.setAttribute('data-app-type', app);
-    document.documentElement.setAttribute('data-color-scheme', config.colorScheme);
-
-    // Save to localStorage
-    localStorage.setItem('app-type', app);
-  };
-
-  // Load from localStorage on mount
+  // Update document attributes when route changes
   useEffect(() => {
-    const saved = localStorage.getItem('app-type') as AppType;
-    if (saved && APP_CONFIGS[saved]) {
-      setApp(saved);
-    }
-  }, []);
+    document.documentElement.setAttribute('data-app-type', currentApp);
+    document.documentElement.setAttribute('data-color-scheme', config.colorScheme);
+  }, [currentApp, config.colorScheme]);
 
   return (
-    <AppContext.Provider value={{ currentApp, config, setApp }}>
+    <AppContext.Provider value={{ currentApp, config }}>
       {children}
     </AppContext.Provider>
   );

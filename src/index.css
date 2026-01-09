@@ -9,8 +9,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: rgb(var(--layer-0));
-  color: rgb(var(--text-primary));
+  /* background-color and color are defined in themes.css with TailwindCSS 4 tokens */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
     'Helvetica Neue', sans-serif;

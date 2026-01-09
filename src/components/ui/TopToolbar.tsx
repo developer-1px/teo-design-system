@@ -7,9 +7,9 @@
  * @see https://www.jetbrains.com/help/idea/new-ui.html
  */
 
-import { Layer } from '@/components/ui/Layer';
-import { IconButton } from '@/components/ui/IconButton';
-import { Button } from '@/components/ui/Button';
+import { Section } from '@/components/dsl/Section';
+import { IconButton } from '@/components/ui';
+import { Button } from '@/components/ui';
 import { ThemeToggleButton } from '@/components/ui/ThemeSwitcher';
 import {
   Menu as MenuIcon,
@@ -48,12 +48,12 @@ export const TopToolbar = ({
   const [showRunMenu, setShowRunMenu] = useState(false);
 
   return (
-    <Layer level={4} className="flex h-10 items-center px-3 gap-2">
+    <Section role="Header" prominence="Hero" className="flex h-10 items-center px-3 gap-2">
       {/* 1. Main Menu (Hamburger) */}
       <div className="relative">
         <IconButton
           size="sm"
-          layer={4}
+         
           onClick={() => setShowMainMenu(!showMainMenu)}
           onBlur={() => setTimeout(() => setShowMainMenu(false), 200)}
           title="Main Menu (Alt+\)"
@@ -62,13 +62,14 @@ export const TopToolbar = ({
         </IconButton>
 
         {showMainMenu && (
-          <Layer
-            level={5}
-            rounded="lg"
+          <Section
+            role="Container"
+            prominence="Hero"
+           
             className="absolute top-full left-0 mt-1 w-56 py-1 z-50"
           >
             <MainMenuContent />
-          </Layer>
+          </Section>
         )}
       </div>
 
@@ -87,13 +88,14 @@ export const TopToolbar = ({
         </Button>
 
         {showProjectMenu && (
-          <Layer
-            level={5}
-            rounded="lg"
+          <Section
+            role="Container"
+            prominence="Hero"
+           
             className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
           >
             <ProjectMenuContent />
-          </Layer>
+          </Section>
         )}
       </div>
 
@@ -115,13 +117,14 @@ export const TopToolbar = ({
         </Button>
 
         {showVcsMenu && (
-          <Layer
-            level={5}
-            rounded="lg"
+          <Section
+            role="Container"
+            prominence="Hero"
+           
             className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
           >
             <VcsMenuContent />
-          </Layer>
+          </Section>
         )}
       </div>
 
@@ -140,13 +143,14 @@ export const TopToolbar = ({
         </Button>
 
         {showRunMenu && (
-          <Layer
-            level={5}
-            rounded="lg"
+          <Section
+            role="Container"
+            prominence="Hero"
+           
             className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
           >
             <RunMenuContent />
-          </Layer>
+          </Section>
         )}
       </div>
 
@@ -159,7 +163,7 @@ export const TopToolbar = ({
         {onToggleRightSidebar && (
           <IconButton
             size="sm"
-            layer={4}
+           
             active={showRightSidebar}
             onClick={onToggleRightSidebar}
             title="Toggle Right Sidebar"
@@ -177,14 +181,14 @@ export const TopToolbar = ({
         {/* Settings */}
         <IconButton
           size="sm"
-          layer={4}
+         
           title="Settings (⌘,)"
           onClick={onOpenSettings}
         >
           <SettingsIcon size={16} />
         </IconButton>
       </div>
-    </Layer>
+    </Section>
   );
 };
 
@@ -206,13 +210,13 @@ const MainMenuContent = () => {
     <div className="py-1">
       {menuItems.map((menu) => (
         <div key={menu.label} className="px-2 py-1">
-          <div className="text-xs font-semibold text-text-tertiary px-2 py-1">
+          <div className="text-xs font-semibold text-subtle px-2 py-1">
             {menu.label}
           </div>
           {menu.items.map((item) => (
             <button
               key={item}
-              className="w-full text-left px-3 py-1.5 text-sm rounded-md layer-5-interactive"
+              className="w-full text-left px-3 py-1.5 text-sm rounded-md hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
             >
               {item}
             </button>
@@ -233,21 +237,21 @@ const ProjectMenuContent = () => {
 
   return (
     <div className="py-1">
-      <button className="w-full text-left px-3 py-2 text-sm font-medium layer-5-interactive">
+      <button className="w-full text-left px-3 py-2 text-sm font-medium hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         New Project...
       </button>
-      <button className="w-full text-left px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         Open...
       </button>
       <div className="h-px bg-border my-1" />
       <div className="px-2 py-1">
-        <div className="text-xs font-semibold text-text-tertiary px-2 py-1">
+        <div className="text-xs font-semibold text-subtle px-2 py-1">
           Recent Projects
         </div>
         {recentProjects.map((project) => (
           <button
             key={project}
-            className="w-full text-left px-3 py-1.5 text-sm rounded layer-5-interactive"
+            className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
           >
             {project}
           </button>
@@ -260,30 +264,30 @@ const ProjectMenuContent = () => {
 const VcsMenuContent = () => {
   return (
     <div className="py-1">
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         <DownloadIcon size={16} />
         <span>Update Project</span>
-        <span className="ml-auto text-xs text-text-tertiary">⌘T</span>
+        <span className="ml-auto text-xs text-subtle">⌘T</span>
       </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         <UploadIcon size={16} />
         <span>Commit...</span>
-        <span className="ml-auto text-xs text-text-tertiary">⌘K</span>
+        <span className="ml-auto text-xs text-subtle">⌘K</span>
       </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         <UploadIcon size={16} />
         <span>Push...</span>
-        <span className="ml-auto text-xs text-text-tertiary">⇧⌘K</span>
+        <span className="ml-auto text-xs text-subtle">⇧⌘K</span>
       </button>
       <div className="h-px bg-border my-1" />
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         <GitBranchIcon size={16} />
         <span>Branches...</span>
       </button>
-      <button className="w-full text-left px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         Fetch
       </button>
-      <button className="w-full text-left px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         Pull...
       </button>
     </div>
@@ -299,36 +303,36 @@ const RunMenuContent = () => {
 
   return (
     <div className="py-1">
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium layer-5-interactive">
+      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         <PlayIcon size={16} />
         <span>Run 'dev'</span>
-        <span className="ml-auto text-xs text-text-tertiary">⌃R</span>
+        <span className="ml-auto text-xs text-subtle">⌃R</span>
       </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         <span className="text-accent">▶</span>
         <span>Debug 'dev'</span>
-        <span className="ml-auto text-xs text-text-tertiary">⌃D</span>
+        <span className="ml-auto text-xs text-subtle">⌃D</span>
       </button>
       <div className="h-px bg-border my-1" />
       <div className="px-2 py-1">
-        <div className="text-xs font-semibold text-text-tertiary px-2 py-1">
+        <div className="text-xs font-semibold text-subtle px-2 py-1">
           Configurations
         </div>
         {configurations.map((config) => (
           <button
             key={config.name}
-            className="w-full text-left px-3 py-1.5 text-sm rounded layer-5-interactive"
+            className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
           >
             <div className="flex items-center gap-2">
               <PlayIcon size={14} />
               <span>{config.name}</span>
-              <span className="text-xs text-text-tertiary ml-auto">{config.type}</span>
+              <span className="text-xs text-subtle ml-auto">{config.type}</span>
             </div>
           </button>
         ))}
       </div>
       <div className="h-px bg-border my-1" />
-      <button className="w-full text-left px-3 py-2 text-sm layer-5-interactive">
+      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
         Edit Configurations...
       </button>
     </div>

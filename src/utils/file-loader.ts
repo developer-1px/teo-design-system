@@ -4,7 +4,7 @@ const srcModules = import.meta.glob('/src/**/*.{ts,tsx,js,jsx,json,css,html,md}'
   import: 'default',
 });
 
-const docsModules = import.meta.glob('/docs/**/*.{md,txt}', {
+const docsModules = import.meta.glob('/apps/docs/**/*.{md,mdx}', {
   query: '?raw',
   import: 'default',
 });
@@ -55,8 +55,8 @@ export function buildFileTree(paths: string[]): FileNode[] {
 
       // Create entry if it doesn't exist
       if (!currentLevel[part]) {
-        // Default open for specific folders: docs, src
-        const shouldDefaultOpen = !isFile && (part === 'docs' || part === 'src');
+        // Default open for specific folders: apps, src
+        const shouldDefaultOpen = !isFile && (part === 'apps' || part === 'src' || part === 'docs');
 
         currentLevel[part] = {
           node: {

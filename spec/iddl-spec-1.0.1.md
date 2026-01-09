@@ -222,6 +222,7 @@ Page (Root)
 | `constraints` | `Constraints` | | 유효성 검사 규칙 |
 | `dependsOn` | `string` | | 의존하는 다른 필드의 model |
 | `modeOverride` | `'view' \| 'edit'` | | 부모 mode 무시하고 강제 지정 |
+| `clearable` | `boolean` | | 입력 내용 지우기 버튼 표시 (v1.0.2, text 계열만) |
 
 **DataType Values:**
 
@@ -392,6 +393,7 @@ type ActionBehavior =
 | `Tooltip` | 마우스오버 힌트 | `top` |
 | `Sheet` | 모바일 하단 시트 | `bottom` |
 | `Lightbox` | 이미지/미디어 뷰어 | `center` |
+| `Floating` | 지속적 인터랙티브 오버레이 (v1.0.2) | `bottom` |
 
 **Placement Values:**
 `center`, `top`, `bottom`, `left`, `right`, `top-left`, `top-right`, `bottom-left`, `bottom-right`
@@ -649,7 +651,7 @@ export interface SectionNode extends BaseNode {
   density?: Density;
 }
 
-export type OverlayRole = 'Dialog' | 'Drawer' | 'Popover' | 'Toast' | 'Tooltip' | 'Sheet' | 'Lightbox';
+export type OverlayRole = 'Dialog' | 'Drawer' | 'Popover' | 'Toast' | 'Tooltip' | 'Sheet' | 'Lightbox' | 'Floating';
 export type Placement = 'center' | 'top' | 'bottom' | 'left' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
 export interface OverlayNode extends BaseNode {

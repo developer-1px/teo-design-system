@@ -11,7 +11,7 @@ import {
   Server,
   Presentation,
 } from 'lucide-react';
-import { IconButton } from '@/components/ui/IconButton';
+import { IconButton } from '@/components/ui';
 
 interface WorkspaceNavProps {
   onViewChange?: (view: string) => void;

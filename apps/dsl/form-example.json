@@ -1,0 +1,171 @@
+{
+  "id": "page-form-1",
+  "type": "page",
+  "children": [
+    {
+      "id": "region-main-1",
+      "type": "region",
+      "role": "main",
+      "className": "px-6 py-8 flex items-center justify-center min-h-screen",
+      "children": [
+        {
+          "id": "section-form-container-1",
+          "type": "section",
+          "prominence": 1,
+          "className": "max-w-md w-full",
+          "children": [
+            {
+              "id": "group-form-header-1",
+              "type": "group",
+              "purpose": "content",
+              "className": "text-center mb-8",
+              "children": [
+                {
+                  "id": "text-form-title",
+                  "type": "text",
+                  "role": "Title",
+                  "prominence": 1,
+                  "content": "Create Account"
+                },
+                {
+                  "id": "text-form-subtitle",
+                  "type": "text",
+                  "role": "Body",
+                  "prominence": 2,
+                  "content": "Fill in the form below to get started"
+                }
+              ]
+            },
+            {
+              "id": "group-form-fields-1",
+              "type": "group",
+              "purpose": "form",
+              "children": [
+                {
+                  "id": "group-field-name-1",
+                  "type": "group",
+                  "purpose": "form",
+                  "children": [
+                    {
+                      "id": "field-name",
+                      "type": "field",
+                      "label": "Full Name",
+                      "model": "user.name",
+                      "dataType": "text",
+                      "prominence": 1,
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "id": "group-field-email-1",
+                  "type": "group",
+                  "purpose": "form",
+                  "children": [
+                    {
+                      "id": "field-email",
+                      "type": "field",
+                      "label": "Email Address",
+                      "model": "user.email",
+                      "dataType": "email",
+                      "prominence": 1,
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "id": "group-field-password-1",
+                  "type": "group",
+                  "purpose": "form",
+                  "children": [
+                    {
+                      "id": "field-password",
+                      "type": "field",
+                      "label": "Password",
+                      "model": "user.password",
+                      "dataType": "password",
+                      "prominence": 1,
+                      "required": true,
+                      "placeholder": "At least 8 characters"
+                    }
+                  ]
+                },
+                {
+                  "id": "group-field-country-1",
+                  "type": "group",
+                  "purpose": "form",
+                  "children": [
+                    {
+                      "id": "field-country",
+                      "type": "field",
+                      "label": "Country",
+                      "model": "user.country",
+                      "dataType": "select",
+                      "prominence": 1,
+                      "placeholder": "Select your country"
+                    }
+                  ]
+                },
+                {
+                  "id": "group-field-bio-1",
+                  "type": "group",
+                  "purpose": "form",
+                  "children": [
+                    {
+                      "id": "field-bio",
+                      "type": "field",
+                      "label": "Bio",
+                      "model": "user.bio",
+                      "dataType": "textarea",
+                      "prominence": 1,
+                      "placeholder": "Tell us about yourself (optional)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "group-form-actions-1",
+              "type": "group",
+              "purpose": "action",
+              "direction": "horizontal",
+              "className": "mt-6",
+              "children": [
+                {
+                  "id": "action-btn-submit",
+                  "type": "action",
+                  "label": "Create Account",
+                  "prominence": 1,
+                  "behavior": { "action": "submit" },
+                  "className": "flex-1"
+                },
+                {
+                  "id": "action-btn-cancel",
+                  "type": "action",
+                  "label": "Cancel",
+                  "prominence": 3,
+                  "behavior": { "action": "reset" }
+                }
+              ]
+            },
+            {
+              "id": "group-form-footer-1",
+              "type": "group",
+              "purpose": "content",
+              "className": "mt-6 text-center",
+              "children": [
+                {
+                  "id": "text-form-footer-text",
+                  "type": "text",
+                  "role": "Caption",
+                  "prominence": 3,
+                  "content": "Already have an account? Sign in"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
