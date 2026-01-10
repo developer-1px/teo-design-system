@@ -8,12 +8,12 @@
  * v2.0.0: Headless + Renderer 패턴 도입 (로직과 프레젠테이션 분리)
  * v2.0.1: role + type + value 일관성 체계 (dataType → type)
  * v3.0.0: role 기반 구조로 전환 (role="Input|Select|Radio|Checkbox|Rating" + type)
+ * v3.1.0: Legacy → Renderer 마이그레이션 완료 (모든 21개 타입 Renderer화, 548줄 → 417줄)
+ *
  * @see spec/iddl-spec-1.0.1.md#412-field-node
  */
 
 import { cva } from 'class-variance-authority';
-import { useState } from 'react';
-import { Star } from 'lucide-react';
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { FieldProps, FieldOption } from '@/components/types/Atom/types.ts';
 import { cn } from '@/shared/lib/utils.ts';
@@ -21,23 +21,21 @@ import { cn } from '@/shared/lib/utils.ts';
 // Re-export types for convenience
 export type { FieldOption } from '@/components/types/Atom/types.ts';
 
-// New Renderers (v2.0.0)
+// Renderers (v2.0.0, v3.1.0 expanded)
 import { TextField } from './renderers/TextField';
 import { NumberField } from './renderers/NumberField';
 import { SelectField } from './renderers/SelectField';
 import { RadioField } from './renderers/RadioField';
 import { RatingField } from './renderers/RatingField';
+import { DateField } from './renderers/DateField';
+import { BooleanField } from './renderers/BooleanField';
+import { ColorField } from './renderers/ColorField';
+import { FileField } from './renderers/FileField';
+import { CheckboxField } from './renderers/CheckboxField';
+import { TextareaField } from './renderers/TextareaField';
 
-// Shared Styles (v2.1.0)
-import {
-  inputStyles,
-  textareaStyles,
-  checkboxStyles,
-  fileInputStyles,
-  colorInputStyles,
-  rangeStyles,
-  ratingStarStyles,
-} from './styles/field.styles';
+// Shared Styles (v2.1.0 - only for fallback)
+import { inputStyles } from './styles/field.styles';
 
 /**
  * Field view text variants (CVA)
@@ -89,12 +87,112 @@ function FieldView({
 }
 
 /**
+ * Utility: onChange 핸들러 변환 (Renderer의 onChange를 React 이벤트로 변환)
+ */
+function createChangeHandler(controlledOnChange?: (event: any) => void) {
+  return (val: any) => {
+    if (controlledOnChange) {
+      const event = { target: { value: val } };
+      controlledOnChange(event as any);
+    }
+  };
+}
+
+/**
+ * Utility: Renderer 선택 로직 (role과 type 기반)
+ * v3.1.0: 모든 21개 타입 지원 (Legacy fallback 제거)
+ * @returns { renderer: Component, rendererType: string } | null
+ */
+function getRendererConfig(role?: string, type?: string) {
+  // role 기반 우선 매핑
+  if (role === 'Input') {
+    if (!type || ['text', 'email', 'url', 'phone', 'password'].includes(type)) {
+      return { renderer: TextField, rendererType: (type || 'text') as 'text' | 'email' | 'url' | 'phone' | 'password' };
+    }
+    if (['number', 'currency', 'range'].includes(type)) {
+      return { renderer: NumberField, rendererType: type as 'number' | 'currency' | 'range' };
+    }
+  }
+
+  if (role === 'Select') {
+    return { renderer: SelectField, rendererType: (type === 'multiselect' ? 'multiselect' : 'select') as 'select' | 'multiselect' };
+  }
+
+  if (role === 'Radio') {
+    return { renderer: RadioField, rendererType: 'radio' as const };
+  }
+
+  if (role === 'Rating') {
+    return { renderer: RatingField, rendererType: 'rating' as const };
+  }
+
+  // type 기반 fallback (하위 호환성)
+  if (!type) return null;
+
+  // Text-based inputs
+  if (['text', 'email', 'url', 'phone', 'password'].includes(type)) {
+    return { renderer: TextField, rendererType: type as 'text' | 'email' | 'url' | 'phone' | 'password' };
+  }
+
+  // Number inputs
+  if (['number', 'currency', 'range'].includes(type)) {
+    return { renderer: NumberField, rendererType: type as 'number' | 'currency' | 'range' };
+  }
+
+  // Selection inputs
+  if (['select', 'multiselect'].includes(type)) {
+    return { renderer: SelectField, rendererType: type as 'select' | 'multiselect' };
+  }
+
+  if (type === 'radio') {
+    return { renderer: RadioField, rendererType: 'radio' as const };
+  }
+
+  if (type === 'rating') {
+    return { renderer: RatingField, rendererType: 'rating' as const };
+  }
+
+  // Date/Time inputs (NEW v3.1.0)
+  if (['date', 'datetime'].includes(type)) {
+    return { renderer: DateField, rendererType: type as 'date' | 'datetime' };
+  }
+
+  // Boolean input (NEW v3.1.0)
+  if (type === 'boolean') {
+    return { renderer: BooleanField, rendererType: 'boolean' as const };
+  }
+
+  // Checkbox group (NEW v3.1.0)
+  if (type === 'checkbox') {
+    return { renderer: CheckboxField, rendererType: 'checkbox' as const };
+  }
+
+  // Textarea (NEW v3.1.0)
+  if (['textarea', 'richtext'].includes(type)) {
+    return { renderer: TextareaField, rendererType: type as 'textarea' | 'richtext' };
+  }
+
+  // File uploads (NEW v3.1.0)
+  if (['file', 'image'].includes(type)) {
+    return { renderer: FileField, rendererType: type as 'file' | 'image' };
+  }
+
+  // Color picker (NEW v3.1.0)
+  if (type === 'color') {
+    return { renderer: ColorField, rendererType: 'color' as const };
+  }
+
+  return null;
+}
+
+/**
  * Edit Mode: 데이터를 입력 폼으로 표시 (v1.0.1: 21개 type)
  * IDDL-only: prominence와 type만으로 스타일 결정
  * v1.0.2: clearable 지원 추가
  * v2.0.0: Headless + Renderer 패턴 적용 (우선순위 높은 타입부터)
  * v2.0.1: dataType → type으로 rename
  * v3.0.0: role 기반 구조 (role 우선, type은 세부 variant)
+ * v3.1.0: 반복 코드 제거 - createChangeHandler, getRendererConfig 유틸리티 사용
  */
 function FieldEdit(props: FieldProps) {
   const {
@@ -117,465 +215,196 @@ function FieldEdit(props: FieldProps) {
   const ctx = useLayoutContext();
   const computedDensity = props.density ?? ctx.density ?? 'Standard';
 
-  // v3.0.0: role 기반 분기 (role="Input|Select|Radio|Checkbox|Rating")
+  // Shared onChange handler
+  const handleChange = createChangeHandler(controlledOnChange);
 
-  // role="Input": Text input variants (text, email, url, phone, password, number, color, date 등)
-  if (role === 'Input') {
-    // Text-based inputs
-    if (!type || ['text', 'email', 'url', 'phone', 'password'].includes(type)) {
+  // Shared common props
+  const commonProps = {
+    label,
+    model,
+    prominence,
+    intent,
+    required,
+    placeholder,
+  };
+
+  // Try to get renderer from role/type mapping
+  const rendererConfig = getRendererConfig(role, type);
+
+  if (rendererConfig) {
+    const { renderer: Renderer, rendererType } = rendererConfig;
+
+    // TextField-specific props
+    if (Renderer === TextField) {
       return (
-        <TextField
-          label={label}
-          model={model}
-          type={(type || 'text') as 'text' | 'email' | 'url' | 'phone' | 'password'}
-          prominence={prominence}
-          intent={intent}
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'text' | 'email' | 'url' | 'phone' | 'password'}
           density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
           constraints={constraints}
           clearable={clearable}
-          required={required}
-          placeholder={placeholder}
           value={controlledValue as string | undefined}
-          onChange={(val) => {
-            if (controlledOnChange) {
-              const event = { target: { value: val } };
-              controlledOnChange(event as any);
-            }
-          }}
+          onChange={handleChange}
         />
       );
     }
 
-    // Number inputs
-    if (['number', 'currency', 'range'].includes(type || '')) {
+    // NumberField-specific props
+    if (Renderer === NumberField) {
       return (
-        <NumberField
-          label={label}
-          model={model}
-          type={type as 'number' | 'currency' | 'range'}
-          prominence={prominence}
-          intent={intent}
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'number' | 'currency' | 'range'}
           constraints={constraints}
-          required={required}
-          placeholder={placeholder}
           value={controlledValue as number | undefined}
-          onChange={(val) => {
-            if (controlledOnChange) {
-              const event = { target: { value: val } };
-              controlledOnChange(event as any);
-            }
-          }}
+          onChange={handleChange}
         />
       );
     }
 
-    // Color/Date/Other special inputs (fallback to legacy)
-    // Fall through to legacy code below
-  }
-
-  // role="Select": Dropdown selection
-  if (role === 'Select') {
-    return (
-      <SelectField
-        label={label}
-        model={model}
-        type={type === 'multiselect' ? 'multiselect' : 'select'}
-        options={options || []}
-        prominence={prominence}
-        intent={intent}
-        density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-        required={required}
-        placeholder={placeholder}
-        value={controlledValue}
-        onChange={(val) => {
-          if (controlledOnChange) {
-            const event = { target: { value: val } };
-            controlledOnChange(event as any);
-          }
-        }}
-      />
-    );
-  }
-
-  // role="Radio": Radio button group
-  if (role === 'Radio') {
-    return (
-      <RadioField
-        label={label}
-        model={model}
-        type="radio"
-        options={options || []}
-        prominence={prominence}
-        intent={intent}
-        required={required}
-        value={controlledValue as string | number | boolean | undefined}
-        onChange={(val) => {
-          if (controlledOnChange) {
-            const event = { target: { value: val } };
-            controlledOnChange(event as any);
-          }
-        }}
-      />
-    );
-  }
-
-  // role="Rating": Star rating
-  if (role === 'Rating') {
-    return (
-      <RatingField
-        label={label}
-        model={model}
-        type="rating"
-        prominence={prominence}
-        constraints={constraints}
-        required={required}
-        value={controlledValue as number | undefined}
-        onChange={(val) => {
-          if (controlledOnChange) {
-            const event = { target: { value: val } };
-            controlledOnChange(event as any);
-          }
-        }}
-      />
-    );
-  }
-
-  // Legacy: type 기반 fallback (하위 호환성)
-  // v2.0.0: New Renderer 사용 (text, email, url, phone, password)
-  if (['text', 'email', 'url', 'phone', 'password'].includes(type)) {
-    return (
-      <TextField
-        label={label}
-        model={model}
-        type={type as 'text' | 'email' | 'url' | 'phone' | 'password'}
-        prominence={prominence}
-        intent={intent}
-        density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-        constraints={constraints}
-        clearable={clearable}
-        required={required}
-        placeholder={placeholder}
-        value={controlledValue as string | undefined}
-        onChange={(val) => {
-          if (controlledOnChange) {
-            const event = { target: { value: val } };
-            controlledOnChange(event as any);
-          }
-        }}
-      />
-    );
-  }
-
-  // v2.0.0: NumberField (number, currency, range)
-  if (['number', 'currency', 'range'].includes(type)) {
-    return (
-      <NumberField
-        label={label}
-        model={model}
-        type={type as 'number' | 'currency' | 'range'}
-        prominence={prominence}
-        intent={intent}
-        constraints={constraints}
-        required={required}
-        placeholder={placeholder}
-        value={controlledValue as number | undefined}
-        onChange={(val) => {
-          if (controlledOnChange) {
-            const event = { target: { value: val } };
-            controlledOnChange(event as any);
-          }
-        }}
-      />
-    );
-  }
-
-  // v2.0.0: SelectField (select, multiselect)
-  if (['select', 'multiselect'].includes(type)) {
-    return (
-      <SelectField
-        label={label}
-        model={model}
-        type={type as 'select' | 'multiselect'}
-        options={options || []}
-        prominence={prominence}
-        intent={intent}
-        density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-        required={required}
-        placeholder={placeholder}
-        value={controlledValue}
-        onChange={(val) => {
-          if (controlledOnChange) {
-            const event = { target: { value: val } };
-            controlledOnChange(event as any);
-          }
-        }}
-      />
-    );
-  }
-
-  // v2.0.0: RadioField
-  if (type === 'radio') {
-    return (
-      <RadioField
-        label={label}
-        model={model}
-        type="radio"
-        options={options || []}
-        prominence={prominence}
-        intent={intent}
-        required={required}
-        value={controlledValue as string | number | boolean | undefined}
-        onChange={(val) => {
-          if (controlledOnChange) {
-            const event = { target: { value: val } };
-            controlledOnChange(event as any);
-          }
-        }}
-      />
-    );
-  }
-
-  // v2.0.0: RatingField
-  if (type === 'rating') {
-    return (
-      <RatingField
-        label={label}
-        model={model}
-        type="rating"
-        prominence={prominence}
-        constraints={constraints}
-        required={required}
-        value={controlledValue as number | undefined}
-        onChange={(val) => {
-          if (controlledOnChange) {
-            const event = { target: { value: val } };
-            controlledOnChange(event as any);
-          }
-        }}
-      />
-    );
-  }
-
-  // Legacy: 나머지 타입은 기존 코드 사용
-  const [internalValue, setInternalValue] = useState('');
-  const value = controlledValue !== undefined ? controlledValue : internalValue;
-  const setValue = controlledOnChange
-    ? (newValue: any) => {
-      const event = typeof newValue === 'string' ? { target: { value: newValue } } : newValue;
-      controlledOnChange(event);
+    // SelectField-specific props
+    if (Renderer === SelectField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'select' | 'multiselect'}
+          options={options || []}
+          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+          value={controlledValue}
+          onChange={handleChange}
+        />
+      );
     }
-    : setInternalValue;
 
-  // Shared styles for fallback inputs
-  const inputClassName = inputStyles({
-    prominence,
-    density: computedDensity as any,
-    intent,
-    dataType: type as any,
-  });
-
-  const renderInput = () => {
-    switch (type) {
-      // text, password, email, url, phone, number, currency, range, select, multiselect, radio, rating
-      // → 이미 새 Renderer로 처리됨 (위 if문들에서)
-
-      case 'date':
-        return (
-          <input
-            type="date"
-            name={model}
-            required={required}
-            min={constraints?.min ? String(constraints.min) : undefined}
-            max={constraints?.max ? String(constraints.max) : undefined}
-            className={inputClassName}
-            data-model={model}
-          />
-        );
-
-      case 'datetime': // v1.0.1 - Legacy
-        return (
-          <input
-            type="datetime-local"
-            name={model}
-            required={required}
-            className={inputClassName}
-            data-model={model}
-          />
-        );
-
-      case 'boolean': // Legacy - TODO: useBooleanField로 마이그레이션
-        return (
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              name={model}
-              className={checkboxStyles({ type: 'checkbox' })}
-              data-model={model}
-              checked={value}
-              onChange={controlledOnChange || ((e) => setValue(e.target.checked))}
-            />
-            <span className="text-text">{label}</span>
-          </label>
-        );
-
-      case 'checkbox': // v1.0.1 - 체크박스 그룹 (boolean과 다름)
-        return (
-          <div className="flex flex-col gap-2">
-            {options?.map((opt) => (
-              <label key={String(opt.value)} className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name={`${model}[]`}
-                  value={String(opt.value)}
-                  disabled={opt.disabled}
-                  className={checkboxStyles({ type: 'checkbox' })}
-                  data-model={model}
-                />
-                <span className="text-sm text-text">{opt.label}</span>
-              </label>
-            ))}
-          </div>
-        );
-
-      case 'textarea': // v1.0.1
-        return (
-          <textarea
-            name={model}
-            placeholder={placeholder}
-            required={required}
-            minLength={constraints?.minLength}
-            maxLength={constraints?.maxLength}
-            rows={4}
-            className={textareaStyles({
-              prominence,
-              density: computedDensity as any,
-              intent,
-            })}
-            data-model={model}
-          />
-        );
-
-      case 'richtext': // v1.0.1 - TODO: 실제 리치 텍스트 에디터 통합 필요
-        return (
-          <div>
-            <textarea
-              name={model}
-              placeholder={placeholder || 'Rich text editor (placeholder)'}
-              required={required}
-              rows={6}
-              className={textareaStyles({
-                prominence,
-                density: computedDensity as any,
-                intent,
-                dataType: 'richtext',
-              })}
-              data-model={model}
-            />
-            <p className="text-xs text-subtle mt-1">TODO: Rich text editor integration</p>
-          </div>
-        );
-
-      case 'image':
-        return (
-          <input
-            type="file"
-            name={model}
-            accept="image/*"
-            required={required}
-            className={fileInputStyles()}
-            data-model={model}
-          />
-        );
-
-      case 'file': // v1.0.1 - 일반 파일
-        return (
-          <input
-            type="file"
-            name={model}
-            required={required}
-            className={fileInputStyles()}
-            data-model={model}
-          />
-        );
-
-      case 'color': // v1.0.1
-        return (
-          <input
-            type="color"
-            name={model}
-            required={required}
-            className={colorInputStyles()}
-            data-model={model}
-          />
-        );
-
-      case 'range': // v1.0.1
-        return (
-          <div>
-            <input
-              type="range"
-              name={model}
-              required={required}
-              min={constraints?.min ?? 0}
-              max={constraints?.max ?? 100}
-              className={rangeStyles()}
-              data-model={model}
-              value={value}
-              onChange={controlledOnChange || ((e) => setValue(parseFloat(e.target.value)))}
-            />
-            <div className="flex justify-between text-xs text-subtle mt-1">
-              <span>{constraints?.min ?? 0}</span>
-              <span>{constraints?.max ?? 100}</span>
-            </div>
-          </div>
-        );
-
-      case 'rating': // v1.0.1 - 별점
-        return (
-          <div className="flex gap-1">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                className={ratingStarStyles({ filled: false /* TODO: filled logic */ })}
-                data-model={model}
-                data-value={star}
-              >
-                <Star size={24} />
-              </button>
-            ))}
-          </div>
-        );
-
-      default:
-        return (
-          <input
-            type="text"
-            name={model}
-            placeholder={placeholder}
-            required={required}
-            className={inputClassName}
-            data-model={model}
-          />
-        );
+    // RadioField-specific props
+    if (Renderer === RadioField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'radio'}
+          options={options || []}
+          value={controlledValue as string | number | boolean | undefined}
+          onChange={handleChange}
+        />
+      );
     }
-  };
 
-  // boolean 타입은 라벨이 인라인으로 포함되어 있음
-  if (type === 'boolean') {
-    return <div className={cn('flex flex-col gap-1')}>{renderInput()}</div>;
+    // RatingField-specific props
+    if (Renderer === RatingField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'rating'}
+          constraints={constraints}
+          value={controlledValue as number | undefined}
+          onChange={handleChange}
+        />
+      );
+    }
+
+    // DateField-specific props (NEW v3.1.0)
+    if (Renderer === DateField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'date' | 'datetime'}
+          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+          constraints={constraints}
+          value={controlledValue as string | undefined}
+          onChange={handleChange}
+        />
+      );
+    }
+
+    // BooleanField-specific props (NEW v3.1.0)
+    if (Renderer === BooleanField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'boolean'}
+          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+          value={controlledValue as boolean | undefined}
+          onChange={handleChange}
+        />
+      );
+    }
+
+    // CheckboxField-specific props (NEW v3.1.0)
+    if (Renderer === CheckboxField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'checkbox'}
+          options={options || []}
+          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+          value={controlledValue as Array<string | number | boolean> | undefined}
+          onChange={handleChange}
+        />
+      );
+    }
+
+    // TextareaField-specific props (NEW v3.1.0)
+    if (Renderer === TextareaField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'textarea' | 'richtext'}
+          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+          constraints={constraints}
+          value={controlledValue as string | undefined}
+          onChange={handleChange}
+        />
+      );
+    }
+
+    // FileField-specific props (NEW v3.1.0)
+    if (Renderer === FileField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'file' | 'image'}
+          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+          onChange={handleChange}
+        />
+      );
+    }
+
+    // ColorField-specific props (NEW v3.1.0)
+    if (Renderer === ColorField) {
+      return (
+        <Renderer
+          {...commonProps}
+          type={rendererType as 'color'}
+          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+          value={controlledValue as string | undefined}
+          onChange={handleChange}
+        />
+      );
+    }
   }
 
+  // Fallback: 알 수 없는 타입은 기본 text input으로 처리
+  console.warn(`[Field] Unknown type "${type}" for model "${model}". Falling back to text input.`);
   return (
     <div className={cn('flex flex-col gap-1')}>
       <label htmlFor={model} className="text-sm text-text font-medium">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
-      {renderInput()}
-      {constraints?.patternMessage && (
-        <p className="text-xs text-subtle mt-1">{constraints.patternMessage}</p>
-      )}
+      <input
+        id={model}
+        name={model}
+        type="text"
+        placeholder={placeholder}
+        required={required}
+        className={inputStyles({
+          prominence,
+          density: computedDensity as any,
+          intent,
+          dataType: 'text',
+        })}
+        data-model={model}
+      />
     </div>
   );
 }
@@ -595,7 +424,6 @@ export function Field({ as, ...props }: FieldProps) {
   // 부모 컨텍스트에서 상속
   const computedProminence = props.prominence ?? ctx.prominence ?? 'Primary';
   const computedIntent = props.intent ?? ctx.intent ?? 'Neutral';
-  const computedDensity = props.density ?? ctx.density ?? 'Standard';
 
   // modeOverride가 있으면 우선 사용 (v1.0.1)
   const mode = props.modeOverride ?? ctx.mode ?? 'edit';

@@ -290,6 +290,10 @@ export interface GroupProps extends AsProp {
    */
   selectionModel?: SelectionModel;
 
+  // Toolbar-specific props (v4.1)
+  sticky?: boolean; // Toolbar: Sticky positioning
+  border?: 'top' | 'bottom' | 'both' | 'none'; // Toolbar: Border options
+
   // Accordion-specific props (v4.0)
   mode?: 'single' | 'multiple'; // Accordion: 단일/다중 선택
   defaultValue?: string | string[]; // Accordion: 초기 열린 아이템
@@ -553,7 +557,8 @@ export type GroupRole =
   | 'Accordion' // 아코디언 (펼침/접힘)
   | 'Breadcrumbs' // 경로 탐색 (v2.1)
   | 'ScrollMenu' // 스크롤 메뉴 (ScrollSpy)
-  | 'Navigator'; // 네비게이션바 (v2.1)
+  | 'Navigator' // 네비게이션바 (v2.1)
+  | 'Spacer'; // 여백 (flex-1)
 
 /**
  * Layout - 레이아웃 방향

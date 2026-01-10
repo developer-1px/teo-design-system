@@ -19,15 +19,11 @@
  * ```
  */
 
-import type { GroupProps } from '@/components/types/Atom/types';
 import { cn } from '@/shared/lib/utils';
+import type { GroupRendererProps } from '../role-config';
 
-export interface ToolbarProps extends Omit<GroupProps, 'role'> {
+export interface ToolbarProps extends GroupRendererProps {
   role: 'Toolbar';
-  computedDensity: 'Compact' | 'Standard' | 'Comfortable';
-  computedProminence: GroupProps['prominence'];
-  computedIntent: GroupProps['intent'];
-  Element: any;
   sticky?: boolean; // Sticky positioning
   border?: 'top' | 'bottom' | 'both' | 'none'; // Border options
 }

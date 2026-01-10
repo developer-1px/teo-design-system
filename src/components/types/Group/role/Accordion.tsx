@@ -24,8 +24,8 @@
 
 import { createContext, useContext, useState, useRef, useEffect, type ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
-import type { GroupProps } from '@/components/types/Atom/types';
 import { cn } from '@/shared/lib/utils';
+import type { GroupRendererProps } from '../role-config';
 
 // ============================================
 // Accordion Context
@@ -72,12 +72,8 @@ function useAccordionItem() {
 // Accordion (Root)
 // ============================================
 
-export interface AccordionProps extends Omit<GroupProps, 'role'> {
+export interface AccordionProps extends GroupRendererProps {
   role: 'Accordion';
-  computedDensity: 'Compact' | 'Standard' | 'Comfortable';
-  computedProminence: GroupProps['prominence'];
-  computedIntent: GroupProps['intent'];
-  Element: any;
   mode?: 'single' | 'multiple'; // 단일 선택 vs 다중 선택
   defaultValue?: string | string[]; // 초기 열린 아이템
   value?: string | string[]; // Controlled mode

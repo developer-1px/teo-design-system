@@ -65,10 +65,10 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
     },
     Editor: {
       gridArea: 'editor',
-      overflow: 'hidden',
+      overflow: 'auto',
       htmlTag: 'main',
       baseStyles: 'flex-1 flex flex-col min-w-0 bg-surface',
-      description: '에디터 영역 (내부 CodeMirror가 스크롤)',
+      description: '에디터 영역 - 스크롤',
     },
     Panel: {
       gridArea: 'panel',
@@ -231,17 +231,17 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
     },
     Main: {
       gridArea: 'center',
-      overflow: 'hidden',
+      overflow: 'auto',
       htmlTag: 'main',
       baseStyles: 'flex-1 flex flex-col',
-      description: '중앙 메인 영역 (캔버스/에디터)',
+      description: '중앙 메인 영역 (캔버스/에디터) - 스크롤',
     },
     Container: {
       gridArea: 'center',
-      overflow: 'hidden',
+      overflow: 'auto',
       htmlTag: 'section',
       baseStyles: 'flex-1 flex flex-col',
-      description: '중앙 컨테이너',
+      description: '중앙 컨테이너 - 스크롤',
     },
     Aside: {
       gridArea: 'right',
