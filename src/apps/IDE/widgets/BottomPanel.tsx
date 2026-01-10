@@ -42,47 +42,40 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
   return (
     <Group role="Container" layout="flex" direction="column" height={height}>
       <Section role="Container" layout="flex" direction="column" flex="1">
-        {/* Tab Header */}
-        <Group
-          role="Toolbar"
-          direction="horizontal"
-          align="center"
-          justify="between"
-          padding="xs"
-          prominence="Secondary"
-        >
-          <Group role="Tabs" direction="horizontal" align="center" gap="xs">
+        {/* Tab Header (Unified Design) */}
+        <Section role="Header" density="Compact" className="flex items-center justify-between gap-0 p-0 h-9 border-b border-border-default">
+          <Group role="Tabs" direction="horizontal" align="center" gap="0" className="h-full">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
-                <Group
+                <button
                   key={tab.id}
-                  role="Tab"
-                  direction="horizontal"
-                  align="center"
-                  padding="sm"
-                  gap="xs"
-                  interactive
-                  selected={activeTab === tab.id}
+                  className={cn(
+                    'flex items-center gap-2 px-4 h-full text-xs transition-colors border-r border-border-muted whitespace-nowrap',
+                    {
+                      'bg-surface-raised text-text font-medium': activeTab === tab.id,
+                      'text-text-secondary hover:bg-surface-hover': activeTab !== tab.id,
+                    }
+                  )}
                   onClick={() => setActiveTab(tab.id)}
                 >
-                  <Icon size={14} />
-                  <Text role="Body" content={tab.label} size="sm" />
+                  <Icon size={14} className="text-text-tertiary" />
+                  <span>{tab.label}</span>
                   {tab.count !== undefined && (
-                    <Badge
-                      variant={activeTab === tab.id ? 'default' : 'secondary'}
-                      size="sm"
-                    >
+                    <span className={cn(
+                      'ml-1.5 px-1.5 py-0.5 text-[10px] font-bold rounded-full',
+                      activeTab === tab.id ? 'bg-accent text-white' : 'bg-surface-sunken text-text-tertiary'
+                    )}>
                       {tab.count}
-                    </Badge>
+                    </span>
                   )}
-                </Group>
+                </button>
               );
             })}
           </Group>
 
           {/* Actions */}
-          <Group role="Actions" direction="horizontal" align="center" gap="xs">
+          <Group role="Inline" align="center" gap="xs" className="px-2">
             <Action
               role="IconButton"
               icon="ChevronUp"
@@ -97,10 +90,10 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
               onClick={onClose}
             />
           </Group>
-        </Group>
+        </Section>
 
         {/* Panel Content */}
-        <Group role="Content" layout="scroll" flex="1" padding="sm">
+        <Group role="Container" layout="scroll" flex="1" padding="sm">
           {activeTab === 'terminal' && <TerminalContent />}
           {activeTab === 'problems' && <ProblemsContent />}
           {activeTab === 'output' && <OutputContent />}
@@ -114,18 +107,18 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
 // Terminal Tab Content
 const TerminalContent = () => {
   return (
-    <Group role="Terminal" font="mono" gap="sm">
-      <Group role="Line" direction="horizontal" gap="xs">
+    <Group role="List" className="font-mono" gap="sm">
+      <Group role="Inline" gap="xs">
         <Text role="Code" prominence="Brand" content="user@macbook" />
         <Text role="Code" prominence="Subtle" content="~" />
         <Text role="Code" content="$" />
       </Group>
-      <Group role="Output" gap="xs">
-        <Group role="Command" direction="horizontal" gap="xs">
+      <Group role="List" gap="xs">
+        <Group role="Inline" gap="xs">
           <Text role="Code" prominence="Brand" content="$" />
           <Text role="Code" content="pnpm dev" />
         </Group>
-        <Group role="Result" gap="xs">
+        <Group role="List" gap="xs">
           <Text role="Code" prominence="Subtle" content="VITE v5.4.21 ready in 390 ms" />
           <Text role="Code" prominence="Subtle" content="➜ Local: http://localhost:5175/" />
         </Group>
@@ -165,12 +158,11 @@ const ProblemsContent = () => {
       {problems.map((problem, idx) => (
         <Group
           key={idx}
-          role="ListItem"
-          direction="horizontal"
+          role="Inline"
           align="start"
           padding="sm"
           gap="sm"
-          interactive
+          clickable
         >
           <AlertCircleIcon
             size={16}
@@ -180,8 +172,8 @@ const ProblemsContent = () => {
               marginTop: '2px'
             }}
           />
-          <Group role="Content" flex="1" gap="xs">
-            <Text role="Body" prominence="Primary" content={problem.message} />
+          <Group role="Container" flex="1" gap="xs">
+            <Text role="Body" prominence="Standard" content={problem.message} />
             <Text
               role="Body"
               prominence="Subtle"
@@ -198,16 +190,16 @@ const ProblemsContent = () => {
 // Output Tab Content
 const OutputContent = () => {
   return (
-    <Group role="Output" font="mono" gap="xs">
+    <Group role="List" className="font-mono" gap="xs">
       <Text role="Code" prominence="Subtle" content="[12:34:56] Starting compilation..." size="sm" />
-      <Text role="Code" prominence="Secondary" content="[12:34:57] Compiling TypeScript..." size="sm" />
+      <Text role="Code" prominence="Standard" content="[12:34:57] Compiling TypeScript..." size="sm" />
       <Text
         role="Code"
         prominence="Positive"
         content="[12:34:58] Compilation successful"
         size="sm"
       />
-      <Text role="Code" prominence="Secondary" content="[12:34:58] Watching for file changes..." size="sm" />
+      <Text role="Code" prominence="Standard" content="[12:34:58] Watching for file changes..." size="sm" />
     </Group>
   );
 };
@@ -215,7 +207,7 @@ const OutputContent = () => {
 // Debug Console Content
 const DebugContent = () => {
   return (
-    <Group role="Empty" font="mono" gap="xs">
+    <Group role="Container" className="items-center justify-center h-full font-mono" gap="xs">
       <Text role="Code" prominence="Subtle" content="Debug console is empty" />
       <Text role="Code" prominence="Subtle" content="Start debugging to see output here" size="sm" />
     </Group>

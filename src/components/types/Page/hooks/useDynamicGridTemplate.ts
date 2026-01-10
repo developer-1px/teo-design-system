@@ -14,7 +14,7 @@
 
 import { type ReactNode, useMemo } from 'react';
 import type { PageLayout, PresentationGridArea } from '@/components/types/Atom/types';
-import { getRoleConfig } from '@/components/types/Section/role-config';
+import { getRoleConfig, ROLE_CONFIGS } from '@/components/types/Section/role-config';
 
 export interface GridSizes {
   header?: string;
@@ -32,7 +32,7 @@ export interface GridSizes {
   editor?: string;
   panel?: string;
   secondarysidebar?: string;
-  auxiliary?: string;
+  utilitybar?: string;
   // Sidebar template specific
   nav?: string;
   content?: string;
@@ -72,14 +72,28 @@ function extractUsedAreas(children: ReactNode, layout?: PageLayout): Set<string>
 
       // v5.0: role 기반 gridArea 자동 계산 (role-config 사용)
       if (props?.role) {
-        // layout을 소문자로 변환하여 template 호환성 유지
-        const templateHint = layout?.toLowerCase();
-        const config = getRoleConfig(props.role, templateHint);
+        // v5.0: layout 이름을 Capitalized로 변환하여 ROLE_CONFIGS 키와 일치시킴
+        const layoutName = layout ? layout.charAt(0).toUpperCase() + layout.slice(1).toLowerCase() : undefined;
+
+        // 1. Layout 특정 role인 경우 (가장 중요)
+        if (layoutName && (ROLE_CONFIGS as any)[layoutName]?.[props.role]) {
+          const config = (ROLE_CONFIGS as any)[layoutName][props.role];
+          areas.add(config.gridArea);
+          return; // 핵심: 직접적인 레이아웃 영역을 찾으면 더 이상 자식으로 들어가지 않음 (nested Section 보호)
+        }
+
+        // 2. Fallback: universal role인 경우
+        if (ROLE_CONFIGS.universal[props.role]) {
+          const config = ROLE_CONFIGS.universal[props.role];
+          areas.add(config.gridArea);
+          return;
+        }
+
+        // 3. Unknown role fallback
+        const config = getRoleConfig(props.role, layoutName as any);
         areas.add(config.gridArea);
-      }
-      // Backward compatibility: 명시적 gridArea prop도 지원
-      else if (props?.gridArea) {
-        areas.add(props.gridArea);
+        // Fallback인 경우에도 일단 찾았으므로 더 깊이 들어가지 않음 (IDDL은 계층적 Section을 기본적으로 한 단계만 Grid로 봄)
+        return;
       }
 
       if (props?.children) {
@@ -120,7 +134,7 @@ function generateGridTemplate(
     editor: '1fr',
     panel: '300px',
     secondarysidebar: '300px',
-    auxiliary: '300px',
+    utilitybar: 'auto',
     // Sidebar template
     nav: '250px',
     content: '1fr',
@@ -143,72 +157,76 @@ function generateGridTemplate(
   const columns: string[] = [];
   const columnSizes: string[] = [];
 
-  // Special case: Studio template (IDE 레이아웃 with optional toolbar)
+  // Special case: Studio template (IDE 레이아웃 with optional toolbar, header, footer)
   if (
     has('toolbar') ||
+    has('header') ||
+    has('footer') ||
     has('activitybar') ||
     has('primarysidebar') ||
     has('editor') ||
     has('panel') ||
     has('secondarysidebar') ||
-    has('auxiliary')
+    has('utilitybar')
   ) {
     const studioRows: string[] = [];
     const studioRowSizes: string[] = [];
-
-    // Toolbar row (optional)
-    if (has('toolbar')) {
-      const toolbarRow: string[] = [];
-      const toolbarColumns: string[] = [];
-
-      // Toolbar spans all columns
-      const numColumns =
-        (has('activitybar') ? 1 : 0) +
-        (has('primarysidebar') ? 1 : 0) +
-        (has('editor') ? 1 : 0) +
-        (has('panel') ? 1 : 0) +
-        (has('secondarysidebar') ? 1 : 0) +
-        (has('auxiliary') ? 1 : 0);
-
-      for (let i = 0; i < numColumns; i++) {
-        toolbarRow.push('toolbar');
-      }
-
-      studioRows.push(toolbarRow.join(' '));
-      studioRowSizes.push(getSize('toolbar') || 'auto');
-    }
-
-    // Main content row
-    const mainRow: string[] = [];
     const mainColumns: string[] = [];
+    const columns: string[] = [];
 
+    // Columns 정의
     if (has('activitybar')) {
-      mainRow.push('activitybar');
+      columns.push('activitybar');
       mainColumns.push(getSize('activitybar'));
     }
     if (has('primarysidebar')) {
-      mainRow.push('primarysidebar');
+      columns.push('primarysidebar');
       mainColumns.push(getSize('primarysidebar'));
     }
     if (has('editor')) {
-      mainRow.push('editor');
+      columns.push('editor');
       mainColumns.push(getSize('editor'));
     }
     if (has('panel')) {
-      mainRow.push('panel');
+      columns.push('panel');
       mainColumns.push(getSize('panel'));
     }
     if (has('secondarysidebar')) {
-      mainRow.push('secondarysidebar');
+      columns.push('secondarysidebar');
       mainColumns.push(getSize('secondarysidebar'));
     }
-    if (has('auxiliary')) {
-      mainRow.push('auxiliary');
-      mainColumns.push(getSize('auxiliary'));
+    if (has('utilitybar')) {
+      columns.push('utilitybar');
+      mainColumns.push(getSize('utilitybar'));
     }
 
-    studioRows.push(mainRow.join(' '));
+    const numCols = columns.length || 1;
+    if (columns.length === 0) {
+      columns.push('editor');
+      mainColumns.push('1fr');
+    }
+
+    // Header row (Full width)
+    if (has('header')) {
+      studioRows.push(new Array(numCols).fill('header').join(' '));
+      studioRowSizes.push(getSize('header'));
+    }
+
+    // Toolbar row (Full width)
+    if (has('toolbar')) {
+      studioRows.push(new Array(numCols).fill('toolbar').join(' '));
+      studioRowSizes.push(getSize('toolbar'));
+    }
+
+    // Main content row
+    studioRows.push(columns.join(' '));
     studioRowSizes.push('1fr');
+
+    // Footer row (Full width)
+    if (has('footer')) {
+      studioRows.push(new Array(numCols).fill('footer').join(' '));
+      studioRowSizes.push(getSize('footer'));
+    }
 
     return {
       gridTemplateAreas: studioRows.map((row) => `"${row}"`).join('\n    '),

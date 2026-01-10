@@ -145,7 +145,7 @@ export interface PageProps extends AsProp {
 
   // Deprecated props (v5.0) - 하위 호환성을 위해 유지
   /** @deprecated Use `layout` instead of `template` */
-  template?: GridTemplate;
+  // Deprecated props (v5.0) - 하위 호환성을 위해 유지
   /** @deprecated direction is now determined by `role` and `layout` props */
   direction?: 'row' | 'column';
 }
@@ -445,6 +445,7 @@ export interface FieldProps extends AsProp {
   clearable?: boolean; // v1.0.2: 입력 내용 지우기 버튼 표시
   hidden?: boolean;
   condition?: string; // v1.0.1: 조건부 렌더링
+  disabled?: boolean; // v1.0.2: 비활성화 상태
 
   // Controlled Component (React)
   value?: any; // v1.0.2: controlled value
@@ -550,7 +551,9 @@ export type GroupRole =
   | 'Tabs' // 탭 컨테이너
   | 'Steps' // 단계별 진행
   | 'Accordion' // 아코디언 (펼침/접힘)
-  | 'ScrollMenu'; // 스크롤 메뉴 (ScrollSpy)
+  | 'Breadcrumbs' // 경로 탐색 (v2.1)
+  | 'ScrollMenu' // 스크롤 메뉴 (ScrollSpy)
+  | 'Navigator'; // 네비게이션바 (v2.1)
 
 /**
  * Layout - 레이아웃 방향
@@ -597,7 +600,7 @@ export type SectionRole =
   | 'SecondarySidebar' // 보조 사이드바 (아웃라인 등)
   | 'Editor' // 에디터 영역
   | 'Panel' // 하단 패널 (터미널, 콘솔 등)
-  | 'Auxiliary' // 보조 패널 (속성, AI 등)
+  | 'UtilityBar' // 보조 패널 (속성, AI 등)
   // Master-Detail (template="master-detail")
   | 'Master' // 마스터 리스트
   | 'Detail' // 디테일 뷰
@@ -638,92 +641,13 @@ export const LAYOUT_SECTION_ROLES: Record<PageLayout, SectionRole[]> = {
     'SecondarySidebar',
     'Editor',
     'Panel',
-    'Auxiliary',
+    'UtilityBar',
     'Container',
     'Main',
   ],
 
   // Blank: 빈 캔버스 (dialog, custom)
   Blank: ['Container', 'Main', 'DialogHeader', 'DialogContent', 'DialogFooter'],
-};
-
-/**
- * @deprecated TEMPLATE_SECTION_ROLES는 v5.0에서 LAYOUT_SECTION_ROLES로 대체되었습니다.
- */
-export const TEMPLATE_SECTION_ROLES: Record<string, SectionRole[]> = {
-  // Universal roles (모든 template에서 사용 가능)
-  universal: ['Header', 'Footer', 'Main', 'Container'],
-
-  // IDE/Studio Layout
-  studio: [
-    'Header',
-    'Footer',
-    'Main',
-    'Container', // Universal
-    'Toolbar',
-    'ActivityBar',
-    'PrimarySidebar',
-    'SecondarySidebar',
-    'Editor',
-    'Panel',
-    'Auxiliary',
-  ],
-
-  // Web Standard (Sidebar + Content)
-  'sidebar-content': [
-    'Header',
-    'Footer',
-    'Main',
-    'Container', // Universal
-    'Navigator',
-    'Aside',
-    'Search',
-    'Region',
-  ],
-
-  // Master-Detail (List + Detail View)
-  'master-detail': [
-    'Header',
-    'Footer',
-    'Main',
-    'Container', // Universal
-    'Master',
-    'Detail',
-    'Toolbar',
-  ],
-
-  // Dashboard (Stats + Charts + Activity)
-  dashboard: [
-    'Header',
-    'Footer',
-    'Main',
-    'Container', // Universal
-    'Region', // Named regions for stats/charts/activity
-  ],
-
-  // Dialog/Modal
-  dialog: ['DialogHeader', 'DialogContent', 'DialogFooter'],
-
-  // 3-column (Left + Center + Right)
-  '3-col': [
-    'Header',
-    'Footer',
-    'Main',
-    'Container', // Universal
-    'Navigator',
-    'Aside',
-    'Region',
-  ],
-
-  // Presentation (Slide List + Canvas + Format Sidebar)
-  presentation: [
-    'Header',
-    'Footer',
-    'Main',
-    'Container', // Universal
-    'Navigator',
-    'Aside',
-  ],
 };
 
 /**
@@ -756,35 +680,7 @@ export type Placement =
   | 'bottom-left'
   | 'bottom-right';
 
-/**
- * Grid Template - CSS Grid 템플릿 (v4.0: Template-aware)
- * v3.0 추가 (App/Page의 layout="grid"일 때 사용)
- * v4.0: Section role과 1:1 대응, template 선택 시 유효한 Section role 자동 결정
- */
-export type GridTemplate =
-  | 'studio' // IDE/Studio: ActivityBar + PrimarySidebar + Editor + Panel + Auxiliary
-  | 'sidebar-content' // Web Standard: Navigator + Main + Aside
-  | 'master-detail' // Master-Detail: Master list + Detail view
-  | '3-col' // 3-column: left + center + right
-  | 'dashboard' // Dashboard: auto-fit grid with named regions
-  | 'dialog' // Dialog: DialogHeader + DialogContent + DialogFooter
-  | 'presentation' // Presentation: 동적 Holy Grail + 코너 패널 (v4.0)
-  | 'custom'; // Custom: 사용자 정의 (className으로 직접 제어)
 
-/**
- * Presentation Grid Area - presentation template에서 사용 가능한 영역
- * v4.0 추가 (Holy Grail + IntelliJ 스타일 하이브리드)
- */
-export type PresentationGridArea =
-  | 'header' // 상단 헤더
-  | 'footer' // 하단 푸터
-  | 'left' // 좌측 사이드바
-  | 'right' // 우측 사이드바
-  | 'main' // 중앙 메인 영역
-  | 'top-left' // 좌상단 코너 패널
-  | 'top-right' // 우상단 코너 패널
-  | 'bottom-left' // 좌하단 코너 패널
-  | 'bottom-right'; // 우하단 코너 패널
 
 /**
  * Max Width - 페이지 최대 너비

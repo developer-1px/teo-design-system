@@ -38,13 +38,10 @@ import { cva } from 'class-variance-authority';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
 import type {
-  GridTemplate,
-  PageLayout,
   PageProps,
   PageRole,
 } from '@/components/types/Atom/types.ts';
 import { cn } from '@/shared/lib/utils.ts';
-import './grid-templates.css';
 
 // Import App layout renderer
 import { AppLayout } from './renderers/AppLayout';
@@ -119,24 +116,6 @@ const maxWidthMap: Record<string, string> = {
   none: 'max-w-none',
 };
 
-/**
- * Helper: GridTemplate → PageLayout 매핑 (하위 호환성)
- */
-function convertTemplateToLayout(template?: GridTemplate): PageLayout | undefined {
-  if (!template) return undefined;
-  const mapping: Record<GridTemplate, PageLayout> = {
-    studio: 'Studio',
-    'sidebar-content': 'Sidebar',
-    'master-detail': 'Split',
-    '3-col': 'HolyGrail',
-    dashboard: 'HolyGrail', // Dashboard는 HolyGrail과 유사
-    dialog: 'Blank',
-    presentation: 'HolyGrail',
-    custom: 'Blank',
-  };
-  return mapping[template];
-}
-
 export function Page({
   as: Component = 'div',
   role = 'Document',
@@ -156,7 +135,6 @@ export function Page({
   onClick,
   condition,
   // Deprecated props (v5.0) - 하위 호환성
-  template,
   direction,
   ...rest
 }: PageProps) {
@@ -164,8 +142,8 @@ export function Page({
   const normalizedRole: PageRole =
     role === ('App' as any) ? 'Application' : role === ('Content' as any) ? 'Document' : role;
 
-  // 하위 호환성: template → layout 매핑
-  const layout = layoutProp || convertTemplateToLayout(template);
+  // Layout prop usage
+  const layout = layoutProp;
 
   // 조건부 렌더링
   if (condition) {

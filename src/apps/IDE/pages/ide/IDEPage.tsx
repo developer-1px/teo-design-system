@@ -111,31 +111,45 @@ export const IDEPage = () => {
 
       {/* IDDL Section[PrimarySidebar]: File Tree Sidebar */}
       {currentView === 'files' && (
-        <Section role="PrimarySidebar">
-          {/* Explorer Header */}
-          <Section role="Header" prominence="Subtle" density="Compact">
+        <Section role="PrimarySidebar" className="flex flex-col border-r border-border-default overflow-hidden">
+          {/* Explorer Header (Unified Design) */}
+          <Section role="Header" density="Compact" className="h-9 px-3 flex items-center border-b border-border-default bg-surface-elevated">
             <Text
               role="Title"
               prominence="Subtle"
-              content="Explorer"
+              content="EXPLORER"
+              className="text-[10px] font-bold text-text-tertiary tracking-widest"
             />
           </Section>
 
           {/* File Tree */}
-          <Group role="Container">
+          <Section role="Container" className="flex-1 overflow-y-auto">
             <FileTree data={fileTreeData} onFileClick={handleFileClick} />
-          </Group>
+          </Section>
         </Section>
       )}
 
       {/* IDDL Section[Editor]: Editor Area */}
       <Section role="Editor">
         {/* Editor Content */}
-        <Group role="Container">
+        <Group role="Container" className="flex-1 min-h-0 flex flex-col gap-0">
           {currentView === 'files' && (
             <>
               {/* Editor Tabs */}
               {openFiles.length > 0 && <EditorTabs />}
+
+              {/* Breadcrumbs */}
+              {activeFile && (
+                <Group role="Breadcrumbs" layout="inline" padding="xs" prominence="Subtle" className="border-b border-border-muted px-4">
+                  <Text role="Caption" content="src" prominence="Subtle" />
+                  <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
+                  <Text role="Caption" content="apps" prominence="Subtle" />
+                  <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
+                  <Text role="Caption" content="IDE" prominence="Subtle" />
+                  <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
+                  <Text role="Caption" content={activeFile.name} prominence="Standard" />
+                </Group>
+              )}
 
               {/* Editor or Empty State */}
               {activeFile ? (
@@ -178,9 +192,31 @@ export const IDEPage = () => {
         />
       </Section>
 
-      {/* IDDL Section[Auxiliary]: Right Navigation */}
-      <Section role="Auxiliary">
+      {/* IDDL Section[UtilityBar]: Right Navigation */}
+      <Section role="UtilityBar">
         <RightNav onViewChange={setRightPanelView} onClose={() => setRightPanelView(null)} />
+      </Section>
+
+      {/* IDDL Section[Footer]: Status Bar */}
+      <Section role="Footer" prominence="Subtle" density="Compact">
+        <Group role="Toolbar" justify="between" align="center" padding="xs" className="w-full">
+          {/* Left: Git Branch & Errors */}
+          <Group role="Inline" gap="sm" align="center">
+            <Action role="Button" icon="GitBranch" label="main*" prominence="Subtle" density="Compact" />
+            <Action role="Button" icon="RefreshCw" label="" prominence="Subtle" density="Compact" />
+            <Text role="Body" content="0 errors" prominence="Subtle" size="xs" />
+            <Text role="Body" content="0 warnings" prominence="Subtle" size="xs" />
+          </Group>
+
+          {/* Right: Cursor & Language */}
+          <Group role="Inline" gap="sm" align="center">
+            <Text role="Body" content="Ln 12, Col 34" prominence="Subtle" size="xs" />
+            <Text role="Body" content="UTF-8" prominence="Subtle" size="xs" />
+            <Text role="Body" content="TypeScript React" prominence="Subtle" size="xs" />
+            <Action role="Button" icon="Check" label="Prettier" prominence="Subtle" density="Compact" />
+            <Action role="IconButton" icon="Bell" label="Notifications" prominence="Subtle" density="Compact" />
+          </Group>
+        </Group>
       </Section>
 
       {/* Modals */}

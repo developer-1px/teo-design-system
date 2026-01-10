@@ -77,6 +77,9 @@ const groupVariants = cva('', {
       PreviewCard: 'rounded-lg border-2 p-3 flex flex-col justify-center items-center', // v1.1.2: 미리보기 카드 (색상은 별도 지정)
       Inline: 'flex items-center gap-2',
       Accordion: 'flex flex-col gap-2',
+      ScrollMenu: 'flex flex-col overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border-default hover:scrollbar-thumb-border-strong',
+      Breadcrumbs: 'flex items-center gap-1 text-sm text-text-subtle',
+      Navigator: 'flex flex-col items-center gap-2',
     },
     // Density (v1.1.1)
     density: {
@@ -155,6 +158,7 @@ const roleToTag: Record<GroupRole, string> = {
   Form: 'form',
   Fieldset: 'fieldset',
   List: 'ul',
+  SortableList: 'div',
   Table: 'table',
   Card: 'article',
   Divider: 'div',
@@ -170,6 +174,9 @@ const roleToTag: Record<GroupRole, string> = {
   Split: 'div',
   Inline: 'div',
   Accordion: 'div',
+  ScrollMenu: 'nav',
+  Breadcrumbs: 'nav',
+  Navigator: 'nav',
 };
 
 /**
@@ -188,6 +195,9 @@ const roleToAria: Partial<Record<GroupRole, Record<string, string>>> = {
   Card: { role: 'article' },
   Steps: { role: 'list', 'aria-label': 'Progress steps' },
   Accordion: { role: 'region' }, // 각 AccordionItem은 개별 ARIA 처리
+  ScrollMenu: { role: 'navigation', 'aria-label': 'Scroll Menu' },
+  Breadcrumbs: { 'aria-label': 'Breadcrumb' },
+  Navigator: { role: 'navigation', 'aria-label': 'Navigator' },
 };
 
 export function Group({
@@ -259,10 +269,10 @@ export function Group({
   const selectionAriaProps =
     value !== undefined
       ? {
-          role: 'option',
-          'aria-selected': isSelected,
-          tabIndex: isSelected ? 0 : -1,
-        }
+        role: 'option',
+        'aria-selected': isSelected,
+        tabIndex: isSelected ? 0 : -1,
+      }
       : {};
 
   // v1.0.4: Focus management - ref 등록
@@ -306,24 +316,24 @@ export function Group({
   // v3.1: Interactive State Token System 적용 (clickable/selectable일 때)
   const interactiveClasses = computedClickable
     ? getInteractiveClasses({
-        prominence: computedProminence,
-        intent: computedIntent,
-        config: {
-          selected: isSelected,
-          disabled: false,
-          focusable: true,
-          clickable: true,
-        },
-      })
+      prominence: computedProminence,
+      intent: computedIntent,
+      config: {
+        selected: isSelected,
+        disabled: false,
+        focusable: true,
+        clickable: true,
+      },
+    })
     : '';
 
   // v3.1: Spacing Token System 적용 (gap만 필요)
   const spacingClasses = gap
     ? `gap-${gap}` // override
     : gapVariants({
-        prominence: computedProminence as 'Hero' | 'Standard' | 'Strong' | 'Subtle',
-        density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
-      });
+      prominence: computedProminence as 'Hero' | 'Standard' | 'Strong' | 'Subtle',
+      density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
+    });
 
   // v4.0: Toolbar role에 대해 전용 renderer 사용
   if (role === 'Toolbar') {

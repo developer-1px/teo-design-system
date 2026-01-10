@@ -53,9 +53,38 @@ function createTagBadge(): HTMLDivElement {
 }
 
 /**
+ * IDDL Role 별 아이콘 반환
+ */
+function getRoleIcon(role?: string, name?: string): string {
+  if (!role) {
+    if (name === 'Page') return '📄';
+    if (name === 'Section') return '📦';
+    if (name === 'Group') return '🗂️';
+    if (name === 'Action') return '⚡';
+    if (name === 'Text') return '📝';
+    if (name === 'Field') return '📥';
+    return '🧩';
+  }
+
+  const r = role.toLowerCase();
+  if (r.includes('page') || r.includes('application')) return '📄';
+  if (r.includes('sidebar') || r.includes('nav') || r.includes('aside')) return '📂';
+  if (r.includes('editor')) return '💻';
+  if (r.includes('panel') || r.includes('footer')) return '🖥️';
+  if (r.includes('toolbar')) return '🛠️';
+  if (r.includes('button') || r.includes('action')) return '⚡';
+  if (r.includes('input') || r.includes('field')) return '📥';
+  if (r.includes('text') || r.includes('title') || r.includes('body')) return '📝';
+  if (r.includes('card') || r.includes('container')) return '🗂️';
+  if (r.includes('grid') || r.includes('list')) return '📋';
+
+  return '🧩';
+}
+
+/**
  * 요소 위치에 맞춰 overlay 업데이트
  */
-function updateOverlayPosition(element: HTMLElement, componentName?: string): void {
+function updateOverlayPosition(element: HTMLElement, componentName?: string, role?: string): void {
   if (!overlayDiv) return;
 
   const rect = element.getBoundingClientRect();
@@ -66,11 +95,14 @@ function updateOverlayPosition(element: HTMLElement, componentName?: string): vo
   overlayDiv.style.display = 'block';
 
   // Tag Badge 업데이트
-  if (tagBadge && componentName) {
-    tagBadge.textContent = componentName;
+  if (tagBadge && (componentName || role)) {
+    const icon = getRoleIcon(role, componentName);
+    const label = role ? `{${role}}` : componentName;
+    tagBadge.innerHTML = `<span style="margin-right: 4px;">${icon}</span>${label}`;
     tagBadge.style.top = `${rect.top - 20}px`;
     tagBadge.style.left = `${rect.left}px`;
-    tagBadge.style.display = 'block';
+    tagBadge.style.display = 'flex';
+    tagBadge.style.alignItems = 'center';
   }
 }
 
@@ -156,11 +188,13 @@ function handleMouseMove(e: MouseEvent): void {
     return;
   }
 
-  // 컴포넌트 이름 가져오기
+  // 컴포넌트 정보 가져오기
   const hierarchy = extractComponentHierarchy(element);
-  const componentName = hierarchy.length > 0 ? hierarchy[0].name : undefined;
+  const first = hierarchy.length > 0 ? hierarchy[0] : undefined;
+  const componentName = first?.name;
+  const role = first?.role;
 
-  updateOverlayPosition(element, componentName);
+  updateOverlayPosition(element, componentName, role);
 }
 
 /**
