@@ -1,10 +1,10 @@
 import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Atom/Text/Text';
-import { Action } from '@/components/types/Atom/Action/Action';
+import { Text } from '@/components/types/Element/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
 
 export function BlockNavigationDemo() {
     return (
-        <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
+        <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
                 <Text role="Title" prominence="Strong" content="5. Navigation" />
                 <Text role="Body" prominence="Subtle" content="Components for wayfinding and structure." />
@@ -13,7 +13,7 @@ export function BlockNavigationDemo() {
             {/* Breadcrumbs */}
             <Block role="Card" className="p-4 gap-4">
                 <Text role="Label" content="Breadcrumbs (role='Breadcrumbs')" />
-                <Block role="Breadcrumbs" layout="inline">
+                <Block role="Breadcrumbs">
                     <Text role="Caption" content="Home" />
                     <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
                     <Text role="Caption" content="Category" />
@@ -35,7 +35,7 @@ export function BlockNavigationDemo() {
             {/* Steps */}
             <Block role="Card" className="p-4 gap-4">
                 <Text role="Label" content="Steps (role='Steps')" />
-                <Block role="Steps" layout="inline" className="items-center">
+                <Block role="Steps" className="items-center !flex-row">
                     <Block role="Inline" gap="2">
                         <div className="w-6 h-6 rounded-full bg-surface-accent-default text-text-inverse flex items-center justify-center text-xs">1</div>
                         <Text role="Body" content="Step 1" />

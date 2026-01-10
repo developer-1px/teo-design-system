@@ -38,7 +38,8 @@
 import { cva } from 'class-variance-authority';
 import { type ReactNode } from 'react';
 import { useDynamicGridTemplate } from '@/components/types/Page/hooks/useDynamicGridTemplate';
-import type { GridTemplate, Intent, PageLayout, Prominence } from '@/components/types/Atom/types';
+import type { PageLayout } from '@/components/types/Page/Page.types';
+import type { GridTemplate, Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
 
 /**

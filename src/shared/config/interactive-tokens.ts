@@ -20,7 +20,7 @@
  */
 
 import { cva } from 'class-variance-authority';
-import type { Intent, Prominence } from '@/components/types/Atom/types';
+import type { Intent, Prominence } from '@/components/types/Shared.types';
 
 /**
  * Interactive State 타입 정의

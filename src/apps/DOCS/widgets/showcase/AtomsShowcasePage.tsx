@@ -9,9 +9,9 @@
 
 import { useState } from 'react';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Atom/Action/Action';
-import { Field, type FieldOption } from '@/components/types/Atom/Field/Field';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Field, type FieldOption } from '@/components/types/Element/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
 
 export function AtomsShowcasePage() {

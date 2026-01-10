@@ -1,6 +1,6 @@
 import { Code, FileSearch, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 

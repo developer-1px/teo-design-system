@@ -11,9 +11,9 @@
 import { useEffect, useState } from 'react';
 import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
 import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Atom/Action/Action';
-import { Field } from '@/components/types/Atom/Field/Field';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Field } from '@/components/types/Element/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 import { DocsTree } from './DocsTree.tsx';
@@ -68,7 +68,7 @@ export const DocsViewer = () => {
     <Page role="Application" layout="Sidebar">
       {/* 상단 고정 헤더 */}
       <Section role="Header" prominence="Standard">
-        <Block role="Toolbar" layout="inline">
+        <Block role="Toolbar">
           <Text role="Title" content="문서" />
         </Block>
       </Section>
@@ -90,7 +90,7 @@ export const DocsViewer = () => {
         <Section role="Container">
           {searchQuery ? (
             // 검색 결과
-            <Block role="List" layout="stack">
+            <Block role="List">
               {filteredDocs.map((doc) => (
                 <Action
                   key={doc.path}

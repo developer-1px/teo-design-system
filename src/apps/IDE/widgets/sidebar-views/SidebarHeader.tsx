@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Section } from '@/components/types/Section/Section';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Text } from '@/components/types/Element/Text/Text';
 
 interface SidebarHeaderProps {
     title: string;

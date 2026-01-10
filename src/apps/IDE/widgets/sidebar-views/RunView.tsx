@@ -1,4 +1,4 @@
-import { Action } from '@/components/types/Atom/Action/Action';
+import { Action } from '@/components/types/Element/Action/Action';
 import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block';
 import { SidebarHeader } from './SidebarHeader';

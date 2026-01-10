@@ -18,8 +18,8 @@
  */
 
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Atom/Action/Action';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Text } from '@/components/types/Element/Text/Text';
 import { SlidePreview } from './SlidePreview';
 import { useSelection } from '@/shared/lib/selection/useSelection';
 
@@ -96,12 +96,12 @@ export const SlideList = ({
   return (
     <Block
       role="Container"
-      layout="stack"
+      role="Container"
       density="Compact"
       {...containerProps}
     >
       {/* Toolbar: Add Button */}
-      <Block role="Toolbar" layout="inline" density="Compact">
+      <Block role="Toolbar" density="Compact">
         <Action icon="Plus" onClick={onSlideAdd} />
         {selection.selectedItems.length > 0 && (
           <Text role="Caption" prominence="Subtle">
@@ -148,7 +148,7 @@ export const SlideList = ({
         />
       ) : (
         // Fallback: Non-sortable list (if onReorder is not provided) with Selection (v1.0.2 simplified)
-        <Block role="List" layout="stack" density="Compact" className="flex-1 overflow-y-auto">
+        <Block role="List" density="Compact" className="flex-1 overflow-y-auto">
           {slides.map((slide, index) => {
             return (
               <Block

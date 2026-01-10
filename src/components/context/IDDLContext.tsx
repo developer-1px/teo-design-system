@@ -6,7 +6,8 @@
  */
 
 import { createContext, useContext } from 'react';
-import type { LayoutContextValue, BlockRole } from '@/components/types/Atom/types.ts';
+import type { BlockRole } from '@/components/types/Block/Block.types';
+import type { LayoutContextValue } from '@/components/types/Shared.types';
 
 /**
  * IDDL Context

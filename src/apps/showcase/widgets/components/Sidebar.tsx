@@ -14,9 +14,9 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FileTreeNode } from '@/apps/showcase/widgets/parser/types';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Atom/Action/Action';
-import { Field } from '@/components/types/Atom/Field/Field';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Field } from '@/components/types/Element/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
 
 interface SidebarProps {

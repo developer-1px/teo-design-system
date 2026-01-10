@@ -40,8 +40,8 @@ import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
 import type {
   PageProps,
   PageRole,
-} from '@/components/types/Atom/types.ts';
-import { cn } from '@/shared/lib/utils.ts';
+} from '@/components/types/Page/Page.types';
+import { cn } from '@/shared/lib/utils';
 
 // Import App layout renderer
 import { AppLayout } from './renderers/AppLayout';

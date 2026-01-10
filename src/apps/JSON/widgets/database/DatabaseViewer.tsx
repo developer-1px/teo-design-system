@@ -7,10 +7,10 @@
 import { useMemo, useState } from 'react';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Divider } from '@/components/types/Block/role/Divider.tsx';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
-import { Badge } from '@/components/types/Atom/Text/role/Badge.tsx';
-import { Text } from '@/components/types/Atom/Text/Text.tsx';
-import type { DatabaseConfig, JsonArray } from '@/components/types/Atom/types.ts';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
+import { Badge } from '@/components/types/Element/Text/role/Badge.tsx';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
+import type { DatabaseConfig, JsonArray } from '@/apps/JSON/widgets/database/types';
 import { Page } from '@/components/types/Page/Page.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 import { ViewSwitcher } from './ViewSwitcher.tsx';
@@ -70,7 +70,7 @@ export const DatabaseViewer = ({
 
   return (
     <Page>
-      <Section role="Container" layout="flex" direction="column">
+      <Section role="Container">
         {/* Header */}
         <Section role="Header" border="bottom">
           <Block role="Container" padding="lg" gap="sm">
@@ -83,12 +83,11 @@ export const DatabaseViewer = ({
           {/* Controls */}
           <Block
             role="Toolbar"
-            direction="horizontal"
             padding="md"
             border="top"
             justify="between"
           >
-            <Block role="navigation" direction="horizontal" align="center" gap="md">
+            <Block role="navigation" className="flex flex-row items-center gap-2">
               <ViewSwitcher
                 views={views}
                 activeView={activeViewId}
@@ -98,7 +97,7 @@ export const DatabaseViewer = ({
               {showStats && (
                 <>
                   <Divider orientation="vertical" spacing="none" />
-                  <Block role="Info" direction="horizontal" gap="xs">
+                  <Block role="Info" className="flex flex-row items-center gap-1">
                     <Badge variant="default" size="sm">
                       {stats.rows} rows
                     </Badge>
@@ -124,7 +123,7 @@ export const DatabaseViewer = ({
         </Section>
 
         {/* View Content */}
-        <Section role="Main" layout="flex" flex="1">
+        <Section role="Main">
           {activeView.type === 'table' && (
             <TableView data={data} viewConfig={activeView} density={density} />
           )}

@@ -18,7 +18,7 @@
  */
 
 import type { ComponentType } from 'react';
-import type { BlockRole, BlockProps } from '@/components/types/Atom/types';
+import type { BlockRole, BlockProps } from '@/components/types/Block/Block.types';
 
 // Renderers (현재 사용 중인 것들)
 import { Toolbar } from './role/Toolbar';
@@ -69,6 +69,24 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
     htmlTag: 'div',
     baseStyles: '',
     description: '일반 컨테이너 (기본값)',
+  },
+
+  Stack: {
+    htmlTag: 'div',
+    baseStyles: 'flex flex-col gap-2',
+    description: '수직 쌓기 (Stack Layout)',
+  },
+
+  Group: {
+    htmlTag: 'div',
+    baseStyles: 'flex flex-col gap-2',
+    description: '수직 쌓기 (Stack Alias for compatibility)',
+  },
+
+  Row: {
+    htmlTag: 'div',
+    baseStyles: 'flex flex-row items-start gap-2',
+    description: '수평 배치 (Row Layout)',
   },
 
   Split: {
@@ -179,6 +197,12 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
     ariaProps: { role: 'toolbar', 'aria-label': 'Floating toolbar' },
     baseStyles: 'flex items-center gap-1 bg-surface-overlay shadow-xl rounded-full px-2 py-1',
     description: '플로팅 툴바 (화면 위에 떠있는 액션 모음)',
+  },
+
+  ToolbarDivider: {
+    htmlTag: 'div',
+    baseStyles: 'w-px h-4 bg-border-muted self-center mx-1',
+    description: '툴바용 수직 구분선',
   },
 
   // ==================== Navigation ====================

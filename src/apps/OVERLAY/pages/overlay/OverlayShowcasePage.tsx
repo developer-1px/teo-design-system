@@ -9,8 +9,9 @@ import { useState } from 'react';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Atom/Text/Text';
-import { Action } from '@/components/types/Atom/Action/Action';
+import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
+import { Text } from '@/components/types/Element/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
 import { Overlay } from '@/components/types/Overlay/Overlay';
 
 export function OverlayShowcasePage() {
@@ -22,18 +23,18 @@ export function OverlayShowcasePage() {
     <Page role="Application" layout="Studio">
       {/* Header */}
       <Section role="Toolbar" prominence="Standard">
-        <Block role="Toolbar" layout="inline" density="Compact">
+        <Block role="Toolbar" density="Compact">
           <Text role="Title" prominence="Standard" content="Overlay Component Gallery" />
-          <Block role="Divider" layout="inline"><></></Block>
+          <Separator role="ToolbarDivider" className="w-px h-4 mx-2" />
           <Text role="Body" prominence="Subtle" content="Layered User Interface v2.1" />
         </Block>
       </Section>
 
       {/* Sidebar navigation */}
       <Section role="PrimarySidebar" prominence="Standard">
-        <Block role="ScrollMenu" layout="stack" density="Comfortable">
+        <Block role="ScrollMenu" density="Comfortable">
           <Text role="Label" content="CATEGORIES" prominence="Subtle" className="px-2 pt-2" />
-          <Block role="Container" layout="stack" density="Standard">
+          <Block role="Container" density="Standard">
             {['Dialogs & Modals', 'Drawers & Sheets', 'Popovers & Tooltips', 'Toasts'].map(item => (
               <Block key={item} role="Inline" clickable value={item} className="px-2 py-1 hover:bg-surface-elevated rounded-md cursor-pointer">
                 <Text role="Body" content={item} prominence="Standard" />
@@ -45,33 +46,35 @@ export function OverlayShowcasePage() {
 
       {/* Main Content */}
       <Section role="Editor" prominence="Standard" mode="view">
-        <Block role="Container" layout="stack" density="Comfortable" className="p-8 gap-12 max-w-5xl mx-auto">
+        <Block role="Container" density="Comfortable" className="p-8 gap-12 max-w-5xl mx-auto">
 
           {/* Header */}
-          <Block role="Container" layout="stack" density="Standard" className="gap-2">
+          <Block role="Container" density="Standard" className="gap-2">
             <Text role="Title" prominence="Hero" content="Overlays" />
             <Text role="Body" prominence="Hero" content="Components that sit on top of the main UI-layer." />
           </Block>
 
-          <Block role="Divider" layout="stack"><></></Block>
+          <Separator className="h-px w-full" />
+
 
           {/* 1. Dialogs */}
-          <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
+          <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="1. Dialogs" />
-              <Text role="Body" prominence="Subtle" content="Modal windows that require user interaction." />
+              <Action role="IconButton" icon="Bold" label="Bold" />
+              <Action role="IconButton" icon="Italic" label="Italic" />
+              <Separator role="ToolbarDivider" />
             </div>
-
             <Block role="Card" className="p-6 flex flex-row gap-4">
               <Action role="Button" label="Standard Dialog" onClick={() => setActiveOverlay('dialog-standard')} />
               <Action role="Button" label="Critical Alert" intent="Critical" onClick={() => setActiveOverlay('dialog-critical')} />
             </Block>
           </Block>
 
-          <Block role="Divider" layout="stack"><></></Block>
+          <Separator className="h-px w-full" />
 
           {/* 2. Drawers */}
-          <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
+          <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="2. Drawers & Sheets" />
               <Text role="Body" prominence="Subtle" content="slide-out panels from screen edges." />
@@ -84,10 +87,10 @@ export function OverlayShowcasePage() {
             </Block>
           </Block>
 
-          <Block role="Divider" layout="stack"><></></Block>
+          <Separator className="h-px w-full" />
 
           {/* 3. Popovers & Tooltips */}
-          <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
+          <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="3. Popovers & Toasts" />
               <Text role="Body" prominence="Subtle" content="Floating content and notifications." />
@@ -113,7 +116,7 @@ export function OverlayShowcasePage() {
             <Text role="Title" prominence="Strong" content="Confirm Action" />
             <Text role="Body" content="Are you sure you want to proceed with this action? This can be undone." />
           </Block>
-          <Block role="Toolbar" layout="inline" className="justify-end gap-2">
+          <Block role="Toolbar" className="justify-end gap-2">
             <Action role="Button" label="Cancel" prominence="Subtle" onClick={closeOverlay} />
             <Action role="Button" label="Confirm" intent="Brand" onClick={closeOverlay} />
           </Block>
@@ -127,7 +130,7 @@ export function OverlayShowcasePage() {
             <Text role="Title" prominence="Strong" content="Delete Account" intent="Critical" />
             <Text role="Body" content="This action promotes permanent data loss. Are you absolutely sure?" />
           </Block>
-          <Block role="Toolbar" layout="inline" className="justify-end gap-2">
+          <Block role="Toolbar" className="justify-end gap-2">
             <Action role="Button" label="Cancel" onClick={closeOverlay} />
             <Action role="Button" label="Delete" intent="Critical" onClick={closeOverlay} />
           </Block>
@@ -167,6 +170,6 @@ export function OverlayShowcasePage() {
         </Block>
       </Overlay>
 
-    </Page>
+    </Page >
   );
 }

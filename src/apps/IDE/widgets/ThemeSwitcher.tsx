@@ -9,10 +9,10 @@
 
 import { Moon as MoonIcon, Sun as SunIcon, X as XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Text } from '@/components/types/Atom/Text/Text.tsx';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
 import {
   applyThemeConfig,
   type ColorScheme,
@@ -20,7 +20,7 @@ import {
   getThemeConfig,
   type Theme,
   toggleTheme as toggleThemeUtil,
-} from '@/shared/lib/theme.ts';
+} from '@/shared/lib/theme';
 
 interface ThemeSwitcherProps {
   onClose?: () => void;

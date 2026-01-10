@@ -6,7 +6,7 @@
 
 import { Save, Undo, Redo, Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 import { Block, ToolbarDivider, ToolbarBlock } from '../Block';
-import { Action } from '@/components/types/Atom/Action/Action';
+import { Action } from '@/components/types/Element/Action/Action';
 
 /**
  * 예시 1: 기본 Toolbar

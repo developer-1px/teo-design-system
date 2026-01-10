@@ -1,4 +1,44 @@
-import type { PageLayout } from '@/components/types/Atom/types.ts';
+import type { PageLayout } from '@/components/types/Page/Page.types';
+import type { SectionRole } from './Section.types';
+
+/**
+ * Layout별 유효한 Section Role 매핑 (v5.0)
+ * Page layout에 따라 사용 가능한 Section role이 결정됨
+ */
+export const LAYOUT_SECTION_ROLES: Record<PageLayout, SectionRole[]> = {
+  // Single: Header + Container + Footer (1단 기본형)
+  Single: ['Header', 'Container', 'Footer', 'Main'],
+
+  // Sidebar: Navigator(좌) + Container(우) (2단 좌측 메뉴형)
+  Sidebar: ['Header', 'Footer', 'Navigator', 'Container', 'Main'],
+
+  // Aside: Container(좌) + Aside(우) (2단 우측 정보형)
+  Aside: ['Header', 'Footer', 'Container', 'Aside', 'Main'],
+
+  // HolyGrail: Header + Navigator + Container + Aside + Footer (3단 완전체)
+  HolyGrail: ['Header', 'Footer', 'Navigator', 'Container', 'Aside', 'Main', 'Region'],
+
+  // Split: PanelLeft + PanelRight (5:5 분할형, master-detail)
+  Split: ['Header', 'Footer', 'Master', 'Detail', 'Toolbar', 'Container', 'Main'],
+
+  // Studio: ActivityBar + PrimarySidebar + Editor + Panel + SecondarySidebar (IDE 전용)
+  Studio: [
+    'Header',
+    'Footer',
+    'Toolbar',
+    'ActivityBar',
+    'PrimarySidebar',
+    'SecondarySidebar',
+    'Editor',
+    'Panel',
+    'UtilityBar',
+    'Container',
+    'Main',
+  ],
+
+  // Blank: 빈 캔버스 (dialog, custom)
+  Blank: ['Container', 'Main', 'DialogHeader', 'DialogContent', 'DialogFooter'],
+};
 
 /**
  * Role Configuration Helper (v5.0)
@@ -39,14 +79,7 @@ export interface RoleConfig {
 export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
   // ==================== Studio Layout (IDE) ====================
   Studio: {
-    Toolbar: {
-      gridArea: 'toolbar',
-      overflow: 'hidden',
-      htmlTag: 'div',
-      ariaProps: { role: 'toolbar' },
-      baseStyles: 'flex-shrink-0 bg-surface-elevated border-b border-border-default',
-      description: '상단 툴바 (고정)',
-    },
+    // Toolbar defined below in fallback section
     ActivityBar: {
       gridArea: 'activitybar',
       overflow: 'hidden',

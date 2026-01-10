@@ -21,10 +21,10 @@ import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import { BlockLayoutProvider, useBlockLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { BlockProps, BlockRole } from '@/components/types/Atom/types.ts';
+import type { BlockProps, BlockRole } from '@/components/types/Block/Block.types';
 import { getInteractiveClasses } from '@/shared/config/interactive-tokens';
 import { gapVariants } from '@/shared/config/spacing-tokens';
-import { cn } from '@/shared/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 import { getRoleConfig, hasRenderer } from './role-config';
 
 // Re-export renderer utilities
@@ -129,6 +129,12 @@ export function Block({
   items,
   onReorder,
   renderItem,
+  // v1.0 Core: Spec support
+  // Toolbar-specific
+  sticky,
+  border,
+  // v1.0 Core: Spec support
+  spec,
   ...rest
 }: BlockProps) {
   // 조건부 렌더링 (v1.0.1)
@@ -148,7 +154,22 @@ export function Block({
   if (!computedLayout && direction) {
     computedLayout = direction === 'horizontal' ? 'inline' : 'stack';
   }
+
+  // v1.0 Core: Role determines layout (Migration Stub)
+  if (role === 'Stack' || role === 'Group') computedLayout = 'stack';
+  if (role === 'Row' || role === 'Inline' || role === 'Toolbar' || role === 'FloatingToolbar' || role === 'Breadcrumbs') computedLayout = 'inline';
+  if (role === 'Grid') computedLayout = 'grid';
+  if (role === 'Split') computedLayout = 'split';
+
+  // Default fallback
   computedLayout = computedLayout ?? 'stack';
+
+  // v1.0 Core: Spec handling (Grid columns)
+  const specStyle: React.CSSProperties = {};
+  if (role === 'Grid' && spec?.columns) {
+    specStyle.gridTemplateColumns = `repeat(${spec.columns}, minmax(0, 1fr))`;
+  }
+  // Stack/Row gap handling via spec (optional future enhancement, current using gap prop)
 
   // v1.0.2: Selection logic
   // value가 있으면 자동으로 selectable (clickable)
@@ -282,6 +303,11 @@ export function Block({
       ) : (
         <Component
           ref={componentRef}
+          // Toolbar props
+          data-sticky={sticky}
+          data-border={border}
+          // Accordion props handled via data-attributes if needed or ignored for DOM
+          data-accordion-mode={mode}
           className={cn(
             // Base role-based styles from role-config (v4.1)
             roleConfig.baseStyles,
@@ -304,7 +330,7 @@ export function Block({
             // EXCEPTION: 데이터 시각화를 위한 동적 className (예: 차트 색상, 데이터 기반 배경색)
             className
           )}
-          style={style} // EXCEPTION: 동적 레이아웃(grid-area)용 인라인 스타일
+          style={{ ...specStyle, ...style }} // EXCEPTION: 동적 레이아웃(grid-area)용 인라인 스타일
           {...ariaProps}
           {...selectionAriaProps}
           data-dsl-component="block"

@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { cn } from '@/shared/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Dropdown Context

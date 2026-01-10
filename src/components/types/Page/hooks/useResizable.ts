@@ -13,7 +13,8 @@
  */
 
 import { useCallback, useEffect, useState } from 'react';
-import type { PresentationGridArea } from '@/components/types/Atom/types';
+// PresentationGridArea removed or moved? Check usage. Assuming it was in Page types.
+import type { PresentationGridArea } from '@/components/types/Page/Page.types';
 
 export interface ResizableSizes {
   header?: string;

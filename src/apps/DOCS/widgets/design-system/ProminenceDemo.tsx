@@ -4,7 +4,7 @@
  * 주목도 시스템이 어떻게 작동하는지 시각적으로 보여줍니다.
  */
 
-import { Content, ContentGroup } from '@/components/types/Atom/Text/role/Content';
+import { Content, ContentGroup } from '@/components/types/Element/Text/role/Content';
 import { Section } from '@/components/types/Section/Section.tsx';
 
 export const ProminenceDemo = () => {

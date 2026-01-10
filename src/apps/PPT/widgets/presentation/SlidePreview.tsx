@@ -10,7 +10,7 @@
 
 import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
 import type { Slide } from './SlideList';
 
@@ -43,7 +43,7 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
           style={{ backgroundColor: slide.backgroundColor }}
         >
           {/* Slide Content Stack */}
-          <Block role="Container" layout="stack" density="Comfortable">
+          <Block role="Container" density="Comfortable">
             {/* Title Area */}
             {slide.title && (
               <Block role="Container" prominence="Primary" density="Compact">

@@ -18,8 +18,8 @@
 import { useState } from 'react';
 import { IDDLProvider } from '@/components/context/IDDLContext';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Field } from '@/components/types/Atom/Field/Field';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Field } from '@/components/types/Element/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
 import type { Slide } from './SlideList';
 
 interface FormatSidebarProps {
@@ -55,10 +55,10 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
         mode: 'edit',
       }}
     >
-      <Block role="Container" className="h-full overflow-y-auto" layout="stack" density="Comfortable">
-        <Block role="Container" layout="stack" density="Comfortable">
+      <Block role="Container" className="h-full overflow-y-auto" density="Comfortable">
+        <Block role="Container" density="Comfortable">
           {/* Text Formatting Section */}
-          <Block role="Fieldset" layout="stack" direction="vertical" density="Compact">
+          <Block role="Fieldset" density="Compact">
             <Text role="Label" prominence="Secondary" content="텍스트" />
 
             <Field
@@ -96,7 +96,7 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
           </Block>
 
           {/* Background Formatting Section */}
-          <Block role="Fieldset" layout="stack" direction="vertical" density="Compact">
+          <Block role="Fieldset" density="Compact">
             <Text role="Label" prominence="Secondary" content="배경" />
 
             <Field

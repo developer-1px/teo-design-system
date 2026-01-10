@@ -15,7 +15,7 @@ import type {
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Text } from '@/components/types/Element/Text/Text';
 import { ComponentRenderer } from './ComponentRenderer';
 import { ErrorBoundary } from './ErrorBoundary';
 import type { BackgroundType, ViewportSize } from './Toolbar';

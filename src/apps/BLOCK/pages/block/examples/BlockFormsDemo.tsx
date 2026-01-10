@@ -1,10 +1,10 @@
 import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Atom/Text/Text';
-import { Field } from '@/components/types/Atom/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
+import { Field } from '@/components/types/Element/Field/Field';
 
 export function BlockFormsDemo() {
     return (
-        <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
+        <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
                 <Text role="Title" prominence="Strong" content="3. Forms & Fieldsets" />
                 <Text role="Body" prominence="Subtle" content="Semantic grouping for input controls." />

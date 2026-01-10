@@ -4,7 +4,9 @@
 
 import { Kanban, LayoutGrid, List as ListIcon, Table } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/types/Block/role/Tabs.tsx';
-import type { ViewConfig, ViewType } from '@/components/types/Atom/types.ts';
+import type { ViewConfig } from '@/apps/JSON/widgets/database/types';
+// ViewType might be needed? Check usage. Original imported ViewConfig, ViewType
+import type { ViewType } from '@/apps/JSON/widgets/database/types';
 
 interface ViewSwitcherProps {
   views: ViewConfig[];

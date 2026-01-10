@@ -6,8 +6,8 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { DataTable } from '@/components/types/Block/role/DataTable.tsx';
-import { Text } from '@/components/types/Atom/Text/Text.tsx';
-import type { JsonArray, JsonObject, JsonValue, ViewConfig } from '../types.ts';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
+import type { JsonArray, JsonObject, JsonValue, ViewConfig } from '../types';
 
 interface TableViewProps {
   data: JsonArray;

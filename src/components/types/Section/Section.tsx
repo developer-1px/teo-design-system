@@ -22,8 +22,8 @@
  */
 
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { SectionProps } from '@/components/types/Atom/types.ts';
-import { LAYOUT_SECTION_ROLES } from '@/components/types/Atom/types.ts';
+import type { SectionProps } from '@/components/types/Section/Section.types';
+import { LAYOUT_SECTION_ROLES } from '@/components/types/Section/role-config';
 
 // v4.1: Role Configuration Helper
 import { getOverflowClass, getRoleConfig } from './role-config';

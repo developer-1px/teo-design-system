@@ -9,9 +9,9 @@ import type {
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
 import { Block } from '@/components/types/Block/Block.tsx';
-import type { DataType } from '@/components/types/Atom/Field/Field';
-import { Field } from '@/components/types/Atom/Field/Field';
-import { Text } from '@/components/types/Atom/Text/Text';
+import type { DataType } from '@/components/types/Element/Field/Field';
+import { Field } from '@/components/types/Element/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
 
 interface PropsPanelProps {

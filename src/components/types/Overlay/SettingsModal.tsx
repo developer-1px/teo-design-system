@@ -10,9 +10,9 @@ import {
   X,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/types/Atom/Action/role/Button.tsx';
+import { Button } from '@/components/types/Element/Action/role/Button.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { cn } from '@/shared/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 interface SettingsModalProps {
   isOpen: boolean;

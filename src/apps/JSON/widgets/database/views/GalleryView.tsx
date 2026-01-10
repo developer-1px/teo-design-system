@@ -5,8 +5,8 @@
 import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Card } from '@/components/types/Block/role/Card.tsx';
-import { Text } from '@/components/types/Atom/Text/Text.tsx';
-import type { JsonArray, JsonObject, ViewConfig } from '../types.ts';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
+import type { JsonArray, JsonObject, ViewConfig } from '../types';
 
 interface GalleryViewProps {
   data: JsonArray;
@@ -24,8 +24,8 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
   };
 
   return (
-    <Section role="Container" layout="scroll" padding="md">
-      <Block role="Grid" template="gallery" gridCols={gridCols[cardSize]} gap="md">
+    <Section role="Container" padding="md">
+      <Block role="Grid" spec={{ columns: gridCols[cardSize] }} gap="md">
         {data.map((item, index) => {
           const obj = item as JsonObject;
           const keys = Object.keys(obj).slice(0, 6); // 최대 6개 필드

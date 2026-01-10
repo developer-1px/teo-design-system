@@ -22,7 +22,8 @@ import {
   ZoomOut,
 } from 'lucide-react';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Atom/Action/Action';
+import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
+import { Action } from '@/components/types/Element/Action/Action';
 
 export type BackgroundType = 'transparent' | 'light' | 'dark' | 'grid';
 export type ViewportSize = 'mobile' | 'tablet' | 'desktop' | 'full';
@@ -53,9 +54,9 @@ export function Toolbar({
   onMeasureToggle,
 }: ToolbarProps) {
   return (
-    <Block role="Toolbar" layout="inline" density="Compact" prominence="Standard">
+    <Block role="Toolbar" density="Compact" prominence="Standard">
       {/* Zoom Controls */}
-      <Block role="Toolbar" layout="inline" density="Compact">
+      <Block role="Toolbar" density="Compact">
         <Action onClick={() => onZoomChange(Math.max(25, zoom - 25))}>
           <ZoomOut size={14} />
         </Action>
@@ -72,7 +73,7 @@ export function Toolbar({
       <Block role="Container" className="w-px h-6 bg-border-default" />
 
       {/* Background Controls - NOTE: Color swatches는 향후 Swatch 컴포넌트로 교체 예정 */}
-      <Block role="Toolbar" layout="inline" density="Compact">
+      <Block role="Toolbar" density="Compact">
         <Action
           selected={background === 'light'}
           onClick={() => onBackgroundChange('light')}
@@ -103,7 +104,7 @@ export function Toolbar({
       <Block role="Container" className="w-px h-6 bg-border-default" />
 
       {/* Viewport Controls */}
-      <Block role="Toolbar" layout="inline" density="Compact">
+      <Block role="Toolbar" density="Compact">
         <Action
           selected={viewport === 'mobile'}
           onClick={() => onViewportChange('mobile')}

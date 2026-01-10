@@ -6,7 +6,7 @@
 
 import { useMemo } from 'react';
 import { X } from 'lucide-react';
-import { Field } from '@/components/types/Atom/Field/Field';
+import { Field } from '@/components/types/Element/Field/Field';
 import { Block } from '@/components/types/Block/Block';
 import { IDDLProvider } from '@/components/context/IDDLContext';
 import type { JsonObject } from '@/apps/JSON/widgets/database/types';

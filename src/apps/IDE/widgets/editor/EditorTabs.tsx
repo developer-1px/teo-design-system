@@ -1,6 +1,6 @@
 import { FileCode, FileJson, FileType, X } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/types/Atom/Action/role/Button';
+import { Button } from '@/components/types/Element/Action/role/Button';
 import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
