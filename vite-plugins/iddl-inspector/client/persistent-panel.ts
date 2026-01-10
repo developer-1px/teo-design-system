@@ -8,12 +8,16 @@
  */
 
 import {
+  type FilterLevel,
+  getAllFilterLevels,
   getCurrentFilterLevel,
   getFilterConfig,
-  getAllFilterLevels,
-  type FilterLevel,
 } from './filter-state';
-import { selectComponent, getSelectedIndex, getSelectedComponentDetails } from './multi-highlighter';
+import {
+  getSelectedComponentDetails,
+  getSelectedIndex,
+  selectComponent,
+} from './multi-highlighter';
 
 interface ComponentListItem {
   name: string;
@@ -170,17 +174,18 @@ export function updatePanelContent(components: ComponentListItem[]): void {
   // Component List
   const selectedIdx = getSelectedIndex();
   const listItems = components
-    .map(
-      (item, index) => {
-        const isSelected = selectedIdx === index;
+    .map((item, index) => {
+      const isSelected = selectedIdx === index;
 
-        // Props를 1줄로 표시
-        const propsText = [
-          item.props.role ? `role="${item.props.role}"` : null,
-          item.props.prominence ? `prominence="${item.props.prominence}"` : null,
-        ].filter(Boolean).join(' ');
+      // Props를 1줄로 표시
+      const propsText = [
+        item.props.role ? `role="${item.props.role}"` : null,
+        item.props.prominence ? `prominence="${item.props.prominence}"` : null,
+      ]
+        .filter(Boolean)
+        .join(' ');
 
-        return `
+      return `
     <div
       data-component-index="${index}"
       class="component-list-item"
@@ -198,8 +203,7 @@ export function updatePanelContent(components: ComponentListItem[]): void {
       </div>
     </div>
   `;
-      }
-    )
+    })
     .join('');
 
   // Details Section (선택된 컴포넌트 상세 정보)

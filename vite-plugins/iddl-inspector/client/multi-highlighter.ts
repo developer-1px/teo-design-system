@@ -7,7 +7,7 @@
  * - Overlay + Label 생성
  */
 
-import { getFilterColor, getCurrentFilterLevel, FilterLevel } from './filter-state';
+import { FilterLevel, getCurrentFilterLevel, getFilterColor } from './filter-state';
 import { getComponentName } from './inspector';
 
 interface Fiber {
@@ -253,7 +253,9 @@ export function highlightAllComponents(): { name: string; props: any; element: H
   // 필터 레벨에 맞는 컴포넌트 수집
   const components = collectComponentsByLevel(rootFiber, filterLevel);
 
-  console.log(`[Multi Highlighter] Found ${components.length} components for level: ${filterLevel}`);
+  console.log(
+    `[Multi Highlighter] Found ${components.length} components for level: ${filterLevel}`
+  );
 
   // 각 컴포넌트에 overlay 생성
   components.forEach((component, index) => {
@@ -420,9 +422,17 @@ export function getSelectedComponentDetails(): {
   const props = fiber.memoizedProps || {};
 
   // 우선순위 있는 props 먼저
-  const priorityKeys = ['role', 'prominence', 'intent', 'density', 'layout', 'direction', 'gridArea'];
-  const otherKeys = Object.keys(props)
-    .filter((key) =>
+  const priorityKeys = [
+    'role',
+    'prominence',
+    'intent',
+    'density',
+    'layout',
+    'direction',
+    'gridArea',
+  ];
+  const otherKeys = Object.keys(props).filter(
+    (key) =>
       !priorityKeys.includes(key) &&
       key !== 'children' &&
       key !== 'ref' &&
@@ -432,9 +442,9 @@ export function getSelectedComponentDetails(): {
       !key.startsWith('data-') &&
       !key.startsWith('aria-') &&
       !key.startsWith('computed')
-    );
+  );
 
-  const allKeys = [...priorityKeys.filter(k => k in props), ...otherKeys];
+  const allKeys = [...priorityKeys.filter((k) => k in props), ...otherKeys];
 
   const propsStr = allKeys
     .map((key) => {

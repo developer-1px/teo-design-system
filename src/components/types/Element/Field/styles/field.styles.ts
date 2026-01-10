@@ -38,24 +38,27 @@ export type FieldWrapperVariants = VariantProps<typeof fieldWrapperStyles>;
  *
  * 토큰: fontSize.xs (12px), fontWeight.medium/semibold
  */
-export const labelStyles = cva('font-medium text-text peer-disabled:cursor-not-allowed peer-disabled:opacity-70', {
-  variants: {
-    prominence: {
-      Hero: 'text-base font-semibold', // 16px, 600
-      Standard: 'text-sm font-medium', // 13px, 500
-      Strong: 'text-sm font-semibold', // 13px, 600
-      Subtle: 'text-xs text-muted', // 12px
+export const labelStyles = cva(
+  'font-medium text-text peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+  {
+    variants: {
+      prominence: {
+        Hero: 'text-base font-semibold', // 16px, 600
+        Standard: 'text-sm font-medium', // 13px, 500
+        Strong: 'text-sm font-semibold', // 13px, 600
+        Subtle: 'text-xs text-muted', // 12px
+      },
+      required: {
+        true: 'after:content-["*"] after:ml-0.5 after:text-red-500',
+        false: '',
+      },
     },
-    required: {
-      true: 'after:content-["*"] after:ml-0.5 after:text-red-500',
-      false: '',
+    defaultVariants: {
+      prominence: 'Standard',
+      required: false,
     },
-  },
-  defaultVariants: {
-    prominence: 'Standard',
-    required: false,
-  },
-});
+  }
+);
 
 export type LabelVariants = VariantProps<typeof labelStyles>;
 
@@ -80,10 +83,10 @@ export const inputStyles = cva(
   {
     variants: {
       prominence: {
-        Hero: 'text-lg h-12', 
-        Standard: 'text-sm h-9', 
-        Strong: 'text-sm font-medium h-10', 
-        Subtle: 'text-xs h-8', 
+        Hero: 'text-lg h-12',
+        Standard: 'text-sm h-9',
+        Strong: 'text-sm font-medium h-10',
+        Subtle: 'text-xs h-8',
       },
       density: {
         Comfortable: 'py-2 px-3', // 8px 12px
@@ -203,7 +206,7 @@ export const selectStyles = cva(
     'disabled:cursor-not-allowed disabled:opacity-50',
     'appearance-none',
     // Custom Arrow
-    'bg-[url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%236b7280\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e")]',
+    "bg-[url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")]",
     'bg-no-repeat bg-right bg-[length:1.25rem]',
     'pr-8',
   ],
@@ -259,14 +262,15 @@ export const checkboxStyles = cva(
     'peer shrink-0 border border-primary text-primary shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
     'cursor-pointer appearance-none bg-surface',
     // Custom Check Icon for checked state
-    'checked:bg-accent checked:border-accent checked:bg-[url("data:image/svg+xml,%3csvg viewBox=\'0 0 16 16\' fill=\'white\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z\'/%3e%3c/svg%3e")]',
+    "checked:bg-accent checked:border-accent checked:bg-[url(\"data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e\")]",
     'checked:bg-center checked:bg-no-repeat',
   ],
   {
     variants: {
       type: {
         checkbox: 'rounded-sm', // 4px
-        radio: 'rounded-full checked:bg-[url("data:image/svg+xml,%3csvg viewBox=\'0 0 16 16\' fill=\'white\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3ccircle cx=\'8\' cy=\'8\' r=\'3\'/%3e%3c/svg%3e")]',
+        radio:
+          "rounded-full checked:bg-[url(\"data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e\")]",
       },
       size: {
         sm: 'w-3 h-3', // 12px
@@ -292,7 +296,8 @@ export const optionLabelStyles = cva(['flex items-center gap-2 cursor-pointer te
   variants: {
     prominence: {
       Hero: 'text-lg',
-      Standard: 'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+      Standard:
+        'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
       Strong: 'text-sm font-medium leading-none',
       Subtle: 'text-xs text-muted',
     },
@@ -421,31 +426,28 @@ export type FileInputVariants = VariantProps<typeof fileInputStyles>;
  *
  * 토큰: iconSize.md (20px), accent, text.tertiary
  */
-export const ratingStarStyles = cva(
-  ['cursor-pointer transition-colors'],
-  {
-    variants: {
-      filled: {
-        true: 'text-yellow-500',
-        false: 'text-subtle hover:text-yellow-400',
-      },
-      size: {
-        sm: 'w-4 h-4', // 16px
-        md: 'w-5 h-5', // 20px (default)
-        lg: 'w-6 h-6', // 24px
-      },
-      disabled: {
-        true: 'cursor-not-allowed opacity-50',
-        false: '',
-      },
+export const ratingStarStyles = cva(['cursor-pointer transition-colors'], {
+  variants: {
+    filled: {
+      true: 'text-yellow-500',
+      false: 'text-subtle hover:text-yellow-400',
     },
-    defaultVariants: {
-      filled: false,
-      size: 'md',
-      disabled: false,
+    size: {
+      sm: 'w-4 h-4', // 16px
+      md: 'w-5 h-5', // 20px (default)
+      lg: 'w-6 h-6', // 24px
     },
-  }
-);
+    disabled: {
+      true: 'cursor-not-allowed opacity-50',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    filled: false,
+    size: 'md',
+    disabled: false,
+  },
+});
 
 export type RatingStarVariants = VariantProps<typeof ratingStarStyles>;
 
@@ -479,7 +481,7 @@ export const toggleStyles = cva(
       size: {
         sm: 'h-5 w-9',
         md: 'h-6 w-11',
-        lg: 'h-7 w-14', 
+        lg: 'h-7 w-14',
       },
     },
     defaultVariants: {
@@ -497,7 +499,9 @@ export type ToggleVariants = VariantProps<typeof toggleStyles>;
  * 토큰: borderRadius, spacing
  */
 export const toggleThumbStyles = cva(
-  ['pointer-events-none block rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0'],
+  [
+    'pointer-events-none block rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
+  ],
   {
     variants: {
       checked: {
@@ -505,8 +509,8 @@ export const toggleThumbStyles = cva(
         false: '',
       },
       size: {
-        sm: 'h-4 w-4', 
-        md: 'h-5 w-5', 
+        sm: 'h-4 w-4',
+        md: 'h-5 w-5',
         lg: 'h-6 w-6',
       },
     },

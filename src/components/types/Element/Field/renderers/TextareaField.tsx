@@ -16,6 +16,9 @@
  * />
  */
 
+import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
+import type { Intent, Prominence } from '@/components/types/Shared.types';
+import { cn } from '@/shared/lib/utils';
 import { useTextareaField } from '../headless/useTextareaField';
 import {
   errorStyles,
@@ -23,9 +26,6 @@ import {
   labelStyles,
   textareaStyles,
 } from '../styles/field.styles';
-import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
-import type { Intent, Prominence } from '@/components/types/Shared.types';
-import { cn } from '@/shared/lib/utils';
 
 export interface TextareaFieldProps {
   /**
@@ -158,9 +158,7 @@ export function TextareaField(props: TextareaFieldProps) {
           <span>
             {field.characterCount.current} / {field.characterCount.max}
           </span>
-          <span>
-            {field.characterCount.percentage}%
-          </span>
+          <span>{field.characterCount.percentage}%</span>
         </div>
       )}
 

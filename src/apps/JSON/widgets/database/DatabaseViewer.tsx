@@ -5,12 +5,12 @@
  */
 
 import { useMemo, useState } from 'react';
+import type { DatabaseConfig, JsonArray } from '@/apps/JSON/widgets/database/types';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Divider } from '@/components/types/Block/role/Divider.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Badge } from '@/components/types/Element/Text/role/Badge.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
-import type { DatabaseConfig, JsonArray } from '@/apps/JSON/widgets/database/types';
 import { Page } from '@/components/types/Page/Page.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 import { ViewSwitcher } from './ViewSwitcher.tsx';
@@ -74,19 +74,12 @@ export const DatabaseViewer = ({
         {/* Header */}
         <Section role="Header" border="bottom">
           <Block role="Container" padding="lg" gap="sm">
-            {title && (
-              <Text role="Title" prominence="Hero" content={title} />
-            )}
+            {title && <Text role="Title" prominence="Hero" content={title} />}
             {description && <Text role="Body" prominence="Subtle" content={description} />}
           </Block>
 
           {/* Controls */}
-          <Block
-            role="Toolbar"
-            padding="md"
-            border="top"
-            justify="between"
-          >
+          <Block role="Toolbar" padding="md" border="top" justify="between">
             <Block role="navigation" className="flex flex-row items-center gap-2">
               <ViewSwitcher
                 views={views}

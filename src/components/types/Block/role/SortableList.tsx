@@ -23,15 +23,14 @@
  * **v1.0.2 변경사항**: `itemKey` → `value` (backward compatible)
  */
 
-import { type ReactNode, useCallback } from 'react';
 import {
-  DndContext,
   closestCenter,
+  DndContext,
+  type DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-  type DragEndEvent,
 } from '@dnd-kit/core';
 import {
   arrayMove,
@@ -41,6 +40,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { type ReactNode, useCallback } from 'react';
 import { cn } from '@/shared/lib/utils';
 import type { BlockRendererProps } from '../role-config';
 
@@ -136,7 +136,7 @@ export function SortableList({
           className={cn(
             // Base SortableList styles
             'flex flex-col',
-            densityGap,
+            densityGap
             // Custom className
           )}
           aria-label="Sortable List"

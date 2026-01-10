@@ -78,7 +78,7 @@ export function ButtonAction({
         // Spacing (gap, padding based on prominence × density)
         spacingClasses,
         // Loading cursor
-        loading && 'cursor-wait',
+        loading && 'cursor-wait'
         // Custom className override
       )}
       data-dsl-component="action"

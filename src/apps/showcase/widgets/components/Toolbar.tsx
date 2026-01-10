@@ -22,8 +22,8 @@ import {
   ZoomOut,
 } from 'lucide-react';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
 import { Action } from '@/components/types/Element/Action/Action';
+import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
 
 export type BackgroundType = 'transparent' | 'light' | 'dark' | 'grid';
 export type ViewportSize = 'mobile' | 'tablet' | 'desktop' | 'full';

@@ -5,10 +5,10 @@ import {
   Terminal as TerminalIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface BottomPanelProps {
@@ -41,7 +41,11 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
     <Block role="Container" layout="flex" direction="column" className="h-full">
       <Section role="Container" layout="flex" direction="column" flex="1">
         {/* Tab Header (Unified Design) */}
-        <Section role="Header" density="Compact" className="flex items-center justify-between gap-0 p-0 h-9 border-b border-border-default">
+        <Section
+          role="Header"
+          density="Compact"
+          className="flex items-center justify-between gap-0 p-0 h-9 border-b border-border-default"
+        >
           <Block role="Tabs" direction="horizontal" align="center" gap="0" className="h-full">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -60,10 +64,14 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
                   <Icon size={14} className="text-text-tertiary" />
                   <span>{tab.label}</span>
                   {tab.count !== undefined && (
-                    <span className={cn(
-                      'ml-1.5 px-1.5 py-0.5 text-[10px] font-bold rounded-full',
-                      activeTab === tab.id ? 'bg-accent text-white' : 'bg-surface-sunken text-text-tertiary'
-                    )}>
+                    <span
+                      className={cn(
+                        'ml-1.5 px-1.5 py-0.5 text-[10px] font-bold rounded-full',
+                        activeTab === tab.id
+                          ? 'bg-accent text-white'
+                          : 'bg-surface-sunken text-text-tertiary'
+                      )}
+                    >
                       {tab.count}
                     </span>
                   )}
@@ -74,12 +82,7 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
 
           {/* Actions */}
           <Block role="Inline" align="center" gap="xs" className="px-2">
-            <Action
-              role="IconButton"
-              icon="ChevronUp"
-              label="Maximize Panel"
-              density="Compact"
-            />
+            <Action role="IconButton" icon="ChevronUp" label="Maximize Panel" density="Compact" />
             <Action
               role="IconButton"
               icon="X"
@@ -154,20 +157,16 @@ const ProblemsContent = () => {
   return (
     <Block role="List" gap="xs">
       {problems.map((problem, idx) => (
-        <Block
-          key={idx}
-          role="Inline"
-          align="start"
-          padding="sm"
-          gap="sm"
-          clickable
-        >
+        <Block key={idx} role="Inline" align="start" padding="sm" gap="sm" clickable>
           <AlertCircleIcon
             size={16}
             style={{
-              color: problem.type === 'error' ? 'var(--color-semantic-error)' : 'var(--color-semantic-warning)',
+              color:
+                problem.type === 'error'
+                  ? 'var(--color-semantic-error)'
+                  : 'var(--color-semantic-warning)',
               flexShrink: 0,
-              marginTop: '2px'
+              marginTop: '2px',
             }}
           />
           <Block role="Container" flex="1" gap="xs">
@@ -189,15 +188,30 @@ const ProblemsContent = () => {
 const OutputContent = () => {
   return (
     <Block role="List" className="font-mono" gap="xs">
-      <Text role="Code" prominence="Subtle" content="[12:34:56] Starting compilation..." size="sm" />
-      <Text role="Code" prominence="Standard" content="[12:34:57] Compiling TypeScript..." size="sm" />
+      <Text
+        role="Code"
+        prominence="Subtle"
+        content="[12:34:56] Starting compilation..."
+        size="sm"
+      />
+      <Text
+        role="Code"
+        prominence="Standard"
+        content="[12:34:57] Compiling TypeScript..."
+        size="sm"
+      />
       <Text
         role="Code"
         prominence="Positive"
         content="[12:34:58] Compilation successful"
         size="sm"
       />
-      <Text role="Code" prominence="Standard" content="[12:34:58] Watching for file changes..." size="sm" />
+      <Text
+        role="Code"
+        prominence="Standard"
+        content="[12:34:58] Watching for file changes..."
+        size="sm"
+      />
     </Block>
   );
 };
@@ -207,7 +221,12 @@ const DebugContent = () => {
   return (
     <Block role="Container" className="items-center justify-center h-full font-mono" gap="xs">
       <Text role="Code" prominence="Subtle" content="Debug console is empty" />
-      <Text role="Code" prominence="Subtle" content="Start debugging to see output here" size="sm" />
+      <Text
+        role="Code"
+        prominence="Subtle"
+        content="Start debugging to see output here"
+        size="sm"
+      />
     </Block>
   );
 };

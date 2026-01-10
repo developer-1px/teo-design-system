@@ -73,7 +73,10 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
 
               // 단락
               p: ({ node, children, ...props }) => (
-                <p className="my-4 text-[15px] text-text leading-[1.7] [&:first-child]:mt-0" {...props}>
+                <p
+                  className="my-4 text-[15px] text-text leading-[1.7] [&:first-child]:mt-0"
+                  {...props}
+                >
                   {children}
                 </p>
               ),

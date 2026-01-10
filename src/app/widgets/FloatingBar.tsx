@@ -15,11 +15,11 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
+import { APP_CONFIGS, type AppType } from '@/app/contexts/app-context.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
 import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
-import { APP_CONFIGS, type AppType } from '@/app/contexts/app-context.tsx';
 import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme';
 
 export const FloatingBar = () => {
@@ -55,10 +55,7 @@ export const FloatingBar = () => {
 
   return (
     <Overlay id="floating-bar" role="Floating" placement="bottom" isOpen={true} dismissable={false}>
-      <Block
-        role="FloatingToolbar"
-        density="Compact"
-      >
+      <Block role="FloatingToolbar" density="Compact">
         {/* App 선택 버튼들 */}
         {Object.values(APP_CONFIGS).map((app) => {
           const isActive = currentApp === app.type;

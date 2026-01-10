@@ -183,19 +183,9 @@ export function AtomsShowcasePage() {
           <Section role="Container" className="gap-4 p-4 rounded-lg grid-cols-2">
             <Field label="Text" model="text" type="text" value={formData.text} />
             <Field label="Number" model="number" type="number" value={formData.number} />
-            <Field
-              label="Currency"
-              model="currency"
-              type="currency"
-              value={formData.currency}
-            />
+            <Field label="Currency" model="currency" type="currency" value={formData.currency} />
             <Field label="Date" model="date" type="date" value={formData.date} />
-            <Field
-              label="DateTime"
-              model="datetime"
-              type="datetime"
-              value={formData.datetime}
-            />
+            <Field label="DateTime" model="datetime" type="datetime" value={formData.datetime} />
             <Field label="Boolean" model="boolean" type="boolean" value={formData.boolean} />
             <Field
               label="Select"
@@ -240,12 +230,7 @@ export function AtomsShowcasePage() {
           </Section>
 
           <Section role="Container" className="gap-4 p-4 rounded-lg mt-4">
-            <Field
-              label="Textarea"
-              model="textarea"
-              type="textarea"
-              value={formData.textarea}
-            />
+            <Field label="Textarea" model="textarea" type="textarea" value={formData.textarea} />
             <Field label="Password" model="password" type="password" value="********" />
           </Section>
         </Block>

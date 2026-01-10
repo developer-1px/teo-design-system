@@ -90,20 +90,17 @@ const placementVariants = cva('', {
  *
  * NOTE: 너비(width)는 포함하지 않음 - Page가 className으로 제어
  */
-const drawerDirectionVariants = cva(
-  'fixed inset-y-0 bg-surface-overlay shadow-xl overflow-auto',
-  {
-    variants: {
-      direction: {
-        left: 'left-0',
-        right: 'right-0',
-      },
+const drawerDirectionVariants = cva('fixed inset-y-0 bg-surface-overlay shadow-xl overflow-auto', {
+  variants: {
+    direction: {
+      left: 'left-0',
+      right: 'right-0',
     },
-    defaultVariants: {
-      direction: 'right',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    direction: 'right',
+  },
+});
 
 /**
  * Sheet direction variants (CVA)
@@ -196,7 +193,7 @@ export function Overlay({
               'bg-surface-overlay rounded-lg shadow-xl max-w-lg w-full mx-4 max-h-[90vh] overflow-auto',
               overlayDensityVariants({
                 density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
-              }),
+              })
             )}
             role="dialog"
             aria-modal="true"
@@ -246,7 +243,7 @@ export function Overlay({
               }),
               overlayDensityVariants({
                 density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
-              }),
+              })
             )}
             role="dialog"
             aria-modal="true"
@@ -293,7 +290,7 @@ export function Overlay({
               sheetDirectionVariants({ direction: sheetPlacement as 'top' | 'bottom' }),
               overlayDensityVariants({
                 density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
-              }),
+              })
             )}
             role="dialog"
             aria-modal="true"
@@ -325,7 +322,7 @@ export function Overlay({
           placementVariants({ placement }),
           compactDensityVariants({
             density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
-          }),
+          })
         )}
         data-dsl-component="overlay"
         data-role={role}
@@ -367,7 +364,7 @@ export function Overlay({
           placementVariants({ placement }),
           compactDensityVariants({
             density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
-          }),
+          })
         )}
         data-dsl-component="overlay"
         data-role={role}
@@ -405,7 +402,7 @@ export function Overlay({
       <ContentComponent
         className={cn(
           'absolute z-50 bg-gray-900 text-white text-xs rounded px-2 py-1 pointer-events-none',
-          placementVariants({ placement }),
+          placementVariants({ placement })
         )}
         data-dsl-component="overlay"
         data-role={role}
@@ -437,10 +434,7 @@ export function Overlay({
             depth: parentCtx.depth + 1,
           }}
         >
-          <ContentComponent
-            className={cn('max-w-7xl max-h-[90vh] overflow-auto')}
-            {...rest}
-          >
+          <ContentComponent className={cn('max-w-7xl max-h-[90vh] overflow-auto')} {...rest}>
             {dismissable && onClose && (
               <button
                 onClick={onClose}

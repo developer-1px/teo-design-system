@@ -175,22 +175,21 @@ export function useCheckboxField(options: UseCheckboxFieldOptions): UseCheckboxF
   /**
    * Handle checkbox change
    */
-  const handleChange = (optionValue: string | number | boolean) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const checked = e.target.checked;
-    let newValue: Array<string | number | boolean>;
+  const handleChange =
+    (optionValue: string | number | boolean) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const checked = e.target.checked;
+      let newValue: Array<string | number | boolean>;
 
-    if (checked) {
-      // Add to selection
-      newValue = [...value, optionValue];
-    } else {
-      // Remove from selection
-      newValue = value.filter((v) => v !== optionValue);
-    }
+      if (checked) {
+        // Add to selection
+        newValue = [...value, optionValue];
+      } else {
+        // Remove from selection
+        newValue = value.filter((v) => v !== optionValue);
+      }
 
-    setValue(newValue);
-  };
+      setValue(newValue);
+    };
 
   /**
    * Handle blur (mark as touched, validate)

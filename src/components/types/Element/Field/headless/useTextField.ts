@@ -92,13 +92,13 @@ export interface UseTextFieldReturn {
   /**
    * Input ref for focus management
    */
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 
   /**
    * Props getter for input element
    */
   getInputProps: () => {
-    ref: React.RefObject<HTMLInputElement>;
+    ref: React.RefObject<HTMLInputElement | null>;
     name: string;
     value: string;
     required?: boolean;

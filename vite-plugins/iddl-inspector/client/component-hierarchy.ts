@@ -104,7 +104,10 @@ export function extractComponentHierarchy(element: HTMLElement): ComponentInfo[]
         className,
         filePath,
         fiber: currentFiber,
-        element: currentFiber.stateNode instanceof HTMLElement ? currentFiber.stateNode : element as HTMLElement,
+        element:
+          currentFiber.stateNode instanceof HTMLElement
+            ? currentFiber.stateNode
+            : (element as HTMLElement),
       });
     }
 

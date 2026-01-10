@@ -192,7 +192,8 @@ export function Sidebar({ fileTree, selectedFile, onFileSelect }: SidebarProps) 
     return nodes.map((node) => {
       if (node.type === 'folder') {
         const isExpanded = expandedFolders.has(node.path);
-        const folderChildren = isExpanded && node.children ? renderTree(node.children, depth + 1) : null;
+        const folderChildren =
+          isExpanded && node.children ? renderTree(node.children, depth + 1) : null;
 
         return (
           <Block key={node.path} role="Container" gap={0}>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 
 interface WorkspaceNavProps {
   onViewChange?: (view: string) => void;

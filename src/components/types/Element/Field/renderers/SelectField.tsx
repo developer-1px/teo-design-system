@@ -16,16 +16,11 @@
  * />
  */
 
-import { useSelectField } from '../headless/useSelectField';
-import {
-  errorStyles,
-  fieldWrapperStyles,
-  labelStyles,
-  selectStyles,
-} from '../styles/field.styles';
 import type { FieldOption } from '@/components/types/Element/Field/Field.types';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
+import { useSelectField } from '../headless/useSelectField';
+import { errorStyles, fieldWrapperStyles, labelStyles, selectStyles } from '../styles/field.styles';
 
 export interface SelectFieldProps {
   /**

@@ -1,23 +1,26 @@
-/**
- * PageShowcasePage - Page Layout Showcase
- * 
- * MECE gallery of IDDL Page layouts and templates.
- * Visualizes the 7 standard core layouts: Single, Sidebar, Aside, HolyGrail, Split, Studio, Blank.
- */
-
-import { useState } from 'react';
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
+import {
+  AlertTriangle,
+  FileText,
+  Layout,
+} from 'lucide-react';
+import { useMemo, useState } from 'react';
 import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Element/Text/Text';
-import type { PageLayout } from '@/components/types/Page/Page.types';
+import { Page } from '@/components/types/Page/Page';
+import type { PageLayout, PageRole } from '@/components/types/Page/Page.types';
+// Dynamic Type Imports
+import pageTypesRaw from '@/components/types/Page/Page.types.ts?raw';
 import { LAYOUT_SECTION_ROLES } from '@/components/types/Section/role-config';
+import { Section } from '@/components/types/Section/Section';
 import type { SectionRole } from '@/components/types/Section/Section.types';
+import sectionTypesRaw from '@/components/types/Section/Section.types.ts?raw';
+import { parseTsSource } from '../../utils/ts-doc-parser';
 
 // Visual colors for section roles (keeping existing colors)
 const ROLE_COLORS: Partial<Record<SectionRole, string>> = {
   Header: 'bg-blue-100/50 border-blue-200 text-blue-700',
   Footer: 'bg-gray-100/50 border-gray-200 text-gray-700',
+  Status: 'bg-slate-800 text-white border-slate-900', // Unique for Status
   Main: 'bg-emerald-50/50 border-emerald-200 text-emerald-700',
   Container: 'bg-emerald-50/50 border-emerald-200 text-emerald-700',
   Navigator: 'bg-purple-100/50 border-purple-200 text-purple-700',
@@ -37,133 +40,276 @@ const ROLE_COLORS: Partial<Record<SectionRole, string>> = {
   Region: 'bg-gray-100 border-gray-200 text-gray-700',
 };
 
+
 export function PageShowcasePage() {
-  const [selectedLayout, setSelectedLayout] = useState<PageLayout>('Sidebar');
+  const [selectedLayout, setSelectedLayout] = useState<PageLayout>('Single');
+  const [selectedRole, setSelectedRole] = useState<PageRole>('Document');
+  const [disabledSections, setDisabledSections] = useState<Set<SectionRole>>(new Set());
 
-  // Available layouts
-  const layouts: PageLayout[] = ['Single', 'Sidebar', 'Aside', 'HolyGrail', 'Split', 'Studio', 'Blank'];
+  // 1. Parse Page Types
+  const pageTypeDefs = useMemo(() => parseTsSource(pageTypesRaw, 'Page.types.ts'), []);
+  const pageLayoutDef = useMemo(
+    () => pageTypeDefs.find((def) => def.name === 'PageLayout'),
+    [pageTypeDefs]
+  );
+  const pageRoleDef = useMemo(
+    () => pageTypeDefs.find((def) => def.name === 'PageRole'),
+    [pageTypeDefs]
+  );
 
-  // Get valid section roles for the current layout
+  // 2. Parse Section Types
+  const sectionTypeDefs = useMemo(() => parseTsSource(sectionTypesRaw, 'Section.types.ts'), []);
+  const sectionRoleDef = useMemo(
+    () => sectionTypeDefs.find((def) => def.name === 'SectionRole'),
+    [sectionTypeDefs]
+  );
+
+  // Available options
+  const layouts: PageLayout[] = (pageLayoutDef?.members as PageLayout[]) || [
+    'Single',
+    'Sidebar',
+    'Aside',
+    'HolyGrail',
+    'Split',
+    'Studio',
+    'Mobile',
+  ];
+
+  const roles: PageRole[] = (pageRoleDef?.members as PageRole[]) || [
+    'Document',
+    'Application',
+    'Focus',
+    'Fullscreen',
+    'Immersive',
+    'Overlay',
+    'Paper',
+  ];
+
+  // Determine sections to render
   const validSections = LAYOUT_SECTION_ROLES[selectedLayout] || [];
 
+  const renderSections = useMemo(
+    () => validSections.filter((role) => !disabledSections.has(role)),
+    [validSections, disabledSections]
+  );
+
+  const toggleSection = (role: SectionRole) => {
+    setDisabledSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(role)) {
+        next.delete(role);
+      } else {
+        next.add(role);
+      }
+      return next;
+    });
+  };
+
+  // Validation Logic
+  const validationResults = useMemo(() => {
+    if (!sectionRoleDef) return [];
+    return validSections.map((role) => ({
+      role,
+      isDefined: sectionRoleDef.members?.includes(role),
+    }));
+  }, [validSections, sectionRoleDef]);
+
   return (
-    <Page role="Application" layout="Studio">
+    <Page title="Showcase" role="Document" layout="Sidebar">
       {/* Header */}
-      <Section role="Toolbar" prominence="Standard">
+      <Section role="Header" prominence="Standard">
         <Block role="Toolbar" className="w-full">
-          <Text role="Title" prominence="Standard" content="Page Layout Gallery" />
-          <Block role="ToolbarDivider" />
-          <Text role="Body" prominence="Subtle" content="Core Layout Templates v5.0 (Live Preview)" />
+          <Text
+            role="Title"
+            prominence="Standard"
+            content="Page Layout Gallery (Dynamic + Validated)"
+          />
+          <Block role="ToolbarDivider">
+            <></>
+          </Block>
+          <Text role="Body" prominence="Subtle" content="Strict IDDL 5.0 Implementation" />
         </Block>
       </Section>
 
       {/* Sidebar navigation */}
-      <Section role="PrimarySidebar" prominence="Standard" className="w-64">
-        <Block role="ScrollMenu" className="p-2 gap-1 h-full">
-          <Text role="Label" content="LAYOUT TEMPLATES" prominence="Subtle" className="px-2 py-2" />
-          {layouts.map(layout => (
-            <Block
-              key={layout}
-              role="Inline"
-              clickable
-              onClick={() => setSelectedLayout(layout)}
-              className={`
-                px-3 py-2 rounded-md cursor-pointer transition-colors
-                ${selectedLayout === layout
-                  ? 'bg-accent/10 text-accent font-medium'
-                  : 'hover:bg-surface-elevated text-text-secondary'}
-              `}
-            >
-              <Text role="Body" content={layout} />
-            </Block>
-          ))}
+      <Section role="Nav" prominence="Standard" className="w-72">
+        <Block role="ScrollMenu" className="p-2 gap-4 h-full">
+          {/* Role Selector */}
+          <Block role="Stack" className="gap-2">
+            <Text role="Label" content="PHYSICS (ROLE)" prominence="Subtle" className="px-2" />
+            <div className="flex flex-col gap-1">
+              {roles.map((role) => {
+                const Icon = FileText;
+                const isSelected = selectedRole === role;
+                return (
+                  <div
+                    key={role}
+                    onClick={() => setSelectedRole(role)}
+                    className={`
+                       px-3 py-2 rounded-md cursor-pointer transition-all flex items-center gap-3
+                       ${isSelected ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-surface-elevated text-text-secondary'}
+                     `}
+                  >
+                    <Icon size={16} />
+                    <span className="text-sm">{role}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </Block>
+
+          <Block role="Divider" />
+
+          {/* Layout Selector */}
+          <Block role="Stack" className="gap-2">
+            <Text role="Label" content="ZONING (LAYOUT)" prominence="Subtle" className="px-2" />
+            <div className="flex flex-col gap-1">
+              {layouts.map((layout) => {
+                const isSelected = selectedLayout === layout;
+                const desc = pageLayoutDef?.memberDescriptions?.[layout];
+                return (
+                  <div
+                    key={layout}
+                    onClick={() => setSelectedLayout(layout)}
+                    className={`
+                       px-3 py-2 rounded-md cursor-pointer transition-all flex flex-col gap-1
+                       ${isSelected ? 'bg-accent/10 text-accent' : 'hover:bg-surface-elevated text-text-secondary'}
+                     `}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className={`text-sm ${isSelected ? 'font-medium' : ''}`}>{layout}</span>
+                      <Layout size={14} className="opacity-50" />
+                    </div>
+                    {desc && (
+                      <span className="text-[10px] opacity-70 line-clamp-1">
+                        {desc.split('(')[0]}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </Block>
         </Block>
       </Section>
 
       {/* Main Content */}
-      <Section role="Editor" prominence="Standard" mode="view">
-        {/* Removing h-full to allow natural scrolling of the Section */}
-        <Block role="Container" className="p-8 gap-8 w-full max-w-6xl mx-auto">
+      <Section role="Main" prominence="Standard" mode="view">
+        <Block
+          role="Container"
+          className="p-8 gap-8 w-full max-w-6xl mx-auto h-full"
+        >
+          {/* Section Toggles (Outside the preview box) */}
+          <div className="flex flex-col items-center gap-4 w-full bg-white p-6 rounded-2xl border border-border-default shadow-lg mb-8 transition-all hover:shadow-xl">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 font-black">
+              <Layout size={14} className="text-primary" />
+              Section Toggles
+            </div>
+            <div className="flex flex-wrap justify-center gap-3 max-w-3xl px-4">
+              {validSections.map((role) => {
+                const isDisabled = disabledSections.has(role);
+                const colorClass = ROLE_COLORS[role] || 'bg-gray-100 text-gray-500';
 
-          <Block role="Stack" className="gap-2">
-            <Text role="Title" prominence="Hero" content={selectedLayout} />
-            <Text role="Body" prominence="Subtle" content={`Standard ${selectedLayout} Layout Preview`} />
-            <Text role="Body" content="The preview below demonstrates the layout capabilities. Resize your window to see responsiveness." />
-          </Block>
+                return (
+                  <button
+                    key={role}
+                    onClick={() => toggleSection(role)}
+                    className={`
+                      px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200
+                      border-2 flex items-center gap-3 active:scale-95
+                      ${isDisabled
+                        ? 'bg-slate-50 border-slate-100 text-slate-300 opacity-50'
+                        : `bg-white ${colorClass.split(' ')[1]} ${colorClass.split(' ')[2]} shadow-md hover:shadow-lg translate-y-[-2px]`
+                      }
+                    `}
+                  >
+                    <div className={`w-2 h-2 rounded-full ${isDisabled ? 'bg-slate-300' : 'bg-primary shadow-[0_0_8px_rgba(var(--primary),0.5)]'}`} />
+                    {role}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="text-[10px] text-slate-400 font-medium bg-slate-50 px-3 py-1 rounded-full border border-slate-100 italic">
+              Click to dynamically toggle sections and verify layout adaptation
+            </div>
+          </div>
 
-          {/* Canvas for Layout Visualization */}
-          <Block role="Card" className="aspect-video w-full bg-surface-sunken p-8 border border-border-default rounded-xl shadow-inner relative overflow-hidden">
-            <div className="absolute inset-8 bg-surface rounded-lg shadow-sm border border-border-default overflow-hidden">
+          {/* LIVE PREVIEW */}
+          <Block
+            role="Card"
+            className="aspect-[4/3] w-full bg-slate-100 p-8 border border-border-default rounded-xl shadow-inner relative overflow-hidden flex flex-col items-center justify-center flex-1"
+          >
+            {/* Simulation Window - Using Custom Block Role */}
+            <Block
+              role="DeviceFrame"
+              className={`
+              border-[6px] border-slate-900 overflow-hidden shadow-2xl relative
+              ${selectedRole === 'Application' ? 'w-full h-full rounded-none' : ''}
+              ${selectedRole === 'Document' ? 'w-full max-w-[850px] aspect-[3/4] rounded-2xl' : ''}
+              ${selectedLayout === 'Mobile' ? 'w-[375px] h-[750px] rounded-[50px] border-[12px]' : ''}
+              ${selectedRole === 'Paper' ? 'w-[210mm] h-[297mm] bg-white shadow-none border-none scale-50 origin-top' : ''}
+            `}
+            >
               {/* 
-                 Live Page Component 
-                 - role="Application" triggers AppLayout (grid based)
-                 - w-full h-full fills the card container
+                 ACTUAL PAGE COMPONENT 
+                 Nested safely here to demonstrate internal layout 
                */}
               <Page
-                role="Application"
+                title="Page Showcase"
+                role={selectedRole}
                 layout={selectedLayout}
-                className="w-full h-full relative"
-                sizes={{
-                  primarysidebar: '200px',
-                  secondarysidebar: '200px',
-                  panel: '150px',
-                  navigator: '200px',
-                  aside: '200px',
-                  master: '250px'
-                }}
+                className={`w-full h-full !min-h-0 relative ${selectedRole === 'Paper' ? 'scale-75 origin-top' : ''}`}
               >
-                {validSections.map(role => (
-                  <Section key={role} role={role} className="relative group overflow-hidden">
-                    {/* 
-                        Mock Content to demonstrate scrolling 
-                        Container/Main/Editor roles usually scroll
-                     */}
-                    <div className={`
-                       absolute inset-0 
-                       flex flex-col
-                       ${ROLE_COLORS[role] || 'bg-gray-100/50 border-gray-200 text-gray-700'}
-                     `}>
-                      {/* Header for the section */}
-                      <div className="p-2 border-b border-black/5 flex items-center justify-center bg-black/5">
-                        <Text role="Label" content={role} className="font-bold text-xs" />
-                      </div>
+                {renderSections.map((role) => {
+                  const validationResult = validationResults.find((r) => r.role === role);
+                  const isMissing = !validationResult?.isDefined;
 
-                      {/* Scrolling content area */}
-                      <div className="flex-1 overflow-auto p-4 space-y-4">
-                        <div className="text-[10px] opacity-70 text-center uppercase tracking-wider mb-4">{role} Area</div>
+                  return (
+                    <Section key={role} role={role} className="relative group overflow-hidden">
+                      <Block
+                        role="SectionHighlight"
+                        className={`
+                       ${ROLE_COLORS[role] || 'bg-gray-100 text-gray-500'}
+                       ${isMissing ? 'ring-2 ring-red-500 ring-inset' : ''} 
+                     `}
+                      >
+                        <div className="p-2 border-b border-black/5 flex items-center justify-center bg-black/5 gap-2">
+                          <Text role="Label" content={role} className="font-bold text-xs" />
+                          {isMissing && <AlertTriangle size={12} className="text-red-600" />}
+                        </div>
 
-                        {/* Add lots of dummy content for scrolling regions */}
-                        {(['Container', 'Main', 'Editor', 'Navigator', 'Aside', 'Master', 'Detail', 'PrimarySidebar', 'SecondarySidebar'].includes(role)) && (
-                          <>
-                            {Array.from({ length: 10 }).map((_, i) => (
-                              <div key={i} className="h-8 bg-black/5 rounded w-full animate-pulse" style={{ opacity: 1 - (i * 0.1) }} />
-                            ))}
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </Section>
-                ))}
+                        <div className="flex-1 overflow-auto p-4 flex flex-col">
+                          <div className="text-[10px] opacity-50 text-center uppercase tracking-wider mb-2">
+                            {role} Area
+                          </div>
+                          {role === 'Main' && selectedRole === 'Document' ? (
+                            <div className="flex flex-col gap-4">
+                              {Array.from({ length: 15 }).map((_, i) => (
+                                <Block
+                                  key={i}
+                                  role="Mock"
+                                  className="h-24 flex items-center justify-center border-dashed"
+                                >
+                                  Document Content Block {i + 1}
+                                </Block>
+                              ))}
+                            </div>
+                          ) : (
+                            <Block role="Mock" className="h-full flex items-center justify-center">
+                              Mock Content
+                            </Block>
+                          )}
+                        </div>
+                      </Block>
+                    </Section>
+                  );
+                })}
               </Page>
-            </div>
-          </Block>
-
-          {/* Code Usage Example */}
-          <Block role="Stack" className="gap-4">
-            <Text role="Label" content="Implementation" />
-            <Block role="Card" className="bg-surface-sunken p-4 font-mono text-sm border border-border-default rounded-md overflow-x-auto">
-              <pre className="text-text-secondary">
-                {`<Page role="Application" layout="${selectedLayout}">
-${validSections.map(role => `  <Section role="${role}">
-    {/* content */}
-  </Section>`).join('\n')}
-</Page>`}
-              </pre>
             </Block>
           </Block>
-
         </Block>
       </Section>
+
     </Page>
   );
 }

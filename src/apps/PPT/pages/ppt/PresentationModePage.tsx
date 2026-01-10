@@ -16,13 +16,13 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
+import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas';
+import type { Slide } from '@/apps/PPT/widgets/presentation/SlideList';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
-import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas';
-import type { Slide } from '@/apps/PPT/widgets/presentation/SlideList';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 
 interface PresentationModePageProps {
   /** 슬라이드 목록 */
@@ -122,9 +122,14 @@ export const PresentationModePage = ({
   // Empty state
   if (slides.length === 0) {
     return (
-      <Page role="Fullscreen">
+      <Page title="Showcase" role="Fullscreen">
         <Section role="Container">
-          <Block role="Container" layout="stack" className="items-center justify-center h-full" density="Comfortable">
+          <Block
+            role="Container"
+            layout="stack"
+            className="items-center justify-center h-full"
+            density="Comfortable"
+          >
             <Text role="Body" prominence="Subtle" content="슬라이드가 없습니다" />
             <Action prominence="Secondary" onClick={onExit}>
               나가기 (Esc)
@@ -136,7 +141,7 @@ export const PresentationModePage = ({
   }
 
   return (
-    <Page role="Fullscreen">
+    <Page title="Showcase" role="Fullscreen">
       {/* Slide Container with Transition */}
       <Section
         role="Container"

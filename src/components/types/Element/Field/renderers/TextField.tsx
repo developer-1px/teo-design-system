@@ -16,6 +16,9 @@
  */
 
 import { X } from 'lucide-react';
+import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
+import type { Intent, Prominence } from '@/components/types/Shared.types';
+import { cn } from '@/shared/lib/utils';
 import { useTextField } from '../headless/useTextField';
 import {
   clearButtonStyles,
@@ -24,9 +27,6 @@ import {
   inputStyles,
   labelStyles,
 } from '../styles/field.styles';
-import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
-import type { Intent, Prominence } from '@/components/types/Shared.types';
-import { cn } from '@/shared/lib/utils';
 
 export interface TextFieldProps {
   /**

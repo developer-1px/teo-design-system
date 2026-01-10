@@ -34,7 +34,7 @@ export interface UseModalReturn {
   getOverlayProps: () => {
     role: 'dialog';
     'aria-modal': boolean;
-    ref: React.RefObject<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement | null>;
     onKeyDown: (event: React.KeyboardEvent) => void;
   };
   /** Backdrop에 적용할 props */

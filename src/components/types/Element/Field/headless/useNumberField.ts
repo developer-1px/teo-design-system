@@ -87,13 +87,13 @@ export interface UseNumberFieldReturn {
   /**
    * Input ref for focus management
    */
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 
   /**
    * Props getter for number input element
    */
   getInputProps: () => {
-    ref: React.RefObject<HTMLInputElement>;
+    ref: React.RefObject<HTMLInputElement | null>;
     type: 'number';
     name: string;
     value: number;
@@ -118,7 +118,7 @@ export interface UseNumberFieldReturn {
    * Props getter for range input element
    */
   getRangeProps: () => {
-    ref: React.RefObject<HTMLInputElement>;
+    ref: React.RefObject<HTMLInputElement | null>;
     type: 'range';
     name: string;
     value: number;

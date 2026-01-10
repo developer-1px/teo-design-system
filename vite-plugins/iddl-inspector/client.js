@@ -1,69 +1,63 @@
-(function() {
-  "use strict";
+(() => {
   var FilterLevel = /* @__PURE__ */ ((FilterLevel2) => {
-    FilterLevel2["Page"] = "Page";
-    FilterLevel2["Section"] = "Section";
-    FilterLevel2["Group"] = "Group";
-    FilterLevel2["Atom"] = "Atom";
-    FilterLevel2["All"] = "All";
+    FilterLevel2['Page'] = 'Page';
+    FilterLevel2['Section'] = 'Section';
+    FilterLevel2['Group'] = 'Group';
+    FilterLevel2['Atom'] = 'Atom';
+    FilterLevel2['All'] = 'All';
     return FilterLevel2;
   })(FilterLevel || {});
   const FILTER_CONFIGS = {
-    [
-      "Page"
+    ['Page']:
       /* Page */
-    ]: {
-      level: "Page",
-      color: "#a855f7",
-      label: "Page",
-      description: "최상위 Page 컴포넌트"
-    },
-    [
-      "Section"
+      {
+        level: 'Page',
+        color: '#a855f7',
+        label: 'Page',
+        description: '최상위 Page 컴포넌트',
+      },
+    ['Section']:
       /* Section */
-    ]: {
-      level: "Section",
-      color: "#3b82f6",
-      label: "Section",
-      description: "Section 레이아웃 영역"
-    },
-    [
-      "Group"
+      {
+        level: 'Section',
+        color: '#3b82f6',
+        label: 'Section',
+        description: 'Section 레이아웃 영역',
+      },
+    ['Group']:
       /* Group */
-    ]: {
-      level: "Group",
-      color: "#10b981",
-      label: "Group",
-      description: "Group 논리적 그룹"
-    },
-    [
-      "Atom"
+      {
+        level: 'Group',
+        color: '#10b981',
+        label: 'Group',
+        description: 'Group 논리적 그룹',
+      },
+    ['Atom']:
       /* Atom */
-    ]: {
-      level: "Atom",
-      color: "#f59e0b",
-      label: "Atom",
-      description: "Atom (Field, Action, Text)"
-    },
-    [
-      "All"
+      {
+        level: 'Atom',
+        color: '#f59e0b',
+        label: 'Atom',
+        description: 'Atom (Field, Action, Text)',
+      },
+    ['All']:
       /* All */
-    ]: {
-      level: "All",
-      color: "#6b7280",
-      label: "All",
-      description: "모든 IDDL 컴포넌트"
-    }
+      {
+        level: 'All',
+        color: '#6b7280',
+        label: 'All',
+        description: '모든 IDDL 컴포넌트',
+      },
   };
   const FILTER_CYCLE = [
-    "Page",
-    "Section",
-    "Group",
-    "Atom",
-    "All"
+    'Page',
+    'Section',
+    'Group',
+    'Atom',
+    'All',
     /* All */
   ];
-  let currentFilterLevel = "All";
+  let currentFilterLevel = 'All';
   function cycleFilterLevel() {
     const currentIndex = FILTER_CYCLE.indexOf(currentFilterLevel);
     const nextIndex = (currentIndex + 1) % FILTER_CYCLE.length;
@@ -80,43 +74,43 @@
     return FILTER_CONFIGS[level || currentFilterLevel];
   }
   function getComponentName(fiber) {
-    if (!fiber) return "Unknown";
+    if (!fiber) return 'Unknown';
     const { type, elementType } = fiber;
-    if (typeof type === "string") {
+    if (typeof type === 'string') {
       return type;
     }
-    if (typeof type === "function") {
-      return type.displayName || type.name || "Anonymous";
+    if (typeof type === 'function') {
+      return type.displayName || type.name || 'Anonymous';
     }
-    if (typeof type === "object" && type !== null) {
+    if (typeof type === 'object' && type !== null) {
       if (type.$$typeof) {
         const symbolString = String(type.$$typeof);
-        if (symbolString.includes("context")) {
+        if (symbolString.includes('context')) {
           const contextName = type._context?.displayName;
           if (contextName) return contextName;
-          return "Provider";
+          return 'Provider';
         }
       }
     }
-    if (typeof type === "symbol") {
+    if (typeof type === 'symbol') {
       const symbolString = type.toString();
-      if (symbolString.includes("Fragment")) return "Fragment";
-      if (symbolString.includes("Provider")) return "Provider";
-      if (symbolString.includes("Consumer")) return "Consumer";
-      if (symbolString.includes("Suspense")) return "Suspense";
-      return "React.SymbolComponent";
+      if (symbolString.includes('Fragment')) return 'Fragment';
+      if (symbolString.includes('Provider')) return 'Provider';
+      if (symbolString.includes('Consumer')) return 'Consumer';
+      if (symbolString.includes('Suspense')) return 'Suspense';
+      return 'React.SymbolComponent';
     }
     if (elementType) {
       if (elementType.displayName) return elementType.displayName;
       if (elementType.name) return elementType.name;
-      if (elementType.render && typeof elementType.render === "function") {
-        return elementType.render.displayName || elementType.render.name || "Unknown";
+      if (elementType.render && typeof elementType.render === 'function') {
+        return elementType.render.displayName || elementType.render.name || 'Unknown';
       }
-      if (elementType.type && typeof elementType.type === "function") {
-        return elementType.type.displayName || elementType.type.name || "Unknown";
+      if (elementType.type && typeof elementType.type === 'function') {
+        return elementType.type.displayName || elementType.type.name || 'Unknown';
       }
     }
-    return "Unknown";
+    return 'Unknown';
   }
   let activeHighlights = [];
   let selectedIndex = null;
@@ -134,16 +128,16 @@
   }
   function getComponentType(fiber) {
     const name = getComponentName(fiber);
-    if (name === "Page" || name.startsWith("App")) {
+    if (name === 'Page' || name.startsWith('App')) {
       return FilterLevel.Page;
     }
-    if (name === "Section") {
+    if (name === 'Section') {
       return FilterLevel.Section;
     }
-    if (name === "Group") {
+    if (name === 'Group') {
       return FilterLevel.Group;
     }
-    if (name === "Field" || name === "Action" || name === "Text") {
+    if (name === 'Field' || name === 'Action' || name === 'Text') {
       return FilterLevel.Atom;
     }
     return null;
@@ -157,7 +151,7 @@
         collected.push({
           fiber,
           name: getComponentName(fiber),
-          element
+          element,
         });
       }
     }
@@ -169,10 +163,10 @@
     return collected;
   }
   function getRootFiber() {
-    const rootElement = document.getElementById("root");
+    const rootElement = document.getElementById('root');
     if (!rootElement) return null;
     const allKeys = Object.keys(rootElement);
-    const fiberKey = allKeys.find((key) => key.startsWith("__react"));
+    const fiberKey = allKeys.find((key) => key.startsWith('__react'));
     if (!fiberKey) return null;
     const fiberRoot = rootElement[fiberKey];
     let fiber = null;
@@ -190,12 +184,18 @@
     }
     return fiber;
   }
-  function createOverlayForElement(element, componentName, color, isSelected = false, onClickCallback) {
+  function createOverlayForElement(
+    element,
+    componentName,
+    color,
+    isSelected = false,
+    onClickCallback
+  ) {
     const rect = element.getBoundingClientRect();
     const borderColor = isSelected ? color : `${color}40`;
     const backgroundColor = isSelected ? `${color}33` : `${color}0D`;
-    const overlay = document.createElement("div");
-    overlay.className = "iddl-inspector-highlight-overlay";
+    const overlay = document.createElement('div');
+    overlay.className = 'iddl-inspector-highlight-overlay';
     overlay.style.cssText = `
     position: fixed;
     pointer-events: auto;
@@ -210,13 +210,13 @@
     height: ${rect.height}px;
   `;
     if (onClickCallback) {
-      overlay.addEventListener("click", (e) => {
+      overlay.addEventListener('click', (e) => {
         e.stopPropagation();
         onClickCallback();
       });
     }
-    const label = document.createElement("div");
-    label.className = "iddl-inspector-highlight-label";
+    const label = document.createElement('div');
+    label.className = 'iddl-inspector-highlight-label';
     label.textContent = componentName;
     label.style.cssText = `
     position: fixed;
@@ -230,7 +230,7 @@
     border-radius: 3px;
     z-index: 999999;
     white-space: nowrap;
-    opacity: ${isSelected ? "1" : "0.7"};
+    opacity: ${isSelected ? '1' : '0.7'};
     top: ${rect.top - 20}px;
     left: ${rect.left}px;
   `;
@@ -255,11 +255,13 @@
     const color = getFilterColor(filterLevel);
     const rootFiber = getRootFiber();
     if (!rootFiber) {
-      console.warn("[Multi Highlighter] Root fiber not found");
+      console.warn('[Multi Highlighter] Root fiber not found');
       return [];
     }
     const components = collectComponentsByLevel(rootFiber, filterLevel);
-    console.log(`[Multi Highlighter] Found ${components.length} components for level: ${filterLevel}`);
+    console.log(
+      `[Multi Highlighter] Found ${components.length} components for level: ${filterLevel}`
+    );
     components.forEach((component, index) => {
       const { overlay, label } = createOverlayForElement(
         component.element,
@@ -268,7 +270,7 @@
         false,
         () => {
           selectComponent(index);
-          window.dispatchEvent(new CustomEvent("iddl-component-selected", { detail: { index } }));
+          window.dispatchEvent(new CustomEvent('iddl-component-selected', { detail: { index } }));
         }
       );
       activeHighlights.push({
@@ -277,15 +279,15 @@
         overlay,
         label,
         fiber: component.fiber,
-        isSelected: false
+        isSelected: false,
       });
     });
-    window.addEventListener("scroll", updateHighlightPositions, true);
-    window.addEventListener("resize", updateHighlightPositions);
+    window.addEventListener('scroll', updateHighlightPositions, true);
+    window.addEventListener('resize', updateHighlightPositions);
     return components.map((c) => ({
       name: c.name,
       props: c.fiber.memoizedProps || {},
-      element: c.element
+      element: c.element,
     }));
   }
   function clearAllHighlights() {
@@ -295,8 +297,8 @@
     });
     activeHighlights = [];
     selectedIndex = null;
-    window.removeEventListener("scroll", updateHighlightPositions, true);
-    window.removeEventListener("resize", updateHighlightPositions);
+    window.removeEventListener('scroll', updateHighlightPositions, true);
+    window.removeEventListener('resize', updateHighlightPositions);
   }
   function selectComponent(index) {
     if (index < 0 || index >= activeHighlights.length) return;
@@ -307,16 +309,16 @@
       prevHighlight.isSelected = false;
       prevHighlight.overlay.style.border = `2px solid ${color}40`;
       prevHighlight.overlay.style.background = `${color}0D`;
-      prevHighlight.label.style.opacity = "0.7";
+      prevHighlight.label.style.opacity = '0.7';
     }
     const highlight = activeHighlights[index];
     highlight.isSelected = true;
     selectedIndex = index;
     highlight.overlay.style.border = `2px solid ${color}`;
     highlight.overlay.style.background = `${color}33`;
-    highlight.label.style.opacity = "1";
-    highlight.element.scrollIntoView({ behavior: "smooth", block: "center" });
-    console.log("[Multi Highlighter] Component selected:", index, getSelectedComponentDetails());
+    highlight.label.style.opacity = '1';
+    highlight.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    console.log('[Multi Highlighter] Component selected:', index, getSelectedComponentDetails());
   }
   function getSelectedIndex() {
     return selectedIndex;
@@ -327,12 +329,12 @@
     }
     const highlight = activeHighlights[selectedIndex];
     const fiber = highlight.fiber;
-    let fileName = "Unknown.tsx";
-    let lineNumber = "";
+    let fileName = 'Unknown.tsx';
+    let lineNumber = '';
     if (fiber._debugSource) {
       const source = fiber._debugSource;
       if (source.fileName) {
-        const parts = source.fileName.split("/");
+        const parts = source.fileName.split('/');
         fileName = parts[parts.length - 1];
         if (source.lineNumber) {
           lineNumber = `:${source.lineNumber}`;
@@ -342,45 +344,69 @@
         }
       }
     } else if (fiber._debugInfo) {
-      console.log("[Multi Highlighter] _debugInfo:", fiber._debugInfo);
+      console.log('[Multi Highlighter] _debugInfo:', fiber._debugInfo);
     }
     const componentName = highlight.componentName;
     const props = fiber.memoizedProps || {};
-    const priorityKeys = ["role", "prominence", "intent", "density", "layout", "direction", "gridArea"];
+    const priorityKeys = [
+      'role',
+      'prominence',
+      'intent',
+      'density',
+      'layout',
+      'direction',
+      'gridArea',
+    ];
     const otherKeys = Object.keys(props).filter(
-      (key) => !priorityKeys.includes(key) && key !== "children" && key !== "ref" && key !== "key" && key !== "className" && !key.startsWith("on") && !key.startsWith("data-") && !key.startsWith("aria-") && !key.startsWith("computed")
+      (key) =>
+        !priorityKeys.includes(key) &&
+        key !== 'children' &&
+        key !== 'ref' &&
+        key !== 'key' &&
+        key !== 'className' &&
+        !key.startsWith('on') &&
+        !key.startsWith('data-') &&
+        !key.startsWith('aria-') &&
+        !key.startsWith('computed')
     );
     const allKeys = [...priorityKeys.filter((k) => k in props), ...otherKeys];
-    const propsStr = allKeys.map((key) => {
-      const value = props[key];
-      if (value === void 0 || value === null) return null;
-      if (typeof value === "string") {
-        return `${key}="${value}"`;
-      } else if (typeof value === "number") {
-        return `${key}={${value}}`;
-      } else if (typeof value === "boolean" && value === true) {
-        return key;
-      } else if (typeof value === "object") {
-        return `${key}={{...}}`;
-      }
-      return null;
-    }).filter(Boolean).join(" ");
+    const propsStr = allKeys
+      .map((key) => {
+        const value = props[key];
+        if (value === void 0 || value === null) return null;
+        if (typeof value === 'string') {
+          return `${key}="${value}"`;
+        } else if (typeof value === 'number') {
+          return `${key}={${value}}`;
+        } else if (typeof value === 'boolean' && value === true) {
+          return key;
+        } else if (typeof value === 'object') {
+          return `${key}={{...}}`;
+        }
+        return null;
+      })
+      .filter(Boolean)
+      .join(' ');
     const reactCode = propsStr ? `<${componentName} ${propsStr} />` : `<${componentName} />`;
     let htmlCode = highlight.element.outerHTML;
-    htmlCode = htmlCode.replace(/\s+/g, " ").replace(/style="[^"]*"/g, 'style="..."').replace(/class="([^"]{50,}?)"/g, 'class="..."').substring(0, 800);
+    htmlCode = htmlCode
+      .replace(/\s+/g, ' ')
+      .replace(/style="[^"]*"/g, 'style="..."')
+      .replace(/class="([^"]{50,}?)"/g, 'class="..."')
+      .substring(0, 800);
     return {
       fileName,
       lineNumber,
       reactCode,
-      htmlCode
+      htmlCode,
     };
   }
   let panelDiv = null;
   let isVisible = false;
   let currentComponents = [];
   function createPersistentPanel() {
-    const div = document.createElement("div");
-    div.id = "iddl-inspector-persistent-panel";
+    const div = document.createElement('div');
+    div.id = 'iddl-inspector-persistent-panel';
     const initialTop = 20;
     const initialRight = 20;
     div.style.cssText = `
@@ -409,31 +435,31 @@
     let startY = 0;
     let initialLeft = 0;
     let initialTop = 0;
-    const header = panel.querySelector("#iddl-panel-header");
+    const header = panel.querySelector('#iddl-panel-header');
     if (!header) return;
-    header.style.cursor = "move";
-    header.style.userSelect = "none";
-    header.addEventListener("mousedown", (e) => {
+    header.style.cursor = 'move';
+    header.style.userSelect = 'none';
+    header.addEventListener('mousedown', (e) => {
       isDragging = true;
       startX = e.clientX;
       startY = e.clientY;
       const rect = panel.getBoundingClientRect();
       initialLeft = rect.left;
       initialTop = rect.top;
-      header.style.cursor = "grabbing";
+      header.style.cursor = 'grabbing';
     });
-    document.addEventListener("mousemove", (e) => {
+    document.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
       const deltaX = e.clientX - startX;
       const deltaY = e.clientY - startY;
-      panel.style.right = "auto";
+      panel.style.right = 'auto';
       panel.style.left = `${initialLeft + deltaX}px`;
       panel.style.top = `${initialTop + deltaY}px`;
     });
-    document.addEventListener("mouseup", () => {
+    document.addEventListener('mouseup', () => {
       if (isDragging) {
         isDragging = false;
-        header.style.cursor = "move";
+        header.style.cursor = 'move';
       }
     });
   }
@@ -488,13 +514,15 @@
     </div>
   `;
     const selectedIdx = getSelectedIndex();
-    const listItems = components.map(
-      (item, index) => {
+    const listItems = components
+      .map((item, index) => {
         const isSelected = selectedIdx === index;
         const propsText = [
           item.props.role ? `role="${item.props.role}"` : null,
-          item.props.prominence ? `prominence="${item.props.prominence}"` : null
-        ].filter(Boolean).join(" ");
+          item.props.prominence ? `prominence="${item.props.prominence}"` : null,
+        ]
+          .filter(Boolean)
+          .join(' ');
         return `
     <div
       data-component-index="${index}"
@@ -504,19 +532,19 @@
         border-bottom: 1px solid #2a2a2a;
         cursor: pointer;
         transition: background 0.15s;
-        background: ${isSelected ? "rgba(0, 0, 0, 0.4)" : "transparent"};
+        background: ${isSelected ? 'rgba(0, 0, 0, 0.4)' : 'transparent'};
         font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
       "
     >
       <div style="font-size: 11px; color: ${config.color};">
-        <span style="font-weight: 600;">&lt;${item.name}</span>${propsText ? ` <span style="color: #888;">${propsText}</span>` : ""}<span style="font-weight: 600;"> /&gt;</span>
+        <span style="font-weight: 600;">&lt;${item.name}</span>${propsText ? ` <span style="color: #888;">${propsText}</span>` : ''}<span style="font-weight: 600;"> /&gt;</span>
       </div>
     </div>
   `;
-      }
-    ).join("");
+      })
+      .join('');
     const details = getSelectedComponentDetails();
-    let detailsSection = "";
+    let detailsSection = '';
     if (details) {
       const fileLocation = `${details.fileName}${details.lineNumber}`;
       const combinedCode = `// ${fileLocation}
@@ -585,8 +613,12 @@ ${details.htmlCode}`;
       ">ESC</kbd> Close
     </div>
   `;
-    panelDiv.innerHTML = header + `<div style="overflow-y: auto; flex: 1;">${listItems || '<div style="padding: 16px; text-align: center; color: #666;">No components found</div>'}</div>` + detailsSection + footer;
-    panelDiv.querySelector("#iddl-close-panel-btn")?.addEventListener("click", () => {
+    panelDiv.innerHTML =
+      header +
+      `<div style="overflow-y: auto; flex: 1;">${listItems || '<div style="padding: 16px; text-align: center; color: #666;">No components found</div>'}</div>` +
+      detailsSection +
+      footer;
+    panelDiv.querySelector('#iddl-close-panel-btn')?.addEventListener('click', () => {
       hidePanel();
     });
     setupDragFunctionality(panelDiv);
@@ -595,17 +627,17 @@ ${details.htmlCode}`;
       if (!itemEl) return;
       const selectedIdx2 = getSelectedIndex();
       const isSelected = selectedIdx2 === index;
-      itemEl.addEventListener("mouseenter", () => {
+      itemEl.addEventListener('mouseenter', () => {
         if (!isSelected) {
-          itemEl.style.background = "rgba(0, 0, 0, 0.25)";
+          itemEl.style.background = 'rgba(0, 0, 0, 0.25)';
         }
       });
-      itemEl.addEventListener("mouseleave", () => {
+      itemEl.addEventListener('mouseleave', () => {
         if (!isSelected) {
-          itemEl.style.background = "transparent";
+          itemEl.style.background = 'transparent';
         }
       });
-      itemEl.addEventListener("click", () => {
+      itemEl.addEventListener('click', () => {
         selectComponent(index);
         updatePanelContent(currentComponents);
       });
@@ -616,37 +648,37 @@ ${details.htmlCode}`;
     if (!panelDiv) {
       panelDiv = createPersistentPanel();
     } else {
-      panelDiv.style.display = "flex";
+      panelDiv.style.display = 'flex';
     }
     isVisible = true;
     updatePanelContent(currentComponents);
   }
   function hidePanel() {
     if (!isVisible || !panelDiv) return;
-    panelDiv.style.display = "none";
+    panelDiv.style.display = 'none';
     isVisible = false;
   }
   function isPanelVisible() {
     return isVisible;
   }
   function initPersistentPanel() {
-    window.addEventListener("iddl-component-selected", () => {
-      console.log("[Persistent Panel] Component selected event received");
+    window.addEventListener('iddl-component-selected', () => {
+      console.log('[Persistent Panel] Component selected event received');
       updatePanelContent(currentComponents);
     });
-    console.log("[Persistent Panel] Event listener registered");
+    console.log('[Persistent Panel] Event listener registered');
   }
   function setupKeyboardHandler() {
-    document.addEventListener("keydown", (e) => {
+    document.addEventListener('keydown', (e) => {
       const isMac = /Mac/i.test(navigator.platform);
       const modKey = isMac ? e.metaKey : e.ctrlKey;
-      if (e.key === "Escape" && isPanelVisible()) {
+      if (e.key === 'Escape' && isPanelVisible()) {
         e.preventDefault();
         hidePanel();
         clearAllHighlights();
         return;
       }
-      if (modKey && e.key === "d") {
+      if (modKey && e.key === 'd') {
         e.preventDefault();
         handleFilterCycle();
       }
@@ -661,16 +693,16 @@ ${details.htmlCode}`;
     const components = highlightAllComponents();
     updatePanelContent(components);
   }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
   function init() {
     setupKeyboardHandler();
     initPersistentPanel();
-    console.log("[IDDL Inspector] Ready.");
-    console.log("  - Cmd+D: Show Inspector & Cycle Filter Level");
-    console.log("  - ESC: Hide Inspector");
+    console.log('[IDDL Inspector] Ready.');
+    console.log('  - Cmd+D: Show Inspector & Cycle Filter Level');
+    console.log('  - ESC: Hide Inspector');
   }
 })();

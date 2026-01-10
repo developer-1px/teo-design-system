@@ -51,15 +51,22 @@ export const EditorTabs = ({ onTabChange }: EditorTabsProps) => {
   };
 
   return (
-    <Section role="Header" density="Compact" className="flex items-center overflow-x-auto gap-0 p-0 h-9 border-b border-border-default">
+    <Section
+      role="Header"
+      density="Compact"
+      className="flex items-center overflow-x-auto gap-0 p-0 h-9 border-b border-border-default"
+    >
       {tabs.map((tab) => (
         <Button
           key={tab.id}
           variant="ghost"
-          className={cn('gap-2 px-4 py-0 text-xs h-full rounded-none border-r border-border-muted group whitespace-nowrap', {
-            'bg-surface-raised text-text font-medium': activeTab === tab.id,
-            'text-text-secondary hover:bg-surface-hover': activeTab !== tab.id,
-          })}
+          className={cn(
+            'gap-2 px-4 py-0 text-xs h-full rounded-none border-r border-border-muted group whitespace-nowrap',
+            {
+              'bg-surface-raised text-text font-medium': activeTab === tab.id,
+              'text-text-secondary hover:bg-surface-hover': activeTab !== tab.id,
+            }
+          )}
           onClick={() => handleTabClick(tab.id)}
         >
           <span className="text-text-tertiary">{getIcon(tab.type)}</span>

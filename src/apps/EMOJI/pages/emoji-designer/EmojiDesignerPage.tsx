@@ -142,7 +142,7 @@ export const EmojiDesignerPage = () => {
   };
 
   return (
-    <Page role="Application" layout="HolyGrail" density="Compact">
+    <Page title="Showcase" role="Application" layout="HolyGrail" density="Compact">
       {/* Header */}
       <Section role="Header" className="px-6 py-4">
         <Block role="Container" direction="horizontal" className="justify-between">
@@ -179,284 +179,284 @@ export const EmojiDesignerPage = () => {
 
       {/* Left Sidebar - Tools & Settings */}
       <Section role="Navigator" className="overflow-y-auto">
-          <Section className="p-4">
-            {/* Design Info */}
-            <Block role="Form">
-              <div>
-                <Text role="Label" className="block mb-1.5" content="Emoji Name" />
-                <Input
-                  value={state.design.name}
-                  onChange={(e) =>
-                    setState((prev) => ({
-                      ...prev,
-                      design: { ...prev.design, name: e.target.value },
-                    }))
-                  }
-                />
-              </div>
-
-              <div>
-                <Text role="Label" className="block mb-1.5" content="Grid Size" />
-                <Select
-                  value={state.design.size}
-                  onChange={(e) => handleResizeGrid(Number(e.target.value))}
-                >
-                  <option value={8}>8x8</option>
-                  <option value={16}>16x16</option>
-                  <option value={24}>24x24</option>
-                  <option value={32}>32x32</option>
-                </Select>
-              </div>
-
-              <div>
-                <Text role="Label" className="block mb-1.5" content="Preset Palette" />
-                <Select onChange={(e) => handleLoadPreset(e.target.value)}>
-                  <option value="">Select preset...</option>
-                  <option value="classic">Classic</option>
-                  <option value="skin">Skin Tones</option>
-                  <option value="nature">Nature</option>
-                </Select>
-              </div>
-            </Block>
-          </Section>
-
-          <Section className="p-4 border-t border-border">
-            <Text role="Title" prominence="Hero" className="mb-3" content="Tools" />
-
-            <Block role="Toolbar">
-              <Button
-                variant={state.tool === 'pen' ? 'accent' : 'ghost'}
-                onClick={() => setState((prev) => ({ ...prev, tool: 'pen' }))}
-                className="w-full justify-start"
-              >
-                <Paintbrush size={16} />
-                Pen
-              </Button>
-
-              <Button
-                variant={state.tool === 'eraser' ? 'accent' : 'ghost'}
-                onClick={() => setState((prev) => ({ ...prev, tool: 'eraser' }))}
-                className="w-full justify-start"
-              >
-                <Eraser size={16} />
-                Eraser
-              </Button>
-
-              <Button
-                variant={state.tool === 'fill' ? 'accent' : 'ghost'}
-                onClick={() => setState((prev) => ({ ...prev, tool: 'fill' }))}
-                className="w-full justify-start"
-              >
-                <Droplet size={16} />
-                Fill
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={handleClear}
-                className="w-full justify-start text-red-600"
-              >
-                <Trash2 size={16} />
-                Clear Canvas
-              </Button>
-            </Block>
-
-            <div className="mt-4">
-              <Switch
-                label="Show Grid"
-                checked={state.showGrid}
-                onChange={(e) => setState((prev) => ({ ...prev, showGrid: e.target.checked }))}
+        <Section className="p-4">
+          {/* Design Info */}
+          <Block role="Form">
+            <div>
+              <Text role="Label" className="block mb-1.5" content="Emoji Name" />
+              <Input
+                value={state.design.name}
+                onChange={(e) =>
+                  setState((prev) => ({
+                    ...prev,
+                    design: { ...prev.design, name: e.target.value },
+                  }))
+                }
               />
             </div>
-          </Section>
 
-          <Section className="p-4 border-t border-border">
-            <Text role="Title" prominence="Hero" className="mb-3" content="Color Palette" />
+            <div>
+              <Text role="Label" className="block mb-1.5" content="Grid Size" />
+              <Select
+                value={state.design.size}
+                onChange={(e) => handleResizeGrid(Number(e.target.value))}
+              >
+                <option value={8}>8x8</option>
+                <option value={16}>16x16</option>
+                <option value={24}>24x24</option>
+                <option value={32}>32x32</option>
+              </Select>
+            </div>
 
-            <ColorPalette
-              palette={state.design.palette}
-              selectedColor={state.selectedColor}
-              onSelectColor={(color) => setState((prev) => ({ ...prev, selectedColor: color }))}
-              onAddColor={handleAddColor}
-              onRemoveColor={handleRemoveColor}
+            <div>
+              <Text role="Label" className="block mb-1.5" content="Preset Palette" />
+              <Select onChange={(e) => handleLoadPreset(e.target.value)}>
+                <option value="">Select preset...</option>
+                <option value="classic">Classic</option>
+                <option value="skin">Skin Tones</option>
+                <option value="nature">Nature</option>
+              </Select>
+            </div>
+          </Block>
+        </Section>
+
+        <Section className="p-4 border-t border-border">
+          <Text role="Title" prominence="Hero" className="mb-3" content="Tools" />
+
+          <Block role="Toolbar">
+            <Button
+              variant={state.tool === 'pen' ? 'accent' : 'ghost'}
+              onClick={() => setState((prev) => ({ ...prev, tool: 'pen' }))}
+              className="w-full justify-start"
+            >
+              <Paintbrush size={16} />
+              Pen
+            </Button>
+
+            <Button
+              variant={state.tool === 'eraser' ? 'accent' : 'ghost'}
+              onClick={() => setState((prev) => ({ ...prev, tool: 'eraser' }))}
+              className="w-full justify-start"
+            >
+              <Eraser size={16} />
+              Eraser
+            </Button>
+
+            <Button
+              variant={state.tool === 'fill' ? 'accent' : 'ghost'}
+              onClick={() => setState((prev) => ({ ...prev, tool: 'fill' }))}
+              className="w-full justify-start"
+            >
+              <Droplet size={16} />
+              Fill
+            </Button>
+
+            <Button
+              variant="outline"
+              onClick={handleClear}
+              className="w-full justify-start text-red-600"
+            >
+              <Trash2 size={16} />
+              Clear Canvas
+            </Button>
+          </Block>
+
+          <div className="mt-4">
+            <Switch
+              label="Show Grid"
+              checked={state.showGrid}
+              onChange={(e) => setState((prev) => ({ ...prev, showGrid: e.target.checked }))}
             />
-          </Section>
+          </div>
+        </Section>
+
+        <Section className="p-4 border-t border-border">
+          <Text role="Title" prominence="Hero" className="mb-3" content="Color Palette" />
+
+          <ColorPalette
+            palette={state.design.palette}
+            selectedColor={state.selectedColor}
+            onSelectColor={(color) => setState((prev) => ({ ...prev, selectedColor: color }))}
+            onAddColor={handleAddColor}
+            onRemoveColor={handleRemoveColor}
+          />
+        </Section>
       </Section>
 
       {/* Center - Canvas */}
       <Section role="Main" className="flex flex-col overflow-hidden">
-          {/* Toolbar */}
-          <div className="h-12 bg-layer-2 border-b border-border flex items-center justify-between px-4">
-            <Block role="Card" direction="horizontal">
-              <Text role="Body" content={`${state.design.size}x${state.design.size} pixels`} />
-              <Text role="Body" content="•" />
-              <Text role="Body" content={`${state.design.palette.length} colors`} />
-            </Block>
+        {/* Toolbar */}
+        <div className="h-12 bg-layer-2 border-b border-border flex items-center justify-between px-4">
+          <Block role="Card" direction="horizontal">
+            <Text role="Body" content={`${state.design.size}x${state.design.size} pixels`} />
+            <Text role="Body" content="•" />
+            <Text role="Body" content={`${state.design.palette.length} colors`} />
+          </Block>
 
-            <Tabs value={previewTab} onValueChange={setPreviewTab}>
-              <TabsList>
-                <TabsTrigger value="canvas">Canvas</TabsTrigger>
-                <TabsTrigger value="json">JSON</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
+          <Tabs value={previewTab} onValueChange={setPreviewTab}>
+            <TabsList>
+              <TabsTrigger value="canvas">Canvas</TabsTrigger>
+              <TabsTrigger value="json">JSON</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
 
-          {/* Content */}
-          <div className="flex-1 overflow-auto p-8 flex items-center justify-center">
-            <Tabs value={previewTab} onValueChange={setPreviewTab}>
-              <TabsContent value="canvas">
-                <EmojiCanvas
-                  grid={state.design.grid}
-                  selectedColor={state.selectedColor}
-                  tool={state.tool}
-                  showGrid={state.showGrid}
-                  onChange={handleGridChange}
-                  onFill={handleFill}
-                />
-              </TabsContent>
+        {/* Content */}
+        <div className="flex-1 overflow-auto p-8 flex items-center justify-center">
+          <Tabs value={previewTab} onValueChange={setPreviewTab}>
+            <TabsContent value="canvas">
+              <EmojiCanvas
+                grid={state.design.grid}
+                selectedColor={state.selectedColor}
+                tool={state.tool}
+                showGrid={state.showGrid}
+                onChange={handleGridChange}
+                onFill={handleFill}
+              />
+            </TabsContent>
 
-              <TabsContent value="json">
-                <Section className="max-w-2xl">
-                  <Block role="Container">
-                    <Text role="Title" prominence="Hero" content="Emoji JSON Data" />
-                    <pre className="bg-layer-1 p-4 rounded-lg overflow-x-auto text-xs font-mono">
-                      {exportDesign(state.design)}
-                    </pre>
+            <TabsContent value="json">
+              <Section className="max-w-2xl">
+                <Block role="Container">
+                  <Text role="Title" prominence="Hero" content="Emoji JSON Data" />
+                  <pre className="bg-layer-1 p-4 rounded-lg overflow-x-auto text-xs font-mono">
+                    {exportDesign(state.design)}
+                  </pre>
 
-                    <Block role="Toolbar" direction="horizontal">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          navigator.clipboard.writeText(exportDesign(state.design));
-                        }}
-                      >
-                        <Copy size={16} />
-                        Copy JSON
-                      </Button>
-                    </Block>
+                  <Block role="Toolbar" direction="horizontal">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        navigator.clipboard.writeText(exportDesign(state.design));
+                      }}
+                    >
+                      <Copy size={16} />
+                      Copy JSON
+                    </Button>
                   </Block>
-                </Section>
-              </TabsContent>
-            </Tabs>
-          </div>
+                </Block>
+              </Section>
+            </TabsContent>
+          </Tabs>
+        </div>
       </Section>
 
       {/* Right Sidebar - Preview */}
       <Section role="Aside" className="overflow-y-auto">
-          <Section className="p-4">
-            <Text role="Title" prominence="Hero" className="mb-3" content="Preview" />
+        <Section className="p-4">
+          <Text role="Title" prominence="Hero" className="mb-3" content="Preview" />
 
-            <Block role="Container">
-              {/* Small preview */}
-              <div className="bg-layer-1 p-4 rounded-lg flex items-center justify-center">
-                <div
-                  className="grid gap-0"
-                  style={{
-                    gridTemplateColumns: `repeat(${state.design.size}, 4px)`,
-                    gridTemplateRows: `repeat(${state.design.size}, 4px)`,
-                  }}
-                >
-                  {state.design.grid.map((row, rowIndex) =>
-                    row.map((color, colIndex) => (
-                      <div
-                        key={`${rowIndex}-${colIndex}`}
-                        style={{
-                          width: '4px',
-                          height: '4px',
-                          backgroundColor: color === '#FFFFFF00' ? 'transparent' : color,
-                        }}
-                      />
-                    ))
-                  )}
-                </div>
+          <Block role="Container">
+            {/* Small preview */}
+            <div className="bg-layer-1 p-4 rounded-lg flex items-center justify-center">
+              <div
+                className="grid gap-0"
+                style={{
+                  gridTemplateColumns: `repeat(${state.design.size}, 4px)`,
+                  gridTemplateRows: `repeat(${state.design.size}, 4px)`,
+                }}
+              >
+                {state.design.grid.map((row, rowIndex) =>
+                  row.map((color, colIndex) => (
+                    <div
+                      key={`${rowIndex}-${colIndex}`}
+                      style={{
+                        width: '4px',
+                        height: '4px',
+                        backgroundColor: color === '#FFFFFF00' ? 'transparent' : color,
+                      }}
+                    />
+                  ))
+                )}
               </div>
+            </div>
 
-              {/* Medium preview */}
-              <div className="bg-layer-1 p-4 rounded-lg flex items-center justify-center">
-                <div
-                  className="grid gap-0"
-                  style={{
-                    gridTemplateColumns: `repeat(${state.design.size}, 8px)`,
-                    gridTemplateRows: `repeat(${state.design.size}, 8px)`,
-                  }}
-                >
-                  {state.design.grid.map((row, rowIndex) =>
-                    row.map((color, colIndex) => (
-                      <div
-                        key={`${rowIndex}-${colIndex}`}
-                        style={{
-                          width: '8px',
-                          height: '8px',
-                          backgroundColor: color === '#FFFFFF00' ? 'transparent' : color,
-                        }}
-                      />
-                    ))
-                  )}
-                </div>
+            {/* Medium preview */}
+            <div className="bg-layer-1 p-4 rounded-lg flex items-center justify-center">
+              <div
+                className="grid gap-0"
+                style={{
+                  gridTemplateColumns: `repeat(${state.design.size}, 8px)`,
+                  gridTemplateRows: `repeat(${state.design.size}, 8px)`,
+                }}
+              >
+                {state.design.grid.map((row, rowIndex) =>
+                  row.map((color, colIndex) => (
+                    <div
+                      key={`${rowIndex}-${colIndex}`}
+                      style={{
+                        width: '8px',
+                        height: '8px',
+                        backgroundColor: color === '#FFFFFF00' ? 'transparent' : color,
+                      }}
+                    />
+                  ))
+                )}
               </div>
+            </div>
 
-              {/* Large preview */}
-              <div className="bg-layer-1 p-4 rounded-lg flex items-center justify-center">
-                <div
-                  className="grid gap-0"
-                  style={{
-                    gridTemplateColumns: `repeat(${state.design.size}, 12px)`,
-                    gridTemplateRows: `repeat(${state.design.size}, 12px)`,
-                  }}
-                >
-                  {state.design.grid.map((row, rowIndex) =>
-                    row.map((color, colIndex) => (
-                      <div
-                        key={`${rowIndex}-${colIndex}`}
-                        style={{
-                          width: '12px',
-                          height: '12px',
-                          backgroundColor: color === '#FFFFFF00' ? 'transparent' : color,
-                        }}
-                      />
-                    ))
-                  )}
-                </div>
+            {/* Large preview */}
+            <div className="bg-layer-1 p-4 rounded-lg flex items-center justify-center">
+              <div
+                className="grid gap-0"
+                style={{
+                  gridTemplateColumns: `repeat(${state.design.size}, 12px)`,
+                  gridTemplateRows: `repeat(${state.design.size}, 12px)`,
+                }}
+              >
+                {state.design.grid.map((row, rowIndex) =>
+                  row.map((color, colIndex) => (
+                    <div
+                      key={`${rowIndex}-${colIndex}`}
+                      style={{
+                        width: '12px',
+                        height: '12px',
+                        backgroundColor: color === '#FFFFFF00' ? 'transparent' : color,
+                      }}
+                    />
+                  ))
+                )}
               </div>
-            </Block>
-          </Section>
+            </div>
+          </Block>
+        </Section>
 
-          <Section className="p-4 border-t border-border">
-            <Text role="Title" prominence="Hero" className="mb-3" content="Design Info" />
+        <Section className="p-4 border-t border-border">
+          <Text role="Title" prominence="Hero" className="mb-3" content="Design Info" />
 
-            <Block role="Card">
-              <div className="flex justify-between">
-                <Text role="Label" content="ID" />
-                <Text
-                  role="Body"
-                  prominence="Hero"
-                  className="font-mono text-xs"
-                  content={state.design.id}
-                />
-              </div>
+          <Block role="Card">
+            <div className="flex justify-between">
+              <Text role="Label" content="ID" />
+              <Text
+                role="Body"
+                prominence="Hero"
+                className="font-mono text-xs"
+                content={state.design.id}
+              />
+            </div>
 
-              <div className="flex justify-between">
-                <Text role="Label" content="Created" />
-                <Text
-                  role="Body"
-                  prominence="Hero"
-                  className="text-xs"
-                  content={new Date(state.design.createdAt).toLocaleString()}
-                />
-              </div>
+            <div className="flex justify-between">
+              <Text role="Label" content="Created" />
+              <Text
+                role="Body"
+                prominence="Hero"
+                className="text-xs"
+                content={new Date(state.design.createdAt).toLocaleString()}
+              />
+            </div>
 
-              <div className="flex justify-between">
-                <Text role="Label" content="Updated" />
-                <Text
-                  role="Body"
-                  prominence="Hero"
-                  className="text-xs"
-                  content={new Date(state.design.updatedAt).toLocaleString()}
-                />
-              </div>
-            </Block>
-          </Section>
+            <div className="flex justify-between">
+              <Text role="Label" content="Updated" />
+              <Text
+                role="Body"
+                prominence="Hero"
+                className="text-xs"
+                content={new Date(state.design.updatedAt).toLocaleString()}
+              />
+            </div>
+          </Block>
+        </Section>
       </Section>
     </Page>
   );

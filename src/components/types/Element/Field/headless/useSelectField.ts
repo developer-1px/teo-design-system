@@ -131,7 +131,10 @@ export interface UseSelectFieldReturn {
   /**
    * Props getter for radio/checkbox input
    */
-  getInputProps: (option: FieldOption, type: 'radio' | 'checkbox') => {
+  getInputProps: (
+    option: FieldOption,
+    type: 'radio' | 'checkbox'
+  ) => {
     type: 'radio' | 'checkbox';
     name: string;
     value: string;
@@ -190,9 +193,7 @@ export function useSelectField(options: UseSelectFieldOptions): UseSelectFieldRe
    * Filter options by search query
    */
   const filteredOptions = searchable
-    ? fieldOptions.filter((opt) =>
-      opt.label.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    ? fieldOptions.filter((opt) => opt.label.toLowerCase().includes(searchQuery.toLowerCase()))
     : fieldOptions;
 
   /**
@@ -269,7 +270,10 @@ export function useSelectField(options: UseSelectFieldOptions): UseSelectFieldRe
   /**
    * Handle radio/checkbox change
    */
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>, optionValue: string | number | boolean) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    optionValue: string | number | boolean
+  ) => {
     select(optionValue);
   };
 

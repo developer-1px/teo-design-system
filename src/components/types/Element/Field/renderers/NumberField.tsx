@@ -20,6 +20,9 @@
  * />
  */
 
+import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
+import type { Intent, Prominence } from '@/components/types/Shared.types';
+import { cn } from '@/shared/lib/utils';
 import { useNumberField } from '../headless/useNumberField';
 import {
   errorStyles,
@@ -29,9 +32,6 @@ import {
   rangeLabelsStyles,
   rangeStyles,
 } from '../styles/field.styles';
-import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
-import type { Intent, Prominence } from '@/components/types/Shared.types';
-import { cn } from '@/shared/lib/utils';
 
 export interface NumberFieldProps {
   /**

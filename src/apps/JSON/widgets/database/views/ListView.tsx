@@ -3,9 +3,9 @@
  * 간단하고 컴팩트한 리스트
  */
 
-import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import type { JsonArray, JsonObject } from '../types';
 
 interface ListViewProps {
@@ -32,11 +32,7 @@ export const ListView = ({ data }: ListViewProps) => {
             >
               {/* 첫 번째 필드 (제목) */}
               <Block role="Container" flex="1">
-                <Text
-                  role="Body"
-                  prominence="Primary"
-                  content={String(obj[keys[0]])}
-                />
+                <Text role="Body" prominence="Primary" content={String(obj[keys[0]])} />
               </Block>
 
               {/* 나머지 필드들 */}
@@ -47,11 +43,7 @@ export const ListView = ({ data }: ListViewProps) => {
 
                   return (
                     <Block key={key} role="Field" direction="horizontal" align="center" gap="xs">
-                      <Text
-                        role="Label"
-                        prominence="Subtle"
-                        content={`${key}:`}
-                      />
+                      <Text role="Label" prominence="Subtle" content={`${key}:`} />
                       <Text
                         role="Body"
                         content={

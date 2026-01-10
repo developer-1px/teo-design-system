@@ -11,10 +11,10 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { ChevronDown, ChevronsUpDown, ChevronUp, Grid3x3, Rows3 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Block } from '@/components/types/Block/Block.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { SearchInput } from '@/components/types/Element/Field/role/SearchInput.tsx';
 import { Kbd } from '@/components/types/Element/Text/role/Kbd.tsx';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Block } from '@/components/types/Block/Block.tsx';
 import { useNavigableCursor } from '@/shared/lib/keyboard';
 
 type SelectionMode = 'row' | 'cell';
@@ -43,7 +43,6 @@ export function DataTable<TData, TValue>({
   onRowDoubleClick,
   clearSelection,
 }: DataTableProps<TData, TValue>) {
-
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [internalGlobalFilter, setInternalGlobalFilter] = useState('');
@@ -80,7 +79,6 @@ export function DataTable<TData, TValue>({
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const { rows } = table.getRowModel();
 
-
   // 검색/정렬이 변경되면 선택 초기화
   useEffect(() => {
     setSelectedRowIndex(null);
@@ -105,8 +103,7 @@ export function DataTable<TData, TValue>({
   const { cursorIndex, getItemProps } = useNavigableCursor({
     type: 'list',
     items: rows,
-    onSelect: (row) => {
-    },
+    onSelect: (row) => {},
   });
 
   // Cell 선택 모드 키보드 네비게이션
@@ -265,9 +262,11 @@ export function DataTable<TData, TValue>({
       <div ref={tableContainerRef} className="flex-1 overflow-auto" style={{ contain: 'strict' }}>
         <div className="text-sm" style={{ minWidth: 'max-content' }}>
           {/* Header */}
-          <div className={`sticky top-0 z-10 bg-surface/95 backdrop-blur-sm transition-colors ${
-            hoveredRowIndex !== null ? 'bg-accent/5' : ''
-          }`}>
+          <div
+            className={`sticky top-0 z-10 bg-surface/95 backdrop-blur-sm transition-colors ${
+              hoveredRowIndex !== null ? 'bg-accent/5' : ''
+            }`}
+          >
             {table.getHeaderGroups().map((headerGroup) => (
               <div key={headerGroup.id} className="flex">
                 {headerGroup.headers.map((header) => {

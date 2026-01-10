@@ -4,9 +4,9 @@
  * Block role="Accordion"의 다양한 사용 사례를 보여줍니다.
  */
 
-import { useState } from 'react';
-import { Block, AccordionItem, AccordionTrigger, AccordionContent } from '../Block';
 import { ChevronRight, Plus } from 'lucide-react';
+import { useState } from 'react';
+import { AccordionContent, AccordionItem, AccordionTrigger, Block } from '../Block';
 
 /**
  * 예시 1: 기본 Accordion (Single mode)
@@ -28,18 +28,14 @@ export function BasicAccordion() {
       <AccordionItem value="item-2">
         <AccordionTrigger>Section 2</AccordionTrigger>
         <AccordionContent>
-          <p>
-            This is the content of section 2. Click on a section header to expand it.
-          </p>
+          <p>This is the content of section 2. Click on a section header to expand it.</p>
         </AccordionContent>
       </AccordionItem>
 
       <AccordionItem value="item-3">
         <AccordionTrigger>Section 3</AccordionTrigger>
         <AccordionContent>
-          <p>
-            This is the content of section 3. Use keyboard arrows to navigate between sections.
-          </p>
+          <p>This is the content of section 3. Use keyboard arrows to navigate between sections.</p>
         </AccordionContent>
       </AccordionItem>
     </Block>
@@ -58,8 +54,8 @@ export function MultipleAccordion() {
         <AccordionTrigger>What is IDDL?</AccordionTrigger>
         <AccordionContent>
           <p>
-            IDDL (Intent-Driven Design Language) is a TSX-based DSL where developers declare
-            "why" (purpose + prominence) instead of "how" (colors + sizes).
+            IDDL (Intent-Driven Design Language) is a TSX-based DSL where developers declare "why"
+            (purpose + prominence) instead of "how" (colors + sizes).
           </p>
         </AccordionContent>
       </AccordionItem>
@@ -68,11 +64,21 @@ export function MultipleAccordion() {
         <AccordionTrigger>How does keyboard navigation work?</AccordionTrigger>
         <AccordionContent>
           <ul className="list-disc list-inside space-y-2">
-            <li><kbd>Enter</kbd> or <kbd>Space</kbd>: Toggle current section</li>
-            <li><kbd>↓</kbd>: Focus next section</li>
-            <li><kbd>↑</kbd>: Focus previous section</li>
-            <li><kbd>Home</kbd>: Focus first section</li>
-            <li><kbd>End</kbd>: Focus last section</li>
+            <li>
+              <kbd>Enter</kbd> or <kbd>Space</kbd>: Toggle current section
+            </li>
+            <li>
+              <kbd>↓</kbd>: Focus next section
+            </li>
+            <li>
+              <kbd>↑</kbd>: Focus previous section
+            </li>
+            <li>
+              <kbd>Home</kbd>: Focus first section
+            </li>
+            <li>
+              <kbd>End</kbd>: Focus last section
+            </li>
           </ul>
         </AccordionContent>
       </AccordionItem>
@@ -81,7 +87,8 @@ export function MultipleAccordion() {
         <AccordionTrigger>What are the available densities?</AccordionTrigger>
         <AccordionContent>
           <p>
-            Three densities are available: <strong>Compact</strong>, <strong>Standard</strong>, and <strong>Comfortable</strong>.
+            Three densities are available: <strong>Compact</strong>, <strong>Standard</strong>, and{' '}
+            <strong>Comfortable</strong>.
           </p>
         </AccordionContent>
       </AccordionItem>
@@ -129,7 +136,13 @@ export function ControlledAccordion() {
         </div>
       </div>
 
-      <Block role="Accordion" mode="single" value={value} onValueChange={handleValueChange} density="Standard">
+      <Block
+        role="Accordion"
+        mode="single"
+        value={value}
+        onValueChange={handleValueChange}
+        density="Standard"
+      >
         <AccordionItem value="section-1">
           <AccordionTrigger>Section 1</AccordionTrigger>
           <AccordionContent>
@@ -164,18 +177,14 @@ export function AccordionWithCustomIcons() {
   return (
     <Block role="Accordion" mode="single" density="Compact">
       <AccordionItem value="item-1">
-        <AccordionTrigger icon={<ChevronRight size={20} />}>
-          Chevron Right Icon
-        </AccordionTrigger>
+        <AccordionTrigger icon={<ChevronRight size={20} />}>Chevron Right Icon</AccordionTrigger>
         <AccordionContent>
           <p>Using ChevronRight icon that rotates 90 degrees when open.</p>
         </AccordionContent>
       </AccordionItem>
 
       <AccordionItem value="item-2">
-        <AccordionTrigger icon={<Plus size={20} />}>
-          Plus/Minus Icons
-        </AccordionTrigger>
+        <AccordionTrigger icon={<Plus size={20} />}>Plus/Minus Icons</AccordionTrigger>
         <AccordionContent>
           <p>Note: For Plus/Minus icons, you'd need conditional rendering in the trigger.</p>
         </AccordionContent>

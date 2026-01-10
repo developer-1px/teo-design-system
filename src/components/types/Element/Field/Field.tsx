@@ -21,18 +21,18 @@ import { cn } from '@/shared/lib/utils';
 // Re-export types for convenience
 export type { FieldOption } from '@/components/types/Element/Field/Field.types';
 
-// Renderers (v2.0.0, v3.1.0 expanded)
-import { TextField } from './renderers/TextField';
+import { BooleanField } from './renderers/BooleanField';
+import { CheckboxField } from './renderers/CheckboxField';
+import { ColorField } from './renderers/ColorField';
+import { DateField } from './renderers/DateField';
+import { FileField } from './renderers/FileField';
 import { NumberField } from './renderers/NumberField';
-import { SelectField } from './renderers/SelectField';
 import { RadioField } from './renderers/RadioField';
 import { RatingField } from './renderers/RatingField';
-import { DateField } from './renderers/DateField';
-import { BooleanField } from './renderers/BooleanField';
-import { ColorField } from './renderers/ColorField';
-import { FileField } from './renderers/FileField';
-import { CheckboxField } from './renderers/CheckboxField';
+import { SelectField } from './renderers/SelectField';
 import { TextareaField } from './renderers/TextareaField';
+// Renderers (v2.0.0, v3.1.0 expanded)
+import { TextField } from './renderers/TextField';
 
 // Shared Styles (v2.1.0 - only for fallback)
 import { inputStyles } from './styles/field.styles';
@@ -107,7 +107,10 @@ function getRendererConfig(role?: string, type?: string) {
   // role 기반 우선 매핑
   if (role === 'Input') {
     if (!type || ['text', 'email', 'url', 'phone', 'password'].includes(type)) {
-      return { renderer: TextField, rendererType: (type || 'text') as 'text' | 'email' | 'url' | 'phone' | 'password' };
+      return {
+        renderer: TextField,
+        rendererType: (type || 'text') as 'text' | 'email' | 'url' | 'phone' | 'password',
+      };
     }
     if (['number', 'currency', 'range'].includes(type)) {
       return { renderer: NumberField, rendererType: type as 'number' | 'currency' | 'range' };
@@ -115,7 +118,10 @@ function getRendererConfig(role?: string, type?: string) {
   }
 
   if (role === 'Select') {
-    return { renderer: SelectField, rendererType: (type === 'multiselect' ? 'multiselect' : 'select') as 'select' | 'multiselect' };
+    return {
+      renderer: SelectField,
+      rendererType: (type === 'multiselect' ? 'multiselect' : 'select') as 'select' | 'multiselect',
+    };
   }
 
   if (role === 'Radio') {
@@ -131,7 +137,10 @@ function getRendererConfig(role?: string, type?: string) {
 
   // Text-based inputs
   if (['text', 'email', 'url', 'phone', 'password'].includes(type)) {
-    return { renderer: TextField, rendererType: type as 'text' | 'email' | 'url' | 'phone' | 'password' };
+    return {
+      renderer: TextField,
+      rendererType: type as 'text' | 'email' | 'url' | 'phone' | 'password',
+    };
   }
 
   // Number inputs

@@ -2,9 +2,9 @@
  * Section Type Definitions
  */
 
-import { ReactNode } from 'react';
-import type { AsProp, Density, Intent, Prominence } from '../Shared.types';
+import type { ReactNode } from 'react';
 import type { PageLayout } from '../Page/Page.types';
+import type { AsProp, Density, Intent, Prominence } from '../Shared.types';
 
 /**
  * Section Role - 섹션의 배치 역할 (Template-aware v4.0)
@@ -21,82 +21,90 @@ import type { PageLayout } from '../Page/Page.types';
  * - 각 template은 특정 Section role 세트를 정의
  * - 잘못된 조합 시 경고 (예: template="studio"인데 role="Master" 사용)
  */
+/**
+ * Section Role - IDDL v5.0 Core + Alias + Extensions
+ *
+ * **Core Roles** (The Magnificent 5 + 3):
+ * - Header, Nav, Main, Aside, Footer
+ * - Dock (App), Status (Studio), Panel (Split/Studio)
+ *
+ * **Extended Roles** (IDE Domain):
+ * - ActivityBar, UtilityBar, Editor, PrimarySidebar, SecondarySidebar
+ */
 export type SectionRole =
-    // Universal (모든 template에서 사용 가능)
-    | 'Header' // 페이지 상단 (<header>)
-    | 'Footer' // 페이지 하단 (<footer>)
-    | 'Main' // 메인 콘텐츠 영역 (<main>)
-    | 'Container' // 일반 컨테이너 (<section>)
-    // Web Standard (Content Page - template="sidebar-content")
-    | 'Navigator' // 네비게이션 (<nav>)
-    | 'Aside' // 보조 사이드바 (<aside>)
-    | 'Search' // 검색 영역
-    | 'Region' // 명명된 영역
-    // IDE/Studio (template="studio")
-    | 'Toolbar' // 툴바 (<div>)
-    | 'ActivityBar' // 액티비티 바 (아이콘 세로 바)
-    | 'PrimarySidebar' // 주 사이드바 (파일 트리 등)
-    | 'SecondarySidebar' // 보조 사이드바 (아웃라인 등)
-    | 'Editor' // 에디터 영역
-    | 'Panel' // 하단 패널 (터미널, 콘솔 등)
-    | 'UtilityBar' // 보조 패널 (속성, AI 등)
-    // Master-Detail (template="master-detail")
-    | 'Master' // 마스터 리스트
-    | 'Detail' // 디테일 뷰
-    // Dialog (template="dialog")
-    | 'DialogHeader' // 다이얼로그 헤더
-    | 'DialogContent' // 다이얼로그 콘텐츠
-    | 'DialogFooter' // 다이얼로그 푸터
-    // Deprecated
-    | 'SplitContainer'; // @deprecated Use Main with layout="flex"
+  // 1. Core Roles (Standard Semantics)
+  | 'Header'
+  | 'Nav'
+  | 'Main'
+  | 'Aside'
+  | 'Footer'
+  | 'Dock'
+  | 'Status'
+  | 'Panel'
+  // 2. Aliases (Normalized to Core)
+  | 'Navigator' // -> Nav
+  | 'Container' // -> Main
+  | 'Sidebar' // -> Nav
+  | 'Region' // -> Main/Section
+  // 3. Extended Roles (IDE / Studio Specific)
+  | 'ActivityBar'
+  | 'UtilityBar'
+  | 'PrimarySidebar'
+  | 'SecondarySidebar'
+  | 'Editor'
+  | 'Toolbar'
+  | 'Master'
+  | 'Detail'
+  | 'DialogHeader'
+  | 'DialogContent'
+  | 'DialogFooter';
 
-/**
- * Layout별 유효한 Section Role 매핑 (v5.0)
- * Page layout에 따라 사용 가능한 Section role이 결정됨
- */
-// LAYOUT_SECTION_ROLES moved to role-config.ts
-
-/**
- * Section Props
- * v1.0.1: role 타입 변경, condition 추가
- * v3.0: gridArea 추가 (App/Page의 layout="grid"일 때 사용)
- */
 export interface SectionProps extends AsProp {
-    role?: SectionRole; // v1.0.1: Role → SectionRole
-    prominence?: Prominence;
-    density?: Density; // v1.0.1: 명시적으로 추가됨 (자식에 전파)
-    intent?: Intent;
-    children: ReactNode;
-    /**
-     * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
-     * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
-     * 정적 스타일은 반드시 role을 통해 정의해야 함
-     */
-    className?: string;
-    id?: string;
-    onClick?: (e: React.MouseEvent) => void;
-    /**
-     * Field 렌더링 모드 (IDDL v1.0)
-     * - view: 데이터를 텍스트로 표시
-     * - edit: 데이터를 입력 폼으로 표시
-     */
-    mode?: 'view' | 'edit';
-    condition?: string; // v1.0.1: 조건부 렌더링
-    gridArea?: string; // v3.0: CSS grid-area 이름 (grid layout일 때)
-    /**
-     * Resize 가능 여부 (v4.0)
-     * - true: 기본 방향으로 resize 가능
-     * - { direction, minSize, maxSize }: 상세 설정
-     */
-    resizable?:
+  // 1. Zoning & Semantics
+  role?: SectionRole;
+
+  // 2. Identity
+  title?: string;
+  actions?: ReactNode;
+
+  // 3. Behavior
+  scrollable?: boolean;
+
+  // 4. Styling
+  variant?: 'Plain' | 'Card' | 'Hero';
+  prominence?: Prominence; // Deprecated? Kept for backward compat for now.
+  density?: Density;
+  intent?: Intent;
+
+  // Base
+  children?: ReactNode;
+  className?: string; // Only for dynamic styling
+  id?: string;
+  onClick?: (e: React.MouseEvent) => void;
+
+  // Legacy/Internal
+  gridArea?: string;
+  mode?: 'view' | 'edit';
+  condition?: string;
+  resizable?:
     | boolean
-    | {
-        direction?: 'horizontal' | 'vertical' | 'both';
-        minSize?: number;
-        maxSize?: number;
-    };
-    /**
-     * Collapse 가능 여부 (v4.0)
-     */
-    collapsible?: boolean;
+    | { direction?: 'horizontal' | 'vertical' | 'both'; minSize?: number; maxSize?: number };
+  collapsible?: boolean;
+
+  // Formatting (Compatibility)
+  style?: React.CSSProperties;
+  layout?: string; // e.g. "flex", "grid" (often used in IDE)
+  padding?: string; // e.g. "md"
+  border?: string; // e.g. "top"
+  position?: string; // e.g. "absolute"
+  width?: string | number;
+  height?: string | number;
+  top?: string | number;
+  left?: string | number;
+  gap?: string | number;
+  elevation?: string;
+  direction?: 'horizontal' | 'vertical';
+  align?: string;
+  justify?: string;
+  split?: string; // for SplitContainer
 }

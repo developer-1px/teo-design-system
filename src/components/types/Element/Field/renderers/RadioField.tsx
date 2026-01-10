@@ -16,6 +16,9 @@
  * />
  */
 
+import type { FieldOption } from '@/components/types/Element/Field/Field.types';
+import type { Intent, Prominence } from '@/components/types/Shared.types';
+import { cn } from '@/shared/lib/utils';
 import { useSelectField } from '../headless/useSelectField';
 import {
   checkboxStyles,
@@ -24,9 +27,6 @@ import {
   labelStyles,
   optionLabelStyles,
 } from '../styles/field.styles';
-import type { FieldOption } from '@/components/types/Element/Field/Field.types';
-import type { Intent, Prominence } from '@/components/types/Shared.types';
-import { cn } from '@/shared/lib/utils';
 
 export interface RadioFieldProps {
   /**

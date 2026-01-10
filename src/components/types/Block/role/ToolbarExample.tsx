@@ -4,9 +4,19 @@
  * Block role="Toolbar"의 다양한 사용 사례를 보여줍니다.
  */
 
-import { Save, Undo, Redo, Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
-import { Block, ToolbarDivider, ToolbarBlock } from '../Block';
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  Bold,
+  Italic,
+  Redo,
+  Save,
+  Underline,
+  Undo,
+} from 'lucide-react';
 import { Action } from '@/components/types/Element/Action/Action';
+import { Block, ToolbarBlock, ToolbarDivider } from '../Block';
 
 /**
  * 예시 1: 기본 Toolbar
@@ -138,7 +148,8 @@ export function StickyToolbar() {
         <h1 className="text-2xl font-bold mb-4">Long Content</h1>
         {Array.from({ length: 50 }).map((_, i) => (
           <p key={i} className="mb-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down to see the sticky toolbar.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down to see the sticky
+            toolbar.
           </p>
         ))}
       </div>

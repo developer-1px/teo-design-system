@@ -95,13 +95,13 @@ export interface UseTextareaFieldReturn {
   /**
    * Textarea ref for focus management
    */
-  textareaRef: React.RefObject<HTMLTextAreaElement>;
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
 
   /**
    * Props getter for textarea element
    */
   getTextareaProps: () => {
-    ref: React.RefObject<HTMLTextAreaElement>;
+    ref: React.RefObject<HTMLTextAreaElement | null>;
     name: string;
     value: string;
     required?: boolean;

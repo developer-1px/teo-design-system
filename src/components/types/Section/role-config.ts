@@ -6,38 +6,37 @@ import type { SectionRole } from './Section.types';
  * Page layout에 따라 사용 가능한 Section role이 결정됨
  */
 export const LAYOUT_SECTION_ROLES: Record<PageLayout, SectionRole[]> = {
-  // Single: Header + Container + Footer (1단 기본형)
-  Single: ['Header', 'Container', 'Footer', 'Main'],
+  // Single: Header + Main + Footer (1단 기본형)
+  Single: ['Header', 'Main', 'Footer'],
 
-  // Sidebar: Navigator(좌) + Container(우) (2단 좌측 메뉴형)
-  Sidebar: ['Header', 'Footer', 'Navigator', 'Container', 'Main'],
+  // Sidebar: Header + Nav + Main + Footer (2단 좌측 메뉴형)
+  Sidebar: ['Header', 'Nav', 'Main', 'Footer'],
 
-  // Aside: Container(좌) + Aside(우) (2단 우측 정보형)
-  Aside: ['Header', 'Footer', 'Container', 'Aside', 'Main'],
+  // Aside: Header + Main + Aside + Footer (2단 우측 정보형)
+  Aside: ['Header', 'Main', 'Aside', 'Footer'],
 
-  // HolyGrail: Header + Navigator + Container + Aside + Footer (3단 완전체)
-  HolyGrail: ['Header', 'Footer', 'Navigator', 'Container', 'Aside', 'Main', 'Region'],
+  // HolyGrail: Header + Nav + Main + Aside + Footer (3단 완전체)
+  HolyGrail: ['Header', 'Nav', 'Main', 'Aside', 'Footer'],
 
-  // Split: PanelLeft + PanelRight (5:5 분할형, master-detail)
-  Split: ['Header', 'Footer', 'Master', 'Detail', 'Toolbar', 'Container', 'Main'],
+  // Split: Header + Master + Detail + Footer (5:5 분할형)
+  Split: ['Header', 'Master', 'Detail', 'Footer', 'Toolbar'],
 
-  // Studio: ActivityBar + PrimarySidebar + Editor + Panel + SecondarySidebar (IDE 전용)
+  // Studio: IDE 전용 (모든 영역 노출)
   Studio: [
     'Header',
-    'Footer',
     'Toolbar',
     'ActivityBar',
     'PrimarySidebar',
-    'SecondarySidebar',
     'Editor',
-    'Panel',
+    'SecondarySidebar',
     'UtilityBar',
-    'Container',
-    'Main',
+    'Status',
+    'Panel',
+    'Footer',
   ],
 
-  // Blank: 빈 캔버스 (dialog, custom)
-  Blank: ['Container', 'Main', 'DialogHeader', 'DialogContent', 'DialogFooter'],
+  // Mobile: Header + Main + Footer + Dock (App)
+  Mobile: ['Header', 'Main', 'Footer', 'Dock'],
 };
 
 /**
@@ -79,91 +78,82 @@ export interface RoleConfig {
 export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
   // ==================== Studio Layout (IDE) ====================
   Studio: {
-    // Toolbar defined below in fallback section
     ActivityBar: {
-      gridArea: 'activitybar',
+      gridArea: 'act',
       overflow: 'hidden',
       htmlTag: 'nav',
       ariaProps: { role: 'navigation', 'aria-label': 'Activity Bar' },
-      baseStyles: 'flex flex-col items-center py-2 w-12 flex-shrink-0 bg-surface-elevated border-r border-border-default',
-      description: '좌측 액티비티바 (아이콘 버튼들)',
+      baseStyles:
+        'flex flex-col items-center py-2 w-12 flex-shrink-0 bg-surface-elevated border-r border-border-default',
+      description: 'Activity Bar (Core: Nav)',
     },
     PrimarySidebar: {
-      gridArea: 'primarysidebar',
+      gridArea: 'side',
       overflow: 'auto',
-      htmlTag: 'aside',
+      htmlTag: 'nav', // Normalized from 'aside' -> 'nav' as per 'Sidebar' alias rule? Or keep aside for panel-like sidebars? Spec says 'Nav' is core. Let's use 'nav' or 'aside' that semantically fits. Primary Sidebar is usually navigation.
       ariaProps: { 'aria-label': 'Primary Sidebar' },
-      baseStyles: 'flex flex-col flex-shrink-0 bg-surface border-r border-border-default w-full h-full',
-      description: '메인 사이드바 (파일 트리 등) - 스크롤',
+      baseStyles:
+        'flex flex-col flex-shrink-0 bg-surface border-r border-border-default w-full h-full',
+      description: 'Primary Sidebar (Core: Nav)',
     },
     Editor: {
-      gridArea: 'editor',
-      overflow: 'auto',
+      gridArea: 'main',
+      overflow: 'hidden', // Editor handles scroll internally
       htmlTag: 'main',
       baseStyles: 'flex-1 flex flex-col min-w-0 bg-surface',
-      description: '에디터 영역 - 스크롤',
+      description: 'Editor (Core: Main)',
     },
     Panel: {
       gridArea: 'panel',
       overflow: 'auto',
-      htmlTag: 'section',
+      htmlTag: 'section', // Core: Panel -> section
       ariaProps: { 'aria-label': 'Panel' },
-      baseStyles: 'flex flex-col flex-shrink-0 bg-surface-sunken border-t border-border-default w-full h-full',
-      description: '하단 패널 (터미널, 문제, 출력 등) - 스크롤',
+      baseStyles:
+        'flex flex-col flex-shrink-0 bg-surface-sunken border-t border-border-default w-full h-full',
+      description: 'Panel (Core: Panel)',
     },
     SecondarySidebar: {
-      gridArea: 'secondarysidebar',
+      gridArea: 'aux',
       overflow: 'auto',
-      htmlTag: 'aside',
-      ariaProps: { 'aria-label': 'Secondary Sidebar' },
-      baseStyles: 'flex flex-col flex-shrink-0 bg-surface border-l border-border-default w-full h-full',
-      description: '우측 사이드바 - 스크롤',
+      htmlTag: 'aside', // Core: Aside
+      baseStyles:
+        'flex flex-col flex-shrink-0 bg-surface border-l border-border-default w-full h-full',
+      description: 'Secondary Sidebar (Core: Aside)',
     },
     UtilityBar: {
-      gridArea: 'utilitybar',
+      gridArea: 'utility',
       overflow: 'hidden',
-      htmlTag: 'nav',
-      ariaProps: { role: 'navigation', 'aria-label': 'Utility Bar' },
-      baseStyles: 'flex flex-col items-center py-2 w-12 flex-shrink-0 bg-surface-elevated border-l border-border-default',
-      description: '우측 보조 바 (아이콘 세로 바)',
+      htmlTag: 'nav', // Core: Nav
+      baseStyles:
+        'flex flex-col items-center py-2 w-12 flex-shrink-0 bg-surface-elevated border-l border-border-default',
+      description: 'Utility Bar (Core: Nav)',
     },
-    Container: {
-      gridArea: 'editor', // Fallback to editor area if direct child
-      overflow: 'auto',
-      htmlTag: 'section',
-      baseStyles: 'flex-1 min-h-0',
-      description: '내부 컨테이너',
+    Status: {
+      gridArea: 'stat',
+      overflow: 'hidden',
+      htmlTag: 'footer', // Core: Status -> footer
+      baseStyles: 'flex items-center bg-accent text-white px-2 min-h-[24px] text-xs',
+      description: 'Status Bar (Core: Status)',
     },
-    Main: {
-      gridArea: 'editor',
-      overflow: 'auto',
-      htmlTag: 'main',
-      baseStyles: 'flex-1 min-h-0',
-      description: '내부 메인 영역',
-    },
-    // Common fallback for Studio
+    // Explicit Aliases for Studio
     Header: {
       gridArea: 'header',
       overflow: 'hidden',
       htmlTag: 'header',
-      baseStyles: 'flex items-center bg-surface-elevated border-b border-border-muted px-4 min-h-[36px]',
-      description: '섹션 상단 헤더 (unified design)',
-    },
-    Toolbar: {
-      gridArea: 'toolbar',
-      overflow: 'hidden',
-      htmlTag: 'div',
-      ariaProps: { role: 'toolbar' },
-      baseStyles: 'flex items-center bg-surface-elevated border-b border-border-default px-2 min-h-[36px]',
-      description: '상단 툴바 (unified design)',
+      baseStyles: 'bg-surface-elevated border-b py-2 px-4 shadow-sm',
     },
     Footer: {
       gridArea: 'footer',
       overflow: 'hidden',
       htmlTag: 'footer',
-      baseStyles: 'flex items-center bg-surface-elevated border-t border-border-muted px-4 min-h-[28px]',
-      description: '하단 푸터',
-    }
+      baseStyles: 'bg-surface-elevated border-t py-1 px-4 text-[10px]',
+    },
+    Toolbar: {
+      gridArea: 'header', // Default toolbar to header area
+      overflow: 'hidden',
+      htmlTag: 'div',
+      baseStyles: 'flex items-center px-4 h-12 border-b bg-surface',
+    },
   },
 
   // ==================== Sidebar Layout ====================
@@ -173,36 +163,39 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'hidden',
       htmlTag: 'header',
       baseStyles: 'sticky top-0 z-10 bg-surface-elevated border-b border-border-muted py-2 px-4',
-      description: '상단 헤더 (고정)',
     },
-    Navigator: {
+    Nav: {
       gridArea: 'nav',
       overflow: 'auto',
       htmlTag: 'nav',
       ariaProps: { role: 'navigation' },
       baseStyles: 'flex flex-col w-72 flex-shrink-0 border-r border-border-default',
-      description: '네비게이션 사이드바 - 스크롤',
     },
-    Container: {
-      gridArea: 'content',
+    // Alias for Nav
+    Navigator: {
+      gridArea: 'nav',
       overflow: 'auto',
-      htmlTag: 'section',
-      baseStyles: 'flex-1',
-      description: '컨테이너 영역',
+      htmlTag: 'nav',
+      baseStyles: 'flex flex-col w-72 flex-shrink-0 border-r border-border-default',
     },
     Main: {
-      gridArea: 'content',
+      gridArea: 'main', // Fixed: content -> main
       overflow: 'auto',
       htmlTag: 'main',
       baseStyles: 'flex-1',
-      description: '메인 콘텐츠 영역 - 스크롤',
+    },
+    // Alias for Main
+    Container: {
+      gridArea: 'main', // Fixed: content -> main
+      overflow: 'auto',
+      htmlTag: 'main',
+      baseStyles: 'flex-1',
     },
     Footer: {
       gridArea: 'footer',
       overflow: 'hidden',
       htmlTag: 'footer',
       baseStyles: 'sticky bottom-0 z-10 bg-surface-elevated border-t border-border-muted py-2 px-4',
-      description: '하단 푸터 (고정)',
     },
   },
 
@@ -213,35 +206,24 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'hidden',
       htmlTag: 'header',
       baseStyles: 'sticky top-0 z-10 bg-surface-elevated border-b border-border-muted py-2 px-4',
-      description: '상단 헤더 (고정)',
-    },
-    Container: {
-      gridArea: 'content',
-      overflow: 'auto',
-      htmlTag: 'section',
-      baseStyles: 'flex-1',
-      description: '컨테이너 영역',
     },
     Main: {
-      gridArea: 'content',
+      gridArea: 'main', // Fixed: content -> main
       overflow: 'auto',
       htmlTag: 'main',
       baseStyles: 'flex-1',
-      description: '메인 콘텐츠 영역 - 스크롤',
     },
     Aside: {
       gridArea: 'aside',
       overflow: 'auto',
       htmlTag: 'aside',
       baseStyles: 'flex flex-col w-64 flex-shrink-0 border-l border-border-default',
-      description: '우측 사이드바 - 스크롤',
     },
     Footer: {
       gridArea: 'footer',
       overflow: 'hidden',
       htmlTag: 'footer',
       baseStyles: 'sticky bottom-0 z-10 bg-surface-elevated border-t border-border-muted py-2 px-4',
-      description: '하단 푸터 (고정)',
     },
   },
 
@@ -252,82 +234,30 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'hidden',
       htmlTag: 'header',
       baseStyles: 'bg-surface-elevated border-b border-border-default',
-      description: '상단 헤더 (전체 너비)',
     },
-    Navigator: {
-      gridArea: 'left',
+    Nav: {
+      gridArea: 'nav', // Fixed: left -> nav
       overflow: 'auto',
       htmlTag: 'nav',
-      ariaProps: { role: 'navigation' },
       baseStyles: 'flex flex-col border-r border-border-default',
-      description: '좌측 네비게이션 - 스크롤',
     },
+    Navigator: {
+      gridArea: 'nav',
+      overflow: 'auto',
+      htmlTag: 'nav',
+      baseStyles: 'flex flex-col border-r border-border-default',
+    }, // Alias
     Main: {
-      gridArea: 'center',
+      gridArea: 'main', // Fixed: center -> main
       overflow: 'auto',
       htmlTag: 'main',
       baseStyles: 'flex-1 flex flex-col',
-      description: '중앙 메인 영역 (캔버스/에디터) - 스크롤',
-    },
-    Container: {
-      gridArea: 'center',
-      overflow: 'auto',
-      htmlTag: 'section',
-      baseStyles: 'flex-1 flex flex-col',
-      description: '중앙 컨테이너 - 스크롤',
     },
     Aside: {
-      gridArea: 'right',
+      gridArea: 'aside', // Fixed: right -> aside
       overflow: 'auto',
       htmlTag: 'aside',
       baseStyles: 'flex flex-col border-l border-border-default',
-      description: '우측 사이드바 - 스크롤',
-    },
-    Footer: {
-      gridArea: 'footer',
-      overflow: 'hidden',
-      htmlTag: 'footer',
-      baseStyles: 'bg-surface-elevated border-t border-border-default',
-      description: '하단 푸터',
-    },
-    Region: {
-      gridArea: 'region',
-      overflow: 'auto',
-      htmlTag: 'section',
-      baseStyles: 'flex-1',
-      description: '임의 영역',
-    }
-  },
-
-  // ==================== Split Layout (Master-Detail) ====================
-  Split: {
-    Master: {
-      gridArea: 'master',
-      overflow: 'auto',
-      htmlTag: 'aside',
-      ariaProps: { 'aria-label': 'Master List' },
-      baseStyles: 'flex flex-col w-96 flex-shrink-0 border-r border-border-default',
-      description: '마스터 리스트 - 스크롤',
-    },
-    Detail: {
-      gridArea: 'detail',
-      overflow: 'auto',
-      htmlTag: 'main',
-      ariaProps: { 'aria-label': 'Detail View' },
-      baseStyles: 'flex-1 flex flex-col',
-      description: '상세 뷰 - 스크롤',
-    },
-    Main: {
-      gridArea: 'detail',
-      overflow: 'auto',
-      htmlTag: 'main',
-      baseStyles: 'flex-1 flex flex-col',
-    },
-    Header: {
-      gridArea: 'header',
-      overflow: 'hidden',
-      htmlTag: 'header',
-      baseStyles: 'bg-surface-elevated border-b border-border-default',
     },
     Footer: {
       gridArea: 'footer',
@@ -335,52 +265,6 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       htmlTag: 'footer',
       baseStyles: 'bg-surface-elevated border-t border-border-default',
     },
-    Toolbar: {
-      gridArea: 'toolbar',
-      overflow: 'hidden',
-      htmlTag: 'div',
-      baseStyles: 'bg-surface-elevated border-b border-border-default',
-    }
-  },
-
-  // ==================== Blank Layout (Dialog/Custom) ====================
-  Blank: {
-    DialogHeader: {
-      gridArea: 'dialog-header',
-      overflow: 'hidden',
-      htmlTag: 'header',
-      ariaProps: { 'aria-label': 'Dialog Header' },
-      baseStyles: 'border-b border-border-default p-4',
-      description: '다이얼로그 헤더',
-    },
-    DialogContent: {
-      gridArea: 'dialog-content',
-      overflow: 'auto',
-      htmlTag: 'div',
-      ariaProps: { 'aria-label': 'Dialog Content' },
-      baseStyles: 'flex-1 p-4',
-      description: '다이얼로그 콘텐츠 - 스크롤',
-    },
-    DialogFooter: {
-      gridArea: 'dialog-footer',
-      overflow: 'hidden',
-      htmlTag: 'footer',
-      ariaProps: { 'aria-label': 'Dialog Footer' },
-      baseStyles: 'border-t border-border-default p-4',
-      description: '다이얼로그 푸터 (액션 버튼들)',
-    },
-    Container: {
-      gridArea: 'content',
-      overflow: 'auto',
-      htmlTag: 'section',
-      baseStyles: 'flex-1',
-    },
-    Main: {
-      gridArea: 'content',
-      overflow: 'auto',
-      htmlTag: 'main',
-      baseStyles: 'flex-1',
-    }
   },
 
   // ==================== Single Layout ====================
@@ -389,58 +273,112 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       gridArea: 'header',
       overflow: 'hidden',
       htmlTag: 'header',
-      baseStyles: 'bg-surface-elevated border-b border-border-default',
+      baseStyles: 'bg-surface-elevated border-b py-4 px-6 shadow-sm',
     },
     Main: {
-      gridArea: 'content',
+      gridArea: 'main',
       overflow: 'auto',
       htmlTag: 'main',
-      baseStyles: 'flex-1',
-    },
-    Container: {
-      gridArea: 'content',
-      overflow: 'auto',
-      htmlTag: 'section',
-      baseStyles: 'flex-1',
+      baseStyles: 'flex-1 p-6',
     },
     Footer: {
       gridArea: 'footer',
       overflow: 'hidden',
       htmlTag: 'footer',
-      baseStyles: 'bg-surface-elevated border-t border-border-default',
-    }
+      baseStyles: 'bg-surface-elevated border-t py-3 px-6 text-sm text-text-secondary',
+    },
   },
 
-  // ==================== Universal (Fallback) ====================
-  universal: {
-    Container: {
-      gridArea: 'container',
-      overflow: 'auto',
-      htmlTag: 'section',
-      baseStyles: 'flex-1',
-      description: '범용 컨테이너 - 스크롤',
-    },
+  // ==================== Mobile Layout ====================
+  Mobile: {
     Header: {
       gridArea: 'header',
       overflow: 'hidden',
       htmlTag: 'header',
-      baseStyles: 'bg-surface-elevated border-b border-border-default',
-      description: '범용 헤더 (고정)',
-    },
-    Footer: {
-      gridArea: 'footer',
-      overflow: 'hidden',
-      htmlTag: 'footer',
-      baseStyles: 'bg-surface-elevated border-t border-border-default',
-      description: '범용 푸터 (고정)',
+      baseStyles: 'bg-surface border-b px-4 h-14 flex items-center justify-between sticky top-0 z-20',
     },
     Main: {
       gridArea: 'main',
       overflow: 'auto',
       htmlTag: 'main',
       baseStyles: 'flex-1',
-      description: '범용 메인 - 스크롤',
     },
+    Footer: {
+      gridArea: 'footer',
+      overflow: 'hidden',
+      htmlTag: 'footer',
+      baseStyles: 'bg-surface border-t px-4 py-2',
+    },
+    Dock: {
+      gridArea: 'dock',
+      overflow: 'hidden',
+      htmlTag: 'nav',
+      baseStyles: 'bg-surface-elevated border-t h-16 flex items-center justify-around sticky bottom-0 z-20',
+    },
+  },
+
+  // ==================== Split Layout (Master-Detail) ====================
+  Split: {
+    Master: {
+      gridArea: 'panel-a',
+      overflow: 'auto',
+      htmlTag: 'aside',
+      ariaProps: { 'aria-label': 'Master List' },
+      baseStyles: 'flex flex-col w-full flex-shrink-0 border-r border-border-default',
+    },
+    Detail: {
+      gridArea: 'panel-b',
+      overflow: 'auto',
+      htmlTag: 'main',
+      ariaProps: { 'aria-label': 'Detail View' },
+      baseStyles: 'flex-1 flex flex-col',
+    },
+    // Aliases
+    Panel: {
+      gridArea: 'panel-a', // Default to left panel? Or require specificity?
+      overflow: 'auto',
+      htmlTag: 'section',
+      baseStyles: 'flex-1',
+    },
+  },
+
+  // ==================== Blank Layout ====================
+  Blank: {
+    Container: { gridArea: 'content', overflow: 'auto', htmlTag: 'main', baseStyles: 'flex-1' },
+    Main: { gridArea: 'content', overflow: 'auto', htmlTag: 'main', baseStyles: 'flex-1' },
+  },
+
+  // ==================== Universal (Fallback) ====================
+  universal: {
+    Header: {
+      gridArea: 'header',
+      overflow: 'hidden',
+      htmlTag: 'header',
+      baseStyles: 'bg-surface-elevated border-b',
+    },
+    Footer: {
+      gridArea: 'footer',
+      overflow: 'hidden',
+      htmlTag: 'footer',
+      baseStyles: 'bg-surface-elevated border-t',
+    },
+    Nav: { gridArea: 'nav', overflow: 'auto', htmlTag: 'nav', baseStyles: 'flex-col border-r' },
+    Aside: {
+      gridArea: 'aside',
+      overflow: 'auto',
+      htmlTag: 'aside',
+      baseStyles: 'flex-col border-l',
+    },
+    Main: { gridArea: 'main', overflow: 'auto', htmlTag: 'main', baseStyles: 'flex-1' },
+
+    // Aliases normalization
+    Navigator: {
+      gridArea: 'nav',
+      overflow: 'auto',
+      htmlTag: 'nav',
+      baseStyles: 'flex-col border-r',
+    },
+    Container: { gridArea: 'main', overflow: 'auto', htmlTag: 'main', baseStyles: 'flex-1' },
   },
 };
 
@@ -464,9 +402,7 @@ export function getRoleConfig(role: string, layout?: PageLayout): RoleConfig {
   }
 
   // 3. Fallback (정의되지 않은 role)
-  console.warn(
-    `[getRoleConfig] Unknown role "${role}" for layout "${layout}". Using fallback.`
-  );
+  console.warn(`[getRoleConfig] Unknown role "${role}" for layout "${layout}". Using fallback.`);
   return {
     gridArea: role.toLowerCase(),
     overflow: 'auto',
@@ -510,8 +446,5 @@ export function isValidRoleForLayout(role: string, layout?: string): boolean {
   if (!layout) return true;
 
   // Layout 특정 role 또는 universal role이면 유효
-  return !!(
-    ROLE_CONFIGS[layout]?.[role] ||
-    ROLE_CONFIGS.universal[role]
-  );
+  return !!(ROLE_CONFIGS[layout]?.[role] || ROLE_CONFIGS.universal[role]);
 }

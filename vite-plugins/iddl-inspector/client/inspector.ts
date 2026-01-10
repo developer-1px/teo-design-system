@@ -112,7 +112,16 @@ function propsToString(props: any): string {
   const relevantProps: string[] = [];
 
   // 우선순위 props (먼저 표시)
-  const priorityKeys = ['role', 'prominence', 'intent', 'density', 'layout', 'direction', 'align', 'justify'];
+  const priorityKeys = [
+    'role',
+    'prominence',
+    'intent',
+    'density',
+    'layout',
+    'direction',
+    'align',
+    'justify',
+  ];
 
   // 우선순위 props 먼저 추가
   for (const key of priorityKeys) {
@@ -304,7 +313,10 @@ export function inspectReactTree(): string {
     console.log('[IDDL Inspector] Fiber key:', fiberKey);
 
     if (!fiberKey) {
-      return '// Error: React Fiber not found (is this a React app?)\n// Available keys: ' + allKeys.join(', ');
+      return (
+        '// Error: React Fiber not found (is this a React app?)\n// Available keys: ' +
+        allKeys.join(', ')
+      );
     }
 
     const fiberRoot = (rootElement as any)[fiberKey];
@@ -340,10 +352,17 @@ export function inspectReactTree(): string {
     if (!fiber) {
       return (
         '// Error: Could not find React Fiber root node\n' +
-        '// fiberRoot keys: ' + Object.keys(fiberRoot || {}).join(', ') + '\n' +
-        '// fiberRoot.child: ' + !!fiberRoot?.child + '\n' +
-        '// fiberRoot.current: ' + !!fiberRoot?.current + '\n' +
-        '// fiberRoot.stateNode: ' + !!fiberRoot?.stateNode
+        '// fiberRoot keys: ' +
+        Object.keys(fiberRoot || {}).join(', ') +
+        '\n' +
+        '// fiberRoot.child: ' +
+        !!fiberRoot?.child +
+        '\n' +
+        '// fiberRoot.current: ' +
+        !!fiberRoot?.current +
+        '\n' +
+        '// fiberRoot.stateNode: ' +
+        !!fiberRoot?.stateNode
       );
     }
 

@@ -11,25 +11,23 @@
 
 import { Redirect, Route, Router } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
+import { AppProvider } from '@/app/contexts/app-context.tsx';
+import { FloatingBar } from '@/app/widgets/FloatingBar.tsx';
+import { AppAction } from '@/apps/ACTION/AppAction.tsx';
+import { AppBlock } from '@/apps/BLOCK/AppBlock.tsx';
 import { AppDOCS } from '@/apps/DOCS/AppDOCS.tsx';
 import { AppDSLBuilder } from '@/apps/DSLBuilder/AppDSLBuilder.tsx';
 import { AppEMOJI } from '@/apps/EMOJI/AppEMOJI.tsx';
-import { AppIDE } from '@/apps/IDE/AppIDE.tsx';
-import { FloatingBar } from '@/app/widgets/FloatingBar.tsx';
-import { AppJSON } from '@/apps/JSON/AppJSON.tsx';
-
-import { AppPPT } from '@/apps/PPT/AppPPT.tsx';
-import { AppShowcase } from '@/apps/showcase/AppShowcase.tsx';
-
-import { AppPage } from '@/apps/PAGE/AppPage.tsx';
-import { AppSection } from '@/apps/SECTION/AppSection.tsx';
-import { AppOverlay } from '@/apps/OVERLAY/AppOverlay.tsx';
-import { AppBlock } from '@/apps/BLOCK/AppBlock.tsx';
 import { AppField } from '@/apps/FIELD/AppField.tsx';
-import { AppAction } from '@/apps/ACTION/AppAction.tsx';
+import { AppIDE } from '@/apps/IDE/AppIDE.tsx';
+import { AppJSON } from '@/apps/JSON/AppJSON.tsx';
+import { AppOverlay } from '@/apps/OVERLAY/AppOverlay.tsx';
+import { AppPage } from '@/apps/PAGE/AppPage.tsx';
+import { AppPPT } from '@/apps/PPT/AppPPT.tsx';
+import { AppSection } from '@/apps/SECTION/AppSection.tsx';
+import { AppShowcase } from '@/apps/showcase/AppShowcase.tsx';
 import { AppText } from '@/apps/TEXT/AppText.tsx';
 import { CommandPalette } from '@/components/types/Overlay/CommandPalette.tsx';
-import { AppProvider } from '@/app/contexts/app-context.tsx';
 
 function App() {
   // Note: Theme initialization moved to main.tsx (before React renders)
@@ -63,8 +61,8 @@ function App() {
         {/* 전역 UI 요소 (모든 앱에서 공통) */}
         <FloatingBar />
         <CommandPalette />
-      </AppProvider >
-    </Router >
+      </AppProvider>
+    </Router>
   );
 }
 

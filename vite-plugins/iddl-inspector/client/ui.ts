@@ -187,7 +187,8 @@ export function showInspector(): void {
   if (textarea) {
     // Fallback 메시지
     if (!jsx || jsx.trim() === '') {
-      textarea.value = '// IDDL Inspector: No React components found\n// Check browser console for details';
+      textarea.value =
+        '// IDDL Inspector: No React components found\n// Check browser console for details';
     } else {
       textarea.value = jsx;
     }

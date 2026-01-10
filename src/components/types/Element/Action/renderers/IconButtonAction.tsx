@@ -79,10 +79,12 @@ export function IconButtonAction({
         // Interactive State (hover, active, selected, disabled, focus)
         interactiveClasses,
         // Enhanced hover/active states for IconButton (구 IconButton 디자인 통합)
-        !selected && !isDisabled && 'hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10',
+        !selected &&
+          !isDisabled &&
+          'hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10',
         selected && 'bg-accent/10',
         // Loading cursor
-        loading && 'cursor-wait',
+        loading && 'cursor-wait'
         // Custom className override
       )}
       data-dsl-component="action"

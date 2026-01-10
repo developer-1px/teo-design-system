@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 
 interface RightNavProps {
   onViewChange?: (view: string | null) => void;
@@ -52,14 +52,7 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
         onClick={() => handleViewChange('settings')}
       />
 
-      {onClose && (
-        <Action
-          role="IconButton"
-          icon="X"
-          label="Close Sidebar"
-          onClick={onClose}
-        />
-      )}
+      {onClose && <Action role="IconButton" icon="X" label="Close Sidebar" onClick={onClose} />}
     </Block>
   );
 };

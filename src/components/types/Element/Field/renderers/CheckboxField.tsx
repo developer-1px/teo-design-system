@@ -18,6 +18,9 @@
  * />
  */
 
+import type { FieldOption } from '@/components/types/Element/Field/Field.types';
+import type { Intent, Prominence } from '@/components/types/Shared.types';
+import { cn } from '@/shared/lib/utils';
 import { useCheckboxField } from '../headless/useCheckboxField';
 import {
   checkboxStyles,
@@ -25,9 +28,6 @@ import {
   fieldWrapperStyles,
   labelStyles,
 } from '../styles/field.styles';
-import type { FieldOption } from '@/components/types/Element/Field/Field.types';
-import type { Intent, Prominence } from '@/components/types/Shared.types';
-import { cn } from '@/shared/lib/utils';
 
 export interface CheckboxFieldProps {
   /**
@@ -117,26 +117,23 @@ export function CheckboxField(props: CheckboxFieldProps) {
   return (
     <div className={cn(fieldWrapperStyles({ density }), className)}>
       {/* Label */}
-      <label className={labelStyles({ prominence, required })}>
-        {label}
-      </label>
+      <label className={labelStyles({ prominence, required })}>{label}</label>
 
       {/* Checkbox Block */}
       <div className="flex flex-col gap-2">
         {field.options.map((opt) => (
-          <label
-            key={String(opt.value)}
-            className="flex items-center gap-2 cursor-pointer"
-          >
+          <label key={String(opt.value)} className="flex items-center gap-2 cursor-pointer">
             <input
               {...field.getCheckboxProps(opt.value)}
               disabled={disabled || opt.disabled}
               className={checkboxStyles({ type: 'checkbox' })}
             />
-            <span className={cn(
-              'text-sm text-text',
-              (disabled || opt.disabled) && 'opacity-50 cursor-not-allowed'
-            )}>
+            <span
+              className={cn(
+                'text-sm text-text',
+                (disabled || opt.disabled) && 'opacity-50 cursor-not-allowed'
+              )}
+            >
               {opt.label}
             </span>
           </label>

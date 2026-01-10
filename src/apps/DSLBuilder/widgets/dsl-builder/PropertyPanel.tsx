@@ -4,15 +4,11 @@
 
 import { Check, Copy } from 'lucide-react';
 import { useState } from 'react';
-import type {
-  AnyDSLNode,
-  GroupNode,
-  SectionNode,
-} from '@/apps/DSLBuilder/lib/dsl-builder/types';
+import type { AnyDSLNode, GroupNode, SectionNode } from '@/apps/DSLBuilder/lib/dsl-builder/types';
+import type { BlockRole as GroupRole } from '@/components/types/Block/Block.types';
 import { FormField } from '@/components/types/Element/Field/role/FormField';
 import { Input } from '@/components/types/Element/Field/role/Input';
 import { Select } from '@/components/types/Element/Field/role/Select';
-import type { BlockRole as GroupRole } from '@/components/types/Block/Block.types';
 import type { Prominence } from '@/components/types/Shared.types';
 
 export interface PropertyPanelProps {

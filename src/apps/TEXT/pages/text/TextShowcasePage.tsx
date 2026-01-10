@@ -1,19 +1,19 @@
 /**
  * TextShowcasePage - Text Component Showcase
- * 
+ *
  * MECE gallery of IDDL Text component capabilities.
  * Demonstrates all Roles, Prominences, Intents, and Behaviors.
  */
 
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 
 export function TextShowcasePage() {
   return (
-    <Page role="Application" layout="Studio">
+    <Page title="Showcase" role="Application" layout="Studio">
       {/* Header */}
       <Section role="Toolbar" prominence="Standard">
         <Block role="Toolbar" density="Compact">
@@ -28,8 +28,20 @@ export function TextShowcasePage() {
         <Block role="ScrollMenu" density="Comfortable">
           <Text role="Label" content="CATEGORIES" prominence="Subtle" className="px-2 pt-2" />
           <Block role="Container" density="Standard">
-            {['Typography Matrix', 'Intent Colors', 'Alignment & Layout', 'Highlighting', 'Code & Monospace'].map(item => (
-              <Block key={item} role="Inline" clickable value={item} className="px-2 py-1 hover:bg-surface-elevated rounded-md cursor-pointer">
+            {[
+              'Typography Matrix',
+              'Intent Colors',
+              'Alignment & Layout',
+              'Highlighting',
+              'Code & Monospace',
+            ].map((item) => (
+              <Block
+                key={item}
+                role="Inline"
+                clickable
+                value={item}
+                className="px-2 py-1 hover:bg-surface-elevated rounded-md cursor-pointer"
+              >
                 <Text role="Body" content={item} prominence="Standard" />
               </Block>
             ))}
@@ -40,20 +52,29 @@ export function TextShowcasePage() {
       {/* Main Content */}
       <Section role="Editor" prominence="Standard" mode="view">
         <Block role="Container" density="Comfortable" className="p-8 gap-12 max-w-4xl mx-auto">
-
           {/* Header */}
           <Block role="Container" density="Standard" className="gap-2">
             <Text role="Title" prominence="Hero" content="Typography" />
-            <Text role="Body" prominence="Hero" content="The semantic text component for consistent Application UI." />
+            <Text
+              role="Body"
+              prominence="Hero"
+              content="The semantic text component for consistent Application UI."
+            />
           </Block>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 1. Typography Matrix (Role x Prominence) */}
           <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="1. Typography Matrix" />
-              <Text role="Body" prominence="Subtle" content="Combinations of semantic Role and visual Prominence." />
+              <Text
+                role="Body"
+                prominence="Subtle"
+                content="Combinations of semantic Role and visual Prominence."
+              />
             </div>
 
             {/* Title Role */}
@@ -84,26 +105,44 @@ export function TextShowcasePage() {
               <Text role="Label" content="Body Role" prominence="Subtle" />
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
-                  <Text role="Body" prominence="Hero" content="Hero Body used for lead paragraphs." />
+                  <Text
+                    role="Body"
+                    prominence="Hero"
+                    content="Hero Body used for lead paragraphs."
+                  />
                   <Text role="Caption" content="prominence='Hero' (Lead Text)" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Text role="Body" prominence="Strong" content="Strong body text is used for emphasis within content." />
+                  <Text
+                    role="Body"
+                    prominence="Strong"
+                    content="Strong body text is used for emphasis within content."
+                  />
                   <Text role="Caption" content="prominence='Strong' (Emphasis)" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Text role="Body" prominence="Standard" content="Standard body text is the default for most reading content. It has good readability and contrast." />
+                  <Text
+                    role="Body"
+                    prominence="Standard"
+                    content="Standard body text is the default for most reading content. It has good readability and contrast."
+                  />
                   <Text role="Caption" content="prominence='Standard' (Default)" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Text role="Body" prominence="Subtle" content="Subtle body text is for secondary information, metadata, or helper text." />
+                  <Text
+                    role="Body"
+                    prominence="Subtle"
+                    content="Subtle body text is for secondary information, metadata, or helper text."
+                  />
                   <Text role="Caption" content="prominence='Subtle' (Muted)" />
                 </div>
               </div>
             </Block>
           </Block>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 2. Intent Colors */}
           <Block role="Container" density="Comfortable" className="gap-6">
@@ -113,28 +152,48 @@ export function TextShowcasePage() {
             </div>
 
             <Block role="Grid" density="Standard" className="grid-cols-2 md:grid-cols-3 gap-6">
-              <Block role="Card" className="p-4 items-center justify-center border-l-4 border-l-current text-text-primary">
+              <Block
+                role="Card"
+                className="p-4 items-center justify-center border-l-4 border-l-current text-text-primary"
+              >
                 <Text role="Body" intent="Neutral" content="Neutral Intent" prominence="Strong" />
               </Block>
-              <Block role="Card" className="p-4 items-center justify-center border-l-4 border-l-current text-brand-primary">
+              <Block
+                role="Card"
+                className="p-4 items-center justify-center border-l-4 border-l-current text-brand-primary"
+              >
                 <Text role="Body" intent="Brand" content="Brand Intent" prominence="Strong" />
               </Block>
-              <Block role="Card" className="p-4 items-center justify-center border-l-4 border-l-green-500">
+              <Block
+                role="Card"
+                className="p-4 items-center justify-center border-l-4 border-l-green-500"
+              >
                 <Text role="Body" intent="Positive" content="Positive Intent" prominence="Strong" />
               </Block>
-              <Block role="Card" className="p-4 items-center justify-center border-l-4 border-l-yellow-500">
+              <Block
+                role="Card"
+                className="p-4 items-center justify-center border-l-4 border-l-yellow-500"
+              >
                 <Text role="Body" intent="Caution" content="Caution Intent" prominence="Strong" />
               </Block>
-              <Block role="Card" className="p-4 items-center justify-center border-l-4 border-l-red-500">
+              <Block
+                role="Card"
+                className="p-4 items-center justify-center border-l-4 border-l-red-500"
+              >
                 <Text role="Body" intent="Critical" content="Critical Intent" prominence="Strong" />
               </Block>
-              <Block role="Card" className="p-4 items-center justify-center border-l-4 border-l-blue-500">
+              <Block
+                role="Card"
+                className="p-4 items-center justify-center border-l-4 border-l-blue-500"
+              >
                 <Text role="Body" intent="Info" content="Info Intent" prominence="Strong" />
               </Block>
             </Block>
           </Block>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 3. Alignment */}
           <Block role="Container" density="Comfortable" className="gap-6">
@@ -144,19 +203,40 @@ export function TextShowcasePage() {
             </div>
 
             <Block role="Card" className="p-6 gap-4">
-              <Text role="Body" align="left" content="Left Aligned Text (Default)" className="bg-surface-sunken p-2" />
-              <Text role="Body" align="center" content="Center Aligned Text" className="bg-surface-sunken p-2" />
-              <Text role="Body" align="right" content="Right Aligned Text" className="bg-surface-sunken p-2" />
+              <Text
+                role="Body"
+                align="left"
+                content="Left Aligned Text (Default)"
+                className="bg-surface-sunken p-2"
+              />
+              <Text
+                role="Body"
+                align="center"
+                content="Center Aligned Text"
+                className="bg-surface-sunken p-2"
+              />
+              <Text
+                role="Body"
+                align="right"
+                content="Right Aligned Text"
+                className="bg-surface-sunken p-2"
+              />
             </Block>
           </Block>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 4. Highlighting */}
           <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="4. Search Highlighting" />
-              <Text role="Body" prominence="Subtle" content="Built-in highlighting for search results." />
+              <Text
+                role="Body"
+                prominence="Subtle"
+                content="Built-in highlighting for search results."
+              />
             </div>
 
             <Block role="Card" className="p-6">
@@ -170,13 +250,19 @@ export function TextShowcasePage() {
             </Block>
           </Block>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 5. Code & Monospace */}
           <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="5. Technical Text" />
-              <Text role="Body" prominence="Subtle" content="Monospaced styles for code and keys." />
+              <Text
+                role="Body"
+                prominence="Subtle"
+                content="Monospaced styles for code and keys."
+              />
             </div>
 
             <Block role="Grid" density="Standard" className="grid-cols-1 md:grid-cols-2 gap-8">
@@ -198,7 +284,6 @@ export function TextShowcasePage() {
               </Block>
             </Block>
           </Block>
-
         </Block>
       </Section>
     </Page>

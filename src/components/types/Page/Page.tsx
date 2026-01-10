@@ -1,60 +1,38 @@
 /**
- * Page - Application Root (IDDL v5.0)
+ * Page - Application Root (IDDL v5.0 Final)
  *
- * **Why-based API**: "이 페이지는 어떻게 움직이는가?" + "공간을 어떻게 나누었는가?"
+ * **Physics (Role)**: Controls Scroll & Viewport behavior.
+ * **Zoning (Layout)**: Controls Grid/Flex structure.
  *
- * **Four Page Types** (물리법칙):
- * - type="Application": 전체 화면, 스크롤 없음 (w-screen h-screen overflow-hidden)
- * - type="Document" (default): 스크롤 가능한 문서 페이지 (min-height: 100vh)
- * - type="Focus": 중앙 집중형 (로그인, 결제 등, 화면 정중앙 배치)
- * - type="Fullscreen": 전체화면 고정 (프레젠테이션, 키오스크, 스크롤 불가)
- *
- * **Seven Page Layouts** (공간 분할):
- * - layout="Single": Header + Container + Footer (1단 기본형)
- * - layout="Sidebar": Navigator(좌) + Container(우) (2단 좌측 메뉴형)
- * - layout="Aside": Container(좌) + Aside(우) (2단 우측 정보형)
- * - layout="HolyGrail": Header + Navigator + Container + Aside + Footer (3단 완전체)
- * - layout="Split": PanelLeft + PanelRight (5:5 분할형)
- * - layout="Studio": ActivityBar + PrimarySidebar + Editor + Panel (IDE 전용)
- * - layout="Blank": 빈 캔버스 (dialog, custom)
- *
- * **Why-based Developer Experience**:
- * ```tsx
- * // ❌ Before (v4.0)
- * <Page role="App" layout="grid" template="studio">
- *
- * // ✅ After (v5.0)
- * <Page type="Application" layout="Studio">
- * ```
- *
- * v1.0.1: title, description, layout, breadcrumbs, condition 추가
- * v2.0: role, prominence, density, intent, maxWidth, centered, navigation, scrollable, loading, error 추가
- * v3.0: main 태그 제거, layout 단순화 (flex/grid만 지원), role/navigation 제거
- * v4.0: Template-aware architecture, Section role validation
- * v5.0: role→type, template→layout 통합, Focus/Fullscreen 추가, direction 제거
+ * This component acts as the "God Component" for the page structure,
+ * enforcing the physical laws defined in the IDDL spec.
  */
 
 import { cva } from 'class-variance-authority';
-import { ChevronRight, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
-import type {
-  PageProps,
-  PageRole,
-} from '@/components/types/Page/Page.types';
+import { useDynamicGridTemplate } from '@/components/types/Page/hooks/useDynamicGridTemplate';
+import type { PageProps } from '@/components/types/Page/Page.types';
 import { cn } from '@/shared/lib/utils';
 
-// Import App layout renderer
-import { AppLayout } from './renderers/AppLayout';
-import { FullscreenLayout } from './renderers/FullscreenLayout';
-
 /**
- * Page container variants (CVA)
- * v3.1: text-base 추가 - 모든 하위 Text가 상속받도록 함 (text-* 최소화)
+ * Page Physics Variants (Role-based)
  */
-const pageContainerVariants = cva(
-  'h-full w-full overflow-y-auto bg-surface-base flex flex-col text-base text-text-primary',
+const pagePhysicsVariants = cva(
+  'transition-colors', // Common base
   {
     variants: {
+      role: {
+        Document: 'relative min-h-screen w-full overflow-y-auto flex flex-col', // Standard Web
+        Application: 'relative h-screen w-screen overflow-hidden grid', // App Shell
+        Focus:
+          'relative min-h-screen w-full overflow-y-auto flex flex-col items-center justify-center', // Center
+        Fullscreen: 'fixed inset-0 z-50 h-full w-full overflow-hidden', // Kiosk
+        Immersive: 'relative h-screen w-full overflow-y-scroll snap-y snap-mandatory', // PPT
+        Overlay: 'fixed inset-0 z-50 h-full w-full overflow-y-auto bg-black/50', // Backdrop
+        Paper:
+          'relative mx-auto w-[210mm] min-h-[297mm] overflow-visible shadow-lg bg-white text-black bg-surface', // A4 Print
+      },
       prominence: {
         Hero: 'bg-surface-raised',
         Standard: 'bg-surface',
@@ -63,193 +41,115 @@ const pageContainerVariants = cva(
       },
     },
     defaultVariants: {
+      role: 'Document',
       prominence: 'Standard',
     },
   }
 );
 
 /**
- * Document page content variants (v5.0)
- * type="Document"일 때만 사용 (기존 role="Content")
- */
-const documentPageVariants = cva('w-full flex-1 flex flex-col', {
-  variants: {
-    centered: {
-      true: 'mx-auto',
-      false: '',
-    },
-  },
-  defaultVariants: {
-    centered: false,
-  },
-});
-
-/**
- * Gap utility - Convert number to Tailwind gap class
- */
-function getGapClass(gap: number): string {
-  const gapMap: Record<number, string> = {
-    0: 'gap-0',
-    1: 'gap-1',
-    2: 'gap-2',
-    3: 'gap-3',
-    4: 'gap-4',
-    6: 'gap-6',
-    8: 'gap-8',
-    12: 'gap-12',
-    16: 'gap-16',
-    24: 'gap-24',
-  };
-  return gapMap[gap] || 'gap-0';
-}
-
-/**
- * Max width mapping
+ * Document Width Constraints
  */
 const maxWidthMap: Record<string, string> = {
-  sm: 'max-w-sm', // 640px
-  md: 'max-w-md', // 768px
-  lg: 'max-w-lg', // 1024px
-  xl: 'max-w-xl', // 1280px
-  '2xl': 'max-w-2xl', // 1536px
-  '4xl': 'max-w-4xl', // 2048px
+  sm: 'max-w-sm',
+  md: 'max-w-md',
+  lg: 'max-w-lg',
+  xl: 'max-w-xl',
+  '2xl': 'max-w-2xl',
+  '4xl': 'max-w-4xl',
   none: 'max-w-none',
+};
+
+/**
+ * Helper to get max-width class
+ */
+const getMaxWidthClass = (mw?: string | number) => {
+  if (!mw) return undefined;
+  if (typeof mw === 'number') return `max-w-[${mw}px]`;
+  return maxWidthMap[mw] || maxWidthMap.none;
 };
 
 export function Page({
   as: Component = 'div',
   role = 'Document',
-  layout: layoutProp,
-  gap = 0,
-  maxWidth,
-  centered = false,
+  layout = 'Single',
   title,
   description,
-  breadcrumbs,
+  maxWidth,
+  centered = false,
   prominence = 'Standard',
   density = 'Standard',
   intent = 'Neutral',
   loading = false,
   error,
   children,
+  className,
   onClick,
   condition,
-  sizes,
-  // Deprecated props (v5.0) - 하위 호환성
-  direction,
+  // Note: gap, breadcrumbs, direction, template are REMOVED (Legacy)
   ...rest
 }: PageProps) {
-  // 하위 호환성: "App" → "Application", "Content" → "Document"
-  const normalizedRole: PageRole =
-    role === ('App' as any) ? 'Application' : role === ('Content' as any) ? 'Document' : role;
+  // Feature: Dynamic Grid Template Calculation
+  // Analyzes <Section> children to build grid-areas automatically.
+  const dynamicTemplate = useDynamicGridTemplate(children, layout);
 
-  // Layout prop usage
-  const layout = layoutProp;
+  // Layout Styles (Applied only if role supports Grid layout)
+  // Document role uses Flex usually, but can use Grid if layout is complex (like HolyGrail).
+  // Application role ALWAYS uses Grid.
+  // Focus uses Flex Center.
 
-  // 조건부 렌더링
+  const hasDynamicLayout =
+    layout &&
+    ['Single', 'Sidebar', 'Split', 'Aside', 'HolyGrail', 'Mobile', 'Studio'].includes(layout);
+
+  const isGridPowered = role === 'Application' || (role === 'Document' && hasDynamicLayout);
+
+  const layoutStyles = isGridPowered
+    ? {
+      display: 'grid',
+      gridTemplateAreas: dynamicTemplate.gridTemplateAreas,
+      gridTemplateColumns: dynamicTemplate.gridTemplateColumns,
+      gridTemplateRows: dynamicTemplate.gridTemplateRows,
+    }
+    : {};
+
+  // Additional classes for Document role constraints
+  const documentConstraintClass =
+    role === 'Document'
+      ? cn(
+        getMaxWidthClass(maxWidth),
+        centered ? 'mx-auto' : ''
+      )
+      : '';
+
+  // Condition check
   if (condition) {
-    // TODO: condition 표현식 평가 구현
+    // TODO: Evaluate condition string
   }
 
-  // v5.0: role="Application" → AppLayout 렌더러 사용
-  if (normalizedRole === 'Application') {
-    return (
-      <LayoutProvider
-        value={{
-          prominence,
-          density,
-          intent,
-          depth: 0,
-          mode: 'view',
-          layout, // v5.0: Pass layout for Section role validation
-        }}
-      >
-        <AppLayout
-          layout={layout}
-          gap={gap}
-          prominence={prominence}
-          intent={intent}
-          onClick={onClick}
-          sizes={sizes}
-          {...rest}
-        >
-          {children}
-        </AppLayout>
-      </LayoutProvider>
-    );
-  }
-
-  // v5.0: role="Fullscreen" → FullscreenLayout 렌더러 사용
-  if (normalizedRole === 'Fullscreen') {
-    return (
-      <LayoutProvider
-        value={{
-          prominence,
-          density,
-          intent,
-          depth: 0,
-          mode: 'view',
-          layout, // v5.0: Pass layout for Section role validation
-        }}
-      >
-        <FullscreenLayout
-          prominence={prominence}
-          intent={intent}
-          onClick={onClick}
-        >
-          {children}
-        </FullscreenLayout>
-      </LayoutProvider>
-    );
-  }
-
-  // TODO: role="Focus" → FocusLayout (v5.0)
-
-  // role="Document" (default): 기존 Content 페이지 로직
-
-  // 로딩 상태 렌더링
+  // Loading State
   if (loading) {
     return (
-      <div
-        className={cn(
-          pageContainerVariants({ prominence }),
-          'items-center justify-center',
-        )}
-        data-dsl-component="page"
-        data-state="loading"
-      >
+      <div className="w-full h-screen flex items-center justify-center bg-surface">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-8 h-8 animate-spin text-text-secondary" />
-          <p className="text-sm text-text-secondary">Loading...</p>
+          <p className="text-sm text-text-secondary">Loading {title}...</p>
         </div>
       </div>
     );
   }
 
-  // 에러 상태 렌더링
+  // Error State
   if (error) {
     return (
-      <div
-        className={cn(
-          pageContainerVariants({ prominence }),
-          'items-center justify-center',
-        )}
-        data-dsl-component="page"
-        data-state="error"
-      >
-        <div className="flex flex-col items-center gap-4 max-w-md text-center">
-          <p className="text-lg font-semibold text-critical">Error</p>
-          <p className="text-sm text-text-secondary">{error}</p>
+      <div className="w-full h-screen flex items-center justify-center bg-surface-base">
+        <div className="text-center">
+          <h1 className="text-xl font-bold text-critical">Error Loading Page</h1>
+          <p className="text-text-secondary mt-2">{error}</p>
         </div>
       </div>
     );
   }
-
-  const maxWidthClass = maxWidth
-    ? typeof maxWidth === 'number'
-      ? `max-w-[${maxWidth}px]`
-      : maxWidthMap[maxWidth] || maxWidthMap.none
-    : undefined;
 
   return (
     <LayoutProvider
@@ -257,15 +157,21 @@ export function Page({
         prominence,
         density,
         intent,
-        depth: 0,
         mode: 'view',
-        layout, // v5.0: Pass layout for Section role validation
+        layout, // Important: Passed down directly for Section validation
+        depth: 0,
+        role, // Pass role down so children know their physics context?
       }}
     >
       <Component
-        className={cn(pageContainerVariants({ prominence }))}
+        className={cn(
+          pagePhysicsVariants({ role, prominence }),
+          documentConstraintClass,
+          className
+        )}
+        style={{ ...layoutStyles }}
         data-dsl-component="page"
-        data-role={normalizedRole}
+        data-role={role}
         data-layout={layout}
         data-prominence={prominence}
         data-density={density}
@@ -273,44 +179,8 @@ export function Page({
         onClick={onClick}
         {...rest}
       >
-        {/* Breadcrumbs */}
-        {breadcrumbs && breadcrumbs.length > 0 && (
-          <nav className="px-6 py-3 border-b border-border bg-surface" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-sm">
-              {breadcrumbs.map((crumb, index) => (
-                <li key={index} className="flex items-center gap-2">
-                  {index > 0 && <ChevronRight size={16} className="text-text-tertiary" />}
-                  {crumb.to ? (
-                    <a href={crumb.to} className="text-accent hover:underline">
-                      {crumb.label}
-                    </a>
-                  ) : (
-                    <span className="text-PrimarySidebartext-secondary">{crumb.label}</span>
-                  )}
-                </li>
-              ))}
-            </ol>
-          </nav>
-        )}
-
-        {/* Page Header */}
-        {(title || description) && (
-          <header className="px-6 py-6 border-b border-border bg-surface">
-            {title && <h1 className="text-3xl font-semibold text-text-primary mb-2">{title}</h1>}
-            {description && <p className="text-base text-text-secondary">{description}</p>}
-          </header>
-        )}
-
-        {/* Page Content */}
-        <div
-          className={cn(
-            documentPageVariants({ centered }),
-            getGapClass(gap),
-            maxWidthClass
-          )}
-        >
-          {children}
-        </div>
+        {/* Title/Description Header (Optional, mostly for Document) */}
+        {children}
       </Component>
     </LayoutProvider>
   );

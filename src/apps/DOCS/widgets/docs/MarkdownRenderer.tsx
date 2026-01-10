@@ -169,9 +169,7 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
               className="my-6 pl-6 pr-4 py-4 border-l-4 border-accent bg-accent/5 rounded-r-lg"
               {...props}
             >
-              <div className="text-text-secondary [&>p]:my-2 [&>p]:leading-relaxed">
-                {children}
-              </div>
+              <div className="text-text-secondary [&>p]:my-2 [&>p]:leading-relaxed">{children}</div>
             </blockquote>
           ),
 

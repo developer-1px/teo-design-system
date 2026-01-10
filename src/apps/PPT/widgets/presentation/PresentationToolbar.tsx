@@ -35,11 +35,7 @@ export const PresentationToolbar = ({
 }: PresentationToolbarProps) => {
   return (
     <Section role="Header" className="border-b border-border bg-layer-4 shadow-sm">
-      <Block
-        role="Toolbar"
-        density="Compact"
-        className="h-12 items-center justify-between px-4"
-      >
+      <Block role="Toolbar" density="Compact" className="h-12 items-center justify-between px-4">
         {/* 좌측: 제목 */}
         <Block role="Inline" className="flex-1">
           <Text
