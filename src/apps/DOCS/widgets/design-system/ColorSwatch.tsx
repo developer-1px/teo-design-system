@@ -4,7 +4,7 @@
 
 import { Check, Copy } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Section } from '@/components/Section/Section.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface ColorSwatchProps {
@@ -51,7 +51,7 @@ export const ColorSwatch = ({
   };
 
   return (
-    <Section role="Container" prominence="Secondary" className={cn('overflow-hidden', className)}>
+    <Section role="Container" className={cn('overflow-hidden', className)}>
       {/* Color Preview */}
       <div
         className="h-32 relative group cursor-pointer"

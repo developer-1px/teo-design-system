@@ -3,9 +3,9 @@
  * 간단하고 컴팩트한 리스트
  */
 
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Item/Text/Text.tsx';
-import { cn } from '@/shared/lib/utils.ts';
+import { Section } from '@/components/types/Section/Section.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import type { JsonArray, JsonObject } from '../types.ts';
 
 interface ListViewProps {
@@ -14,73 +14,66 @@ interface ListViewProps {
 
 export const ListView = ({ data }: ListViewProps) => {
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="divide-y divide-border">
+    <Section role="Container" layout="scroll">
+      <Group role="List" divider="horizontal">
         {data.map((item, index) => {
           const obj = item as JsonObject;
           const keys = Object.keys(obj).slice(0, 4); // 최대 4개 필드
 
           return (
-            <div
+            <Group
               key={index}
-              className={cn(
-                'px-4 py-3 hover:bg-surface-sunken cursor-pointer transition-colors',
-                'flex items-center gap-4'
-              )}
+              role="ListItem"
+              direction="horizontal"
+              padding="md"
+              align="center"
+              gap="md"
+              interactive
             >
               {/* 첫 번째 필드 (제목) */}
-              <div className="flex-1 min-w-0">
+              <Group role="Container" flex="1">
                 <Text
                   role="Body"
-                  prominence="Hero"
-                  className="font-medium truncate block"
+                  prominence="Primary"
                   content={String(obj[keys[0]])}
                 />
-              </div>
+              </Group>
 
               {/* 나머지 필드들 */}
-              <Group role="Container" direction="horizontal" className="gap-6 flex-shrink-0">
+              <Group role="Container" direction="horizontal" gap="lg">
                 {keys.slice(1).map((key) => {
                   const value = obj[key];
                   if (value === null || value === undefined) return null;
 
                   return (
-                    <div key={key} className="flex items-center gap-2 min-w-0">
+                    <Group key={key} role="Field" direction="horizontal" align="center" gap="xs">
                       <Text
                         role="Label"
-                        prominence="Tertiary"
-                        className="text-xs text-subtle whitespace-nowrap"
+                        prominence="Subtle"
                         content={`${key}:`}
                       />
                       <Text
                         role="Body"
-                        prominence="Primary"
-                        className="text-sm truncate"
                         content={
                           typeof value === 'object'
                             ? JSON.stringify(value).substring(0, 30)
                             : String(value)
                         }
                       />
-                    </div>
+                    </Group>
                   );
                 })}
               </Group>
-            </div>
+            </Group>
           );
         })}
 
         {data.length === 0 && (
-          <div className="flex items-center justify-center h-64">
-            <Text
-              role="Body"
-              prominence="Tertiary"
-              className="text-subtle"
-              content="데이터가 없습니다"
-            />
-          </div>
+          <Group role="Empty" align="center" justify="center" padding="xl">
+            <Text role="Body" prominence="Subtle" content="데이터가 없습니다" />
+          </Group>
         )}
-      </div>
-    </div>
+      </Group>
+    </Section>
   );
 };

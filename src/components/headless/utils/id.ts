@@ -46,9 +46,7 @@ export function useIdFallback(prefix = 'id'): string {
  * <label id={sourceId} htmlFor={targetId}>Name</label>
  * <input id={targetId} aria-labelledby={sourceId} />
  */
-export function generateRelationIds(
-  prefix: string
-): { sourceId: string; targetId: string } {
+export function generateRelationIds(prefix: string): { sourceId: string; targetId: string } {
   const baseId = generateId(prefix);
   return {
     sourceId: `${baseId}-label`,

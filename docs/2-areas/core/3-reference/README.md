@@ -122,7 +122,7 @@ Reference는 **정보 검색**을 위한 문서입니다:
 TypeScript 타입 정의가 포함됩니다:
 
 ```typescript
-type Prominence = 'Hero' | 'Primary' | 'Secondary' | 'Tertiary';
+type Prominence = 'Hero' | 'Standard' | 'Strong' | 'Subtle';
 type Intent = 'Neutral' | 'Brand' | 'Positive' | 'Critical' | ...;
 ```
 

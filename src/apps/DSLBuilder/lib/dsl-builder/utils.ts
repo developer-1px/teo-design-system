@@ -153,13 +153,13 @@ export function createDefaultNode(type: DSLNodeType): AnyDSLNode {
     case 'region':
       return { id, type: 'region', role: 'main', children: [] };
     case 'section':
-      return { id, type: 'section', prominence: 'Primary', children: [] };
+      return { id, type: 'section', prominence: 'Standard', children: [] };
     case 'overlay':
       return { id, type: 'overlay', role: 'Dialog', prominence: 'Hero', children: [] };
     case 'group':
       return { id, type: 'group', role: 'Container', children: [] };
     case 'text':
-      return { id, type: 'text', role: 'Body', prominence: 'Primary', content: 'New Text' };
+      return { id, type: 'text', role: 'Body', prominence: 'Standard', content: 'New Text' };
     case 'field':
       return {
         id,
@@ -167,14 +167,14 @@ export function createDefaultNode(type: DSLNodeType): AnyDSLNode {
         label: 'Field',
         model: 'data.field',
         dataType: 'text',
-        prominence: 'Primary',
+        prominence: 'Standard',
       };
     case 'action':
       return {
         id,
         type: 'action',
         label: 'Button',
-        prominence: 'Primary',
+        prominence: 'Standard',
         behavior: { action: 'command', command: 'noop' },
       };
     default:

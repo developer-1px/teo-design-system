@@ -5,7 +5,7 @@ import {
   type ReactNode,
   useContext,
 } from 'react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/lib/utils.ts';
 
 /**
  * Tabs Context
@@ -52,6 +52,7 @@ export interface TabsListProps extends HTMLAttributes<HTMLDivElement> {}
 export function TabsList({ className, children, ...props }: TabsListProps) {
   return (
     <div
+      role="tablist"
       className={cn(
         'inline-flex items-center gap-1 bg-surface p-1 rounded-lg border border-default',
         className
@@ -73,10 +74,16 @@ export interface TabsTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement
 export function TabsTrigger({ value, className, children, ...props }: TabsTriggerProps) {
   const { value: selectedValue, onValueChange } = useTabsContext();
   const isActive = selectedValue === value;
+  const tabId = `tab-${value}`;
+  const panelId = `tabpanel-${value}`;
 
   return (
     <button
       type="button"
+      role="tab"
+      id={tabId}
+      aria-selected={isActive}
+      aria-controls={panelId}
       onClick={() => onValueChange(value)}
       className={cn(
         'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
@@ -102,13 +109,21 @@ export interface TabsContentProps extends HTMLAttributes<HTMLDivElement> {
 
 export function TabsContent({ value, className, children, ...props }: TabsContentProps) {
   const { value: selectedValue } = useTabsContext();
+  const tabId = `tab-${value}`;
+  const panelId = `tabpanel-${value}`;
 
   if (selectedValue !== value) {
     return null;
   }
 
   return (
-    <div className={cn('mt-4', className)} {...props}>
+    <div
+      role="tabpanel"
+      id={panelId}
+      aria-labelledby={tabId}
+      className={cn('mt-4', className)}
+      {...props}
+    >
       {children}
     </div>
   );

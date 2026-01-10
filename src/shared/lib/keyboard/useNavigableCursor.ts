@@ -44,7 +44,6 @@ interface UseNavigableCursorReturn<T> {
  * const { cursorIndex, getItemProps } = useNavigableCursor({
  *   type: 'list',
  *   items: users,
- *   onSelect: (user) => console.log(user)
  * });
  *
  * return users.map((user, index) => (

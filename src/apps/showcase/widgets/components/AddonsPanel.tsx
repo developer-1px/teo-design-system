@@ -13,8 +13,8 @@ import type {
   FileTreeNode,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text';
 import { CodeViewer } from './CodeViewer';
 import { MarkdownDocs } from './MarkdownDocs';
 import { PropsPanel } from './PropsPanel';
@@ -33,24 +33,26 @@ export function AddonsPanel({ node, propValues, onPropChange }: AddonsPanelProps
 
   if (!metadata) {
     return (
-      <div className="flex-1 flex items-center justify-center p-8 bg-surface">
-        <Text role="Body" prominence="Tertiary">
-          Select a component to view addons
-        </Text>
-      </div>
+      <Group
+        role="Container"
+        prominence="Standard"
+        className="flex-1 flex items-center justify-center"
+      >
+        <Text role="Body">Select a component to view addons</Text>
+      </Group>
     );
   }
 
   return (
-    <div className="flex flex-col h-full bg-surface border-l border-default">
+    <Group role="Container" prominence="Standard" className="flex flex-col h-full">
       {/* Tabs Header */}
-      <Group role="Toolbar" layout="inline" className="border-b border-default px-2">
+      <Group role="Tabs" prominence="Standard" className="border-b border-border-default">
         <button
           onClick={() => setActiveTab('controls')}
           className={`px-3 py-2 text-sm font-medium transition-colors border-b-2 ${
             activeTab === 'controls'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-muted hover:text'
+              ? 'border-accent-default text-accent-default'
+              : 'border-transparent text-text-secondary hover:text-text'
           }`}
         >
           Controls
@@ -59,8 +61,8 @@ export function AddonsPanel({ node, propValues, onPropChange }: AddonsPanelProps
           onClick={() => setActiveTab('docs')}
           className={`px-3 py-2 text-sm font-medium transition-colors border-b-2 ${
             activeTab === 'docs'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-muted hover:text'
+              ? 'border-accent-default text-accent-default'
+              : 'border-transparent text-text-secondary hover:text-text'
           }`}
         >
           Docs
@@ -69,8 +71,8 @@ export function AddonsPanel({ node, propValues, onPropChange }: AddonsPanelProps
           onClick={() => setActiveTab('code')}
           className={`px-3 py-2 text-sm font-medium transition-colors border-b-2 ${
             activeTab === 'code'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-muted hover:text'
+              ? 'border-accent-default text-accent-default'
+              : 'border-transparent text-text-secondary hover:text-text'
           }`}
         >
           Code
@@ -78,27 +80,29 @@ export function AddonsPanel({ node, propValues, onPropChange }: AddonsPanelProps
       </Group>
 
       {/* Tab Content */}
-      <div className="flex-1 overflow-auto">
+      <Group role="Container" prominence="Standard" className="flex-1 overflow-auto">
         {activeTab === 'controls' && (
-          <div className="p-4">
+          <Group role="Container" prominence="Standard" className="p-4">
             <PropsPanel
               metadata={metadata}
               propValues={propValues}
-              onPropChange={onPropChange}
               mockData={{}}
-              onMockDataChange={() => {}}
+              onPropChange={onPropChange}
+              onMockChange={() => {}}
             />
-          </div>
+          </Group>
         )}
 
         {activeTab === 'docs' && (
-          <div className="p-4">
+          <Group role="Container" prominence="Standard" className="p-4">
             <MarkdownDocs metadata={metadata} />
-          </div>
+          </Group>
         )}
 
-        {activeTab === 'code' && node && <CodeViewer node={node} />}
-      </div>
-    </div>
+        {activeTab === 'code' && metadata.sourceCode && (
+          <CodeViewer sourceCode={metadata.sourceCode} />
+        )}
+      </Group>
+    </Group>
   );
 }

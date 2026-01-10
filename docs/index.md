@@ -2,7 +2,7 @@
 
 > **Intent-Driven Design Language - A Taxonomy for UI Components**
 
-**Version**: 1.0.1
+**Version**: 1.0.1 (Implementation: v4.1)
 **Last Updated**: 2026-01-09
 
 ---
@@ -11,9 +11,12 @@
 
 | Document | Description |
 |----------|-------------|
+| [**IDDL v1.0.1 Specification**](./2-areas/spec/iddl-spec-1.0.1.md) | ⭐ Official IDDL specification |
 | [Component Taxonomy](./2-areas/core/3-reference/component-role-mapping.md) | Standard naming & classification system for UI components |
 | [Field API Reference](./2-areas/core/3-reference/field-reference.md) | Complete spec for Field component (21 data types) |
 | [Page API Reference](./2-areas/core/3-reference/page-v2-spec.md) | Complete spec for Page component (layouts & navigation) |
+| [**Section v4.1 Spec**](./2-areas/core/3-reference/section-v4.1-spec.md) | ⭐ NEW: Section role configuration (v4.1) |
+| [**Page-Section Overflow Policy**](./2-areas/core/3-reference/page-section-overflow-policy.md) | ⭐ NEW: Scroll behavior responsibility model |
 
 ---
 
@@ -100,10 +103,37 @@ Page (Root)
 ```tsx
 <Section role="Header">
   <Group role="Toolbar" align="right">
-    <Action prominence="Primary" intent="Brand" label="Save" />
+    <Action prominence="Standard" intent="Brand" label="Save" />
   </Group>
 </Section>
 ```
+
+---
+
+## What's New in v4.1 (2026-01-09)
+
+### Section Role Configuration 중앙화
+
+IDDL v4.1 구현에서 **Section Role Configuration**을 중앙화했습니다. 이는 스펙 변경이 아닌 구현 최적화입니다.
+
+**핵심 원칙**:
+```
+Page가 template을 정의하고, template + role 조합이 모든 Section 속성을 결정한다.
+```
+
+**주요 변경**:
+- ✅ **role-config.ts** 신규 파일: 모든 Section role 속성 중앙 관리
+- ✅ **Page 책임 원칙**: Page template + Section role → gridArea, overflow, htmlTag, ariaProps, baseStyles 자동 결정
+- ✅ **Overflow 정책 명확화**: Template별 스크롤 동작 정의 (목록 `auto`, 에디터 `hidden`, 고정 영역 `hidden`)
+- ✅ **Renderer 단순화**: 외부 주입 방식으로 하드코딩 제거
+
+**문서**:
+- [Section v4.1 스펙](./2-areas/core/3-reference/section-v4.1-spec.md) - 전체 스펙
+- [Page-Section Overflow 정책](./2-areas/core/3-reference/page-section-overflow-policy.md) - 스크롤 정책
+- [IDDL Spec Appendix D](./2-areas/spec/iddl-spec-1.0.1.md#appendix-d-section-v41-implementation-notes-2026-01-09) - 구현 노트
+
+**아카이브**:
+- [v4.0 문서](./4-archive/2026-01-09-v4.1-section-role-config/) - 이전 renderer 가이드
 
 ---
 

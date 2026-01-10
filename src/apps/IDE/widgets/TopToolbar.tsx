@@ -12,18 +12,14 @@ import {
   Download as DownloadIcon,
   FolderOpen as FolderOpenIcon,
   GitBranch as GitBranchIcon,
-  Menu as MenuIcon,
-  PanelBottom as PanelBottomIcon,
-  PanelRightOpen as PanelRightOpenIcon,
   Play as PlayIcon,
-  Settings as SettingsIcon,
   Upload as UploadIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/Item/Action/role/Button.tsx';
-import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
-import { Section } from '@/components/Section/Section.tsx';
 import { ThemeToggleButton } from '@/apps/IDE/widgets/ThemeSwitcher.tsx';
+import { Button } from '@/components/types/Atom/Action/role/Button.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface TopToolbarProps {
   projectName?: string;
@@ -48,40 +44,45 @@ export const TopToolbar = ({
   const [showRunMenu, setShowRunMenu] = useState(false);
 
   return (
-    <Section role="Header" prominence="Hero" className="flex h-10 items-center px-3 gap-2">
+    <Section role="Header" prominence="Hero" layout="flex" direction="horizontal" align="center" padding="sm" gap="xs" height="40">
       {/* 1. Main Menu (Hamburger) */}
-      <div className="relative">
-        <IconButton
-          size="sm"
+      <Group role="Dropdown" position="relative">
+        <Action
+          role="IconButton"
+          icon="Menu"
+          label="Main Menu (Alt+\)"
+          density="Compact"
           onClick={() => setShowMainMenu(!showMainMenu)}
           onBlur={() => setTimeout(() => setShowMainMenu(false), 200)}
-          title="Main Menu (Alt+\)"
-        >
-          <MenuIcon size={16} />
-        </IconButton>
+        />
 
         {showMainMenu && (
           <Section
             role="Container"
             prominence="Hero"
-            className="absolute top-full left-0 mt-1 w-56 py-1 z-50"
+            position="absolute"
+            top="full"
+            left="0"
+            width="224"
+            padding="xs"
+            elevation="high"
           >
             <MainMenuContent />
           </Section>
         )}
-      </div>
+      </Group>
 
       {/* 2. Project Widget */}
-      <div className="relative">
+      <Group role="Dropdown" position="relative">
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2"
+          gap="xs"
           onClick={() => setShowProjectMenu(!showProjectMenu)}
           onBlur={() => setTimeout(() => setShowProjectMenu(false), 200)}
         >
           <FolderOpenIcon size={16} />
-          <span className="font-medium">{projectName}</span>
+          <Text role="Body" prominence="Primary" content={projectName} />
           <ChevronDownIcon size={16} />
         </Button>
 
@@ -89,22 +90,27 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-            className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
+            position="absolute"
+            top="full"
+            left="0"
+            width="256"
+            padding="xs"
+            elevation="high"
           >
             <ProjectMenuContent />
           </Section>
         )}
-      </div>
+      </Group>
 
       {/* Divider */}
-      <div className="h-6 w-px bg-border" />
+      <Group role="Divider" orientation="vertical" height="24" />
 
       {/* 3. VCS Widget */}
-      <div className="relative">
+      <Group role="Dropdown" position="relative">
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2"
+          gap="xs"
           onClick={() => setShowVcsMenu(!showVcsMenu)}
           onBlur={() => setTimeout(() => setShowVcsMenu(false), 200)}
         >
@@ -117,19 +123,24 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-            className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
+            position="absolute"
+            top="full"
+            left="0"
+            width="256"
+            padding="xs"
+            elevation="high"
           >
             <VcsMenuContent />
           </Section>
         )}
-      </div>
+      </Group>
 
       {/* 4. Run Widget */}
-      <div className="relative">
+      <Group role="Dropdown" position="relative">
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2"
+          gap="xs"
           onClick={() => setShowRunMenu(!showRunMenu)}
           onBlur={() => setTimeout(() => setShowRunMenu(false), 200)}
         >
@@ -142,41 +153,50 @@ export const TopToolbar = ({
           <Section
             role="Container"
             prominence="Hero"
-            className="absolute top-full left-0 mt-1 w-64 py-1 z-50"
+            position="absolute"
+            top="full"
+            left="0"
+            width="256"
+            padding="xs"
+            elevation="high"
           >
             <RunMenuContent />
           </Section>
         )}
-      </div>
+      </Group>
 
       {/* Spacer */}
-      <div className="flex-1" />
+      <Group role="Spacer" flex="1" />
 
       {/* Right Side Actions */}
-      <div className="flex items-center gap-1">
+      <Group role="Toolbar" direction="horizontal" align="center" gap="xs">
         {/* Panel Toggles */}
         {onToggleRightSidebar && (
-          <IconButton
-            size="sm"
-            active={showRightSidebar}
+          <Action
+            role="IconButton"
+            icon="PanelRightOpen"
+            label="Toggle Right Sidebar"
+            density="Compact"
+            selected={showRightSidebar}
             onClick={onToggleRightSidebar}
-            title="Toggle Right Sidebar"
-          >
-            <PanelRightOpenIcon size={16} />
-          </IconButton>
+          />
         )}
 
         {/* Divider */}
-        <div className="h-6 w-px bg-border mx-1" />
+        <Group role="Divider" orientation="vertical" height="24" margin="xs" />
 
         {/* Theme Toggle */}
         <ThemeToggleButton />
 
         {/* Settings */}
-        <IconButton size="sm" title="Settings (⌘,)" onClick={onOpenSettings}>
-          <SettingsIcon size={16} />
-        </IconButton>
-      </div>
+        <Action
+          role="IconButton"
+          icon="Settings"
+          label="Settings (⌘,)"
+          density="Compact"
+          onClick={onOpenSettings}
+        />
+      </Group>
     </Section>
   );
 };
@@ -196,21 +216,23 @@ const MainMenuContent = () => {
   ];
 
   return (
-    <div className="py-1">
+    <Group role="Menu" padding="xs">
       {menuItems.map((menu) => (
-        <div key={menu.label} className="px-2 py-1">
-          <div className="text-xs font-semibold text-subtle px-2 py-1">{menu.label}</div>
-          {menu.items.map((item) => (
-            <button
-              key={item}
-              className="w-full text-left px-3 py-1.5 text-sm rounded-md hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+        <Group key={menu.label} role="MenuSection" padding="xs">
+          <Text role="Label" prominence="Subtle" content={menu.label} />
+          <Group role="MenuItems" gap="xs">
+            {menu.items.map((item) => (
+              <Action
+                key={item}
+                role="MenuItem"
+                prominence="Secondary"
+                label={item}
+              />
+            ))}
+          </Group>
+        </Group>
       ))}
-    </div>
+    </Group>
   );
 };
 
@@ -218,59 +240,69 @@ const ProjectMenuContent = () => {
   const recentProjects = ['ide-ui-kit', 'design-system', 'react-dashboard', 'portfolio-2024'];
 
   return (
-    <div className="py-1">
-      <button className="w-full text-left px-3 py-2 text-sm font-medium hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        New Project...
-      </button>
-      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        Open...
-      </button>
-      <div className="h-px bg-border my-1" />
-      <div className="px-2 py-1">
-        <div className="text-xs font-semibold text-subtle px-2 py-1">Recent Projects</div>
-        {recentProjects.map((project) => (
-          <button
-            key={project}
-            className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
-          >
-            {project}
-          </button>
-        ))}
-      </div>
-    </div>
+    <Group role="Menu" padding="xs">
+      <Action
+        role="MenuItem"
+        prominence="Primary"
+        label="New Project..."
+      />
+      <Action
+        role="MenuItem"
+        prominence="Secondary"
+        label="Open..."
+      />
+      <Group role="Divider" orientation="horizontal" />
+      <Group role="MenuSection" padding="xs">
+        <Text role="Label" prominence="Subtle" content="Recent Projects" />
+        <Group role="MenuItems" gap="xs">
+          {recentProjects.map((project) => (
+            <Action
+              key={project}
+              role="MenuItem"
+              prominence="Secondary"
+              label={project}
+            />
+          ))}
+        </Group>
+      </Group>
+    </Group>
   );
 };
 
 const VcsMenuContent = () => {
   return (
-    <div className="py-1">
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+    <Group role="Menu" padding="xs">
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <DownloadIcon size={16} />
-        <span>Update Project</span>
-        <span className="ml-auto text-xs text-subtle">⌘T</span>
-      </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+        <Text role="Body" prominence="Primary" content="Update Project" />
+        <Text role="Label" prominence="Subtle" content="⌘T" />
+      </Group>
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <UploadIcon size={16} />
-        <span>Commit...</span>
-        <span className="ml-auto text-xs text-subtle">⌘K</span>
-      </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+        <Text role="Body" prominence="Primary" content="Commit..." />
+        <Text role="Label" prominence="Subtle" content="⌘K" />
+      </Group>
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <UploadIcon size={16} />
-        <span>Push...</span>
-        <span className="ml-auto text-xs text-subtle">⇧⌘K</span>
-      </button>
-      <div className="h-px bg-border my-1" />
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+        <Text role="Body" prominence="Primary" content="Push..." />
+        <Text role="Label" prominence="Subtle" content="⇧⌘K" />
+      </Group>
+      <Group role="Divider" orientation="horizontal" />
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <GitBranchIcon size={16} />
-        <span>Branches...</span>
-      </button>
-      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        Fetch
-      </button>
-      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        Pull...
-      </button>
-    </div>
+        <Text role="Body" prominence="Primary" content="Branches..." />
+      </Group>
+      <Action
+        role="MenuItem"
+        prominence="Secondary"
+        label="Fetch"
+      />
+      <Action
+        role="MenuItem"
+        prominence="Secondary"
+        label="Pull..."
+      />
+    </Group>
   );
 };
 
@@ -282,37 +314,44 @@ const RunMenuContent = () => {
   ];
 
   return (
-    <div className="py-1">
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+    <Group role="Menu" padding="xs">
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <PlayIcon size={16} />
-        <span>Run 'dev'</span>
-        <span className="ml-auto text-xs text-subtle">⌃R</span>
-      </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        <span className="text-accent">▶</span>
-        <span>Debug 'dev'</span>
-        <span className="ml-auto text-xs text-subtle">⌃D</span>
-      </button>
-      <div className="h-px bg-border my-1" />
-      <div className="px-2 py-1">
-        <div className="text-xs font-semibold text-subtle px-2 py-1">Configurations</div>
-        {configurations.map((config) => (
-          <button
-            key={config.name}
-            className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
-          >
-            <div className="flex items-center gap-2">
+        <Text role="Body" prominence="Primary" content="Run 'dev'" weight="medium" />
+        <Text role="Label" prominence="Subtle" content="⌃R" />
+      </Group>
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
+        <Text role="Body" prominence="Brand" content="▶" />
+        <Text role="Body" prominence="Primary" content="Debug 'dev'" />
+        <Text role="Label" prominence="Subtle" content="⌃D" />
+      </Group>
+      <Group role="Divider" orientation="horizontal" />
+      <Group role="MenuSection" padding="xs">
+        <Text role="Label" prominence="Subtle" content="Configurations" />
+        <Group role="MenuItems" gap="xs">
+          {configurations.map((config) => (
+            <Group
+              key={config.name}
+              role="MenuItem"
+              direction="horizontal"
+              align="center"
+              padding="sm"
+              gap="xs"
+              interactive
+            >
               <PlayIcon size={14} />
-              <span>{config.name}</span>
-              <span className="text-xs text-subtle ml-auto">{config.type}</span>
-            </div>
-          </button>
-        ))}
-      </div>
-      <div className="h-px bg-border my-1" />
-      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        Edit Configurations...
-      </button>
-    </div>
+              <Text role="Body" prominence="Primary" content={config.name} />
+              <Text role="Label" prominence="Subtle" content={config.type} />
+            </Group>
+          ))}
+        </Group>
+      </Group>
+      <Group role="Divider" orientation="horizontal" />
+      <Action
+        role="MenuItem"
+        prominence="Secondary"
+        label="Edit Configurations..."
+      />
+    </Group>
   );
 };

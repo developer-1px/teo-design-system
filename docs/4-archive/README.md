@@ -1,91 +1,27 @@
-# 4. Archive (보관소)
+# Archive
 
-> **완료되거나 비활성화된 프로젝트**
+Completed or deprecated documentation.
 
----
+## Current Archives
 
-## 📋 개념
+- **`2026-01-10-v4-completed/`** - IDDL v4.0 완료 항목
+  - Item 네임스페이스 도입
+  - Page role-based rendering (App vs Content)
+  - Field Headless + Renderer 패턴
+  - Interactive state tokens (prominence × intent × state)
+  - Spacing tokens (prominence × density)
 
-Archive는 다음과 같은 항목을 보관합니다:
+## Archive Policy
 
-- ✅ **완료된 프로젝트**: 목표 달성, 더 이상 활성화되지 않음
-- ✅ **비활성화된 자료**: 더 이상 사용하지 않지만 참고 가능
-- ✅ **과거 버전**: 이전 버전 문서, 폐기된 스펙
-- ❌ **삭제 아님**: 완전 삭제가 아닌 보관
+- Completed project documentation is moved here when implementation is finished
+- Files are kept for historical reference and learning purposes
+- Current active documentation:
+  - Development Guide: `/CLAUDE.md`
+  - IDDL Specification: `/docs/2-areas/spec/iddl-spec-1.0.1.md`
+  - Component References: `/docs/2-areas/core/3-reference/`
+  - Patterns: `/docs/2-areas/patterns/`
+  - Active Projects: `/docs/1-project/`
 
----
+## How to Use Archives
 
-## 📦 보관 정책
-
-### 언제 Archive로 이동하나?
-
-#### Projects → Archive
-- ✅ 프로젝트 완료 (목표 달성)
-- ✅ Areas로 이동할 필요 없음 (일회성 작업)
-- 예: "v1.0 출시", "마이그레이션 완료"
-
-#### Areas → Archive (거의 없음)
-- ✅ 표준이 폐기됨
-- ✅ 더 이상 유지하지 않음
-- 예: "구 버전 IDDL 스펙"
-
-#### Resources → Archive
-- ✅ 오래된 자료 (3년 이상)
-- ✅ 링크 깨짐, 서비스 종료
-- 예: "Medium 아티클 (서비스 종료)"
-
----
-
-## 🗂️ Archive 구조
-
-```
-4-archive/
-├── 2024/
-│   ├── q1-projects/
-│   ├── q2-projects/
-│   ├── q3-projects/
-│   └── q4-projects/
-├── 2025/
-└── deprecated-specs/
-```
-
-**규칙**:
-- 연도별 폴더
-- 분기별 프로젝트 그룹화
-- 폐기된 스펙은 별도 폴더
-
----
-
-## 🔄 정리 주기
-
-- **매주**: Projects 검토 (완료 시 Archive 이동)
-- **매 분기**: Archive 검토 (완전 삭제 고려)
-- **매년**: 3년 이상 된 항목 삭제
-
----
-
-## ⚠️ 주의사항
-
-### Archive ≠ 삭제
-
-Archive는 **"나중에 다시 볼 수도 있다"**는 의미입니다:
-
-- ✅ 참고용으로 보관
-- ✅ 검색 가능
-- ✅ 필요 시 복원 가능
-
-### 완전 삭제 기준
-
-다음 조건을 모두 만족하면 삭제:
-
-1. **3년 이상** Archive에 있음
-2. **검색 기록 없음** (아무도 안 봄)
-3. **복원 가능성 없음** (Git history에 있음)
-
----
-
-## 🔗 관련 문서
-
-- [1-projects](../1-projects/) - 진행 중인 프로젝트
-- [2-areas](../2-areas/) - 지속 관리 영역
-- [inbox](../inbox/) - 새로 받은 자료
+Archives are **read-only reference materials**. If you need to revisit implementation details or understand historical decisions, check here first. For current best practices, always refer to the main documentation and CLAUDE.md.

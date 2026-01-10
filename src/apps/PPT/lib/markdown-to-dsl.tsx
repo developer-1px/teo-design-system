@@ -9,8 +9,8 @@
  */
 
 import type { ReactNode } from 'react';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text';
 
 /**
  * 마크다운 라인 타입
@@ -139,16 +139,12 @@ export function markdownToDSL(markdown: string): ReactNode {
 
       case 'heading2':
         flushList();
-        elements.push(
-          <Text key={`h2-${key++}`} role="Title" prominence="Primary" content={parsed.content} />
-        );
+        elements.push(<Text key={`h2-${key++}`} role="Title" content={parsed.content} />);
         break;
 
       case 'heading3':
         flushList();
-        elements.push(
-          <Text key={`h3-${key++}`} role="Title" prominence="Secondary" content={parsed.content} />
-        );
+        elements.push(<Text key={`h3-${key++}`} role="Title" content={parsed.content} />);
         break;
 
       case 'blockquote':
@@ -157,31 +153,24 @@ export function markdownToDSL(markdown: string): ReactNode {
           <Group
             key={`quote-${key++}`}
             role="Container"
-            prominence="Primary"
             intent="Brand"
             className="border-l-4 border-accent bg-accent/5 pl-4 py-3 my-2"
           >
-            <Text role="Body" prominence="Primary" content={parsed.content} className="italic" />
+            <Text role="Body" content={parsed.content} className="italic" />
           </Group>
         );
         break;
 
       case 'list':
         // 리스트 아이템 누적
-        listItems.push(<Text role="Body" prominence="Secondary" content={parsed.content} />);
+        listItems.push(<Text role="Body" content={parsed.content} />);
         break;
 
       case 'paragraph': {
         flushList();
         const content = parseInlineMarkdown(parsed.content);
         elements.push(
-          <Text
-            key={`p-${key++}`}
-            role="Body"
-            prominence="Secondary"
-            content={content}
-            className="leading-relaxed"
-          />
+          <Text key={`p-${key++}`} role="Body" content={content} className="leading-relaxed" />
         );
         break;
       }

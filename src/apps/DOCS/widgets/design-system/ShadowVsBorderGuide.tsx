@@ -3,7 +3,7 @@
  */
 
 import { Check, X } from 'lucide-react';
-import { Section } from '@/components/Section/Section.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface ComparisonCardProps {
   title: string;
@@ -21,7 +21,7 @@ interface ComparisonCardProps {
 
 const ComparisonCard = ({ title, good, bad }: ComparisonCardProps) => {
   return (
-    <Section role="Container" prominence="Secondary" className="p-6">
+    <Section role="Container" className="p-6">
       <h3 className="text-lg font-semibold text-text mb-4">{title}</h3>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -103,19 +103,11 @@ export const ShadowVsBorderGuide = () => {
           description: '같은 레벨에서는 tone variation으로 구분합니다.',
           example: (
             <div className="flex gap-0.5">
-              <Section
-                role="Container"
-                prominence="Secondary"
-                className="bg-layer-2-warm flex-1 p-3"
-              >
+              <Section role="Container" className="bg-layer-2-warm flex-1 p-3">
                 <div className="text-xs text-text-secondary">Workspace Nav</div>
                 <div className="text-xs text-text-tertiary mt-1">Layer 2 Warm</div>
               </Section>
-              <Section
-                role="Container"
-                prominence="Secondary"
-                className="bg-layer-2-cool flex-1 p-3"
-              >
+              <Section role="Container" className="bg-layer-2-cool flex-1 p-3">
                 <div className="text-xs text-text-secondary">File Tree</div>
                 <div className="text-xs text-text-tertiary mt-1">Layer 2 Cool</div>
               </Section>
@@ -147,7 +139,7 @@ export const ShadowVsBorderGuide = () => {
           label: 'Use Inset Shadow',
           description: 'Layer 1 + inset shadow로 눌린 느낌을 표현합니다.',
           example: (
-            <Section role="Container" prominence="Tertiary" className="px-3 py-2">
+            <Section role="Container" className="px-3 py-2">
               <input
                 type="text"
                 placeholder="Enter text..."
@@ -180,7 +172,7 @@ export const ShadowVsBorderGuide = () => {
           label: 'Use Layer System',
           description: 'Layer 레벨로만 깊이를 표현합니다.',
           example: (
-            <Section role="Container" prominence="Primary" className="p-4">
+            <Section role="Container" prominence="Standard" className="p-4">
               <div className="text-sm font-semibold text-text mb-2">Card Title</div>
               <div className="text-xs text-text-secondary">
                 Clean and minimal design with layer-based depth.
@@ -203,7 +195,7 @@ export const ShadowVsBorderGuide = () => {
       />
 
       {/* 5. When to Use Border */}
-      <Section role="Container" prominence="Secondary" className="p-6">
+      <Section role="Container" className="p-6">
         <h3 className="text-lg font-semibold text-text mb-4 flex items-center gap-2">
           <Check size={20} className="text-success" />
           When to Use Border (예외적인 경우)
@@ -217,11 +209,7 @@ export const ShadowVsBorderGuide = () => {
               <div className="text-sm text-text-secondary mb-3">
                 Input field가 활성화되었을 때 accent border로 표시
               </div>
-              <Section
-                role="Container"
-                prominence="Tertiary"
-                className="px-3 py-2 border-2 border-accent"
-              >
+              <Section role="Container" className="px-3 py-2 border-2 border-accent">
                 <input
                   type="text"
                   placeholder="Focused input..."
@@ -240,25 +228,13 @@ export const ShadowVsBorderGuide = () => {
                 Success, Error, Warning 상태를 명확히 표시할 때
               </div>
               <div className="flex gap-2">
-                <Section
-                  role="Container"
-                  prominence="Secondary"
-                  className="px-3 py-2 border border-success flex-1"
-                >
+                <Section role="Container" className="px-3 py-2 border border-success flex-1">
                   <div className="text-xs text-success">Success</div>
                 </Section>
-                <Section
-                  role="Container"
-                  prominence="Secondary"
-                  className="px-3 py-2 border border-error flex-1"
-                >
+                <Section role="Container" className="px-3 py-2 border border-error flex-1">
                   <div className="text-xs text-error">Error</div>
                 </Section>
-                <Section
-                  role="Container"
-                  prominence="Secondary"
-                  className="px-3 py-2 border border-warning flex-1"
-                >
+                <Section role="Container" className="px-3 py-2 border border-warning flex-1">
                   <div className="text-xs text-warning">Warning</div>
                 </Section>
               </div>
@@ -272,7 +248,7 @@ export const ShadowVsBorderGuide = () => {
               <div className="text-sm text-text-secondary mb-3">
                 같은 레벨 내에서 콘텐츠를 구분할 때
               </div>
-              <Section role="Container" prominence="Secondary" className="p-4">
+              <Section role="Container" className="p-4">
                 <div className="text-sm text-text mb-2">Section 1</div>
                 <hr className="border-border my-3" />
                 <div className="text-sm text-text mt-2">Section 2</div>
@@ -301,7 +277,7 @@ export const ShadowVsBorderGuide = () => {
       </Section>
 
       {/* Design Principles Summary */}
-      <Section role="Container" prominence="Secondary" className="p-6 bg-accent/5">
+      <Section role="Container" className="p-6 bg-accent/5">
         <h3 className="text-lg font-semibold text-text mb-4">Design Principles Summary</h3>
 
         <div className="grid md:grid-cols-2 gap-6">

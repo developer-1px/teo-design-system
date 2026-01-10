@@ -2,10 +2,10 @@
  * GalleryView - Notion 스타일 Gallery (카드 그리드) 뷰
  */
 
-import { Group } from '@/components/Group/Group.tsx';
-import { Card } from '@/components/Group/role/Card.tsx';
-import { Text } from '@/components/Item/Text/Text.tsx';
-import { cn } from '@/shared/lib/utils.ts';
+import { Section } from '@/components/types/Section/Section.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Card } from '@/components/types/Group/role/Card.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import type { JsonArray, JsonObject, ViewConfig } from '../types.ts';
 
 interface GalleryViewProps {
@@ -18,14 +18,14 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
 
   // 카드 사이즈별 그리드 컬럼 수
   const gridCols = {
-    sm: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6',
-    md: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
-    lg: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3',
+    sm: 6,
+    md: 4,
+    lg: 3,
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4">
-      <div className={cn('grid gap-4', gridCols[cardSize])}>
+    <Section role="Container" layout="scroll" padding="md">
+      <Group role="Grid" template="gallery" gridCols={gridCols[cardSize]} gap="md">
         {data.map((item, index) => {
           const obj = item as JsonObject;
           const keys = Object.keys(obj).slice(0, 6); // 최대 6개 필드
@@ -34,21 +34,20 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
             <Card
               key={index}
               padding="md"
-              className="cursor-pointer hover:shadow-lg transition-all"
+              interactive
             >
-              <Group role="Container" className="gap-3">
+              <Group role="Container" gap="sm">
                 {/* 이미지 (있으면) */}
                 {viewConfig.showImage && viewConfig.imageKey && obj[viewConfig.imageKey] && (
-                  <div className="w-full aspect-video bg-surface-sunken rounded overflow-hidden mb-2">
+                  <Group role="Media" aspectRatio="video">
                     <img
                       src={String(obj[viewConfig.imageKey])}
                       alt=""
-                      className="w-full h-full object-cover"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                       }}
                     />
-                  </div>
+                  </Group>
                 )}
 
                 {/* 필드들 */}
@@ -62,39 +61,31 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                       <Text
                         key={key}
                         role="Title"
-                        prominence="Hero"
-                        className="font-semibold text-lg line-clamp-2"
+                        prominence="Primary"
                         content={String(value)}
                       />
                     );
                   }
 
                   return (
-                    <div key={key} className="flex flex-col gap-0.5">
-                      <Text
-                        role="Label"
-                        prominence="Tertiary"
-                        className="text-xs text-subtle"
-                        content={key}
-                      />
+                    <Group key={key} role="Field" gap="xs">
+                      <Text role="Label" prominence="Subtle" content={key} />
                       <Text
                         role="Body"
-                        prominence="Primary"
-                        className="text-sm line-clamp-1"
                         content={
                           typeof value === 'object'
                             ? JSON.stringify(value).substring(0, 50) + '...'
                             : String(value)
                         }
                       />
-                    </div>
+                    </Group>
                   );
                 })}
               </Group>
             </Card>
           );
         })}
-      </div>
-    </div>
+      </Group>
+    </Section>
   );
 };

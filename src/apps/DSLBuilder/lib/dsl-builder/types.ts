@@ -10,19 +10,18 @@ import type {
   Breadcrumb,
   Density,
   FieldConstraints,
-  FieldDataType,
+  FieldType,
   FieldOption,
   GroupRole,
   Intent,
   Layout,
   LoadState,
   OverlayRole,
-  PageLayout,
   Placement,
   Prominence,
   SectionRole,
   TextRole,
-} from '@/components/Item/types';
+} from '@/components/types/Atom/types';
 
 // Region is deprecated but still used in builder for backward compatibility
 type RegionRole = 'main' | 'aside' | 'header' | 'footer' | 'nav';
@@ -56,12 +55,13 @@ export interface DSLNode {
 /**
  * Page Node
  * v1.0.1: title, description, layout, breadcrumbs 추가
+ * v5.0: layout type changed to PageLayout
  */
 export interface PageNode extends DSLNode {
   type: 'page';
   title?: string;
   description?: string;
-  layout?: PageLayout;
+  layout?: import('@/components/types/Atom/types').PageLayout;
   breadcrumbs?: Breadcrumb[];
   className?: string;
 }
@@ -143,7 +143,7 @@ export interface FieldNode extends Omit<DSLNode, 'children'> {
   type: 'field';
   label: string;
   model: string;
-  dataType: FieldDataType;
+  fieldType: FieldType;
   prominence?: Prominence;
   intent?: Intent;
   required?: boolean;

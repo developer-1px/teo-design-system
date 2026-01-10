@@ -10,9 +10,9 @@ import {
   X,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/Item/Action/role/Button';
-import { Section } from '@/components/Section/Section.tsx';
-import { cn } from '@/shared/lib/utils';
+import { Button } from '@/components/types/Atom/Action/role/Button.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
+import { cn } from '@/shared/lib/utils.ts';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -190,7 +190,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
         className="relative w-full max-w-4xl h-[600px] flex flex-col overflow-hidden"
       >
         {/* Header */}
-        <Section role="Container" prominence="Tertiary" className="px-6 py-4">
+        <Section role="Container" prominence="Subtle" className="px-6 py-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-text">Settings</h2>
             <Button variant="ghost" onClick={onClose} className="h-auto p-1.5">
@@ -202,7 +202,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
         {/* Content */}
         <div className="flex flex-1 overflow-hidden">
           {/* Sidebar */}
-          <Section role="Container" prominence="Tertiary" className="w-56 overflow-y-auto">
+          <Section role="Container" prominence="Subtle" className="w-56 overflow-y-auto">
             <div className="p-2">
               {categories.map((category) => {
                 const Icon = category.icon;
@@ -249,7 +249,7 @@ export const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
         </div>
 
         {/* Footer */}
-        <Section role="Container" prominence="Tertiary" className="px-6 py-4">
+        <Section role="Container" prominence="Subtle" className="px-6 py-4">
           <div className="flex items-center justify-end gap-3">
             <Button variant="ghost" onClick={onClose}>
               Cancel

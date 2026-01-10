@@ -4,16 +4,15 @@
  * 다양한 뷰로 JSON 데이터를 표시
  */
 
-import { Maximize2, Minimize2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
-import { Group } from '@/components/Group/Group.tsx';
-import { Page } from '@/components/Page/Page.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Badge } from '@/components/Item/Text/role/Badge.tsx';
-import { Text } from '@/components/Item/Text/Text.tsx';
-import { Divider } from '@/components/Group/role/Divider.tsx';
-import type { DatabaseConfig, JsonArray } from '@/components/Item/types.ts';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Divider } from '@/components/types/Group/role/Divider.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Badge } from '@/components/types/Atom/Text/role/Badge.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
+import type { DatabaseConfig, JsonArray } from '@/components/types/Atom/types.ts';
+import { Page } from '@/components/types/Page/Page.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { ViewSwitcher } from './ViewSwitcher.tsx';
 import { BoardView } from './views/BoardView.tsx';
 import { GalleryView } from './views/GalleryView.tsx';
@@ -71,25 +70,25 @@ export const DatabaseViewer = ({
 
   return (
     <Page>
-      <Section role="Container" className="flex flex-col h-full overflow-hidden">
+      <Section role="Container" layout="flex" direction="column">
         {/* Header */}
-        <Section prominence="Primary" className="border-b border-default bg-surface">
-          <Group role="Container" className="px-6 py-4 gap-2">
+        <Section role="Header" border="bottom">
+          <Group role="Container" padding="lg" gap="sm">
             {title && (
-              <Text role="Title" prominence="Hero" className="text-2xl font-bold" content={title} />
+              <Text role="Title" prominence="Hero" content={title} />
             )}
-            {description && (
-              <Text role="Body" prominence="Primary" className="text-muted" content={description} />
-            )}
+            {description && <Text role="Body" prominence="Subtle" content={description} />}
           </Group>
 
           {/* Controls */}
           <Group
             role="Toolbar"
             direction="horizontal"
-            className="px-6 py-3 border-t border-default justify-between"
+            padding="md"
+            border="top"
+            justify="between"
           >
-            <Group role="navigation" direction="horizontal" className="items-center gap-4">
+            <Group role="navigation" direction="horizontal" align="center" gap="md">
               <ViewSwitcher
                 views={views}
                 activeView={activeViewId}
@@ -98,8 +97,8 @@ export const DatabaseViewer = ({
 
               {showStats && (
                 <>
-                  <Divider orientation="vertical" spacing="none" className="h-4" />
-                  <Group role="Info" direction="horizontal">
+                  <Divider orientation="vertical" spacing="none" />
+                  <Group role="Info" direction="horizontal" gap="xs">
                     <Badge variant="default" size="sm">
                       {stats.rows} rows
                     </Badge>
@@ -113,26 +112,26 @@ export const DatabaseViewer = ({
 
             {/* Density toggle (Table 뷰에서만) */}
             {activeView.type === 'table' && (
-              <IconButton
-                size="sm"
+              <Action
+                role="IconButton"
+                icon={density === 'compact' ? 'Maximize2' : 'Minimize2'}
+                label={density === 'compact' ? 'Normal view' : 'Compact view'}
+                density="Compact"
                 onClick={() => setDensity(density === 'compact' ? 'normal' : 'compact')}
-                title={density === 'compact' ? 'Normal view' : 'Compact view'}
-              >
-                {density === 'compact' ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
-              </IconButton>
+              />
             )}
           </Group>
         </Section>
 
         {/* View Content */}
-        <div className="flex-1 min-h-0 bg-surface">
+        <Section role="Main" layout="flex" flex="1">
           {activeView.type === 'table' && (
             <TableView data={data} viewConfig={activeView} density={density} />
           )}
           {activeView.type === 'board' && <BoardView data={data} viewConfig={activeView} />}
           {activeView.type === 'gallery' && <GalleryView data={data} viewConfig={activeView} />}
           {activeView.type === 'list' && <ListView data={data} />}
-        </div>
+        </Section>
       </Section>
     </Page>
   );

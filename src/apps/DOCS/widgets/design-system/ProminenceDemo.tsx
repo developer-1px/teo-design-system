@@ -4,8 +4,8 @@
  * 주목도 시스템이 어떻게 작동하는지 시각적으로 보여줍니다.
  */
 
-import { Section } from '@/components/Section/Section.tsx';
-import { Content, ContentGroup } from '@/components/Item/Text/role/Content';
+import { Content, ContentGroup } from '@/components/types/Atom/Text/role/Content';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 export const ProminenceDemo = () => {
   return (
@@ -20,7 +20,7 @@ export const ProminenceDemo = () => {
       {/* Depth 0 */}
       <div>
         <h2 className="text-lg font-semibold mb-4">Depth 0 (App Base)</h2>
-        <Section role="Container" prominence="Tertiary" className="p-6">
+        <Section role="Container" className="p-6">
           <ContentGroup gap={12}>
             <Content prominence="primary">
               <div>Primary - 가장 중요한 내용 (배경 2%)</div>
@@ -38,7 +38,7 @@ export const ProminenceDemo = () => {
       {/* Depth 2 */}
       <div>
         <h2 className="text-lg font-semibold mb-4">Depth 2 (Base Surface)</h2>
-        <Section role="Container" prominence="Secondary" className="p-6">
+        <Section role="Container" prominence="Standard" className="p-6">
           <ContentGroup gap={12}>
             <Content prominence="primary">
               <div>Primary - 가장 중요한 내용 (배경 5%)</div>
@@ -74,7 +74,7 @@ export const ProminenceDemo = () => {
       {/* 실제 사용 예시 */}
       <div>
         <h2 className="text-lg font-semibold mb-4">실제 사용 예시 - 파일 목록</h2>
-        <Section role="Container" prominence="Secondary" className="p-6">
+        <Section role="Container" prominence="Standard" className="p-6">
           <ContentGroup gap={16}>
             {/* 파일 1 */}
             <div className="flex items-start gap-4">
@@ -127,7 +127,7 @@ export const ProminenceDemo = () => {
       {/* 중첩 예시 */}
       <div>
         <h2 className="text-lg font-semibold mb-4">중첩 예시 - 카드 안의 카드</h2>
-        <Section role="Container" prominence="Secondary" className="p-6">
+        <Section role="Container" prominence="Standard" className="p-6">
           <Content prominence="primary">
             <h3>외부 카드 제목</h3>
           </Content>
@@ -135,7 +135,7 @@ export const ProminenceDemo = () => {
             <p className="mt-2">외부 카드 설명</p>
           </Content>
 
-          <Section role="Container" prominence="Primary" className="p-4 mt-4">
+          <Section role="Container" prominence="Standard" className="p-4 mt-4">
             <Content prominence="primary">
               <h4>내부 카드 제목</h4>
             </Content>
@@ -152,7 +152,7 @@ export const ProminenceDemo = () => {
       {/* 수평 배치 예시 */}
       <div>
         <h2 className="text-lg font-semibold mb-4">수평 배치 - 버튼 그룹</h2>
-        <Section role="Container" prominence="Secondary" className="p-6">
+        <Section role="Container" prominence="Standard" className="p-6">
           <ContentGroup direction="horizontal" gap={12}>
             <Content prominence="primary">
               <button className="px-4 py-2 rounded bg-accent text-white">Primary Action</button>

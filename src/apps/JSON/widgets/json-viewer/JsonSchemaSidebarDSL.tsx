@@ -9,10 +9,10 @@
 
 import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Group } from '@/components/Group/Group';
-import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Item/Text/Text';
 import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
+import { Group } from '@/components/types/Group/Group';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Section } from '@/components/types/Section/Section';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };
@@ -62,10 +62,7 @@ export const JsonSchemaSidebarDSL = ({
   // No data state
   if (!schema.typescript) {
     return (
-      <Section
-        prominence="Primary"
-        className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden rounded-md"
-      >
+      <Section className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden rounded-md">
         <div className="px-4 py-3">
           <Group role="Container" className="flex items-center gap-2">
             <Code size={16} />
@@ -75,12 +72,7 @@ export const JsonSchemaSidebarDSL = ({
 
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <Group role="Card">
-            <Text
-              role="Body"
-              prominence="Tertiary"
-              className="text-center"
-              content="No data to analyze"
-            />
+            <Text role="Body" className="text-center" content="No data to analyze" />
           </Group>
         </div>
       </Section>
@@ -88,26 +80,22 @@ export const JsonSchemaSidebarDSL = ({
   }
 
   return (
-    <Section
-      prominence="Primary"
-      className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden rounded-md"
-    >
+    <Section className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden rounded-md">
       {/* Header */}
       <div className="px-3 py-2">
         <Group role="Container" className="flex items-center gap-2">
           <Code size={14} />
-          <Text role="Title" prominence="Primary" content="Schema" />
+          <Text role="Title" content="Schema" />
         </Group>
       </div>
 
       <div className="flex-1 overflow-y-auto">
         {/* Schema Analysis Section */}
         {schema.analysis && (
-          <Section prominence="Primary">
+          <Section>
             <Group role="Toolbar">
               <Item
                 as="button"
-                prominence="Primary"
                 onClick={() => toggleSection('analysis')}
                 className="w-full justify-start px-3 py-2 flex items-center gap-1.5"
               >
@@ -125,7 +113,7 @@ export const JsonSchemaSidebarDSL = ({
               <div className="px-3 pb-2 space-y-2">
                 <Group role="Card">
                   <div className="flex justify-between px-2">
-                    <Text role="Label" prominence="Tertiary" content="Properties" />
+                    <Text role="Label" content="Properties" />
                     <Text
                       role="Body"
                       prominence="Hero"
@@ -135,7 +123,7 @@ export const JsonSchemaSidebarDSL = ({
                   </div>
 
                   <div className="flex justify-between px-2">
-                    <Text role="Label" prominence="Tertiary" content="Depth" />
+                    <Text role="Label" content="Depth" />
                     <Text
                       role="Body"
                       prominence="Hero"
@@ -145,7 +133,7 @@ export const JsonSchemaSidebarDSL = ({
                   </div>
 
                   <div className="flex justify-between px-2">
-                    <Text role="Label" prominence="Tertiary" content="Types" />
+                    <Text role="Label" content="Types" />
                     <Text
                       role="Body"
                       prominence="Hero"
@@ -160,11 +148,10 @@ export const JsonSchemaSidebarDSL = ({
         )}
 
         {/* TypeScript Interface Section */}
-        <Section prominence="Primary">
+        <Section>
           <Group role="Toolbar">
             <Item
               as="button"
-              prominence="Primary"
               onClick={() => toggleSection('typescript')}
               className="w-full justify-start px-3 py-2 flex items-center gap-1.5"
             >

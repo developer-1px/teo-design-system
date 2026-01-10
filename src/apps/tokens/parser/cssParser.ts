@@ -239,7 +239,7 @@ function generateCategoryName(category: string, type: TokenType): string {
     surface: 'Surface (Backgrounds)',
     text: 'Text Colors',
     border: 'Border Colors',
-    primary: 'Primary (Brand)',
+    primary: 'Standard (Brand)',
     accent: 'Accent (Alias)',
     success: 'Success',
     warning: 'Warning',

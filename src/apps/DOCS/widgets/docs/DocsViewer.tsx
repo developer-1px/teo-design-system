@@ -11,9 +11,9 @@
 import { useEffect, useState } from 'react';
 import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
 import { Group } from '@/components/types/Group/Group';
-import { Action } from '@/components/types/Item/Action/Action';
-import { Field } from '@/components/types/Item/Field/Field';
-import { Text } from '@/components/types/Item/Text/Text';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Field } from '@/components/types/Atom/Field/Field';
+import { Text } from '@/components/types/Atom/Text/Text';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 import { DocsTree } from './DocsTree.tsx';
@@ -65,21 +65,21 @@ export const DocsViewer = () => {
     : [];
 
   return (
-    <Page role="App" layout="grid" template="sidebar-content">
+    <Page role="Application" layout="Sidebar">
       {/* 상단 고정 헤더 */}
-      <Section role="Toolbar" prominence="Standard" gridArea="toolbar">
+      <Section role="Header" prominence="Standard">
         <Group role="Toolbar" layout="inline">
           <Text role="Title" content="문서" />
         </Group>
       </Section>
 
       {/* 사이드바 - 네비게이션 */}
-      <Section role="PrimarySidebar" prominence="Standard" gridArea="sidebar" layout="flex" direction="column">
+      <Section role="Navigator" prominence="Standard">
         {/* 검색 */}
         <Group role="Form">
           <Field
             label=""
-            dataType="text"
+            type="text"
             placeholder="문서 검색..."
             model={searchQuery}
             onChange={(value) => setSearchQuery(value as string)}
@@ -87,7 +87,7 @@ export const DocsViewer = () => {
         </Group>
 
         {/* 문서 트리 - 스크롤 가능 영역 */}
-        <Section role="Container" layout="scroll">
+        <Section role="Container">
           {searchQuery ? (
             // 검색 결과
             <Group role="List" layout="stack">
@@ -117,7 +117,7 @@ export const DocsViewer = () => {
       </Section>
 
       {/* 메인 콘텐츠 영역 */}
-      <Section role="Editor" prominence="Standard" gridArea="editor" layout="scroll">
+      <Section role="Main" prominence="Standard">
         {selectedPath ? (
           <>
             {/* 문서 제목 */}

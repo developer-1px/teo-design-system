@@ -7,17 +7,6 @@
 
 import { Copy, Download, Droplet, Eraser, Paintbrush, Trash2, Upload } from 'lucide-react';
 import { useState } from 'react';
-import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
-import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
-import { Button } from '@/components/Item/Action/role/Button';
-import { Input } from '@/components/Item/Field/role/Input';
-import { Select } from '@/components/Item/Field/role/Select';
-import { Switch } from '@/components/Item/Field/role/Switch';
-import { Group } from '@/components/Group/Group';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Group/role/Tabs';
-import { Page } from '@/components/Page/Page';
-import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Item/Text/Text';
 import type { DesignerState, PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types';
 import { PRESET_PALETTES } from '@/apps/EMOJI/lib/emoji-designer/types';
 import {
@@ -27,6 +16,17 @@ import {
   importDesign,
   resizeGrid,
 } from '@/apps/EMOJI/lib/emoji-designer/utils';
+import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
+import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
+import { Group } from '@/components/types/Group/Group';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/types/Group/role/Tabs';
+import { Button } from '@/components/types/Atom/Action/role/Button';
+import { Input } from '@/components/types/Atom/Field/role/Input';
+import { Select } from '@/components/types/Atom/Field/role/Select';
+import { Switch } from '@/components/types/Atom/Field/role/Switch';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 
 export const EmojiDesignerPage = () => {
   const [state, setState] = useState<DesignerState>(() => ({
@@ -142,61 +142,48 @@ export const EmojiDesignerPage = () => {
   };
 
   return (
-    <Page>
+    <Page role="Application" layout="HolyGrail" density="Compact">
       {/* Header */}
       <Section role="Header" className="px-6 py-4">
-        <Section prominence="Hero">
-          <Group role="Container" direction="horizontal" className="justify-between">
-            <div>
-              <div className="flex items-center gap-2">
-                <Paintbrush size={24} />
-                <Text role="Title" prominence="Hero" content="Emoji Designer IDE" />
-              </div>
-              <Text
-                role="Body"
-                prominence="Primary"
-                content="JSON 기반 픽셀 아트 이모지 디자이너"
-              />
+        <Group role="Container" direction="horizontal" className="justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <Paintbrush size={24} />
+              <Text role="Title" prominence="Hero" content="Emoji Designer IDE" />
             </div>
+            <Text role="Body" content="JSON 기반 픽셀 아트 이모지 디자이너" />
+          </div>
 
-            <Group role="Toolbar" direction="horizontal">
-              <label htmlFor="import-file" className="cursor-pointer">
-                <div className="inline-flex items-center justify-center gap-2 rounded-md font-medium text-sm h-9 px-4 bg-transparent text-text hover:bg-black/5 active:bg-black/10 transition-colors">
-                  <Upload size={16} />
-                  Import
-                </div>
-              </label>
-              <input
-                id="import-file"
-                type="file"
-                accept=".json"
-                onChange={handleImport}
-                className="hidden"
-              />
+          <Group role="Toolbar" direction="horizontal">
+            <label htmlFor="import-file" className="cursor-pointer">
+              <div className="inline-flex items-center justify-center gap-2 rounded-md font-medium text-sm h-9 px-4 bg-transparent text-text hover:bg-black/5 active:bg-black/10 transition-colors">
+                <Upload size={16} />
+                Import
+              </div>
+            </label>
+            <input
+              id="import-file"
+              type="file"
+              accept=".json"
+              onChange={handleImport}
+              className="hidden"
+            />
 
-              <Button variant="ghost" size="sm" onClick={handleExport}>
-                <Download size={16} />
-                Export JSON
-              </Button>
-            </Group>
+            <Button variant="ghost" size="sm" onClick={handleExport}>
+              <Download size={16} />
+              Export JSON
+            </Button>
           </Group>
-        </Section>
+        </Group>
       </Section>
 
-      {/* Main Content */}
-      <Section role="Container" className="flex-1 flex gap-0 overflow-hidden">
-        {/* Left Sidebar - Tools & Settings */}
-        <aside className="w-80 bg-layer-2 border-r border-border overflow-y-auto">
-          <Section prominence="Primary" className="p-4">
+      {/* Left Sidebar - Tools & Settings */}
+      <Section role="Navigator" className="overflow-y-auto">
+          <Section className="p-4">
             {/* Design Info */}
             <Group role="Form">
               <div>
-                <Text
-                  role="Label"
-                  prominence="Primary"
-                  className="block mb-1.5"
-                  content="Emoji Name"
-                />
+                <Text role="Label" className="block mb-1.5" content="Emoji Name" />
                 <Input
                   value={state.design.name}
                   onChange={(e) =>
@@ -209,12 +196,7 @@ export const EmojiDesignerPage = () => {
               </div>
 
               <div>
-                <Text
-                  role="Label"
-                  prominence="Primary"
-                  className="block mb-1.5"
-                  content="Grid Size"
-                />
+                <Text role="Label" className="block mb-1.5" content="Grid Size" />
                 <Select
                   value={state.design.size}
                   onChange={(e) => handleResizeGrid(Number(e.target.value))}
@@ -227,12 +209,7 @@ export const EmojiDesignerPage = () => {
               </div>
 
               <div>
-                <Text
-                  role="Label"
-                  prominence="Primary"
-                  className="block mb-1.5"
-                  content="Preset Palette"
-                />
+                <Text role="Label" className="block mb-1.5" content="Preset Palette" />
                 <Select onChange={(e) => handleLoadPreset(e.target.value)}>
                   <option value="">Select preset...</option>
                   <option value="classic">Classic</option>
@@ -243,7 +220,7 @@ export const EmojiDesignerPage = () => {
             </Group>
           </Section>
 
-          <Section prominence="Primary" className="p-4 border-t border-border">
+          <Section className="p-4 border-t border-border">
             <Text role="Title" prominence="Hero" className="mb-3" content="Tools" />
 
             <Group role="Toolbar">
@@ -293,7 +270,7 @@ export const EmojiDesignerPage = () => {
             </div>
           </Section>
 
-          <Section prominence="Primary" className="p-4 border-t border-border">
+          <Section className="p-4 border-t border-border">
             <Text role="Title" prominence="Hero" className="mb-3" content="Color Palette" />
 
             <ColorPalette
@@ -304,24 +281,16 @@ export const EmojiDesignerPage = () => {
               onRemoveColor={handleRemoveColor}
             />
           </Section>
-        </aside>
+      </Section>
 
-        {/* Center - Canvas */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Center - Canvas */}
+      <Section role="Main" className="flex flex-col overflow-hidden">
           {/* Toolbar */}
           <div className="h-12 bg-layer-2 border-b border-border flex items-center justify-between px-4">
             <Group role="Card" direction="horizontal">
-              <Text
-                role="Body"
-                prominence="Tertiary"
-                content={`${state.design.size}x${state.design.size} pixels`}
-              />
-              <Text role="Body" prominence="Tertiary" content="•" />
-              <Text
-                role="Body"
-                prominence="Tertiary"
-                content={`${state.design.palette.length} colors`}
-              />
+              <Text role="Body" content={`${state.design.size}x${state.design.size} pixels`} />
+              <Text role="Body" content="•" />
+              <Text role="Body" content={`${state.design.palette.length} colors`} />
             </Group>
 
             <Tabs value={previewTab} onValueChange={setPreviewTab}>
@@ -347,7 +316,7 @@ export const EmojiDesignerPage = () => {
               </TabsContent>
 
               <TabsContent value="json">
-                <Section prominence="Primary" className="max-w-2xl">
+                <Section className="max-w-2xl">
                   <Group role="Container">
                     <Text role="Title" prominence="Hero" content="Emoji JSON Data" />
                     <pre className="bg-layer-1 p-4 rounded-lg overflow-x-auto text-xs font-mono">
@@ -371,11 +340,11 @@ export const EmojiDesignerPage = () => {
               </TabsContent>
             </Tabs>
           </div>
-        </div>
+      </Section>
 
-        {/* Right Sidebar - Preview */}
-        <aside className="w-80 bg-layer-2 border-l border-border overflow-y-auto">
-          <Section prominence="Primary" className="p-4">
+      {/* Right Sidebar - Preview */}
+      <Section role="Aside" className="overflow-y-auto">
+          <Section className="p-4">
             <Text role="Title" prominence="Hero" className="mb-3" content="Preview" />
 
             <Group role="Container">
@@ -453,12 +422,12 @@ export const EmojiDesignerPage = () => {
             </Group>
           </Section>
 
-          <Section prominence="Primary" className="p-4 border-t border-border">
+          <Section className="p-4 border-t border-border">
             <Text role="Title" prominence="Hero" className="mb-3" content="Design Info" />
 
             <Group role="Card">
               <div className="flex justify-between">
-                <Text role="Label" prominence="Tertiary" content="ID" />
+                <Text role="Label" content="ID" />
                 <Text
                   role="Body"
                   prominence="Hero"
@@ -468,7 +437,7 @@ export const EmojiDesignerPage = () => {
               </div>
 
               <div className="flex justify-between">
-                <Text role="Label" prominence="Tertiary" content="Created" />
+                <Text role="Label" content="Created" />
                 <Text
                   role="Body"
                   prominence="Hero"
@@ -478,7 +447,7 @@ export const EmojiDesignerPage = () => {
               </div>
 
               <div className="flex justify-between">
-                <Text role="Label" prominence="Tertiary" content="Updated" />
+                <Text role="Label" content="Updated" />
                 <Text
                   role="Body"
                   prominence="Hero"
@@ -488,7 +457,6 @@ export const EmojiDesignerPage = () => {
               </div>
             </Group>
           </Section>
-        </aside>
       </Section>
     </Page>
   );

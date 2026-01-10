@@ -8,11 +8,11 @@
  */
 
 import { useState } from 'react';
-import { Action } from '@/components/Item/Action/Action';
-import { Field, type FieldOption } from '@/components/Item/Field/Field';
-import { Group } from '@/components/Group/Group.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Field, type FieldOption } from '@/components/types/Atom/Field/Field';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 export function AtomsShowcasePage() {
   // Form state for all field types
@@ -61,7 +61,7 @@ export function AtomsShowcasePage() {
   };
 
   return (
-    <Section role="Container" prominence="Tertiary" className="min-h-screen p-8">
+    <Section role="Container" className="min-h-screen p-8">
       {/* Header */}
       <Section role="Header" className="mb-8">
         <Group role="Container">
@@ -69,7 +69,7 @@ export function AtomsShowcasePage() {
           <Text
             role="Body"
             content="IDDL 1.0.1 명세를 준수하는 모든 atoms 컴포넌트 데모"
-            prominence="Secondary"
+            prominence="Standard"
           />
         </Group>
       </Section>
@@ -77,17 +77,17 @@ export function AtomsShowcasePage() {
       {/* Text Component Showcase */}
       <Section role="Container" className="mb-12">
         <Group role="Card">
-          <Text role="Title" content="1. Text Component (5 Roles)" prominence="Primary" />
-          <Section role="Container" prominence="Tertiary" className="gap-4 p-4 rounded-lg">
-            <Text role="Title" content="Title Role" prominence="Primary" />
+          <Text role="Title" content="1. Text Component (5 Roles)" prominence="Standard" />
+          <Section role="Container" className="gap-4 p-4 rounded-lg">
+            <Text role="Title" content="Title Role" prominence="Standard" />
             <Text role="Body" content="Body role for paragraphs and main content" />
             <Text role="Label" content="Label role for form labels and small text" />
             <Text role="Caption" content="Caption role for metadata and secondary info" />
             <Text role="Code" content="Code role for inline code" />
           </Section>
 
-          <Text role="Title" content="Intent Colors" prominence="Secondary" className="mt-4" />
-          <Section role="Container" prominence="Tertiary" className="gap-2 p-4 rounded-lg">
+          <Text role="Title" content="Intent Colors" prominence="Standard" className="mt-4" />
+          <Section role="Container" className="gap-2 p-4 rounded-lg">
             <Text role="Body" content="Neutral (default)" intent="Neutral" />
             <Text role="Body" content="Brand (accent color)" intent="Brand" />
             <Text role="Body" content="Positive (success/green)" intent="Positive" />
@@ -101,22 +101,22 @@ export function AtomsShowcasePage() {
       {/* Action Component Showcase */}
       <Section role="Container" className="mb-12">
         <Group role="Card">
-          <Text role="Title" content="2. Action Component (7 Behaviors)" prominence="Primary" />
+          <Text role="Title" content="2. Action Component (7 Behaviors)" prominence="Standard" />
 
-          <Section role="Container" prominence="Tertiary" className="gap-4 p-4 rounded-lg">
+          <Section role="Container" className="gap-4 p-4 rounded-lg">
             <div>
-              <Text role="Label" content="Command Behavior" prominence="Secondary" />
+              <Text role="Label" content="Command Behavior" prominence="Standard" />
               <div className="flex gap-2 mt-2">
                 <Action
                   label="Execute Command"
                   behavior={{ action: 'command', command: 'test.command', args: { id: 1 } }}
-                  prominence="Primary"
+                  prominence="Standard"
                   intent="Brand"
                 />
                 <Action
                   label="With Confirm"
                   behavior={{ action: 'command', command: 'delete.item' }}
-                  prominence="Secondary"
+                  prominence="Standard"
                   intent="Critical"
                   confirm="Are you sure?"
                 />
@@ -124,52 +124,46 @@ export function AtomsShowcasePage() {
             </div>
 
             <div>
-              <Text role="Label" content="Navigate Behavior" prominence="Secondary" />
+              <Text role="Label" content="Navigate Behavior" prominence="Standard" />
               <div className="flex gap-2 mt-2">
-                <Action
-                  label="Internal Link"
-                  behavior={{ action: 'navigate', to: '#section' }}
-                  prominence="Tertiary"
-                />
+                <Action label="Internal Link" behavior={{ action: 'navigate', to: '#section' }} />
                 <Action
                   label="External Link"
                   behavior={{ action: 'navigate', to: 'https://example.com', target: '_blank' }}
-                  prominence="Tertiary"
                   intent="Info"
                 />
               </div>
             </div>
 
             <div>
-              <Text role="Label" content="Form Behaviors" prominence="Secondary" />
+              <Text role="Label" content="Form Behaviors" prominence="Standard" />
               <form className="flex gap-2 mt-2">
                 <Action
                   label="Submit Form"
                   behavior={{ action: 'submit' }}
-                  prominence="Primary"
+                  prominence="Standard"
                   intent="Brand"
                 />
-                <Action label="Reset Form" behavior={{ action: 'reset' }} prominence="Secondary" />
+                <Action label="Reset Form" behavior={{ action: 'reset' }} prominence="Standard" />
               </form>
             </div>
 
             <div>
-              <Text role="Label" content="Overlay Behaviors" prominence="Secondary" />
+              <Text role="Label" content="Overlay Behaviors" prominence="Standard" />
               <div className="flex gap-2 mt-2">
                 <Action
                   label="Open Modal"
                   behavior={{ action: 'open', overlay: 'my-modal' }}
-                  prominence="Secondary"
+                  prominence="Standard"
                 />
                 <Action
                   label="Close Modal"
                   behavior={{ action: 'close', overlay: 'my-modal' }}
-                  prominence="Secondary"
+                  prominence="Standard"
                 />
                 <Action
                   label="Toggle Panel"
                   behavior={{ action: 'toggle', target: 'side-panel' }}
-                  prominence="Tertiary"
                 />
               </div>
             </div>
@@ -183,80 +177,76 @@ export function AtomsShowcasePage() {
           <Text
             role="Title"
             content="3. Field Component - View Mode (21 DataTypes)"
-            prominence="Primary"
+            prominence="Standard"
           />
 
-          <Section
-            role="Container"
-            prominence="Tertiary"
-            className="gap-4 p-4 rounded-lg grid-cols-2"
-          >
-            <Field label="Text" model="text" dataType="text" value={formData.text} />
-            <Field label="Number" model="number" dataType="number" value={formData.number} />
+          <Section role="Container" className="gap-4 p-4 rounded-lg grid-cols-2">
+            <Field label="Text" model="text" type="text" value={formData.text} />
+            <Field label="Number" model="number" type="number" value={formData.number} />
             <Field
               label="Currency"
               model="currency"
-              dataType="currency"
+              type="currency"
               value={formData.currency}
             />
-            <Field label="Date" model="date" dataType="date" value={formData.date} />
+            <Field label="Date" model="date" type="date" value={formData.date} />
             <Field
               label="DateTime"
               model="datetime"
-              dataType="datetime"
+              type="datetime"
               value={formData.datetime}
             />
-            <Field label="Boolean" model="boolean" dataType="boolean" value={formData.boolean} />
+            <Field label="Boolean" model="boolean" type="boolean" value={formData.boolean} />
             <Field
               label="Select"
               model="select"
-              dataType="select"
+              type="select"
               value={formData.select}
               options={selectOptions}
             />
             <Field
               label="Multiselect"
               model="multiselect"
-              dataType="multiselect"
+              type="multiselect"
               value={formData.multiselect}
               options={selectOptions}
             />
             <Field
               label="Radio"
               model="radio"
-              dataType="radio"
+              type="radio"
               value={formData.radio}
               options={radioOptions}
             />
             <Field
               label="Checkbox"
               model="checkbox"
-              dataType="checkbox"
+              type="checkbox"
               value={formData.checkbox}
               options={checkboxOptions}
             />
-            <Field label="Email" model="email" dataType="email" value={formData.email} />
-            <Field label="URL" model="url" dataType="url" value={formData.url} />
-            <Field label="Phone" model="phone" dataType="phone" value={formData.phone} />
-            <Field label="Color" model="color" dataType="color" value={formData.color} />
-            <Field label="Rating" model="rating" dataType="rating" value={formData.rating} />
+            <Field label="Email" model="email" type="email" value={formData.email} />
+            <Field label="URL" model="url" type="url" value={formData.url} />
+            <Field label="Phone" model="phone" type="phone" value={formData.phone} />
+            <Field label="Color" model="color" type="color" value={formData.color} />
+            <Field label="Rating" model="rating" type="rating" value={formData.rating} />
             <Field
               label="Range"
               model="range"
-              dataType="range"
+              type="range"
               value={formData.range}
               constraints={{ min: 0, max: 100 }}
             />
           </Section>
 
-          <Section role="Container" prominence="Tertiary" className="gap-4 p-4 rounded-lg mt-4">
+          <Section role="Container" className="gap-4 p-4 rounded-lg mt-4">
             <Field
               label="Textarea"
               model="textarea"
-              dataType="textarea"
+              type="textarea"
               value={formData.textarea}
             />
-            <Field label="Password" model="password" dataType="password" value="********" />
+            <Field label="Password" model="password" type="password" value="********" />
           </Section>
         </Group>
       </Section>
@@ -264,17 +254,13 @@ export function AtomsShowcasePage() {
       {/* Field Component Showcase - Edit Mode */}
       <Section role="Container" mode="edit" className="mb-12">
         <Group role="Card">
-          <Text role="Title" content="4. Field Component - Edit Mode" prominence="Primary" />
+          <Text role="Title" content="4. Field Component - Edit Mode" prominence="Standard" />
 
-          <Section
-            role="Container"
-            prominence="Tertiary"
-            className="gap-4 p-4 rounded-lg grid-cols-2"
-          >
+          <Section role="Container" className="gap-4 p-4 rounded-lg grid-cols-2">
             <Field
               label="Text"
               model="text"
-              dataType="text"
+              type="text"
               value={formData.text}
               onChange={(v) => handleChange('text', v)}
               placeholder="Enter text"
@@ -282,7 +268,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Number"
               model="number"
-              dataType="number"
+              type="number"
               value={formData.number}
               onChange={(v) => handleChange('number', v)}
               constraints={{ min: 0, max: 100 }}
@@ -290,7 +276,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Currency"
               model="currency"
-              dataType="currency"
+              type="currency"
               value={formData.currency}
               onChange={(v) => handleChange('currency', v)}
               required
@@ -298,28 +284,28 @@ export function AtomsShowcasePage() {
             <Field
               label="Date"
               model="date"
-              dataType="date"
+              type="date"
               value={formData.date}
               onChange={(v) => handleChange('date', v)}
             />
             <Field
               label="DateTime"
               model="datetime"
-              dataType="datetime"
+              type="datetime"
               value={formData.datetime}
               onChange={(v) => handleChange('datetime', v)}
             />
             <Field
               label="Boolean"
               model="boolean"
-              dataType="boolean"
+              type="boolean"
               value={formData.boolean}
               onChange={(v) => handleChange('boolean', v)}
             />
             <Field
               label="Select"
               model="select"
-              dataType="select"
+              type="select"
               value={formData.select}
               onChange={(v) => handleChange('select', v)}
               options={selectOptions}
@@ -327,7 +313,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Email"
               model="email"
-              dataType="email"
+              type="email"
               value={formData.email}
               onChange={(v) => handleChange('email', v)}
               placeholder="user@example.com"
@@ -335,39 +321,39 @@ export function AtomsShowcasePage() {
             <Field
               label="URL"
               model="url"
-              dataType="url"
+              type="url"
               value={formData.url}
               onChange={(v) => handleChange('url', v)}
             />
             <Field
               label="Phone"
               model="phone"
-              dataType="phone"
+              type="phone"
               value={formData.phone}
               onChange={(v) => handleChange('phone', v)}
             />
             <Field
               label="Color"
               model="color"
-              dataType="color"
+              type="color"
               value={formData.color}
               onChange={(v) => handleChange('color', v)}
             />
             <Field
               label="Password"
               model="password"
-              dataType="password"
+              type="password"
               value={formData.password}
               onChange={(v) => handleChange('password', v)}
               constraints={{ minLength: 8 }}
             />
           </Section>
 
-          <Section role="Container" prominence="Tertiary" className="gap-4 p-4 rounded-lg mt-4">
+          <Section role="Container" className="gap-4 p-4 rounded-lg mt-4">
             <Field
               label="Radio Group"
               model="radio"
-              dataType="radio"
+              type="radio"
               value={formData.radio}
               onChange={(v) => handleChange('radio', v)}
               options={radioOptions}
@@ -375,7 +361,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Checkbox Group"
               model="checkbox"
-              dataType="checkbox"
+              type="checkbox"
               value={formData.checkbox}
               onChange={(v) => handleChange('checkbox', v)}
               options={checkboxOptions}
@@ -383,7 +369,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Textarea"
               model="textarea"
-              dataType="textarea"
+              type="textarea"
               value={formData.textarea}
               onChange={(v) => handleChange('textarea', v)}
               placeholder="Enter multiple lines..."
@@ -391,14 +377,14 @@ export function AtomsShowcasePage() {
             <Field
               label="Rating"
               model="rating"
-              dataType="rating"
+              type="rating"
               value={formData.rating}
               onChange={(v) => handleChange('rating', v)}
             />
             <Field
               label="Range Slider"
               model="range"
-              dataType="range"
+              type="range"
               value={formData.range}
               onChange={(v) => handleChange('range', v)}
               constraints={{ min: 0, max: 100 }}
@@ -410,7 +396,7 @@ export function AtomsShowcasePage() {
       {/* Form State Debug */}
       <Section role="Container" className="mb-8">
         <Group role="Card">
-          <Text role="Title" content="5. Live Form State (Debug)" prominence="Secondary" />
+          <Text role="Title" content="5. Live Form State (Debug)" prominence="Standard" />
           <pre className="bg-layer-1 p-4 rounded-lg text-xs overflow-auto max-h-96">
             {JSON.stringify(formData, null, 2)}
           </pre>

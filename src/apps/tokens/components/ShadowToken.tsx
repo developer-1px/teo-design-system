@@ -1,13 +1,13 @@
 /**
- * ShadowToken - 그림자 토큰 시각화
+ * ShadowToken - 그림자 토큰 시각화 (Pure IDDL)
  *
  * 실제 box-shadow를 적용한 박스로 표시합니다.
  */
 
 import { useState } from 'react';
 import type { Token } from '@/apps/tokens/parser/types';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text';
 
 export function ShadowToken({ token }: { token: Token }) {
   const [copied, setCopied] = useState(false);
@@ -22,75 +22,37 @@ export function ShadowToken({ token }: { token: Token }) {
   };
 
   return (
-    <Group role="Card" prominence="Primary" gap={0}>
-      {/* 그림자 미리보기 (compact) */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          height: '80px',
-          backgroundColor: 'var(--color-surface-sunken)',
-          borderRadius: '0.375rem',
-          padding: '0.75rem',
-        }}
+    <Group role="Card" layout="stack" gap={0} prominence="Standard" density="Compact">
+      {/* 그림자 미리보기 */}
+      <Group
+        role="Container"
+        prominence="Strong"
+        className="relative w-full h-20 bg-surface-sunken rounded-md flex items-center justify-center p-3"
       >
         <div
+          className="w-15 h-15 bg-white rounded-md"
           style={{
-            width: '60px',
-            height: '60px',
-            backgroundColor: 'white',
-            borderRadius: '0.375rem',
             boxShadow: token.resolvedValue,
           }}
         />
-      </div>
+      </Group>
 
-      {/* 토큰 정보 (compact) */}
-      <div style={{ padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-        <Text
-          role="Label"
-          prominence="Primary"
-          className="font-mono text-xs truncate"
-          title={token.name}
-        >
-          {token.name}
-        </Text>
-        <Text
-          role="Caption"
-          prominence="Tertiary"
-          className="font-mono text-xs break-all line-clamp-2"
-        >
-          {token.resolvedValue}
-        </Text>
+      {/* 토큰 정보 */}
+      <Group role="Container" layout="stack" gap={1} className="p-2">
+        <Text role="Label" prominence="Standard" content={token.name} className="font-mono text-xs truncate" />
+        <Text role="Caption" prominence="Subtle" content={token.resolvedValue} className="font-mono text-xs break-all line-clamp-2" />
 
-        {/* CSS Variable (compact) */}
-        <div
+        {/* CSS Variable (clickable) */}
+        <Group
+          role="Container"
+          clickable
           onClick={() => handleCopy(`var(${token.name})`)}
-          style={{
-            backgroundColor: 'var(--color-surface-sunken)',
-            padding: '0.375rem',
-            borderRadius: '0.25rem',
-            fontFamily: 'monospace',
-            fontSize: '0.625rem',
-            cursor: 'pointer',
-            border: '1px solid var(--color-border-subtle)',
-            transition: 'background-color 100ms',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--color-surface-raised)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--color-surface-sunken)';
-          }}
-          title="Click to copy"
+          prominence="Strong"
+          className="bg-surface-sunken px-2 py-1.5 rounded border border-border-subtle cursor-pointer hover:bg-surface-raised transition-colors"
         >
-          <Text role="Caption" prominence="Primary" className="font-mono truncate">
-            var({token.name})
-          </Text>
-        </div>
-      </div>
+          <Text role="Caption" prominence="Standard" content={`var(${token.name})`} className="font-mono text-[10px] truncate" />
+        </Group>
+      </Group>
     </Group>
   );
 }

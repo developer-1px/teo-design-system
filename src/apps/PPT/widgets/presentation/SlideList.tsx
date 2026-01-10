@@ -1,22 +1,37 @@
 /**
- * SlideList - IDDL 기반 슬라이드 리스트
+ * SlideList - IDDL 기반 슬라이드 리스트 (Pure IDDL v4.0 with Selection)
  *
  * IDDL Group을 사용한 구조:
  * - Group[Container]: 전체 컨테이너
  *   - Group[Toolbar]: 상단 액션 버튼
- *   - Group[List]: 슬라이드 썸네일 리스트
+ *   - Group[SortableList]: 정렬 가능한 슬라이드 썸네일 리스트 (Drag & Drop)
+ *
+ * v3.1: 모든 수동 className 제거, role 기반 minimal 디자인
+ * v4.0: Group role="SortableList" 적용 (드래그 앤 드롭)
+ * v4.1: useSelection hook 적용 (상용 앱 수준 선택 관리)
+ *       - 단일/멀티 선택, Shift 범위 선택
+ *       - Cmd+C/X/V (복사/잘라내기/붙여넣기)
+ *       - Delete (삭제)
+ *       - Cmd+A (전체 선택)
+ * v1.0.3: 키보드 네비게이션 통합 (ArrowUp/Down/Left/Right, Home, End)
+ * v1.0.4: Focus management 통합 (브라우저 포커스 자동 이동)
  */
 
-import { Plus, Trash2 } from 'lucide-react';
-import { Group } from '@/components/Group/Group.tsx';
-import { cn } from '@/shared/lib/utils';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Text } from '@/components/types/Atom/Text/Text';
 import { SlidePreview } from './SlidePreview';
+import { useSelection } from '@/shared/lib/selection/useSelection';
 
 export interface Slide {
   id: string;
   title: string;
   content: string;
   backgroundColor: string;
+  // Format properties
+  fontFamily?: string;
+  fontSize?: number;
+  textColor?: string;
 }
 
 interface SlideListProps {
@@ -25,6 +40,12 @@ interface SlideListProps {
   onSlideSelect: (id: string) => void;
   onSlideAdd: () => void;
   onSlideDelete: (id: string) => void;
+  onReorder?: (slides: Slide[]) => void; // v4.0: 드래그 앤 드롭으로 순서 변경
+  // v4.1: Selection management (optional)
+  onSlidesDelete?: (slides: Slide[]) => void; // 멀티 삭제
+  onSlidesCopy?: (slides: Slide[]) => void; // 복사
+  onSlidesCut?: (slides: Slide[]) => void; // 잘라내기
+  onSlidesPaste?: (slides: Slide[]) => void; // 붙여넣기
 }
 
 export const SlideList = ({
@@ -33,94 +54,128 @@ export const SlideList = ({
   onSlideSelect,
   onSlideAdd,
   onSlideDelete,
+  onReorder,
+  onSlidesDelete,
+  onSlidesCopy,
+  onSlidesCut,
+  onSlidesPaste,
 }: SlideListProps) => {
+  // Selection management (v4.1 → v1.0.3: keyboard navigation 통합)
+  const selection = useSelection({
+    items: slides,
+    getId: (slide) => slide.id,
+    initialSelectedIds: [activeSlideId],
+    onCopy: onSlidesCopy,
+    onCut: onSlidesCut,
+    onPaste: onSlidesPaste,
+    onDelete: onSlidesDelete,
+    onSelectionChange: (selectedSlides) => {
+      // 단일 선택 시 activeSlideId 업데이트
+      if (selectedSlides.length === 1) {
+        onSlideSelect(selectedSlides[0].id);
+      }
+    },
+    // v1.0.3: 키보드 네비게이션 (ArrowUp/Down/Left/Right, Home, End)
+    keyboardNavigation: true,
+    onNavigate: (slide) => {
+      onSlideSelect(slide.id);
+    },
+  });
+
+  // v1.0.2: SelectionModel 객체 생성 (Group value prop과 함께 사용)
+  // v1.0.4: Focus management 추가
+  const selectionModel = {
+    selectedValues: selection.selectedIds,
+    isSelected: selection.isSelected,
+    handleItemClick: selection.handleItemClick,
+    registerItemRef: selection.registerItemRef,
+  };
+
   return (
     <Group
       role="Container"
       layout="stack"
       density="Compact"
-      className="h-full w-full overflow-hidden bg-layer-2"
+      {...selection.getContainerProps()}
     >
-      {/* Group[Toolbar]: Header with Add Button */}
-      <Group
-        role="Toolbar"
-        layout="inline"
-        density="Compact"
-        className="justify-start px-2 py-1.5 border-b border-border"
-      >
-        <button
-          onClick={onSlideAdd}
-          className="flex h-7 w-7 items-center justify-center rounded hover:bg-layer-3 transition-colors text-text-secondary hover:text-accent"
-          title="슬라이드 추가"
-        >
-          <Plus size={16} />
-        </button>
+      {/* Toolbar: Add Button */}
+      <Group role="Toolbar" layout="inline" density="Compact">
+        <Action icon="Plus" onClick={onSlideAdd} />
+        {selection.selectedItems.length > 0 && (
+          <Text role="Caption" prominence="Subtle">
+            {selection.selectedItems.length} selected
+          </Text>
+        )}
       </Group>
 
-      {/* Group[List]: Slide Thumbnails */}
-      <Group
-        role="List"
-        layout="stack"
-        density="Compact"
-        className="flex-1 overflow-y-auto px-2 py-2 gap-2"
-      >
-        {slides.map((slide, index) => (
-          <div
-            key={slide.id}
-            role="button"
-            tabIndex={0}
-            onClick={() => onSlideSelect(slide.id)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onSlideSelect(slide.id);
-              }
-            }}
-            className={cn(
-              'group relative flex flex-col rounded transition-all cursor-pointer',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-              activeSlideId === slide.id
-                ? 'ring-2 ring-accent shadow-sm'
-                : 'ring-1 ring-border/30 hover:ring-accent/50 hover:shadow-sm'
-            )}
-          >
-            {/* Slide Number Badge */}
-            <div className="absolute left-1 top-1 z-10 flex h-5 w-5 items-center justify-center rounded bg-layer-0/95 text-[10px] font-semibold text-text-secondary shadow-sm">
-              {index + 1}
-            </div>
-
-            {/* Thumbnail Preview - Real slide content scaled down */}
-            <div className={cn('aspect-[16/9] w-full overflow-hidden rounded', 'bg-layer-1')}>
-              <SlidePreview slide={slide} scale={0.15} />
-            </div>
-
-            {/* Delete Button - Shows on hover */}
-            <div
-              className={cn(
-                'absolute right-1 top-1 z-10 opacity-0 transition-opacity',
-                'group-hover:opacity-100'
-              )}
-            >
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSlideDelete(slide.id);
-                }}
-                title="슬라이드 삭제"
-                className={cn(
-                  'flex h-6 w-6 items-center justify-center rounded',
-                  'bg-layer-0/95 text-text-tertiary shadow-sm',
-                  'hover:bg-red-500 hover:text-white',
-                  'transition-colors',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent'
-                )}
+      {/* Sortable Slide List (v4.0) with Selection (v4.1 → v1.0.2 simplified) */}
+      {onReorder ? (
+        <Group
+          role="SortableList"
+          density="Compact"
+          className="flex-1 overflow-y-auto"
+          items={slides}
+          value="id"
+          onReorder={onReorder}
+          renderItem={(slide: Slide, index: number) => {
+            return (
+              <Group
+                role="Card"
+                density="Compact"
+                prominence="Standard"
+                intent="Neutral"
+                value={slide.id}
+                selectionModel={selectionModel}
+                className="cursor-move !bg-white border border-border hover:border-border-emphasis data-[selected=true]:border-accent data-[selected=true]:ring-1 data-[selected=true]:ring-accent/20 transition-all"
               >
-                <Trash2 size={14} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </Group>
+                {/* Slide Number + Thumbnail as one group */}
+                <div className="flex flex-col gap-1">
+                  {/* Slide Number */}
+                  <Text role="Caption" prominence="Subtle" className="px-1">
+                    {index + 1}
+                  </Text>
+
+                  {/* Thumbnail */}
+                  <div className="aspect-[16/9] w-full overflow-hidden rounded">
+                    <SlidePreview slide={slide} scale={0.15} />
+                  </div>
+                </div>
+              </Group>
+            );
+          }}
+        />
+      ) : (
+        // Fallback: Non-sortable list (if onReorder is not provided) with Selection (v1.0.2 simplified)
+        <Group role="List" layout="stack" density="Compact" className="flex-1 overflow-y-auto">
+          {slides.map((slide, index) => {
+            return (
+              <Group
+                key={slide.id}
+                role="Card"
+                density="Compact"
+                prominence="Standard"
+                intent="Neutral"
+                value={slide.id}
+                selectionModel={selectionModel}
+                className="!bg-white border border-border hover:border-border-emphasis data-[selected=true]:border-accent data-[selected=true]:ring-1 data-[selected=true]:ring-accent/20 transition-all"
+              >
+                {/* Slide Number + Thumbnail as one group */}
+                <div className="flex flex-col gap-1">
+                  {/* Slide Number */}
+                  <Text role="Caption" prominence="Subtle" className="px-1">
+                    {index + 1}
+                  </Text>
+
+                  {/* Thumbnail */}
+                  <div className="aspect-[16/9] w-full overflow-hidden rounded">
+                    <SlidePreview slide={slide} scale={0.15} />
+                  </div>
+                </div>
+              </Group>
+            );
+          })}
+        </Group>
+      )}
     </Group>
   );
 };

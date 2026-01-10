@@ -1,13 +1,13 @@
 /**
- * SpacingToken - 간격 토큰 시각화
+ * SpacingToken - 간격 토큰 시각화 (Pure IDDL)
  *
  * 실제 크기의 박스로 간격을 표시합니다.
  */
 
 import { useState } from 'react';
 import type { Token } from '@/apps/tokens/parser/types';
-import { Group } from '@/components/Group/Group.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text';
 
 export function SpacingToken({ token }: { token: Token }) {
   const [copied, setCopied] = useState(false);
@@ -22,88 +22,46 @@ export function SpacingToken({ token }: { token: Token }) {
   };
 
   return (
-    <Group role="Card" prominence="Primary" gap={0}>
-      {/* 실제 크기 박스 (compact) */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          height: '80px',
-          backgroundColor: 'var(--color-surface-sunken)',
-          borderRadius: '0.375rem',
-          position: 'relative',
-        }}
+    <Group role="Card" layout="stack" gap={0} prominence="Standard" density="Compact">
+      {/* 실제 크기 박스 */}
+      <Group
+        role="Container"
+        prominence="Strong"
+        className="relative w-full h-20 bg-surface-sunken rounded-md flex items-center justify-center"
       >
         <div
+          className="bg-accent rounded"
           style={{
             width: token.resolvedValue,
             height: token.resolvedValue,
-            backgroundColor: 'var(--color-accent)',
-            borderRadius: '0.25rem',
           }}
         />
         {/* 크기 라벨 */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '0.375rem',
-            right: '0.375rem',
-            backgroundColor: 'rgba(0, 0, 0, 0.6)',
-            color: 'white',
-            padding: '0.25rem 0.375rem',
-            borderRadius: '0.25rem',
-            fontSize: '0.625rem',
-            fontFamily: 'monospace',
-          }}
+        <Group
+          role="Container"
+          prominence="Hero"
+          className="absolute bottom-1.5 right-1.5 bg-gray-900/60 text-white px-1.5 py-1 rounded"
         >
-          {token.resolvedValue}
-        </div>
-      </div>
+          <Text role="Caption" content={token.resolvedValue} className="text-white text-[10px] font-mono" />
+        </Group>
+      </Group>
 
-      {/* 토큰 정보 (compact) */}
-      <div style={{ padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-        <Text
-          role="Label"
-          prominence="Primary"
-          className="font-mono text-xs truncate"
-          title={token.name}
-        >
-          {token.name}
-        </Text>
-        <Text role="Caption" prominence="Secondary" className="font-mono text-xs">
-          <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>
-            {token.resolvedValue}
-          </span>
-        </Text>
+      {/* 토큰 정보 */}
+      <Group role="Container" layout="stack" gap={1} className="p-2">
+        <Text role="Label" prominence="Standard" content={token.name} className="font-mono text-xs truncate" />
+        <Text role="Caption" prominence="Subtle" content={token.resolvedValue} className="font-mono text-xs font-semibold" />
 
-        {/* CSS Variable (compact) */}
-        <div
+        {/* CSS Variable (clickable) */}
+        <Group
+          role="Container"
+          clickable
           onClick={() => handleCopy(`var(${token.name})`)}
-          style={{
-            backgroundColor: 'var(--color-surface-sunken)',
-            padding: '0.375rem',
-            borderRadius: '0.25rem',
-            fontFamily: 'monospace',
-            fontSize: '0.625rem',
-            cursor: 'pointer',
-            border: '1px solid var(--color-border-subtle)',
-            transition: 'background-color 100ms',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--color-surface-raised)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--color-surface-sunken)';
-          }}
-          title="Click to copy"
+          prominence="Strong"
+          className="bg-surface-sunken px-2 py-1.5 rounded border border-border-subtle cursor-pointer hover:bg-surface-raised transition-colors"
         >
-          <Text role="Caption" prominence="Primary" className="font-mono truncate">
-            var({token.name})
-          </Text>
-        </div>
-      </div>
+          <Text role="Caption" prominence="Standard" content={`var(${token.name})`} className="font-mono text-[10px] truncate" />
+        </Group>
+      </Group>
     </Group>
   );
 }

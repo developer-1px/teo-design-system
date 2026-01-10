@@ -4,25 +4,42 @@
  */
 
 import type { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
-import { DataTable } from '@/components/Group/role/DataTable.tsx';
-import { Text } from '@/components/Item/Text/Text.tsx';
+import { useMemo, useState } from 'react';
+import { DataTable } from '@/components/types/Group/role/DataTable.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import type { JsonArray, JsonObject, JsonValue, ViewConfig } from '../types.ts';
 
 interface TableViewProps {
   data: JsonArray;
   viewConfig: ViewConfig;
   density?: 'compact' | 'normal';
+  onRowDoubleClick?: (row: JsonObject) => void;
+  clearSelection?: boolean;
 }
 
-export const TableView = ({ data, viewConfig, density = 'compact' }: TableViewProps) => {
+export const TableView = ({
+  data,
+  viewConfig,
+  density = 'compact',
+  onRowDoubleClick,
+  clearSelection,
+}: TableViewProps) => {
+
+  // 검색어 상태
+  const [searchQuery, setSearchQuery] = useState('');
+
   const columns = useMemo<ColumnDef<JsonObject>[]>(() => {
-    if (data.length === 0) return [];
+
+    if (data.length === 0) {
+      return [];
+    }
 
     const firstItem = data[0] as JsonObject;
+
     const keys = viewConfig.properties
       ? viewConfig.properties.filter((p) => p.visible !== false).map((p) => p.key)
       : Object.keys(firstItem);
+
 
     return keys.map((key) => {
       const propConfig = viewConfig.properties?.find((p) => p.key === key);
@@ -36,44 +53,47 @@ export const TableView = ({ data, viewConfig, density = 'compact' }: TableViewPr
 
           // null/undefined
           if (value === null) {
-            return (
-              <Text role="Caption" prominence="Tertiary" className="italic">
-                null
-              </Text>
-            );
+            return <Text role="Caption" prominence="Subtle" className="italic" content="null" />;
           }
           if (value === undefined) {
             return (
-              <Text role="Caption" prominence="Tertiary" className="italic">
-                undefined
-              </Text>
+              <Text role="Caption" prominence="Subtle" className="italic" content="undefined" />
             );
           }
 
           // boolean
           if (typeof value === 'boolean') {
             return (
-              <Text role="Body" prominence="Primary" className="text-accent font-medium">
-                {String(value)}
-              </Text>
+              <Text
+                role="Body"
+                className="text-accent font-medium"
+                content={String(value)}
+                highlight={searchQuery}
+              />
             );
           }
 
           // number
           if (typeof value === 'number') {
             return (
-              <Text role="Body" prominence="Primary" className="font-mono">
-                {value.toLocaleString()}
-              </Text>
+              <Text
+                role="Body"
+                className="font-mono"
+                content={value.toLocaleString()}
+                highlight={searchQuery}
+              />
             );
           }
 
           // array
           if (Array.isArray(value)) {
             return (
-              <Text role="Caption" prominence="Tertiary" className="font-mono text-xs">
-                [Array] x{value.length}
-              </Text>
+              <Text
+                role="Caption"
+                prominence="Subtle"
+                className="font-mono text-xs"
+                content={`[Array] x${value.length}`}
+              />
             );
           }
 
@@ -81,28 +101,35 @@ export const TableView = ({ data, viewConfig, density = 'compact' }: TableViewPr
           if (typeof value === 'object') {
             const keys = Object.keys(value);
             return (
-              <Text role="Caption" prominence="Tertiary" className="font-mono text-xs">
-                {keys.length > 0 ? `{Object} ${keys.length} keys` : '{Object}'}
-              </Text>
+              <Text
+                role="Caption"
+                prominence="Subtle"
+                className="font-mono text-xs"
+                content={keys.length > 0 ? `{Object} ${keys.length} keys` : '{Object}'}
+              />
             );
           }
 
           // string (default)
-          return (
-            <Text role="Body" prominence="Primary">
-              {String(value)}
-            </Text>
-          );
+          return <Text role="Body" content={String(value)} highlight={searchQuery} />;
         },
       };
     });
-  }, [data, viewConfig]);
+  }, [data, viewConfig, searchQuery]);
 
   const typedData = useMemo(() => data as JsonObject[], [data]);
 
   return (
     <div className="h-full">
-      <DataTable columns={columns} data={typedData} density={density} />
+      <DataTable
+        columns={columns}
+        data={typedData}
+        density={density}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onRowDoubleClick={onRowDoubleClick}
+        clearSelection={clearSelection}
+      />
     </div>
   );
 };

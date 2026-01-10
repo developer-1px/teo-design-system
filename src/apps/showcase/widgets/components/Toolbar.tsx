@@ -1,5 +1,5 @@
 /**
- * Storybook-style Toolbar
+ * Storybook-style Toolbar (Pure IDDL v3.1)
  *
  * Canvas 제어 도구:
  * - 줌 (100%, 50%, 200%)
@@ -7,21 +7,22 @@
  * - 격자 표시
  * - 측정 도구
  * - 반응형 뷰포트
+ *
+ * v3.1: Minimal IDDL - role 기반, selected prop 사용, 수동 className 최소화
  */
 
 import {
   Grid3x3,
   Maximize2,
   Monitor,
-  Paintbrush,
   Ruler,
   Smartphone,
   Tablet,
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
-import { Action } from '@/components/Item/Action/Action';
-import { Group } from '@/components/Group/Group.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
 
 export type BackgroundType = 'transparent' | 'light' | 'dark' | 'grid';
 export type ViewportSize = 'mobile' | 'tablet' | 'desktop' | 'full';
@@ -52,151 +53,94 @@ export function Toolbar({
   onMeasureToggle,
 }: ToolbarProps) {
   return (
-    <Group
-      role="Toolbar"
-      layout="inline"
-      density="Compact"
-      className="px-4 py-2 border-b border-default"
-    >
+    <Group role="Toolbar" layout="inline" density="Compact" prominence="Standard">
       {/* Zoom Controls */}
-      <Group role="Toolbar" layout="inline" className="gap-1">
-        <Action
-          icon="ZoomOut"
-          prominence="Tertiary"
-          intent="Neutral"
-          onClick={() => onZoomChange(Math.max(25, zoom - 25))}
-          label=""
-        />
-        <button
-          onClick={() => onZoomChange(100)}
-          className="px-2 py-1 text-xs text-muted hover:text min-w-[60px] rounded transition-colors"
-        >
-          {zoom}%
-        </button>
-        <Action
-          icon="ZoomIn"
-          prominence="Tertiary"
-          intent="Neutral"
-          onClick={() => onZoomChange(Math.min(200, zoom + 25))}
-          label=""
-        />
-        <Action
-          icon="Maximize2"
-          prominence="Tertiary"
-          intent="Neutral"
-          onClick={() => onZoomChange(100)}
-          label=""
-        />
+      <Group role="Toolbar" layout="inline" density="Compact">
+        <Action onClick={() => onZoomChange(Math.max(25, zoom - 25))}>
+          <ZoomOut size={14} />
+        </Action>
+        <Action onClick={() => onZoomChange(100)}>{zoom}%</Action>
+        <Action onClick={() => onZoomChange(Math.min(200, zoom + 25))}>
+          <ZoomIn size={14} />
+        </Action>
+        <Action onClick={() => onZoomChange(100)}>
+          <Maximize2 size={14} />
+        </Action>
       </Group>
 
-      <div className="w-px h-6 bg-border-default" />
+      {/* Divider */}
+      <Group role="Container" className="w-px h-6 bg-border-default" />
 
-      {/* Background Controls */}
-      <Group role="Toolbar" layout="inline" className="gap-1">
-        <button
+      {/* Background Controls - NOTE: Color swatches는 향후 Swatch 컴포넌트로 교체 예정 */}
+      <Group role="Toolbar" layout="inline" density="Compact">
+        <Action
+          selected={background === 'light'}
           onClick={() => onBackgroundChange('light')}
-          className={`w-6 h-6 rounded border-2 transition-all ${
-            background === 'light'
-              ? 'border-primary bg-white'
-              : 'border-default bg-white hover:border-muted'
-          }`}
-          title="White background"
-        />
-        <button
-          onClick={() => onBackgroundChange('dark')}
-          className={`w-6 h-6 rounded border-2 transition-all ${
-            background === 'dark'
-              ? 'border-primary bg-gray-900'
-              : 'border-default bg-gray-900 hover:border-muted'
-          }`}
-          title="Dark background"
-        />
-        <button
-          onClick={() => onBackgroundChange('transparent')}
-          className={`w-6 h-6 rounded border-2 transition-all ${
-            background === 'transparent' ? 'border-primary' : 'border-default hover:border-muted'
-          }`}
-          style={{
-            backgroundImage:
-              'linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc)',
-            backgroundSize: '8px 8px',
-            backgroundPosition: '0 0, 4px 4px',
-          }}
-          title="Transparent background"
-        />
-        <button
-          onClick={onGridToggle}
-          className={`p-1 rounded transition-colors ${
-            showGrid ? 'bg-primary text-inverse' : 'text-muted hover:text hover:bg-surface-sunken'
-          }`}
-          title="Toggle grid"
+          aria-label="White background"
         >
+          ⬜
+        </Action>
+        <Action
+          selected={background === 'dark'}
+          onClick={() => onBackgroundChange('dark')}
+          aria-label="Dark background"
+        >
+          ⬛
+        </Action>
+        <Action
+          selected={background === 'transparent'}
+          onClick={() => onBackgroundChange('transparent')}
+          aria-label="Transparent background"
+        >
+          ▦
+        </Action>
+        <Action selected={showGrid} onClick={onGridToggle} aria-label="Toggle grid">
           <Grid3x3 size={16} />
-        </button>
+        </Action>
       </Group>
 
-      <div className="w-px h-6 bg-border-default" />
+      {/* Divider */}
+      <Group role="Container" className="w-px h-6 bg-border-default" />
 
       {/* Viewport Controls */}
-      <Group role="Toolbar" layout="inline" className="gap-1">
-        <button
+      <Group role="Toolbar" layout="inline" density="Compact">
+        <Action
+          selected={viewport === 'mobile'}
           onClick={() => onViewportChange('mobile')}
-          className={`p-1 rounded transition-colors ${
-            viewport === 'mobile'
-              ? 'bg-primary text-inverse'
-              : 'text-muted hover:text hover:bg-surface-sunken'
-          }`}
-          title="Mobile (375px)"
+          aria-label="Mobile (375px)"
         >
           <Smartphone size={16} />
-        </button>
-        <button
+        </Action>
+        <Action
+          selected={viewport === 'tablet'}
           onClick={() => onViewportChange('tablet')}
-          className={`p-1 rounded transition-colors ${
-            viewport === 'tablet'
-              ? 'bg-primary text-inverse'
-              : 'text-muted hover:text hover:bg-surface-sunken'
-          }`}
-          title="Tablet (768px)"
+          aria-label="Tablet (768px)"
         >
           <Tablet size={16} />
-        </button>
-        <button
+        </Action>
+        <Action
+          selected={viewport === 'desktop'}
           onClick={() => onViewportChange('desktop')}
-          className={`p-1 rounded transition-colors ${
-            viewport === 'desktop'
-              ? 'bg-primary text-inverse'
-              : 'text-muted hover:text hover:bg-surface-sunken'
-          }`}
-          title="Desktop (1280px)"
+          aria-label="Desktop (1280px)"
         >
           <Monitor size={16} />
-        </button>
-        <button
+        </Action>
+        <Action
+          selected={viewport === 'full'}
           onClick={() => onViewportChange('full')}
-          className={`p-1 rounded transition-colors ${
-            viewport === 'full'
-              ? 'bg-primary text-inverse'
-              : 'text-muted hover:text hover:bg-surface-sunken'
-          }`}
-          title="Full width"
+          aria-label="Full width"
         >
           <Maximize2 size={16} />
-        </button>
+        </Action>
       </Group>
 
-      <div className="w-px h-6 bg-border-default" />
+      {/* Divider */}
+      <Group role="Container" className="w-px h-6 bg-border-default" />
 
       {/* Measure Tool */}
-      <button
-        onClick={onMeasureToggle}
-        className={`p-1 rounded transition-colors ${
-          showMeasure ? 'bg-primary text-inverse' : 'text-muted hover:text hover:bg-surface-sunken'
-        }`}
-        title="Toggle measure"
-      >
+      <Action selected={showMeasure} onClick={onMeasureToggle} aria-label="Toggle measure">
         <Ruler size={16} />
-      </button>
+      </Action>
     </Group>
   );
 }

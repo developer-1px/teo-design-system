@@ -6,9 +6,9 @@
  * @see docs/1-project/4-headless-hook.md
  */
 
-import { useState, useCallback, useRef } from 'react';
-import { useDisclosure } from '../primitives/useDisclosure';
+import { useCallback, useRef, useState } from 'react';
 import { useClickOutside } from '../primitives/useClickOutside';
+import { useDisclosure } from '../primitives/useDisclosure';
 
 export interface UseMenuOptions {
   /** 메뉴 열림 콜백 */

@@ -7,13 +7,11 @@
 
 import { Check, Code, Download, Play, Upload } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { type NodePath, PreviewPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel';
-import { PropertyPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PropertyPanel';
-import { TreeView } from '@/apps/DSLBuilder/widgets/dsl-builder/TreeView';
-import { Button } from '@/components/Item/Action/role/Button';
-import { Select } from '@/components/Item/Field/role/Select';
-import { Kbd } from '@/components/Item/Text/role/Kbd';
-import type { AnyDSLNode, BuilderState, DSLNodeType } from '@/apps/DSLBuilder/lib/dsl-builder/types';
+import type {
+  AnyDSLNode,
+  BuilderState,
+  DSLNodeType,
+} from '@/apps/DSLBuilder/lib/dsl-builder/types';
 import {
   addChildNode,
   cloneNode,
@@ -24,6 +22,14 @@ import {
   removeNode,
   updateNode,
 } from '@/apps/DSLBuilder/lib/dsl-builder/utils';
+import { type NodePath, PreviewPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel';
+import { PropertyPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PropertyPanel';
+import { TreeView } from '@/apps/DSLBuilder/widgets/dsl-builder/TreeView';
+import { Button } from '@/components/types/Atom/Action/role/Button';
+import { Select } from '@/components/types/Atom/Field/role/Select';
+import { Kbd } from '@/components/types/Atom/Text/role/Kbd';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 
 // Import all JSON files from apps/dsl using Vite's glob import
 const templateFiles = import.meta.glob('/apps/dsl/*.json', { eager: true });
@@ -47,7 +53,7 @@ const getDefaultTree = (): AnyDSLNode => ({
         {
           id: generateId(),
           type: 'section',
-          prominence: 'Primary',
+          prominence: 'Standard',
           children: [
             {
               id: generateId(),
@@ -65,7 +71,7 @@ const getDefaultTree = (): AnyDSLNode => ({
                   id: generateId(),
                   type: 'text',
                   role: 'Body',
-                  prominence: 'Secondary',
+                  prominence: 'Standard',
                   content: 'Drag and drop to build your layout!',
                 },
               ],
@@ -234,7 +240,6 @@ export const DSLBuilderPage = () => {
   // Copy hierarchy to clipboard
   const copyHierarchyToClipboard = useCallback(async () => {
     if (!clickedNodePath || clickedNodePath.length === 0) {
-      console.log('No node clicked yet');
       return;
     }
 
@@ -242,7 +247,6 @@ export const DSLBuilderPage = () => {
 
     try {
       await navigator.clipboard.writeText(hierarchyText);
-      console.log('Copied hierarchy:', hierarchyText);
 
       // Show success indicator
       setShowCopySuccess(true);
@@ -275,7 +279,6 @@ export const DSLBuilderPage = () => {
             clipboard: selectedNode,
             clipboardAction: 'copy',
           }));
-          console.log('Copied:', selectedNode.type);
         }
       }
 
@@ -288,7 +291,6 @@ export const DSLBuilderPage = () => {
             clipboard: selectedNode,
             clipboardAction: 'cut',
           }));
-          console.log('Cut:', selectedNode.type);
         }
       }
 
@@ -329,7 +331,6 @@ export const DSLBuilderPage = () => {
             selectedNodeId: nodeToAdd.id,
           }));
 
-          console.log('Pasted:', nodeToAdd.type);
         }
       }
 
@@ -345,7 +346,6 @@ export const DSLBuilderPage = () => {
               tree: newTree,
               selectedNodeId: null,
             }));
-            console.log('Deleted:', selectedNode.type);
           }
         }
       }
@@ -368,9 +368,9 @@ export const DSLBuilderPage = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-layer-0">
+    <Page role="Application" layout="Studio" density="Compact">
       {/* Left Sidebar - Tree View */}
-      <div className="w-64 bg-layer-2 border-r border-border flex flex-col">
+      <Section role="PrimarySidebar" className="flex flex-col">
         {/* Header */}
         <div className="p-2 border-b border-border">
           <h2 className="text-sm font-semibold text-text">DSL Builder</h2>
@@ -440,10 +440,10 @@ export const DSLBuilderPage = () => {
             onMove={handleMove}
           />
         </div>
-      </div>
+      </Section>
 
       {/* Center - Preview or Properties */}
-      <div className="flex-1 flex flex-col">
+      <Section role="Editor" className="flex flex-col">
         {/* Toolbar */}
         <div className="h-10 bg-layer-2 border-b border-border flex items-center justify-between px-3">
           <div className="flex items-center gap-1">
@@ -485,16 +485,16 @@ export const DSLBuilderPage = () => {
             </div>
           )}
         </div>
-      </div>
+      </Section>
 
       {/* Right Sidebar - Properties (when preview is shown) */}
       {showPreview && (
-        <div className="w-64 bg-layer-2 border-l border-border overflow-y-auto">
+        <Section role="SecondarySidebar" className="overflow-y-auto">
           <div className="p-2 border-b border-border">
             <h3 className="text-xs font-semibold text-text">Properties</h3>
           </div>
           <PropertyPanel node={selectedNode} onUpdate={handleUpdateNode} />
-        </div>
+        </Section>
       )}
 
       {/* Copy Success Toast */}
@@ -504,6 +504,6 @@ export const DSLBuilderPage = () => {
           <span className="text-sm font-medium">Hierarchy copied to clipboard!</span>
         </div>
       )}
-    </div>
+    </Page>
   );
 };

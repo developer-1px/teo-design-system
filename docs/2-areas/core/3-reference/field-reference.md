@@ -292,14 +292,14 @@ text, password, email, url, phone 타입에서 사용 가능:
   label="제목"
   model="title"
   dataType="text"
-  prominence="Primary"    // 강조
+  prominence="Standard"    // 강조
 />
 
 <Field
   label="메모"
   model="memo"
   dataType="textarea"
-  prominence="Secondary"  // 보통
+  prominence="Standard"  // 보통
 />
 ```
 

@@ -190,7 +190,7 @@ import { Section } from '@/components/dsl/Section';
 
 // IDDL + Compound Components
 <Tabs defaultTab="profile">
-  <Group role="TabList" prominence="Primary">
+  <Group role="TabList" prominence="Standard">
     <Tabs.Tab id="profile">
       <Action role="Tab">Profile</Action>
     </Tabs.Tab>
@@ -199,7 +199,7 @@ import { Section } from '@/components/dsl/Section';
     </Tabs.Tab>
   </Group>
 
-  <Section role="TabPanel" prominence="Primary">
+  <Section role="TabPanel" prominence="Standard">
     <Tabs.Panel id="profile">
       <ProfileContent />
     </Tabs.Panel>

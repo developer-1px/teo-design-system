@@ -1,15 +1,13 @@
 /**
- * TokenTableOfContents - 토큰 목차 (Table of Contents)
+ * TokenTableOfContents - 토큰 목차 (Pure IDDL)
  *
  * Sticky 사이드바로 카테고리 목록을 표시하고, 클릭 시 해당 섹션으로 스크롤합니다.
- * Figma Tokens, Material Design 스타일의 목차 네비게이션
  */
 
 import type { TokenCategory } from '@/apps/tokens/parser/types';
-import { Action } from '@/components/Item/Action/Action';
-import { Group } from '@/components/Group/Group.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Text } from '@/components/types/Atom/Text/Text';
 
 export function TokenTableOfContents({ categories }: { categories: TokenCategory[] }) {
   // Tier별로 그룹화
@@ -28,48 +26,39 @@ export function TokenTableOfContents({ categories }: { categories: TokenCategory
   };
 
   return (
-    <div
-      style={{
-        width: '280px',
-        flexShrink: 0,
-        position: 'sticky',
-        top: 0,
-        height: '100vh',
-        overflowY: 'auto',
-        borderRight: '1px solid var(--color-border-default)',
-        backgroundColor: 'var(--color-surface)',
-        padding: '1.5rem 1rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-      }}
+    <Group
+      role="Container"
+      layout="stack"
+      gap={3}
+      prominence="Standard"
+      density="Standard"
+      className="w-[280px] flex-shrink-0 sticky top-0 h-screen overflow-y-auto border-r border-border-default bg-surface p-6"
     >
       {/* 헤더 */}
-      <Group role="Container" prominence="Primary" gap={0}>
-        <Text role="Title" prominence="Primary">
+      <Group role="Container" layout="stack" gap={1}>
+        <Text role="Title" prominence="Standard">
           Table of Contents
         </Text>
-        <Text role="Caption" prominence="Tertiary">
+        <Text role="Caption" prominence="Subtle">
           {categories.length} categories
         </Text>
       </Group>
 
       {/* Tier 1: Primitive */}
       {tierGroups.primitive.length > 0 && (
-        <Group role="Container" prominence="Secondary" gap={1}>
-          <Text role="Label" prominence="Secondary">
+        <Group role="Container" layout="stack" gap={2}>
+          <Text role="Label" prominence="Standard">
             Tier 1: Primitive
           </Text>
-          <Group role="List" prominence="Tertiary" gap={0}>
+          <Group role="List" layout="stack" gap={0}>
             {tierGroups.primitive.map((cat) => (
               <Action
                 key={cat.name}
                 label={`${cat.name} (${cat.tokens.length})`}
-                behavior={{ action: 'command', command: 'scrollToCategory' }}
-                onClick={() => scrollToCategory(cat.name)}
-                variant="list-item"
-                prominence="Secondary"
+                prominence="Standard"
                 intent="Neutral"
+                onClick={() => scrollToCategory(cat.name)}
+                className="w-full justify-start"
               />
             ))}
           </Group>
@@ -78,20 +67,19 @@ export function TokenTableOfContents({ categories }: { categories: TokenCategory
 
       {/* Tier 2: Semantic */}
       {tierGroups.semantic.length > 0 && (
-        <Group role="Container" prominence="Secondary" gap={1}>
-          <Text role="Label" prominence="Secondary">
+        <Group role="Container" layout="stack" gap={2}>
+          <Text role="Label" prominence="Standard">
             Tier 2: Semantic
           </Text>
-          <Group role="List" prominence="Tertiary" gap={0}>
+          <Group role="List" layout="stack" gap={0}>
             {tierGroups.semantic.map((cat) => (
               <Action
                 key={cat.name}
                 label={`${cat.name} (${cat.tokens.length})`}
-                behavior={{ action: 'command', command: 'scrollToCategory' }}
-                onClick={() => scrollToCategory(cat.name)}
-                variant="list-item"
-                prominence="Secondary"
+                prominence="Standard"
                 intent="Neutral"
+                onClick={() => scrollToCategory(cat.name)}
+                className="w-full justify-start"
               />
             ))}
           </Group>
@@ -100,20 +88,19 @@ export function TokenTableOfContents({ categories }: { categories: TokenCategory
 
       {/* Tier 3: Component */}
       {tierGroups.component.length > 0 && (
-        <Group role="Container" prominence="Secondary" gap={1}>
-          <Text role="Label" prominence="Secondary">
+        <Group role="Container" layout="stack" gap={2}>
+          <Text role="Label" prominence="Standard">
             Tier 3: Component
           </Text>
-          <Group role="List" prominence="Tertiary" gap={0}>
+          <Group role="List" layout="stack" gap={0}>
             {tierGroups.component.map((cat) => (
               <Action
                 key={cat.name}
                 label={`${cat.name} (${cat.tokens.length})`}
-                behavior={{ action: 'command', command: 'scrollToCategory' }}
-                onClick={() => scrollToCategory(cat.name)}
-                variant="list-item"
-                prominence="Secondary"
+                prominence="Standard"
                 intent="Neutral"
+                onClick={() => scrollToCategory(cat.name)}
+                className="w-full justify-start"
               />
             ))}
           </Group>
@@ -121,11 +108,11 @@ export function TokenTableOfContents({ categories }: { categories: TokenCategory
       )}
 
       {/* Footer */}
-      <Group role="Container" prominence="Tertiary" gap={0}>
-        <Text role="Caption" prominence="Tertiary">
+      <Group role="Container" layout="stack" gap={0} className="mt-auto">
+        <Text role="Caption" prominence="Subtle">
           Auto-generated from themes.css
         </Text>
       </Group>
-    </div>
+    </Group>
   );
 }

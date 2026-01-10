@@ -1,6 +1,6 @@
 import { AlertCircle } from 'lucide-react';
 import { type ComponentType, useEffect, useState } from 'react';
-import { Section } from '@/components/Section/Section.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface ComponentPreviewProps {
   path: string;
@@ -48,11 +48,7 @@ export const ComponentPreview = ({ path, filename }: ComponentPreviewProps) => {
 
   if (error || !Component) {
     return (
-      <Section
-        role="Container"
-        prominence="Primary"
-        className="flex-1 flex items-center justify-center"
-      >
+      <Section role="Container" className="flex-1 flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="mx-auto mb-3 text-error" size={48} />
           <p className="text-text-primary font-medium mb-1">Cannot preview this component</p>
@@ -64,7 +60,7 @@ export const ComponentPreview = ({ path, filename }: ComponentPreviewProps) => {
   }
 
   return (
-    <Section role="Container" prominence="Primary" className="flex-1 overflow-auto">
+    <Section role="Container" className="flex-1 overflow-auto">
       {/* Preview Header */}
       <div className="sticky top-0 z-10 bg-layer-1 px-6 py-3">
         <div className="flex items-center justify-between">

@@ -1,15 +1,15 @@
 import {
   AlertCircle as AlertCircleIcon,
   Bug as BugIcon,
-  ChevronUp as ChevronUpIcon,
   FileOutput as FileOutputIcon,
   Terminal as TerminalIcon,
-  X as XIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Item/Action/role/IconButton.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { cn } from '@/shared/lib/utils.ts';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
+import { Badge } from '@/components/types/Atom/Text/role/Badge.tsx';
 
 interface BottomPanelProps {
   isOpen: boolean;
@@ -40,88 +40,97 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
   if (!isOpen) return null;
 
   return (
-    <div style={{ height: `${height}px` }} className="flex flex-col overflow-hidden">
-      <Section
-        role="Container"
-        prominence="Tertiary"
-        className="flex flex-col flex-1 overflow-hidden"
-      >
+    <Group role="Container" layout="flex" direction="column" height={height}>
+      <Section role="Container" layout="flex" direction="column" flex="1">
         {/* Tab Header */}
-        <div className="flex items-center justify-between px-2 py-1 bg-surface">
-          <div className="flex items-center gap-1">
+        <Group
+          role="Toolbar"
+          direction="horizontal"
+          align="center"
+          justify="between"
+          padding="xs"
+          prominence="Secondary"
+        >
+          <Group role="Tabs" direction="horizontal" align="center" gap="xs">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
-                <button
+                <Group
                   key={tab.id}
+                  role="Tab"
+                  direction="horizontal"
+                  align="center"
+                  padding="sm"
+                  gap="xs"
+                  interactive
+                  selected={activeTab === tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={cn(
-                    'flex items-center gap-2 px-3 py-1 text-xs rounded-md hover:bg-surface-sunken/50 active:bg-surface-sunken transition-colors',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1',
-                    activeTab === tab.id ? 'bg-surface text' : 'text-muted'
-                  )}
                 >
                   <Icon size={14} />
-                  <span>{tab.label}</span>
+                  <Text role="Body" content={tab.label} size="sm" />
                   {tab.count !== undefined && (
-                    <span
-                      className={cn(
-                        'px-1.5 py-0.5 text-xs rounded-full',
-                        activeTab === tab.id
-                          ? 'bg-accent text-white'
-                          : 'bg-surface-sunken text-subtle'
-                      )}
+                    <Badge
+                      variant={activeTab === tab.id ? 'default' : 'secondary'}
+                      size="sm"
                     >
                       {tab.count}
-                    </span>
+                    </Badge>
                   )}
-                </button>
+                </Group>
               );
             })}
-          </div>
+          </Group>
 
           {/* Actions */}
-          <div className="flex items-center gap-1">
-            <IconButton size="sm" title="Maximize Panel">
-              <ChevronUpIcon size={16} />
-            </IconButton>
-            <IconButton size="sm" onClick={onClose} title="Close Panel">
-              <XIcon size={16} />
-            </IconButton>
-          </div>
-        </div>
+          <Group role="Actions" direction="horizontal" align="center" gap="xs">
+            <Action
+              role="IconButton"
+              icon="ChevronUp"
+              label="Maximize Panel"
+              density="Compact"
+            />
+            <Action
+              role="IconButton"
+              icon="X"
+              label="Close Panel"
+              density="Compact"
+              onClick={onClose}
+            />
+          </Group>
+        </Group>
 
         {/* Panel Content */}
-        <div className="flex-1 overflow-auto p-2">
+        <Group role="Content" layout="scroll" flex="1" padding="sm">
           {activeTab === 'terminal' && <TerminalContent />}
           {activeTab === 'problems' && <ProblemsContent />}
           {activeTab === 'output' && <OutputContent />}
           {activeTab === 'debug' && <DebugContent />}
-        </div>
+        </Group>
       </Section>
-    </div>
+    </Group>
   );
 };
 
 // Terminal Tab Content
 const TerminalContent = () => {
   return (
-    <div className="font-mono text-sm">
-      <div className="text-muted mb-2">
-        <span className="text-accent">user@macbook</span>
-        <span className="text-subtle"> ~ </span>
-        <span>$</span>
-      </div>
-      <div className="space-y-1">
-        <div>
-          <span className="text-accent">$</span> pnpm dev
-        </div>
-        <div className="text-muted">
-          <div>VITE v5.4.21 ready in 390 ms</div>
-          <div>➜ Local: http://localhost:5175/</div>
-        </div>
-      </div>
-    </div>
+    <Group role="Terminal" font="mono" gap="sm">
+      <Group role="Line" direction="horizontal" gap="xs">
+        <Text role="Code" prominence="Brand" content="user@macbook" />
+        <Text role="Code" prominence="Subtle" content="~" />
+        <Text role="Code" content="$" />
+      </Group>
+      <Group role="Output" gap="xs">
+        <Group role="Command" direction="horizontal" gap="xs">
+          <Text role="Code" prominence="Brand" content="$" />
+          <Text role="Code" content="pnpm dev" />
+        </Group>
+        <Group role="Result" gap="xs">
+          <Text role="Code" prominence="Subtle" content="VITE v5.4.21 ready in 390 ms" />
+          <Text role="Code" prominence="Subtle" content="➜ Local: http://localhost:5175/" />
+        </Group>
+      </Group>
+    </Group>
   );
 };
 
@@ -152,49 +161,63 @@ const ProblemsContent = () => {
   ];
 
   return (
-    <div className="space-y-1">
+    <Group role="List" gap="xs">
       {problems.map((problem, idx) => (
-        <button
+        <Group
           key={idx}
-          className="w-full flex items-start gap-3 px-2 py-1.5 rounded hover:bg-surface-sunken/50 active:bg-surface-sunken transition-colors text-left text-sm"
+          role="ListItem"
+          direction="horizontal"
+          align="start"
+          padding="sm"
+          gap="sm"
+          interactive
         >
           <AlertCircleIcon
             size={16}
-            className={cn(
-              'mt-0.5 flex-shrink-0',
-              problem.type === 'error' ? 'text-red-500' : 'text-yellow-500'
-            )}
+            style={{
+              color: problem.type === 'error' ? 'var(--color-semantic-error)' : 'var(--color-semantic-warning)',
+              flexShrink: 0,
+              marginTop: '2px'
+            }}
           />
-          <div className="flex-1 min-w-0">
-            <div className="text">{problem.message}</div>
-            <div className="text-xs text-subtle mt-0.5">
-              {problem.file}:{problem.line}:{problem.col}
-            </div>
-          </div>
-        </button>
+          <Group role="Content" flex="1" gap="xs">
+            <Text role="Body" prominence="Primary" content={problem.message} />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content={`${problem.file}:${problem.line}:${problem.col}`}
+              size="sm"
+            />
+          </Group>
+        </Group>
       ))}
-    </div>
+    </Group>
   );
 };
 
 // Output Tab Content
 const OutputContent = () => {
   return (
-    <div className="font-mono text-xs space-y-0.5">
-      <div className="text-subtle">[12:34:56] Starting compilation...</div>
-      <div className="text-muted">[12:34:57] Compiling TypeScript...</div>
-      <div className="text-green-600">[12:34:58] Compilation successful</div>
-      <div className="text-muted">[12:34:58] Watching for file changes...</div>
-    </div>
+    <Group role="Output" font="mono" gap="xs">
+      <Text role="Code" prominence="Subtle" content="[12:34:56] Starting compilation..." size="sm" />
+      <Text role="Code" prominence="Secondary" content="[12:34:57] Compiling TypeScript..." size="sm" />
+      <Text
+        role="Code"
+        prominence="Positive"
+        content="[12:34:58] Compilation successful"
+        size="sm"
+      />
+      <Text role="Code" prominence="Secondary" content="[12:34:58] Watching for file changes..." size="sm" />
+    </Group>
   );
 };
 
 // Debug Console Content
 const DebugContent = () => {
   return (
-    <div className="font-mono text-sm space-y-1">
-      <div className="text-subtle">Debug console is empty</div>
-      <div className="text-subtle text-xs">Start debugging to see output here</div>
-    </div>
+    <Group role="Empty" font="mono" gap="xs">
+      <Text role="Code" prominence="Subtle" content="Debug console is empty" />
+      <Text role="Code" prominence="Subtle" content="Start debugging to see output here" size="sm" />
+    </Group>
   );
 };

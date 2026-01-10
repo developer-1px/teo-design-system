@@ -1,7 +1,7 @@
-import { Bell, Clock, GitBranch, MessageSquare, User, X } from 'lucide-react';
+import { Bell, Clock, GitBranch, MessageSquare, User } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Item/Action/role/IconButton';
-import { Section } from '@/components/Section/Section.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface RightSidebarProps {
   onClose?: () => void;
@@ -13,46 +13,50 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
   );
 
   return (
-    <Section role="Container" prominence="Secondary" className="flex w-80 flex-col overflow-hidden">
+    <Section role="Container" className="flex w-80 flex-col overflow-hidden">
       {/* Header with tabs */}
       <div className="flex items-center justify-between px-2 py-1.5">
         <div className="flex gap-1">
-          <IconButton
-            size="sm"
-            active={activeTab === 'notifications'}
+          <Action
+            role="IconButton"
+            icon="Bell"
+            label="Notifications"
+            density="Compact"
+            selected={activeTab === 'notifications'}
             onClick={() => setActiveTab('notifications')}
-            title="Notifications"
-          >
-            <Bell size={16} />
-          </IconButton>
-          <IconButton
-            size="sm"
-            active={activeTab === 'git'}
+          />
+          <Action
+            role="IconButton"
+            icon="GitBranch"
+            label="Git Changes"
+            density="Compact"
+            selected={activeTab === 'git'}
             onClick={() => setActiveTab('git')}
-            title="Git Changes"
-          >
-            <GitBranch size={16} />
-          </IconButton>
-          <IconButton
-            size="sm"
-            active={activeTab === 'chat'}
+          />
+          <Action
+            role="IconButton"
+            icon="MessageSquare"
+            label="Chat"
+            density="Compact"
+            selected={activeTab === 'chat'}
             onClick={() => setActiveTab('chat')}
-            title="Chat"
-          >
-            <MessageSquare size={16} />
-          </IconButton>
-          <IconButton
-            size="sm"
-            active={activeTab === 'history'}
+          />
+          <Action
+            role="IconButton"
+            icon="Clock"
+            label="History"
+            density="Compact"
+            selected={activeTab === 'history'}
             onClick={() => setActiveTab('history')}
-            title="History"
-          >
-            <Clock size={16} />
-          </IconButton>
+          />
         </div>
-        <IconButton size="sm" onClick={onClose} title="Close">
-          <X size={16} />
-        </IconButton>
+        <Action
+          role="IconButton"
+          icon="X"
+          label="Close"
+          density="Compact"
+          onClick={onClose}
+        />
       </div>
 
       {/* Content */}
@@ -85,7 +89,6 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
               <Section
                 key={i}
                 role="Container"
-                prominence="Primary"
                 className="p-2 rounded-lg transition-all hover:shadow-layer-4 cursor-pointer"
               >
                 <div className="flex items-start gap-2">
@@ -106,7 +109,7 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
             <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-tertiary">
               Git Changes
             </h3>
-            <Section role="Container" prominence="Tertiary" className="p-2">
+            <Section role="Container" className="p-2">
               <div className="text-sm text-text-secondary">
                 <div className="mb-2 text-xs text-text-tertiary">Modified (3)</div>
                 <div className="space-y-1 font-mono text-xs">
@@ -133,7 +136,7 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
             <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-tertiary">
               Recent History
             </h3>
-            <Section role="Container" prominence="Tertiary" className="p-2">
+            <Section role="Container" className="p-2">
               <div className="space-y-2 text-xs">
                 <div>
                   <div className="font-medium text-text">Edited App.tsx</div>

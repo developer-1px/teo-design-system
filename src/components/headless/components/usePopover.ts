@@ -6,8 +6,8 @@
  * @see docs/1-project/4-headless-hook.md
  */
 
-import { useDisclosure } from '../primitives/useDisclosure';
 import { useClickOutside } from '../primitives/useClickOutside';
+import { useDisclosure } from '../primitives/useDisclosure';
 
 export type PopoverPlacement =
   | 'top'
@@ -72,13 +72,7 @@ export interface UsePopoverReturn {
  * )}
  */
 export function usePopover(options: UsePopoverOptions = {}): UsePopoverReturn {
-  const {
-    placement = 'bottom',
-    closeOnEsc = true,
-    closeOnBlur = true,
-    onOpen,
-    onClose,
-  } = options;
+  const { placement = 'bottom', closeOnEsc = true, closeOnBlur = true, onOpen, onClose } = options;
 
   const { isOpen, open, close, toggle } = useDisclosure({ onOpen, onClose });
   const popoverRef = useClickOutside<HTMLDivElement>({

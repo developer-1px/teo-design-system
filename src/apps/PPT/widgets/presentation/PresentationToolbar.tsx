@@ -11,10 +11,10 @@
  *   - Group[Toolbar]: 우측 여백
  */
 
-import { Action } from '@/components/Item/Action/Action';
-import { Group } from '@/components/Group/Group.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface PresentationToolbarProps {
   title?: string;
@@ -45,7 +45,6 @@ export const PresentationToolbar = ({
         <Group role="Inline" layout="inline" className="flex-1">
           <Text
             role="Title"
-            prominence="Secondary"
             content={title}
             className="text-text-primary font-medium truncate max-w-md"
           />
@@ -56,7 +55,6 @@ export const PresentationToolbar = ({
           {/* 이전 슬라이드 - IDDL Action[Tertiary] */}
           <Action
             icon="ChevronLeft"
-            prominence="Tertiary"
             intent="Neutral"
             disabled={!canGoPrev}
             behavior={{ action: 'command', command: 'presentation.prevSlide' }}
@@ -70,7 +68,6 @@ export const PresentationToolbar = ({
           <Action
             label="재생"
             icon="Play"
-            prominence="Primary"
             intent="Brand"
             behavior={{ action: 'command', command: 'presentation.play' }}
             onClick={(e) => {
@@ -82,7 +79,6 @@ export const PresentationToolbar = ({
           {/* 다음 슬라이드 - IDDL Action[Tertiary] */}
           <Action
             icon="ChevronRight"
-            prominence="Tertiary"
             intent="Neutral"
             disabled={!canGoNext}
             behavior={{ action: 'command', command: 'presentation.nextSlide' }}

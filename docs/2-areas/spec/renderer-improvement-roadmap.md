@@ -170,7 +170,7 @@
 
 **IDDL Mapping:**
 ```tsx
-<Overlay role="Tooltip" prominence="Tertiary">
+<Overlay role="Tooltip" prominence="Subtle">
   <Text role="Caption">Edit</Text>
 </Overlay>
 ```
@@ -184,7 +184,7 @@
 ```tsx
 <Action
   icon="Edit"
-  prominence="Tertiary"
+  prominence="Subtle"
   tooltip="Edit item"
   onClick={handleEdit}
 />
@@ -204,11 +204,11 @@
 
 **IDDL Mapping:**
 ```tsx
-<Overlay role="Toast" prominence="Primary" intent="Positive">
+<Overlay role="Toast" prominence="Standard" intent="Positive">
   <Group role="Container">
-    <Action icon="Check" prominence="Tertiary" disabled />
+    <Action icon="Check" prominence="Subtle" disabled />
     <Text role="Body">Changes saved successfully</Text>
-    <Action icon="X" prominence="Tertiary" onClick={dismiss} />
+    <Action icon="X" prominence="Subtle" onClick={dismiss} />
   </Group>
 </Overlay>
 ```
@@ -241,9 +241,9 @@ toast({
 
 **IDDL Mapping:**
 ```tsx
-<Group role="Status" prominence="Tertiary">
+<Group role="Status" prominence="Subtle">
   <Action icon="Loader2" loading disabled />
-  <Text role="Caption" prominence="Tertiary">Loading...</Text>
+  <Text role="Caption" prominence="Subtle">Loading...</Text>
 </Group>
 ```
 
@@ -264,10 +264,10 @@ toast({
 
 **IDDL Mapping:**
 ```tsx
-<Group role="Container" prominence="Tertiary">
-  <Action icon="Inbox" prominence="Tertiary" disabled />
-  <Text role="Body" prominence="Tertiary">No items found</Text>
-  <Action label="Create new" prominence="Primary" intent="Brand" />
+<Group role="Container" prominence="Subtle">
+  <Action icon="Inbox" prominence="Subtle" disabled />
+  <Text role="Body" prominence="Subtle">No items found</Text>
+  <Action label="Create new" prominence="Standard" intent="Brand" />
 </Group>
 ```
 
@@ -351,9 +351,9 @@ toast({
 **Action Items:**
 - [ ] Verify font sizes match guide:
   - Hero: text-lg (18px) + font-medium (500)
-  - Primary: text-base (14px) + font-medium (500)
-  - Secondary: text-base (14px) + font-normal (400)
-  - Tertiary: text-sm (12px) + opacity 0.6
+  - Standard: text-base (14px) + font-medium (500)
+  - Strong: text-base (14px) + font-normal (400)
+  - Subtle: text-sm (12px) + opacity 0.6
 - [ ] Add line-height: 1.5 to all variants
 
 ### 4.4. Section Component Improvements

@@ -1,9 +1,9 @@
 import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Button } from '@/components/Item/Action/role/Button';
-import { Section } from '@/components/Section/Section.tsx';
-import { Content, ContentGroup } from '@/components/Item/Text/role/Content';
 import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
+import { Button } from '@/components/types/Atom/Action/role/Button';
+import { Content, ContentGroup } from '@/components/types/Atom/Text/role/Content';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };
@@ -53,7 +53,6 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
     return (
       <Section
         role="Container"
-        prominence="Secondary"
         className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden"
       >
         <div className="px-4 py-3">
@@ -76,7 +75,6 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
   return (
     <Section
       role="Container"
-      prominence="Secondary"
       className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden"
     >
       {/* Header */}

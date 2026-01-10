@@ -3,13 +3,6 @@
  */
 
 import { useState } from 'react';
-import { Action } from '@/components/Item/Action/Action';
-import { Field } from '@/components/Item/Field/Field';
-import { Group } from '@/components/Group/Group';
-import { Overlay } from '@/components/Overlay/Overlay';
-import { Page } from '@/components/Page/Page';
-import { Section } from '@/components/Section/Section';
-import { Text } from '@/components/Item/Text/Text';
 import type {
   ActionNode,
   AnyDSLNode,
@@ -21,6 +14,13 @@ import type {
   SectionNode,
   TextNode,
 } from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
+import { Group } from '@/components/types/Group/Group';
+import { Action } from '@/components/types/Atom/Action/Action';
+import { Field } from '@/components/types/Atom/Field/Field';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Overlay } from '@/components/types/Overlay/Overlay';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 
 // 노드 경로 정보
 export interface NodePath {
@@ -107,8 +107,8 @@ function renderNode(
       name += ` [${(node as GroupNode).role}]`;
     } else if (node.type === 'text' && (node as TextNode).role) {
       name += ` [${(node as TextNode).role}]`;
-    } else if (node.type === 'field' && (node as FieldNode).dataType) {
-      name += ` [${(node as FieldNode).dataType}]`;
+    } else if (node.type === 'field' && (node as FieldNode).fieldType) {
+      name += ` [${(node as FieldNode).fieldType}]`;
     } else if (node.type === 'action' && (node as ActionNode).behavior) {
       name += ` [${(node as ActionNode).behavior.action}]`;
     } else if (node.type === 'overlay' && (node as OverlayNode).role) {
@@ -140,6 +140,7 @@ function renderNode(
       const pageNode = node as PageNode;
       return (
         <Page
+          role="Application"
           title={pageNode.title}
           description={pageNode.description}
           layout={pageNode.layout}
@@ -239,7 +240,7 @@ function renderNode(
             <Field
               label={fieldNode.label}
               model={fieldNode.model}
-              dataType={fieldNode.dataType}
+              type={fieldNode.fieldType}
               prominence={fieldNode.prominence}
               intent={fieldNode.intent}
               required={fieldNode.required}

@@ -1,7 +1,7 @@
-import { Code, FileSearch, Send, Sparkles } from 'lucide-react';
+import { Code, FileSearch, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { IconButton } from '@/components/Item/Action/role/IconButton';
-import { Section } from '@/components/Section/Section.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface Message {
@@ -101,7 +101,7 @@ export const AIAgentChat = ({ hideHeader = false, className = '' }: AIAgentChatP
           >
             <Section
               role="Container"
-              prominence={message.role === 'user' ? 'Primary' : 'Tertiary'}
+              prominence={message.role === 'user' ? 'Standard' : 'Subtle'}
               className={cn('max-w-[85%] p-2 rounded-lg', {
                 'bg-accent/10': message.role === 'user',
               })}
@@ -128,13 +128,15 @@ export const AIAgentChat = ({ hideHeader = false, className = '' }: AIAgentChatP
           placeholder="Ask anything..."
           className="flex-1 px-2 py-1.5 text-sm rounded bg-layer-0 text-text placeholder:text-text-tertiary focus:outline-none focus:ring-1 focus:ring-accent"
         />
-        <IconButton
-          size="sm"
+        <Action
+          role="IconButton"
+          icon="Send"
+          label="Send message"
+          density="Compact"
+          intent="Brand"
+          prominence="Standard"
           onClick={handleSend}
-          className="bg-accent text-white hover:bg-accent-hover"
-        >
-          <Send size={16} />
-        </IconButton>
+        />
       </div>
     </div>
   );

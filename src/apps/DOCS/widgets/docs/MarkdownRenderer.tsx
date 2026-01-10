@@ -10,7 +10,7 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkGfm from 'remark-gfm';
 import { AtomsShowcase } from '@/apps/DOCS/widgets/docs/interactive/AtomsShowcase';
 import { ComponentsShowcase } from '@/apps/DOCS/widgets/docs/interactive/ComponentsShowcase';
-import { Section } from '@/components/Section/Section.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface MarkdownRendererProps {
@@ -54,7 +54,7 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
   }, [content]);
 
   return (
-    <div className={cn('prose prose-slate max-w-none', className)}>
+    <div className={cn('markdown-body max-w-none', className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkFrontmatter]}
         rehypePlugins={[rehypeRaw, rehypeHighlight]}
@@ -80,7 +80,7 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
 
               return (
                 <div className="my-8 not-prose">
-                  <Section role="Container" prominence="Secondary" className="p-6">
+                  <Section role="Container" className="p-6">
                     <Component {...parsedProps} />
                   </Section>
                 </div>
@@ -98,14 +98,22 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
           code: ({ node, inline, className, children, ...props }: any) => {
             const match = /language-(\w+)/.exec(className || '');
             return !inline && match ? (
-              <Section role="Container" prominence="Primary" className="overflow-x-auto my-4">
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              </Section>
+              <div className="relative my-6 rounded-lg overflow-hidden bg-surface-sunken border border-border">
+                <div className="absolute top-0 right-0 px-3 py-1 text-xs text-muted bg-surface-raised rounded-bl">
+                  {match[1]}
+                </div>
+                <pre className="overflow-x-auto p-4">
+                  <code className={cn('text-sm font-mono', className)} {...props}>
+                    {children}
+                  </code>
+                </pre>
+              </div>
             ) : (
               <code
-                className={cn('px-1.5 py-0.5 rounded text-sm bg-layer-1', className)}
+                className={cn(
+                  'px-1.5 py-0.5 mx-0.5 rounded text-[0.9em] font-mono bg-surface-sunken text-accent border border-border',
+                  className
+                )}
                 {...props}
               >
                 {children}
@@ -113,34 +121,64 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
             );
           },
 
+          // 코드 블록 pre (highlight.js용)
+          pre: ({ node, children, ...props }: any) => {
+            return <>{children}</>;
+          },
+
           // 테이블
           table: ({ node, children, ...props }: any) => (
-            <div className="my-6 overflow-x-auto">
-              <Section role="Container" prominence="Secondary">
-                <table className="w-full border-collapse" {...props}>
-                  {children}
-                </table>
-              </Section>
+            <div className="my-8 overflow-x-auto rounded-lg border border-border">
+              <table className="w-full border-collapse" {...props}>
+                {children}
+              </table>
             </div>
+          ),
+          thead: ({ node, children, ...props }: any) => (
+            <thead className="bg-surface-raised" {...props}>
+              {children}
+            </thead>
+          ),
+          tbody: ({ node, children, ...props }: any) => (
+            <tbody className="divide-y divide-border" {...props}>
+              {children}
+            </tbody>
+          ),
+          tr: ({ node, children, ...props }: any) => (
+            <tr className="hover:bg-surface-raised transition-colors" {...props}>
+              {children}
+            </tr>
+          ),
+          th: ({ node, children, ...props }: any) => (
+            <th
+              className="px-4 py-3 text-left text-sm font-semibold text-text border-b-2 border-border"
+              {...props}
+            >
+              {children}
+            </th>
+          ),
+          td: ({ node, children, ...props }: any) => (
+            <td className="px-4 py-3 text-sm text-text" {...props}>
+              {children}
+            </td>
           ),
 
           // 인용구
           blockquote: ({ node, children, ...props }: any) => (
-            <Section
-              role="Container"
-              prominence="Primary"
-              className="my-4 pl-4 border-l-4 border-accent"
+            <blockquote
+              className="my-6 pl-6 pr-4 py-4 border-l-4 border-accent bg-accent/5 rounded-r-lg"
+              {...props}
             >
-              <blockquote className="text-text-secondary italic" {...props}>
+              <div className="text-text-secondary [&>p]:my-2 [&>p]:leading-relaxed">
                 {children}
-              </blockquote>
-            </Section>
+              </div>
+            </blockquote>
           ),
 
           // 링크
           a: ({ node, children, ...props }: any) => (
             <a
-              className="text-accent hover:underline"
+              className="text-accent hover:text-accent/80 underline decoration-accent/30 hover:decoration-accent/60 underline-offset-2 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
               {...props}
@@ -149,58 +187,137 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
             </a>
           ),
 
-          // 제목
+          // 제목 (fluid typography with clamp)
           h1: ({ node, children, ...props }: any) => (
-            <h1 className="text-4xl font-bold mt-8 mb-4 text-text" {...props}>
+            <h1
+              className="text-[clamp(2rem,5vw,3rem)] font-bold mt-12 mb-6 text-text leading-tight tracking-tight border-b border-border pb-3"
+              {...props}
+            >
               {children}
             </h1>
           ),
           h2: ({ node, children, ...props }: any) => (
             <h2
-              className="text-3xl font-semibold mt-6 mb-3 text-text border-b border-border pb-2"
+              className="text-[clamp(1.5rem,4vw,2rem)] font-semibold mt-10 mb-4 text-text leading-snug tracking-tight border-b border-border pb-2"
               {...props}
             >
               {children}
             </h2>
           ),
           h3: ({ node, children, ...props }: any) => (
-            <h3 className="text-2xl font-semibold mt-4 mb-2 text-text" {...props}>
+            <h3
+              className="text-[clamp(1.25rem,3vw,1.5rem)] font-semibold mt-8 mb-3 text-text leading-snug"
+              {...props}
+            >
               {children}
             </h3>
           ),
           h4: ({ node, children, ...props }: any) => (
-            <h4 className="text-xl font-medium mt-3 mb-2 text-text" {...props}>
+            <h4
+              className="text-[clamp(1.1rem,2.5vw,1.25rem)] font-medium mt-6 mb-2 text-text leading-normal"
+              {...props}
+            >
               {children}
             </h4>
+          ),
+          h5: ({ node, children, ...props }: any) => (
+            <h5 className="text-lg font-medium mt-4 mb-2 text-text" {...props}>
+              {children}
+            </h5>
+          ),
+          h6: ({ node, children, ...props }: any) => (
+            <h6 className="text-base font-medium mt-3 mb-2 text-muted" {...props}>
+              {children}
+            </h6>
           ),
 
           // 단락
           p: ({ node, children, ...props }: any) => (
-            <p className="my-3 text-text leading-relaxed" {...props}>
+            <p className="my-4 text-[15px] text-text leading-[1.7] [&:first-child]:mt-0" {...props}>
               {children}
             </p>
           ),
 
           // 리스트
           ul: ({ node, children, ...props }: any) => (
-            <ul className="my-3 ml-6 list-disc text-text" {...props}>
+            <ul className="my-4 ml-6 space-y-2 list-disc marker:text-accent text-text" {...props}>
               {children}
             </ul>
           ),
           ol: ({ node, children, ...props }: any) => (
-            <ol className="my-3 ml-6 list-decimal text-text" {...props}>
+            <ol
+              className="my-4 ml-6 space-y-2 list-decimal marker:text-accent marker:font-medium text-text"
+              {...props}
+            >
               {children}
             </ol>
           ),
           li: ({ node, children, ...props }: any) => (
-            <li className="my-1 text-text" {...props}>
+            <li className="text-[15px] leading-[1.7] pl-1" {...props}>
               {children}
             </li>
+          ),
+
+          // 수평선
+          hr: ({ node, ...props }: any) => (
+            <hr className="my-8 border-0 border-t-2 border-border" {...props} />
+          ),
+
+          // 강조
+          strong: ({ node, children, ...props }: any) => (
+            <strong className="font-semibold text-text" {...props}>
+              {children}
+            </strong>
+          ),
+          em: ({ node, children, ...props }: any) => (
+            <em className="italic text-text" {...props}>
+              {children}
+            </em>
+          ),
+
+          // 삭제선
+          del: ({ node, children, ...props }: any) => (
+            <del className="line-through text-muted" {...props}>
+              {children}
+            </del>
+          ),
+
+          // 이미지
+          img: ({ node, ...props }: any) => (
+            <img className="my-6 rounded-lg border border-border max-w-full h-auto" {...props} />
           ),
         }}
       >
         {processedContent}
       </ReactMarkdown>
+
+      <style jsx global>{`
+        .markdown-body {
+          font-size: 16px;
+          line-height: 1.6;
+          word-wrap: break-word;
+        }
+
+        .markdown-body .hljs {
+          background: transparent !important;
+          padding: 0 !important;
+        }
+
+        /* Task lists */
+        .markdown-body input[type='checkbox'] {
+          margin-right: 0.5rem;
+          cursor: pointer;
+        }
+
+        /* Nested lists */
+        .markdown-body ul ul,
+        .markdown-body ol ul,
+        .markdown-body ul ol,
+        .markdown-body ol ol {
+          margin-top: 0.5rem;
+          margin-bottom: 0.5rem;
+        }
+      `}</style>
     </div>
   );
 };

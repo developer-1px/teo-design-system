@@ -6,7 +6,7 @@
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
  */
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type Orientation = 'horizontal' | 'vertical' | 'both';
 
@@ -46,9 +46,7 @@ export interface UseRovingFocusReturn {
  *   </button>
  * ))}
  */
-export function useRovingFocus(
-  options: UseRovingFocusOptions = {}
-): UseRovingFocusReturn {
+export function useRovingFocus(options: UseRovingFocusOptions = {}): UseRovingFocusReturn {
   const { orientation = 'horizontal', loop = true, defaultIndex = 0 } = options;
   const [focusedIndex, setFocusedIndex] = useState(defaultIndex);
   const itemRefs = useRef<Map<number, HTMLElement>>(new Map());

@@ -15,12 +15,12 @@
 
 import { Keyboard, Layers, Palette, Settings as SettingsIcon, Type } from 'lucide-react';
 import { useState } from 'react';
-import { Action } from '@/components/Item/Action/Action';
-import { Field } from '@/components/Item/Field/Field';
-import { Group } from '@/components/Group/Group.tsx';
-import { Overlay } from '@/components/Overlay/Overlay.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Field } from '@/components/types/Atom/Field/Field.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
+import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -149,7 +149,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
     >
       {/* Header */}
       <Section role="DialogHeader" density="Compact">
-        <Text role="Title" prominence="Primary" content="Settings" />
+        <Text role="Title" prominence="Standard" content="Settings" />
       </Section>
 
       {/* Main Content */}
@@ -165,7 +165,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                     key={category.id}
                     label={category.label}
                     icon={Icon.displayName || Icon.name}
-                    prominence={activeCategory === category.id ? 'Primary' : 'Secondary'}
+                    prominence={activeCategory === category.id ? 'Standard' : 'Standard'}
                     intent={activeCategory === category.id ? 'Brand' : 'Neutral'}
                     onClick={() => setActiveCategory(category.id)}
                   />
@@ -178,18 +178,18 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
           <Section role="Container" density="Compact">
             <Text
               role="Title"
-              prominence="Primary"
+              prominence="Standard"
               content={categories.find((c) => c.id === activeCategory)?.label || ''}
             />
 
             <Group role="Form" density="Compact">
               {getSettingsForCategory(activeCategory).map((setting) => (
                 <Group key={setting.id} role="Inline" layout="inline" density="Compact">
-                  <Text role="Label" prominence="Primary" content={setting.label} />
+                  <Text role="Label" prominence="Standard" content={setting.label} />
                   {setting.type === 'select' && (
                     <Field
                       model={setting.id}
-                      dataType="select"
+                      type="select"
                       label=""
                       options={setting.options}
                       value={setting.value}
@@ -201,7 +201,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                   {setting.type === 'boolean' && (
                     <Field
                       model={setting.id}
-                      dataType="boolean"
+                      type="boolean"
                       label={setting.label}
                       value={setting.value}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -213,7 +213,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                     <Group role="Inline" layout="inline" density="Compact">
                       <Field
                         model={setting.id}
-                        dataType="range"
+                        type="range"
                         label=""
                         value={setting.value}
                         constraints={{
@@ -226,7 +226,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                       />
                       <Text
                         role="Body"
-                        prominence="Tertiary"
+                        prominence="Subtle"
                         align="right"
                         content={`${setting.value}${setting.id === 'fontSize' ? 'px' : ''}`}
                       />
@@ -238,7 +238,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
               {getSettingsForCategory(activeCategory).length === 0 && (
                 <Text
                   role="Body"
-                  prominence="Tertiary"
+                  prominence="Subtle"
                   align="center"
                   content="Settings for this category are coming soon..."
                 />
@@ -251,8 +251,8 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
       {/* Footer */}
       <Section role="DialogFooter" density="Compact">
         <Group role="Toolbar" layout="inline" density="Compact">
-          <Action label="Cancel" prominence="Secondary" intent="Neutral" onClick={onClose} />
-          <Action label="Apply" prominence="Primary" intent="Brand" onClick={onClose} />
+          <Action label="Cancel" prominence="Standard" intent="Neutral" onClick={onClose} />
+          <Action label="Apply" prominence="Standard" intent="Brand" onClick={onClose} />
         </Group>
       </Section>
     </Overlay>

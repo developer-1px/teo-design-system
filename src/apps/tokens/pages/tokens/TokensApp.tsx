@@ -1,5 +1,5 @@
 /**
- * TokensApp - Design Token Viewer
+ * TokensApp - Design Token Viewer (Pure IDDL)
  *
  * themes.css를 파싱하여 Design Token을 자동으로 시각화합니다.
  * 디자인 시스템 서비스(Figma Tokens, Material Design) 스타일의 전문적인 UI
@@ -11,11 +11,11 @@ import { TokenCategorySection } from '@/apps/tokens/components/TokenCategorySect
 import { TokenTableOfContents } from '@/apps/tokens/components/TokenTableOfContents';
 import { parseCSSTokens } from '@/apps/tokens/parser/cssParser';
 import type { TokenCategory } from '@/apps/tokens/parser/types';
-import { Field } from '@/components/Item/Field/Field';
-import { Group } from '@/components/Group/Group.tsx';
-import { Page } from '@/components/Page/Page.tsx';
-import { Section } from '@/components/Section/Section.tsx';
-import { Text } from '@/components/Item/Text/Text';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Field } from '@/components/types/Atom/Field/Field';
+import { Text } from '@/components/types/Atom/Text/Text';
+import { Page } from '@/components/types/Page/Page.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 // import.meta.glob으로 themes.css 로드
 const cssModules = import.meta.glob('/src/styles/themes.css', {
@@ -33,21 +33,12 @@ export function TokensApp() {
   useEffect(() => {
     async function loadTokens() {
       try {
-        console.log('[TokensApp] 🔄 Loading themes.css...');
-
         // import.meta.glob으로 로드된 모듈들 순회
         for (const [path, loader] of Object.entries(cssModules)) {
-          console.log(`[TokensApp] 📄 Loading ${path}`);
           const cssContent = (await loader()) as string;
-          console.log(`[TokensApp] 📝 CSS length: ${cssContent.length} characters`);
 
           // CSS 파싱
           const parsed = parseCSSTokens(cssContent);
-          console.log(`[TokensApp] ✅ Parsed ${parsed.length} categories`);
-          console.log(
-            '[TokensApp] Categories:',
-            parsed.map((c) => c.name)
-          );
 
           setCategories(parsed);
         }
@@ -120,10 +111,10 @@ export function TokensApp() {
 
   if (loading) {
     return (
-      <Page layout="full">
-        <Section role="Container" prominence="Primary">
-          <Group role="Container" prominence="Primary">
-            <Text role="Body" prominence="Primary">
+      <Page role="Document">
+        <Section role="Container" prominence="Standard" density="Standard">
+          <Group role="Container" layout="stack" gap={2}>
+            <Text role="Body" prominence="Standard">
               Loading design tokens...
             </Text>
           </Group>
@@ -134,13 +125,13 @@ export function TokensApp() {
 
   if (error) {
     return (
-      <Page layout="full">
-        <Section role="Container" prominence="Primary">
-          <Group role="Container" prominence="Primary">
-            <Text role="Title" prominence="Primary" intent="Critical">
+      <Page role="Document">
+        <Section role="Container" prominence="Standard" density="Standard">
+          <Group role="Container" layout="stack" gap={2}>
+            <Text role="Title" prominence="Hero" intent="Critical">
               Error Loading Tokens
             </Text>
-            <Text role="Body" prominence="Secondary">
+            <Text role="Body" prominence="Standard">
               {error}
             </Text>
           </Group>
@@ -151,50 +142,63 @@ export function TokensApp() {
 
   return (
     <Page
-      layout="full"
+      role="Document"
       title="Design Tokens"
       description="3-Tier token architecture for consistent design system. Primitive tokens define raw values, semantic tokens map to purposes, and component tokens are pre-configured for UI elements."
+      prominence="Standard"
+      density="Standard"
     >
       {/* 통계 대시보드 */}
-      <Section role="Container" prominence="Secondary">
-        <Group role="Container" prominence="Primary" gap={2}>
+      <Section role="Container" prominence="Standard" density="Comfortable">
+        <Group role="Container" layout="stack" gap={3}>
           {/* 전체 통계 */}
-          <Group role="Container" prominence="Primary" gap={1}>
-            <Text role="Label" prominence="Secondary">
+          <Group role="Container" layout="stack" gap={2}>
+            <Text role="Label" prominence="Standard">
               Overview
             </Text>
-            <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+            <Group role="Container" layout="inline" gap={3} className="flex-wrap">
               <StatCard label="Total Tokens" value={stats.total} />
               <StatCard label="Categories" value={categories.length} />
               <StatCard label="Colors" value={stats.byType.color} />
               <StatCard label="Spacing" value={stats.byType.spacing} />
               <StatCard label="Radius" value={stats.byType.radius} />
               <StatCard label="Shadows" value={stats.byType.shadow} />
-            </div>
+            </Group>
           </Group>
 
           {/* Tier별 분포 */}
-          <Group role="Container" prominence="Primary" gap={1}>
-            <Text role="Label" prominence="Secondary">
+          <Group role="Container" layout="stack" gap={2}>
+            <Text role="Label" prominence="Standard">
               Token Tiers
             </Text>
-            <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-              <TierCard label="Tier 1: Primitive" value={stats.byTier.primitive} color="#10b981" />
-              <TierCard label="Tier 2: Semantic" value={stats.byTier.semantic} color="#3b82f6" />
-              <TierCard label="Tier 3: Component" value={stats.byTier.component} color="#a855f7" />
-            </div>
+            <Group role="Container" layout="inline" gap={3} className="flex-wrap">
+              <TierCard
+                label="Tier 1: Primitive"
+                value={stats.byTier.primitive}
+                intent="Positive"
+              />
+              <TierCard label="Tier 2: Semantic" value={stats.byTier.semantic} intent="Brand" />
+              <TierCard
+                label="Tier 3: Component"
+                value={stats.byTier.component}
+                intent="Info"
+              />
+            </Group>
           </Group>
 
           {/* 검색 필드 */}
-          <Group role="Form" prominence="Secondary" gap={1}>
+          <Group role="Form" layout="stack" gap={1}>
             <Field
-              dataType="text"
+              label="Search Tokens"
+              type="text"
               placeholder="Search tokens by name or value..."
               value={searchQuery}
-              onChange={(value) => setSearchQuery(value as string)}
+              onChange={(e: any) => setSearchQuery(e.target.value)}
+              clearable
+              prominence="Standard"
             />
             {searchQuery && (
-              <Text role="Caption" prominence="Tertiary">
+              <Text role="Caption" prominence="Subtle">
                 Found {filteredCategories.reduce((sum, cat) => sum + cat.tokens.length, 0)} tokens
                 in {filteredCategories.length} categories
               </Text>
@@ -204,48 +208,41 @@ export function TokensApp() {
       </Section>
 
       {/* 메인 콘텐츠: 목차 + 전체 토큰 스크롤 */}
-      <Section role="SplitContainer" prominence="Primary">
+      <Section role="SplitContainer" prominence="Standard">
         {/* 왼쪽: Sticky 목차 */}
         <TokenTableOfContents categories={filteredCategories} />
 
         {/* 오른쪽: 전체 토큰 섹션 (스크롤) */}
-        <div
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: '1.5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '2rem',
-          }}
-        >
-          {filteredCategories.map((category) => (
-            <TokenCategorySection key={category.name} category={category} />
-          ))}
+        <Section role="Container" prominence="Standard" className="flex-1 overflow-y-auto">
+          <Group role="Container" layout="stack" gap={4} className="p-6">
+            {filteredCategories.map((category) => (
+              <TokenCategorySection key={category.name} category={category} />
+            ))}
 
-          {filteredCategories.length === 0 && (
-            <Group role="Container" prominence="Tertiary">
-              <Text role="Body" prominence="Tertiary">
-                No tokens found matching "{searchQuery}"
-              </Text>
-            </Group>
-          )}
-        </div>
+            {filteredCategories.length === 0 && (
+              <Group role="Container" layout="stack" gap={2}>
+                <Text role="Body" prominence="Standard">
+                  No tokens found matching "{searchQuery}"
+                </Text>
+              </Group>
+            )}
+          </Group>
+        </Section>
       </Section>
     </Page>
   );
 }
 
 /**
- * StatCard - 통계 카드 컴포넌트
+ * StatCard - 통계 카드 컴포넌트 (Pure IDDL)
  */
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
-    <Group role="Card" prominence="Secondary" gap={0}>
-      <Text role="Caption" prominence="Tertiary">
+    <Group role="Card" layout="stack" gap={1} prominence="Standard" density="Compact">
+      <Text role="Caption" prominence="Subtle">
         {label}
       </Text>
-      <Text role="Title" prominence="Primary">
+      <Text role="Title" prominence="Hero">
         {value}
       </Text>
     </Group>
@@ -253,24 +250,35 @@ function StatCard({ label, value }: { label: string; value: number }) {
 }
 
 /**
- * TierCard - Tier별 통계 카드 (색상 강조)
+ * TierCard - Tier별 통계 카드 (Pure IDDL with intent)
  */
-function TierCard({ label, value, color }: { label: string; value: number; color: string }) {
+function TierCard({
+  label,
+  value,
+  intent,
+}: {
+  label: string;
+  value: number;
+  intent: 'Positive' | 'Brand' | 'Info';
+}) {
   return (
-    <Group role="Card" prominence="Secondary" gap={0}>
+    <Group role="Card" layout="stack" gap={1} prominence="Standard" density="Compact">
+      {/* Tier indicator bar - 유일한 시각적 구분 요소 */}
       <div
+        className="w-full h-1 rounded-full"
         style={{
-          width: '100%',
-          height: '4px',
-          backgroundColor: color,
-          borderRadius: '2px',
-          marginBottom: '0.5rem',
+          backgroundColor:
+            intent === 'Positive'
+              ? 'var(--color-success)'
+              : intent === 'Brand'
+                ? 'var(--color-primary)'
+                : 'var(--color-info)',
         }}
       />
-      <Text role="Caption" prominence="Tertiary">
+      <Text role="Caption" prominence="Subtle">
         {label}
       </Text>
-      <Text role="Title" prominence="Primary">
+      <Text role="Title" prominence="Hero" intent={intent}>
         {value}
       </Text>
     </Group>
