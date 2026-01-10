@@ -136,10 +136,10 @@ function createUI(): HTMLElement {
   ta.style.cssText = `
     width: 100%;
     flex: 1;
-    padding: 16px;
+    padding: 12px;
     font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-    font-size: 13px;
-    line-height: 1.6;
+    font-size: 11px;
+    line-height: 1.4;
     background: #1e1e1e;
     color: #d4d4d4;
     border: none;

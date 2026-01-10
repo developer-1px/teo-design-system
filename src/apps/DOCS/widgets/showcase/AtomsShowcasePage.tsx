@@ -181,59 +181,59 @@ export function AtomsShowcasePage() {
           />
 
           <Section role="Container" className="gap-4 p-4 rounded-lg grid-cols-2">
-            <Field label="Text" model="text" dataType="text" value={formData.text} />
-            <Field label="Number" model="number" dataType="number" value={formData.number} />
+            <Field label="Text" model="text" type="text" value={formData.text} />
+            <Field label="Number" model="number" type="number" value={formData.number} />
             <Field
               label="Currency"
               model="currency"
-              dataType="currency"
+              type="currency"
               value={formData.currency}
             />
-            <Field label="Date" model="date" dataType="date" value={formData.date} />
+            <Field label="Date" model="date" type="date" value={formData.date} />
             <Field
               label="DateTime"
               model="datetime"
-              dataType="datetime"
+              type="datetime"
               value={formData.datetime}
             />
-            <Field label="Boolean" model="boolean" dataType="boolean" value={formData.boolean} />
+            <Field label="Boolean" model="boolean" type="boolean" value={formData.boolean} />
             <Field
               label="Select"
               model="select"
-              dataType="select"
+              type="select"
               value={formData.select}
               options={selectOptions}
             />
             <Field
               label="Multiselect"
               model="multiselect"
-              dataType="multiselect"
+              type="multiselect"
               value={formData.multiselect}
               options={selectOptions}
             />
             <Field
               label="Radio"
               model="radio"
-              dataType="radio"
+              type="radio"
               value={formData.radio}
               options={radioOptions}
             />
             <Field
               label="Checkbox"
               model="checkbox"
-              dataType="checkbox"
+              type="checkbox"
               value={formData.checkbox}
               options={checkboxOptions}
             />
-            <Field label="Email" model="email" dataType="email" value={formData.email} />
-            <Field label="URL" model="url" dataType="url" value={formData.url} />
-            <Field label="Phone" model="phone" dataType="phone" value={formData.phone} />
-            <Field label="Color" model="color" dataType="color" value={formData.color} />
-            <Field label="Rating" model="rating" dataType="rating" value={formData.rating} />
+            <Field label="Email" model="email" type="email" value={formData.email} />
+            <Field label="URL" model="url" type="url" value={formData.url} />
+            <Field label="Phone" model="phone" type="phone" value={formData.phone} />
+            <Field label="Color" model="color" type="color" value={formData.color} />
+            <Field label="Rating" model="rating" type="rating" value={formData.rating} />
             <Field
               label="Range"
               model="range"
-              dataType="range"
+              type="range"
               value={formData.range}
               constraints={{ min: 0, max: 100 }}
             />
@@ -243,10 +243,10 @@ export function AtomsShowcasePage() {
             <Field
               label="Textarea"
               model="textarea"
-              dataType="textarea"
+              type="textarea"
               value={formData.textarea}
             />
-            <Field label="Password" model="password" dataType="password" value="********" />
+            <Field label="Password" model="password" type="password" value="********" />
           </Section>
         </Group>
       </Section>
@@ -260,7 +260,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Text"
               model="text"
-              dataType="text"
+              type="text"
               value={formData.text}
               onChange={(v) => handleChange('text', v)}
               placeholder="Enter text"
@@ -268,7 +268,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Number"
               model="number"
-              dataType="number"
+              type="number"
               value={formData.number}
               onChange={(v) => handleChange('number', v)}
               constraints={{ min: 0, max: 100 }}
@@ -276,7 +276,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Currency"
               model="currency"
-              dataType="currency"
+              type="currency"
               value={formData.currency}
               onChange={(v) => handleChange('currency', v)}
               required
@@ -284,28 +284,28 @@ export function AtomsShowcasePage() {
             <Field
               label="Date"
               model="date"
-              dataType="date"
+              type="date"
               value={formData.date}
               onChange={(v) => handleChange('date', v)}
             />
             <Field
               label="DateTime"
               model="datetime"
-              dataType="datetime"
+              type="datetime"
               value={formData.datetime}
               onChange={(v) => handleChange('datetime', v)}
             />
             <Field
               label="Boolean"
               model="boolean"
-              dataType="boolean"
+              type="boolean"
               value={formData.boolean}
               onChange={(v) => handleChange('boolean', v)}
             />
             <Field
               label="Select"
               model="select"
-              dataType="select"
+              type="select"
               value={formData.select}
               onChange={(v) => handleChange('select', v)}
               options={selectOptions}
@@ -313,7 +313,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Email"
               model="email"
-              dataType="email"
+              type="email"
               value={formData.email}
               onChange={(v) => handleChange('email', v)}
               placeholder="user@example.com"
@@ -321,28 +321,28 @@ export function AtomsShowcasePage() {
             <Field
               label="URL"
               model="url"
-              dataType="url"
+              type="url"
               value={formData.url}
               onChange={(v) => handleChange('url', v)}
             />
             <Field
               label="Phone"
               model="phone"
-              dataType="phone"
+              type="phone"
               value={formData.phone}
               onChange={(v) => handleChange('phone', v)}
             />
             <Field
               label="Color"
               model="color"
-              dataType="color"
+              type="color"
               value={formData.color}
               onChange={(v) => handleChange('color', v)}
             />
             <Field
               label="Password"
               model="password"
-              dataType="password"
+              type="password"
               value={formData.password}
               onChange={(v) => handleChange('password', v)}
               constraints={{ minLength: 8 }}
@@ -353,7 +353,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Radio Group"
               model="radio"
-              dataType="radio"
+              type="radio"
               value={formData.radio}
               onChange={(v) => handleChange('radio', v)}
               options={radioOptions}
@@ -361,7 +361,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Checkbox Group"
               model="checkbox"
-              dataType="checkbox"
+              type="checkbox"
               value={formData.checkbox}
               onChange={(v) => handleChange('checkbox', v)}
               options={checkboxOptions}
@@ -369,7 +369,7 @@ export function AtomsShowcasePage() {
             <Field
               label="Textarea"
               model="textarea"
-              dataType="textarea"
+              type="textarea"
               value={formData.textarea}
               onChange={(v) => handleChange('textarea', v)}
               placeholder="Enter multiple lines..."
@@ -377,14 +377,14 @@ export function AtomsShowcasePage() {
             <Field
               label="Rating"
               model="rating"
-              dataType="rating"
+              type="rating"
               value={formData.rating}
               onChange={(v) => handleChange('rating', v)}
             />
             <Field
               label="Range Slider"
               model="range"
-              dataType="range"
+              type="range"
               value={formData.range}
               onChange={(v) => handleChange('range', v)}
               constraints={{ min: 0, max: 100 }}

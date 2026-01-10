@@ -190,7 +190,7 @@ export function TokensApp() {
           <Group role="Form" layout="stack" gap={1}>
             <Field
               label="Search Tokens"
-              dataType="text"
+              type="text"
               placeholder="Search tokens by name or value..."
               value={searchQuery}
               onChange={(e: any) => setSearchQuery(e.target.value)}

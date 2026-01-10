@@ -10,7 +10,7 @@ import type {
   Breadcrumb,
   Density,
   FieldConstraints,
-  FieldDataType,
+  FieldType,
   FieldOption,
   GroupRole,
   Intent,
@@ -143,7 +143,7 @@ export interface FieldNode extends Omit<DSLNode, 'children'> {
   type: 'field';
   label: string;
   model: string;
-  dataType: FieldDataType;
+  fieldType: FieldType;
   prominence?: Prominence;
   intent?: Intent;
   required?: boolean;

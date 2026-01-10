@@ -8,7 +8,7 @@
  * <RadioField
  *   label="Gender"
  *   model="gender"
- *   dataType="radio"
+ *   type="radio"
  *   options={[
  *     { label: 'Male', value: 'male' },
  *     { label: 'Female', value: 'female' },
@@ -41,7 +41,7 @@ export interface RadioFieldProps {
   /**
    * Data type
    */
-  dataType: 'radio';
+  type: 'radio';
 
   /**
    * Available options

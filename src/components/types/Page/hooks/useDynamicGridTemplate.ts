@@ -26,11 +26,13 @@ export interface GridSizes {
   'bottom-left'?: string;
   'bottom-right'?: string;
   // Studio template specific
+  toolbar?: string;
   activitybar?: string;
-  sidebar?: string;
+  primarysidebar?: string;
   editor?: string;
   panel?: string;
-  rightbar?: string;
+  secondarysidebar?: string;
+  auxiliary?: string;
   // Sidebar template specific
   nav?: string;
   content?: string;
@@ -112,11 +114,13 @@ function generateGridTemplate(
     'bottom-right': '200px',
     main: '1fr',
     // Studio template (IDE)
+    toolbar: '48px',
     activitybar: '48px',
-    sidebar: '250px',
+    primarysidebar: '250px',
     editor: '1fr',
     panel: '300px',
-    rightbar: '48px',
+    secondarysidebar: '300px',
+    auxiliary: '300px',
     // Sidebar template
     nav: '250px',
     content: '1fr',
@@ -139,39 +143,77 @@ function generateGridTemplate(
   const columns: string[] = [];
   const columnSizes: string[] = [];
 
-  // Special case: Studio template (단일 행 IDE 레이아웃)
-  if (has('activitybar') || has('sidebar') || has('editor') || has('panel') || has('rightbar')) {
-    const studioRow: string[] = [];
-    const studioColumns: string[] = [];
+  // Special case: Studio template (IDE 레이아웃 with optional toolbar)
+  if (
+    has('toolbar') ||
+    has('activitybar') ||
+    has('primarysidebar') ||
+    has('editor') ||
+    has('panel') ||
+    has('secondarysidebar') ||
+    has('auxiliary')
+  ) {
+    const studioRows: string[] = [];
+    const studioRowSizes: string[] = [];
+
+    // Toolbar row (optional)
+    if (has('toolbar')) {
+      const toolbarRow: string[] = [];
+      const toolbarColumns: string[] = [];
+
+      // Toolbar spans all columns
+      const numColumns =
+        (has('activitybar') ? 1 : 0) +
+        (has('primarysidebar') ? 1 : 0) +
+        (has('editor') ? 1 : 0) +
+        (has('panel') ? 1 : 0) +
+        (has('secondarysidebar') ? 1 : 0) +
+        (has('auxiliary') ? 1 : 0);
+
+      for (let i = 0; i < numColumns; i++) {
+        toolbarRow.push('toolbar');
+      }
+
+      studioRows.push(toolbarRow.join(' '));
+      studioRowSizes.push(getSize('toolbar') || 'auto');
+    }
+
+    // Main content row
+    const mainRow: string[] = [];
+    const mainColumns: string[] = [];
 
     if (has('activitybar')) {
-      studioRow.push('activitybar');
-      studioColumns.push(getSize('activitybar'));
+      mainRow.push('activitybar');
+      mainColumns.push(getSize('activitybar'));
     }
-    if (has('sidebar')) {
-      studioRow.push('sidebar');
-      studioColumns.push(getSize('sidebar'));
+    if (has('primarysidebar')) {
+      mainRow.push('primarysidebar');
+      mainColumns.push(getSize('primarysidebar'));
     }
     if (has('editor')) {
-      studioRow.push('editor');
-      studioColumns.push(getSize('editor'));
+      mainRow.push('editor');
+      mainColumns.push(getSize('editor'));
     }
     if (has('panel')) {
-      studioRow.push('panel');
-      studioColumns.push(getSize('panel'));
+      mainRow.push('panel');
+      mainColumns.push(getSize('panel'));
     }
-    if (has('rightbar')) {
-      studioRow.push('rightbar');
-      studioColumns.push(getSize('rightbar'));
+    if (has('secondarysidebar')) {
+      mainRow.push('secondarysidebar');
+      mainColumns.push(getSize('secondarysidebar'));
+    }
+    if (has('auxiliary')) {
+      mainRow.push('auxiliary');
+      mainColumns.push(getSize('auxiliary'));
     }
 
-    rows.push(studioRow.join(' '));
-    rowSizes.push('1fr');
+    studioRows.push(mainRow.join(' '));
+    studioRowSizes.push('1fr');
 
     return {
-      gridTemplateAreas: `"${studioRow.join(' ')}"`,
-      gridTemplateColumns: studioColumns.join(' '),
-      gridTemplateRows: '1fr',
+      gridTemplateAreas: studioRows.map((row) => `"${row}"`).join('\n    '),
+      gridTemplateColumns: mainColumns.join(' '),
+      gridTemplateRows: studioRowSizes.join(' '),
     };
   }
 

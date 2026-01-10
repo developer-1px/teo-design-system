@@ -77,17 +77,17 @@ export function getComponentName(fiber: Fiber): string {
 /**
  * 값을 간략한 문자열로 serialize (객체/배열 간략화)
  */
-function serializeValue(value: any, maxLength: number = 50): string {
+function serializeValue(value: any, maxLength: number = 80): string {
   try {
     const serialized = JSON.stringify(value);
 
     // maxLength 초과 시 간략화
     if (serialized.length > maxLength) {
       if (Array.isArray(value)) {
-        return `[...${value.length} items]`;
+        return `[...${value.length}]`;
       } else if (typeof value === 'object' && value !== null) {
         const keys = Object.keys(value);
-        return `{...${keys.length} keys}`;
+        return `{...${keys.length}}`;
       }
     }
 
@@ -111,16 +111,31 @@ function propsToString(props: any): string {
 
   const relevantProps: string[] = [];
 
-  // 모든 props 순회
+  // 우선순위 props (먼저 표시)
+  const priorityKeys = ['role', 'prominence', 'intent', 'density', 'layout', 'direction', 'align', 'justify'];
+
+  // 우선순위 props 먼저 추가
+  for (const key of priorityKeys) {
+    if (key in props && props[key] !== undefined && props[key] !== null) {
+      const value = props[key];
+      if (typeof value === 'string') {
+        relevantProps.push(`${key}="${value}"`);
+      }
+    }
+  }
+
+  // 나머지 props 추가
   for (const key in props) {
     // 제외할 props
     if (
       key === 'children' ||
       key === 'ref' ||
       key === 'key' ||
-      key === 'className' || // HTML 관련 제외
-      key.startsWith('data-') || // HTML data attributes 제외
-      key.startsWith('aria-') // HTML aria attributes 제외
+      key === 'className' ||
+      key.startsWith('data-') ||
+      key.startsWith('aria-') ||
+      key.startsWith('on') || // 이벤트 핸들러 제외
+      priorityKeys.includes(key) // 이미 추가한 우선순위 props 제외
     )
       continue;
 
@@ -134,13 +149,21 @@ function propsToString(props: any): string {
 
     // Primitive 값 (string, number, boolean)
     if (typeof value === 'string') {
-      relevantProps.push(`${key}="${value}"`);
-    } else if (typeof value === 'number' || typeof value === 'boolean') {
+      // content prop은 40자까지만 표시
+      if (key === 'content' && value.length > 40) {
+        relevantProps.push(`${key}="${value.substring(0, 40)}..."`);
+      } else {
+        relevantProps.push(`${key}="${value}"`);
+      }
+    } else if (typeof value === 'number') {
       relevantProps.push(`${key}={${value}}`);
+    } else if (typeof value === 'boolean' && value === true) {
+      // boolean true는 key만 표시
+      relevantProps.push(key);
     }
     // 객체/배열
     else if (typeof value === 'object') {
-      const serialized = serializeValue(value);
+      const serialized = serializeValue(value, 40);
       relevantProps.push(`${key}={${serialized}}`);
     }
   }
@@ -208,7 +231,7 @@ export function shouldRenderFiber(fiber: Fiber): boolean {
 function fiberToJSX(fiber: Fiber | null, depth: number = 0): string {
   if (!fiber) return '';
 
-  const indent = '  '.repeat(depth);
+  const indent = ' '.repeat(depth * 2); // 2칸 들여쓰기로 더 compact
   let result = '';
 
   const name = getComponentName(fiber);
@@ -217,24 +240,25 @@ function fiberToJSX(fiber: Fiber | null, depth: number = 0): string {
   // 현재 노드 처리
   if (shouldRender) {
     const props = propsToString(fiber.memoizedProps);
-    const hasChild = !!fiber.child; // ✅ 실제 child 존재 여부만 확인!
+    const hasChild = !!fiber.child;
 
     if (!hasChild) {
-      // 자식이 없으면 self-closing tag
+      // 자식이 없으면 self-closing tag (한 줄)
       result += `${indent}<${name}${props} />\n`;
     } else {
-      // 자식이 있으면 opening tag
-      result += `${indent}<${name}${props}>\n`;
+      // 자식이 있는지 확인하여 compact 표시 결정
+      const childJSX = collectChildrenJSX(fiber.child, depth + 1);
+      const childLines = childJSX.trim().split('\n');
 
-      // 자식 노드 처리
-      let child = fiber.child;
-      while (child) {
-        result += fiberToJSX(child, depth + 1);
-        child = child.sibling;
+      // 자식이 한 줄이고 짧으면 inline으로 표시
+      if (childLines.length === 1 && childJSX.trim().length < 60) {
+        result += `${indent}<${name}${props}>${childJSX.trim()}</${name}>\n`;
+      } else {
+        // 자식이 여러 줄이거나 길면 여러 줄로 표시
+        result += `${indent}<${name}${props}>\n`;
+        result += childJSX;
+        result += `${indent}</${name}>\n`;
       }
-
-      // Closing tag
-      result += `${indent}</${name}>\n`;
     }
   } else {
     // Fragment, Provider, Consumer 같은 경우 자식만 렌더링 (depth 유지)
@@ -245,7 +269,19 @@ function fiberToJSX(fiber: Fiber | null, depth: number = 0): string {
     }
   }
 
-  // Sibling 처리는 while loop에서 이미 처리되므로 여기서는 하지 않음
+  return result;
+}
+
+/**
+ * 모든 자식 노드의 JSX를 수집
+ */
+function collectChildrenJSX(fiber: Fiber | null, depth: number): string {
+  let result = '';
+  let child = fiber;
+  while (child) {
+    result += fiberToJSX(child, depth);
+    child = child.sibling;
+  }
   return result;
 }
 

@@ -19,16 +19,16 @@ import { cn } from '@/shared/lib/utils.ts';
 const getRoleElement = (role: TextRole, prominence?: string): keyof JSX.IntrinsicElements => {
   switch (role) {
     case 'Title':
-      // Prominence에 따라 heading 레벨 결정
+      // Hierarchy based on Prominence
       if (prominence === 'Hero') return 'h1';
-      if (prominence === 'Primary') return 'h2';
-      if (prominence === 'Secondary') return 'h3';
+      if (prominence === 'Strong') return 'h2';
+      if (prominence === 'Standard') return 'h3';
       return 'h4';
     case 'Body':
       return 'p';
     case 'Label':
       return 'span';
-    case 'Caption': // v1.0.1
+    case 'Caption':
       return 'small';
     case 'Code':
       return 'code';
@@ -40,42 +40,36 @@ const getRoleElement = (role: TextRole, prominence?: string): keyof JSX.Intrinsi
 /**
  * Text variants (CVA)
  * IDDL semantic properties를 variants로 정의
- * Per minimal-renderer-guide.md Section 1.3
- * v1.1.1: Density-aware typography 추가
  */
 const textVariants = cva('', {
   variants: {
-    // Role (semantic meaning)
     role: {
-      Title: 'font-semibold',
-      Body: 'font-normal',
-      Label: 'text-sm font-medium',
-      Caption: 'text-xs text-muted',
-      Code: 'font-mono text-sm bg-surface-sunken px-1 py-0.5 rounded',
+      Title: 'font-semibold tracking-tight text-text scroll-m-20',
+      Body: 'leading-7 text-text',
+      Label: 'text-sm font-medium leading-none text-text',
+      Caption: 'text-sm text-subtle',
+      Code: 'relative rounded bg-surface-sunken px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-text',
     },
-    // Prominence (size/hierarchy) - per minimal-renderer-guide.md Section 1.3
+    // Prominence behaves differently based on Role
     prominence: {
-      Hero: 'text-3xl font-semibold', // text-3xl + font-semibold (30px) - 문서 제목
-      Standard: 'text-sm font-medium', // text-sm + font-medium (14px) - Notion 스타일 헤더
-      Strong: 'text-sm font-normal', // text-sm + font-normal (14px)
-      Subtle: 'text-xs opacity-60', // text-xs + opacity 0.6 (12px)
+      Hero: '',
+      Strong: '',
+      Standard: '',
+      Subtle: '',
     },
-    // Intent (semantic color)
     intent: {
-      Neutral: 'text-text',
+      Neutral: '',
       Brand: 'text-accent',
-      Positive: 'text-success',
-      Caution: 'text-warning',
-      Critical: 'text-error',
-      Info: 'text-info',
+      Positive: 'text-green-600',
+      Caution: 'text-yellow-600',
+      Critical: 'text-red-600',
+      Info: 'text-blue-600',
     },
-    // Alignment
     align: {
       left: 'text-left',
       center: 'text-center',
       right: 'text-right',
     },
-    // Density (v1.1.1)
     density: {
       Compact: '',
       Standard: '',
@@ -83,29 +77,17 @@ const textVariants = cva('', {
     },
   },
   compoundVariants: [
-    // Title role + density (v1.1.1)
-    { role: 'Title', prominence: 'Hero', density: 'Compact', class: '!text-xl' },
-    { role: 'Title', prominence: 'Hero', density: 'Comfortable', class: '!text-4xl' },
-    { role: 'Title', prominence: 'Standard', density: 'Compact', class: '!text-sm' },
-    { role: 'Title', prominence: 'Standard', density: 'Comfortable', class: '!text-base' },
-    { role: 'Title', prominence: 'Standard', density: 'Compact', class: '!text-xs' },
-    { role: 'Title', prominence: 'Standard', density: 'Comfortable', class: '!text-sm' },
+    // --- Title Hierarchy ---
+    { role: 'Title', prominence: 'Hero', class: 'text-4xl lg:text-5xl font-extrabold tracking-tight' },
+    { role: 'Title', prominence: 'Strong', class: 'text-3xl font-semibold tracking-tight first:mt-0' }, // Section Header
+    { role: 'Title', prominence: 'Standard', class: 'text-2xl font-semibold tracking-tight' }, // Card Header
+    { role: 'Title', prominence: 'Subtle', class: 'text-xl font-semibold tracking-tight' }, // Subsection
 
-    // Body role + density (v1.1.1)
-    { role: 'Body', density: 'Compact', class: '!text-xs' },
-    { role: 'Body', density: 'Comfortable', class: '!text-base' },
-
-    // Label role + density (v1.1.1)
-    { role: 'Label', density: 'Compact', class: '!text-xs' },
-    { role: 'Label', density: 'Comfortable', class: '!text-sm' },
-
-    // Caption role + density (v1.1.1)
-    { role: 'Caption', density: 'Compact', class: '!text-[10px]' },
-    { role: 'Caption', density: 'Comfortable', class: '!text-xs' },
-
-    // Code role + density (v1.1.1)
-    { role: 'Code', density: 'Compact', class: '!text-xs !px-0.5 !py-0' },
-    { role: 'Code', density: 'Comfortable', class: '!text-sm !px-1.5 !py-1' },
+    // --- Body Hierarchy ---
+    { role: 'Body', prominence: 'Hero', class: 'text-xl text-text-muted' }, // Lead text
+    { role: 'Body', prominence: 'Strong', class: 'text-lg font-medium' },
+    { role: 'Body', prominence: 'Standard', class: 'text-base' },
+    { role: 'Body', prominence: 'Subtle', class: 'text-sm text-subtle' }, // Muted body text
   ],
   defaultVariants: {
     prominence: 'Standard',
@@ -128,33 +110,24 @@ export function Text({
 }: TextProps) {
   const ctx = useLayoutContext();
 
-  // 부모 컨텍스트에서 상속
-  const computedProminence = prominence ?? ctx.prominence ?? 'Primary';
+  const computedProminence = prominence ?? ctx.prominence ?? 'Standard';
   const computedIntent = intent ?? ctx.intent ?? 'Neutral';
-  const computedDensity = ctx.density ?? 'Standard'; // v1.1.1
+  const computedDensity = ctx.density ?? 'Standard';
 
   if (hidden) return null;
 
-  // HTML 요소 결정 (as prop이 있으면 우선 사용)
   const defaultElement = getRoleElement(role, computedProminence);
   const Element: any = as || defaultElement;
 
-  // Highlight 매칭 로직
   const renderContent = () => {
     if (!highlight || !content) return content;
-
-    // 대소문자 구분 없이 매칭
     const regex = new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     const parts = content.split(regex);
-
-    // 매칭된 부분이 없으면 원본 반환
     if (parts.length === 1) return content;
-
-    // 매칭된 부분을 <mark>로 감싸기
     return parts.map((part, index) => {
       if (part.toLowerCase() === highlight.toLowerCase()) {
         return (
-          <mark key={index} className="bg-accent/20 px-0.5 rounded">
+          <mark key={index} className="bg-accent/20 px-0.5 rounded text-accent">
             {part}
           </mark>
         );
@@ -165,18 +138,18 @@ export function Text({
 
   return (
     <Element
-      className={textVariants({
-        role,
-        prominence: computedProminence as Prominence,
-        intent: computedIntent as Intent,
-        align,
-        density: computedDensity as 'Compact' | 'Standard' | 'Comfortable', // v1.1.1
-        className,
-      })}
+      className={cn(
+        textVariants({
+          role,
+          prominence: computedProminence as any,
+          intent: computedIntent as any,
+          align,
+          density: computedDensity as any,
+        }),
+        className
+      )}
       data-dsl-component="text"
       data-role={role}
-      data-prominence={computedProminence}
-      data-density={computedDensity}
       {...rest}
     >
       {renderContent()}

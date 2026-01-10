@@ -107,8 +107,8 @@ function renderNode(
       name += ` [${(node as GroupNode).role}]`;
     } else if (node.type === 'text' && (node as TextNode).role) {
       name += ` [${(node as TextNode).role}]`;
-    } else if (node.type === 'field' && (node as FieldNode).dataType) {
-      name += ` [${(node as FieldNode).dataType}]`;
+    } else if (node.type === 'field' && (node as FieldNode).fieldType) {
+      name += ` [${(node as FieldNode).fieldType}]`;
     } else if (node.type === 'action' && (node as ActionNode).behavior) {
       name += ` [${(node as ActionNode).behavior.action}]`;
     } else if (node.type === 'overlay' && (node as OverlayNode).role) {
@@ -240,7 +240,7 @@ function renderNode(
             <Field
               label={fieldNode.label}
               model={fieldNode.model}
-              dataType={fieldNode.dataType}
+              type={fieldNode.fieldType}
               prominence={fieldNode.prominence}
               intent={fieldNode.intent}
               required={fieldNode.required}

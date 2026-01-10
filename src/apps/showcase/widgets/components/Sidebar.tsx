@@ -252,7 +252,7 @@ export function Sidebar({ fileTree, selectedFile, onFileSelect }: SidebarProps) 
       {/* Search Header */}
       <Group role="Form" prominence="Standard" gap={0} className="mb-2">
         <Field
-          dataType="text"
+          type="text"
           placeholder="Search components..."
           value={searchQuery}
           onChange={(value) => setSearchQuery(value as string)}

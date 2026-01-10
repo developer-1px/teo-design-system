@@ -6,12 +6,19 @@ import {
   Beaker,
   Blocks,
   BookOpen,
+  Boxes,
   Code,
+  FileBox,
   FileText,
+  FormInput,
+  Layout,
   LayoutGrid,
+  Layers,
   Palette,
   Presentation,
   Smile,
+  Type,
+  Zap,
 } from 'lucide-react';
 import { createContext, type ReactNode, useContext, useEffect } from 'react';
 import { useLocation } from 'wouter';
@@ -25,7 +32,14 @@ export type AppType =
   | 'builder'
   | 'showcase'
   | 'tokens'
-  | 'layout';
+  | 'layout'
+  | 'page'
+  | 'section'
+  | 'overlay'
+  | 'group'
+  | 'field'
+  | 'action'
+  | 'text';
 
 import type { LucideIcon } from 'lucide-react';
 
@@ -40,6 +54,70 @@ export interface AppConfig {
 }
 
 export const APP_CONFIGS: Record<AppType, AppConfig> = {
+  page: {
+    type: 'page',
+    name: 'Page',
+    icon: FileBox,
+    iconName: 'FileBox',
+    description: 'Page Component Showcase (role, layout)',
+    accentColor: '#059669',
+    colorScheme: 'emerald',
+  },
+  section: {
+    type: 'section',
+    name: 'Section',
+    icon: Layout,
+    iconName: 'Layout',
+    description: 'Section Component Showcase (gridArea, resizable)',
+    accentColor: '#3b82f6',
+    colorScheme: 'blue',
+  },
+  overlay: {
+    type: 'overlay',
+    name: 'Overlay',
+    icon: Layers,
+    iconName: 'Layers',
+    description: 'Overlay Component Showcase (Dialog, Drawer, Popover)',
+    accentColor: '#8b5cf6',
+    colorScheme: 'purple',
+  },
+  group: {
+    type: 'group',
+    name: 'Group',
+    icon: Boxes,
+    iconName: 'Boxes',
+    description: 'Group Component Showcase (Card, Toolbar, List)',
+    accentColor: '#f59e0b',
+    colorScheme: 'orange',
+  },
+  field: {
+    type: 'field',
+    name: 'Field',
+    icon: FormInput,
+    iconName: 'FormInput',
+    description: 'Field Component Showcase (21 dataTypes, validation)',
+    accentColor: '#059669',
+    colorScheme: 'emerald',
+  },
+  action: {
+    type: 'action',
+    name: 'Action',
+    icon: Zap,
+    iconName: 'Zap',
+    description: 'Action Component Showcase (Button, IconButton, Link)',
+    accentColor: '#ef4444',
+    colorScheme: 'red',
+  },
+  text: {
+    type: 'text',
+    name: 'Text',
+    icon: Type,
+    iconName: 'Type',
+    description: 'Text Component Showcase (Title, Body, Label, Code)',
+    accentColor: '#3b82f6',
+    colorScheme: 'blue',
+  },
+
   ide: {
     type: 'ide',
     name: 'IDE',

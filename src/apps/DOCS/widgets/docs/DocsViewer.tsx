@@ -79,7 +79,7 @@ export const DocsViewer = () => {
         <Group role="Form">
           <Field
             label=""
-            dataType="text"
+            type="text"
             placeholder="문서 검색..."
             model={searchQuery}
             onChange={(value) => setSearchQuery(value as string)}

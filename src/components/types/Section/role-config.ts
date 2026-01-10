@@ -54,7 +54,7 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       description: '좌측 액티비티바 (아이콘 버튼들)',
     },
     PrimarySidebar: {
-      gridArea: 'sidebar',
+      gridArea: 'primarysidebar',
       overflow: 'auto',
       htmlTag: 'aside',
       ariaProps: { 'aria-label': 'Primary Sidebar' },
@@ -77,7 +77,7 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       description: '하단 패널 (터미널, 문제, 출력 등) - 스크롤',
     },
     SecondarySidebar: {
-      gridArea: 'rightbar',
+      gridArea: 'secondarysidebar',
       overflow: 'auto',
       htmlTag: 'aside',
       ariaProps: { 'aria-label': 'Secondary Sidebar' },
@@ -85,7 +85,7 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       description: '우측 사이드바 - 스크롤',
     },
     Auxiliary: {
-      gridArea: 'rightbar',
+      gridArea: 'auxiliary',
       overflow: 'auto',
       htmlTag: 'aside',
       ariaProps: { 'aria-label': 'Auxiliary Panel' },

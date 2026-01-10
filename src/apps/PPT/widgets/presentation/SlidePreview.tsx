@@ -1,13 +1,15 @@
 /**
- * SlidePreview - Thumbnail preview of slide content
+ * SlidePreview - 순수 IDDL 기반 슬라이드 썸네일 (v2.0)
  *
- * DSL 기반 슬라이드 썸네일 렌더링
- * - DSLSlideCanvas와 동일한 렌더링 로직
- * - transform: scale()로 축소
+ * 모든 레이아웃을 IDDL Group/Section role로 표현
+ * - 수동 className 제거 (flex, h-full, flex-col, gap-6, border-b 등)
+ * - Group layout/density/prominence로 시각적 계층 표현
+ * - transform: scale()로 축소 (presentational 속성이므로 유지)
  * - 인터랙션 요소 제거 (클릭, 줌, 키보드 힌트 등)
  */
 
 import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
+import { Group } from '@/components/types/Group/Group.tsx';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
 import type { Slide } from './SlideList';
@@ -24,8 +26,8 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
   const baseHeight = 1080;
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
-      {/* Scale wrapper */}
+    <Group role="Container" prominence="Subtle">
+      {/* Scale wrapper - transform은 presentational 속성 */}
       <div
         className="origin-top-left pointer-events-none"
         style={{
@@ -36,34 +38,34 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
       >
         <Section
           role="Container"
-          className="h-full w-full overflow-hidden p-8"
+          prominence="Standard"
+          density="Comfortable"
           style={{ backgroundColor: slide.backgroundColor }}
         >
-          {/* Slide Content - DSL 기반 */}
-          <div className="flex h-full flex-col gap-6">
+          {/* Slide Content Stack */}
+          <Group layout="stack" direction="vertical" density="Comfortable">
             {/* Title Area */}
             {slide.title && (
-              <div className="border-b border-text-primary/5 pb-4">
+              <Group role="Container" prominence="Primary" density="Compact">
                 <Text
                   role="Title"
                   prominence="Hero"
                   content={slide.title}
-                  className="text-text-primary"
                 />
-              </div>
+              </Group>
             )}
 
-            {/* Content Area */}
-            <div className="flex-1 overflow-hidden">
+            {/* Content Area - overflow hidden for thumbnail */}
+            <Group role="Container" prominence="Standard" density="Standard">
               {slide.content ? (
                 slideContentToDSL(slide.content)
               ) : (
-                <Text role="Body" content="내용을 입력하세요" className="text-text-tertiary" />
+                <Text role="Body" prominence="Subtle" content="내용을 입력하세요" />
               )}
-            </div>
-          </div>
+            </Group>
+          </Group>
         </Section>
       </div>
-    </div>
+    </Group>
   );
 };

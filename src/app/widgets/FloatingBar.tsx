@@ -55,10 +55,9 @@ export const FloatingBar = () => {
   return (
     <Overlay id="floating-bar" role="Floating" placement="bottom" isOpen={true} dismissable={false}>
       <Group
-        role="Toolbar"
+        role="FloatingToolbar"
         layout="inline"
         density="Compact"
-        className="bg-surface-overlay shadow-xl rounded-full px-2 py-1 gap-1"
       >
         {/* App 선택 버튼들 */}
         {Object.values(APP_CONFIGS).map((app) => {
@@ -84,7 +83,7 @@ export const FloatingBar = () => {
         })}
 
         {/* 구분선 */}
-        <div className="w-px h-4 bg-border-default mx-1" />
+        <Group role="Divider" layout="inline" />
 
         {/* 테마 토글 버튼 */}
         <Action

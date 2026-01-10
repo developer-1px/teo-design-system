@@ -189,7 +189,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                   {setting.type === 'select' && (
                     <Field
                       model={setting.id}
-                      dataType="select"
+                      type="select"
                       label=""
                       options={setting.options}
                       value={setting.value}
@@ -201,7 +201,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                   {setting.type === 'boolean' && (
                     <Field
                       model={setting.id}
-                      dataType="boolean"
+                      type="boolean"
                       label={setting.label}
                       value={setting.value}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -213,7 +213,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                     <Group role="Inline" layout="inline" density="Compact">
                       <Field
                         model={setting.id}
-                        dataType="range"
+                        type="range"
                         label=""
                         value={setting.value}
                         constraints={{

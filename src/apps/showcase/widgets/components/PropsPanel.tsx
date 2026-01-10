@@ -122,7 +122,7 @@ export function PropsPanel({
             This component uses: {metadata.externalDeps.join(', ')}
           </Text>
           <Field
-            dataType="textarea"
+            type="textarea"
             label="Mock Data (JSON)"
             value={JSON.stringify(mockData, null, 2)}
             onChange={(value) => {

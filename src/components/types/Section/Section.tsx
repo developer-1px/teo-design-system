@@ -42,7 +42,6 @@ export function Section({
   intent,
   mode,
   children,
-  className,
   id,
   onClick,
   condition,
@@ -103,7 +102,6 @@ export function Section({
   const rendererProps = {
     role: role as any,
     children,
-    className,
     gridArea: computedGridArea,
     computedProminence: prominence,
     computedDensity: computedDensity as 'Compact' | 'Standard' | 'Comfortable',

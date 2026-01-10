@@ -23,7 +23,6 @@ export interface FrameSectionProps extends Omit<SectionProps, 'role'> {
 export function FrameSection({
   role,
   children,
-  className,
   gridArea,
   Element,
   baseStyles, // v4.1: 외부에서 주입
@@ -33,7 +32,7 @@ export function FrameSection({
 }: FrameSectionProps) {
   return (
     <Element
-      className={cn(baseStyles, overflowClass, className)}
+      className={cn(baseStyles, overflowClass)}
       style={{ gridArea }}
       data-dsl-component="section"
       data-role={role}

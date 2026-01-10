@@ -25,7 +25,6 @@ export function LinkAction({
   icon,
   loading,
   selected,
-  className,
   computedProminence,
   computedIntent,
   computedDensity,
@@ -83,7 +82,6 @@ export function LinkAction({
         // Loading cursor
         loading && 'cursor-wait',
         // Custom className override
-        className
       )}
       data-dsl-component="action"
       data-role="link"

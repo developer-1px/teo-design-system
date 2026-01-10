@@ -134,6 +134,11 @@ export interface PageProps extends AsProp {
 
   // React Integration
   children: ReactNode;
+  /**
+   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
+   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
   className?: string;
   onClick?: (e: React.MouseEvent) => void;
   condition?: string; // v1.0.1: 조건부 렌더링
@@ -156,6 +161,11 @@ export interface SectionProps extends AsProp {
   density?: Density; // v1.0.1: 명시적으로 추가됨 (자식에 전파)
   intent?: Intent;
   children: ReactNode;
+  /**
+   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
+   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
   className?: string;
   id?: string;
   onClick?: (e: React.MouseEvent) => void;
@@ -173,12 +183,12 @@ export interface SectionProps extends AsProp {
    * - { direction, minSize, maxSize }: 상세 설정
    */
   resizable?:
-    | boolean
-    | {
-        direction?: 'horizontal' | 'vertical' | 'both';
-        minSize?: number;
-        maxSize?: number;
-      };
+  | boolean
+  | {
+    direction?: 'horizontal' | 'vertical' | 'both';
+    minSize?: number;
+    maxSize?: number;
+  };
   /**
    * Collapse 가능 여부 (v4.0)
    */
@@ -197,7 +207,12 @@ export interface OverlayProps extends AsProp {
   intent?: Intent;
   placement?: Placement; // v1.0.1: Placement 타입으로 변경
   children: ReactNode;
-  className?: string; // Page가 레이아웃 제어 (너비, 높이 등)
+  /**
+   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
+   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
+  className?: string;
   isOpen?: boolean; // v1.0.1: open → isOpen으로 rename
   dismissable?: boolean; // v1.0.1: 외부 클릭으로 닫기 가능 여부
   onClose?: () => void;
@@ -236,7 +251,18 @@ export interface GroupProps extends AsProp {
   density?: Density;
   intent?: Intent;
   children: ReactNode;
+  /**
+   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
+   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
   className?: string;
+  /**
+   * EXCEPTION: style은 동적 레이아웃(grid-area 등)을 위한 인라인 스타일에만 허용
+   * 예: CSS Grid 배치, 동적 너비/높이
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
+  style?: React.CSSProperties;
   /**
    * @deprecated direction은 deprecated되었습니다. layout을 사용하세요.
    */
@@ -289,10 +315,28 @@ export interface GroupProps extends AsProp {
 export type TextRole = 'Title' | 'Body' | 'Label' | 'Caption' | 'Code';
 
 /**
- * Field Data Type - 필드의 데이터 타입
- * v1.0.1: 14개 타입 추가
+ * Field Role - 필드의 UI 렌더링 방식
+ * v2.0: role + type + value 일관성 체계 도입
  */
-export type FieldDataType =
+export type FieldRole =
+  | 'Input' // 텍스트 입력 (text, email, password, url, tel)
+  | 'Textarea' // 여러 줄 텍스트
+  | 'Select' // 드롭다운 선택
+  | 'Radio' // 라디오 버튼 그룹
+  | 'Checkbox' // 체크박스 그룹
+  | 'Switch' // 토글 스위치
+  | 'Slider' // 슬라이더 (range)
+  | 'ColorPicker' // 색상 선택기
+  | 'DatePicker' // 날짜 선택기
+  | 'Rating' // 별점
+  | 'FilePicker'; // 파일 업로드
+
+/**
+ * Field Type - 필드의 데이터 타입/검증 규칙
+ * v1.0.1: 14개 타입 추가
+ * v2.0: FieldDataType → FieldType으로 rename (role + type + value 일관성)
+ */
+export type FieldType =
   | 'text'
   | 'number'
   | 'currency' // v1.0.1
@@ -351,6 +395,11 @@ export interface TextProps extends AsProp {
   prominence?: Prominence;
   intent?: Intent;
   align?: 'left' | 'center' | 'right';
+  /**
+   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
+   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
   className?: string;
   hidden?: boolean;
   condition?: string; // v1.0.1: 조건부 렌더링
@@ -360,28 +409,43 @@ export interface TextProps extends AsProp {
 /**
  * Field Props - 데이터 바인딩 (View/Edit 모드)
  * v1.0.1: constraints, dependsOn, modeOverride 추가
+ * v2.0: role + type + value 일관성 체계 (dataType → type, role 추가)
  */
 export interface FieldProps extends AsProp {
+  // IDDL Core (v2.0)
+  role?: FieldRole; // UI 렌더링 방식 (optional, type에서 추론 가능)
+  type: FieldType; // 데이터 타입/검증 규칙 (v2.0: dataType → type)
+
   // Data Definition
   label: string;
   model: string;
-  dataType: FieldDataType;
+
   // Styling
   prominence?: Prominence;
   intent?: Intent;
+  density?: Density; // v2.0: 추가 (일관성)
+  /**
+   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
+   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
   className?: string;
+
   // Constraints
   required?: boolean;
   options?: FieldOption[]; // For select/radio/checkbox type
   constraints?: FieldConstraints; // v1.0.1
+
   // Dependencies
   dependsOn?: string; // v1.0.1
+
   // View/Edit Config
   placeholder?: string;
   modeOverride?: 'view' | 'edit'; // v1.0.1
   clearable?: boolean; // v1.0.2: 입력 내용 지우기 버튼 표시
   hidden?: boolean;
   condition?: string; // v1.0.1: 조건부 렌더링
+
   // Controlled Component (React)
   value?: any; // v1.0.2: controlled value
   onChange?: (e: any) => void; // v1.0.2: onChange handler
@@ -426,6 +490,11 @@ export interface ActionProps extends AsProp {
   // Styling
   prominence?: Prominence;
   intent?: Intent;
+  /**
+   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
+   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
   className?: string;
   // Behavior (v1.0.1: discriminated union)
   behavior?: ActionBehavior;
@@ -467,15 +536,21 @@ export type GroupRole =
   | 'Grid' // 그리드 레이아웃 (CSS Grid)
   | 'Table' // 테이블 (<table>)
   | 'Card' // 카드 UI (시각적 요소 있음)
+  | 'Divider' // 구분선 (수직/수평)
+  | 'ColorIndicator' // 색상 표시 박스 (작은 사각형)
+  | 'PreviewContainer' // 미리보기 컨테이너 (sunken 배경)
+  | 'PreviewCard' // 미리보기 카드 (Section 시각화용)
   // 입력 폼 (Forms)
   | 'Form' // 폼 컨테이너 (<form>)
   | 'Fieldset' // 필드 그룹 (<fieldset>)
   // 액션 그룹 (Action Groups)
   | 'Toolbar' // 툴바/액션 모음 (가로 정렬)
+  | 'FloatingToolbar' // 플로팅 툴바 (화면 위에 떠있는 액션 모음, 강조된 스타일)
   // 네비게이션 (Navigation)
   | 'Tabs' // 탭 컨테이너
   | 'Steps' // 단계별 진행
-  | 'Accordion'; // 아코디언 (펼침/접힘)
+  | 'Accordion' // 아코디언 (펼침/접힘)
+  | 'ScrollMenu'; // 스크롤 메뉴 (ScrollSpy)
 
 /**
  * Layout - 레이아웃 방향
@@ -724,41 +799,15 @@ export type MaxWidth = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none' | number;
 export interface NavigationConfig {
   header?: {
     show: boolean;
-    sticky?: boolean;
-    transparent?: boolean;
-  };
-  sidebar?: {
-    show: boolean;
-    position?: 'left' | 'right';
-    collapsible?: boolean;
-    width?: number;
-  };
-  footer?: {
-    show: boolean;
-    sticky?: boolean;
   };
 }
 
 /**
- * Breadcrumb - 경로 네비게이션
+ * Breadcrumb
  * v1.0.1 추가
  */
 export interface Breadcrumb {
   label: string;
   to?: string;
-}
-
-/**
- * Layout Context Value (v4.0: template-aware)
- */
-export interface LayoutContextValue {
-  prominence: Prominence;
-  role?: Role;
-  density?: Density;
-  intent?: Intent;
-  depth: number;
-  mode?: 'view' | 'edit'; // Field 렌더링 모드
-  layout?: PageLayout; // v5.0: Page layout (for Section role validation)
-  /** @deprecated Use `layout` instead */
-  template?: GridTemplate; // v4.0: Deprecated, use `layout`
+  icon?: string;
 }

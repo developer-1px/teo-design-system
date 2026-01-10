@@ -11,6 +11,8 @@ import { Moon as MoonIcon, Sun as SunIcon, X as XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
+import { Group } from '@/components/types/Group/Group.tsx';
+import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import {
   applyThemeConfig,
   type ColorScheme,
@@ -19,7 +21,6 @@ import {
   type Theme,
   toggleTheme as toggleThemeUtil,
 } from '@/shared/lib/theme.ts';
-import { cn } from '@/shared/lib/utils.ts';
 
 interface ThemeSwitcherProps {
   onClose?: () => void;
@@ -59,10 +60,10 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
   };
 
   return (
-    <Section role="Container" prominence="Hero" className="w-80 p-4 z-50">
+    <Section role="Container" prominence="Hero" width="320" padding="md" elevation="overlay">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold">Theme Settings</h3>
+      <Group role="Header" direction="horizontal" align="center" justify="between" padding="sm">
+        <Text role="Title" prominence="Primary" content="Theme Settings" />
         {onClose && (
           <Action
             role="IconButton"
@@ -72,95 +73,113 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
             onClick={onClose}
           />
         )}
-      </div>
+      </Group>
 
       {/* Light/Dark Toggle */}
-      <div className="mb-6">
-        <div className="text-xs font-medium text-muted mb-2">Appearance</div>
-        <div className="grid grid-cols-2 gap-2">
-          <button
+      <Group role="FormSection" gap="sm" padding="sm">
+        <Text role="Label" prominence="Subtle" content="Appearance" />
+        <Group role="Grid" template="custom" gridCols={2} gap="xs">
+          <Group
+            role="Button"
+            direction="horizontal"
+            align="center"
+            justify="center"
+            padding="sm"
+            gap="xs"
+            interactive
+            selected={config.theme === 'light'}
             onClick={() => {
               const newConfig: typeof config = { ...config, theme: 'light' };
               applyThemeConfig(newConfig);
               setConfig(newConfig);
             }}
-            className={cn(
-              'flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm',
-              config.theme === 'light'
-                ? 'bg-primary text-inverse'
-                : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
-            )}
           >
             <SunIcon size={16} />
-            <span>Light</span>
-          </button>
-          <button
+            <Text role="Body" content="Light" />
+          </Group>
+          <Group
+            role="Button"
+            direction="horizontal"
+            align="center"
+            justify="center"
+            padding="sm"
+            gap="xs"
+            interactive
+            selected={config.theme === 'dark'}
             onClick={() => {
               const newConfig: typeof config = { ...config, theme: 'dark' };
               applyThemeConfig(newConfig);
               setConfig(newConfig);
             }}
-            className={cn(
-              'flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm',
-              config.theme === 'dark'
-                ? 'bg-primary text-inverse'
-                : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
-            )}
           >
             <MoonIcon size={16} />
-            <span>Dark</span>
-          </button>
-        </div>
-      </div>
+            <Text role="Body" content="Dark" />
+          </Group>
+        </Group>
+      </Group>
 
       {/* Color Scheme */}
-      <div className="mb-6">
-        <div className="text-xs font-medium text-muted mb-2">Color Scheme</div>
-        <div className="grid grid-cols-2 gap-2">
+      <Group role="FormSection" gap="sm" padding="sm">
+        <Text role="Label" prominence="Subtle" content="Color Scheme" />
+        <Group role="Grid" template="custom" gridCols={2} gap="xs">
           {colorSchemes.map((scheme) => (
-            <button
+            <Group
               key={scheme.value}
+              role="Button"
+              direction="horizontal"
+              align="center"
+              padding="sm"
+              gap="xs"
+              interactive
+              selected={config.colorScheme === scheme.value}
               onClick={() => handleColorSchemeChange(scheme.value)}
-              className={cn(
-                'flex items-center gap-2 px-3 py-2 rounded-md text-sm',
-                config.colorScheme === scheme.value
-                  ? 'bg-primary text-inverse'
-                  : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
-              )}
             >
-              <div className="w-4 h-4 rounded-full" style={{ backgroundColor: scheme.color }} />
-              <span>{scheme.label}</span>
-            </button>
+              <Group
+                role="ColorSwatch"
+                width="16"
+                height="16"
+                rounded="full"
+                style={{ backgroundColor: scheme.color }}
+              />
+              <Text role="Body" content={scheme.label} />
+            </Group>
           ))}
-        </div>
-      </div>
+        </Group>
+      </Group>
 
       {/* Density */}
-      <div>
-        <div className="text-xs font-medium text-muted mb-2">Density</div>
-        <div className="space-y-1">
+      <Group role="FormSection" gap="sm" padding="sm">
+        <Text role="Label" prominence="Subtle" content="Density" />
+        <Group role="List" gap="xs">
           {densities.map((density) => (
-            <button
+            <Group
               key={density.value}
+              role="Button"
+              direction="horizontal"
+              align="center"
+              justify="between"
+              padding="sm"
+              interactive
+              selected={config.density === density.value}
               onClick={() => handleDensityChange(density.value)}
-              className={cn(
-                'w-full flex items-center justify-between px-3 py-2 rounded-md text-sm',
-                config.density === density.value
-                  ? 'bg-primary text-inverse'
-                  : 'bg-surface-sunken hover:bg-surface-elevated/50 active:bg-surface-elevated transition-colors'
-              )}
             >
-              <div>
-                <div className="font-medium">{density.label}</div>
-                <div className="text-xs opacity-70">{density.description}</div>
-              </div>
+              <Group role="Content" gap="xs">
+                <Text role="Body" prominence="Primary" content={density.label} weight="medium" />
+                <Text role="Body" prominence="Subtle" content={density.description} size="sm" />
+              </Group>
               {config.density === density.value && (
-                <div className="w-2 h-2 rounded-full bg-current" />
+                <Group
+                  role="Indicator"
+                  width="8"
+                  height="8"
+                  rounded="full"
+                  prominence="Brand"
+                />
               )}
-            </button>
+            </Group>
           ))}
-        </div>
-      </div>
+        </Group>
+      </Group>
     </Section>
   );
 };

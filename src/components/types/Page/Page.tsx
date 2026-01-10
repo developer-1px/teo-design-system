@@ -48,6 +48,7 @@ import './grid-templates.css';
 
 // Import App layout renderer
 import { AppLayout } from './renderers/AppLayout';
+import { FullscreenLayout } from './renderers/FullscreenLayout';
 
 /**
  * Page container variants (CVA)
@@ -152,7 +153,6 @@ export function Page({
   loading = false,
   error,
   children,
-  className,
   onClick,
   condition,
   // Deprecated props (v5.0) - 하위 호환성
@@ -190,7 +190,6 @@ export function Page({
           gap={gap}
           prominence={prominence}
           intent={intent}
-          className={className}
           onClick={onClick}
         >
           {children}
@@ -199,8 +198,31 @@ export function Page({
     );
   }
 
+  // v5.0: role="Fullscreen" → FullscreenLayout 렌더러 사용
+  if (normalizedRole === 'Fullscreen') {
+    return (
+      <LayoutProvider
+        value={{
+          prominence,
+          density,
+          intent,
+          depth: 0,
+          mode: 'view',
+          layout, // v5.0: Pass layout for Section role validation
+        }}
+      >
+        <FullscreenLayout
+          prominence={prominence}
+          intent={intent}
+          onClick={onClick}
+        >
+          {children}
+        </FullscreenLayout>
+      </LayoutProvider>
+    );
+  }
+
   // TODO: role="Focus" → FocusLayout (v5.0)
-  // TODO: role="Fullscreen" → FullscreenLayout (v5.0)
 
   // role="Document" (default): 기존 Content 페이지 로직
 
@@ -211,7 +233,6 @@ export function Page({
         className={cn(
           pageContainerVariants({ prominence }),
           'items-center justify-center',
-          className
         )}
         data-dsl-component="page"
         data-state="loading"
@@ -231,7 +252,6 @@ export function Page({
         className={cn(
           pageContainerVariants({ prominence }),
           'items-center justify-center',
-          className
         )}
         data-dsl-component="page"
         data-state="error"
@@ -262,7 +282,7 @@ export function Page({
       }}
     >
       <Component
-        className={cn(pageContainerVariants({ prominence }), className)}
+        className={cn(pageContainerVariants({ prominence }))}
         data-dsl-component="page"
         data-role={normalizedRole}
         data-layout={layout}

@@ -24,7 +24,6 @@ export interface DialogSectionProps extends Omit<SectionProps, 'role'> {
 export function DialogSection({
   role,
   children,
-  className,
   Element,
   baseStyles, // v4.1: 외부에서 주입
   overflowClass, // v4.1: 외부에서 주입
@@ -34,7 +33,7 @@ export function DialogSection({
 }: DialogSectionProps) {
   return (
     <Element
-      className={cn(baseStyles, overflowClass, className)}
+      className={cn(baseStyles, overflowClass)}
       style={{ gridArea }}
       data-dsl-component="section"
       data-role={role}

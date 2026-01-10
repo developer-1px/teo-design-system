@@ -133,7 +133,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
           <Search size={20} className="text-subtle" />
           <Field
             model="search"
-            dataType="text"
+            type="text"
             label=""
             placeholder="Search files, commands, symbols..."
             clearable

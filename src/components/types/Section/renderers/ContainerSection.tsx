@@ -23,7 +23,6 @@ export interface ContainerSectionProps extends Omit<SectionProps, 'role'> {
 export function ContainerSection({
   role,
   children,
-  className,
   computedProminence,
   computedDensity,
   gridArea,
@@ -35,7 +34,7 @@ export function ContainerSection({
 }: ContainerSectionProps) {
   return (
     <Element
-      className={cn(baseStyles, overflowClass, className)}
+      className={cn(baseStyles, overflowClass)}
       style={{ gridArea }}
       data-dsl-component="section"
       data-role={role}

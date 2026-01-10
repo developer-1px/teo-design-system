@@ -21,6 +21,13 @@ import { AppLayout } from '@/apps/LAYOUT/AppLayout.tsx';
 import { AppPPT } from '@/apps/PPT/AppPPT.tsx';
 import { AppShowcase } from '@/apps/showcase/AppShowcase.tsx';
 import { AppTokens } from '@/apps/tokens/AppTokens.tsx';
+import { AppPage } from '@/apps/PAGE/AppPage.tsx';
+import { AppSection } from '@/apps/SECTION/AppSection.tsx';
+import { AppOverlay } from '@/apps/OVERLAY/AppOverlay.tsx';
+import { AppGroup } from '@/apps/GROUP/AppGroup.tsx';
+import { AppField } from '@/apps/FIELD/AppField.tsx';
+import { AppAction } from '@/apps/ACTION/AppAction.tsx';
+import { AppText } from '@/apps/TEXT/AppText.tsx';
 import { CommandPalette } from '@/components/types/Overlay/CommandPalette.tsx';
 import { AppProvider } from '@/app/contexts/app-context.tsx';
 
@@ -40,6 +47,14 @@ function App() {
         <Route path="/showcase" component={AppShowcase} />
         <Route path="/tokens" component={AppTokens} />
         <Route path="/layout" component={AppLayout} />
+        {/* IDDL Component Showcases */}
+        <Route path="/page" component={AppPage} />
+        <Route path="/section" component={AppSection} />
+        <Route path="/overlay" component={AppOverlay} />
+        <Route path="/group" component={AppGroup} />
+        <Route path="/field" component={AppField} />
+        <Route path="/action" component={AppAction} />
+        <Route path="/text" component={AppText} />
 
         {/* Default redirect to IDE */}
         <Route path="/">

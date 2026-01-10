@@ -8,7 +8,7 @@
  * <RatingField
  *   label="Satisfaction"
  *   model="satisfaction"
- *   dataType="rating"
+ *   type="rating"
  *   constraints={{ min: 1, max: 5 }}
  * />
  */
@@ -38,7 +38,7 @@ export interface RatingFieldProps {
   /**
    * Data type
    */
-  dataType: 'rating';
+  type: 'rating';
 
   /**
    * Prominence level

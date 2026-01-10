@@ -86,7 +86,6 @@ export interface AccordionProps extends Omit<GroupProps, 'role'> {
 
 export function Accordion({
   children,
-  className,
   computedDensity,
   computedProminence,
   computedIntent,
@@ -137,7 +136,7 @@ export function Accordion({
   return (
     <AccordionContext.Provider value={{ value, onValueChange: handleValueChange, mode }}>
       <Element
-        className={cn('flex flex-col', densitySpacing, className)}
+        className={cn('flex flex-col', densitySpacing)}
         data-dsl-component="group"
         data-role="Accordion"
         data-density={computedDensity}
@@ -160,7 +159,7 @@ export interface AccordionItemProps {
   disabled?: boolean;
 }
 
-export function AccordionItem({ value, children, className, disabled = false }: AccordionItemProps) {
+export function AccordionItem({ value, children, disabled = false }: AccordionItemProps) {
   const { value: openValue } = useAccordion();
   const isOpen = Array.isArray(openValue) ? openValue.includes(value) : openValue === value;
 
@@ -170,7 +169,7 @@ export function AccordionItem({ value, children, className, disabled = false }: 
   return (
     <AccordionItemContext.Provider value={{ value, isOpen, triggerId, contentId }}>
       <div
-        className={cn('border border-border-default rounded-lg overflow-hidden', className)}
+        className={cn('border border-border-default rounded-lg overflow-hidden')}
         data-state={isOpen ? 'open' : 'closed'}
         data-disabled={disabled}
       >
@@ -190,7 +189,7 @@ export interface AccordionTriggerProps {
   icon?: ReactNode; // 커스텀 아이콘
 }
 
-export function AccordionTrigger({ children, className, icon }: AccordionTriggerProps) {
+export function AccordionTrigger({ children, icon }: AccordionTriggerProps) {
   const { onValueChange } = useAccordion();
   const { value, isOpen, triggerId, contentId } = useAccordionItem();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -245,7 +244,6 @@ export function AccordionTrigger({ children, className, icon }: AccordionTrigger
         'bg-surface hover:bg-surface-elevated transition-colors',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
         'text-text-primary font-medium',
-        className
       )}
     >
       <span>{children}</span>
@@ -310,7 +308,7 @@ export function AccordionContent({ children, className }: AccordionContentProps)
         transition: 'height 200ms ease-out',
       }}
     >
-      <div className={cn('px-4 py-3 text-text-secondary', className)}>
+      <div className={cn('px-4 py-3 text-text-secondary')}>
         {children}
       </div>
     </div>

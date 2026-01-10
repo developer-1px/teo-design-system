@@ -7,6 +7,8 @@
  *   - Section role="Navigator": 좌측 슬라이드 썸네일 리스트 (resizable)
  *   - Section role="Main": 중앙 슬라이드 캔버스
  *   - Section role="Aside": 우측 포맷 설정 사이드바 (resizable, collapsible)
+ *
+ * v2.0: 전체화면 프레젠테이션 모드 추가
  */
 
 import { useEffect, useState } from 'react';
@@ -19,6 +21,7 @@ import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas.t
 import { FormatSidebar } from '@/apps/PPT/widgets/presentation/FormatSidebar.tsx';
 import { PresentationToolbar } from '@/apps/PPT/widgets/presentation/PresentationToolbar.tsx';
 import { type Slide, SlideList } from '@/apps/PPT/widgets/presentation/SlideList.tsx';
+import { PresentationModePage } from './PresentationModePage';
 
 // 초기 샘플 슬라이드 데이터 (fallback)
 const fallbackSlides: Slide[] = [
@@ -45,6 +48,7 @@ const fallbackSlides: Slide[] = [
 export const PPTPage = () => {
   const [slides, setSlides] = useState<Slide[]>(fallbackSlides);
   const [activeSlideId, setActiveSlideId] = useState<string>('1');
+  const [isPresentationMode, setIsPresentationMode] = useState(false);
 
   // ai-era-slides.md 파일 로드 및 파싱
   useEffect(() => {
@@ -80,8 +84,7 @@ export const PPTPage = () => {
   };
 
   const handlePlay = () => {
-    // TODO: 전체화면 프레젠테이션 모드
-    alert('전체화면 프레젠테이션 모드는 준비 중입니다!');
+    setIsPresentationMode(true);
   };
 
   const handleSlideAdd = () => {
@@ -165,6 +168,19 @@ export const PPTPage = () => {
     setSlides([...slides, ...newSlides]);
   };
 
+  // 프레젠테이션 모드 (전체화면)
+  if (isPresentationMode) {
+    return (
+      <PresentationModePage
+        slides={slides}
+        initialSlideId={activeSlideId}
+        onExit={() => setIsPresentationMode(false)}
+        onSlideChange={setActiveSlideId}
+      />
+    );
+  }
+
+  // 편집 모드 (기본)
   return (
     <Page role="Application" layout="HolyGrail" density="Compact">
       {/* Header: Presentation Toolbar */}

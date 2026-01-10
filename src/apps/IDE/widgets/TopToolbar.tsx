@@ -216,21 +216,23 @@ const MainMenuContent = () => {
   ];
 
   return (
-    <div className="py-1">
+    <Group role="Menu" padding="xs">
       {menuItems.map((menu) => (
-        <div key={menu.label} className="px-2 py-1">
-          <div className="text-xs font-semibold text-subtle px-2 py-1">{menu.label}</div>
-          {menu.items.map((item) => (
-            <button
-              key={item}
-              className="w-full text-left px-3 py-1.5 text-sm rounded-md hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+        <Group key={menu.label} role="MenuSection" padding="xs">
+          <Text role="Label" prominence="Subtle" content={menu.label} />
+          <Group role="MenuItems" gap="xs">
+            {menu.items.map((item) => (
+              <Action
+                key={item}
+                role="MenuItem"
+                prominence="Secondary"
+                label={item}
+              />
+            ))}
+          </Group>
+        </Group>
       ))}
-    </div>
+    </Group>
   );
 };
 
@@ -238,59 +240,69 @@ const ProjectMenuContent = () => {
   const recentProjects = ['ide-ui-kit', 'design-system', 'react-dashboard', 'portfolio-2024'];
 
   return (
-    <div className="py-1">
-      <button className="w-full text-left px-3 py-2 text-sm font-medium hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        New Project...
-      </button>
-      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        Open...
-      </button>
-      <div className="h-px bg-border my-1" />
-      <div className="px-2 py-1">
-        <div className="text-xs font-semibold text-subtle px-2 py-1">Recent Projects</div>
-        {recentProjects.map((project) => (
-          <button
-            key={project}
-            className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
-          >
-            {project}
-          </button>
-        ))}
-      </div>
-    </div>
+    <Group role="Menu" padding="xs">
+      <Action
+        role="MenuItem"
+        prominence="Primary"
+        label="New Project..."
+      />
+      <Action
+        role="MenuItem"
+        prominence="Secondary"
+        label="Open..."
+      />
+      <Group role="Divider" orientation="horizontal" />
+      <Group role="MenuSection" padding="xs">
+        <Text role="Label" prominence="Subtle" content="Recent Projects" />
+        <Group role="MenuItems" gap="xs">
+          {recentProjects.map((project) => (
+            <Action
+              key={project}
+              role="MenuItem"
+              prominence="Secondary"
+              label={project}
+            />
+          ))}
+        </Group>
+      </Group>
+    </Group>
   );
 };
 
 const VcsMenuContent = () => {
   return (
-    <div className="py-1">
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+    <Group role="Menu" padding="xs">
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <DownloadIcon size={16} />
-        <span>Update Project</span>
-        <span className="ml-auto text-xs text-subtle">⌘T</span>
-      </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+        <Text role="Body" prominence="Primary" content="Update Project" />
+        <Text role="Label" prominence="Subtle" content="⌘T" />
+      </Group>
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <UploadIcon size={16} />
-        <span>Commit...</span>
-        <span className="ml-auto text-xs text-subtle">⌘K</span>
-      </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+        <Text role="Body" prominence="Primary" content="Commit..." />
+        <Text role="Label" prominence="Subtle" content="⌘K" />
+      </Group>
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <UploadIcon size={16} />
-        <span>Push...</span>
-        <span className="ml-auto text-xs text-subtle">⇧⌘K</span>
-      </button>
-      <div className="h-px bg-border my-1" />
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+        <Text role="Body" prominence="Primary" content="Push..." />
+        <Text role="Label" prominence="Subtle" content="⇧⌘K" />
+      </Group>
+      <Group role="Divider" orientation="horizontal" />
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <GitBranchIcon size={16} />
-        <span>Branches...</span>
-      </button>
-      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        Fetch
-      </button>
-      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        Pull...
-      </button>
-    </div>
+        <Text role="Body" prominence="Primary" content="Branches..." />
+      </Group>
+      <Action
+        role="MenuItem"
+        prominence="Secondary"
+        label="Fetch"
+      />
+      <Action
+        role="MenuItem"
+        prominence="Secondary"
+        label="Pull..."
+      />
+    </Group>
   );
 };
 
@@ -302,37 +314,44 @@ const RunMenuContent = () => {
   ];
 
   return (
-    <div className="py-1">
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
+    <Group role="Menu" padding="xs">
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
         <PlayIcon size={16} />
-        <span>Run 'dev'</span>
-        <span className="ml-auto text-xs text-subtle">⌃R</span>
-      </button>
-      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        <span className="text-accent">▶</span>
-        <span>Debug 'dev'</span>
-        <span className="ml-auto text-xs text-subtle">⌃D</span>
-      </button>
-      <div className="h-px bg-border my-1" />
-      <div className="px-2 py-1">
-        <div className="text-xs font-semibold text-subtle px-2 py-1">Configurations</div>
-        {configurations.map((config) => (
-          <button
-            key={config.name}
-            className="w-full text-left px-3 py-1.5 text-sm rounded hover:bg-surface-floating/50 active:bg-surface-floating transition-colors"
-          >
-            <div className="flex items-center gap-2">
+        <Text role="Body" prominence="Primary" content="Run 'dev'" weight="medium" />
+        <Text role="Label" prominence="Subtle" content="⌃R" />
+      </Group>
+      <Group role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
+        <Text role="Body" prominence="Brand" content="▶" />
+        <Text role="Body" prominence="Primary" content="Debug 'dev'" />
+        <Text role="Label" prominence="Subtle" content="⌃D" />
+      </Group>
+      <Group role="Divider" orientation="horizontal" />
+      <Group role="MenuSection" padding="xs">
+        <Text role="Label" prominence="Subtle" content="Configurations" />
+        <Group role="MenuItems" gap="xs">
+          {configurations.map((config) => (
+            <Group
+              key={config.name}
+              role="MenuItem"
+              direction="horizontal"
+              align="center"
+              padding="sm"
+              gap="xs"
+              interactive
+            >
               <PlayIcon size={14} />
-              <span>{config.name}</span>
-              <span className="text-xs text-subtle ml-auto">{config.type}</span>
-            </div>
-          </button>
-        ))}
-      </div>
-      <div className="h-px bg-border my-1" />
-      <button className="w-full text-left px-3 py-2 text-sm hover:bg-surface-floating/50 active:bg-surface-floating transition-colors">
-        Edit Configurations...
-      </button>
-    </div>
+              <Text role="Body" prominence="Primary" content={config.name} />
+              <Text role="Label" prominence="Subtle" content={config.type} />
+            </Group>
+          ))}
+        </Group>
+      </Group>
+      <Group role="Divider" orientation="horizontal" />
+      <Action
+        role="MenuItem"
+        prominence="Secondary"
+        label="Edit Configurations..."
+      />
+    </Group>
   );
 };

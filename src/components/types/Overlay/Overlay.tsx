@@ -132,7 +132,6 @@ export function Overlay({
   intent,
   placement = 'center',
   children,
-  className,
   isOpen = false,
   dismissable = true,
   onClose,
@@ -198,7 +197,6 @@ export function Overlay({
               overlayDensityVariants({
                 density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
               }),
-              className
             )}
             role="dialog"
             aria-modal="true"
@@ -249,7 +247,6 @@ export function Overlay({
               overlayDensityVariants({
                 density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
               }),
-              className
             )}
             role="dialog"
             aria-modal="true"
@@ -297,7 +294,6 @@ export function Overlay({
               overlayDensityVariants({
                 density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
               }),
-              className
             )}
             role="dialog"
             aria-modal="true"
@@ -330,7 +326,6 @@ export function Overlay({
           compactDensityVariants({
             density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
           }),
-          className
         )}
         data-dsl-component="overlay"
         data-role={role}
@@ -373,7 +368,6 @@ export function Overlay({
           compactDensityVariants({
             density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
           }),
-          className
         )}
         data-dsl-component="overlay"
         data-role={role}
@@ -412,7 +406,6 @@ export function Overlay({
         className={cn(
           'absolute z-50 bg-gray-900 text-white text-xs rounded px-2 py-1 pointer-events-none',
           placementVariants({ placement }),
-          className
         )}
         data-dsl-component="overlay"
         data-role={role}
@@ -445,7 +438,7 @@ export function Overlay({
           }}
         >
           <ContentComponent
-            className={cn('max-w-7xl max-h-[90vh] overflow-auto', className)}
+            className={cn('max-w-7xl max-h-[90vh] overflow-auto')}
             {...rest}
           >
             {dismissable && onClose && (
@@ -474,7 +467,7 @@ export function Overlay({
     const ContentComponent = as || 'div';
     return (
       <ContentComponent
-        className={cn('fixed z-50', placementVariants({ placement }), className)}
+        className={cn('fixed z-50', placementVariants({ placement }))}
         data-dsl-component="overlay"
         data-role={role}
         data-overlay-id={id}

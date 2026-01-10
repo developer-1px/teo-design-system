@@ -8,7 +8,7 @@
  * <SelectField
  *   label="Country"
  *   model="country"
- *   dataType="select"
+ *   type="select"
  *   options={[
  *     { label: 'Korea', value: 'kr' },
  *     { label: 'USA', value: 'us' },
@@ -40,7 +40,7 @@ export interface SelectFieldProps {
   /**
    * Data type
    */
-  dataType: 'select' | 'multiselect';
+  type: 'select' | 'multiselect';
 
   /**
    * Available options
@@ -97,7 +97,7 @@ export function SelectField(props: SelectFieldProps) {
   const {
     label,
     model,
-    dataType,
+    type,
     options,
     prominence = 'Standard',
     intent = 'Neutral',
@@ -116,7 +116,7 @@ export function SelectField(props: SelectFieldProps) {
     options,
     value,
     required,
-    multiple: dataType === 'multiselect',
+    multiple: type === 'multiselect',
     onChange,
   });
 
@@ -138,12 +138,12 @@ export function SelectField(props: SelectFieldProps) {
             density,
             intent,
             error: !!field.error,
-            multiple: dataType === 'multiselect',
+            multiple: type === 'multiselect',
           })
         )}
       >
         {/* Placeholder option (single select only) */}
-        {dataType === 'select' && (
+        {type === 'select' && (
           <option value="" disabled>
             {placeholder}
           </option>

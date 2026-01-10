@@ -1,7 +1,7 @@
 /**
  * useCombobox - 콤보박스 컴포넌트 헤드리스 훅
  *
- * IDDL Field dataType="select" control="combobox" 구현을 위한 헤드리스 로직
+ * IDDL Field type="select" control="combobox" 구현을 위한 헤드리스 로직
  * @see docs/1-project/1-type-role-aria-mapping-1.md#3-field (select/combobox)
  * @see docs/1-project/4-headless-hook.md
  */

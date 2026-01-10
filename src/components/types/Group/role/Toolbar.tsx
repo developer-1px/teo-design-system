@@ -34,7 +34,6 @@ export interface ToolbarProps extends Omit<GroupProps, 'role'> {
 
 export function Toolbar({
   children,
-  className,
   computedDensity,
   computedProminence,
   computedIntent,
@@ -76,7 +75,6 @@ export function Toolbar({
         // Sticky positioning
         sticky && 'sticky top-0 z-10',
         // Custom className
-        className
       )}
       aria-label="Toolbar"
       data-dsl-component="group"
@@ -104,7 +102,7 @@ export function Toolbar({
 export function ToolbarDivider({ className }: { className?: string }) {
   return (
     <div
-      className={cn('w-px h-6 bg-border-muted', className)}
+      className={cn('w-px h-6 bg-border-muted')}
       role="separator"
       aria-orientation="vertical"
     />
@@ -130,13 +128,12 @@ export function ToolbarDivider({ className }: { className?: string }) {
  */
 export function ToolbarGroup({
   children,
-  className,
 }: {
   children: React.ReactNode;
   className?: string;
 }) {
   return (
-    <div className={cn('flex items-center gap-1', className)} role="group">
+    <div className={cn('flex items-center gap-1')} role="group">
       {children}
     </div>
   );

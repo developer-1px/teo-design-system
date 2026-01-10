@@ -26,7 +26,6 @@ export function IconButtonAction({
   icon,
   loading,
   selected,
-  className,
   computedProminence,
   computedIntent,
   computedDensity,
@@ -85,7 +84,6 @@ export function IconButtonAction({
         // Loading cursor
         loading && 'cursor-wait',
         // Custom className override
-        className
       )}
       data-dsl-component="action"
       data-role="icon-button"

@@ -63,6 +63,7 @@ const groupVariants = cva('', {
       Form: 'space-y-4',
       Fieldset: 'border border-default rounded-lg p-4 space-y-3',
       Toolbar: 'flex items-center gap-2',
+      FloatingToolbar: 'flex items-center gap-1 bg-surface-overlay shadow-xl rounded-full px-2 py-1', // v1.1.2: 플로팅 툴바 (화면 위에 떠있는 액션 모음)
       List: 'flex flex-col gap-1 flex-1 overflow-y-auto',
       Grid: 'grid gap-4',
       Table: 'border border-default rounded-lg overflow-hidden',
@@ -70,6 +71,10 @@ const groupVariants = cva('', {
       Steps: 'flex flex-col',
       Split: 'grid grid-cols-2 gap-4',
       Card: 'bg-surface-raised rounded-lg p-4', // Shadow removed per minimal-renderer-guide.md Section 2.1: Card는 페이지와 같은 레벨
+      Divider: 'bg-border-default', // v1.1.2: 구분선 (기본: 수평선, layout="inline"이면 수직선)
+      ColorIndicator: 'w-4 h-4 rounded', // v1.1.2: 색상 표시 박스 (작은 사각형, 색상은 별도 지정)
+      PreviewContainer: 'relative w-full h-full border-2 border-border-default rounded-lg p-4 bg-surface-sunken', // v1.1.2: 미리보기 컨테이너
+      PreviewCard: 'rounded-lg border-2 p-3 flex flex-col justify-center items-center', // v1.1.2: 미리보기 카드 (색상은 별도 지정)
       Inline: 'flex items-center gap-2',
       Accordion: 'flex flex-col gap-2',
     },
@@ -100,6 +105,8 @@ const groupVariants = cva('', {
     { role: 'Fieldset', density: 'Comfortable', class: '!p-6 !space-y-4' },
     { role: 'Toolbar', density: 'Compact', class: '!gap-1' },
     { role: 'Toolbar', density: 'Comfortable', class: '!gap-3' },
+    { role: 'FloatingToolbar', density: 'Compact', class: '!gap-1' },
+    { role: 'FloatingToolbar', density: 'Comfortable', class: '!gap-2' },
     { role: 'List', density: 'Compact', class: '!gap-0.5' },
     { role: 'List', density: 'Comfortable', class: '!gap-2' },
     { role: 'Grid', density: 'Compact', class: '!gap-2' },
@@ -108,6 +115,14 @@ const groupVariants = cva('', {
     { role: 'Card', density: 'Comfortable', class: '!p-6' },
     { role: 'Inline', density: 'Compact', class: '!gap-1' },
     { role: 'Inline', density: 'Comfortable', class: '!gap-3' },
+
+    // v1.1.2: Divider (구분선)
+    { role: 'Divider', layout: 'stack', class: 'h-px w-full' }, // 수평선
+    { role: 'Divider', layout: 'inline', class: 'w-px h-4 mx-1' }, // 수직선
+
+    // v1.1.2: ColorIndicator (색상 표시 박스 크기 변형)
+    { role: 'ColorIndicator', density: 'Compact', class: '!w-3 !h-3' }, // 작은 크기
+    { role: 'ColorIndicator', density: 'Comfortable', class: '!w-5 !h-5' }, // 큰 크기
   ],
   defaultVariants: {
     layout: 'stack',
@@ -142,7 +157,12 @@ const roleToTag: Record<GroupRole, string> = {
   List: 'ul',
   Table: 'table',
   Card: 'article',
+  Divider: 'div',
+  ColorIndicator: 'div',
+  PreviewContainer: 'div',
+  PreviewCard: 'div',
   Toolbar: 'div',
+  FloatingToolbar: 'div',
   Container: 'div',
   Grid: 'div',
   Tabs: 'div',
@@ -157,6 +177,7 @@ const roleToTag: Record<GroupRole, string> = {
  */
 const roleToAria: Partial<Record<GroupRole, Record<string, string>>> = {
   Toolbar: { role: 'toolbar' },
+  FloatingToolbar: { role: 'toolbar', 'aria-label': 'Floating toolbar' },
   Tabs: { role: 'tablist' },
   Table: { role: 'table' },
   List: { role: 'list' },
@@ -176,7 +197,8 @@ export function Group({
   density,
   intent,
   children,
-  className,
+  className, // EXCEPTION: 데이터 시각화용 동적 스타일링
+  style, // EXCEPTION: 동적 레이아웃(grid-area)용 인라인 스타일
   direction, // @deprecated: layout을 사용하세요
   layout,
   state = 'idle',
@@ -260,18 +282,18 @@ export function Group({
   // State 렌더링 (v1.0.1)
   if (state === 'loading') {
     return (
-      <div className={groupStateVariants({ state: 'loading', className })}>
+      <div className={groupStateVariants({ state: 'loading' })}>
         <Loader2 size={24} className="animate-spin text-accent" />
       </div>
     );
   }
 
   if (state === 'error' && errorContent) {
-    return <div className={groupStateVariants({ state: 'error', className })}>{errorContent}</div>;
+    return <div className={groupStateVariants({ state: 'error' })}>{errorContent}</div>;
   }
 
   if (state === 'empty' && emptyContent) {
-    return <div className={groupStateVariants({ state: 'empty', className })}>{emptyContent}</div>;
+    return <div className={groupStateVariants({ state: 'empty' })}>{emptyContent}</div>;
   }
 
   // role에 따른 HTML 태그 결정
@@ -321,7 +343,6 @@ export function Group({
           computedProminence={computedProminence}
           computedIntent={computedIntent}
           Element={Component}
-          className={className}
           onClick={onClick}
           {...rest}
         >
@@ -349,7 +370,6 @@ export function Group({
           computedProminence={computedProminence}
           computedIntent={computedIntent}
           Element={Component}
-          className={className}
           onClick={onClick}
           mode={mode}
           defaultValue={defaultValue}
@@ -381,7 +401,6 @@ export function Group({
           computedProminence={computedProminence}
           computedIntent={computedIntent}
           Element={Component}
-          className={className}
           onClick={onClick}
           {...rest}
         >
@@ -421,9 +440,10 @@ export function Group({
           interactiveClasses,
           // v3.1: Spacing (gap from tokens or override)
           spacingClasses,
-          // Custom className override
+          // EXCEPTION: 데이터 시각화를 위한 동적 className (예: 차트 색상, 데이터 기반 배경색)
           className
         )}
+        style={style} // EXCEPTION: 동적 레이아웃(grid-area)용 인라인 스타일
         {...ariaProps}
         {...selectionAriaProps}
         data-dsl-component="group"

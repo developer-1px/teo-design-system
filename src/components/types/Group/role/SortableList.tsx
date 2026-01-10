@@ -84,7 +84,6 @@ function SortableItem({ id, children }: SortableItemProps) {
 
 export function SortableList({
   children,
-  className,
   computedDensity,
   computedProminence,
   computedIntent,
@@ -143,7 +142,6 @@ export function SortableList({
             'flex flex-col',
             densityGap,
             // Custom className
-            className
           )}
           aria-label="Sortable List"
           data-dsl-component="group"

@@ -1,5 +1,84 @@
 (function() {
   "use strict";
+  var FilterLevel = /* @__PURE__ */ ((FilterLevel2) => {
+    FilterLevel2["Page"] = "Page";
+    FilterLevel2["Section"] = "Section";
+    FilterLevel2["Group"] = "Group";
+    FilterLevel2["Atom"] = "Atom";
+    FilterLevel2["All"] = "All";
+    return FilterLevel2;
+  })(FilterLevel || {});
+  const FILTER_CONFIGS = {
+    [
+      "Page"
+      /* Page */
+    ]: {
+      level: "Page",
+      color: "#a855f7",
+      label: "Page",
+      description: "최상위 Page 컴포넌트"
+    },
+    [
+      "Section"
+      /* Section */
+    ]: {
+      level: "Section",
+      color: "#3b82f6",
+      label: "Section",
+      description: "Section 레이아웃 영역"
+    },
+    [
+      "Group"
+      /* Group */
+    ]: {
+      level: "Group",
+      color: "#10b981",
+      label: "Group",
+      description: "Group 논리적 그룹"
+    },
+    [
+      "Atom"
+      /* Atom */
+    ]: {
+      level: "Atom",
+      color: "#f59e0b",
+      label: "Atom",
+      description: "Atom (Field, Action, Text)"
+    },
+    [
+      "All"
+      /* All */
+    ]: {
+      level: "All",
+      color: "#6b7280",
+      label: "All",
+      description: "모든 IDDL 컴포넌트"
+    }
+  };
+  const FILTER_CYCLE = [
+    "Page",
+    "Section",
+    "Group",
+    "Atom",
+    "All"
+    /* All */
+  ];
+  let currentFilterLevel = "All";
+  function cycleFilterLevel() {
+    const currentIndex = FILTER_CYCLE.indexOf(currentFilterLevel);
+    const nextIndex = (currentIndex + 1) % FILTER_CYCLE.length;
+    currentFilterLevel = FILTER_CYCLE[nextIndex];
+    return currentFilterLevel;
+  }
+  function getCurrentFilterLevel() {
+    return currentFilterLevel;
+  }
+  function getFilterColor(level) {
+    return FILTER_CONFIGS[level || currentFilterLevel].color;
+  }
+  function getFilterConfig(level) {
+    return FILTER_CONFIGS[level || currentFilterLevel];
+  }
   function getComponentName(fiber) {
     if (!fiber) return "Unknown";
     const { type, elementType } = fiber;
@@ -39,146 +118,110 @@
     }
     return "Unknown";
   }
-  function isReactComponent(fiber) {
-    if (!fiber) return false;
-    const { type } = fiber;
-    if (typeof type === "string") {
-      return false;
+  let activeHighlights = [];
+  let selectedIndex = null;
+  function findDOMNode(fiber) {
+    if (fiber.stateNode && fiber.stateNode instanceof HTMLElement) {
+      return fiber.stateNode;
     }
-    if (typeof type === "function") {
-      return true;
+    let child = fiber.child;
+    while (child) {
+      const node = findDOMNode(child);
+      if (node) return node;
+      child = child.sibling;
     }
-    if (typeof type === "object" && type !== null) {
-      return true;
-    }
-    return false;
+    return null;
   }
-  function shouldRenderFiber(fiber) {
-    if (!fiber) return false;
-    if (!isReactComponent(fiber)) return false;
+  function getComponentType(fiber) {
     const name = getComponentName(fiber);
-    if (name === "Fragment") return false;
-    if (name.startsWith("React.")) return false;
-    if (name === "Provider" || name === "Consumer") {
-      return false;
+    if (name === "Page" || name.startsWith("App")) {
+      return FilterLevel.Page;
     }
-    if (name === "Unknown" || name === "Anonymous") return false;
-    return true;
+    if (name === "Section") {
+      return FilterLevel.Section;
+    }
+    if (name === "Group") {
+      return FilterLevel.Group;
+    }
+    if (name === "Field" || name === "Action" || name === "Text") {
+      return FilterLevel.Atom;
+    }
+    return null;
   }
-  function getFiberFromElement(element) {
-    const allKeys = Object.keys(element);
-    const fiberKey = allKeys.find((key) => key.startsWith("__reactFiber"));
-    if (!fiberKey) {
-      console.warn("[Component Hierarchy] No React Fiber found on element:", element);
-      return null;
-    }
-    return element[fiberKey];
-  }
-  function getFilePath(fiber) {
-    if (fiber._debugSource?.fileName) {
-      return fiber._debugSource.fileName;
-    }
-    if (fiber._debugInfo) {
-      const debugInfo = Array.isArray(fiber._debugInfo) ? fiber._debugInfo[0] : fiber._debugInfo;
-      if (debugInfo?.source) {
-        return debugInfo.source;
-      }
-    }
-    return void 0;
-  }
-  function extractComponentHierarchy(element) {
-    const fiber = getFiberFromElement(element);
-    if (!fiber) {
-      return [];
-    }
-    const hierarchy = [];
-    let currentFiber = fiber;
-    while (currentFiber) {
-      if (shouldRenderFiber(currentFiber)) {
-        const name = getComponentName(currentFiber);
-        const props = { ...currentFiber.memoizedProps };
-        const className = props.className;
-        const filePath = getFilePath(currentFiber);
-        delete props.children;
-        delete props.ref;
-        delete props.key;
-        hierarchy.push({
-          name,
-          props,
-          className,
-          filePath,
-          fiber: currentFiber
+  function collectComponentsByLevel(fiber, targetLevel, collected = []) {
+    if (!fiber) return collected;
+    const componentType = getComponentType(fiber);
+    if (targetLevel === FilterLevel.All || componentType === targetLevel) {
+      const element = findDOMNode(fiber);
+      if (element) {
+        collected.push({
+          fiber,
+          name: getComponentName(fiber),
+          element
         });
       }
-      currentFiber = currentFiber.return;
     }
-    return hierarchy;
+    let child = fiber.child;
+    while (child) {
+      collectComponentsByLevel(child, targetLevel, collected);
+      child = child.sibling;
+    }
+    return collected;
   }
-  function formatComponentInfo(info) {
-    let result = `Component: ${info.name}
-`;
-    if (info.filePath) {
-      result += `File: ${info.filePath}
-`;
-    }
-    if (info.className) {
-      result += `
-Tailwind CSS:
-${info.className}
-`;
-    }
-    result += `
-Props:
-`;
-    for (const [key, value] of Object.entries(info.props)) {
-      if (typeof value === "function") {
-        result += `  ${key}: [Function]
-`;
-      } else if (typeof value === "object" && value !== null) {
-        try {
-          const serialized = JSON.stringify(value, null, 2);
-          if (serialized.length > 100) {
-            result += `  ${key}: ${JSON.stringify(value)}
-`;
-          } else {
-            result += `  ${key}: ${serialized}
-`;
-          }
-        } catch {
-          result += `  ${key}: [Object]
-`;
-        }
-      } else {
-        result += `  ${key}: ${JSON.stringify(value)}
-`;
+  function getRootFiber() {
+    const rootElement = document.getElementById("root");
+    if (!rootElement) return null;
+    const allKeys = Object.keys(rootElement);
+    const fiberKey = allKeys.find((key) => key.startsWith("__react"));
+    if (!fiberKey) return null;
+    const fiberRoot = rootElement[fiberKey];
+    let fiber = null;
+    if (fiberRoot?.child) {
+      fiber = fiberRoot.child;
+    } else if (fiberRoot?.current) {
+      fiber = fiberRoot.current;
+    } else if (fiberRoot?.stateNode?.current) {
+      fiber = fiberRoot.stateNode.current;
+    } else {
+      const internalRoot = fiberRoot?._internalRoot || fiberRoot?.stateNode?._internalRoot;
+      if (internalRoot?.current) {
+        fiber = internalRoot.current;
       }
     }
-    return result;
+    return fiber;
   }
-  let overlayDiv = null;
-  let tagBadge = null;
-  let isActive = false;
-  function createOverlay() {
-    const div = document.createElement("div");
-    div.id = "iddl-inspector-overlay";
-    div.style.cssText = `
+  function createOverlayForElement(element, componentName, color, isSelected = false, onClickCallback) {
+    const rect = element.getBoundingClientRect();
+    const borderColor = isSelected ? color : `${color}40`;
+    const backgroundColor = isSelected ? `${color}33` : `${color}0D`;
+    const overlay = document.createElement("div");
+    overlay.className = "iddl-inspector-highlight-overlay";
+    overlay.style.cssText = `
     position: fixed;
-    pointer-events: none;
-    border: 2px solid #3b82f6;
-    background: rgba(59, 130, 246, 0.1);
+    pointer-events: auto;
+    cursor: pointer;
+    border: 2px solid ${borderColor};
+    background: ${backgroundColor};
     z-index: 999998;
-    transition: all 0.05s ease;
+    transition: all 0.15s ease;
+    top: ${rect.top}px;
+    left: ${rect.left}px;
+    width: ${rect.width}px;
+    height: ${rect.height}px;
   `;
-    document.body.appendChild(div);
-    return div;
-  }
-  function createTagBadge() {
-    const badge = document.createElement("div");
-    badge.id = "iddl-inspector-tag";
-    badge.style.cssText = `
+    if (onClickCallback) {
+      overlay.addEventListener("click", (e) => {
+        e.stopPropagation();
+        onClickCallback();
+      });
+    }
+    const label = document.createElement("div");
+    label.className = "iddl-inspector-highlight-label";
+    label.textContent = componentName;
+    label.style.cssText = `
     position: fixed;
     pointer-events: none;
-    background: #3b82f6;
+    background: ${color};
     color: white;
     padding: 2px 6px;
     font-size: 11px;
@@ -187,108 +230,165 @@ Props:
     border-radius: 3px;
     z-index: 999999;
     white-space: nowrap;
-    transition: all 0.05s ease;
+    opacity: ${isSelected ? "1" : "0.7"};
+    top: ${rect.top - 20}px;
+    left: ${rect.left}px;
   `;
-    document.body.appendChild(badge);
-    return badge;
+    document.body.appendChild(overlay);
+    document.body.appendChild(label);
+    return { overlay, label };
   }
-  function updateOverlayPosition(element, componentName) {
-    if (!overlayDiv) return;
-    const rect = element.getBoundingClientRect();
-    overlayDiv.style.top = `${rect.top}px`;
-    overlayDiv.style.left = `${rect.left}px`;
-    overlayDiv.style.width = `${rect.width}px`;
-    overlayDiv.style.height = `${rect.height}px`;
-    overlayDiv.style.display = "block";
-    if (tagBadge && componentName) {
-      tagBadge.textContent = componentName;
-      tagBadge.style.top = `${rect.top - 20}px`;
-      tagBadge.style.left = `${rect.left}px`;
-      tagBadge.style.display = "block";
-    }
+  function updateHighlightPositions() {
+    activeHighlights.forEach((highlight) => {
+      const rect = highlight.element.getBoundingClientRect();
+      highlight.overlay.style.top = `${rect.top}px`;
+      highlight.overlay.style.left = `${rect.left}px`;
+      highlight.overlay.style.width = `${rect.width}px`;
+      highlight.overlay.style.height = `${rect.height}px`;
+      highlight.label.style.top = `${rect.top - 20}px`;
+      highlight.label.style.left = `${rect.left}px`;
+    });
   }
-  function hideOverlay() {
-    if (overlayDiv) {
-      overlayDiv.style.display = "none";
+  function highlightAllComponents() {
+    clearAllHighlights();
+    const filterLevel = getCurrentFilterLevel();
+    const color = getFilterColor(filterLevel);
+    const rootFiber = getRootFiber();
+    if (!rootFiber) {
+      console.warn("[Multi Highlighter] Root fiber not found");
+      return [];
     }
-    if (tagBadge) {
-      tagBadge.style.display = "none";
-    }
+    const components = collectComponentsByLevel(rootFiber, filterLevel);
+    console.log(`[Multi Highlighter] Found ${components.length} components for level: ${filterLevel}`);
+    components.forEach((component, index) => {
+      const { overlay, label } = createOverlayForElement(
+        component.element,
+        component.name,
+        color,
+        false,
+        () => {
+          selectComponent(index);
+          window.dispatchEvent(new CustomEvent("iddl-component-selected", { detail: { index } }));
+        }
+      );
+      activeHighlights.push({
+        componentName: component.name,
+        element: component.element,
+        overlay,
+        label,
+        fiber: component.fiber,
+        isSelected: false
+      });
+    });
+    window.addEventListener("scroll", updateHighlightPositions, true);
+    window.addEventListener("resize", updateHighlightPositions);
+    return components.map((c) => ({
+      name: c.name,
+      props: c.fiber.memoizedProps || {},
+      element: c.element
+    }));
   }
-  function activateInspectMode() {
-    if (isActive) return;
-    if (!overlayDiv) {
-      overlayDiv = createOverlay();
-    }
-    if (!tagBadge) {
-      tagBadge = createTagBadge();
-    }
-    isActive = true;
-    document.body.style.cursor = "default";
-    const style = document.createElement("style");
-    style.id = "iddl-inspector-cursor-override";
-    style.textContent = `
-    * {
-      cursor: default !important;
-    }
-  `;
-    document.head.appendChild(style);
-    document.addEventListener("mousemove", handleMouseMove);
+  function clearAllHighlights() {
+    activeHighlights.forEach((highlight) => {
+      highlight.overlay.remove();
+      highlight.label.remove();
+    });
+    activeHighlights = [];
+    selectedIndex = null;
+    window.removeEventListener("scroll", updateHighlightPositions, true);
+    window.removeEventListener("resize", updateHighlightPositions);
   }
-  function deactivateInspectMode() {
-    if (!isActive) return;
-    isActive = false;
-    hideOverlay();
-    document.body.style.cursor = "";
-    const cursorStyle = document.getElementById("iddl-inspector-cursor-override");
-    if (cursorStyle) {
-      cursorStyle.remove();
+  function selectComponent(index) {
+    if (index < 0 || index >= activeHighlights.length) return;
+    const filterLevel = getCurrentFilterLevel();
+    const color = getFilterColor(filterLevel);
+    if (selectedIndex !== null && selectedIndex < activeHighlights.length) {
+      const prevHighlight = activeHighlights[selectedIndex];
+      prevHighlight.isSelected = false;
+      prevHighlight.overlay.style.border = `2px solid ${color}40`;
+      prevHighlight.overlay.style.background = `${color}0D`;
+      prevHighlight.label.style.opacity = "0.7";
     }
-    document.removeEventListener("mousemove", handleMouseMove);
+    const highlight = activeHighlights[index];
+    highlight.isSelected = true;
+    selectedIndex = index;
+    highlight.overlay.style.border = `2px solid ${color}`;
+    highlight.overlay.style.background = `${color}33`;
+    highlight.label.style.opacity = "1";
+    highlight.element.scrollIntoView({ behavior: "smooth", block: "center" });
+    console.log("[Multi Highlighter] Component selected:", index, getSelectedComponentDetails());
   }
-  function handleMouseMove(e) {
-    if (!isActive) return;
-    const element = e.target;
-    if (element.id === "iddl-inspector-overlay" || element.id === "iddl-inspector-tag" || element.id === "iddl-inspector-panel" || element.closest("#iddl-inspector-panel")) {
-      hideOverlay();
-      return;
+  function getSelectedIndex() {
+    return selectedIndex;
+  }
+  function getSelectedComponentDetails() {
+    if (selectedIndex === null || selectedIndex >= activeHighlights.length) {
+      return null;
     }
-    const hierarchy = extractComponentHierarchy(element);
-    const componentName = hierarchy.length > 0 ? hierarchy[0].name : void 0;
-    updateOverlayPosition(element, componentName);
-  }
-  function isInspectModeActive() {
-    return isActive;
+    const highlight = activeHighlights[selectedIndex];
+    const fiber = highlight.fiber;
+    let fileName = "Unknown.tsx";
+    let lineNumber = "";
+    if (fiber._debugSource) {
+      const source = fiber._debugSource;
+      if (source.fileName) {
+        const parts = source.fileName.split("/");
+        fileName = parts[parts.length - 1];
+        if (source.lineNumber) {
+          lineNumber = `:${source.lineNumber}`;
+          if (source.columnNumber) {
+            lineNumber += `:${source.columnNumber}`;
+          }
+        }
+      }
+    } else if (fiber._debugInfo) {
+      console.log("[Multi Highlighter] _debugInfo:", fiber._debugInfo);
+    }
+    const componentName = highlight.componentName;
+    const props = fiber.memoizedProps || {};
+    const priorityKeys = ["role", "prominence", "intent", "density", "layout", "direction", "gridArea"];
+    const otherKeys = Object.keys(props).filter(
+      (key) => !priorityKeys.includes(key) && key !== "children" && key !== "ref" && key !== "key" && key !== "className" && !key.startsWith("on") && !key.startsWith("data-") && !key.startsWith("aria-") && !key.startsWith("computed")
+    );
+    const allKeys = [...priorityKeys.filter((k) => k in props), ...otherKeys];
+    const propsStr = allKeys.map((key) => {
+      const value = props[key];
+      if (value === void 0 || value === null) return null;
+      if (typeof value === "string") {
+        return `${key}="${value}"`;
+      } else if (typeof value === "number") {
+        return `${key}={${value}}`;
+      } else if (typeof value === "boolean" && value === true) {
+        return key;
+      } else if (typeof value === "object") {
+        return `${key}={{...}}`;
+      }
+      return null;
+    }).filter(Boolean).join(" ");
+    const reactCode = propsStr ? `<${componentName} ${propsStr} />` : `<${componentName} />`;
+    let htmlCode = highlight.element.outerHTML;
+    htmlCode = htmlCode.replace(/\s+/g, " ").replace(/style="[^"]*"/g, 'style="..."').replace(/class="([^"]{50,}?)"/g, 'class="..."').substring(0, 800);
+    return {
+      fileName,
+      lineNumber,
+      reactCode,
+      htmlCode
+    };
   }
   let panelDiv = null;
-  let selectedIndex = null;
-  let hoveredIndex = null;
-  let currentHierarchy = [];
-  function createPanel(rect) {
+  let isVisible = false;
+  let currentComponents = [];
+  function createPersistentPanel() {
     const div = document.createElement("div");
-    div.id = "iddl-inspector-panel";
-    const panelWidth = 600;
-    const panelHeight = Math.min(window.innerHeight * 0.8, 600);
-    let top = rect.top;
-    let left = rect.right + 10;
-    if (left + panelWidth > window.innerWidth) {
-      left = rect.left - panelWidth - 10;
-    }
-    if (left < 0) {
-      left = rect.left;
-      top = rect.bottom + 10;
-    }
-    if (top + panelHeight > window.innerHeight) {
-      top = rect.top - panelHeight - 10;
-    }
-    top = Math.max(10, Math.min(top, window.innerHeight - panelHeight - 10));
-    left = Math.max(10, Math.min(left, window.innerWidth - panelWidth - 10));
+    div.id = "iddl-inspector-persistent-panel";
+    const initialTop = 20;
+    const initialRight = 20;
     div.style.cssText = `
     position: fixed;
-    top: ${top}px;
-    left: ${left}px;
-    width: ${panelWidth}px;
-    max-height: ${panelHeight}px;
+    top: ${initialTop}px;
+    right: ${initialRight}px;
+    width: 320px;
+    max-height: 400px;
     background: #1e1e1e;
     border: 1px solid #404040;
     border-radius: 8px;
@@ -300,313 +400,277 @@ Props:
     color: #d4d4d4;
   `;
     document.body.appendChild(div);
+    setupDragFunctionality(div);
     return div;
   }
-  function updateItemStyle(index) {
-    const item = panelDiv?.querySelector(`[data-component-index="${index}"]`);
-    if (!item) return;
-    const isSelected = index === selectedIndex;
-    const isHovered = index === hoveredIndex;
-    if (isSelected) {
-      item.style.background = "rgba(59, 130, 246, 0.15)";
-      item.style.boxShadow = "inset 0 0 0 2px #3b82f6";
-    } else if (isHovered) {
-      item.style.background = "rgba(0, 0, 0, 0.02)";
-      item.style.boxShadow = "none";
-    } else {
-      item.style.background = "transparent";
-      item.style.boxShadow = "none";
-    }
+  function setupDragFunctionality(panel) {
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let initialLeft = 0;
+    let initialTop = 0;
+    const header = panel.querySelector("#iddl-panel-header");
+    if (!header) return;
+    header.style.cursor = "move";
+    header.style.userSelect = "none";
+    header.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      const rect = panel.getBoundingClientRect();
+      initialLeft = rect.left;
+      initialTop = rect.top;
+      header.style.cursor = "grabbing";
+    });
+    document.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+      panel.style.right = "auto";
+      panel.style.left = `${initialLeft + deltaX}px`;
+      panel.style.top = `${initialTop + deltaY}px`;
+    });
+    document.addEventListener("mouseup", () => {
+      if (isDragging) {
+        isDragging = false;
+        header.style.cursor = "move";
+      }
+    });
   }
-  function renderHierarchyList(hierarchy) {
+  function updatePanelContent(components) {
     if (!panelDiv) return;
+    currentComponents = components;
+    const filterLevel = getCurrentFilterLevel();
+    const config = getFilterConfig(filterLevel);
     const header = `
-    <div style="
-      padding: 16px;
-      border-bottom: 1px solid #404040;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    ">
-      <div>
-        <div style="font-size: 14px; font-weight: 600; color: #3b82f6;">Component Hierarchy</div>
-        <div style="font-size: 11px; color: #888; margin-top: 4px;">
-          Click to select, hover to preview
+    <div
+      id="iddl-panel-header"
+      style="
+        padding: 12px 16px;
+        background: linear-gradient(135deg, ${config.color}22, ${config.color}11);
+        border-bottom: 1px solid #404040;
+        border-radius: 8px 8px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      "
+    >
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div
+          style="
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: ${config.color};
+          "
+        ></div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: ${config.color};">
+            ${config.label}
+          </div>
+          <div style="font-size: 10px; color: #888; margin-top: 2px;">
+            ${components.length} components
+          </div>
         </div>
       </div>
       <button
-        id="iddl-close-panel"
+        id="iddl-close-panel-btn"
         style="
           background: transparent;
           border: none;
           color: #888;
           cursor: pointer;
-          font-size: 18px;
+          font-size: 16px;
           padding: 4px 8px;
+          transition: color 0.2s;
         "
       >✕</button>
     </div>
   `;
-    const listItems = hierarchy.map(
-      (info, index) => `
+    const selectedIdx = getSelectedIndex();
+    const listItems = components.map(
+      (item, index) => {
+        const isSelected = selectedIdx === index;
+        const propsText = [
+          item.props.role ? `role="${item.props.role}"` : null,
+          item.props.prominence ? `prominence="${item.props.prominence}"` : null
+        ].filter(Boolean).join(" ");
+        return `
     <div
       data-component-index="${index}"
-      class="hierarchy-item"
+      class="component-list-item"
       style="
-        padding: 12px 16px;
+        padding: 8px 16px;
         border-bottom: 1px solid #2a2a2a;
         cursor: pointer;
-        transition: background 0.1s, box-shadow 0.1s;
-        background: transparent;
+        transition: background 0.15s;
+        background: ${isSelected ? "rgba(0, 0, 0, 0.4)" : "transparent"};
+        font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
       "
     >
-      <div style="font-size: 13px; font-weight: 500; color: #61afef;">
-        ${info.name}
+      <div style="font-size: 11px; color: ${config.color};">
+        <span style="font-weight: 600;">&lt;${item.name}</span>${propsText ? ` <span style="color: #888;">${propsText}</span>` : ""}<span style="font-weight: 600;"> /&gt;</span>
       </div>
-      ${info.filePath ? `<div style="font-size: 11px; color: #888; margin-top: 4px;">
-          ${info.filePath}
-        </div>` : ""}
-      ${info.className ? `<div style="
-          font-size: 11px;
-          color: #98c379;
-          margin-top: 4px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        ">
-          ${info.className}
-        </div>` : ""}
     </div>
-  `
+  `;
+      }
     ).join("");
-    panelDiv.innerHTML = header + `<div style="overflow-y: auto; flex: 1;">${listItems}</div>`;
-    panelDiv.querySelector("#iddl-close-panel")?.addEventListener("click", hidePanel);
-    hierarchy.forEach((info, index) => {
-      const item = panelDiv?.querySelector(`[data-component-index="${index}"]`);
-      if (!item) return;
-      item.addEventListener("mouseenter", () => {
-        const prevHovered = hoveredIndex;
-        hoveredIndex = index;
-        if (prevHovered !== null) {
-          updateItemStyle(prevHovered);
-        }
-        updateItemStyle(index);
-      });
-      item.addEventListener("mouseleave", () => {
-        if (hoveredIndex === index) {
-          hoveredIndex = null;
-          updateItemStyle(index);
-        }
-      });
-      item.addEventListener("click", () => {
-        const prevSelected = selectedIndex;
-        selectedIndex = index;
-        if (prevSelected !== null && prevSelected !== index) {
-          updateItemStyle(prevSelected);
-        }
-        updateItemStyle(index);
-        renderDetailsView(info);
-      });
-    });
-    if (selectedIndex !== null) {
-      updateItemStyle(selectedIndex);
-    }
-  }
-  function renderDetailsView(info) {
-    if (!panelDiv) return;
-    const formattedInfo = formatComponentInfo(info);
-    const header = `
-    <div style="
-      padding: 16px;
-      border-bottom: 1px solid #404040;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    ">
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <button
-          id="iddl-back-button"
-          style="
-            background: transparent;
-            border: 1px solid #404040;
-            color: #d4d4d4;
-            cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-          "
-        >← Back</button>
-        <div>
-          <div style="font-size: 14px; font-weight: 600; color: #3b82f6;">${info.name}</div>
-          ${info.filePath ? `<div style="font-size: 11px; color: #888; margin-top: 4px;">
-            ${info.filePath}
-          </div>` : ""}
-        </div>
-      </div>
-      <div style="display: flex; gap: 8px;">
-        <button
-          id="iddl-copy-button"
-          style="
-            background: #3b82f6;
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-          "
-        >Copy</button>
-        <button
-          id="iddl-close-panel"
-          style="
-            background: transparent;
-            border: none;
-            color: #888;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 4px 8px;
-          "
-        >✕</button>
-      </div>
+    const details = getSelectedComponentDetails();
+    let detailsSection = "";
+    if (details) {
+      const fileLocation = `${details.fileName}${details.lineNumber}`;
+      const combinedCode = `// ${fileLocation}
+${details.reactCode}
+
+// HTML
+${details.htmlCode}`;
+      detailsSection = `
+    <div
+      style="
+        padding: 12px 16px;
+        border-top: 1px solid #404040;
+        background: #1a1a1a;
+        max-height: 200px;
+        overflow-y: auto;
+      "
+    >
+      <div style="font-size: 10px; color: #888; margin-bottom: 4px;">Selected Component:</div>
+      <textarea
+        id="iddl-component-details"
+        readonly
+        onclick="this.select()"
+        style="
+          width: 100%;
+          min-height: 120px;
+          background: #0d0d0d;
+          border: 1px solid #333;
+          border-radius: 4px;
+          color: #d4d4d4;
+          font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+          font-size: 11px;
+          padding: 8px;
+          resize: vertical;
+          line-height: 1.4;
+          cursor: text;
+        "
+      >${combinedCode}</textarea>
     </div>
   `;
-    const content = `
-    <div style="
-      padding: 16px;
-      overflow-y: auto;
-      flex: 1;
-      font-size: 12px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      font-family: 'JetBrains Mono', monospace;
-    ">${formattedInfo}</div>
+    }
+    const footer = `
+    <div
+      style="
+        padding: 8px 16px;
+        border-top: 1px solid #404040;
+        background: #252525;
+        border-radius: 0 0 8px 8px;
+        font-size: 10px;
+        color: #888;
+      "
+    >
+      <kbd style="
+        padding: 2px 6px;
+        background: #333;
+        border: 1px solid #444;
+        border-radius: 3px;
+        font-family: inherit;
+      ">Cmd+D</kbd> Cycle Filter
+      &nbsp;&nbsp;
+      <kbd style="
+        padding: 2px 6px;
+        background: #333;
+        border: 1px solid #444;
+        border-radius: 3px;
+        font-family: inherit;
+      ">ESC</kbd> Close
+    </div>
   `;
-    panelDiv.innerHTML = header + content;
-    panelDiv.querySelector("#iddl-back-button")?.addEventListener("click", () => {
-      renderHierarchyList(currentHierarchy);
+    panelDiv.innerHTML = header + `<div style="overflow-y: auto; flex: 1;">${listItems || '<div style="padding: 16px; text-align: center; color: #666;">No components found</div>'}</div>` + detailsSection + footer;
+    panelDiv.querySelector("#iddl-close-panel-btn")?.addEventListener("click", () => {
+      hidePanel();
     });
-    panelDiv.querySelector("#iddl-copy-button")?.addEventListener("click", () => {
-      navigator.clipboard.writeText(formattedInfo).then(() => {
-        const btn = panelDiv?.querySelector("#iddl-copy-button");
-        if (btn) {
-          btn.textContent = "Copied!";
-          setTimeout(() => {
-            btn.textContent = "Copy";
-          }, 2e3);
+    setupDragFunctionality(panelDiv);
+    components.forEach((item, index) => {
+      const itemEl = panelDiv?.querySelector(`[data-component-index="${index}"]`);
+      if (!itemEl) return;
+      const selectedIdx2 = getSelectedIndex();
+      const isSelected = selectedIdx2 === index;
+      itemEl.addEventListener("mouseenter", () => {
+        if (!isSelected) {
+          itemEl.style.background = "rgba(0, 0, 0, 0.25)";
         }
       });
+      itemEl.addEventListener("mouseleave", () => {
+        if (!isSelected) {
+          itemEl.style.background = "transparent";
+        }
+      });
+      itemEl.addEventListener("click", () => {
+        selectComponent(index);
+        updatePanelContent(currentComponents);
+      });
     });
-    panelDiv.querySelector("#iddl-close-panel")?.addEventListener("click", hidePanel);
   }
-  function showPanel(hierarchy, rect) {
-    currentHierarchy = hierarchy;
+  function showPanel() {
+    if (isVisible) return;
     if (!panelDiv) {
-      panelDiv = createPanel(rect);
+      panelDiv = createPersistentPanel();
+    } else {
+      panelDiv.style.display = "flex";
     }
-    renderHierarchyList(hierarchy);
+    isVisible = true;
+    updatePanelContent(currentComponents);
   }
   function hidePanel() {
-    if (panelDiv) {
-      panelDiv.remove();
-      panelDiv = null;
-    }
-    selectedIndex = null;
-    hoveredIndex = null;
-    currentHierarchy = [];
+    if (!isVisible || !panelDiv) return;
+    panelDiv.style.display = "none";
+    isVisible = false;
   }
-  let clickHandler = null;
-  let mouseDownHandler = null;
-  let mouseUpHandler = null;
-  let escapeHandler = null;
-  function enableInspectMode() {
-    if (isInspectModeActive()) return;
-    console.log("[Element Inspector] Inspect mode enabled");
-    activateInspectMode();
-    const shouldBlockEvent = (target) => {
-      return !(target.id === "iddl-inspector-overlay" || target.id === "iddl-inspector-tag" || target.id === "iddl-inspector-panel" || target.closest("#iddl-inspector-panel"));
-    };
-    mouseDownHandler = (e) => {
-      const target = e.target;
-      if (shouldBlockEvent(target)) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-      }
-    };
-    mouseUpHandler = (e) => {
-      const target = e.target;
-      if (shouldBlockEvent(target)) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-      }
-    };
-    clickHandler = (e) => {
-      const target = e.target;
-      if (!shouldBlockEvent(target)) {
-        return;
-      }
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      const hierarchy = extractComponentHierarchy(target);
-      console.log("[Element Inspector] Component hierarchy:", hierarchy);
-      if (hierarchy.length > 0) {
-        const rect = target.getBoundingClientRect();
-        showPanel(hierarchy, rect);
-      } else {
-        console.warn("[Element Inspector] No React components found at this element");
-      }
-    };
-    document.addEventListener("mousedown", mouseDownHandler, true);
-    document.addEventListener("mouseup", mouseUpHandler, true);
-    document.addEventListener("click", clickHandler, true);
-    escapeHandler = (e) => {
-      if (e.key === "Escape") {
-        disableInspectMode();
-      }
-    };
-    document.addEventListener("keydown", escapeHandler);
+  function isPanelVisible() {
+    return isVisible;
   }
-  function disableInspectMode() {
-    if (!isInspectModeActive()) return;
-    console.log("[Element Inspector] Inspect mode disabled");
-    deactivateInspectMode();
-    hidePanel();
-    if (mouseDownHandler) {
-      document.removeEventListener("mousedown", mouseDownHandler, true);
-      mouseDownHandler = null;
-    }
-    if (mouseUpHandler) {
-      document.removeEventListener("mouseup", mouseUpHandler, true);
-      mouseUpHandler = null;
-    }
-    if (clickHandler) {
-      document.removeEventListener("click", clickHandler, true);
-      clickHandler = null;
-    }
-    if (escapeHandler) {
-      document.removeEventListener("keydown", escapeHandler);
-      escapeHandler = null;
-    }
-  }
-  function toggleInspectMode() {
-    if (isInspectModeActive()) {
-      disableInspectMode();
-    } else {
-      enableInspectMode();
-    }
+  function initPersistentPanel() {
+    window.addEventListener("iddl-component-selected", () => {
+      console.log("[Persistent Panel] Component selected event received");
+      updatePanelContent(currentComponents);
+    });
+    console.log("[Persistent Panel] Event listener registered");
   }
   function setupKeyboardHandler() {
     document.addEventListener("keydown", (e) => {
       const isMac = /Mac/i.test(navigator.platform);
       const modKey = isMac ? e.metaKey : e.ctrlKey;
+      if (e.key === "Escape" && isPanelVisible()) {
+        e.preventDefault();
+        hidePanel();
+        clearAllHighlights();
+        return;
+      }
       if (modKey && e.key === "d") {
         e.preventDefault();
-        toggleInspectMode();
+        handleFilterCycle();
       }
     });
   }
-  setupKeyboardHandler();
-  console.log("[IDDL Inspector] Ready. Press Cmd+D (Mac) or Ctrl+D (Win) to start inspecting.");
+  function handleFilterCycle() {
+    if (!isPanelVisible()) {
+      showPanel();
+    }
+    const newLevel = cycleFilterLevel();
+    console.log(`[IDDL Inspector] Filter level changed to: ${newLevel}`);
+    const components = highlightAllComponents();
+    updatePanelContent(components);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+  function init() {
+    setupKeyboardHandler();
+    initPersistentPanel();
+    console.log("[IDDL Inspector] Ready.");
+    console.log("  - Cmd+D: Show Inspector & Cycle Filter Level");
+    console.log("  - ESC: Hide Inspector");
+  }
 })();

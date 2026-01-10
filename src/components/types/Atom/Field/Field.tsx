@@ -6,11 +6,14 @@
  *
  * v1.0.1: 14개 신규 dataType, constraints, dependsOn, modeOverride, condition 추가, CVA 적용
  * v2.0.0: Headless + Renderer 패턴 도입 (로직과 프레젠테이션 분리)
+ * v2.0.1: role + type + value 일관성 체계 (dataType → type)
+ * v3.0.0: role 기반 구조로 전환 (role="Input|Select|Radio|Checkbox|Rating" + type)
  * @see spec/iddl-spec-1.0.1.md#412-field-node
  */
 
 import { cva } from 'class-variance-authority';
 import { useState } from 'react';
+import { Star } from 'lucide-react';
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { FieldProps, FieldOption } from '@/components/types/Atom/types.ts';
 import { cn } from '@/shared/lib/utils.ts';
@@ -25,30 +28,16 @@ import { SelectField } from './renderers/SelectField';
 import { RadioField } from './renderers/RadioField';
 import { RatingField } from './renderers/RatingField';
 
-/**
- * Field input variants (CVA)
- * Per minimal-renderer-guide.md Section 5.3: Input 패딩 8px 12px
- * Per minimal-renderer-guide.md Section 3.2: radius-sm (4px)
- */
-const inputVariants = cva(
-  'w-full py-2 px-3 bg-surface-sunken border border-default rounded text-text placeholder:text-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors'
-);
-
-/**
- * Checkbox/Radio input variants (CVA)
- * Per minimal-renderer-guide.md Section 3.2: radius-sm (4px) for small elements
- */
-const checkboxVariants = cva(
-  'w-4 h-4 border-default text-accent focus-visible:ring-2 focus-visible:ring-accent rounded',
-  {
-    variants: {
-      type: {
-        checkbox: '',
-        radio: 'rounded-full', // Radio는 원형
-      },
-    },
-  }
-);
+// Shared Styles (v2.1.0)
+import {
+  inputStyles,
+  textareaStyles,
+  checkboxStyles,
+  fileInputStyles,
+  colorInputStyles,
+  rangeStyles,
+  ratingStarStyles,
+} from './styles/field.styles';
 
 /**
  * Field view text variants (CVA)
@@ -68,11 +57,6 @@ const fieldViewVariants = cva('text-text', {
 });
 
 /**
- * Rating button variants (CVA)
- */
-const ratingButtonVariants = cva('text-subtle hover:text-yellow-500 transition-colors');
-
-/**
  * View Mode: 데이터를 텍스트로 표시
  */
 function FieldView({
@@ -80,7 +64,6 @@ function FieldView({
   model,
   value,
   prominence,
-  className,
 }: {
   label: string;
   model: string;
@@ -91,7 +74,7 @@ function FieldView({
   const displayValue = value ?? model; // 실제 구현에서는 model에서 데이터 조회
 
   return (
-    <div className={cn('flex flex-col gap-1', className)}>
+    <div className={cn('flex flex-col gap-1')}>
       <span className="text-xs text-muted font-medium">{label}</span>
       <span
         className={fieldViewVariants({
@@ -106,22 +89,24 @@ function FieldView({
 }
 
 /**
- * Edit Mode: 데이터를 입력 폼으로 표시 (v1.0.1: 21개 dataType)
- * IDDL-only: prominence와 dataType만으로 스타일 결정
+ * Edit Mode: 데이터를 입력 폼으로 표시 (v1.0.1: 21개 type)
+ * IDDL-only: prominence와 type만으로 스타일 결정
  * v1.0.2: clearable 지원 추가
  * v2.0.0: Headless + Renderer 패턴 적용 (우선순위 높은 타입부터)
+ * v2.0.1: dataType → type으로 rename
+ * v3.0.0: role 기반 구조 (role 우선, type은 세부 variant)
  */
 function FieldEdit(props: FieldProps) {
   const {
+    role,
     label,
     model,
-    dataType,
+    type,
     placeholder,
     required,
     options,
     constraints,
     clearable,
-    className,
     value: controlledValue,
     onChange: controlledOnChange,
     prominence,
@@ -132,13 +117,137 @@ function FieldEdit(props: FieldProps) {
   const ctx = useLayoutContext();
   const computedDensity = props.density ?? ctx.density ?? 'Standard';
 
+  // v3.0.0: role 기반 분기 (role="Input|Select|Radio|Checkbox|Rating")
+
+  // role="Input": Text input variants (text, email, url, phone, password, number, color, date 등)
+  if (role === 'Input') {
+    // Text-based inputs
+    if (!type || ['text', 'email', 'url', 'phone', 'password'].includes(type)) {
+      return (
+        <TextField
+          label={label}
+          model={model}
+          type={(type || 'text') as 'text' | 'email' | 'url' | 'phone' | 'password'}
+          prominence={prominence}
+          intent={intent}
+          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+          constraints={constraints}
+          clearable={clearable}
+          required={required}
+          placeholder={placeholder}
+          value={controlledValue as string | undefined}
+          onChange={(val) => {
+            if (controlledOnChange) {
+              const event = { target: { value: val } };
+              controlledOnChange(event as any);
+            }
+          }}
+        />
+      );
+    }
+
+    // Number inputs
+    if (['number', 'currency', 'range'].includes(type || '')) {
+      return (
+        <NumberField
+          label={label}
+          model={model}
+          type={type as 'number' | 'currency' | 'range'}
+          prominence={prominence}
+          intent={intent}
+          constraints={constraints}
+          required={required}
+          placeholder={placeholder}
+          value={controlledValue as number | undefined}
+          onChange={(val) => {
+            if (controlledOnChange) {
+              const event = { target: { value: val } };
+              controlledOnChange(event as any);
+            }
+          }}
+        />
+      );
+    }
+
+    // Color/Date/Other special inputs (fallback to legacy)
+    // Fall through to legacy code below
+  }
+
+  // role="Select": Dropdown selection
+  if (role === 'Select') {
+    return (
+      <SelectField
+        label={label}
+        model={model}
+        type={type === 'multiselect' ? 'multiselect' : 'select'}
+        options={options || []}
+        prominence={prominence}
+        intent={intent}
+        density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
+        required={required}
+        placeholder={placeholder}
+        value={controlledValue}
+        onChange={(val) => {
+          if (controlledOnChange) {
+            const event = { target: { value: val } };
+            controlledOnChange(event as any);
+          }
+        }}
+      />
+    );
+  }
+
+  // role="Radio": Radio button group
+  if (role === 'Radio') {
+    return (
+      <RadioField
+        label={label}
+        model={model}
+        type="radio"
+        options={options || []}
+        prominence={prominence}
+        intent={intent}
+        required={required}
+        value={controlledValue as string | number | boolean | undefined}
+        onChange={(val) => {
+          if (controlledOnChange) {
+            const event = { target: { value: val } };
+            controlledOnChange(event as any);
+          }
+        }}
+      />
+    );
+  }
+
+  // role="Rating": Star rating
+  if (role === 'Rating') {
+    return (
+      <RatingField
+        label={label}
+        model={model}
+        type="rating"
+        prominence={prominence}
+        constraints={constraints}
+        required={required}
+        value={controlledValue as number | undefined}
+        onChange={(val) => {
+          if (controlledOnChange) {
+            const event = { target: { value: val } };
+            controlledOnChange(event as any);
+          }
+        }}
+      />
+    );
+  }
+
+  // Legacy: type 기반 fallback (하위 호환성)
   // v2.0.0: New Renderer 사용 (text, email, url, phone, password)
-  if (['text', 'email', 'url', 'phone', 'password'].includes(dataType)) {
+  if (['text', 'email', 'url', 'phone', 'password'].includes(type)) {
     return (
       <TextField
         label={label}
         model={model}
-        dataType={dataType as 'text' | 'email' | 'url' | 'phone' | 'password'}
+        type={type as 'text' | 'email' | 'url' | 'phone' | 'password'}
         prominence={prominence}
         intent={intent}
         density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
@@ -153,18 +262,17 @@ function FieldEdit(props: FieldProps) {
             controlledOnChange(event as any);
           }
         }}
-        className={className}
       />
     );
   }
 
   // v2.0.0: NumberField (number, currency, range)
-  if (['number', 'currency', 'range'].includes(dataType)) {
+  if (['number', 'currency', 'range'].includes(type)) {
     return (
       <NumberField
         label={label}
         model={model}
-        dataType={dataType as 'number' | 'currency' | 'range'}
+        type={type as 'number' | 'currency' | 'range'}
         prominence={prominence}
         intent={intent}
         constraints={constraints}
@@ -177,18 +285,17 @@ function FieldEdit(props: FieldProps) {
             controlledOnChange(event as any);
           }
         }}
-        className={className}
       />
     );
   }
 
   // v2.0.0: SelectField (select, multiselect)
-  if (['select', 'multiselect'].includes(dataType)) {
+  if (['select', 'multiselect'].includes(type)) {
     return (
       <SelectField
         label={label}
         model={model}
-        dataType={dataType as 'select' | 'multiselect'}
+        type={type as 'select' | 'multiselect'}
         options={options || []}
         prominence={prominence}
         intent={intent}
@@ -202,18 +309,17 @@ function FieldEdit(props: FieldProps) {
             controlledOnChange(event as any);
           }
         }}
-        className={className}
       />
     );
   }
 
   // v2.0.0: RadioField
-  if (dataType === 'radio') {
+  if (type === 'radio') {
     return (
       <RadioField
         label={label}
         model={model}
-        dataType="radio"
+        type="radio"
         options={options || []}
         prominence={prominence}
         intent={intent}
@@ -225,18 +331,17 @@ function FieldEdit(props: FieldProps) {
             controlledOnChange(event as any);
           }
         }}
-        className={className}
       />
     );
   }
 
   // v2.0.0: RatingField
-  if (dataType === 'rating') {
+  if (type === 'rating') {
     return (
       <RatingField
         label={label}
         model={model}
-        dataType="rating"
+        type="rating"
         prominence={prominence}
         constraints={constraints}
         required={required}
@@ -247,7 +352,6 @@ function FieldEdit(props: FieldProps) {
             controlledOnChange(event as any);
           }
         }}
-        className={className}
       />
     );
   }
@@ -257,14 +361,21 @@ function FieldEdit(props: FieldProps) {
   const value = controlledValue !== undefined ? controlledValue : internalValue;
   const setValue = controlledOnChange
     ? (newValue: any) => {
-        const event = typeof newValue === 'string' ? { target: { value: newValue } } : newValue;
-        controlledOnChange(event);
-      }
+      const event = typeof newValue === 'string' ? { target: { value: newValue } } : newValue;
+      controlledOnChange(event);
+    }
     : setInternalValue;
-  const inputClassName = inputVariants();
+
+  // Shared styles for fallback inputs
+  const inputClassName = inputStyles({
+    prominence,
+    density: computedDensity as any,
+    intent,
+    dataType: type as any,
+  });
 
   const renderInput = () => {
-    switch (dataType) {
+    switch (type) {
       // text, password, email, url, phone, number, currency, range, select, multiselect, radio, rating
       // → 이미 새 Renderer로 처리됨 (위 if문들에서)
 
@@ -298,7 +409,7 @@ function FieldEdit(props: FieldProps) {
             <input
               type="checkbox"
               name={model}
-              className={checkboxVariants({ type: 'checkbox' })}
+              className={checkboxStyles({ type: 'checkbox' })}
               data-model={model}
               checked={value}
               onChange={controlledOnChange || ((e) => setValue(e.target.checked))}
@@ -317,7 +428,7 @@ function FieldEdit(props: FieldProps) {
                   name={`${model}[]`}
                   value={String(opt.value)}
                   disabled={opt.disabled}
-                  className={checkboxVariants({ type: 'checkbox' })}
+                  className={checkboxStyles({ type: 'checkbox' })}
                   data-model={model}
                 />
                 <span className="text-sm text-text">{opt.label}</span>
@@ -335,7 +446,11 @@ function FieldEdit(props: FieldProps) {
             minLength={constraints?.minLength}
             maxLength={constraints?.maxLength}
             rows={4}
-            className={inputClassName}
+            className={textareaStyles({
+              prominence,
+              density: computedDensity as any,
+              intent,
+            })}
             data-model={model}
           />
         );
@@ -348,7 +463,12 @@ function FieldEdit(props: FieldProps) {
               placeholder={placeholder || 'Rich text editor (placeholder)'}
               required={required}
               rows={6}
-              className={inputClassName}
+              className={textareaStyles({
+                prominence,
+                density: computedDensity as any,
+                intent,
+                dataType: 'richtext',
+              })}
               data-model={model}
             />
             <p className="text-xs text-subtle mt-1">TODO: Rich text editor integration</p>
@@ -362,10 +482,7 @@ function FieldEdit(props: FieldProps) {
             name={model}
             accept="image/*"
             required={required}
-            className={cn(
-              inputClassName,
-              'file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-accent file:text-white'
-            )}
+            className={fileInputStyles()}
             data-model={model}
           />
         );
@@ -376,10 +493,7 @@ function FieldEdit(props: FieldProps) {
             type="file"
             name={model}
             required={required}
-            className={cn(
-              inputClassName,
-              'file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-accent file:text-white'
-            )}
+            className={fileInputStyles()}
             data-model={model}
           />
         );
@@ -390,7 +504,7 @@ function FieldEdit(props: FieldProps) {
             type="color"
             name={model}
             required={required}
-            className="w-20 h-10 rounded-md border border-default cursor-pointer"
+            className={colorInputStyles()}
             data-model={model}
           />
         );
@@ -404,7 +518,7 @@ function FieldEdit(props: FieldProps) {
               required={required}
               min={constraints?.min ?? 0}
               max={constraints?.max ?? 100}
-              className="w-full h-2 bg-surface-sunken rounded-lg appearance-none cursor-pointer accent-accent"
+              className={rangeStyles()}
               data-model={model}
               value={value}
               onChange={controlledOnChange || ((e) => setValue(parseFloat(e.target.value)))}
@@ -423,7 +537,7 @@ function FieldEdit(props: FieldProps) {
               <button
                 key={star}
                 type="button"
-                className={ratingButtonVariants()}
+                className={ratingStarStyles({ filled: false /* TODO: filled logic */ })}
                 data-model={model}
                 data-value={star}
               >
@@ -448,15 +562,15 @@ function FieldEdit(props: FieldProps) {
   };
 
   // boolean 타입은 라벨이 인라인으로 포함되어 있음
-  if (dataType === 'boolean') {
-    return <div className={cn('flex flex-col gap-1', className)}>{renderInput()}</div>;
+  if (type === 'boolean') {
+    return <div className={cn('flex flex-col gap-1')}>{renderInput()}</div>;
   }
 
   return (
-    <div className={cn('flex flex-col gap-1', className)}>
-      <label htmlFor={model} className="text-sm text-muted font-medium">
+    <div className={cn('flex flex-col gap-1')}>
+      <label htmlFor={model} className="text-sm text-text font-medium">
         {label}
-        {required && <span className="text-red-600 ml-1">*</span>}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
       {renderInput()}
       {constraints?.patternMessage && (
@@ -484,7 +598,7 @@ export function Field({ as, ...props }: FieldProps) {
   const computedDensity = props.density ?? ctx.density ?? 'Standard';
 
   // modeOverride가 있으면 우선 사용 (v1.0.1)
-  const mode = props.modeOverride ?? ctx.mode ?? 'view';
+  const mode = props.modeOverride ?? ctx.mode ?? 'edit';
 
   // dependsOn 처리 (v1.0.1)
   // TODO: dependsOn 표현식 평가 구현
@@ -511,7 +625,6 @@ export function Field({ as, ...props }: FieldProps) {
           model={props.model}
           value={props.value}
           prominence={computedProminence}
-          className={props.className}
         />
       ) : (
         <FieldEdit {...props} />

@@ -8,14 +8,14 @@
  * <NumberField
  *   label="Font Size"
  *   model="fontSize"
- *   dataType="number"
+ *   type="number"
  *   constraints={{ min: 8, max: 72 }}
  * />
  *
  * <NumberField
  *   label="Opacity"
  *   model="opacity"
- *   dataType="range"
+ *   type="range"
  *   constraints={{ min: 0, max: 100 }}
  * />
  */
@@ -46,7 +46,7 @@ export interface NumberFieldProps {
   /**
    * Data type
    */
-  dataType: 'number' | 'currency' | 'range';
+  type: 'number' | 'currency' | 'range';
 
   /**
    * Prominence level
@@ -103,7 +103,7 @@ export function NumberField(props: NumberFieldProps) {
   const {
     label,
     model,
-    dataType,
+    type,
     prominence = 'Standard',
     intent = 'Neutral',
     constraints,
@@ -127,7 +127,7 @@ export function NumberField(props: NumberFieldProps) {
   });
 
   // Render range slider
-  if (dataType === 'range') {
+  if (type === 'range') {
     return (
       <div className={cn(fieldWrapperStyles(), className)}>
         {/* Label */}
@@ -180,7 +180,7 @@ export function NumberField(props: NumberFieldProps) {
           prominence,
           intent,
           error: !!field.error,
-          dataType,
+          dataType: type,
         })}
       />
 
@@ -192,7 +192,7 @@ export function NumberField(props: NumberFieldProps) {
       )}
 
       {/* Currency display (if currency type) */}
-      {dataType === 'currency' && !field.error && field.value > 0 && (
+      {type === 'currency' && !field.error && field.value > 0 && (
         <span className="text-xs text-subtle">{field.formatCurrency(field.value)}</span>
       )}
     </div>

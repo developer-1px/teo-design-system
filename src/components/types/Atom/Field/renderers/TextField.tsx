@@ -8,7 +8,7 @@
  * <TextField
  *   label="Email"
  *   model="user.email"
- *   dataType="email"
+ *   type="email"
  *   prominence="Standard"
  *   required
  *   clearable
@@ -41,7 +41,7 @@ export interface TextFieldProps {
   /**
    * Data type (determines input type)
    */
-  dataType: 'text' | 'email' | 'url' | 'phone' | 'password';
+  type: 'text' | 'email' | 'url' | 'phone' | 'password';
 
   /**
    * Prominence level
@@ -103,7 +103,7 @@ export function TextField(props: TextFieldProps) {
   const {
     label,
     model,
-    dataType,
+    type,
     prominence = 'Standard',
     intent = 'Neutral',
     density = 'Standard',
@@ -139,7 +139,7 @@ export function TextField(props: TextFieldProps) {
         <input
           {...field.getInputProps()}
           id={model}
-          type={dataType === 'phone' ? 'tel' : dataType}
+          type={type === 'phone' ? 'tel' : type}
           placeholder={placeholder}
           disabled={disabled}
           className={inputStyles({
@@ -147,7 +147,7 @@ export function TextField(props: TextFieldProps) {
             density,
             intent,
             error: !!field.error,
-            dataType,
+            dataType: type,
           })}
         />
 

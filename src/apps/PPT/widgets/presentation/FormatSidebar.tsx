@@ -1,14 +1,15 @@
 /**
- * FormatSidebar - IDDL 기반 포맷 설정 사이드바 (v3.0)
+ * FormatSidebar - 순수 IDDL 기반 포맷 설정 사이드바 (v4.0)
  *
- * Features:
- * - Edit 모드 활성화 (IDDLContext mode="edit")
- * - Minimal theme 디자인 (간결한 간격, 명확한 계층)
- * - Slide 데이터 실시간 반영
+ * 모든 레이아웃과 스타일을 IDDL Group/Text role로 표현
+ * - 수동 div/className 제거
+ * - Group layout="stack" + density로 간격 제어
+ * - Text role="Label"로 섹션 헤더 표현
+ * - 미니멀 디자인 유지 (간결한 간격, 명확한 계층)
  *
  * IDDL 구조:
- * - Section[Aside]: 사이드바 컨테이너
- *   - Group[Form]: 폼 전체 (mode="edit")
+ * - Section[Aside]: 사이드바 컨테이너 (외부에서 적용)
+ *   - Group[Stack]: 전체 폼 컨테이너
  *     - Group[Fieldset]: 텍스트 설정
  *     - Group[Fieldset]: 배경 설정
  *     - Text[Caption]: 안내 메시지
@@ -18,6 +19,7 @@ import { useState } from 'react';
 import { IDDLProvider } from '@/components/context/IDDLContext';
 import { Group } from '@/components/types/Group/Group.tsx';
 import { Field } from '@/components/types/Atom/Field/Field';
+import { Text } from '@/components/types/Atom/Text/Text';
 import type { Slide } from './SlideList';
 
 interface FormatSidebarProps {
@@ -47,24 +49,22 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
     <IDDLProvider
       value={{
         prominence: 'Standard',
-        density: 'Comfortable',
+        density: 'Compact',
         intent: 'Neutral',
         depth: 1,
         mode: 'edit',
       }}
     >
-      <div className="h-full w-full overflow-y-auto bg-surface border-l border-border">
-        <div className="flex flex-col p-4 gap-6">
-          {/* Text Formatting */}
-          <Group role="Fieldset" layout="stack" direction="vertical" density="Compact" className="gap-3">
-            <div className="text-xs font-medium text-text-secondary">
-              텍스트
-            </div>
+      <Group layout="scroll" direction="vertical" density="Comfortable">
+        <Group layout="stack" direction="vertical" density="Comfortable">
+          {/* Text Formatting Section */}
+          <Group role="Fieldset" layout="stack" direction="vertical" density="Compact">
+            <Text role="Label" prominence="Secondary" content="텍스트" />
 
             <Field
+              role="Select"
               label="글꼴"
               model="fontFamily"
-              dataType="select"
               value={formData.fontFamily}
               onChange={(value) => handleFieldChange('fontFamily', value)}
               options={[
@@ -76,41 +76,42 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
             />
 
             <Field
+              role="Input"
+              type="number"
               label="크기 (pt)"
               model="fontSize"
-              dataType="number"
               value={formData.fontSize}
               onChange={(value) => handleFieldChange('fontSize', value)}
               constraints={{ min: 8, max: 72 }}
             />
 
             <Field
+              role="Input"
+              type="color"
               label="색상"
               model="textColor"
-              dataType="color"
               value={formData.textColor}
               onChange={(value) => handleFieldChange('textColor', value)}
             />
           </Group>
 
-          {/* Background Formatting */}
-          <Group role="Fieldset" layout="stack" direction="vertical" density="Compact" className="gap-3">
-            <div className="text-xs font-medium text-text-secondary">
-              배경
-            </div>
+          {/* Background Formatting Section */}
+          <Group role="Fieldset" layout="stack" direction="vertical" density="Compact">
+            <Text role="Label" prominence="Secondary" content="배경" />
 
             <Field
+              role="Input"
+              type="color"
               label="배경색"
               model="backgroundColor"
-              dataType="color"
               value={formData.backgroundColor}
               onChange={(value) => handleFieldChange('backgroundColor', value)}
             />
 
             <Field
+              role="Radio"
               label="프리셋"
               model="backgroundPreset"
-              dataType="radio"
               value={formData.backgroundColor}
               onChange={(value) => handleFieldChange('backgroundColor', value)}
               options={[
@@ -124,12 +125,16 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
             />
           </Group>
 
-          {/* Helper Text */}
-          <div className="pt-4 border-t border-border-subtle text-xs text-text-tertiary">
-            현재 선택된 슬라이드에 적용됩니다
-          </div>
-        </div>
-      </div>
+          {/* Divider + Helper Text */}
+          <Group role="Container" prominence="Subtle" density="Comfortable">
+            <Text
+              role="Caption"
+              prominence="Subtle"
+              content="현재 선택된 슬라이드에 적용됩니다"
+            />
+          </Group>
+        </Group>
+      </Group>
     </IDDLProvider>
   );
 };

@@ -182,7 +182,7 @@ export const ServerProductsViewDSL = () => {
 
                 <Field
                   model="search"
-                  dataType="text"
+                  type="text"
                   placeholder="Search all fields..."
                   clearable
                   value={searchQuery}
@@ -195,7 +195,7 @@ export const ServerProductsViewDSL = () => {
                 <Field
                   label="Filter by"
                   model="filterColumn"
-                  dataType="select"
+                  type="select"
                   options={[{ label: 'All columns', value: '' }, ...columnOptions]}
                   value={filterColumn}
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -209,7 +209,7 @@ export const ServerProductsViewDSL = () => {
               <Group role="Toolbar" layout="inline" density="Compact" className="gap-2">
                 <Field
                   model="viewType"
-                  dataType="radio"
+                  type="radio"
                   options={[
                     { label: 'Table', value: 'table' },
                     { label: 'JSON', value: 'json' },
@@ -232,7 +232,7 @@ export const ServerProductsViewDSL = () => {
                 <Field
                   label="Sort by"
                   model="sortColumn"
-                  dataType="select"
+                  type="select"
                   options={[{ label: 'None', value: '' }, ...columnOptions]}
                   value={sortColumn}
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -243,7 +243,7 @@ export const ServerProductsViewDSL = () => {
 
                 <Field
                   model="sortDirection"
-                  dataType="radio"
+                  type="radio"
                   options={[
                     { label: '↑', value: 'asc' },
                     { label: '↓', value: 'desc' },
