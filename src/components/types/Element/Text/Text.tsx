@@ -9,15 +9,15 @@
  */
 
 import { cva } from 'class-variance-authority';
+import type React from 'react';
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { TextProps, TextRole } from '@/components/types/Element/Text/Text.types';
-import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
 
 /**
  * Role에 따른 HTML 태그 매핑
  */
-const getRoleElement = (role: TextRole, prominence?: string): keyof JSX.IntrinsicElements => {
+const getRoleElement = (role: TextRole, prominence?: string): keyof React.JSX.IntrinsicElements => {
   switch (role) {
     case 'Title':
       // Hierarchy based on Prominence
@@ -79,11 +79,18 @@ const textVariants = cva('', {
   },
   compoundVariants: [
     // --- Title Hierarchy ---
-    { role: 'Title', prominence: 'Hero', class: 'text-4xl lg:text-5xl font-extrabold tracking-tight' },
-    { role: 'Title', prominence: 'Strong', class: 'text-3xl font-semibold tracking-tight first:mt-0' }, // Section Header
+    {
+      role: 'Title',
+      prominence: 'Hero',
+      class: 'text-4xl lg:text-5xl font-extrabold tracking-tight',
+    },
+    {
+      role: 'Title',
+      prominence: 'Strong',
+      class: 'text-3xl font-semibold tracking-tight first:mt-0',
+    }, // Section Header
     { role: 'Title', prominence: 'Standard', class: 'text-2xl font-semibold tracking-tight' }, // Card Header
     { role: 'Title', prominence: 'Subtle', class: 'text-xl font-semibold tracking-tight' }, // Subsection
-
     // --- Body Hierarchy ---
     { role: 'Body', prominence: 'Hero', class: 'text-xl text-text-muted' }, // Lead text
     { role: 'Body', prominence: 'Strong', class: 'text-lg font-medium' },
@@ -107,6 +114,8 @@ export function Text({
   className,
   hidden,
   highlight,
+  children,
+  size, // Consumed but not used in CVA to prevent unused warning if strictly checked, or passed if supported
   ...rest
 }: TextProps) {
   const ctx = useLayoutContext();
@@ -121,6 +130,9 @@ export function Text({
   const Element: any = as || defaultElement;
 
   const renderContent = () => {
+    // Prefer children if present
+    if (children) return children;
+
     if (!highlight || !content) return content;
     const regex = new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     const parts = content.split(regex);

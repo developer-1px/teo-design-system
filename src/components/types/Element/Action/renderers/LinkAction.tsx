@@ -80,7 +80,7 @@ export function LinkAction({
         // Disabled state
         isDisabled && 'opacity-50 cursor-not-allowed',
         // Loading cursor
-        loading && 'cursor-wait',
+        loading && 'cursor-wait'
         // Custom className override
       )}
       data-dsl-component="action"

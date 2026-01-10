@@ -167,12 +167,11 @@ function renderHierarchyList(hierarchy: ComponentInfo[]): void {
   `;
 
   const listItems = hierarchy
-    .map(
-      (info, index) => {
-        const icon = getRoleIcon(info.role, info.name);
-        const label = info.role ? `{${info.role}}` : info.name;
+    .map((info, index) => {
+      const icon = getRoleIcon(info.role, info.name);
+      const label = info.role ? `{${info.role}}` : info.name;
 
-        return `
+      return `
     <div
       data-component-index="${index}"
       class="hierarchy-item"
@@ -191,16 +190,16 @@ function renderHierarchyList(hierarchy: ComponentInfo[]): void {
         </span>
         ${info.role ? `<span style="font-size: 11px; color: #666; font-weight: 400;">(${info.name})</span>` : ''}
       </div>
-      ${info.filePath
-            ? `<div style="font-size: 11px; color: #888; margin-top: 4px; padding-left: 22px;">
+      ${
+        info.filePath
+          ? `<div style="font-size: 11px; color: #888; margin-top: 4px; padding-left: 22px;">
           ${info.filePath}
         </div>`
-            : ''
-          }
+          : ''
+      }
     </div>
   `;
-      }
-    )
+    })
     .join('');
 
   panelDiv.innerHTML = header + `<div style="overflow-y: auto; flex: 1;">${listItems}</div>`;
@@ -264,17 +263,40 @@ function renderHierarchyList(hierarchy: ComponentInfo[]): void {
 function getComputedStylesHtml(element: HTMLElement): string {
   const styles = window.getComputedStyle(element);
   const relevantProps = [
-    'display', 'position', 'flex-direction', 'justify-content', 'align-items',
-    'width', 'height', 'margin', 'padding', 'gap',
-    'background-color', 'color', 'font-size', 'font-weight',
-    'border', 'border-radius', 'box-shadow', 'opacity', 'z-index'
+    'display',
+    'position',
+    'flex-direction',
+    'justify-content',
+    'align-items',
+    'width',
+    'height',
+    'margin',
+    'padding',
+    'gap',
+    'background-color',
+    'color',
+    'font-size',
+    'font-weight',
+    'border',
+    'border-radius',
+    'box-shadow',
+    'opacity',
+    'z-index',
   ];
 
-  let html = '<div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 11px;">';
+  let html =
+    '<div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 11px;">';
 
-  relevantProps.forEach(prop => {
+  relevantProps.forEach((prop) => {
     const value = styles.getPropertyValue(prop);
-    if (value && value !== 'initial' && value !== 'none' && value !== 'normal' && value !== '0px' && value !== 'rgba(0, 0, 0, 0)') {
+    if (
+      value &&
+      value !== 'initial' &&
+      value !== 'none' &&
+      value !== 'normal' &&
+      value !== '0px' &&
+      value !== 'rgba(0, 0, 0, 0)'
+    ) {
       html += `
         <div style="color: #9cdcfe;">${prop}:</div>
         <div style="color: #ce9178; word-break: break-all;">${value};</div>
@@ -325,12 +347,13 @@ function renderDetailsView(info: ComponentInfo): void {
             </div>
             ${info.role ? `<div style="font-size: 11px; color: #888;">(${info.name})</div>` : ''}
           </div>
-          ${info.filePath
-      ? `<div style="font-size: 11px; color: #888; margin-top: 4px;">
+          ${
+            info.filePath
+              ? `<div style="font-size: 11px; color: #888; margin-top: 4px;">
             ${info.filePath}
           </div>`
-      : ''
-    }
+              : ''
+          }
         </div>
       </div>
       <div style="display: flex; gap: 8px;">

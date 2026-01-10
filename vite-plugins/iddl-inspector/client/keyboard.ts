@@ -6,8 +6,8 @@
  */
 
 import { cycleFilterLevel, getCurrentFilterLevel } from './filter-state';
-import { highlightAllComponents, clearAllHighlights, clearSelection } from './multi-highlighter';
-import { updatePanelContent, showPanel, hidePanel, isPanelVisible } from './persistent-panel';
+import { clearAllHighlights, clearSelection, highlightAllComponents } from './multi-highlighter';
+import { hidePanel, isPanelVisible, showPanel, updatePanelContent } from './persistent-panel';
 
 /**
  * 키보드 이벤트 리스너 등록

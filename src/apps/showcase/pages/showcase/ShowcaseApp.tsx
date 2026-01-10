@@ -264,7 +264,7 @@ export function ShowcaseApp() {
 
   if (loading) {
     return (
-      <Page role="Focus" className="items-center justify-center">
+      <Page title="Loading" role="Focus" className="items-center justify-center">
         <Block role="Container" prominence="Standard">
           <Text role="Body" prominence="Standard" content="Loading components..." />
         </Block>
@@ -273,7 +273,7 @@ export function ShowcaseApp() {
   }
 
   return (
-    <Page role="Application" layout="Studio">
+    <Page title="Showcase App" role="Application" layout="Studio">
       {/* Top Toolbar */}
       <Section role="Toolbar" prominence="Standard">
         <Toolbar

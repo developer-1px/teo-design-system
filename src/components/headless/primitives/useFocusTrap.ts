@@ -28,7 +28,7 @@ export interface UseFocusTrapOptions {
  */
 export function useFocusTrap<T extends HTMLElement>(
   options: UseFocusTrapOptions = {}
-): React.RefObject<T> {
+): React.RefObject<T | null> {
   const { enabled = true, initialFocus, restoreFocus = true } = options;
   const ref = useRef<T>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);

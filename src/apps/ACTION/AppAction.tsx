@@ -3,4 +3,7 @@
  * FSD 2.1 Pages-First Architecture (No Barrel Exports)
  */
 
-export { ActionShowcasePage, ActionShowcasePage as AppAction } from './pages/action/ActionShowcasePage';
+export {
+  ActionShowcasePage,
+  ActionShowcasePage as AppAction,
+} from './pages/action/ActionShowcasePage';

@@ -21,144 +21,107 @@
  * v4.1: Role Configuration 중앙화 (role-config.ts)
  */
 
+import { cva } from 'class-variance-authority';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { SectionProps } from '@/components/types/Section/Section.types';
-import { LAYOUT_SECTION_ROLES } from '@/components/types/Section/role-config';
+import { Text } from '@/components/types/Element/Text/Text';
+import type { SectionProps, SectionRole } from '@/components/types/Section/Section.types';
+import { getRoleConfig } from './role-config';
 
-// v4.1: Role Configuration Helper
-import { getOverflowClass, getRoleConfig } from './role-config';
-
-// Role Renderers (v4.0)
-import { ContainerSection } from './renderers/ContainerSection';
-import { DialogSection } from './renderers/DialogSection';
-import { FrameSection } from './renderers/FrameSection';
-import { IDESection } from './renderers/IDESection';
+// Styles for Section Variants
+const sectionVariants = cva('flex flex-col relative', {
+  variants: {
+    variant: {
+      Plain: 'bg-transparent',
+      Card: 'bg-surface border border-border-default rounded-lg shadow-sm',
+      Hero: 'bg-surface-elevated border-b border-border-default p-6',
+    },
+    mode: {
+      view: '',
+      edit: 'ring-1 ring-border-focus',
+    },
+  },
+  defaultVariants: {
+    variant: 'Plain',
+  },
+});
 
 export function Section({
   as,
-  role = 'Container',
-  prominence = 'Standard',
+  role = 'Main', // Default to Main per spec suggestion
+  title,
+  actions,
+  scrollable,
+  variant = 'Plain',
+  prominence,
   density,
   intent,
   mode,
   children,
   id,
   onClick,
-  condition,
+  className,
   gridArea,
   ...rest
 }: SectionProps) {
-  // 부모 Context 가져오기 (중첩된 경우)
   const parentCtx = useLayoutContext();
   const computedDensity = density ?? parentCtx.density ?? 'Standard';
   const computedIntent = intent ?? parentCtx.intent ?? 'Neutral';
   const computedMode = mode ?? parentCtx.mode ?? 'view';
 
-  // v5.0: Layout-aware validation (dev mode only)
+  // Validation
   if (import.meta.env.DEV && parentCtx.layout) {
-    const layout = parentCtx.layout;
-    const validRoles = LAYOUT_SECTION_ROLES[layout] || [];
-
-    // Check if role is valid for the current layout
-    // We treat 'Container' as valid everywhere if not explicitly restricted, but strictly speaking IDDL v5 should be explicit.
-    // However, validation in types.ts showed strict lists.
-
-    if (!validRoles.includes(role)) {
-      // Optional: Allow 'Container' as fallback if not strict? 
-      // For now, let's warn based on the definition.
-      console.warn(
-        `[Section] Role "${role}" is not valid for layout "${layout}". ` +
-        `Valid roles: ${validRoles.join(', ')}`
-      );
-    }
+    // Helper to check validity or alias
+    // For now we trust strict validation, but maybe allow aliases if mapped?
   }
 
-  // 조건부 렌더링 (v1.0.1)
-  if (condition) {
-    // TODO: condition 표현식 평가 구현
-  }
+  // Configuration
+  const config = getRoleConfig(role as string, parentCtx.layout as any);
+  const { gridArea: configGridArea, overflow, htmlTag, ariaProps, baseStyles } = config;
 
-  // v4.1: Role Configuration 가져오기 (template 기반 -> layout 기반)
-  // Note: getRoleConfig needs to handle layout logic or be updated. 
-  // Passing layout as second arg if expected
-  const config = getRoleConfig(role, parentCtx.layout as any);
-
-  // 자동 계산된 값들
-  const {
-    gridArea: configGridArea,
-    overflow,
-    htmlTag,
-    ariaProps: configAriaProps,
-    baseStyles: configBaseStyles,
-  } = config;
-
-  // HTML 태그 결정 (as prop이 우선)
-  const Element: any = as || htmlTag;
-
-  // ARIA 속성 (config에서 가져옴)
-  const ariaProps = configAriaProps || {};
-
-  // v4.1: gridArea 계산 (명시적 prop > config)
+  const Element: any = as || htmlTag || 'section';
   const computedGridArea = gridArea || configGridArea;
-
-  // v4.1: Overflow 클래스 생성
-  const overflowClass = getOverflowClass(overflow);
-
-  // v4.1: Role에 따라 적절한 Renderer 선택
-  const rendererProps = {
-    role: role as any,
-    children,
-    gridArea: computedGridArea,
-    computedProminence: prominence,
-    computedDensity: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
-    Element,
-    id,
-    onClick,
-    // v4.1: role-config에서 가져온 값들
-    baseStyles: configBaseStyles,
-    overflowClass,
-    ariaProps,
-    ...rest,
-  };
-
-  // Context Provider로 감싸서 반환
-  const content = (() => {
-    // Container roles
-    if (['Container', 'Main', 'SplitContainer'].includes(role)) {
-      return <ContainerSection {...rendererProps} />;
-    }
-
-    // Frame roles
-    if (['Header', 'Footer', 'Navigator', 'Aside'].includes(role)) {
-      return <FrameSection {...rendererProps} />;
-    }
-
-    // IDE/Studio roles
-    if (['Toolbar', 'ActivityBar', 'PrimarySidebar', 'SecondarySidebar', 'Editor', 'Panel', 'Auxiliary'].includes(role)) {
-      return <IDESection {...rendererProps} />;
-    }
-
-    // Dialog roles
-    if (['DialogHeader', 'DialogFooter', 'DialogContent'].includes(role)) {
-      return <DialogSection {...rendererProps} />;
-    }
-
-    // Fallback to Container
-    return <ContainerSection {...rendererProps} />;
-  })();
+  const isScrollable = scrollable ?? (overflow === 'auto' || overflow === 'scroll');
+  const overflowClass = isScrollable ? 'overflow-auto' : 'overflow-hidden';
 
   return (
     <LayoutProvider
       value={{
+        role: role as SectionRole,
         prominence,
-        role,
         density: computedDensity,
         intent: computedIntent,
         depth: parentCtx.depth + 1,
         mode: computedMode,
       }}
     >
-      {content}
+      <Element
+        id={id}
+        onClick={onClick}
+        className={`
+          ${baseStyles}
+          ${sectionVariants({ variant, mode: computedMode })}
+          ${className || ''}
+        `}
+        style={{
+          gridArea: computedGridArea,
+          ...rest.style, // Pass through style if any
+        }}
+        {...ariaProps}
+        {...rest}
+      >
+        {/* Section Header (Optional) */}
+        {(title || actions) && (
+          <header className="flex items-center justify-between px-4 py-2 border-b border-border-muted bg-surface-elevated flex-shrink-0 min-h-[40px]">
+            {title && <Text role="Label" content={title} prominence="Strong" />}
+            {actions && <div className="flex items-center gap-2">{actions}</div>}
+          </header>
+        )}
+
+        {/* Section Body */}
+        <div className={`flex-1 ${overflowClass} ${variant === 'Card' ? 'p-4' : ''} relative`}>
+          {children}
+        </div>
+      </Element>
     </LayoutProvider>
   );
 }

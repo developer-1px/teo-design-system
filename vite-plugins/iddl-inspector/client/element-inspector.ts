@@ -8,9 +8,9 @@
  * - ESC: Inspect 모드 종료
  */
 
-import { activateInspectMode, deactivateInspectMode, isInspectModeActive } from './overlay';
 import { extractComponentHierarchy } from './component-hierarchy';
-import { showPanel, hidePanel, isPanelVisible } from './component-panel';
+import { hidePanel, isPanelVisible, showPanel } from './component-panel';
+import { activateInspectMode, deactivateInspectMode, isInspectModeActive } from './overlay';
 
 let clickHandler: ((e: MouseEvent) => void) | null = null;
 let mouseDownHandler: ((e: MouseEvent) => void) | null = null;

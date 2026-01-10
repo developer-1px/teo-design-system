@@ -52,7 +52,7 @@ export interface UsePopoverReturn {
   /** Popover Content에 적용할 props */
   getPopoverProps: () => {
     role: 'dialog';
-    ref: React.RefObject<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement | null>;
     onKeyDown: (event: React.KeyboardEvent) => void;
   };
 }

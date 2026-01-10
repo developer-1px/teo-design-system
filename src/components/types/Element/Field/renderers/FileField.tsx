@@ -14,13 +14,9 @@
  * />
  */
 
-import {
-  fileInputStyles,
-  fieldWrapperStyles,
-  labelStyles,
-} from '../styles/field.styles';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
+import { fieldWrapperStyles, fileInputStyles, labelStyles } from '../styles/field.styles';
 
 export interface FileFieldProps {
   /**

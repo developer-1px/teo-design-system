@@ -19,7 +19,7 @@
 
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { BlockLayoutProvider, useBlockLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { BlockProps, BlockRole } from '@/components/types/Block/Block.types';
 import { getInteractiveClasses } from '@/shared/config/interactive-tokens';
@@ -27,9 +27,9 @@ import { gapVariants } from '@/shared/config/spacing-tokens';
 import { cn } from '@/shared/lib/utils';
 import { getRoleConfig, hasRenderer } from './role-config';
 
+export { AccordionContent, AccordionItem, AccordionTrigger } from './role/Accordion';
 // Re-export renderer utilities
-export { ToolbarDivider, ToolbarBlock } from './role/Toolbar';
-export { AccordionItem, AccordionTrigger, AccordionContent } from './role/Accordion';
+export { ToolbarBlock, ToolbarDivider } from './role/Toolbar';
 
 /**
  * Block container variants (CVA) - v4.1: Layout + Density only
@@ -157,7 +157,14 @@ export function Block({
 
   // v1.0 Core: Role determines layout (Migration Stub)
   if (role === 'Stack' || role === 'Group') computedLayout = 'stack';
-  if (role === 'Row' || role === 'Inline' || role === 'Toolbar' || role === 'FloatingToolbar' || role === 'Breadcrumbs') computedLayout = 'inline';
+  if (
+    role === 'Row' ||
+    role === 'Inline' ||
+    role === 'Toolbar' ||
+    role === 'FloatingToolbar' ||
+    role === 'Breadcrumbs'
+  )
+    computedLayout = 'inline';
   if (role === 'Grid') computedLayout = 'grid';
   if (role === 'Split') computedLayout = 'split';
 
@@ -192,10 +199,10 @@ export function Block({
   const selectionAriaProps =
     value !== undefined
       ? {
-        role: 'option',
-        'aria-selected': isSelected,
-        tabIndex: isSelected ? 0 : -1,
-      }
+          role: 'option',
+          'aria-selected': isSelected,
+          tabIndex: isSelected ? 0 : -1,
+        }
       : {};
 
   // v1.0.4: Focus management - ref 등록
@@ -245,24 +252,24 @@ export function Block({
   // v3.1: Interactive State Token System 적용 (clickable/selectable일 때)
   const interactiveClasses = computedClickable
     ? getInteractiveClasses({
-      prominence: computedProminence,
-      intent: computedIntent,
-      config: {
-        selected: isSelected,
-        disabled: false,
-        focusable: true,
-        clickable: true,
-      },
-    })
+        prominence: computedProminence,
+        intent: computedIntent,
+        config: {
+          selected: isSelected,
+          disabled: false,
+          focusable: true,
+          clickable: true,
+        },
+      })
     : '';
 
   // v3.1: Spacing Token System 적용 (gap만 필요)
   const spacingClasses = gap
     ? `gap-${gap}` // override
     : gapVariants({
-      prominence: computedProminence as 'Hero' | 'Standard' | 'Strong' | 'Subtle',
-      density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
-    });
+        prominence: computedProminence as 'Hero' | 'Standard' | 'Strong' | 'Subtle',
+        density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
+      });
 
   // v4.1: 전용 renderer가 있으면 사용, 없으면 기본 렌더링
   const Renderer = roleConfig.renderer;

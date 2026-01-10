@@ -36,7 +36,7 @@ export interface UseMenuReturn {
   /** Menu에 적용할 props */
   getMenuProps: () => {
     role: 'menu';
-    ref: React.RefObject<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement | null>;
   };
   /** MenuItem에 적용할 props */
   getMenuItemProps: (index: number) => {

@@ -1,109 +1,102 @@
 /**
- * Page Type Definitions
+ * Page Type Definitions (IDDL v5.0 Final)
  */
 
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { AsProp, Density, Intent, Prominence } from '../Shared.types';
 
 /**
- * Page Role - 페이지 물리법칙 (스크롤과 뷰포트의 행동 법칙)
- * v5.0: "이 페이지는 어떻게 움직이는가?"
- * - 'Application': 전체 화면, 스크롤 없음 (w-screen h-screen overflow-hidden)
- * - 'Document': 스크롤 가능한 문서 페이지 (min-height: 100vh, 브라우저 스크롤)
- * - 'Focus': 중앙 집중형 (로그인, 결제 등, 화면 정중앙에 배치)
- * - 'Fullscreen': 전체화면 고정 (프레젠테이션, 키오스크, 스크롤 불가)
+ * Page Role (Physics)
+ * 페이지가 브라우저 뷰포트와 상호작용하는 물리적 방식을 정의합니다.
  */
-export type PageRole = 'Application' | 'Document' | 'Focus' | 'Fullscreen';
+export type PageRole =
+  | 'Document' // [Default] 반응형 문서. Window Scroll. (Blog, News)
+  | 'Application' // 웹 애플리케이션. 100vh 고정. Container Scroll. (Admin, Dashboard)
+  | 'Focus' // 단일 행동 집중. Center 정렬. No Scroll/Nav. (Login, Payment)
+  | 'Immersive' // 몰입형 경험. Scroll Snap. (Landing, Presentation)
+  | 'Overlay' // 모달형 페이지. Dimmed Background. (Quick View)
+  | 'Paper'; // 인쇄/고정 규격. Fixed Aspect Ratio. (Invoice, Resume)
 
 /**
- * Page Layout - 공간 분할 패턴 (Section들의 지정석)
- * v5.0: GridTemplate을 대체, "공간을 어떻게 나누었는가?"
- * - 'Single': Header + Container + Footer (1단 기본형)
- * - 'Sidebar': Navigator(좌) + Container(우) (2단 좌측 메뉴형)
- * - 'Aside': Container(좌) + Aside(우) (2단 우측 정보형)
- * - 'HolyGrail': Header + Navigator + Container + Aside + Footer (3단 완전체)
- * - 'Split': PanelLeft + PanelRight (5:5 분할형, master-detail)
- * - 'Studio': ActivityBar + PrimarySidebar + Editor + Panel + SecondarySidebar (IDE 전용)
- * - 'Blank': 빈 캔버스 (dialog, custom)
+ * Page Layout (Zoning)
+ * Role 내부에서 콘텐츠를 배치할 Grid Template 전략입니다.
  */
-export type PageLayout = 'Single' | 'Sidebar' | 'Aside' | 'HolyGrail' | 'Split' | 'Studio' | 'Blank';
+export type PageLayout =
+  | 'Single' // [Default] 1단 구조 (Header-Main-Footer)
+  | 'Sidebar' // 2단: 좌측 네비게이션 주도 (Nav-Main)
+  | 'Aside' // 2단: 우측 정보 보조 (Main-Aside)
+  | 'HolyGrail' // 3단: 좌우 패널 (Nav-Main-Aside)
+  | 'Mobile' // 앱형: 상단 헤더 + 하단 탭바 (Header-Main-Dock)
+  | 'Split' // 분할: 50:50 또는 Master-Detail (Panel-Panel)
+  | 'Studio'; // 복합: IDE 스타일 다중 패널
 
 /**
- * Max Width - 페이지 최대 너비
- * v2.0 추가
+ * Max Width (Constraint)
  */
-export type MaxWidth = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none' | number;
+export type MaxWidth = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '4xl' | 'none' | number;
 
 /**
- * Navigation Config - 네비게이션 구성
- * v2.0 추가
- */
-export interface NavigationConfig {
-    header?: {
-        show: boolean;
-    };
-}
-
-/**
- * Breadcrumb
- * v1.0.1 추가
- */
-export interface Breadcrumb {
-    label: string;
-    to?: string;
-    icon?: string;
-}
-
-/**
- * Page Props (v5.0) - Application Root Container
- * v1.0.1: title, description, layout, breadcrumbs, condition 추가
- * v2.0: role, prominence, density, intent, maxWidth, centered, navigation, scrollable, loading, error 추가
- * v3.0: main 태그 제거, layout 단순화 (flex/grid만 지원)
- * v3.1: as prop 추가 (커스텀 컴포넌트 주입)
- * v4.0: role 추가 (Content vs App)
- * v5.0: role 값 확장 (Application/Document/Focus/Fullscreen), template→layout 통합, direction 제거
+ * Page Props (IDDL v5.0)
+ * Application Root Container
  */
 export interface PageProps extends AsProp {
-    // Role (v5.0) - "이 페이지는 어떻게 움직이는가?" (스크롤 물리법칙)
-    role?: PageRole; // 'Application' | 'Document' (default) | 'Focus' | 'Fullscreen'
+  /**
+   * [Identity] 페이지의 유일한 식별자 (Browser Title, H1)
+   * @required
+   */
+  title: string;
 
-    // Layout (v5.0) - "공간을 어떻게 나누었는가?" (Section 배치)
-    layout?: PageLayout; // 'Single' | 'Sidebar' | 'Aside' | 'HolyGrail' | 'Split' | 'Studio' | 'Blank'
-    gap?: number; // v3.0: spacing between sections
-    sizes?: Record<string, string>; // v5.0: grid area sizes for resizing
+  /**
+   * [Meta] 페이지 설명 (Optional)
+   * Document role 등에서 부제로 사용
+   */
+  description?: string;
 
-    // Constraints (v3.0)
-    maxWidth?: MaxWidth; // v2.0: 컨텐츠 최대 너비 (Document role만 적용)
-    centered?: boolean; // v2.0: 컨텐츠 중앙 정렬 여부 (Document/Focus role만 적용)
+  /**
+   * [Physics] 페이지의 물리적 동작 방식
+   * @default 'Document'
+   */
+  role?: PageRole;
 
-    // Meta (optional)
-    title?: string; // v1.0.1
-    description?: string; // v1.0.1
-    breadcrumbs?: Breadcrumb[]; // v1.0.1
+  /**
+   * [Zoning] 공간 분할 템플릿
+   * @default 'Single'
+   */
+  layout?: PageLayout;
 
-    // Design Tokens (v2.0: IDDL 일관성)
-    prominence?: Prominence; // v2.0: Hero/Standard/Strong/Subtle
-    density?: Density; // v2.0: Comfortable/Standard/Compact (자식에게 전파)
-    intent?: Intent; // v2.0: Neutral/Brand/Positive/Caution/Critical/Info
+  /**
+   * [Constraint] 콘텐츠 최대 너비
+   * Valid only for 'Document' role
+   */
+  maxWidth?: MaxWidth;
 
-    // State & Behavior (v2.0)
-    loading?: boolean; // v2.0: 로딩 상태
-    error?: string; // v2.0: 에러 메시지
+  /**
+   * [Constraint] 콘텐츠 중앙 정렬 여부
+   * Valid only for 'Document' or 'Focus' role
+   * @default false
+   */
+  centered?: boolean;
 
-    // React Integration
-    children: ReactNode;
-    /**
-     * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
-     * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
-     * 정적 스타일은 반드시 role을 통해 정의해야 함
-     */
-    className?: string;
-    onClick?: (e: React.MouseEvent) => void;
-    condition?: string; // v1.0.1: 조건부 렌더링
+  // --- Design Tokens ---
+  prominence?: Prominence;
+  density?: Density;
+  intent?: Intent;
 
-    // Deprecated props (v5.0) - 하위 호환성을 위해 유지
-    /** @deprecated Use `layout` instead of `template` */
-    // Deprecated props (v5.0) - 하위 호환성을 위해 유지
-    /** @deprecated direction is now determined by `role` and `layout` props */
-    direction?: 'row' | 'column';
+  // --- State ---
+  loading?: boolean;
+  error?: string;
+
+  /**
+   * [Slot] Main Content Slot
+   * <Section> 컴포넌트들만 허용됩니다.
+   */
+  children: ReactNode;
+
+  // --- Events & Styling ---
+  className?: string; // For data-driven visualization only
+  onClick?: (e: React.MouseEvent) => void;
+  condition?: string;
+
+  // Deprecated props are typically removed in major versions (v5.0).
+  // If strict migration, we assume backward compatibility is NOT maintained.
 }

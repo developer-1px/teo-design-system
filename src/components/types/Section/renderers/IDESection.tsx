@@ -11,7 +11,14 @@ import type { SectionProps } from '@/components/types/Section/Section.types';
 import { cn } from '@/shared/lib/utils';
 
 export interface IDESectionProps extends Omit<SectionProps, 'role'> {
-  role: 'Toolbar' | 'ActivityBar' | 'PrimarySidebar' | 'SecondarySidebar' | 'Editor' | 'Panel' | 'Auxiliary';
+  role:
+    | 'Toolbar'
+    | 'ActivityBar'
+    | 'PrimarySidebar'
+    | 'SecondarySidebar'
+    | 'Editor'
+    | 'Panel'
+    | 'Auxiliary';
   computedProminence: SectionProps['prominence'];
   computedDensity: 'Compact' | 'Standard' | 'Comfortable';
   Element: any;

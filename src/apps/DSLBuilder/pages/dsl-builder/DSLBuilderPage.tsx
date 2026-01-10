@@ -330,7 +330,6 @@ export const DSLBuilderPage = () => {
             clipboardAction: state.clipboardAction === 'copy' ? prev.clipboardAction : null,
             selectedNodeId: nodeToAdd.id,
           }));
-
         }
       }
 
@@ -368,7 +367,7 @@ export const DSLBuilderPage = () => {
   };
 
   return (
-    <Page role="Application" layout="Studio" density="Compact">
+    <Page title="Showcase" role="Application" layout="Studio" density="Compact">
       {/* Left Sidebar - Tree View */}
       <Section role="PrimarySidebar" className="flex flex-col">
         {/* Header */}

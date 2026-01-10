@@ -104,13 +104,13 @@ export interface UseRatingFieldReturn {
   /**
    * Container ref for focus management
    */
-  containerRef: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
 
   /**
    * Props getter for rating container
    */
   getRatingContainerProps: () => {
-    ref: React.RefObject<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement | null>;
     role: 'radiogroup';
     'aria-label': string;
     'aria-required'?: boolean;
@@ -264,13 +264,14 @@ export function useRatingField(options: UseRatingFieldOptions): UseRatingFieldRe
       case '6':
       case '7':
       case '8':
-      case '9':
+      case '9': {
         e.preventDefault();
         const numValue = parseInt(e.key);
         if (numValue >= min && numValue <= max) {
           setValue(numValue);
         }
         break;
+      }
     }
   };
 

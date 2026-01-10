@@ -19,6 +19,15 @@ import { CodeEditor } from '@/apps/IDE/widgets/editor/CodeEditor';
 import { ComponentPreview } from '@/apps/IDE/widgets/editor/ComponentPreview';
 import { EditorTabs } from '@/apps/IDE/widgets/editor/EditorTabs';
 import { type FileNode, FileTree } from '@/apps/IDE/widgets/file-tree/FileTree';
+import { DebugView } from '@/apps/IDE/widgets/sidebar-views/DebugView';
+import { ExtensionsView } from '@/apps/IDE/widgets/sidebar-views/ExtensionsView';
+import { JsonView } from '@/apps/IDE/widgets/sidebar-views/JsonView';
+import { PresentationView } from '@/apps/IDE/widgets/sidebar-views/PresentationView';
+import { RunView } from '@/apps/IDE/widgets/sidebar-views/RunView';
+import { SearchView } from '@/apps/IDE/widgets/sidebar-views/SearchView';
+import { SettingsView } from '@/apps/IDE/widgets/sidebar-views/SettingsView';
+import { SourceControlView } from '@/apps/IDE/widgets/sidebar-views/SourceControlView';
+import { TokensView } from '@/apps/IDE/widgets/sidebar-views/TokensView';
 import { RightNav } from '@/apps/IDE/widgets/workspace/RightNav';
 import { WorkspaceNav } from '@/apps/IDE/widgets/workspace/WorkspaceNav';
 import { Block } from '@/components/types/Block/Block.tsx';
@@ -29,17 +38,8 @@ import { SettingsModalDSL as SettingsModal } from '@/components/types/Overlay/Se
 import { Page } from '@/components/types/Page/Page.tsx';
 import { RightBar } from '@/components/types/Section/role/RightBar.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { SearchView } from '@/apps/IDE/widgets/sidebar-views/SearchView';
-import { SourceControlView } from '@/apps/IDE/widgets/sidebar-views/SourceControlView';
-import { DebugView } from '@/apps/IDE/widgets/sidebar-views/DebugView';
-import { ExtensionsView } from '@/apps/IDE/widgets/sidebar-views/ExtensionsView';
-import { RunView } from '@/apps/IDE/widgets/sidebar-views/RunView';
-import { TokensView } from '@/apps/IDE/widgets/sidebar-views/TokensView';
-import { JsonView } from '@/apps/IDE/widgets/sidebar-views/JsonView';
-import { PresentationView } from '@/apps/IDE/widgets/sidebar-views/PresentationView';
-import { SettingsView } from '@/apps/IDE/widgets/sidebar-views/SettingsView';
-import { useResizable } from '@/shared/hooks/useResizable';
 import { ResizeHandle } from '@/shared/components/ResizeHandle';
+import { useResizable } from '@/shared/hooks/useResizable';
 
 interface OpenFile {
   path: string;
@@ -61,7 +61,7 @@ export const IDEPage = () => {
   const {
     size: sidebarWidth,
     separatorProps: sidebarSeparatorProps,
-    isResizing: isSidebarResizing
+    isResizing: isSidebarResizing,
   } = useResizable({
     initialSize: 250,
     minSize: 170,
@@ -72,7 +72,7 @@ export const IDEPage = () => {
   const {
     size: panelHeight,
     separatorProps: panelSeparatorProps,
-    isResizing: isPanelResizing
+    isResizing: isPanelResizing,
   } = useResizable({
     initialSize: 200,
     minSize: 100,
@@ -125,15 +125,7 @@ export const IDEPage = () => {
   const activeFile = openFiles.find((f) => f.path === activeFilePath);
 
   return (
-    <Page
-      role="Application"
-      layout="Studio"
-      density="Compact"
-      sizes={{
-        primarysidebar: currentView !== 'none' ? `${sidebarWidth}px` : '0px',
-        panel: showBottomPanel ? `${panelHeight}px` : '0px',
-      }}
-    >
+    <Page title="IDE" role="Application" layout="Studio" density="Compact">
       {/* IDDL Section[ActivityBar]: Left Workspace Navigation */}
       <Section role="ActivityBar">
         <Block role="Container">
@@ -155,10 +147,17 @@ export const IDEPage = () => {
       {/* IDDL Section[PrimarySidebar]: File Tree Sidebar */}
       {/* IDDL Section[PrimarySidebar]: Sidebar Views */}
       {currentView !== 'none' && (
-        <Section role="PrimarySidebar" className="flex flex-col border-r border-border-default overflow-hidden h-full">
+        <Section
+          role="PrimarySidebar"
+          className="flex flex-col border-r border-border-default overflow-hidden h-full"
+        >
           {currentView === 'files' && (
             <>
-              <Section role="Header" density="Compact" className="h-9 px-3 flex items-center border-b border-border-default bg-surface-elevated">
+              <Section
+                role="Header"
+                density="Compact"
+                className="h-9 px-3 flex items-center border-b border-border-default bg-surface-elevated"
+              >
                 <Text
                   role="Title"
                   prominence="Subtle"
@@ -194,13 +193,40 @@ export const IDEPage = () => {
 
               {/* Breadcrumbs */}
               {activeFile && (
-                <Block role="Breadcrumbs" layout="inline" padding="xs" prominence="Subtle" className="border-b border-border-muted px-4">
+                <Block
+                  role="Breadcrumbs"
+                  layout="inline"
+                  padding="xs"
+                  prominence="Subtle"
+                  className="border-b border-border-muted px-4"
+                >
                   <Text role="Caption" content="src" prominence="Subtle" />
-                  <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
+                  <Action
+                    role="Button"
+                    icon="ChevronRight"
+                    label=""
+                    prominence="Subtle"
+                    density="Compact"
+                    disabled
+                  />
                   <Text role="Caption" content="apps" prominence="Subtle" />
-                  <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
+                  <Action
+                    role="Button"
+                    icon="ChevronRight"
+                    label=""
+                    prominence="Subtle"
+                    density="Compact"
+                    disabled
+                  />
                   <Text role="Caption" content="IDE" prominence="Subtle" />
-                  <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
+                  <Action
+                    role="Button"
+                    icon="ChevronRight"
+                    label=""
+                    prominence="Subtle"
+                    density="Compact"
+                    disabled
+                  />
                   <Text role="Caption" content={activeFile.name} prominence="Standard" />
                 </Block>
               )}
@@ -269,7 +295,7 @@ export const IDEPage = () => {
           <BottomPanel
             isOpen={showBottomPanel}
             onClose={() => setShowBottomPanel(false)}
-          // height is handled by grid row size
+            // height is handled by grid row size
           />
         </Section>
       )}
@@ -294,7 +320,13 @@ export const IDEPage = () => {
         <Block role="Toolbar" justify="between" align="center" padding="xs" className="w-full">
           {/* Left: Git Branch & Errors */}
           <Block role="Inline" gap="sm" align="center">
-            <Action role="Button" icon="GitBranch" label="main*" prominence="Subtle" density="Compact" />
+            <Action
+              role="Button"
+              icon="GitBranch"
+              label="main*"
+              prominence="Subtle"
+              density="Compact"
+            />
             <Action role="Button" icon="RefreshCw" label="" prominence="Subtle" density="Compact" />
             <Text role="Body" content="0 errors" prominence="Subtle" size="xs" />
             <Text role="Body" content="0 warnings" prominence="Subtle" size="xs" />
@@ -305,8 +337,20 @@ export const IDEPage = () => {
             <Text role="Body" content="Ln 12, Col 34" prominence="Subtle" size="xs" />
             <Text role="Body" content="UTF-8" prominence="Subtle" size="xs" />
             <Text role="Body" content="TypeScript React" prominence="Subtle" size="xs" />
-            <Action role="Button" icon="Check" label="Prettier" prominence="Subtle" density="Compact" />
-            <Action role="IconButton" icon="Bell" label="Notifications" prominence="Subtle" density="Compact" />
+            <Action
+              role="Button"
+              icon="Check"
+              label="Prettier"
+              prominence="Subtle"
+              density="Compact"
+            />
+            <Action
+              role="IconButton"
+              icon="Bell"
+              label="Notifications"
+              prominence="Subtle"
+              density="Compact"
+            />
           </Block>
         </Block>
       </Section>

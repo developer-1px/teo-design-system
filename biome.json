@@ -21,6 +21,9 @@
       "suspicious": {
         "noExplicitAny": "off"
       },
+      "a11y": {
+        "useValidAriaRole": "off"
+      },
       "complexity": {
         "noForEach": "off"
       },

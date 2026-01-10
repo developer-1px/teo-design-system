@@ -13,13 +13,9 @@
  * />
  */
 
-import {
-  colorInputStyles,
-  fieldWrapperStyles,
-  labelStyles,
-} from '../styles/field.styles';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
+import { colorInputStyles, fieldWrapperStyles, labelStyles } from '../styles/field.styles';
 
 export interface ColorFieldProps {
   /**

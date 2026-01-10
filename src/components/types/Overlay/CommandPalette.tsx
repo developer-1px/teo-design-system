@@ -119,8 +119,7 @@ export const CommandPalette = () => {
           label: 'Command Palette',
           description: 'Open command palette (you are here)',
           icon: <Code size={16} />,
-          onSelect: () => {
-          },
+          onSelect: () => {},
         },
       ],
     },

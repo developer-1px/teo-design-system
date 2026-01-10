@@ -47,11 +47,7 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
             {/* Title Area */}
             {slide.title && (
               <Block role="Container" prominence="Primary" density="Compact">
-                <Text
-                  role="Title"
-                  prominence="Hero"
-                  content={slide.title}
-                />
+                <Text role="Title" prominence="Hero" content={slide.title} />
               </Block>
             )}
 

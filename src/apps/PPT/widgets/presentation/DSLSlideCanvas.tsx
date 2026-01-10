@@ -21,14 +21,27 @@ interface DSLSlideCanvasProps {
   fullscreen?: boolean;
 }
 
-export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides, fullscreen = false }: DSLSlideCanvasProps) => {
+export const DSLSlideCanvas = ({
+  slide,
+  currentIndex,
+  totalSlides,
+  fullscreen = false,
+}: DSLSlideCanvasProps) => {
   // Empty state
   if (!slide) {
     return (
       <Section role="Container">
-        <Block role="Container" className="items-center justify-center h-full" density="Comfortable">
+        <Block
+          role="Container"
+          className="items-center justify-center h-full"
+          density="Comfortable"
+        >
           <Text role="Body" prominence="Subtle" content="슬라이드를 선택하세요" />
-          <Text role="Caption" prominence="Subtle" content="왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요" />
+          <Text
+            role="Caption"
+            prominence="Subtle"
+            content="왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요"
+          />
         </Block>
       </Section>
     );
@@ -57,11 +70,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides, fullscreen = 
               {/* Title Area */}
               {slide.title && (
                 <Block role="Container" prominence="Primary" density="Compact">
-                  <Text
-                    role="Title"
-                    prominence="Hero"
-                    content={slide.title}
-                  />
+                  <Text role="Title" prominence="Hero" content={slide.title} />
                 </Block>
               )}
 

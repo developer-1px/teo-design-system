@@ -50,13 +50,7 @@ export const RightSidebar = ({ onClose }: RightSidebarProps) => {
             onClick={() => setActiveTab('history')}
           />
         </div>
-        <Action
-          role="IconButton"
-          icon="X"
-          label="Close"
-          density="Compact"
-          onClick={onClose}
-        />
+        <Action role="IconButton" icon="X" label="Close" density="Compact" onClick={onClose} />
       </div>
 
       {/* Content */}

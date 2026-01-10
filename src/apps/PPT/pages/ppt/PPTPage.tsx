@@ -15,12 +15,12 @@ import { useEffect, useState } from 'react';
 // ai-era-slides.md 파일 import
 import aiEraSlides from '@/../apps/ppt/ai-era-slides.md?raw';
 import { parseMarkdownSlides } from '@/apps/PPT/lib/markdown-parser';
-import { Page } from '@/components/types/Page/Page.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
 import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas.tsx';
 import { FormatSidebar } from '@/apps/PPT/widgets/presentation/FormatSidebar.tsx';
 import { PresentationToolbar } from '@/apps/PPT/widgets/presentation/PresentationToolbar.tsx';
 import { type Slide, SlideList } from '@/apps/PPT/widgets/presentation/SlideList.tsx';
+import { Page } from '@/components/types/Page/Page.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import { PresentationModePage } from './PresentationModePage';
 
 // 초기 샘플 슬라이드 데이터 (fallback)
@@ -45,8 +45,8 @@ const fallbackSlides: Slide[] = [
   },
 ];
 
-import { useResizable } from '@/shared/hooks/useResizable';
 import { ResizeHandle } from '@/shared/components/ResizeHandle';
+import { useResizable } from '@/shared/hooks/useResizable';
 
 // ... imports remain the same ...
 
@@ -59,7 +59,7 @@ export const PPTPage = () => {
   const {
     size: sidebarWidth,
     separatorProps: sidebarSeparatorProps,
-    isResizing: isSidebarResizing
+    isResizing: isSidebarResizing,
   } = useResizable({
     initialSize: 240,
     minSize: 160,
@@ -70,7 +70,7 @@ export const PPTPage = () => {
   const {
     size: formatBarWidth,
     separatorProps: formatBarSeparatorProps,
-    isResizing: isFormatBarResizing
+    isResizing: isFormatBarResizing,
   } = useResizable({
     initialSize: 280,
     minSize: 200,
@@ -145,9 +145,7 @@ export const PPTPage = () => {
 
   const handleSlideUpdate = (updates: Partial<Slide>) => {
     setSlides((prevSlides) =>
-      prevSlides.map((slide) =>
-        slide.id === activeSlideId ? { ...slide, ...updates } : slide
-      )
+      prevSlides.map((slide) => (slide.id === activeSlideId ? { ...slide, ...updates } : slide))
     );
   };
 
@@ -211,15 +209,7 @@ export const PPTPage = () => {
 
   // 편집 모드 (기본) - Refactored to Studio Layout (IDDL v5.0)
   return (
-    <Page
-      role="Application"
-      layout="Studio"
-      density="Compact"
-      sizes={{
-        primarysidebar: `${sidebarWidth}px`,
-        secondarysidebar: `${formatBarWidth}px`,
-      }}
-    >
+    <Page title="Presentation" role="Application" layout="Studio" density="Compact">
       {/* Header: Presentation Toolbar */}
       <Section role="Header">
         <PresentationToolbar

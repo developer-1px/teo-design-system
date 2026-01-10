@@ -1,23 +1,25 @@
 /**
  * SectionShowcasePage - Section Component Showcase
- * 
+ *
  * MECE gallery of IDDL Section component capabilities.
  * Demonstrates the semantic regions (Roles) available for different Page Layouts.
  */
 
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Element/Text/Text';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 
 export function SectionShowcasePage() {
   return (
-    <Page role="Application" layout="Studio">
+    <Page title="Showcase" role="Application" layout="Studio">
       {/* Header */}
       <Section role="Toolbar" prominence="Standard">
         <Block role="Toolbar" layout="inline" density="Compact">
           <Text role="Title" prominence="Standard" content="Section Component Gallery" />
-          <Block role="Divider" layout="inline"><></></Block>
+          <Block role="Divider" layout="inline">
+            <></>
+          </Block>
           <Text role="Body" prominence="Subtle" content="Semantic Layout Regions v2.1" />
         </Block>
       </Section>
@@ -27,8 +29,19 @@ export function SectionShowcasePage() {
         <Block role="ScrollMenu" layout="stack" density="Comfortable">
           <Text role="Label" content="LAYOUT CONTEXTS" prominence="Subtle" className="px-2 pt-2" />
           <Block role="Container" layout="stack" density="Standard">
-            {['General (Universal)', 'IDE Context (Studio)', 'Web Context (Sidebar)', 'Dialog Context'].map(item => (
-              <Block key={item} role="Inline" clickable value={item} className="px-2 py-1 hover:bg-surface-elevated rounded-md cursor-pointer">
+            {[
+              'General (Universal)',
+              'IDE Context (Studio)',
+              'Web Context (Sidebar)',
+              'Dialog Context',
+            ].map((item) => (
+              <Block
+                key={item}
+                role="Inline"
+                clickable
+                value={item}
+                className="px-2 py-1 hover:bg-surface-elevated rounded-md cursor-pointer"
+              >
                 <Text role="Body" content={item} prominence="Standard" />
               </Block>
             ))}
@@ -38,15 +51,25 @@ export function SectionShowcasePage() {
 
       {/* Main Content */}
       <Section role="Editor" prominence="Standard" mode="view">
-        <Block role="Container" layout="stack" density="Comfortable" className="p-8 gap-12 max-w-5xl mx-auto">
-
+        <Block
+          role="Container"
+          layout="stack"
+          density="Comfortable"
+          className="p-8 gap-12 max-w-5xl mx-auto"
+        >
           {/* Header */}
           <Block role="Container" layout="stack" density="Standard" className="gap-2">
             <Text role="Title" prominence="Hero" content="Sections" />
-            <Text role="Body" prominence="Hero" content="Semantic areas that define the page structure." />
+            <Text
+              role="Body"
+              prominence="Hero"
+              content="Semantic areas that define the page structure."
+            />
           </Block>
 
-          <Block role="Divider" layout="stack"><></></Block>
+          <Block role="Divider" layout="stack">
+            <></>
+          </Block>
 
           {/* 1. Universal */}
           <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
@@ -75,13 +98,19 @@ export function SectionShowcasePage() {
             </Block>
           </Block>
 
-          <Block role="Divider" layout="stack"><></></Block>
+          <Block role="Divider" layout="stack">
+            <></>
+          </Block>
 
           {/* 2. IDE Context */}
           <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="2. IDE Context (Studio)" />
-              <Text role="Body" prominence="Subtle" content="Specialized sections for development environments." />
+              <Text
+                role="Body"
+                prominence="Subtle"
+                content="Specialized sections for development environments."
+              />
             </div>
 
             <Block role="Grid" layout="grid" density="Comfortable" className="grid-cols-3 gap-6">
@@ -108,7 +137,9 @@ export function SectionShowcasePage() {
             </Block>
           </Block>
 
-          <Block role="Divider" layout="stack"><></></Block>
+          <Block role="Divider" layout="stack">
+            <></>
+          </Block>
 
           {/* 3. Web Context */}
           <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
@@ -133,7 +164,9 @@ export function SectionShowcasePage() {
             </Block>
           </Block>
 
-          <Block role="Divider" layout="stack"><></></Block>
+          <Block role="Divider" layout="stack">
+            <></>
+          </Block>
 
           {/* 4. Dialog Context */}
           <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
@@ -143,18 +176,23 @@ export function SectionShowcasePage() {
             </div>
 
             <Block role="Card" className="p-0 border border-border-default max-w-md">
-              <Block role="Container" className="p-4 border-b border-border-default bg-surface-raised">
+              <Block
+                role="Container"
+                className="p-4 border-b border-border-default bg-surface-raised"
+              >
                 <Text role="Label" content="DialogHeader" />
               </Block>
               <Block role="Container" className="p-8 bg-surface">
                 <Text role="Label" content="DialogContent" />
               </Block>
-              <Block role="Container" className="p-4 border-t border-border-default bg-surface-raised">
+              <Block
+                role="Container"
+                className="p-4 border-t border-border-default bg-surface-raised"
+              >
                 <Text role="Label" content="DialogFooter" />
               </Block>
             </Block>
           </Block>
-
         </Block>
       </Section>
     </Page>

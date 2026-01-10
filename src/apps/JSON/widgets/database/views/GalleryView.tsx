@@ -2,10 +2,10 @@
  * GalleryView - Notion 스타일 Gallery (카드 그리드) 뷰
  */
 
-import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Card } from '@/components/types/Block/role/Card.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import type { JsonArray, JsonObject, ViewConfig } from '../types';
 
 interface GalleryViewProps {
@@ -31,11 +31,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
           const keys = Object.keys(obj).slice(0, 6); // 최대 6개 필드
 
           return (
-            <Card
-              key={index}
-              padding="md"
-              interactive
-            >
+            <Card key={index} padding="md" interactive>
               <Block role="Container" gap="sm">
                 {/* 이미지 (있으면) */}
                 {viewConfig.showImage && viewConfig.imageKey && obj[viewConfig.imageKey] && (
@@ -58,12 +54,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                   // 첫 번째 필드는 제목처럼 크게
                   if (i === 0) {
                     return (
-                      <Text
-                        key={key}
-                        role="Title"
-                        prominence="Primary"
-                        content={String(value)}
-                      />
+                      <Text key={key} role="Title" prominence="Primary" content={String(value)} />
                     );
                   }
 

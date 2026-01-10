@@ -4,11 +4,11 @@
  */
 
 import { useMemo } from 'react';
-import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Card } from '@/components/types/Block/role/Card.tsx';
 import { Badge } from '@/components/types/Element/Text/role/Badge.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import type { JsonArray, JsonObject, ViewConfig } from '../types';
 
 interface BoardViewProps {
@@ -41,13 +41,15 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
         {groupedData.map(([groupName, items]) => (
           <Block key={groupName} role="Column" layout="flex" direction="column" width="320">
             {/* 컬럼 헤더 */}
-            <Block role="Header" direction="horizontal" align="center" justify="between" padding="sm">
+            <Block
+              role="Header"
+              direction="horizontal"
+              align="center"
+              justify="between"
+              padding="sm"
+            >
               <Block role="Container" direction="horizontal" align="center" gap="xs">
-                <Text
-                  role="Title"
-                  prominence="Primary"
-                  content={groupName}
-                />
+                <Text role="Title" prominence="Primary" content={groupName} />
                 <Badge variant="default" size="sm">
                   {items.length}
                 </Badge>
@@ -60,11 +62,7 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                 const keys = Object.keys(item).slice(0, 5); // 처음 5개 필드만
 
                 return (
-                  <Card
-                    key={index}
-                    padding="sm"
-                    interactive
-                  >
+                  <Card key={index} padding="sm" interactive>
                     <Block role="Container" gap="xs">
                       {keys.map((key) => {
                         const value = item[key];

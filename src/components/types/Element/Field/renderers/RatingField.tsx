@@ -14,16 +14,12 @@
  */
 
 import { Star } from 'lucide-react';
-import { useRatingField } from '../headless/useRatingField';
-import {
-  errorStyles,
-  fieldWrapperStyles,
-  labelStyles,
-} from '../styles/field.styles';
-import { ratingContainerStyles, starButtonStyles } from '../styles/rating.styles';
 import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
 import type { Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
+import { useRatingField } from '../headless/useRatingField';
+import { errorStyles, fieldWrapperStyles, labelStyles } from '../styles/field.styles';
+import { ratingContainerStyles, starButtonStyles } from '../styles/rating.styles';
 
 export interface RatingFieldProps {
   /**
@@ -114,7 +110,12 @@ export function RatingField(props: RatingFieldProps) {
             disabled={disabled}
             className={starButtonStyles({
               prominence,
-              state: star <= field.displayValue ? 'filled' : star === field.hoverValue ? 'hover' : 'empty',
+              state:
+                star <= field.displayValue
+                  ? 'filled'
+                  : star === field.hoverValue
+                    ? 'hover'
+                    : 'empty',
               disabled,
             })}
           >

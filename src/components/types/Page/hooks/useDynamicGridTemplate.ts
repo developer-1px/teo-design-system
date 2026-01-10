@@ -75,7 +75,9 @@ function extractUsedAreas(children: ReactNode, layout?: PageLayout): Set<string>
         if (props.role === 'separator') return;
 
         // v5.0: layout 이름을 Capitalized로 변환하여 ROLE_CONFIGS 키와 일치시킴
-        const layoutName = layout ? layout.charAt(0).toUpperCase() + layout.slice(1).toLowerCase() : undefined;
+        const layoutName = layout
+          ? layout.charAt(0).toUpperCase() + layout.slice(1).toLowerCase()
+          : undefined;
 
         // 1. Layout 특정 role인 경우 (가장 중요)
         if (layoutName && (ROLE_CONFIGS as any)[layoutName]?.[props.role]) {
@@ -111,350 +113,108 @@ function extractUsedAreas(children: ReactNode, layout?: PageLayout): Set<string>
 /**
  * 사용된 영역 기반으로 grid-template-areas 생성
  */
+/**
+ * 사용된 영역 기반으로 grid-template-areas 생성 (Strict Spec Implementation)
+ */
 function generateGridTemplate(
   usedAreas: Set<string>,
-  sizes: GridSizes
+  sizes: GridSizes,
+  layout?: PageLayout
 ): DynamicGridTemplate {
   const has = (area: string) => usedAreas.has(area);
+  const getSize = (area: string, fallback: string = 'auto') =>
+    sizes[area as keyof GridSizes] || fallback;
 
-  // Default sizes for all possible areas
-  const defaultSizes: Record<string, string> = {
-    // Presentation template
-    header: '64px',
-    footer: '48px',
-    left: '200px',
-    right: '300px',
-    'top-left': '200px',
-    'top-right': '200px',
-    'bottom-left': '200px',
-    'bottom-right': '200px',
-    main: '1fr',
-    // Studio template (IDE)
-    toolbar: '48px',
-    activitybar: '48px',
-    primarysidebar: '250px',
-    editor: '1fr',
-    panel: '300px',
-    secondarysidebar: '300px',
-    utilitybar: 'auto',
-    // Sidebar template
-    nav: '250px',
-    content: '1fr',
-    // 3-col template
-    center: '1fr',
-    // Master-Detail template
-    master: '300px',
-    detail: '1fr',
-    // Dialog template
-    'dialog-header': 'auto',
-    'dialog-content': '1fr',
-    'dialog-footer': 'auto',
-  };
-
-  const getSize = (area: string) => sizes[area as keyof GridSizes] || defaultSizes[area] || 'auto';
-
-  // Row structure
-  const rows: string[] = [];
-  const rowSizes: string[] = [];
-  const columns: string[] = [];
-  const columnSizes: string[] = [];
-
-  // Special case: Studio template (IDE 레이아웃 with optional toolbar, header, footer)
-  if (
-    has('toolbar') ||
-    has('header') ||
-    has('footer') ||
-    has('activitybar') ||
-    has('primarysidebar') ||
-    has('editor') ||
-    has('panel') ||
-    has('secondarysidebar') ||
-    has('utilitybar')
-  ) {
-    const studioRows: string[] = [];
-    const studioRowSizes: string[] = [];
-    const leftColumns: string[] = [];
-    const leftColumnSizes: string[] = [];
-    const rightColumns: string[] = [];
-    const rightColumnSizes: string[] = [];
-
-    // Define side columns
-    if (has('activitybar')) {
-      leftColumns.push('activitybar');
-      leftColumnSizes.push(getSize('activitybar'));
-    }
-    if (has('primarysidebar')) {
-      leftColumns.push('primarysidebar');
-      leftColumnSizes.push(getSize('primarysidebar'));
-    }
-
-    if (has('secondarysidebar')) {
-      rightColumns.push('secondarysidebar');
-      rightColumnSizes.push(getSize('secondarysidebar'));
-    }
-    if (has('utilitybar')) {
-      rightColumns.push('utilitybar');
-      rightColumnSizes.push(getSize('utilitybar'));
-    }
-
-    // Determine center area structure
-    const centerCols = has('editor') || has('panel') ? ['editor'] : ['.']; // Center is always 1 column wide effectively
-    const centerColSize = '1fr';
-
-    // Construct full column list for Header/Footer/Toolbar spanning
-    // Note: Grid Line alignment requires consistent column counts.
-    // We will have: [Left Cols] [Center Col] [Right Cols]
-    const allColSizes = [...leftColumnSizes, centerColSize, ...rightColumnSizes];
-    const numCols = allColSizes.length;
-
-    // Header row (Full width)
-    if (has('header')) {
-      studioRows.push(`"${new Array(numCols).fill('header').join(' ')}"`);
-      studioRowSizes.push(getSize('header'));
-    }
-
-    // Toolbar row (Full width)
-    if (has('toolbar')) {
-      studioRows.push(`"${new Array(numCols).fill('toolbar').join(' ')}"`);
-      studioRowSizes.push(getSize('toolbar'));
-    }
-
-    // Center Section (Editor + Panel)
-    // Row 1: Editor
-    // Sidebars span down, so we use their names again in the next row if needed.
-    // Actually, simply repeating the name in consecutive rows makes them span.
-
-    const row1Areas = [
-      ...leftColumns,
-      has('editor') ? 'editor' : '.',
-      ...rightColumns
-    ];
-    studioRows.push(`"${row1Areas.join(' ')}"`);
-    studioRowSizes.push('1fr');
-
-    // Row 2: Panel (if exists)
-    if (has('panel')) {
-      const row2Areas = [
-        ...leftColumns, // Sidebars span this row too
-        'panel',
-        ...rightColumns // Sidebars span this row too
-      ];
-      studioRows.push(`"${row2Areas.join(' ')}"`);
-      studioRowSizes.push(getSize('panel'));
-    }
-
-    // Footer row (Full width)
-    if (has('footer')) {
-      studioRows.push(`"${new Array(numCols).fill('footer').join(' ')}"`);
-      studioRowSizes.push(getSize('footer'));
-    }
-
+  // 1. Studio Layout
+  if (layout === 'Studio') {
     return {
-      gridTemplateAreas: studioRows.join('\n    '),
-      gridTemplateColumns: allColSizes.join(' '),
-      gridTemplateRows: studioRowSizes.join(' '),
+      gridTemplateAreas: `
+        "header header header header header"
+        "act    side   main   aux    utility"
+        "act    side   panel  aux    utility"
+        "stat   stat   stat   stat   stat"
+        "footer footer footer footer footer"
+      `,
+      gridTemplateColumns: '48px 250px 1fr 250px 48px',
+      gridTemplateRows: 'auto 1fr 200px 24px auto',
     };
   }
 
-  // Special case: Master-Detail template
-  if (has('master') && has('detail')) {
+  // 2. HolyGrail Layout
+  if (layout === 'HolyGrail') {
     return {
-      gridTemplateAreas: '"master detail"',
-      gridTemplateColumns: `${getSize('master')} ${getSize('detail')}`,
-      gridTemplateRows: '1fr',
+      gridTemplateAreas: `
+        "header header header"
+        "nav    main   aside"
+        "footer footer footer"
+      `,
+      gridTemplateColumns: '240px 1fr 300px',
+      gridTemplateRows: 'auto 1fr auto',
     };
   }
 
-  // Special case: Dialog template
-  if (has('dialog-header') || has('dialog-content') || has('dialog-footer')) {
-    const dialogRows: string[] = [];
-    const dialogRowSizes: string[] = [];
-
-    if (has('dialog-header')) {
-      dialogRows.push('"dialog-header"');
-      dialogRowSizes.push('auto');
-    }
-    if (has('dialog-content')) {
-      dialogRows.push('"dialog-content"');
-      dialogRowSizes.push('1fr');
-    }
-    if (has('dialog-footer')) {
-      dialogRows.push('"dialog-footer"');
-      dialogRowSizes.push('auto');
-    }
-
+  // 3. Sidebar Layout
+  if (layout === 'Sidebar') {
     return {
-      gridTemplateAreas: dialogRows.join('\n    '),
+      gridTemplateAreas: `
+        "header header"
+        "nav    main"
+        "footer footer"
+      `,
+      gridTemplateColumns: '240px 1fr',
+      gridTemplateRows: 'auto 1fr auto',
+    };
+  }
+
+  // 4. Aside Layout
+  if (layout === 'Aside') {
+    return {
+      gridTemplateAreas: `
+        "header header"
+        "main   aside"
+        "footer footer"
+      `,
+      gridTemplateColumns: '1fr 300px',
+      gridTemplateRows: 'auto 1fr auto',
+    };
+  }
+
+  // 5. Split Layout
+  if (layout === 'Split') {
+    return {
+      gridTemplateAreas: `
+        "header header"
+        "panel-a panel-b"
+        "footer footer"
+      `,
+      gridTemplateColumns: '1fr 1fr',
+      gridTemplateRows: 'auto 1fr auto',
+    };
+  }
+
+  // 6. Single Layout (Strict: "header" / "main" / "footer")
+  if (layout === 'Single') {
+    return {
+      gridTemplateAreas: '"header"\n    "main"\n    "footer"',
       gridTemplateColumns: '1fr',
-      gridTemplateRows: dialogRowSizes.join(' '),
+      gridTemplateRows: 'auto 1fr auto',
     };
   }
 
-  // Special case: Sidebar template (nav + content)
-  if (has('nav') && has('content')) {
+  // 7. Mobile Layout (Strict: "header" / "main" / "footer" / "dock")
+  if (layout === 'Mobile') {
     return {
-      gridTemplateAreas: '"nav content"',
-      gridTemplateColumns: `${getSize('nav')} ${getSize('content')}`,
-      gridTemplateRows: '1fr',
+      gridTemplateAreas: '"header"\n    "main"\n    "footer"\n    "dock"',
+      gridTemplateColumns: '1fr',
+      gridTemplateRows: 'auto 1fr auto auto',
     };
   }
 
-  // Special case: 3-col + header template (PPT layout)
-  if (has('header') && has('center')) {
-    const cols: string[] = [];
-    const colSizes: string[] = [];
-
-    if (has('left')) {
-      cols.push('left');
-      colSizes.push(getSize('left'));
-    }
-    cols.push('center');
-    colSizes.push(getSize('center'));
-    if (has('right')) {
-      cols.push('right');
-      colSizes.push(getSize('right'));
-    }
-
-    // Header spans all columns
-    const headerRow = cols.map(() => 'header').join(' ');
-
-    return {
-      gridTemplateAreas: `"${headerRow}"\n    "${cols.join(' ')}"`,
-      gridTemplateColumns: colSizes.join(' '),
-      gridTemplateRows: `${getSize('header')} 1fr`,
-    };
-  }
-
-  // Special case: 3-col template (left + center + right)
-  if (has('center')) {
-    const cols: string[] = [];
-    const colSizes: string[] = [];
-
-    if (has('left')) {
-      cols.push('left');
-      colSizes.push(getSize('left'));
-    }
-    cols.push('center');
-    colSizes.push(getSize('center'));
-    if (has('right')) {
-      cols.push('right');
-      colSizes.push(getSize('right'));
-    }
-
-    return {
-      gridTemplateAreas: `"${cols.join(' ')}"`,
-      gridTemplateColumns: colSizes.join(' '),
-      gridTemplateRows: '1fr',
-    };
-  }
-
-  // Presentation template (Holy Grail + corners)
-  // Top row (header or top corners)
-  if (has('header') || has('top-left') || has('top-right')) {
-    const topRow: string[] = [];
-
-    if (has('top-left')) {
-      topRow.push('top-left');
-      if (columns.length === 0) columns.push('top-left');
-    } else if (has('left')) {
-      topRow.push('.');
-      if (columns.length === 0) columns.push('.');
-    }
-
-    if (has('header')) {
-      topRow.push('header');
-      if (columns.length <= 1) columns.push('header');
-    } else {
-      topRow.push('.');
-      if (columns.length <= 1) columns.push('.');
-    }
-
-    if (has('top-right')) {
-      topRow.push('top-right');
-      if (columns.length <= 2) columns.push('top-right');
-    } else if (has('right')) {
-      topRow.push('.');
-      if (columns.length <= 2) columns.push('.');
-    }
-
-    rows.push(topRow.join(' '));
-    rowSizes.push(has('header') ? getSize('header') : 'auto');
-  }
-
-  // Middle row (left, main, right)
-  if (has('left') || has('main') || has('right')) {
-    const midRow: string[] = [];
-
-    if (has('left')) {
-      midRow.push('left');
-      if (columns.length === 0) columns.push('left');
-    } else {
-      midRow.push('.');
-      if (columns.length === 0) columns.push('.');
-    }
-
-    if (has('main')) {
-      midRow.push('main');
-      if (columns.length <= 1) columns.push('main');
-    } else {
-      midRow.push('.');
-      if (columns.length <= 1) columns.push('.');
-    }
-
-    if (has('right')) {
-      midRow.push('right');
-      if (columns.length <= 2) columns.push('right');
-    } else {
-      midRow.push('.');
-      if (columns.length <= 2) columns.push('.');
-    }
-
-    rows.push(midRow.join(' '));
-    rowSizes.push('1fr');
-  }
-
-  // Bottom row (footer or bottom corners)
-  if (has('footer') || has('bottom-left') || has('bottom-right')) {
-    const bottomRow: string[] = [];
-
-    if (has('bottom-left')) {
-      bottomRow.push('bottom-left');
-    } else if (has('left')) {
-      bottomRow.push('.');
-    }
-
-    if (has('footer')) {
-      bottomRow.push('footer');
-    } else {
-      bottomRow.push('.');
-    }
-
-    if (has('bottom-right')) {
-      bottomRow.push('bottom-right');
-    } else if (has('right')) {
-      bottomRow.push('.');
-    }
-
-    rows.push(bottomRow.join(' '));
-    rowSizes.push(has('footer') ? getSize('footer') : 'auto');
-  }
-
-  // Column sizes
-  if (has('left') || has('top-left') || has('bottom-left')) {
-    columnSizes.push(getSize('left'));
-  }
-  columnSizes.push('1fr'); // main always gets 1fr
-  if (has('right') || has('top-right') || has('bottom-right')) {
-    columnSizes.push(getSize('right'));
-  }
-
-  // Generate grid-template-areas string
-  const gridTemplateAreas = rows.map((row) => `"${row}"`).join('\n    ');
-
+  // Default / Fallback Strategy
   return {
-    gridTemplateAreas,
-    gridTemplateColumns: columnSizes.join(' '),
-    gridTemplateRows: rowSizes.join(' '),
+    gridTemplateAreas: '"main"',
+    gridTemplateColumns: '1fr',
+    gridTemplateRows: '1fr',
   };
 }
 
@@ -478,6 +238,6 @@ export function useDynamicGridTemplate(
       };
     }
 
-    return generateGridTemplate(usedAreas, sizes);
+    return generateGridTemplate(usedAreas, sizes, layout); // Pass layout here
   }, [children, layout, sizes]);
 }

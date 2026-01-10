@@ -18,12 +18,11 @@
  */
 
 import type { ComponentType } from 'react';
-import type { BlockRole, BlockProps } from '@/components/types/Block/Block.types';
-
-// Renderers (현재 사용 중인 것들)
-import { Toolbar } from './role/Toolbar';
+import type { BlockProps, BlockRole } from '@/components/types/Block/Block.types';
 import { Accordion } from './role/Accordion';
 import { SortableList } from './role/SortableList';
+// Renderers (현재 사용 중인 것들)
+import { Toolbar } from './role/Toolbar';
 
 /**
  * Block Renderer Props
@@ -158,7 +157,8 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
 
   PreviewContainer: {
     htmlTag: 'div',
-    baseStyles: 'relative w-full h-full border-2 border-border-default rounded-lg p-4 bg-surface-sunken',
+    baseStyles:
+      'relative w-full h-full border-2 border-border-default rounded-lg p-4 bg-surface-sunken',
     description: '미리보기 컨테이너',
   },
 
@@ -238,7 +238,8 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
   ScrollMenu: {
     htmlTag: 'nav',
     ariaProps: { role: 'navigation', 'aria-label': 'Scroll Menu' },
-    baseStyles: 'flex flex-col overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border-default hover:scrollbar-thumb-border-strong',
+    baseStyles:
+      'flex flex-col overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border-default hover:scrollbar-thumb-border-strong',
     description: '스크롤 메뉴 (ScrollSpy)',
   },
 
@@ -247,6 +248,26 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
     ariaProps: { role: 'navigation', 'aria-label': 'Navigator' },
     baseStyles: 'flex flex-col items-center gap-2',
     description: '네비게이션바',
+  },
+
+  // ==================== Testing ====================
+  Mock: {
+    htmlTag: 'div',
+    baseStyles: 'bg-black/5 rounded p-2 text-xs font-mono text-center opacity-50',
+    description: '테스트/Showcase용',
+  },
+
+  DeviceFrame: {
+    htmlTag: 'div',
+    baseStyles:
+      'bg-white shadow-xl border border-slate-200 overflow-hidden relative transition-all duration-300 ease-in-out',
+    description: '기기/프레임 시각화 (반응형/모바일/종이 등)',
+  },
+
+  SectionHighlight: {
+    htmlTag: 'div',
+    baseStyles: 'flex flex-col w-full h-full min-h-[40px]',
+    description: '영역 하이라이트 (Showcase 오버레이)',
   },
 };
 

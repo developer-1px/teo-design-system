@@ -4,12 +4,12 @@
  * Notion처럼 우측 패널에서 JSON 데이터를 필드별로 편집할 수 있도록 표시합니다.
  */
 
-import { useMemo } from 'react';
 import { X } from 'lucide-react';
-import { Field } from '@/components/types/Element/Field/Field';
-import { Block } from '@/components/types/Block/Block';
-import { IDDLProvider } from '@/components/context/IDDLContext';
+import { useMemo } from 'react';
 import type { JsonObject } from '@/apps/JSON/widgets/database/types';
+import { IDDLProvider } from '@/components/context/IDDLContext';
+import { Block } from '@/components/types/Block/Block';
+import { Field } from '@/components/types/Element/Field/Field';
 
 export interface FormViewProps {
   /**

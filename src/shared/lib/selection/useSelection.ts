@@ -12,7 +12,7 @@
  * - v1.0.4: Focus management (브라우저 포커스 자동 동기화)
  */
 
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { UseSelectionOptions, UseSelectionReturn } from './types';
 
 export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionReturn<T> {
@@ -31,9 +31,7 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
   } = options;
 
   // State
-  const [selectedIds, setSelectedIds] = useState<Set<string | number>>(
-    new Set(initialSelectedIds)
-  );
+  const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set(initialSelectedIds));
   const [lastSelectedId, setLastSelectedId] = useState<string | number | null>(null);
   const clipboardRef = useRef<T[]>([]);
   const itemRefsRef = useRef<Map<string | number, HTMLElement>>(new Map());
@@ -57,13 +55,10 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
   );
 
   // 단일 선택 (기존 선택 해제)
-  const selectSingle = useCallback(
-    (id: string | number) => {
-      setSelectedIds(new Set([id]));
-      setLastSelectedId(id);
-    },
-    []
-  );
+  const selectSingle = useCallback((id: string | number) => {
+    setSelectedIds(new Set([id]));
+    setLastSelectedId(id);
+  }, []);
 
   // 선택 토글 (Cmd/Ctrl + 클릭)
   const toggleSelect = useCallback(
@@ -160,7 +155,6 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
 
     clipboardRef.current = [...selectedItems];
     onCopy?.(selectedItems);
-
   }, [selectedItems, onCopy]);
 
   // 잘라내기
@@ -169,7 +163,6 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
 
     clipboardRef.current = [...selectedItems];
     onCut?.(selectedItems);
-
   }, [selectedItems, onCut]);
 
   // 붙여넣기
@@ -177,7 +170,6 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
     if (clipboardRef.current.length === 0) return;
 
     onPaste?.(clipboardRef.current);
-
   }, [onPaste]);
 
   // 삭제
@@ -186,7 +178,6 @@ export function useSelection<T>(options: UseSelectionOptions<T>): UseSelectionRe
 
     onDelete?.(selectedItems);
     clearSelection();
-
   }, [selectedItems, onDelete, clearSelection]);
 
   // 아이템 DOM 요소 등록 (focus management)

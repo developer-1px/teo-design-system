@@ -5,16 +5,16 @@
  * 왼쪽 패널에 TypeScript interface 생성
  */
 
+import { Check, Copy } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Copy, Check } from 'lucide-react';
+import testData from '@/apps/JSON/config/test.json';
+import { jsonToTypeScript } from '@/apps/JSON/lib/json-to-typescript';
 import type { JsonArray, JsonObject } from '@/apps/JSON/widgets/database/types';
+import { TableView } from '@/apps/JSON/widgets/database/views/TableView';
+import { FormView } from '@/apps/JSON/widgets/json-viewer/FormView';
+import { Overlay } from '@/components/types/Overlay/Overlay';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
-import { TableView } from '@/apps/JSON/widgets/database/views/TableView';
-import { jsonToTypeScript } from '@/apps/JSON/lib/json-to-typescript';
-import { Overlay } from '@/components/types/Overlay/Overlay';
-import { FormView } from '@/apps/JSON/widgets/json-viewer/FormView';
-import testData from '@/apps/JSON/config/test.json';
 
 export const JSONPage = () => {
   const [copied, setCopied] = useState(false);
@@ -23,13 +23,11 @@ export const JSONPage = () => {
 
   // JSON에서 첫 번째 배열 데이터 찾기
   const { data, arrayKey } = useMemo(() => {
-
     const firstArrayKey = Object.keys(testData).find((key) => {
       const value = (testData as JsonObject)[key];
       const isArray = Array.isArray(value);
       return isArray;
     });
-
 
     if (firstArrayKey) {
       const arrayData = (testData as JsonObject)[firstArrayKey] as JsonArray;
@@ -47,7 +45,6 @@ export const JSONPage = () => {
       : 'Item';
     return jsonToTypeScript(data, interfaceName);
   }, [data, arrayKey]);
-
 
   // 기본 viewConfig (모든 컬럼 표시)
   const viewConfig = useMemo(
@@ -88,7 +85,7 @@ export const JSONPage = () => {
   };
 
   return (
-    <Page role="Application" layout="Sidebar" className="h-screen overflow-hidden">
+    <Page title="Showcase" role="Application" layout="Sidebar" className="h-screen overflow-hidden">
       {/* Left Panel: TypeScript Interface */}
       <Section role="Navigator">
         <div className="h-full flex flex-col bg-surface-sunken border-r border-border-default">
@@ -110,9 +107,7 @@ export const JSONPage = () => {
 
           {/* Interface Code */}
           <div className="flex-1 overflow-auto p-4">
-            <pre className="text-xs font-mono text-text-primary whitespace-pre">
-              {tsInterface}
-            </pre>
+            <pre className="text-xs font-mono text-text-primary whitespace-pre">{tsInterface}</pre>
           </div>
         </div>
       </Section>

@@ -1,39 +1,34 @@
 /**
  * BlockShowcasePage - Block Component Showcase
- * 
+ *
  * MECE gallery of IDDL Block component structural capabilities.
  * Demonstrates Containers, Cards, Lists, Forms, and Toolbars.
- * 
+ *
  * Features:
  * - Auto-Documentation: Imports source code via ?raw and displays it.
  * - SourcePreview: Renders component + source code tabs.
  */
 
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block';
 import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
 import { Text } from '@/components/types/Element/Text/Text';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
 import { SourcePreview } from '@/shared/components/SourcePreview';
 
 // Examples & Source Code
 import { BlockCardsDemo } from './examples/BlockCardsDemo';
 import BlockCardsCode from './examples/BlockCardsDemo?raw';
-
-import { BlockListsDemo } from './examples/BlockListsDemo';
-import BlockListsCode from './examples/BlockListsDemo?raw';
-
 import { BlockFormsDemo } from './examples/BlockFormsDemo';
 import BlockFormsCode from './examples/BlockFormsDemo?raw';
-
-import { BlockToolbarsDemo } from './examples/BlockToolbarsDemo';
-import BlockToolbarsCode from './examples/BlockToolbarsDemo?raw';
-
+import { BlockListsDemo } from './examples/BlockListsDemo';
+import BlockListsCode from './examples/BlockListsDemo?raw';
 import { BlockNavigationDemo } from './examples/BlockNavigationDemo';
 import BlockNavigationCode from './examples/BlockNavigationDemo?raw';
-
 import { BlockStructureDemo } from './examples/BlockStructureDemo';
 import BlockStructureCode from './examples/BlockStructureDemo?raw';
+import { BlockToolbarsDemo } from './examples/BlockToolbarsDemo';
+import BlockToolbarsCode from './examples/BlockToolbarsDemo?raw';
 
 export function BlockShowcasePage() {
   const scrollTo = (id: string) => {
@@ -42,7 +37,7 @@ export function BlockShowcasePage() {
   };
 
   return (
-    <Page role="Application" layout="Studio">
+    <Page title="Showcase" role="Application" layout="Studio">
       {/* Header */}
       <Section role="Toolbar" prominence="Standard">
         <Block role="Toolbar" density="Compact">
@@ -59,7 +54,14 @@ export function BlockShowcasePage() {
         <Block role="ScrollMenu" density="Comfortable">
           <Text role="Label" content="CATEGORIES" prominence="Subtle" className="px-2 pt-2" />
           <Block role="Container" density="Standard">
-            {['Cards & Containers', 'Lists & Grids', 'Forms & Fieldsets', 'Toolbars & Actions', 'Navigation', 'Structure & LayoutHelpers'].map(item => {
+            {[
+              'Cards & Containers',
+              'Lists & Grids',
+              'Forms & Fieldsets',
+              'Toolbars & Actions',
+              'Navigation',
+              'Structure & LayoutHelpers',
+            ].map((item) => {
               const id = item.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
               return (
                 <Block
@@ -80,14 +82,19 @@ export function BlockShowcasePage() {
       {/* Main Content */}
       <Section role="Editor" prominence="Standard" mode="view">
         <Block role="Container" density="Comfortable" className="p-8 gap-12 max-w-5xl mx-auto">
-
           {/* Header */}
           <Block role="Container" density="Standard" className="gap-2">
             <Text role="Title" prominence="Hero" content="Blocks" />
-            <Text role="Body" prominence="Hero" content="The fundamental structural blocks for layout and grouping." />
+            <Text
+              role="Body"
+              prominence="Hero"
+              content="The fundamental structural blocks for layout and grouping."
+            />
           </Block>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 1. Cards & Containers */}
           <div id="cards-containers">
@@ -96,7 +103,9 @@ export function BlockShowcasePage() {
             </SourcePreview>
           </div>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 2. Lists & Grids */}
           <div id="lists-grids">
@@ -105,7 +114,9 @@ export function BlockShowcasePage() {
             </SourcePreview>
           </div>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 3. Forms & Fieldsets */}
           <div id="forms-fieldsets">
@@ -114,7 +125,9 @@ export function BlockShowcasePage() {
             </SourcePreview>
           </div>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 4. Toolbars */}
           <div id="toolbars-actions">
@@ -123,7 +136,9 @@ export function BlockShowcasePage() {
             </SourcePreview>
           </div>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 5. Navigation */}
           <div id="navigation">
@@ -132,7 +147,9 @@ export function BlockShowcasePage() {
             </SourcePreview>
           </div>
 
-          <Block role="Divider" className="h-px w-full"><></></Block>
+          <Block role="Divider" className="h-px w-full">
+            <></>
+          </Block>
 
           {/* 6. Structure */}
           <div id="structure-layouthelpers">
@@ -140,7 +157,6 @@ export function BlockShowcasePage() {
               <BlockStructureDemo />
             </SourcePreview>
           </div>
-
         </Block>
       </Section>
     </Page>

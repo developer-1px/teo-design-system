@@ -20,8 +20,8 @@
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
-import { SlidePreview } from './SlidePreview';
 import { useSelection } from '@/shared/lib/selection/useSelection';
+import { SlidePreview } from './SlidePreview';
 
 export interface Slide {
   id: string;
@@ -94,12 +94,7 @@ export const SlideList = ({
   const { role: ariaRole, ...containerProps } = selection.getContainerProps();
 
   return (
-    <Block
-      role="Container"
-      role="Container"
-      density="Compact"
-      {...containerProps}
-    >
+    <Block role="Container" role="Container" density="Compact" {...containerProps}>
       {/* Toolbar: Add Button */}
       <Block role="Toolbar" density="Compact">
         <Action icon="Plus" onClick={onSlideAdd} />

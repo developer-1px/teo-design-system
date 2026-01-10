@@ -14,9 +14,9 @@
  * />
  */
 
-import { checkboxStyles, fieldWrapperStyles } from '../styles/field.styles';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
+import { checkboxStyles, fieldWrapperStyles } from '../styles/field.styles';
 
 export interface BooleanFieldProps {
   /**
@@ -105,13 +105,15 @@ export function BooleanField(props: BooleanFieldProps) {
           className={checkboxStyles({ type: 'checkbox' })}
           data-model={model}
         />
-        <span className={cn(
-          'text-text',
-          prominence === 'Hero' && 'text-base font-semibold',
-          prominence === 'Standard' && 'text-sm',
-          prominence === 'Strong' && 'text-sm font-medium',
-          prominence === 'Subtle' && 'text-xs text-muted'
-        )}>
+        <span
+          className={cn(
+            'text-text',
+            prominence === 'Hero' && 'text-base font-semibold',
+            prominence === 'Standard' && 'text-sm',
+            prominence === 'Strong' && 'text-sm font-medium',
+            prominence === 'Subtle' && 'text-xs text-muted'
+          )}
+        >
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </span>

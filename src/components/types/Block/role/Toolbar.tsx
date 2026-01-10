@@ -77,7 +77,7 @@ export function Toolbar({
         densityPadding,
         borderStyles,
         // Sticky positioning
-        sticky && 'sticky top-0 z-10',
+        sticky && 'sticky top-0 z-10'
         // Custom className
       )}
       aria-label="Toolbar"
@@ -105,11 +105,7 @@ export function Toolbar({
  */
 export function ToolbarDivider({ className }: { className?: string }) {
   return (
-    <div
-      className={cn('w-px h-6 bg-border-muted')}
-      role="separator"
-      aria-orientation="vertical"
-    />
+    <div className={cn('w-px h-6 bg-border-muted')} role="separator" aria-orientation="vertical" />
   );
 }
 
@@ -130,12 +126,7 @@ export function ToolbarDivider({ className }: { className?: string }) {
  * </Block>
  * ```
  */
-export function ToolbarBlock({
-  children,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+export function ToolbarBlock({ children }: { children: React.ReactNode; className?: string }) {
   return (
     <div className={cn('flex items-center gap-1')} role="group">
       {children}

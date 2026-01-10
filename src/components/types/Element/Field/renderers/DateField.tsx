@@ -14,14 +14,10 @@
  * />
  */
 
-import {
-  fieldWrapperStyles,
-  inputStyles,
-  labelStyles,
-} from '../styles/field.styles';
 import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
+import { fieldWrapperStyles, inputStyles, labelStyles } from '../styles/field.styles';
 
 export interface DateFieldProps {
   /**

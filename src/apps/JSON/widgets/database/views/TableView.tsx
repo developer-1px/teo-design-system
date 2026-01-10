@@ -24,12 +24,10 @@ export const TableView = ({
   onRowDoubleClick,
   clearSelection,
 }: TableViewProps) => {
-
   // 검색어 상태
   const [searchQuery, setSearchQuery] = useState('');
 
   const columns = useMemo<ColumnDef<JsonObject>[]>(() => {
-
     if (data.length === 0) {
       return [];
     }
@@ -39,7 +37,6 @@ export const TableView = ({
     const keys = viewConfig.properties
       ? viewConfig.properties.filter((p) => p.visible !== false).map((p) => p.key)
       : Object.keys(firstItem);
-
 
     return keys.map((key) => {
       const propConfig = viewConfig.properties?.find((p) => p.key === key);

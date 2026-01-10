@@ -2,6 +2,7 @@
  * Text Type Definitions
  */
 
+import type React from 'react';
 import type { AsProp, Intent, Prominence } from '../../Shared.types';
 
 /**
@@ -17,18 +18,22 @@ export type TextRole = 'Title' | 'Body' | 'Label' | 'Caption' | 'Code';
  * v1.1: highlight 추가
  */
 export interface TextProps extends AsProp {
-    role: TextRole;
-    content: string;
-    prominence?: Prominence;
-    intent?: Intent;
-    align?: 'left' | 'center' | 'right';
-    /**
-     * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
-     * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
-     * 정적 스타일은 반드시 role을 통해 정의해야 함
-     */
-    className?: string;
-    hidden?: boolean;
-    condition?: string; // v1.0.1: 조건부 렌더링
-    highlight?: string; // v1.1: 매칭할 텍스트 (대소문자 구분 안 함)
+  role: TextRole;
+  content?: string;
+  prominence?: Prominence;
+  intent?: Intent;
+  align?: 'left' | 'center' | 'right';
+  /**
+   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
+   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
+   * 정적 스타일은 반드시 role을 통해 정의해야 함
+   */
+  className?: string;
+  hidden?: boolean;
+  condition?: string; // v1.0.1: 조건부 렌더링
+  highlight?: string; // v1.1: 매칭할 텍스트 (대소문자 구분 안 함)
+
+  // Content & Styling
+  size?: string; // e.g. "sm", "lg"
+  children?: React.ReactNode; // Alternative to content
 }

@@ -17,9 +17,11 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { ThemeToggleButton } from '@/apps/IDE/widgets/ThemeSwitcher.tsx';
-import { Button } from '@/components/types/Element/Action/role/Button.tsx';
+import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Button } from '@/components/types/Element/Action/role/Button.tsx';
+import { Text } from '@/components/types/Element/Text/Text';
+import { Section } from '@/components/types/Section/Section';
 
 interface TopToolbarProps {
   projectName?: string;
@@ -44,7 +46,16 @@ export const TopToolbar = ({
   const [showRunMenu, setShowRunMenu] = useState(false);
 
   return (
-    <Section role="Header" prominence="Hero" layout="flex" direction="horizontal" align="center" padding="sm" gap="xs" height="40">
+    <Section
+      role="Header"
+      prominence="Hero"
+      layout="flex"
+      direction="horizontal"
+      align="center"
+      padding="sm"
+      gap="xs"
+      height="40"
+    >
       {/* 1. Main Menu (Hamburger) */}
       <Block role="Dropdown" position="relative">
         <Action
@@ -222,12 +233,7 @@ const MainMenuContent = () => {
           <Text role="Label" prominence="Subtle" content={menu.label} />
           <Block role="MenuItems" gap="xs">
             {menu.items.map((item) => (
-              <Action
-                key={item}
-                role="MenuItem"
-                prominence="Secondary"
-                label={item}
-              />
+              <Action key={item} role="MenuItem" prominence="Secondary" label={item} />
             ))}
           </Block>
         </Block>
@@ -241,27 +247,14 @@ const ProjectMenuContent = () => {
 
   return (
     <Block role="Menu" padding="xs">
-      <Action
-        role="MenuItem"
-        prominence="Primary"
-        label="New Project..."
-      />
-      <Action
-        role="MenuItem"
-        prominence="Secondary"
-        label="Open..."
-      />
+      <Action role="MenuItem" prominence="Primary" label="New Project..." />
+      <Action role="MenuItem" prominence="Secondary" label="Open..." />
       <Block role="Divider" orientation="horizontal" />
       <Block role="MenuSection" padding="xs">
         <Text role="Label" prominence="Subtle" content="Recent Projects" />
         <Block role="MenuItems" gap="xs">
           {recentProjects.map((project) => (
-            <Action
-              key={project}
-              role="MenuItem"
-              prominence="Secondary"
-              label={project}
-            />
+            <Action key={project} role="MenuItem" prominence="Secondary" label={project} />
           ))}
         </Block>
       </Block>
@@ -272,36 +265,56 @@ const ProjectMenuContent = () => {
 const VcsMenuContent = () => {
   return (
     <Block role="Menu" padding="xs">
-      <Block role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
+      <Block
+        role="MenuItem"
+        direction="horizontal"
+        align="center"
+        padding="sm"
+        gap="sm"
+        interactive
+      >
         <DownloadIcon size={16} />
         <Text role="Body" prominence="Primary" content="Update Project" />
         <Text role="Label" prominence="Subtle" content="⌘T" />
       </Block>
-      <Block role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
+      <Block
+        role="MenuItem"
+        direction="horizontal"
+        align="center"
+        padding="sm"
+        gap="sm"
+        interactive
+      >
         <UploadIcon size={16} />
         <Text role="Body" prominence="Primary" content="Commit..." />
         <Text role="Label" prominence="Subtle" content="⌘K" />
       </Block>
-      <Block role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
+      <Block
+        role="MenuItem"
+        direction="horizontal"
+        align="center"
+        padding="sm"
+        gap="sm"
+        interactive
+      >
         <UploadIcon size={16} />
         <Text role="Body" prominence="Primary" content="Push..." />
         <Text role="Label" prominence="Subtle" content="⇧⌘K" />
       </Block>
       <Block role="Divider" orientation="horizontal" />
-      <Block role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
+      <Block
+        role="MenuItem"
+        direction="horizontal"
+        align="center"
+        padding="sm"
+        gap="sm"
+        interactive
+      >
         <GitBranchIcon size={16} />
         <Text role="Body" prominence="Primary" content="Branches..." />
       </Block>
-      <Action
-        role="MenuItem"
-        prominence="Secondary"
-        label="Fetch"
-      />
-      <Action
-        role="MenuItem"
-        prominence="Secondary"
-        label="Pull..."
-      />
+      <Action role="MenuItem" prominence="Secondary" label="Fetch" />
+      <Action role="MenuItem" prominence="Secondary" label="Pull..." />
     </Block>
   );
 };
@@ -315,12 +328,26 @@ const RunMenuContent = () => {
 
   return (
     <Block role="Menu" padding="xs">
-      <Block role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
+      <Block
+        role="MenuItem"
+        direction="horizontal"
+        align="center"
+        padding="sm"
+        gap="sm"
+        interactive
+      >
         <PlayIcon size={16} />
         <Text role="Body" prominence="Primary" content="Run 'dev'" weight="medium" />
         <Text role="Label" prominence="Subtle" content="⌃R" />
       </Block>
-      <Block role="MenuItem" direction="horizontal" align="center" padding="sm" gap="sm" interactive>
+      <Block
+        role="MenuItem"
+        direction="horizontal"
+        align="center"
+        padding="sm"
+        gap="sm"
+        interactive
+      >
         <Text role="Body" prominence="Brand" content="▶" />
         <Text role="Body" prominence="Primary" content="Debug 'dev'" />
         <Text role="Label" prominence="Subtle" content="⌃D" />
@@ -347,11 +374,7 @@ const RunMenuContent = () => {
         </Block>
       </Block>
       <Block role="Divider" orientation="horizontal" />
-      <Action
-        role="MenuItem"
-        prominence="Secondary"
-        label="Edit Configurations..."
-      />
+      <Action role="MenuItem" prominence="Secondary" label="Edit Configurations..." />
     </Block>
   );
 };

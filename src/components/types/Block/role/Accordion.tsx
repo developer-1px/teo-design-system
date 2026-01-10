@@ -22,8 +22,8 @@
  * ```
  */
 
-import { createContext, useContext, useState, useRef, useEffect, type ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/utils';
 import type { BlockRendererProps } from '../role-config';
 
@@ -239,16 +239,11 @@ export function AccordionTrigger({ children, icon }: AccordionTriggerProps) {
         'flex items-center justify-between w-full px-4 py-3 text-left',
         'bg-surface hover:bg-surface-elevated transition-colors',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-        'text-text-primary font-medium',
+        'text-text-primary font-medium'
       )}
     >
       <span>{children}</span>
-      <span
-        className={cn(
-          'transition-transform duration-200',
-          isOpen && 'rotate-180'
-        )}
-      >
+      <span className={cn('transition-transform duration-200', isOpen && 'rotate-180')}>
         {icon ?? <ChevronDown size={20} />}
       </span>
     </button>
@@ -304,9 +299,7 @@ export function AccordionContent({ children, className }: AccordionContentProps)
         transition: 'height 200ms ease-out',
       }}
     >
-      <div className={cn('px-4 py-3 text-text-secondary')}>
-        {children}
-      </div>
+      <div className={cn('px-4 py-3 text-text-secondary')}>{children}</div>
     </div>
   );
 }

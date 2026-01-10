@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface UseResizableProps {
   initialSize: number;
@@ -22,59 +22,62 @@ export const useResizable = ({
   const [size, setSize] = useState(initialSize);
   const [isResizing, setIsResizing] = useState(false);
 
-  const startResizing = useCallback((mouseDownEvent: React.MouseEvent) => {
-    mouseDownEvent.preventDefault();
-    setIsResizing(true);
+  const startResizing = useCallback(
+    (mouseDownEvent: React.MouseEvent) => {
+      mouseDownEvent.preventDefault();
+      setIsResizing(true);
 
-    const startX = mouseDownEvent.clientX;
-    const startY = mouseDownEvent.clientY;
-    const startSize = size;
+      const startX = mouseDownEvent.clientX;
+      const startY = mouseDownEvent.clientY;
+      const startSize = size;
 
-    const doDrag = (mouseMoveEvent: MouseEvent) => {
-      let delta = 0;
-      if (direction === 'horizontal') {
-        delta = mouseMoveEvent.clientX - startX;
-      } else {
-        delta = mouseMoveEvent.clientY - startY;
-      }
+      const doDrag = (mouseMoveEvent: MouseEvent) => {
+        let delta = 0;
+        if (direction === 'horizontal') {
+          delta = mouseMoveEvent.clientX - startX;
+        } else {
+          delta = mouseMoveEvent.clientY - startY;
+        }
 
-      if (reverse) {
-        delta = -delta;
-      }
+        if (reverse) {
+          delta = -delta;
+        }
 
-      let newSize = startSize + delta;
-      
-      // Apply constraints
-      newSize = Math.max(minSize, Math.min(maxSize, newSize));
+        let newSize = startSize + delta;
 
-      setSize(newSize);
-      if (onResize) {
-        onResize(newSize);
-      }
-    };
+        // Apply constraints
+        newSize = Math.max(minSize, Math.min(maxSize, newSize));
 
-    const stopDrag = () => {
-      setIsResizing(false);
-      document.removeEventListener('mousemove', doDrag);
-      document.removeEventListener('mouseup', stopDrag);
-      if (onResizeEnd) {
-        onResizeEnd(size); // Note: this uses the closure 'size' which is stale? No, 'size' is state.
-        // Actually, inside the closure 'size' refers to the state at bind time.
-        // We should calculate the final size again or rely on the last setSize?
-        // Let's just pass nothing or rely on the last update.
-        // Actually, 'doDrag' updates the state. 'onResizeEnd' is usually for cleanup.
-        // Passing the *current* calculated size from doDrag to a variable would be safer, 
-        // but 'doDrag' and 'stopDrag' are defined inside 'startResizing'. 
-        // 'startResizing' is dependent on 'size'. 
-        // So 'startSize' is captured. 'delta' is calculated relative to 'startX/Y'.
-        // So we can recalculate final size in stopDrag if needed, but usually onResize covers it.
-        // Let's assume onResizeEnd is simpler.
-      }
-    };
+        setSize(newSize);
+        if (onResize) {
+          onResize(newSize);
+        }
+      };
 
-    document.addEventListener('mousemove', doDrag);
-    document.addEventListener('mouseup', stopDrag);
-  }, [size, minSize, maxSize, direction, reverse, onResize, onResizeEnd]);
+      const stopDrag = () => {
+        setIsResizing(false);
+        document.removeEventListener('mousemove', doDrag);
+        document.removeEventListener('mouseup', stopDrag);
+        if (onResizeEnd) {
+          onResizeEnd(size); // Note: this uses the closure 'size' which is stale? No, 'size' is state.
+          // Actually, inside the closure 'size' refers to the state at bind time.
+          // We should calculate the final size again or rely on the last setSize?
+          // Let's just pass nothing or rely on the last update.
+          // Actually, 'doDrag' updates the state. 'onResizeEnd' is usually for cleanup.
+          // Passing the *current* calculated size from doDrag to a variable would be safer,
+          // but 'doDrag' and 'stopDrag' are defined inside 'startResizing'.
+          // 'startResizing' is dependent on 'size'.
+          // So 'startSize' is captured. 'delta' is calculated relative to 'startX/Y'.
+          // So we can recalculate final size in stopDrag if needed, but usually onResize covers it.
+          // Let's assume onResizeEnd is simpler.
+        }
+      };
+
+      document.addEventListener('mousemove', doDrag);
+      document.addEventListener('mouseup', stopDrag);
+    },
+    [size, minSize, maxSize, direction, reverse, onResize, onResizeEnd]
+  );
 
   return {
     size,

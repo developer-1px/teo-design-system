@@ -127,11 +127,7 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
 
           {/* Divider + Helper Text */}
           <Block role="Container" prominence="Subtle" density="Comfortable">
-            <Text
-              role="Caption"
-              prominence="Subtle"
-              content="현재 선택된 슬라이드에 적용됩니다"
-            />
+            <Text role="Caption" prominence="Subtle" content="현재 선택된 슬라이드에 적용됩니다" />
           </Block>
         </Block>
       </Block>

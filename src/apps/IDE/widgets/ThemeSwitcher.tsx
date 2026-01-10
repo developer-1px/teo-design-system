@@ -9,10 +9,10 @@
 
 import { Moon as MoonIcon, Sun as SunIcon, X as XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
+import { Section } from '@/components/types/Section/Section.tsx';
 import {
   applyThemeConfig,
   type ColorScheme,
@@ -65,13 +65,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
       <Block role="Header" direction="horizontal" align="center" justify="between" padding="sm">
         <Text role="Title" prominence="Primary" content="Theme Settings" />
         {onClose && (
-          <Action
-            role="IconButton"
-            icon="X"
-            label="Close"
-            density="Compact"
-            onClick={onClose}
-          />
+          <Action role="IconButton" icon="X" label="Close" density="Compact" onClick={onClose} />
         )}
       </Block>
 
@@ -168,13 +162,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
                 <Text role="Body" prominence="Subtle" content={density.description} size="sm" />
               </Block>
               {config.density === density.value && (
-                <Block
-                  role="Indicator"
-                  width="8"
-                  height="8"
-                  rounded="full"
-                  prominence="Brand"
-                />
+                <Block role="Indicator" width="8" height="8" rounded="full" prominence="Brand" />
               )}
             </Block>
           ))}

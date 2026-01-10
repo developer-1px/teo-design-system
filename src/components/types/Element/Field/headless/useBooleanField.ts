@@ -67,13 +67,13 @@ export interface UseBooleanFieldReturn {
   /**
    * Input ref for focus management
    */
-  inputRef: React.RefObject<HTMLInputElement | HTMLButtonElement>;
+  inputRef: React.RefObject<HTMLInputElement | HTMLButtonElement | null>;
 
   /**
    * Props getter for checkbox input
    */
   getCheckboxProps: () => {
-    ref: React.RefObject<HTMLInputElement>;
+    ref: React.RefObject<HTMLInputElement | null>;
     type: 'checkbox';
     name: string;
     checked: boolean;
@@ -90,7 +90,7 @@ export interface UseBooleanFieldReturn {
    * Props getter for switch button (role="switch")
    */
   getSwitchProps: () => {
-    ref: React.RefObject<HTMLButtonElement>;
+    ref: React.RefObject<HTMLButtonElement | null>;
     type: 'button';
     role: 'switch';
     'aria-checked': boolean;
@@ -108,7 +108,7 @@ export interface UseBooleanFieldReturn {
    * Props getter for toggle button (role="button")
    */
   getToggleProps: () => {
-    ref: React.RefObject<HTMLButtonElement>;
+    ref: React.RefObject<HTMLButtonElement | null>;
     type: 'button';
     role: 'button';
     'aria-pressed': boolean;
@@ -225,7 +225,7 @@ export function useBooleanField(options: UseBooleanFieldOptions): UseBooleanFiel
    * Get checkbox props
    */
   const getCheckboxProps = () => ({
-    ref: inputRef as React.RefObject<HTMLInputElement>,
+    ref: inputRef as React.RefObject<HTMLInputElement | null>,
     type: 'checkbox' as const,
     name: model,
     checked,
@@ -242,7 +242,7 @@ export function useBooleanField(options: UseBooleanFieldOptions): UseBooleanFiel
    * Get switch props (role="switch")
    */
   const getSwitchProps = () => ({
-    ref: inputRef as React.RefObject<HTMLButtonElement>,
+    ref: inputRef as React.RefObject<HTMLButtonElement | null>,
     type: 'button' as const,
     role: 'switch' as const,
     'aria-checked': checked,
@@ -260,7 +260,7 @@ export function useBooleanField(options: UseBooleanFieldOptions): UseBooleanFiel
    * Get toggle button props (role="button", aria-pressed)
    */
   const getToggleProps = () => ({
-    ref: inputRef as React.RefObject<HTMLButtonElement>,
+    ref: inputRef as React.RefObject<HTMLButtonElement | null>,
     type: 'button' as const,
     role: 'button' as const,
     'aria-pressed': checked,
