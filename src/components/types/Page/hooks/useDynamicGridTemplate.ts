@@ -72,6 +72,8 @@ function extractUsedAreas(children: ReactNode, layout?: PageLayout): Set<string>
 
       // v5.0: role 기반 gridArea 자동 계산 (role-config 사용)
       if (props?.role) {
+        if (props.role === 'separator') return;
+
         // v5.0: layout 이름을 Capitalized로 변환하여 ROLE_CONFIGS 키와 일치시킴
         const layoutName = layout ? layout.charAt(0).toUpperCase() + layout.slice(1).toLowerCase() : undefined;
 
@@ -171,66 +173,85 @@ function generateGridTemplate(
   ) {
     const studioRows: string[] = [];
     const studioRowSizes: string[] = [];
-    const mainColumns: string[] = [];
-    const columns: string[] = [];
+    const leftColumns: string[] = [];
+    const leftColumnSizes: string[] = [];
+    const rightColumns: string[] = [];
+    const rightColumnSizes: string[] = [];
 
-    // Columns 정의
+    // Define side columns
     if (has('activitybar')) {
-      columns.push('activitybar');
-      mainColumns.push(getSize('activitybar'));
+      leftColumns.push('activitybar');
+      leftColumnSizes.push(getSize('activitybar'));
     }
     if (has('primarysidebar')) {
-      columns.push('primarysidebar');
-      mainColumns.push(getSize('primarysidebar'));
-    }
-    if (has('editor')) {
-      columns.push('editor');
-      mainColumns.push(getSize('editor'));
-    }
-    if (has('panel')) {
-      columns.push('panel');
-      mainColumns.push(getSize('panel'));
-    }
-    if (has('secondarysidebar')) {
-      columns.push('secondarysidebar');
-      mainColumns.push(getSize('secondarysidebar'));
-    }
-    if (has('utilitybar')) {
-      columns.push('utilitybar');
-      mainColumns.push(getSize('utilitybar'));
+      leftColumns.push('primarysidebar');
+      leftColumnSizes.push(getSize('primarysidebar'));
     }
 
-    const numCols = columns.length || 1;
-    if (columns.length === 0) {
-      columns.push('editor');
-      mainColumns.push('1fr');
+    if (has('secondarysidebar')) {
+      rightColumns.push('secondarysidebar');
+      rightColumnSizes.push(getSize('secondarysidebar'));
     }
+    if (has('utilitybar')) {
+      rightColumns.push('utilitybar');
+      rightColumnSizes.push(getSize('utilitybar'));
+    }
+
+    // Determine center area structure
+    const centerCols = has('editor') || has('panel') ? ['editor'] : ['.']; // Center is always 1 column wide effectively
+    const centerColSize = '1fr';
+
+    // Construct full column list for Header/Footer/Toolbar spanning
+    // Note: Grid Line alignment requires consistent column counts.
+    // We will have: [Left Cols] [Center Col] [Right Cols]
+    const allColSizes = [...leftColumnSizes, centerColSize, ...rightColumnSizes];
+    const numCols = allColSizes.length;
 
     // Header row (Full width)
     if (has('header')) {
-      studioRows.push(new Array(numCols).fill('header').join(' '));
+      studioRows.push(`"${new Array(numCols).fill('header').join(' ')}"`);
       studioRowSizes.push(getSize('header'));
     }
 
     // Toolbar row (Full width)
     if (has('toolbar')) {
-      studioRows.push(new Array(numCols).fill('toolbar').join(' '));
+      studioRows.push(`"${new Array(numCols).fill('toolbar').join(' ')}"`);
       studioRowSizes.push(getSize('toolbar'));
     }
 
-    // Main content row
-    studioRows.push(columns.join(' '));
+    // Center Section (Editor + Panel)
+    // Row 1: Editor
+    // Sidebars span down, so we use their names again in the next row if needed.
+    // Actually, simply repeating the name in consecutive rows makes them span.
+
+    const row1Areas = [
+      ...leftColumns,
+      has('editor') ? 'editor' : '.',
+      ...rightColumns
+    ];
+    studioRows.push(`"${row1Areas.join(' ')}"`);
     studioRowSizes.push('1fr');
+
+    // Row 2: Panel (if exists)
+    if (has('panel')) {
+      const row2Areas = [
+        ...leftColumns, // Sidebars span this row too
+        'panel',
+        ...rightColumns // Sidebars span this row too
+      ];
+      studioRows.push(`"${row2Areas.join(' ')}"`);
+      studioRowSizes.push(getSize('panel'));
+    }
 
     // Footer row (Full width)
     if (has('footer')) {
-      studioRows.push(new Array(numCols).fill('footer').join(' '));
+      studioRows.push(`"${new Array(numCols).fill('footer').join(' ')}"`);
       studioRowSizes.push(getSize('footer'));
     }
 
     return {
-      gridTemplateAreas: studioRows.map((row) => `"${row}"`).join('\n    '),
-      gridTemplateColumns: mainColumns.join(' '),
+      gridTemplateAreas: studioRows.join('\n    '),
+      gridTemplateColumns: allColSizes.join(' '),
       gridTemplateRows: studioRowSizes.join(' '),
     };
   }

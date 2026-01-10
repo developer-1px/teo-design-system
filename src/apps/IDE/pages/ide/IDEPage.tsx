@@ -29,6 +29,17 @@ import { SettingsModalDSL as SettingsModal } from '@/components/types/Overlay/Se
 import { Page } from '@/components/types/Page/Page.tsx';
 import { RightBar } from '@/components/types/Section/role/RightBar.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
+import { SearchView } from '@/apps/IDE/widgets/sidebar-views/SearchView';
+import { SourceControlView } from '@/apps/IDE/widgets/sidebar-views/SourceControlView';
+import { DebugView } from '@/apps/IDE/widgets/sidebar-views/DebugView';
+import { ExtensionsView } from '@/apps/IDE/widgets/sidebar-views/ExtensionsView';
+import { RunView } from '@/apps/IDE/widgets/sidebar-views/RunView';
+import { TokensView } from '@/apps/IDE/widgets/sidebar-views/TokensView';
+import { JsonView } from '@/apps/IDE/widgets/sidebar-views/JsonView';
+import { PresentationView } from '@/apps/IDE/widgets/sidebar-views/PresentationView';
+import { SettingsView } from '@/apps/IDE/widgets/sidebar-views/SettingsView';
+import { useResizable } from '@/shared/hooks/useResizable';
+import { ResizeHandle } from '@/shared/components/ResizeHandle';
 
 interface OpenFile {
   path: string;
@@ -45,6 +56,30 @@ export const IDEPage = () => {
   const [activeFilePath, setActiveFilePath] = useState<string | null>(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+
+  // Layout Resizing
+  const {
+    size: sidebarWidth,
+    separatorProps: sidebarSeparatorProps,
+    isResizing: isSidebarResizing
+  } = useResizable({
+    initialSize: 250,
+    minSize: 170,
+    maxSize: 600,
+    direction: 'horizontal',
+  });
+
+  const {
+    size: panelHeight,
+    separatorProps: panelSeparatorProps,
+    isResizing: isPanelResizing
+  } = useResizable({
+    initialSize: 200,
+    minSize: 100,
+    maxSize: 600,
+    direction: 'vertical',
+    reverse: true,
+  });
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -90,7 +125,15 @@ export const IDEPage = () => {
   const activeFile = openFiles.find((f) => f.path === activeFilePath);
 
   return (
-    <Page role="Application" layout="Studio" density="Compact">
+    <Page
+      role="Application"
+      layout="Studio"
+      density="Compact"
+      sizes={{
+        primarysidebar: currentView !== 'none' ? `${sidebarWidth}px` : '0px',
+        panel: showBottomPanel ? `${panelHeight}px` : '0px',
+      }}
+    >
       {/* IDDL Section[ActivityBar]: Left Workspace Navigation */}
       <Section role="ActivityBar">
         <Group role="Container">
@@ -110,22 +153,33 @@ export const IDEPage = () => {
       </Section>
 
       {/* IDDL Section[PrimarySidebar]: File Tree Sidebar */}
-      {currentView === 'files' && (
-        <Section role="PrimarySidebar" className="flex flex-col border-r border-border-default overflow-hidden">
-          {/* Explorer Header (Unified Design) */}
-          <Section role="Header" density="Compact" className="h-9 px-3 flex items-center border-b border-border-default bg-surface-elevated">
-            <Text
-              role="Title"
-              prominence="Subtle"
-              content="EXPLORER"
-              className="text-[10px] font-bold text-text-tertiary tracking-widest"
-            />
-          </Section>
-
-          {/* File Tree */}
-          <Section role="Container" className="flex-1 overflow-y-auto">
-            <FileTree data={fileTreeData} onFileClick={handleFileClick} />
-          </Section>
+      {/* IDDL Section[PrimarySidebar]: Sidebar Views */}
+      {currentView !== 'none' && (
+        <Section role="PrimarySidebar" className="flex flex-col border-r border-border-default overflow-hidden h-full">
+          {currentView === 'files' && (
+            <>
+              <Section role="Header" density="Compact" className="h-9 px-3 flex items-center border-b border-border-default bg-surface-elevated">
+                <Text
+                  role="Title"
+                  prominence="Subtle"
+                  content="EXPLORER"
+                  className="text-[10px] font-bold text-text-tertiary tracking-widest"
+                />
+              </Section>
+              <Section role="Container" className="flex-1 overflow-y-auto">
+                <FileTree data={fileTreeData} onFileClick={handleFileClick} />
+              </Section>
+            </>
+          )}
+          {currentView === 'search' && <SearchView />}
+          {currentView === 'git' && <SourceControlView />}
+          {currentView === 'debug' && <DebugView />}
+          {currentView === 'extensions' && <ExtensionsView />}
+          {currentView === 'run' && <RunView />}
+          {currentView === 'tokens' && <TokensView />}
+          {currentView === 'servers' && <JsonView />}
+          {currentView === 'presentation' && <PresentationView />}
+          {currentView === 'settings' && <SettingsView />}
         </Section>
       )}
 
@@ -173,14 +227,52 @@ export const IDEPage = () => {
             </>
           )}
         </Group>
-
-        {/* Bottom Panel - Terminal */}
-        <BottomPanel
-          isOpen={showBottomPanel}
-          onClose={() => setShowBottomPanel(false)}
-          height={200}
-        />
       </Section>
+
+      {/* Resize Handle: Primary Sidebar */}
+      {currentView !== 'none' && (
+        <ResizeHandle
+          direction="horizontal"
+          isResizing={isSidebarResizing}
+          {...sidebarSeparatorProps}
+          style={{
+            ...sidebarSeparatorProps.style,
+            gridArea: 'primarysidebar',
+            justifySelf: 'end',
+            width: '4px',
+            zIndex: 50,
+            transform: 'translateX(50%)',
+          }}
+        />
+      )}
+
+      {/* Resize Handle: Bottom Panel */}
+      {showBottomPanel && (
+        <ResizeHandle
+          direction="vertical"
+          isResizing={isPanelResizing}
+          {...panelSeparatorProps}
+          style={{
+            ...panelSeparatorProps.style,
+            gridArea: 'panel',
+            alignSelf: 'start',
+            height: '4px',
+            zIndex: 50,
+            transform: 'translateY(-50%)',
+          }}
+        />
+      )}
+
+      {/* IDDL Section[Panel]: Bottom Panel */}
+      {showBottomPanel && (
+        <Section role="Panel">
+          <BottomPanel
+            isOpen={showBottomPanel}
+            onClose={() => setShowBottomPanel(false)}
+          // height is handled by grid row size
+          />
+        </Section>
+      )}
 
       {/* IDDL Section[SecondarySidebar]: Right Sidebar */}
       <Section role="SecondarySidebar">

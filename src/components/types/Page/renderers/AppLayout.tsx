@@ -174,7 +174,10 @@ export interface AppLayoutProps {
   /**
    * @deprecated Use `layout` instead of `template`
    */
-  template?: GridTemplate;
+  /**
+   * Layout sizes (v5.0)
+   */
+  sizes?: Record<string, string>;
 }
 
 export function AppLayout(props: AppLayoutProps) {
@@ -187,13 +190,14 @@ export function AppLayout(props: AppLayoutProps) {
     children,
     className,
     onClick,
+    sizes,
   } = props;
 
   // v5.0: 하위 호환성 - template → layout 매핑
   const layout = layoutProp || convertTemplateToLayout(template) || 'Studio';
 
   // v5.0: layout 기반 동적 템플릿 계산
-  const dynamicTemplate = useDynamicGridTemplate(children, layout);
+  const dynamicTemplate = useDynamicGridTemplate(children, layout, sizes);
 
   // Inline style로 동적 grid 적용
   const inlineStyle = {

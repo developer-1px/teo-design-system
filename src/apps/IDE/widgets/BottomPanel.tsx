@@ -9,7 +9,7 @@ import { Action } from '@/components/types/Atom/Action/Action.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 import { Group } from '@/components/types/Group/Group.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
-import { Badge } from '@/components/types/Atom/Text/role/Badge.tsx';
+import { cn } from '@/shared/lib/utils.ts';
 
 interface BottomPanelProps {
   isOpen: boolean;
@@ -37,10 +37,8 @@ const tabs: Tab[] = [
 export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps) => {
   const [activeTab, setActiveTab] = useState<TabType>('terminal');
 
-  if (!isOpen) return null;
-
   return (
-    <Group role="Container" layout="flex" direction="column" height={height}>
+    <Group role="Container" layout="flex" direction="column" className="h-full">
       <Section role="Container" layout="flex" direction="column" flex="1">
         {/* Tab Header (Unified Design) */}
         <Section role="Header" density="Compact" className="flex items-center justify-between gap-0 p-0 h-9 border-b border-border-default">

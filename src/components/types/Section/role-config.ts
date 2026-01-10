@@ -60,7 +60,7 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'auto',
       htmlTag: 'aside',
       ariaProps: { 'aria-label': 'Primary Sidebar' },
-      baseStyles: 'flex flex-col w-64 flex-shrink-0 bg-surface border-r border-border-default',
+      baseStyles: 'flex flex-col flex-shrink-0 bg-surface border-r border-border-default w-full h-full',
       description: '메인 사이드바 (파일 트리 등) - 스크롤',
     },
     Editor: {
@@ -75,7 +75,7 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'auto',
       htmlTag: 'section',
       ariaProps: { 'aria-label': 'Panel' },
-      baseStyles: 'flex flex-col h-48 flex-shrink-0 bg-surface-sunken border-t border-border-default',
+      baseStyles: 'flex flex-col flex-shrink-0 bg-surface-sunken border-t border-border-default w-full h-full',
       description: '하단 패널 (터미널, 문제, 출력 등) - 스크롤',
     },
     SecondarySidebar: {
@@ -83,7 +83,7 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'auto',
       htmlTag: 'aside',
       ariaProps: { 'aria-label': 'Secondary Sidebar' },
-      baseStyles: 'flex flex-col w-56 flex-shrink-0 bg-surface border-l border-border-default',
+      baseStyles: 'flex flex-col flex-shrink-0 bg-surface border-l border-border-default w-full h-full',
       description: '우측 사이드바 - 스크롤',
     },
     UtilityBar: {

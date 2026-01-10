@@ -113,6 +113,7 @@ export interface PageProps extends AsProp {
   // Layout (v5.0) - "공간을 어떻게 나누었는가?" (Section 배치)
   layout?: PageLayout; // 'Single' | 'Sidebar' | 'Aside' | 'HolyGrail' | 'Split' | 'Studio' | 'Blank'
   gap?: number; // v3.0: spacing between sections
+  sizes?: Record<string, string>; // v5.0: grid area sizes for resizing
 
   // Constraints (v3.0)
   maxWidth?: MaxWidth; // v2.0: 컨텐츠 최대 너비 (Document role만 적용)

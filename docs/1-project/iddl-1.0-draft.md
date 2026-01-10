@@ -1,345 +1,343 @@
-# Intent-Driven Design Language (IDDL) 1.0
-## W3C-Style First Public Working Draft 10 January 2026
+# IDDL 1.0 — Part 1: Intent & Structure Core
 
-<dl>
-  <dt>This version:</dt>
-  <dd><a href="https://iddl.dev/spec/1.0/draft-01">https://iddl.dev/spec/1.0/draft-01</a></dd>
-  <dt>Latest published version:</dt>
-  <dd><a href="https://iddl.dev/spec/latest">https://iddl.dev/spec/latest</a></dd>
-  <dt>Editors:</dt>
-  <dd>Teo (Google Deepmind)</dd>
-  <dd>Claude (Anthropic)</dd>
-  <dd>Antigravity (Google Deepmind)</dd>
-</dl>
+**Status:** Draft (Core Freeze Candidate)  
+**Target:** Renderer Implementers, Validator Implementers, Authoring Tool Developers  
+**Date:** 2026-01-10  
 
 ---
 
-## Abstract
+## 1. Abstract
 
-The **Intent-Driven Design Language (IDDL)** is a declarative domain-specific language (DSL) and specification for defining user interfaces based on **semantic intent** and **data structure** rather than visual implementation details. By abstracting the "How" (styles, pixels, specific widgets) into the "Why" (prominence, intent, role), IDDL enables a separation of concerns where developers or AI agents declare the purpose of UI elements, and a renderer application deterministically generates the appropriate platform-specific interface. This specification defines the syntax, data model, component taxonomy, and rendering behavioral requirements for IDDL 1.0.
+IDDL (Intent-Driven Design Language) is a declarative specification for describing UI based on **Intent** and **Structure**, rather than **Implementation**.
 
-## Status of This Document
+The core objectives of IDDL are:
 
-This is the **First Public Working Draft** of the IDDL 1.0 specification. This document describes the core architecture, data model, and normative interfaces for the language. It is produced by the Advanced Agentic Coding working group.
+*   **Maximizing Renderer (Design System) Autonomy**: The same IDDL document must be transformable not just in color but also in **wireframe layout and structure** to fit the brand/product UI language.
+*   **Preserving Intent**: Even with transformations, the **semantic meaning (Intent/Prominence/Density)** conveyed by the author must be preserved.
 
-This document is a work in progress. It may be updated, replaced, or obsoleted by other documents at any time.
-
-## Table of Contents
-
-1. [Introduction](#1-introduction)
-    1.1 [Problem Statement](#11-problem-statement)
-    1.2 [Design Principles](#12-design-principles)
-    1.3 [Scope](#13-scope)
-2. [Conformance](#2-conformance)
-3. [Core Concepts](#3-core-concepts)
-    3.1 [The Four Axes of Definition](#31-the-four-axes-of-definition)
-    3.2 [Prominence (Visual Hierarchy)](#32-prominence-visual-hierarchy)
-    3.3 [Intent (Semantic Meaning)](#33-intent-semantic-meaning)
-    3.4 [Role (Functional Identity)](#34-role-functional-identity)
-    3.5 [Density (Spatial Relation)](#35-density-spatial-relation)
-4. [Document Object Model](#4-document-object-model)
-    4.1 [Structure Overview](#41-structure-overview)
-    4.2 [Root: Page](#42-root-page)
-    4.3 [Layout Layer: Section](#43-layout-layer-section)
-    4.4 [Container Layer: Group](#44-container-layer-group)
-    4.5 [Interaction Layer: Overlay](#45-interaction-layer-overlay)
-    4.6 [Primitives (Items)](#46-primitives-items)
-5. [Taxonomy and Semantics](#5-taxonomy-and-semantics)
-    5.1 [Section Roles](#51-section-roles)
-    5.2 [Group Roles](#52-group-roles)
-    5.3 [Item Types and Roles](#53-item-types-and-roles)
-6. [Normative Interfaces (TypeScript)](#6-normative-interfaces-typescript)
-7. [Behavioral Model](#7-behavioral-model)
-    7.1 [Inheritance and Cascading](#71-inheritance-and-cascading)
-    7.2 [Selection Model](#72-selection-model)
-    7.3 [Conditional Rendering](#73-conditional-rendering)
-8. [Rendering Requirements](#8-rendering-requirements)
-9. [Accessibility Considerations](#9-accessibility-considerations)
+This document (Part 1) defines the "Core" of IDDL, focusing purely on **Intent, Structure, and Renderer Autonomy**.  
+Data binding, conditional expressions, and state models are defined in **Part 2**.
 
 ---
 
-## 1. Introduction
+## 2. Conformance Terminology
 
-Modern user interface development suffers from "Intent Loss," a phenomenon where the original design intent ("this is a dangerous action") is degraded into implementation details ("make this button red") as it passes from designers to developers to code. IDDL solves this by preserving the intent as the primary definition of the UI.
+The keywords "MUST", "MUST NOT", "SHOULD", and "MAY" in this document are to be interpreted as described in RFC 2119.
 
-### 1.1 Problem Statement
+---
 
-In traditional imperative UI frameworks, the following issues are prevalent:
-*   **Coupling of Style and Logic**: Logic code is cluttered with class names and pixel values.
-*   **Inconsistent Semantics**: A "primary" button might be blue in one module and green in another if not strictly policed.
-*   **AI Interpretation Ambiguity**: When AI agents generate UI code, they often hallucinate styles or mix incompatible design systems.
+## 3. Core Philosophy
 
-### 1.2 Design Principles
+### 3.1 Intent over Implementation
+IDDL describes UI by meaning, such as "Critical Action", rather than "Red Button".
 
-IDDL adheres to the following normative principles:
+### 3.2 Strict Structure
+IDDL uses a **strict hierarchical structure** to ensure stability in understanding, validating, and generating UI.
 
-1.  **Intent over Implementation**: Authors MUST declare *what* something is and *why* it is there, not *how* it looks.
-2.  **Structure over Style**: The hierarchy and logical grouping of elements takes precedence over their spatial positioning.
-3.  **Data-Driven**: The UI structure should reflect the underlying data schema.
-4.  **Renderer Autonomy**: The consuming application (Renderer) has full authority over the visual presentation, theme, and platform adaptation.
+### 3.3 Renderer Autonomy with Intent Preservation
+Renderers MAY reinterpret **structure, patterns, and layout** to fit their brand. However, they MUST preserve the **semantic effect of the Intent Axes** defined by IDDL.
 
-### 1.3 Scope
+---
 
-This specification covers:
-*   The abstract data model of an IDDL document.
-*   The set of valid roles, intents, and prominence levels.
-*   The rules for attribute inheritance and defaults.
-*   The behavior of logical models like Selection.
+## 4. Scope
 
-This specification does **not** cover:
-*   The specific CSS values or visual design (e.g., "what shade of blue is Brand intent").
-*   The internal implementation of the Renderer (e.g., React vs Vue).
+### 4.1 Included in Part 1
+*   Hierarchy Model: Page / Section / Block / Element (6 types)
+*   5 Axes: Role / Intent / Prominence / Density / Spec
+*   Renderer Autonomy and Intent Preservation Norms
+*   TSX-based Type Interfaces (Normalized)
 
-## 2. Conformance
+### 4.2 Excluded (Scheduled for Part 2)
+*   Data Binding (Read/Write standards, Expressions)
+*   Conditional Rendering (`condition`) syntax and execution model
+*   State Standards (loading, error, disabled, invalid, etc.)
+*   Command Execution/Permission/Security Models
 
-As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
+---
 
-The key words **"MUST"**, **"MUST NOT"**, **"REQUIRED"**, **"SHALL"**, **"SHALL NOT"**, **"SHOULD"**, **"SHOULD NOT"**, **"RECOMMENDED"**, **"MAY"**, and **"OPTIONAL"** in this document are to be interpreted as described in [RFC2119].
+## 5. Hierarchy Model
 
-## 3. Core Concepts
+### 5.1 Node Types
+An IDDL document is a Tree structure, where each node is one of the following:
 
-### 3.1 The Four Axes of Definition
+*   **Page**: Root unit for a document or route.
+*   **Section**: Top-level physical partition of the screen.
+*   **Block**: Semantic component unit or layout container.
+*   **Element**: Leaf unit representing actual content/interaction.
 
-All IDDL nodes are defined by their position on four axes. A conforming Renderer MUST support these axes.
+### 5.2 Normative Child Rules
+Validators and Renderers MUST enforce the following rules:
 
-### 3.2 Prominence (Visual Hierarchy)
+1.  **Page children MUST be Sections.**
+2.  **Section children MUST be Blocks.**
+3.  **Block children MUST be Blocks or Elements.**
+4.  **Elements MUST NOT have children** (except for Text content).
 
-Prominence defines the visual weight of an element relative to its siblings.
+> **Note**: These rules prioritize **predictability** as an Intent/Structure language over the freedom of arbitrary nesting like HTML.
 
-*   **`Hero`**: The single most important element in a context. MUST be rendered with maximum visual impact (e.g., largest size, full bleed).
-*   **`Primary`**: Main content or preferred actions. SHOULD be rendered with solid fills or bold typography.
-*   **`Secondary`**: Standard content. RECOMMENDED for the majority of UI elements (outline styles, regular weights).
-*   **`Tertiary`**: Supplementary or meta-information. SHOULD be rendered subtly (ghost interactions, muted text).
+---
 
-### 3.3 Intent (Semantic Meaning)
+## 6. The 5 Axes of Definition
 
-Intent defines the semantic purpose or emotional context of an element. This is orthogonal to Prominence.
+All nodes (Section/Block/Element) MAY be defined by the following 5 Axes. (Role may be MUST for certain nodes).
 
-*   **`Neutral`**: Default. Standard information.
-*   **`Brand`**: Represents the identity of the service.
-*   **`Positive`**: Success, completion, or safe states.
-*   **`Caution`**: Warnings, pauses, or irreversible but not error states.
-*   **`Critical`**: Destructive actions, errors, or danger.
-*   **`Info`**: Help, guidance, or auxiliary information.
+1.  **Role**: "What is this?"
+2.  **Intent**: "What is the semantic context?"
+3.  **Prominence**: "How important is this?"
+4.  **Density**: "How dense is the interface?"
+5.  **Spec**: "Role-dependent parameters to establish/concretize the Role."
 
-### 3.4 Role (Functional Identity)
+---
 
-Role defines the functional contract of a component. For example, a Group with role `Toolbar` implies a horizontal layout of Actions, whereas a Group with role `Form` implies a validation context for Fields.
+## 7. Axes Definitions
 
-### 3.5 Density (Spatial Relation)
+### 7.1 Role
+Role indicates the functional identity of the node. Renderers MAY use Role to select patterns/structures.
 
-Density defines the tightness of the layout. Unlike Intnet, Density typically cascades down the tree.
+*   **Section Role (MUST)**: `Header`, `Footer`, `Main`, `Sidebar`, `Drawer`, `Modal`
+*   **Block Role (MAY)**: `Form`, `Card`, `List`, `Toolbar`, `Menu`, `Grid`, etc.
+*   **Element (6 Types)**: `Text`, `Image`, `Video`, `Field`, `Action`, `Separator`
 
-*   **`Comfortable`**: Marketing pages, wide tables.
-*   **`Standard`**: Default application UI.
-*   **`Compact`**: High-density data grids, code editors.
+### 7.2 Intent
+Indicates semantic context.
 
-## 4. Document Object Model
+*   **Values**: `Neutral`, `Brand`, `Positive`, `Caution`, `Critical`, `Info`
 
-The IDDL DOM is a tree structure rooted at a `Page`.
+### 7.3 Prominence
+Indicates importance/weight.
 
-### 4.1 Structure Overview
+*   **Values**: `Hero`, `Standard`, `Subtle`, `Hidden`
 
-```text
-Page (Root)
- ├── Section (Layout Layer)
- │    └── Group (Logical Container)
- │         ├── Item (Primitive: Text, Field, Action)
- │         └── Group (Nested)
- └── Overlay (Floating Layer)
-      └── Group ...
-```
+#### Minimum Normative Meaning of Hidden
+*   Nodes marked `Hidden` MUST NOT be displayed in the UI visible to the user.
+*   Technical implementation (removal vs visual hiding) MAY vary by Renderer policy.
 
-### 4.2 Root: Page
+### 7.4 Density
+Determines the physical density (spacing/target size/rhythm) of the UI.
 
-The `Page` node represents a discrete view or screen.
-*   **MUST** contain `children` of type `Section` or `Overlay`.
-*   **MUST** define `title`.
-*   **MAY** define `layout` strategy (e.g., `single`, `sidebar`, `dashboard`).
+*   **Values**: `Standard`, `Comfortable`, `Compact`
+*   **Core Meaning**:
+    *   `Standard`: Default density.
+    *   `Comfortable`: Spacious (Enhanced readability/touch targets).
+    *   `Compact`: Dense (Suitable for data-heavy/expert interfaces).
 
-### 4.3 Layout Layer: Section
+> **Note**: Pixel values and token mappings are the responsibility of the Renderer.
 
-`Section` nodes represent distinct layout regions mapped to the Page's template.
-*   **Roles**: `Container`, `Header`, `Footer`, `Navigator`, `Aside`.
-*   Sections constitute the "skeleton" of the page.
+### 7.5 Spec (Role Specification)
 
-### 4.4 Container Layer: Group
+#### 7.5.1 Definition
+`spec` is a set of **role-dependent parameters** required to establish or concretize the node's `role`.
 
-`Group` nodes represent logical collections of items.
-*   **Roles**: `Form`, `List`, `Grid`, `Card`, `Toolbar`, etc.
-*   Groups handle layout direction (`stack`, `inline`) and logical state (loading, error).
+#### 7.5.2 Role-Dependence
+The schema of `spec` (required/optional fields, types) MUST be determined by the `role`.
 
-### 4.5 Interaction Layer: Overlay
+#### 7.5.3 Data Constraints
+*   `spec` MUST be **Plain Data** (Serializable).
+*   It MUST NOT contain functions, class instances, or runtime handles/references.
 
-`Overlay` nodes represent content that exists outside the normal document flow.
-*   **Roles**: `Dialog`, `Drawer`, `Popover`, `Toast`.
-*   **Placement**: Defines anchor points (`center`, `right`, `bottom`).
+#### 7.5.4 Prohibition of Presentation Parameters
+*   `spec` MUST NOT be used to directly describe presentation (CSS/Pixels/Colors/Fonts).
+*   It MUST aim to provide "Minimum Parameters required for Pattern establishment".
 
-### 4.6 Primitives (Items)
+#### 7.5.5 Inheritance
+`spec` MUST NOT be inherited.
 
-Primitives are the leaf nodes of the tree.
+> **Note**: Allowing spec inheritance/merging complicates the core as rules would vary by role. It is prohibited in Part 1 Core.
 
-1.  **Text**: Pure presentation (`Title`, `Body`, `Label`).
-2.  **Field**: Data binding and input (`DataType` determines renderer: text, date, select, etc.).
-3.  **Action**: Triggers (`Button`, `Link`). Defined by `ActionBehavior` (navigate, command, submit).
+---
 
-## 5. Taxonomy and Semantics
+## 8. Element Taxonomy
 
-### 5.1 Section Roles
+IDDL represents UI leaves using only these 6 Elements.
 
-| Role | Semantics | Typical Rendering |
-|---|---|---|
-| `Header` | Top-level context | Sticky top bar |
-| `Navigator` | Global navigation | Sidebar or Tab bar |
-| `Container` | Primary content | Central scrollable area |
-| `Aside` | Contextual help/tools | Right sidebar |
-| `Footer` | Status or meta info | Bottom bar |
+### 8.1 Text
+*   Role: `Title`, `Heading`, `Body`, `Label`, `Caption`
+*   Props(Part 1): `content?: string`, `align?`, `icon?`
 
-### 5.2 Group Roles
+### 8.2 Image
+*   Props: `src: string`, `alt: string`
+*   Options: `aspectRatio?`, `fit?`
 
-| Role | Semantics | Key Behaviors |
-|---|---|---|
-| `Form` | Data entry context | Validates children Fields on submit |
-| `Toolbar` | Action cluster | Inline layout, gap management |
-| `List` | Homogeneous items | Stack layout, virtualization candidate |
-| `Card` | Discrete content unit | Border/Shadow containment |
-| `Tabs` | Mutually exclusive views | Navigation between child Groups |
+### 8.3 Video
+*   Props: `src: string`
+*   Options: `poster?`, `autoplay?`, `loop?`, `controls?`
 
-### 5.3 Item Types and Roles
+### 8.4 Field
+*   Props: `label: string`, `model: string`, `type: FieldType`, `required?`, `disabled?`
+*   **Note**: `model` indicates "input location", but binding standards are defined in Part 2.
 
-Items do not have a single 'role' axis but rather specific subtypes.
+### 8.5 Action
+*   Props: `label: string`, `icon?`, `behavior?`
+*   **Note**: behaviors define structure only; execution/permissions are Part 2 scope.
 
-**Field Types (DataTypes):**
-*   `text`, `number`, `email`, `password`, `url`, `tel`
-*   `date`, `time`, `datetime`, `daterange`
-*   `select`, `multiselect`, `radio`, `checkbox`
-*   `richtext`, `markdown`, `code`
+### 8.6 Separator
+*   Props: `type?`, `size?`, `orientation?`, `content?`
+*   Purpose: Logical separation and layout flattening.
 
-**Action Roles (inferred):**
-*   Primary actions (Submit, Save) uses `Prominence='Primary'`.
-*   Destructive actions (Delete) uses `Intent='Critical'`.
+---
 
-## 6. Normative Interfaces (TypeScript)
+## 9. Renderer Autonomy and Intent Preservation
 
-The following TypeScript definitions are NORMATIVE. Implementation MUST adhere to these shapes.
+### 9.1 Permitted Transformations (Autonomy)
+Renderers MAY:
+*   Transform Role/Spec into internal Design System patterns (including component shape changes).
+*   Reconfigure layout/wireframes.
+*   Apply brand-specific minimal styles or component style variations.
 
-```typescript
-/**
- * IDDL Normative Type Definitions v1.0
- */
+### 9.2 Preservation Obligation
+Renderers MUST NOT compromise the semantic effect of the following Axes:
+*   `Intent`
+*   `Prominence`
+*   `Density`
 
-export type Prominence = 'Hero' | 'Standard' | 'Strong' | 'Subtle';
+### 9.3 Functional Meaning Preservation
+Renderers MUST NOT alter the following functional meanings:
+*   The type of action implied by Action `behavior.type`.
+*   The meaning of input controls implied by Field (type/required/disabled).
+
+---
+
+## 10. Default Mappings (Developer-Friendly Core)
+
+Part 1 aims to enable "Minimum UI Development without Design". To achieve this:
+*   Renderers SHOULD provide reasonable default mappings (Pattern/Default Layout) for each Role.
+
+> **Note**: This guarantees a minimum developer experience where "An IDDL document produces a basic screen". The details of 'basic' are Renderer policy.
+
+---
+
+## 11. Normative TSX Interfaces (Part 1)
+
+```ts
+// --- Axes ---
 export type Intent = 'Neutral' | 'Brand' | 'Positive' | 'Caution' | 'Critical' | 'Info';
-export type Density = 'Comfortable' | 'Standard' | 'Compact';
+export type Prominence = 'Hero' | 'Standard' | 'Subtle' | 'Hidden';
+export type Density = 'Standard' | 'Comfortable' | 'Compact';
 
-interface BaseNode {
-  id?: string;
-  prominence?: Prominence; // Default: 'Primary' (Standard)
-  intent?: Intent;         // Default: 'Neutral'
-  hidden?: boolean;
-  condition?: string;      // Expression for conditional rendering
-}
+// spec is role-dependent plain data
+export type Spec = Record<string, unknown>;
 
-// --- Leaf Nodes ---
-
-export interface TextNode extends BaseNode {
-  type: 'Text';
-  role: 'Title' | 'Body' | 'Label' | 'Caption' | 'Code';
-  content: string;
-  align?: 'left' | 'center' | 'right';
-}
-
-export interface ActionNode extends BaseNode {
-  type: 'Action';
-  label?: string;
-  icon?: string;
-  disabled?: boolean | string;
-  behavior: 
-    | { action: 'command'; command: string; args?: any }
-    | { action: 'navigate'; to: string; target?: '_blank' | '_self' }
-    | { action: 'submit'; form?: string }
-    | { action: 'open'; overlay: string }
-    | { action: 'close'; overlay?: string };
-}
-
-export interface FieldNode extends BaseNode {
-  type: 'Field';
-  label: string;
-  model: string; // Binding path
-  dataType: 
-    | 'text' | 'number' | 'boolean' | 'date'
-    | 'select' | 'radio' | 'checkbox' 
-    | 'textarea' | 'richtext';
-  required?: boolean;
-  options?: Array<{ label: string; value: any }>;
-}
-
-// --- Containers ---
-
-export interface GroupNode extends BaseNode {
-  type: 'Group';
-  role: 
-    | 'Container' | 'Form' | 'Fieldset' | 'Toolbar'
-    | 'List' | 'Grid' | 'Table' | 'Card' | 'Tabs';
-  children: Array<GroupNode | TextNode | FieldNode | ActionNode>;
-  layout?: 'stack' | 'inline' | 'grid';
+// --- Base Props (Part 1 Core) ---
+interface BaseProps {
+  intent?: Intent;
+  prominence?: Prominence;
   density?: Density;
+  spec?: Spec;
 }
 
-export interface SectionNode extends BaseNode {
-  type: 'Section';
-  role: 'Container' | 'Header' | 'Footer' | 'Navigator' | 'Aside';
-  children: GroupNode[];
+// Page
+export interface PageProps {
+  title?: string;
 }
 
-// --- Root ---
+// Section
+export type SectionRole = 'Header' | 'Footer' | 'Main' | 'Sidebar' | 'Drawer' | 'Modal';
+export interface SectionProps extends BaseProps {
+  role: SectionRole;
+}
 
-export interface PageNode {
-  type: 'Page';
-  title: string;
-  layout?: 'single' | 'sidebar' | 'dashboard' | 'split';
-  children: Array<SectionNode | OverlayNode>;
+// Block
+export type BlockRole = 'Form' | 'Card' | 'List' | 'Toolbar' | 'Menu' | 'Grid';
+export interface BlockProps extends BaseProps {
+  role?: BlockRole; // Layout-only Blocks may omit role
+}
+
+// Elements
+export interface TextProps extends BaseProps {
+  role: 'Title' | 'Heading' | 'Body' | 'Label' | 'Caption';
+  content?: string;
+  align?: 'left' | 'center' | 'right';
+  icon?: string;
+}
+
+export interface ImageProps extends BaseProps {
+  src: string;
+  alt: string;
+  aspectRatio?: 'auto' | '1:1' | '16:9' | '4:3';
+  fit?: 'cover' | 'contain';
+}
+
+export interface VideoProps extends BaseProps {
+  src: string;
+  poster?: string;
+  autoplay?: boolean;
+  loop?: boolean;
+  controls?: boolean;
+}
+
+export type FieldType =
+  | 'text' | 'number' | 'email' | 'password'
+  | 'select' | 'date' | 'checkbox' | 'radio';
+
+export interface FieldProps extends BaseProps {
+  label: string;
+  model: string;
+  type: FieldType;
+  options?: Array<{ label: string; value: any }>;
+  required?: boolean;
+  disabled?: boolean;
+}
+
+export type ActionBehavior =
+  | { type: 'submit' }
+  | { type: 'navigate'; to: string; target?: string }
+  | { type: 'command'; id: string; params?: any }
+  | { type: 'open'; target: string };
+
+export interface ActionProps extends BaseProps {
+  label: string;
+  icon?: string;
+  behavior?: ActionBehavior;
+}
+
+export interface SeparatorProps extends BaseProps {
+  type?: 'line' | 'space';
+  size?: 'small' | 'medium' | 'large';
+  orientation?: 'horizontal' | 'vertical';
+  content?: string;
 }
 ```
 
-## 7. Behavioral Model
+---
 
-### 7.1 Inheritance and Cascading
+## 12. Examples (Informative)
 
-To reduce verbosity, certain properties cascade from parent to child.
+> Data binding is defined in Part 2, so examples use literals.
 
-1.  **Density**: Explicitly cascades. A `Section` defined as `Compact` implies all children are `Compact` unless overridden.
-2.  **Mode (View/Edit)**: Cascades. A `Form` in `view` mode renders all Child Fields as text-only displays.
-3.  **Prominence/Intent**: Do **NOT** cascade. A `Critical` Group does not make its children Critical; it implies the container itself is critical (e.g., a red border).
+```tsx
+<Page title="Edit Profile">
+  <Section role="Header">
+    <Block role="Toolbar" density="Standard">
+      <Text role="Title" content="Settings" />
+      <Action label="Close" behavior={{ type: 'navigate', to: '/home' }} prominence="Subtle" />
+    </Block>
+  </Section>
 
-### 7.2 Selection Model
+  <Section role="Main" density="Comfortable">
+    <Block role="Card">
+      <Text role="Heading" content="Profile" />
+      <Separator type="line" />
 
-Groups acting as lists (Role `List`, `Grid`, `Table`) MAY support a Selection Model.
-*   If a `Group` child has a `value` prop, it is a **Selectable Item**.
-*   The parent `Group` manages the selection state (`selectedValues`).
-*   Renderers MUST handle standard interaction patterns (Click to select, Shift+Click for range, Cmd+Click for toggle) automatically.
+      <Block role="Form" density="Standard">
+        <Field label="Nickname" model="user.nickname" type="text" required />
+        <Field label="Bio" model="user.bio" type="text" />
+        <Separator type="space" size="medium" />
+        <Field label="opt-in" model="user.optIn" type="checkbox" />
+      </Block>
 
-### 7.3 Conditional Rendering
+      <Separator type="space" size="large" />
 
-Nodes MAY possess a `condition` property containing a string expression.
-*   The Renderer MUST evaluate this expression against the current data context.
-*   If falsy, the node MUST NOT be rendered.
-*   Supported syntax SHOULD include basic comparison (`==`, `!=`, `>`, `<`) and logical operators (`&&`, `||`, `!`).
-
-## 8. Rendering Requirements
-
-A conforming Renderer:
-1.  **MUST** generate semantically correct HTML (e.g., `<button>` for Actions, `<form>` for Form Groups, `<h1-h6>` for Title Texts).
-2.  **MUST** ensure accessibility (ARIA attributes) is automatically applied based on Role.
-3.  **SHOULD** provide distinct visual treatments for all Intent and Prominence combinations.
-4.  **MUST NOT** require CSS injection to function; the IDDL document is the source of truth.
-
-## 9. Accessibility Considerations
-
-IDDL is designed to enforce accessible patterns by default.
-*   **Role Mapping**: IDDL Roles map directly to WAI-ARIA Roles (e.g., `Group role="Tabs"` -> `role="tablist"`).
-*   **Contrast**: Renderers are responsible for ensuring color combinations generated by Intent/Prominence pairs meet WCAG AA standards.
-*   **Focus Management**: Overlay nodes (Dialogs) MUST trap focus and support `Escape` key dismissal.
+      <Action label="Save" intent="Brand" prominence="Hero" behavior={{ type: 'submit' }} />
+      <Action label="Delete" intent="Critical" prominence="Subtle" behavior={{ type: 'command', id: 'deleteAccount' }} />
+    </Block>
+  </Section>
+</Page>
+```
 
 ---
-**End of Document**
+
+## 13. Non-Normative Notes
+
+*   Part 1 fixes the "UI Intent/Structure Language" core.
+*   Part 2 will deal with "Execution/Data/State" standardization.
+*   This separation is an intentional choice to secure developer friendliness without compromising renderer autonomy.

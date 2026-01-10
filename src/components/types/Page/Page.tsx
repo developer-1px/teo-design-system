@@ -134,6 +134,7 @@ export function Page({
   children,
   onClick,
   condition,
+  sizes,
   // Deprecated props (v5.0) - 하위 호환성
   direction,
   ...rest
@@ -169,6 +170,7 @@ export function Page({
           prominence={prominence}
           intent={intent}
           onClick={onClick}
+          sizes={sizes}
         >
           {children}
         </AppLayout>
