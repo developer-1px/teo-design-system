@@ -3,8 +3,8 @@
  */
 
 import { Section } from '@/components/types/Section/Section.tsx';
-import { Group } from '@/components/types/Group/Group.tsx';
-import { Card } from '@/components/types/Group/role/Card.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
+import { Card } from '@/components/types/Block/role/Card.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import type { JsonArray, JsonObject, ViewConfig } from '../types.ts';
 
@@ -25,7 +25,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
 
   return (
     <Section role="Container" layout="scroll" padding="md">
-      <Group role="Grid" template="gallery" gridCols={gridCols[cardSize]} gap="md">
+      <Block role="Grid" template="gallery" gridCols={gridCols[cardSize]} gap="md">
         {data.map((item, index) => {
           const obj = item as JsonObject;
           const keys = Object.keys(obj).slice(0, 6); // 최대 6개 필드
@@ -36,10 +36,10 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
               padding="md"
               interactive
             >
-              <Group role="Container" gap="sm">
+              <Block role="Container" gap="sm">
                 {/* 이미지 (있으면) */}
                 {viewConfig.showImage && viewConfig.imageKey && obj[viewConfig.imageKey] && (
-                  <Group role="Media" aspectRatio="video">
+                  <Block role="Media" aspectRatio="video">
                     <img
                       src={String(obj[viewConfig.imageKey])}
                       alt=""
@@ -47,7 +47,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                         e.currentTarget.style.display = 'none';
                       }}
                     />
-                  </Group>
+                  </Block>
                 )}
 
                 {/* 필드들 */}
@@ -68,7 +68,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                   }
 
                   return (
-                    <Group key={key} role="Field" gap="xs">
+                    <Block key={key} role="Field" gap="xs">
                       <Text role="Label" prominence="Subtle" content={key} />
                       <Text
                         role="Body"
@@ -78,14 +78,14 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                             : String(value)
                         }
                       />
-                    </Group>
+                    </Block>
                   );
                 })}
-              </Group>
+              </Block>
             </Card>
           );
         })}
-      </Group>
+      </Block>
     </Section>
   );
 };

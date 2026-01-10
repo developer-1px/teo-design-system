@@ -14,7 +14,7 @@ import type {
   SectionNode,
   TextNode,
 } from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Field } from '@/components/types/Atom/Field/Field';
 import { Text } from '@/components/types/Atom/Text/Text';
@@ -90,7 +90,7 @@ function renderNode(
       page: 'Page',
       region: 'Region',
       section: 'Section',
-      group: 'Group',
+      group: 'Block',
       item: 'Item',
       text: 'Text',
       field: 'Field',
@@ -193,7 +193,7 @@ function renderNode(
     case 'group': {
       const groupNode = node as GroupNode;
       return (
-        <Group
+        <Block
           key={groupNode.id}
           role={groupNode.role}
           prominence={groupNode.prominence}
@@ -208,7 +208,7 @@ function renderNode(
           {groupNode.children?.map((child) =>
             renderNode(child, selectedId, onNodeClick, fullPath, hoveredNodeId, setHoveredNodeId)
           )}
-        </Group>
+        </Block>
       );
     }
 

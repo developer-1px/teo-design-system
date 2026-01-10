@@ -13,7 +13,7 @@ import type {
   FileTreeNode,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { CodeViewer } from './CodeViewer';
 import { MarkdownDocs } from './MarkdownDocs';
@@ -33,20 +33,20 @@ export function AddonsPanel({ node, propValues, onPropChange }: AddonsPanelProps
 
   if (!metadata) {
     return (
-      <Group
+      <Block
         role="Container"
         prominence="Standard"
         className="flex-1 flex items-center justify-center"
       >
         <Text role="Body">Select a component to view addons</Text>
-      </Group>
+      </Block>
     );
   }
 
   return (
-    <Group role="Container" prominence="Standard" className="flex flex-col h-full">
+    <Block role="Container" prominence="Standard" className="flex flex-col h-full">
       {/* Tabs Header */}
-      <Group role="Tabs" prominence="Standard" className="border-b border-border-default">
+      <Block role="Tabs" prominence="Standard" className="border-b border-border-default">
         <button
           onClick={() => setActiveTab('controls')}
           className={`px-3 py-2 text-sm font-medium transition-colors border-b-2 ${
@@ -77,12 +77,12 @@ export function AddonsPanel({ node, propValues, onPropChange }: AddonsPanelProps
         >
           Code
         </button>
-      </Group>
+      </Block>
 
       {/* Tab Content */}
-      <Group role="Container" prominence="Standard" className="flex-1 overflow-auto">
+      <Block role="Container" prominence="Standard" className="flex-1 overflow-auto">
         {activeTab === 'controls' && (
-          <Group role="Container" prominence="Standard" className="p-4">
+          <Block role="Container" prominence="Standard" className="p-4">
             <PropsPanel
               metadata={metadata}
               propValues={propValues}
@@ -90,19 +90,19 @@ export function AddonsPanel({ node, propValues, onPropChange }: AddonsPanelProps
               onPropChange={onPropChange}
               onMockChange={() => {}}
             />
-          </Group>
+          </Block>
         )}
 
         {activeTab === 'docs' && (
-          <Group role="Container" prominence="Standard" className="p-4">
+          <Block role="Container" prominence="Standard" className="p-4">
             <MarkdownDocs metadata={metadata} />
-          </Group>
+          </Block>
         )}
 
         {activeTab === 'code' && metadata.sourceCode && (
           <CodeViewer sourceCode={metadata.sourceCode} />
         )}
-      </Group>
-    </Group>
+      </Block>
+    </Block>
   );
 }

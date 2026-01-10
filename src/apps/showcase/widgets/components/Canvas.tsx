@@ -14,7 +14,7 @@ import type {
   FileTreeNode,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { ComponentRenderer } from './ComponentRenderer';
 import { ErrorBoundary } from './ErrorBoundary';
@@ -136,7 +136,7 @@ export function Canvas({
           }}
         >
           {metadata && node?.componentModule ? (
-            <Group
+            <Block
               role="Container"
               prominence="Standard"
               className="border border-border rounded-lg overflow-hidden bg-surface p-8"
@@ -149,11 +149,11 @@ export function Canvas({
                   componentModule={node.componentModule}
                 />
               </ErrorBoundary>
-            </Group>
+            </Block>
           ) : (
-            <Group role="Container" prominence="Standard" className="p-12 text-center">
+            <Block role="Container" prominence="Standard" className="p-12 text-center">
               <Text role="Body" prominence="Subtle" content="Select a component to preview" />
-            </Group>
+            </Block>
           )}
         </div>
       </div>

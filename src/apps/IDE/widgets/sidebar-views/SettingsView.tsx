@@ -1,5 +1,5 @@
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { Input } from './components/ui/input';
@@ -21,19 +21,19 @@ export const SettingsView = () => {
 
             <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
                 {/* Search */}
-                <Group role="Container" className="relative">
+                <Block role="Container" className="relative">
                     <Search size={14} className="absolute left-2.5 top-2.5 text-text-tertiary" />
                     <Input
                         placeholder="Search Settings"
                         className="pl-8 text-sm font-sans"
                     />
-                </Group>
+                </Block>
 
                 {/* Categories */}
-                <Group role="List" className="flex flex-col gap-6">
+                <Block role="List" className="flex flex-col gap-6">
 
                     {/* Editor */}
-                    <Group role="Container" className="flex flex-col gap-3">
+                    <Block role="Container" className="flex flex-col gap-3">
                         <div className="flex items-center gap-1 text-xs font-bold text-text-secondary uppercase tracking-wider mb-1 border-b border-border-muted pb-1">
                             <ChevronDown size={14} />
                             <span>Text Editor</span>
@@ -74,10 +74,10 @@ export const SettingsView = () => {
                                 <Text role="Caption" content="Controls how lines should wrap." className="text-text-secondary" />
                             </div>
                         </div>
-                    </Group>
+                    </Block>
 
                     {/* Workbench */}
-                    <Group role="Container" className="flex flex-col gap-3">
+                    <Block role="Container" className="flex flex-col gap-3">
                         <div className="flex items-center gap-1 text-xs font-bold text-text-secondary uppercase tracking-wider mb-1 border-b border-border-muted pb-1">
                             <ChevronDown size={14} />
                             <span>Workbench</span>
@@ -106,8 +106,8 @@ export const SettingsView = () => {
                                 </select>
                             </div>
                         </div>
-                    </Group>
-                </Group>
+                    </Block>
+                </Block>
             </Section>
         </>
     );

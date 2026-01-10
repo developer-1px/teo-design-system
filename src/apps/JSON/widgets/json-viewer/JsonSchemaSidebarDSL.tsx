@@ -10,7 +10,7 @@
 import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { Section } from '@/components/types/Section/Section';
 
@@ -64,16 +64,16 @@ export const JsonSchemaSidebarDSL = ({
     return (
       <Section className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden rounded-md">
         <div className="px-4 py-3">
-          <Group role="Container" className="flex items-center gap-2">
+          <Block role="Container" className="flex items-center gap-2">
             <Code size={16} />
             <Text role="Title" prominence="Hero" content="Schema" />
-          </Group>
+          </Block>
         </div>
 
         <div className="flex-1 flex items-center justify-center px-4 py-8">
-          <Group role="Card">
+          <Block role="Card">
             <Text role="Body" className="text-center" content="No data to analyze" />
-          </Group>
+          </Block>
         </div>
       </Section>
     );
@@ -83,17 +83,17 @@ export const JsonSchemaSidebarDSL = ({
     <Section className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden rounded-md">
       {/* Header */}
       <div className="px-3 py-2">
-        <Group role="Container" className="flex items-center gap-2">
+        <Block role="Container" className="flex items-center gap-2">
           <Code size={14} />
           <Text role="Title" content="Schema" />
-        </Group>
+        </Block>
       </div>
 
       <div className="flex-1 overflow-y-auto">
         {/* Schema Analysis Section */}
         {schema.analysis && (
           <Section>
-            <Group role="Toolbar">
+            <Block role="Toolbar">
               <Item
                 as="button"
                 onClick={() => toggleSection('analysis')}
@@ -107,11 +107,11 @@ export const JsonSchemaSidebarDSL = ({
                 <Info size={12} />
                 <span>Analysis</span>
               </Item>
-            </Group>
+            </Block>
 
             {expandedSections.has('analysis') && (
               <div className="px-3 pb-2 space-y-2">
-                <Group role="Card">
+                <Block role="Card">
                   <div className="flex justify-between px-2">
                     <Text role="Label" content="Properties" />
                     <Text
@@ -141,7 +141,7 @@ export const JsonSchemaSidebarDSL = ({
                       content={Array.from(schema.analysis.types).join(', ')}
                     />
                   </div>
-                </Group>
+                </Block>
               </div>
             )}
           </Section>
@@ -149,7 +149,7 @@ export const JsonSchemaSidebarDSL = ({
 
         {/* TypeScript Interface Section */}
         <Section>
-          <Group role="Toolbar">
+          <Block role="Toolbar">
             <Item
               as="button"
               onClick={() => toggleSection('typescript')}
@@ -163,11 +163,11 @@ export const JsonSchemaSidebarDSL = ({
               <Code size={12} />
               <span>Interface</span>
             </Item>
-          </Group>
+          </Block>
 
           {expandedSections.has('typescript') && (
             <div className="px-3 pb-2">
-              <Group role="Container">
+              <Block role="Container">
                 <Item
                   as="pre"
                   prominence="Hero"
@@ -175,7 +175,7 @@ export const JsonSchemaSidebarDSL = ({
                 >
                   {schema.typescript}
                 </Item>
-              </Group>
+              </Block>
             </div>
           )}
         </Section>

@@ -3,12 +3,12 @@
  *
  * IDDL 전체 스택 사용:
  * - Section[Header]: Notion 스타일 컨트롤 바
- *   - Group[Toolbar]: 검색/필터 (좌측)
+ *   - Block[Toolbar]: 검색/필터 (좌측)
  *     - Field[text]: 전체 검색 (clearable)
  *     - Field[select]: 필터 기준 컬럼
- *   - Group[Toolbar]: 뷰 타입 (중앙)
+ *   - Block[Toolbar]: 뷰 타입 (중앙)
  *     - Field[radio]: Table/JSON/Tree
- *   - Group[Toolbar]: 정렬/컬럼/액션 (우측)
+ *   - Block[Toolbar]: 정렬/컬럼/액션 (우측)
  *     - Field[select]: 정렬 기준
  *     - Field[radio]: 정렬 방향
  *     - Action: 추가/내보내기
@@ -18,8 +18,8 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebarDSL } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL';
-import { Group } from '@/components/types/Group/Group';
-import { DataTable } from '@/components/types/Group/role/DataTable.tsx';
+import { Block } from '@/components/types/Block/Block';
+import { DataTable } from '@/components/types/Block/role/DataTable.tsx';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Field } from '@/components/types/Atom/Field/Field';
 import { Badge } from '@/components/types/Atom/Text/role/Badge';
@@ -165,14 +165,14 @@ export const ServerProductsViewDSL = () => {
         >
           {/* Notion-style Control Bar */}
           <Section role="Header" className="border-b border-border bg-layer-3">
-            <Group
+            <Block
               role="Toolbar"
               layout="inline"
               density="Compact"
               className="h-12 items-center justify-between px-3"
             >
               {/* Left: Sidebar Toggle + Search + Filter */}
-              <Group role="Toolbar" layout="inline" density="Compact" className="gap-2 flex-1">
+              <Block role="Toolbar" layout="inline" density="Compact" className="gap-2 flex-1">
                 <Action
                   icon={showSidebar ? 'PanelLeftClose' : 'PanelLeft'}
                   intent="Neutral"
@@ -203,10 +203,10 @@ export const ServerProductsViewDSL = () => {
                   }
                   className="w-40"
                 />
-              </Group>
+              </Block>
 
               {/* Center: View Type */}
-              <Group role="Toolbar" layout="inline" density="Compact" className="gap-2">
+              <Block role="Toolbar" layout="inline" density="Compact" className="gap-2">
                 <Field
                   model="viewType"
                   type="radio"
@@ -220,10 +220,10 @@ export const ServerProductsViewDSL = () => {
                     setViewType(e.target.value as 'table' | 'json' | 'tree')
                   }
                 />
-              </Group>
+              </Block>
 
               {/* Right: Sort + Density */}
-              <Group
+              <Block
                 role="Toolbar"
                 layout="inline"
                 density="Compact"
@@ -260,12 +260,12 @@ export const ServerProductsViewDSL = () => {
                   onClick={() => setDensity(density === 'compact' ? 'normal' : 'compact')}
                   behavior={{ action: 'command', command: 'json.toggleDensity' }}
                 />
-              </Group>
-            </Group>
+              </Block>
+            </Block>
           </Section>
 
           {/* Stats Bar */}
-          <Group
+          <Block
             role="Container"
             layout="inline"
             density="Compact"
@@ -280,7 +280,7 @@ export const ServerProductsViewDSL = () => {
             <Badge variant="default" size="sm">
               {visibleColumns.length}/{allColumnKeys.length} visible
             </Badge>
-          </Group>
+          </Block>
 
           {/* Data Table */}
           <div className="flex-1 min-h-0">

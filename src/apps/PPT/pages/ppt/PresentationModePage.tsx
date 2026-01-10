@@ -12,13 +12,13 @@
  * - Page role="Fullscreen": 전체화면 컨테이너
  *   - Section role="Container": 슬라이드 컨테이너
  *     - DSLSlideCanvas: 현재 슬라이드
- *   - Group role="Toolbar": 하단 네비게이션 오버레이
+ *   - Block role="Toolbar": 하단 네비게이션 오버레이
  */
 
 import { useEffect, useState } from 'react';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas';
@@ -124,12 +124,12 @@ export const PresentationModePage = ({
     return (
       <Page role="Fullscreen">
         <Section role="Container">
-          <Group layout="flex" direction="vertical" density="Comfortable">
+          <Block role="Container" layout="stack" className="items-center justify-center h-full" density="Comfortable">
             <Text role="Body" prominence="Subtle" content="슬라이드가 없습니다" />
             <Action prominence="Secondary" onClick={onExit}>
               나가기 (Esc)
             </Action>
-          </Group>
+          </Block>
         </Section>
       </Page>
     );
@@ -154,7 +154,7 @@ export const PresentationModePage = ({
       </Section>
 
       {/* Bottom Navigation Overlay */}
-      <Group
+      <Block
         role="Toolbar"
         layout="inline"
         density="Compact"
@@ -204,21 +204,21 @@ export const PresentationModePage = ({
         >
           나가기 (Esc)
         </Action>
-      </Group>
+      </Block>
 
       {/* Keyboard Hints - Top Right */}
-      <Group
+      <Block
         role="Container"
         prominence="Subtle"
         density="Compact"
         className="absolute top-4 right-4 bg-black/40 backdrop-blur-sm rounded px-3 py-2"
       >
-        <Group layout="inline" density="Compact">
-          <Text role="Kbd" content="←" className="text-white" />
-          <Text role="Kbd" content="→" className="text-white" />
+        <Block role="Inline" layout="inline" density="Compact">
+          <Text role="Code" content="←" className="text-white" />
+          <Text role="Code" content="→" className="text-white" />
           <Text role="Caption" prominence="Subtle" content="탐색" className="text-white/70" />
-        </Group>
-      </Group>
+        </Block>
+      </Block>
     </Page>
   );
 };

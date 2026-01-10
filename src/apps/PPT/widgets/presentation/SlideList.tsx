@@ -1,13 +1,13 @@
 /**
  * SlideList - IDDL 기반 슬라이드 리스트 (Pure IDDL v4.0 with Selection)
  *
- * IDDL Group을 사용한 구조:
- * - Group[Container]: 전체 컨테이너
- *   - Group[Toolbar]: 상단 액션 버튼
- *   - Group[SortableList]: 정렬 가능한 슬라이드 썸네일 리스트 (Drag & Drop)
+ * IDDL Block을 사용한 구조:
+ * - Block[Container]: 전체 컨테이너
+ *   - Block[Toolbar]: 상단 액션 버튼
+ *   - Block[SortableList]: 정렬 가능한 슬라이드 썸네일 리스트 (Drag & Drop)
  *
  * v3.1: 모든 수동 className 제거, role 기반 minimal 디자인
- * v4.0: Group role="SortableList" 적용 (드래그 앤 드롭)
+ * v4.0: Block role="SortableList" 적용 (드래그 앤 드롭)
  * v4.1: useSelection hook 적용 (상용 앱 수준 선택 관리)
  *       - 단일/멀티 선택, Shift 범위 선택
  *       - Cmd+C/X/V (복사/잘라내기/붙여넣기)
@@ -17,7 +17,7 @@
  * v1.0.4: Focus management 통합 (브라우저 포커스 자동 이동)
  */
 
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SlidePreview } from './SlidePreview';
@@ -82,7 +82,7 @@ export const SlideList = ({
     },
   });
 
-  // v1.0.2: SelectionModel 객체 생성 (Group value prop과 함께 사용)
+  // v1.0.2: SelectionModel 객체 생성 (Block value prop과 함께 사용)
   // v1.0.4: Focus management 추가
   const selectionModel = {
     selectedValues: selection.selectedIds,
@@ -91,26 +91,28 @@ export const SlideList = ({
     registerItemRef: selection.registerItemRef,
   };
 
+  const { role: ariaRole, ...containerProps } = selection.getContainerProps();
+
   return (
-    <Group
+    <Block
       role="Container"
       layout="stack"
       density="Compact"
-      {...selection.getContainerProps()}
+      {...containerProps}
     >
       {/* Toolbar: Add Button */}
-      <Group role="Toolbar" layout="inline" density="Compact">
+      <Block role="Toolbar" layout="inline" density="Compact">
         <Action icon="Plus" onClick={onSlideAdd} />
         {selection.selectedItems.length > 0 && (
           <Text role="Caption" prominence="Subtle">
             {selection.selectedItems.length} selected
           </Text>
         )}
-      </Group>
+      </Block>
 
       {/* Sortable Slide List (v4.0) with Selection (v4.1 → v1.0.2 simplified) */}
       {onReorder ? (
-        <Group
+        <Block
           role="SortableList"
           density="Compact"
           className="flex-1 overflow-y-auto"
@@ -119,7 +121,7 @@ export const SlideList = ({
           onReorder={onReorder}
           renderItem={(slide: Slide, index: number) => {
             return (
-              <Group
+              <Block
                 role="Card"
                 density="Compact"
                 prominence="Standard"
@@ -140,16 +142,16 @@ export const SlideList = ({
                     <SlidePreview slide={slide} scale={0.15} />
                   </div>
                 </div>
-              </Group>
+              </Block>
             );
           }}
         />
       ) : (
         // Fallback: Non-sortable list (if onReorder is not provided) with Selection (v1.0.2 simplified)
-        <Group role="List" layout="stack" density="Compact" className="flex-1 overflow-y-auto">
+        <Block role="List" layout="stack" density="Compact" className="flex-1 overflow-y-auto">
           {slides.map((slide, index) => {
             return (
-              <Group
+              <Block
                 key={slide.id}
                 role="Card"
                 density="Compact"
@@ -171,11 +173,11 @@ export const SlideList = ({
                     <SlidePreview slide={slide} scale={0.15} />
                   </div>
                 </div>
-              </Group>
+              </Block>
             );
           })}
-        </Group>
+        </Block>
       )}
-    </Group>
+    </Block>
   );
 };

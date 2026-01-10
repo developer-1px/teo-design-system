@@ -1,7 +1,7 @@
 /**
  * useMenu - 메뉴 컴포넌트 헤드리스 훅
  *
- * IDDL Group role="Menu" 구현을 위한 헤드리스 로직
+ * IDDL Block role="Menu" 구현을 위한 헤드리스 로직
  * @see docs/1-project/1-type-role-aria-mapping-1.md#4-group (Menu, MenuItem)
  * @see docs/1-project/4-headless-hook.md
  */

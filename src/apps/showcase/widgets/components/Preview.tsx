@@ -13,7 +13,7 @@ import type {
   MockData,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
@@ -71,9 +71,9 @@ export function Preview({ node }: PreviewProps) {
   if (!metadata) {
     return (
       <Section role="Container">
-        <Group role="Card">
+        <Block role="Card">
           <Text role="Body">Select a component to preview</Text>
-        </Group>
+        </Block>
       </Section>
     );
   }
@@ -82,7 +82,7 @@ export function Preview({ node }: PreviewProps) {
     <Section role="Container" split="vertical">
       {/* Top Bar */}
       <Section role="navigation">
-        <Group role="Toolbar" gap={2}>
+        <Block role="Toolbar" gap={2}>
           <Action
             label="Preview"
             behavior={{ action: 'command', command: 'switchTab' }}
@@ -102,13 +102,13 @@ export function Preview({ node }: PreviewProps) {
             behavior={{ action: 'command', command: 'toggleDarkMode' }}
             onClick={() => setDarkMode(!darkMode)}
           />
-        </Group>
+        </Block>
       </Section>
 
       {/* Content */}
       <Section role="Container" prominence="Standard">
         {activeTab === 'preview' ? (
-          <Group role="Container" prominence="Standard" gap={2}>
+          <Block role="Container" prominence="Standard" gap={2}>
             {/* Markdown Docs */}
             {metadata.description && <MarkdownDocs content={metadata.description} />}
 
@@ -125,14 +125,14 @@ export function Preview({ node }: PreviewProps) {
                   />
                 </Suspense>
               ) : (
-                <Group role="Card" prominence="Standard">
+                <Block role="Card" prominence="Standard">
                   <Text role="Body" prominence="Standard" intent="Critical">
                     Error: Component module not found for {metadata.name}.
                   </Text>
                   <Text role="Caption" prominence="Subtle">
                     Check browser console for details.
                   </Text>
-                </Group>
+                </Block>
               )}
             </Section>
 
@@ -144,7 +144,7 @@ export function Preview({ node }: PreviewProps) {
               onPropChange={(name, value) => setPropValues((prev) => ({ ...prev, [name]: value }))}
               onMockChange={setMockData}
             />
-          </Group>
+          </Block>
         ) : (
           <CodeViewer sourceCode={metadata.sourceCode} />
         )}

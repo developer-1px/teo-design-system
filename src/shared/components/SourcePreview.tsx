@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Section } from '@/components/types/Section/Section';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { Action } from '@/components/types/Atom/Action/Action';
@@ -14,11 +14,11 @@ export function SourcePreview({ code, title, children }: SourcePreviewProps) {
     const [showCode, setShowCode] = useState(false);
 
     return (
-        <Group role="Card" prominence="Standard" className="p-0 overflow-hidden border border-border-default">
+        <Block role="Card" prominence="Standard" className="p-0 overflow-hidden border border-border-default">
             {/* Header / Tabs */}
-            <Group role="Toolbar" className="bg-surface-subtle border-b border-border-default px-4 py-2 flex justify-between items-center">
+            <Block role="Toolbar" className="bg-surface-subtle border-b border-border-default px-4 py-2 flex justify-between items-center">
                 <Text role="Label" content={title || 'Component Preview'} prominence="Standard" />
-                <Group role="Inline" gap="2">
+                <Block role="Inline" gap="2">
                     <Action
                         role="Button"
                         prominence={!showCode ? 'Standard' : 'Subtle'}
@@ -35,21 +35,21 @@ export function SourcePreview({ code, title, children }: SourcePreviewProps) {
                         icon="Code"
                         onClick={() => setShowCode(true)}
                     />
-                </Group>
-            </Group>
+                </Block>
+            </Block>
 
             {/* Content Area */}
             {showCode ? (
-                <Group role="Container" className="bg-surface-sunken p-4 overflow-auto max-h-[400px]">
+                <Block role="Container" className="bg-surface-sunken p-4 overflow-auto max-h-[400px]">
                     <pre className="font-mono text-xs leading-relaxed text-text-subtle whitespace-pre-wrap">
                         {code}
                     </pre>
-                </Group>
+                </Block>
             ) : (
-                <Group role="Container" className="p-6 bg-surface">
+                <Block role="Container" className="p-6 bg-surface">
                     {children}
-                </Group>
+                </Block>
             )}
-        </Group>
+        </Block>
     );
 }

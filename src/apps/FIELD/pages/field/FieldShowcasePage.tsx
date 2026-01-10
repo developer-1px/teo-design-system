@@ -7,7 +7,7 @@
 
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { Field } from '@/components/types/Atom/Field/Field';
 
@@ -16,50 +16,50 @@ export function FieldShowcasePage() {
     <Page role="Application" layout="Studio">
       {/* Header / Toolbar */}
       <Section role="Toolbar" prominence="Standard">
-        <Group role="Toolbar" layout="inline" density="Compact">
+        <Block role="Toolbar" layout="inline" density="Compact">
           {/* Using Title Standard for navbar-like title */}
           <Text role="Title" prominence="Standard" content="Field Component Library" />
-          <Group role="Divider" layout="inline"><></></Group>
+          <Block role="Divider" layout="inline"><></></Block>
           <Text role="Body" prominence="Subtle" content="v2.1.0 Minimal Design" />
-        </Group>
+        </Block>
       </Section>
 
       {/* Sidebar for Navigation (Mock) */}
       <Section role="PrimarySidebar" prominence="Standard">
-        <Group role="ScrollMenu" layout="stack" density="Comfortable">
+        <Block role="ScrollMenu" layout="stack" density="Comfortable">
           <Text role="Label" content="COMPONENTS" prominence="Subtle" className="px-2 pt-2" />
-          <Group role="Container" layout="stack" density="Standard">
+          <Block role="Container" layout="stack" density="Standard">
             {['Input Primitives', 'Selection Controls', 'Text Areas', 'Advanced Inputs', 'States & Validation'].map(item => (
-              <Group key={item} role="Inline" clickable value={item} className="px-2 py-1 hover:bg-surface-elevated rounded-md cursor-pointer">
+              <Block key={item} role="Inline" clickable value={item} className="px-2 py-1 hover:bg-surface-elevated rounded-md cursor-pointer">
                 <Text role="Body" content={item} prominence="Standard" />
-              </Group>
+              </Block>
             ))}
-          </Group>
-        </Group>
+          </Block>
+        </Block>
       </Section>
 
       {/* Main Content Area - Set mode="edit" to render inputs */}
       <Section role="Editor" prominence="Standard" mode="edit">
         {/* Main Content Container */}
-        <Group role="Container" layout="stack" density="Comfortable" className="p-8 gap-12 max-w-4xl mx-auto">
+        <Block role="Container" layout="stack" density="Comfortable" className="p-8 gap-12 max-w-4xl mx-auto">
 
           {/* Page Header */}
-          <Group role="Container" layout="stack" density="Standard" className="gap-2">
+          <Block role="Container" layout="stack" density="Standard" className="gap-2">
             <Text role="Title" prominence="Hero" content="Field Inputs" />
             <Text role="Body" prominence="Hero" content="Totally refined, minimal input components designed for modern interfaces." />
-          </Group>
+          </Block>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack"><></></Group>
+          <Block role="Divider" layout="stack"><></></Block>
 
           {/* 1. Input Primitives */}
-          <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
+          <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="Input Primitives" />
               <Text role="Body" prominence="Subtle" content="Basic text-based input fields." />
             </div>
 
-            <Group role="Grid" layout="grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8">
+            <Block role="Grid" layout="grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8">
               <Field
                 label="Text Input"
                 model="demo.text"
@@ -92,21 +92,21 @@ export function FieldShowcasePage() {
                 prominence="Standard"
                 density="Standard"
               />
-            </Group>
-          </Group>
+            </Block>
+          </Block>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack"><></></Group>
+          <Block role="Divider" layout="stack"><></></Block>
 
           {/* 2. Selection Controls */}
-          <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
+          <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="Selection Controls" />
               <Text role="Body" prominence="Subtle" content="Components for selecting options." />
             </div>
 
-            <Group role="Grid" layout="grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8 items-start">
-              <Group role="Container" layout="stack" density="Standard">
+            <Block role="Grid" layout="grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8 items-start">
+              <Block role="Container" layout="stack" density="Standard">
                 <Field
                   label="Select Dropdown"
                   model="demo.select"
@@ -118,11 +118,11 @@ export function FieldShowcasePage() {
                   ]}
                   placeholder="Select region..."
                 />
-              </Group>
+              </Block>
 
-              <Group role="Container" layout="stack" density="Standard">
+              <Block role="Container" layout="stack" density="Standard">
                 <Field
-                  label="Radio Group"
+                  label="Radio Block"
                   model="demo.radio"
                   type="radio"
                   options={[
@@ -132,11 +132,11 @@ export function FieldShowcasePage() {
                   ]}
                   value="default"
                 />
-              </Group>
+              </Block>
 
-              <Group role="Container" layout="stack" density="Standard">
+              <Block role="Container" layout="stack" density="Standard">
                 <Field
-                  label="Checkbox Group"
+                  label="Checkbox Block"
                   model="demo.checkbox"
                   type="checkbox"
                   options={[
@@ -145,24 +145,24 @@ export function FieldShowcasePage() {
                     { label: 'Security Alerts', value: 'security' },
                   ]}
                 />
-              </Group>
+              </Block>
 
-              <Group role="Container" layout="stack" density="Standard">
+              <Block role="Container" layout="stack" density="Standard">
                 <Field
                   label="Boolean Toggle"
                   model="demo.toggle"
                   type="boolean"
                   label="Enable Dark Mode"
                 />
-              </Group>
-            </Group>
-          </Group>
+              </Block>
+            </Block>
+          </Block>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack"><></></Group>
+          <Block role="Divider" layout="stack"><></></Block>
 
           {/* 3. Text Areas */}
-          <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
+          <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="Text Areas" />
               <Text role="Body" prominence="Subtle" content="For multiline text input." />
@@ -174,19 +174,19 @@ export function FieldShowcasePage() {
               placeholder="Tell us about yourself..."
               prominence="Standard"
             />
-          </Group>
+          </Block>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack"><></></Group>
+          <Block role="Divider" layout="stack"><></></Block>
 
           {/* 4. Advanced Inputs */}
-          <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
+          <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="Advanced Inputs" />
               <Text role="Body" prominence="Subtle" content="Specialized input types." />
             </div>
 
-            <Group role="Grid" layout="grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8">
+            <Block role="Grid" layout="grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8">
               <Field
                 label="Date Picker"
                 model="demo.date"
@@ -209,21 +209,21 @@ export function FieldShowcasePage() {
                 constraints={{ min: 0, max: 100 }}
                 value={50}
               />
-            </Group>
-          </Group>
+            </Block>
+          </Block>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack"><></></Group>
+          <Block role="Divider" layout="stack"><></></Block>
 
           {/* 5. States & Validation */}
-          <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
+          <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
               <Text role="Title" prominence="Strong" content="States & Validation" />
               <Text role="Body" prominence="Subtle" content="Visual feedback states." />
             </div>
 
-            <Group role="Grid" layout="grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8">
-              <Group role="Container" layout="stack" className="gap-4">
+            <Block role="Grid" layout="grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8">
+              <Block role="Container" layout="stack" className="gap-4">
                 <Field
                   label="Disabled Input"
                   model="demo.disabled"
@@ -239,9 +239,9 @@ export function FieldShowcasePage() {
                   disabled={true}
                   options={[]}
                 />
-              </Group>
+              </Block>
 
-              <Group role="Container" layout="stack" className="gap-4">
+              <Block role="Container" layout="stack" className="gap-4">
                 <Field
                   label="Error State"
                   model="demo.error"
@@ -261,17 +261,17 @@ export function FieldShowcasePage() {
                   required
                   placeholder="This is required *"
                 />
-              </Group>
-            </Group>
-          </Group>
+              </Block>
+            </Block>
+          </Block>
 
-        </Group>
+        </Block>
       </Section>
 
       <Section role="Panel" prominence="Standard">
-        <Group role="Container" layout="stack" density="Compact" className="items-center py-2">
+        <Block role="Container" layout="stack" density="Compact" className="items-center py-2">
           <Text role="Body" content="IDDL Design System v2.1 • Built with React 19 & TailwindCSS 4" prominence="Subtle" />
-        </Group>
+        </Block>
       </Section>
     </Page>
   );

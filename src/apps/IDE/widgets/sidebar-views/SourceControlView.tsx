@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { ChevronRight, ChevronDown, Check, Plus, Minus, MoveRight } from 'lucide-react';
@@ -27,7 +27,7 @@ export const SourceControlView = () => {
 
             <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
                 {/* Commit Input */}
-                <Group role="Container" className="flex flex-col gap-2">
+                <Block role="Container" className="flex flex-col gap-2">
                     <Input
                         placeholder="Message (⌘Enter to commit)"
                         value={message}
@@ -38,10 +38,10 @@ export const SourceControlView = () => {
                         <Check size={14} className="mr-2" />
                         Commit
                     </Button>
-                </Group>
+                </Block>
 
                 {/* Staged Changes */}
-                <Group role="Container" className="flex flex-col gap-1">
+                <Block role="Container" className="flex flex-col gap-1">
                     <button className="flex items-center gap-1 text-xs text-text-tertiary font-bold hover:text-text uppercase tracking-wider mb-1">
                         <ChevronDown size={14} />
                         <span>Staged Changes</span>
@@ -56,10 +56,10 @@ export const SourceControlView = () => {
                             <Button variant="ghost" size="icon" className="h-5 w-5"><Minus size={12} /></Button>
                         </div>
                     </div>
-                </Group>
+                </Block>
 
                 {/* Changes */}
-                <Group role="Container" className="flex flex-col gap-1">
+                <Block role="Container" className="flex flex-col gap-1">
                     <div className="flex items-center justify-between group/header">
                         <button className="flex items-center gap-1 text-xs text-text-tertiary font-bold hover:text-text uppercase tracking-wider mb-1">
                             <ChevronDown size={14} />
@@ -91,7 +91,7 @@ export const SourceControlView = () => {
                             <Button variant="ghost" size="icon" className="h-5 w-5"><MoveRight size={12} /></Button>
                         </div>
                     </div>
-                </Group>
+                </Block>
             </Section>
         </>
     );

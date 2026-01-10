@@ -217,7 +217,7 @@ export const CommandPalette = () => {
           <Command.Empty className="cmdk-empty">No commands found</Command.Empty>
 
           {commands.map((group) => (
-            <Command.Group key={group.heading} heading={group.heading} className="cmdk-group">
+            <Command.Block key={group.heading} heading={group.heading} className="cmdk-group">
               <div className="cmdk-group-heading">{group.heading}</div>
               {group.items.map((item) => (
                 <Command.Item
@@ -235,7 +235,7 @@ export const CommandPalette = () => {
                   </div>
                 </Command.Item>
               ))}
-            </Command.Group>
+            </Command.Block>
           ))}
         </Command.List>
 

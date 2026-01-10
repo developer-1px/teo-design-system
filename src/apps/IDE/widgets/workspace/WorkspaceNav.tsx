@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 
 interface WorkspaceNavProps {
   onViewChange?: (view: string) => void;
@@ -15,7 +15,7 @@ export const WorkspaceNav = ({ onViewChange }: WorkspaceNavProps) => {
   };
 
   return (
-    <Group role="Navigator" padding="xs" gap="xs">
+    <Block role="Navigator" padding="xs" gap="xs">
       <Action
         role="IconButton"
         icon="Files"
@@ -88,7 +88,7 @@ export const WorkspaceNav = ({ onViewChange }: WorkspaceNavProps) => {
         onClick={() => handleViewChange('presentation')}
       />
 
-      <Group role="Spacer" flex="1" />
+      <Block role="Spacer" flex="1" />
 
       <Action
         role="IconButton"
@@ -97,6 +97,6 @@ export const WorkspaceNav = ({ onViewChange }: WorkspaceNavProps) => {
         selected={activeView === 'settings'}
         onClick={() => handleViewChange('settings')}
       />
-    </Group>
+    </Block>
   );
 };

@@ -23,7 +23,7 @@ import { cva } from 'class-variance-authority';
 import type { Density, Prominence } from '@/components/types/Atom/types';
 
 /**
- * Spacing Config - Group/Action에 전달할 spacing 설정
+ * Spacing Config - Block/Action에 전달할 spacing 설정
  */
 export interface SpacingConfig {
   /** prominence 값 (상속 가능) */
@@ -178,7 +178,7 @@ export function calculateSpacing(config: SpacingConfig = {}): SpacingResult {
 /**
  * Spacing Variants (CVA) - prominence × density 조합
  *
- * Action/Group에서 바로 사용할 수 있는 CVA variants
+ * Action/Block에서 바로 사용할 수 있는 CVA variants
  */
 export const spacingVariants = cva('', {
   variants: {

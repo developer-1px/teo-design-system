@@ -1,6 +1,6 @@
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { ChevronRight, ChevronDown, Play, Pause, StepForward, StepBack, RefreshCw, StopCircle } from 'lucide-react';
@@ -33,7 +33,7 @@ export const DebugView = () => {
 
             <Section role="Container" className="flex-1 overflow-y-auto flex flex-col">
                 {/* Variables */}
-                <Group role="Accordion" className="border-b border-border-muted pb-1">
+                <Block role="Accordion" className="border-b border-border-muted pb-1">
                     <button className="w-full flex items-center gap-1 px-2 py-1 hover:bg-surface-hover text-xs font-bold text-text-secondary uppercase tracking-wider group">
                         <ChevronDown size={14} />
                         <span>Variables</span>
@@ -56,10 +56,10 @@ export const DebugView = () => {
                             <span className="text-text-tertiary font-mono text-xs truncate">[]</span>
                         </div>
                     </div>
-                </Group>
+                </Block>
 
                 {/* Watch */}
-                <Group role="Accordion" className="border-b border-border-muted pb-1">
+                <Block role="Accordion" className="border-b border-border-muted pb-1">
                     <div className="flex items-center justify-between group/header pr-2">
                         <button className="flex-1 flex items-center gap-1 px-2 py-1 hover:bg-surface-hover text-xs font-bold text-text-secondary uppercase tracking-wider text-left">
                             <ChevronDown size={14} />
@@ -73,10 +73,10 @@ export const DebugView = () => {
                     <div className="px-4 py-2 text-xs text-text-tertiary italic">
                         No expressions to watch.
                     </div>
-                </Group>
+                </Block>
 
                 {/* Call Stack */}
-                <Group role="Accordion" className="border-b border-border-muted pb-1">
+                <Block role="Accordion" className="border-b border-border-muted pb-1">
                     <button className="w-full flex items-center gap-1 px-2 py-1 hover:bg-surface-hover text-xs font-bold text-text-secondary uppercase tracking-wider">
                         <ChevronDown size={14} />
                         <span>Call Stack</span>
@@ -95,10 +95,10 @@ export const DebugView = () => {
                             <span className="text-text-tertiary text-xs ml-auto">react-dom.js:123</span>
                         </div>
                     </div>
-                </Group>
+                </Block>
 
                 {/* Breakpoints */}
-                <Group role="Accordion" className="border-b border-border-muted pb-1">
+                <Block role="Accordion" className="border-b border-border-muted pb-1">
                     <div className="flex items-center justify-between group/header pr-2">
                         <button className="flex-1 flex items-center gap-1 px-2 py-1 hover:bg-surface-hover text-xs font-bold text-text-secondary uppercase tracking-wider text-left">
                             <ChevronDown size={14} />
@@ -123,7 +123,7 @@ export const DebugView = () => {
                             </div>
                         </div>
                     </div>
-                </Group>
+                </Block>
 
             </Section>
         </>

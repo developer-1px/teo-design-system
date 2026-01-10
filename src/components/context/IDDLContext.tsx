@@ -2,15 +2,15 @@
  * IDDLContext - IDDL Context System
  *
  * prominence, role, density, intent를 자동으로 자식에게 전파
- * Section과 Group이 이 Context를 제공함
+ * Section과 Block이 이 Context를 제공함
  */
 
 import { createContext, useContext } from 'react';
-import type { LayoutContextValue, GroupRole } from '@/components/types/Atom/types.ts';
+import type { LayoutContextValue, BlockRole } from '@/components/types/Atom/types.ts';
 
 /**
  * IDDL Context
- * Section과 Group이 자동으로 이 Context를 제공
+ * Section과 Block이 자동으로 이 Context를 제공
  * v4.1: template 추가 (Page template을 Section으로 전파)
  * v5.0: layout 추가 (Page layout을 Section으로 전파)
  */
@@ -23,7 +23,7 @@ export const IDDLContext = createContext<LayoutContextValue>({
 });
 
 /**
- * useIDDLContext - 현재 Section/Group의 prominence, role, density, intent 가져오기
+ * useIDDLContext - 현재 Section/Block의 prominence, role, density, intent 가져오기
  *
  * Item 컴포넌트에서 사용하여 부모의 속성을 참조
  *
@@ -42,7 +42,7 @@ export function useIDDLContext(): LayoutContextValue {
 
 /**
  * IDDLProvider - Context Provider
- * Section과 Group 컴포넌트가 내부적으로 사용
+ * Section과 Block 컴포넌트가 내부적으로 사용
  */
 export const IDDLProvider = IDDLContext.Provider;
 
@@ -52,16 +52,16 @@ export const useLayoutContext = useIDDLContext;
 export const LayoutProvider = IDDLProvider;
 
 // ============================================
-// Group Context (GroupRole 전용)
+// Block Context (BlockRole 전용)
 // ============================================
 
 /**
- * GroupLayoutContextValue - Group 전용 Context 타입
- * GroupRole을 그대로 사용하여 타입 안정성 확보
+ * BlockLayoutContextValue - Block 전용 Context 타입
+ * BlockRole을 그대로 사용하여 타입 안정성 확보
  */
-export interface GroupLayoutContextValue {
+export interface BlockLayoutContextValue {
   prominence: LayoutContextValue['prominence'];
-  role?: GroupRole; // GroupRole 타입 사용
+  role?: BlockRole; // BlockRole 타입 사용
   density?: LayoutContextValue['density'];
   intent?: LayoutContextValue['intent'];
   depth: number;
@@ -69,9 +69,9 @@ export interface GroupLayoutContextValue {
 }
 
 /**
- * GroupLayoutContext - Group 전용 Context
+ * BlockLayoutContext - Block 전용 Context
  */
-export const GroupLayoutContext = createContext<GroupLayoutContextValue>({
+export const BlockLayoutContext = createContext<BlockLayoutContextValue>({
   prominence: 'Standard',
   density: 'Standard',
   intent: 'Neutral',
@@ -79,13 +79,13 @@ export const GroupLayoutContext = createContext<GroupLayoutContextValue>({
 });
 
 /**
- * useGroupLayoutContext - Group Context 가져오기
+ * useBlockLayoutContext - Block Context 가져오기
  */
-export function useGroupLayoutContext(): GroupLayoutContextValue {
-  return useContext(GroupLayoutContext);
+export function useBlockLayoutContext(): BlockLayoutContextValue {
+  return useContext(BlockLayoutContext);
 }
 
 /**
- * GroupLayoutProvider - Group 전용 Provider
+ * BlockLayoutProvider - Block 전용 Provider
  */
-export const GroupLayoutProvider = GroupLayoutContext.Provider;
+export const BlockLayoutProvider = BlockLayoutContext.Provider;

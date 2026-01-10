@@ -1,5 +1,5 @@
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { Action } from '@/components/types/Atom/Action/Action';
@@ -11,7 +11,7 @@ export const PresentationView = () => {
         { title: 'Core Concepts: Intent vs Implementation', active: false },
         { title: 'Atomic Design Principles', active: false },
         { title: 'Layout System: Page & Section', active: false },
-        { title: 'Functional Components: Group', active: false },
+        { title: 'Functional Components: Block', active: false },
         { title: 'Token System: Role & Prominence', active: false },
         { title: 'Demo: IDE UI Kit', active: false },
         { title: 'Q&A', active: false },
@@ -30,7 +30,7 @@ export const PresentationView = () => {
             />
 
             <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
-                <Group role="List" className="flex flex-col gap-2">
+                <Block role="List" className="flex flex-col gap-2">
                     {slides.map((slide, idx) => (
                         <div key={idx} className={`flex gap-3 p-2 rounded-lg cursor-pointer transition-colors ${slide.active ? 'bg-surface-raised border border-border-default' : 'hover:bg-surface-hover border border-transparent'}`}>
                             {/* Thumbnail */}
@@ -54,7 +54,7 @@ export const PresentationView = () => {
                             </div>
                         </div>
                     ))}
-                </Group>
+                </Block>
             </Section>
         </>
     );

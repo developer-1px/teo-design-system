@@ -4,19 +4,19 @@
  * IDDL Structure:
  * - Overlay[Dialog]: 최상위 모달 컨테이너
  *   - Section[Header]: 검색 입력 영역
- *     - Group[Toolbar]: 검색바
+ *     - Block[Toolbar]: 검색바
  *       - Field[text]: 검색 입력 (clearable)
  *   - Section[Container]: 검색 결과 영역
- *     - Group[List]: 결과 목록
+ *     - Block[List]: 결과 목록
  *       - Action: 각 검색 결과 아이템
  *         - Text: 타이틀/서브타이틀
  *   - Section[Footer]: 힌트 및 결과 카운트
- *     - Group[Toolbar]: 키보드 힌트
+ *     - Block[Toolbar]: 키보드 힌트
  */
 
 import { Command, File, Folder, Hash, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
 import { Field } from '@/components/types/Atom/Field/Field.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
@@ -129,7 +129,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
     >
       {/* Search Input Header */}
       <Section role="DialogHeader" density="Compact">
-        <Group role="Toolbar" layout="inline" density="Compact">
+        <Block role="Toolbar" layout="inline" density="Compact">
           <Search size={20} className="text-subtle" />
           <Field
             model="search"
@@ -141,7 +141,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
           />
           <kbd className="px-2 py-0.5 text-xs bg-surface-base text-subtle rounded">ESC</kbd>
-        </Group>
+        </Block>
       </Section>
 
       {/* Results */}
@@ -154,7 +154,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
             content={`No results found for "${query}"`}
           />
         ) : (
-          <Group role="List" density="Compact">
+          <Block role="List" density="Compact">
             {results.map((result, index) => (
               <Action
                 key={result.id}
@@ -177,14 +177,14 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
                 )}
               </Action>
             ))}
-          </Group>
+          </Block>
         )}
       </Section>
 
       {/* Footer - Keyboard Hints */}
       <Section role="DialogFooter" density="Compact">
-        <Group role="Toolbar" layout="inline" density="Compact">
-          <Group role="Inline" layout="inline" density="Compact">
+        <Block role="Toolbar" layout="inline" density="Compact">
+          <Block role="Inline" layout="inline" density="Compact">
             <span className="flex items-center gap-1 text-xs text-subtle">
               <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↑</kbd>
               <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↓</kbd>
@@ -194,9 +194,9 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
               <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↵</kbd>
               select
             </span>
-          </Group>
+          </Block>
           <Text role="Caption" prominence="Subtle" content={`${results.length} results`} />
-        </Group>
+        </Block>
       </Section>
     </Overlay>
   );

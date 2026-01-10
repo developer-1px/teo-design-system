@@ -45,10 +45,39 @@ const fallbackSlides: Slide[] = [
   },
 ];
 
+import { useResizable } from '@/shared/hooks/useResizable';
+import { ResizeHandle } from '@/shared/components/ResizeHandle';
+
+// ... imports remain the same ...
+
 export const PPTPage = () => {
   const [slides, setSlides] = useState<Slide[]>(fallbackSlides);
   const [activeSlideId, setActiveSlideId] = useState<string>('1');
   const [isPresentationMode, setIsPresentationMode] = useState(false);
+
+  // Layout Resizing (IDE-style)
+  const {
+    size: sidebarWidth,
+    separatorProps: sidebarSeparatorProps,
+    isResizing: isSidebarResizing
+  } = useResizable({
+    initialSize: 240,
+    minSize: 160,
+    maxSize: 400,
+    direction: 'horizontal',
+  });
+
+  const {
+    size: formatBarWidth,
+    separatorProps: formatBarSeparatorProps,
+    isResizing: isFormatBarResizing
+  } = useResizable({
+    initialSize: 280,
+    minSize: 200,
+    maxSize: 500,
+    direction: 'horizontal',
+    reverse: true, // Right sidebar grows when dragging left
+  });
 
   // ai-era-slides.md 파일 로드 및 파싱
   useEffect(() => {
@@ -180,9 +209,17 @@ export const PPTPage = () => {
     );
   }
 
-  // 편집 모드 (기본)
+  // 편집 모드 (기본) - Refactored to Studio Layout (IDDL v5.0)
   return (
-    <Page role="Application" layout="HolyGrail" density="Compact">
+    <Page
+      role="Application"
+      layout="Studio"
+      density="Compact"
+      sizes={{
+        primarysidebar: `${sidebarWidth}px`,
+        secondarysidebar: `${formatBarWidth}px`,
+      }}
+    >
       {/* Header: Presentation Toolbar */}
       <Section role="Header">
         <PresentationToolbar
@@ -195,8 +232,8 @@ export const PPTPage = () => {
         />
       </Section>
 
-      {/* Navigator: Left - Slide Thumbnail List (Resizable) with Selection (v4.1) */}
-      <Section role="Navigator" resizable={{ direction: 'horizontal', minSize: 100, maxSize: 300 }}>
+      {/* Primary Sidebar: Slide List */}
+      <Section role="PrimarySidebar">
         <SlideList
           slides={slides}
           activeSlideId={activeSlideId}
@@ -211,8 +248,23 @@ export const PPTPage = () => {
         />
       </Section>
 
-      {/* Main: Center - Slide Canvas */}
-      <Section role="Main">
+      {/* Resize Handle: Primary Sidebar (Left) */}
+      <ResizeHandle
+        direction="horizontal"
+        isResizing={isSidebarResizing}
+        {...sidebarSeparatorProps}
+        style={{
+          ...sidebarSeparatorProps.style,
+          gridArea: 'primarysidebar',
+          justifySelf: 'end',
+          width: '4px',
+          zIndex: 50,
+          transform: 'translateX(50%)',
+        }}
+      />
+
+      {/* Editor: Slide Canvas */}
+      <Section role="Editor">
         <DSLSlideCanvas
           slide={activeSlide}
           currentIndex={currentIndex}
@@ -220,8 +272,23 @@ export const PPTPage = () => {
         />
       </Section>
 
-      {/* Aside: Right - Format Settings Sidebar (Resizable, Collapsible) */}
-      <Section role="Aside" resizable={{ direction: 'horizontal', minSize: 200, maxSize: 500 }} collapsible>
+      {/* Resize Handle: Secondary Sidebar (Right) */}
+      <ResizeHandle
+        direction="horizontal"
+        isResizing={isFormatBarResizing}
+        {...formatBarSeparatorProps}
+        style={{
+          ...formatBarSeparatorProps.style,
+          gridArea: 'secondarysidebar',
+          justifySelf: 'start',
+          width: '4px',
+          zIndex: 50,
+          transform: 'translateX(-50%)',
+        }}
+      />
+
+      {/* Secondary Sidebar: Format Settings */}
+      <Section role="SecondarySidebar">
         <FormatSidebar
           isOpen={true}
           activeSlide={activeSlide || undefined}

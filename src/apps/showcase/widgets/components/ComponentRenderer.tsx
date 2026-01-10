@@ -4,7 +4,7 @@
 
 import { createElement, useEffect, useMemo, useState } from 'react';
 import type { ComponentMetadata, MockData, PropValue } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Atom/Text/Text';
 
 interface ComponentRendererProps {
@@ -130,21 +130,21 @@ export function ComponentRenderer({
   // 로드 에러 표시
   if (loadError) {
     return (
-      <Group role="Container" prominence="Standard" className="p-4 rounded-lg bg-surface">
-        <Group role="Container" gap={2}>
+      <Block role="Container" prominence="Standard" className="p-4 rounded-lg bg-surface">
+        <Block role="Container" gap={2}>
           <Text role="Title" prominence="Strong" intent="Critical" content="모듈 로드 에러" />
           <Text role="Body" prominence="Standard" intent="Critical" content={loadError} />
-        </Group>
-      </Group>
+        </Block>
+      </Block>
     );
   }
 
   // 로딩 중
   if (!Component) {
     return (
-      <Group role="Container">
+      <Block role="Container">
         <Text role="Body" prominence="Standard" content="Loading component..." />
-      </Group>
+      </Block>
     );
   }
 
@@ -157,8 +157,8 @@ export function ComponentRenderer({
     const errorStack = error instanceof Error ? error.stack : undefined;
 
     return (
-      <Group role="Container" prominence="Standard" className="p-4 rounded-lg bg-surface">
-        <Group role="Container" gap={2}>
+      <Block role="Container" prominence="Standard" className="p-4 rounded-lg bg-surface">
+        <Block role="Container" gap={2}>
           <Text role="Title" prominence="Strong" intent="Critical" content="렌더링 에러 (동기)" />
           <Text role="Body" prominence="Standard" intent="Critical" content={errorMessage} />
           {errorStack && (
@@ -166,8 +166,8 @@ export function ComponentRenderer({
               {errorStack}
             </pre>
           )}
-        </Group>
-      </Group>
+        </Block>
+      </Block>
     );
   }
 }

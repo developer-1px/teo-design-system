@@ -8,11 +8,11 @@
 import { useState } from 'react';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { LAYOUT_SECTION_ROLES, PageLayout, SectionRole } from '@/components/types/Atom/types';
 
-// Visual colors for section roles
+// Visual colors for section roles (keeping existing colors)
 const ROLE_COLORS: Partial<Record<SectionRole, string>> = {
   Header: 'bg-blue-100/50 border-blue-200 text-blue-700',
   Footer: 'bg-gray-100/50 border-gray-200 text-gray-700',
@@ -31,45 +31,8 @@ const ROLE_COLORS: Partial<Record<SectionRole, string>> = {
   DialogHeader: 'bg-sky-100/50 border-sky-200 text-sky-700',
   DialogContent: 'bg-white border-slate-200 text-slate-700',
   DialogFooter: 'bg-slate-100/50 border-slate-200 text-slate-700',
-};
-
-// Grid template definitions (CSS grid-template-areas emulation)
-const GRID_STYLES: Record<PageLayout, React.CSSProperties> = {
-  Single: {
-    gridTemplateAreas: '"header" "container" "footer"',
-    gridTemplateRows: '60px 1fr 60px',
-    gridTemplateColumns: '1fr'
-  },
-  Sidebar: {
-    gridTemplateAreas: '"header header" "navigator container" "footer footer"',
-    gridTemplateRows: '60px 1fr 60px',
-    gridTemplateColumns: '240px 1fr'
-  },
-  Aside: {
-    gridTemplateAreas: '"header header" "container aside" "footer footer"',
-    gridTemplateRows: '60px 1fr 60px',
-    gridTemplateColumns: '1fr 240px'
-  },
-  HolyGrail: {
-    gridTemplateAreas: '"header header header" "navigator container aside" "footer footer footer"',
-    gridTemplateRows: '60px 1fr 60px',
-    gridTemplateColumns: '200px 1fr 200px'
-  },
-  Split: {
-    gridTemplateAreas: '"header header" "master detail" "footer footer"',
-    gridTemplateRows: '60px 1fr 50px',
-    gridTemplateColumns: '300px 1fr'
-  },
-  Studio: {
-    gridTemplateAreas: '"toolbar toolbar toolbar toolbar" "activitybar primarysidebar editor secondarysidebar" "activitybar panel panel panel" "footer footer footer footer"',
-    gridTemplateRows: '40px 1fr 150px 24px',
-    gridTemplateColumns: '48px 250px 1fr 250px'
-  },
-  Blank: {
-    gridTemplateAreas: '"main"',
-    gridTemplateRows: '1fr',
-    gridTemplateColumns: '1fr'
-  }
+  // Fallback
+  Region: 'bg-gray-100 border-gray-200 text-gray-700',
 };
 
 export function PageShowcasePage() {
@@ -85,20 +48,20 @@ export function PageShowcasePage() {
     <Page role="Application" layout="Studio">
       {/* Header */}
       <Section role="Toolbar" prominence="Standard">
-        <Group role="Toolbar" layout="inline" density="Compact">
+        <Block role="Toolbar" layout="inline" density="Compact">
           <Text role="Title" prominence="Standard" content="Page Layout Gallery" />
-          <Group role="Divider" layout="inline"><></></Group>
-          <Text role="Body" prominence="Subtle" content="Core Layout Templates v5.0" />
-        </Group>
+          <Block role="Divider" layout="inline"><></></Block>
+          <Text role="Body" prominence="Subtle" content="Core Layout Templates v5.0 (Live Preview)" />
+        </Block>
       </Section>
 
       {/* Sidebar navigation */}
       <Section role="PrimarySidebar" prominence="Standard">
-        <Group role="ScrollMenu" layout="stack" density="Comfortable">
+        <Block role="ScrollMenu" layout="stack" density="Comfortable">
           <Text role="Label" content="LAYOUT TEMPLATES" prominence="Subtle" className="px-2 pt-2" />
-          <Group role="Container" layout="stack" density="Standard">
+          <Block role="Container" layout="stack" density="Standard">
             {layouts.map(layout => (
-              <Group
+              <Block
                 key={layout}
                 role="Inline"
                 clickable
@@ -106,58 +69,76 @@ export function PageShowcasePage() {
                 className={`px-2 py-1 rounded-md cursor-pointer ${selectedLayout === layout ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-surface-elevated'}`}
               >
                 <Text role="Body" content={layout} prominence={selectedLayout === layout ? 'Strong' : 'Standard'} />
-              </Group>
+              </Block>
             ))}
-          </Group>
-        </Group>
+          </Block>
+        </Block>
       </Section>
 
       {/* Main Content */}
       <Section role="Editor" prominence="Standard" mode="view">
-        <Group role="Container" layout="stack" density="Comfortable" className="p-8 gap-8 w-full h-full">
+        <Block role="Container" layout="stack" density="Comfortable" className="p-8 gap-8 w-full h-full">
 
-          <Group role="Container" layout="stack" density="Standard" className="gap-2">
+          <Block role="Container" layout="stack" density="Standard" className="gap-2">
             <Text role="Title" prominence="Hero" content={selectedLayout} />
             <Text role="Body" prominence="Subtle" content={`Standard ${selectedLayout} Layout`} />
-          </Group>
+          </Block>
 
           {/* Canvas for Layout Visualization */}
-          <Group role="Card" className="flex-1 w-full bg-surface-sunken p-8 border border-border-default rounded-xl overflow-hidden relative">
-            <div className="absolute inset-4 bg-surface rounded-lg shadow-sm border border-border-default overflow-hidden">
-              <div
-                className="w-full h-full grid gap-1 p-1"
-                style={GRID_STYLES[selectedLayout]}
+          <Block role="Card" className="flex-1 w-full bg-surface-sunken p-8 border border-border-default rounded-xl overflow-hidden relative shadow-inner">
+            <div className="absolute inset-8 bg-surface rounded-lg shadow-sm border border-border-default overflow-hidden">
+              {/* 
+                 Live Page Component 
+                 - We use role="Application" to trigger AppLayout
+                 - We override w-screen/h-screen with w-full/h-full to fit in this card
+                 - We pass explicit sizes to ensure it renders reasonably in small space
+               */}
+              <Page
+                role="Application"
+                layout={selectedLayout}
+                className="w-full h-full relative"
+                // Provide default sizes suitable for the preview scale if needed
+                sizes={{
+                  primarysidebar: '200px',
+                  secondarysidebar: '200px',
+                  panel: '150px',
+                  navigator: '200px',
+                  aside: '200px',
+                  master: '250px'
+                }}
               >
                 {validSections.map(role => (
-                  <div
-                    key={role}
-                    className={`
-                        rounded flex flex-col items-center justify-center p-2 text-center transition-all
-                        ${ROLE_COLORS[role] || 'bg-gray-100 border-gray-200'}
-                        border
-                      `}
-                    style={{ gridArea: role.toLowerCase() }}
-                  >
-                    <Text role="Label" content={role} className="font-semibold text-xs" />
-                  </div>
+                  <Section key={role} role={role} className="relative group">
+                    {/* Visual overlay to identify the section */}
+                    <div className={`
+                       absolute inset-2 
+                       rounded border-2 border-dashed 
+                       flex flex-col items-center justify-center p-2 text-center 
+                       transition-all opacity-70 group-hover:opacity-100
+                       ${ROLE_COLORS[role] || 'bg-gray-100/50 border-gray-200 text-gray-700'}
+                     `}>
+                      <Text role="Label" content={role} className="font-bold text-xs" />
+                      <div className="text-[10px] opacity-70 mt-1">{role} Area</div>
+                    </div>
+                  </Section>
                 ))}
-              </div>
+              </Page>
             </div>
-          </Group>
+          </Block>
 
           {/* Legend / Info */}
-          <Group role="Container" layout="stack" density="Standard" className="gap-4">
+          <Block role="Container" layout="stack" density="Standard" className="gap-4">
             <Text role="Label" content="Usage" />
-            <Group role="Card" className="bg-surface-sunken p-4 font-mono text-sm">
-              <Text role="Code" content={`<Page role="Application" layout="${selectedLayout}">`} />
+            <Block role="Card" className="bg-surface-sunken p-4 font-mono text-sm border border-border-default rounded-md">
+              <Text role="Code" content={`<Page role="Application" layout="${selectedLayout}">`} className="text-blue-600" />
               {validSections.map(role => (
-                <Text key={role} role="Code" content={`  <Section role="${role}">...</Section>`} className="text-muted-foreground" />
+                <Text key={role} role="Code" content={`  <Section role="${role}">...</Section>`} className="text-gray-500 pl-4" />
               ))}
-              <Text role="Code" content={`</Page>`} />
-            </Group>
-          </Group>
+              <Text role="Code" content={`</Page>`} className="text-blue-600" />
+            </Block>
+          </Block>
 
-        </Group>
+        </Block>
       </Section>
     </Page>
   );

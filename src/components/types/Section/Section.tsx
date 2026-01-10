@@ -7,9 +7,9 @@
  * - CSS Grid의 grid-area로 배치됨
  * - 최소한의 시각적 요소 (배경색, 보더 정도)
  *
- * **Section vs Group**:
+ * **Section vs Block**:
  * - Section: Page가 만드는 시맨틱 영역 (시맨틱 태그 + grid-area)
- * - Group: 개발자가 선택하는 기능적 컴포넌트 (Form, Card, Toolbar 등)
+ * - Block: 개발자가 선택하는 기능적 컴포넌트 (Form, Card, Toolbar 등)
  *
  * **v4.1 변경사항**: Role Configuration 중앙화
  * - gridArea, overflow, htmlTag, ariaProps, baseStyles 모두 role-config에서 자동 결정

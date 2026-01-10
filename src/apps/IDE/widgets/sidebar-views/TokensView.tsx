@@ -1,5 +1,5 @@
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { Palette, Type } from 'lucide-react';
@@ -19,7 +19,7 @@ export const TokensView = () => {
 
             <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
                 {/* Colors */}
-                <Group role="Container" className="flex flex-col gap-3">
+                <Block role="Container" className="flex flex-col gap-3">
                     <div className="flex items-center gap-2 text-xs font-bold text-text-secondary uppercase tracking-wider mb-1 border-b border-border-muted pb-1">
                         <Palette size={14} />
                         <span>Colors (Surfaces)</span>
@@ -33,9 +33,9 @@ export const TokensView = () => {
                         <ColorSwatch name="Overlay" color="bg-surface-overlay" text="text-white" />
                         <ColorSwatch name="Hover" color="bg-surface-hover" text="text-text" />
                     </div>
-                </Group>
+                </Block>
 
-                <Group role="Container" className="flex flex-col gap-3">
+                <Block role="Container" className="flex flex-col gap-3">
                     <div className="flex items-center gap-2 text-xs font-bold text-text-secondary uppercase tracking-wider mb-1 border-b border-border-muted pb-1">
                         <Palette size={14} />
                         <span>Colors (Semantic)</span>
@@ -47,10 +47,10 @@ export const TokensView = () => {
                         <ColorSwatch name="Warning" color="bg-semantic-warning" text="text-black" />
                         <ColorSwatch name="Info" color="bg-semantic-info" text="text-white" />
                     </div>
-                </Group>
+                </Block>
 
                 {/* Typography */}
-                <Group role="Container" className="flex flex-col gap-3">
+                <Block role="Container" className="flex flex-col gap-3">
                     <div className="flex items-center gap-2 text-xs font-bold text-text-secondary uppercase tracking-wider mb-1 border-b border-border-muted pb-1">
                         <Type size={14} />
                         <span>Typography</span>
@@ -74,7 +74,7 @@ export const TokensView = () => {
                             <div className="text-[10px] text-text-tertiary font-mono mt-1">Inter / 12px / Medium</div>
                         </div>
                     </div>
-                </Group>
+                </Block>
 
             </Section>
         </>

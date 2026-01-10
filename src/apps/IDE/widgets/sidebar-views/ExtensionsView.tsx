@@ -1,6 +1,6 @@
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { Filter, Star, DownloadCloud } from 'lucide-react';
@@ -59,15 +59,15 @@ export const ExtensionsView = () => {
 
             <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
                 {/* Search */}
-                <Group role="Container" className="flex flex-col gap-2">
+                <Block role="Container" className="flex flex-col gap-2">
                     <Input
                         placeholder="Search Extensions in Marketplace"
                         className="text-sm font-sans"
                     />
-                </Group>
+                </Block>
 
                 {/* Installed */}
-                <Group role="List" className="flex flex-col gap-4">
+                <Block role="List" className="flex flex-col gap-4">
                     <div className="px-1 py-1 text-xs font-bold text-text-tertiary uppercase tracking-wider">
                         Installed
                     </div>
@@ -75,10 +75,10 @@ export const ExtensionsView = () => {
                     {extensions.filter(e => e.installed).map((ext, idx) => (
                         <ExtensionCard key={idx} {...ext} />
                     ))}
-                </Group>
+                </Block>
 
                 {/* Recommended */}
-                <Group role="List" className="flex flex-col gap-4 pt-4 border-t border-border-muted">
+                <Block role="List" className="flex flex-col gap-4 pt-4 border-t border-border-muted">
                     <div className="px-1 py-1 text-xs font-bold text-text-tertiary uppercase tracking-wider">
                         Recommended
                     </div>
@@ -86,7 +86,7 @@ export const ExtensionsView = () => {
                     {extensions.filter(e => !e.installed).map((ext, idx) => (
                         <ExtensionCard key={idx} {...ext} />
                     ))}
-                </Group>
+                </Block>
 
             </Section>
         </>
@@ -95,7 +95,7 @@ export const ExtensionsView = () => {
 
 const ExtensionCard = ({ name, publisher, description, installs, rating, installed }: any) => {
     return (
-        <Group role="Card" className="flex gap-3 hover:bg-surface-hover p-2 rounded-lg cursor-pointer group bg-transparent border-0 shadow-none">
+        <Block role="Card" className="flex gap-3 hover:bg-surface-hover p-2 rounded-lg cursor-pointer group bg-transparent border-0 shadow-none">
             {/* Icon */}
             <div className="w-10 h-10 bg-accent/10 rounded overflow-hidden flex-shrink-0 flex items-center justify-center text-accent font-bold text-lg uppercase">
                 {name.substring(0, 2)}
@@ -120,6 +120,6 @@ const ExtensionCard = ({ name, publisher, description, installs, rating, install
                     <Button size="sm" variant="secondary" className="h-6 text-[10px] px-2 bg-surface-raised hover:bg-accent hover:text-white transition-colors">Install</Button>
                 )}
             </div>
-        </Group>
+        </Block>
     )
 }
