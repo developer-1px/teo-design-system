@@ -197,8 +197,6 @@ function renderNode(
           key={groupNode.id}
           role={groupNode.role}
           prominence={groupNode.prominence}
-          direction={groupNode.direction}
-          layout={groupNode.layout}
           state={groupNode.state}
           emptyContent={groupNode.emptyContent}
           errorContent={groupNode.errorContent}

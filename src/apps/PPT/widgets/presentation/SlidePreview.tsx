@@ -43,7 +43,7 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
           style={{ backgroundColor: slide.backgroundColor }}
         >
           {/* Slide Content Stack */}
-          <Block role="Container" layout="stack" density="Comfortable">
+          <Block role="Container" density="Comfortable">
             {/* Title Area */}
             {slide.title && (
               <Block role="Container" prominence="Primary" density="Compact">

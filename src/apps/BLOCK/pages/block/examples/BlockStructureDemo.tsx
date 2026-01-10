@@ -1,9 +1,10 @@
 import { Block } from '@/components/types/Block/Block';
+import { Separator } from '@/components/types/Atom/Separator/Separator.tsx';
 import { Text } from '@/components/types/Atom/Text/Text';
 
 export function BlockStructureDemo() {
     return (
-        <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
+        <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
                 <Text role="Title" prominence="Strong" content="6. Structure & LayoutHelpers" />
                 <Text role="Body" prominence="Subtle" content="Helpers for dividing and arranging content." />
@@ -18,14 +19,12 @@ export function BlockStructureDemo() {
                     <div className="bg-surface-sunken flex items-center justify-center rounded">Right Pane</div>
                 </Block>
 
-                <Block role="Divider" layout="stack"><></></Block>
+                <Block role="Divider" className="h-px w-full" ><></></Block>
 
-                <Block role="Inline" className="h-10 items-center bg-surface-sunken px-4 rounded">
-                    <Text role="Body" content="Item A" />
-                    <Block role="Divider" layout="inline"><></></Block>
-                    <Text role="Body" content="Item B" />
-                    <Block role="Divider" layout="inline"><></></Block>
-                    <Text role="Body" content="Item C" />
+                <Block role="Inline" className="p-4 border border-border-default rounded">
+                    <Text role="Body" content="Left" />
+                    <Separator role="ToolbarDivider" />
+                    <Text role="Body" content="Right" />
                 </Block>
             </Block>
 

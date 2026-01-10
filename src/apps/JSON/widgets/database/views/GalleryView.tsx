@@ -24,8 +24,8 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
   };
 
   return (
-    <Section role="Container" layout="scroll" padding="md">
-      <Block role="Grid" template="gallery" gridCols={gridCols[cardSize]} gap="md">
+    <Section role="Container" padding="md">
+      <Block role="Grid" spec={{ columns: gridCols[cardSize] }} gap="md">
         {data.map((item, index) => {
           const obj = item as JsonObject;
           const keys = Object.keys(obj).slice(0, 6); // 최대 6개 필드

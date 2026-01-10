@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Separator } from '@/components/types/Atom/Separator/Separator.tsx';
 import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
 import { APP_CONFIGS, type AppType } from '@/app/contexts/app-context.tsx';
 import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme.ts';
@@ -56,7 +57,6 @@ export const FloatingBar = () => {
     <Overlay id="floating-bar" role="Floating" placement="bottom" isOpen={true} dismissable={false}>
       <Block
         role="FloatingToolbar"
-        layout="inline"
         density="Compact"
       >
         {/* App 선택 버튼들 */}
@@ -83,7 +83,7 @@ export const FloatingBar = () => {
         })}
 
         {/* 구분선 */}
-        <Block role="Divider" layout="inline" />
+        <Separator role="ToolbarDivider" />
 
         {/* 테마 토글 버튼 */}
         <Action

@@ -68,7 +68,7 @@ export const DocsViewer = () => {
     <Page role="Application" layout="Sidebar">
       {/* 상단 고정 헤더 */}
       <Section role="Header" prominence="Standard">
-        <Block role="Toolbar" layout="inline">
+        <Block role="Toolbar">
           <Text role="Title" content="문서" />
         </Block>
       </Section>
@@ -90,7 +90,7 @@ export const DocsViewer = () => {
         <Section role="Container">
           {searchQuery ? (
             // 검색 결과
-            <Block role="List" layout="stack">
+            <Block role="List">
               {filteredDocs.map((doc) => (
                 <Action
                   key={doc.path}

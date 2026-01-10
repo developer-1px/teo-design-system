@@ -26,7 +26,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides, fullscreen = 
   if (!slide) {
     return (
       <Section role="Container">
-        <Block role="Container" layout="stack" className="items-center justify-center h-full" density="Comfortable">
+        <Block role="Container" className="items-center justify-center h-full" density="Comfortable">
           <Text role="Body" prominence="Subtle" content="슬라이드를 선택하세요" />
           <Text role="Caption" prominence="Subtle" content="왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요" />
         </Block>
@@ -37,7 +37,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides, fullscreen = 
   return (
     <Section role="Container">
       {/* Canvas Container - 중앙 정렬 */}
-      <Block role="Container" layout="stack" className="items-center justify-center h-full" density="Comfortable">
+      <Block role="Container" className="items-center justify-center h-full" density="Comfortable">
         {/* Slide Canvas - 16:9 aspect ratio container */}
         <Block
           role="Container"
@@ -53,7 +53,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides, fullscreen = 
             style={{ backgroundColor: slide.backgroundColor }}
           >
             {/* Slide Content Stack */}
-            <Block role="Container" layout="stack" density="Comfortable">
+            <Block role="Container" density="Comfortable">
               {/* Title Area */}
               {slide.title && (
                 <Block role="Container" prominence="Primary" density="Compact">
@@ -66,7 +66,7 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides, fullscreen = 
               )}
 
               {/* Content Area - Scrollable */}
-              <Block role="Container" className="overflow-y-auto" layout="stack" density="Standard">
+              <Block role="Container" className="overflow-y-auto" density="Standard">
                 {slide.content ? (
                   slideContentToDSL(slide.content)
                 ) : (
@@ -92,21 +92,20 @@ export const DSLSlideCanvas = ({ slide, currentIndex, totalSlides, fullscreen = 
           {!fullscreen && (
             <Block
               role="Toolbar"
-              layout="inline"
               density="Compact"
               prominence="Subtle"
               className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-sm rounded"
             >
-              <Block role="Inline" layout="inline" density="Compact">
+              <Block role="Inline" density="Compact">
                 <Text role="Code" content="←" />
                 <Text role="Code" content="→" />
                 <Text role="Caption" prominence="Subtle" content="이전/다음" />
               </Block>
-              <Block role="Inline" layout="inline" density="Compact">
+              <Block role="Inline" density="Compact">
                 <Text role="Code" content="Space" />
                 <Text role="Caption" prominence="Subtle" content="다음" />
               </Block>
-              <Block role="Inline" layout="inline" density="Compact">
+              <Block role="Inline" density="Compact">
                 <Text role="Code" content="Home" />
                 <Text role="Code" content="End" />
                 <Text role="Caption" prominence="Subtle" content="처음/끝" />

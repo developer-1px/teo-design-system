@@ -3,7 +3,7 @@ import { Text } from '@/components/types/Atom/Text/Text';
 
 export function BlockListsDemo() {
     return (
-        <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
+        <Block role="Container" density="Comfortable" className="gap-6">
             <div className="flex flex-col gap-1">
                 <Text role="Title" prominence="Strong" content="2. Lists & Grids" />
                 <Text role="Body" prominence="Subtle" content="Layouts for collections of items." />

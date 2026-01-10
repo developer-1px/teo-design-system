@@ -37,12 +37,11 @@ export const PresentationToolbar = ({
     <Section role="Header" className="border-b border-border bg-layer-4 shadow-sm">
       <Block
         role="Toolbar"
-        layout="inline"
         density="Compact"
         className="h-12 items-center justify-between px-4"
       >
         {/* 좌측: 제목 */}
-        <Block role="Inline" layout="inline" className="flex-1">
+        <Block role="Inline" className="flex-1">
           <Text
             role="Title"
             content={title}
@@ -51,7 +50,7 @@ export const PresentationToolbar = ({
         </Block>
 
         {/* 중앙: 재생 버튼 + 네비게이션 - IDDL Action 사용 */}
-        <Block role="Toolbar" layout="inline" className="gap-2">
+        <Block role="Toolbar" className="gap-2">
           {/* 이전 슬라이드 - IDDL Action[Tertiary] */}
           <Action
             icon="ChevronLeft"
@@ -90,7 +89,7 @@ export const PresentationToolbar = ({
         </Block>
 
         {/* 우측: 여백 (향후 확장 가능) */}
-        <Block role="Toolbar" layout="inline" className="flex-1 justify-end gap-2">
+        <Block role="Toolbar" className="flex-1 justify-end gap-2">
           {/* Placeholder for future actions */}
         </Block>
       </Block>

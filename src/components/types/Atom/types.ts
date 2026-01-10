@@ -268,7 +268,15 @@ export interface BlockProps extends AsProp {
    * @deprecated direction은 deprecated되었습니다. layout을 사용하세요.
    */
   direction?: 'horizontal' | 'vertical';
+  /**
+   * @deprecated layout은 deprecated되었습니다. Role과 spec을 사용하세요.
+   */
   layout?: Layout; // v1.0.1
+  /**
+   * Role-specific parameters (v1.0 Core)
+   * e.g. Grid: { columns: 3 }, Stack: { align: 'center' }
+   */
+  spec?: Record<string, unknown>;
   state?: LoadState; // v1.0.1
   emptyContent?: ReactNode; // v1.0.1
   errorContent?: ReactNode; // v1.0.1
@@ -552,6 +560,7 @@ export type BlockRole =
   // 액션 그룹 (Action Blocks)
   | 'Toolbar' // 툴바/액션 모음 (가로 정렬)
   | 'FloatingToolbar' // 플로팅 툴바 (화면 위에 떠있는 액션 모음, 강조된 스타일)
+  | 'ToolbarDivider' // 툴바 구분선
   // 네비게이션 (Navigation)
   | 'Tabs' // 탭 컨테이너
   | 'Steps' // 단계별 진행
