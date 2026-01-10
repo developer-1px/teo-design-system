@@ -51,27 +51,26 @@ export const EditorTabs = ({ onTabChange }: EditorTabsProps) => {
   };
 
   return (
-    <Section role="Container" className="flex items-center overflow-x-auto">
+    <Section role="Header" density="Compact" className="flex items-center overflow-x-auto gap-0 p-0 h-9 border-b border-border-default">
       {tabs.map((tab) => (
         <Button
           key={tab.id}
           variant="ghost"
-          className={cn('gap-1.5 px-3 py-2 text-sm h-auto rounded-none group', {
-            'bg-layer-3 hover:bg-layer-3': activeTab === tab.id,
-            'text-text': activeTab === tab.id,
-            'text-text-secondary': activeTab !== tab.id,
+          className={cn('gap-2 px-4 py-0 text-xs h-full rounded-none border-r border-border-muted group whitespace-nowrap', {
+            'bg-surface-raised text-text font-medium': activeTab === tab.id,
+            'text-text-secondary hover:bg-surface-hover': activeTab !== tab.id,
           })}
           onClick={() => handleTabClick(tab.id)}
         >
           <span className="text-text-tertiary">{getIcon(tab.type)}</span>
           <span className="truncate max-w-[120px]">{tab.name}</span>
-          {tab.isDirty && <span className="w-1.5 h-1.5 rounded-full bg-accent" />}
+          {tab.isDirty && <span className="w-1.5 h-1.5 rounded-full bg-accent ml-1" />}
           <Button
             variant="ghost"
             onClick={(e) => handleCloseTab(tab.id, e)}
-            className="opacity-0 group-hover:opacity-100 h-auto p-0.5"
+            className="ml-2 opacity-0 group-hover:opacity-100 h-5 w-5 p-0 hover:bg-black/10 dark:hover:bg-white/10 rounded-sm transition-all"
           >
-            <X size={14} />
+            <X size={12} />
           </Button>
         </Button>
       ))}

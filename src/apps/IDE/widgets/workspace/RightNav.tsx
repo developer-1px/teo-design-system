@@ -17,7 +17,7 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
   };
 
   return (
-    <Group role="Navigator" layout="flex" direction="column" padding="xs" gap="xs">
+    <Group role="Navigator" padding="xs" gap="xs">
       <Action
         role="IconButton"
         icon="Sparkles"

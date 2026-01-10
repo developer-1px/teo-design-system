@@ -27,8 +27,8 @@ function createPanel(rect: DOMRect): HTMLDivElement {
   div.id = 'iddl-inspector-panel';
 
   // 패널 크기
-  const panelWidth = 600;
-  const panelHeight = Math.min(window.innerHeight * 0.8, 600);
+  const panelWidth = 800;
+  const panelHeight = Math.min(window.innerHeight * 0.8, 800);
 
   // 선택한 영역 근처에 배치 (우선순위: 오른쪽 > 왼쪽 > 아래 > 위)
   let top = rect.top;
@@ -72,6 +72,35 @@ function createPanel(rect: DOMRect): HTMLDivElement {
   `;
   document.body.appendChild(div);
   return div;
+}
+
+/**
+ * IDDL Role 별 아이콘 반환
+ */
+function getRoleIcon(role?: string, name?: string): string {
+  if (!role) {
+    if (name === 'Page') return '📄';
+    if (name === 'Section') return '📦';
+    if (name === 'Group') return '🗂️';
+    if (name === 'Action') return '⚡';
+    if (name === 'Text') return '📝';
+    if (name === 'Field') return '📥';
+    return '🧩';
+  }
+
+  const r = role.toLowerCase();
+  if (r.includes('page') || r.includes('application')) return '📄';
+  if (r.includes('sidebar') || r.includes('nav') || r.includes('aside')) return '📂';
+  if (r.includes('editor')) return '💻';
+  if (r.includes('panel') || r.includes('footer')) return '🖥️';
+  if (r.includes('toolbar')) return '🛠️';
+  if (r.includes('button') || r.includes('action')) return '⚡';
+  if (r.includes('input') || r.includes('field')) return '📥';
+  if (r.includes('text') || r.includes('title') || r.includes('body')) return '📝';
+  if (r.includes('card') || r.includes('container')) return '🗂️';
+  if (r.includes('grid') || r.includes('list')) return '📋';
+
+  return '🧩';
 }
 
 /**
@@ -139,7 +168,11 @@ function renderHierarchyList(hierarchy: ComponentInfo[]): void {
 
   const listItems = hierarchy
     .map(
-      (info, index) => `
+      (info, index) => {
+        const icon = getRoleIcon(info.role, info.name);
+        const label = info.role ? `{${info.role}}` : info.name;
+
+        return `
     <div
       data-component-index="${index}"
       class="hierarchy-item"
@@ -151,32 +184,22 @@ function renderHierarchyList(hierarchy: ComponentInfo[]): void {
         background: transparent;
       "
     >
-      <div style="font-size: 13px; font-weight: 500; color: #61afef;">
-        ${info.name}
+      <div style="font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 14px;">${icon}</span>
+        <span style="color: ${info.role ? '#3b82f6' : '#61afef'};">
+          ${label}
+        </span>
+        ${info.role ? `<span style="font-size: 11px; color: #666; font-weight: 400;">(${info.name})</span>` : ''}
       </div>
-      ${
-        info.filePath
-          ? `<div style="font-size: 11px; color: #888; margin-top: 4px;">
+      ${info.filePath
+            ? `<div style="font-size: 11px; color: #888; margin-top: 4px; padding-left: 22px;">
           ${info.filePath}
         </div>`
-          : ''
-      }
-      ${
-        info.className
-          ? `<div style="
-          font-size: 11px;
-          color: #98c379;
-          margin-top: 4px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        ">
-          ${info.className}
-        </div>`
-          : ''
-      }
+            : ''
+          }
     </div>
-  `
+  `;
+      }
     )
     .join('');
 
@@ -236,6 +259,34 @@ function renderHierarchyList(hierarchy: ComponentInfo[]): void {
 }
 
 /**
+ * 요소의 Computed Style 추출하여 HTML로 반환
+ */
+function getComputedStylesHtml(element: HTMLElement): string {
+  const styles = window.getComputedStyle(element);
+  const relevantProps = [
+    'display', 'position', 'flex-direction', 'justify-content', 'align-items',
+    'width', 'height', 'margin', 'padding', 'gap',
+    'background-color', 'color', 'font-size', 'font-weight',
+    'border', 'border-radius', 'box-shadow', 'opacity', 'z-index'
+  ];
+
+  let html = '<div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 11px;">';
+
+  relevantProps.forEach(prop => {
+    const value = styles.getPropertyValue(prop);
+    if (value && value !== 'initial' && value !== 'none' && value !== 'normal' && value !== '0px' && value !== 'rgba(0, 0, 0, 0)') {
+      html += `
+        <div style="color: #9cdcfe;">${prop}:</div>
+        <div style="color: #ce9178; word-break: break-all;">${value};</div>
+      `;
+    }
+  });
+
+  html += '</div>';
+  return html;
+}
+
+/**
  * 상세 정보 렌더링
  */
 function renderDetailsView(info: ComponentInfo): void {
@@ -244,6 +295,7 @@ function renderDetailsView(info: ComponentInfo): void {
   currentMode = 'details';
 
   const formattedInfo = formatComponentInfo(info);
+  const cssHtml = getComputedStylesHtml(info.element);
 
   const header = `
     <div style="
@@ -267,14 +319,18 @@ function renderDetailsView(info: ComponentInfo): void {
           "
         >← Back</button>
         <div>
-          <div style="font-size: 14px; font-weight: 600; color: #3b82f6;">${info.name}</div>
-          ${
-            info.filePath
-              ? `<div style="font-size: 11px; color: #888; margin-top: 4px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="font-size: 14px; font-weight: 600; color: #3b82f6;">
+              ${info.role ? `{${info.role}}` : info.name}
+            </div>
+            ${info.role ? `<div style="font-size: 11px; color: #888;">(${info.name})</div>` : ''}
+          </div>
+          ${info.filePath
+      ? `<div style="font-size: 11px; color: #888; margin-top: 4px;">
             ${info.filePath}
           </div>`
-              : ''
-          }
+      : ''
+    }
         </div>
       </div>
       <div style="display: flex; gap: 8px;">
@@ -289,7 +345,7 @@ function renderDetailsView(info: ComponentInfo): void {
             border-radius: 4px;
             font-size: 12px;
           "
-        >Copy</button>
+        >Copy JSX</button>
         <button
           id="iddl-close-panel"
           style="
@@ -306,15 +362,30 @@ function renderDetailsView(info: ComponentInfo): void {
   `;
 
   const content = `
-    <div style="
-      padding: 16px;
-      overflow-y: auto;
-      flex: 1;
-      font-size: 12px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      font-family: 'JetBrains Mono', monospace;
-    ">${formattedInfo}</div>
+    <div style="display: flex; flex: 1; overflow: hidden;">
+      <div style="
+        flex: 1;
+        padding: 16px;
+        overflow-y: auto;
+        font-size: 12px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        font-family: 'JetBrains Mono', monospace;
+        border-right: 1px solid #404040;
+      ">${formattedInfo}</div>
+
+      <div style="
+        width: 300px;
+        padding: 16px;
+        overflow-y: auto;
+        background: #1a1a1a;
+      ">
+        <div style="font-size: 12px; font-weight: 600; color: #3b82f6; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+          <span>🎨</span> Computed Styles
+        </div>
+        ${cssHtml}
+      </div>
+    </div>
   `;
 
   panelDiv.innerHTML = header + content;
@@ -331,7 +402,7 @@ function renderDetailsView(info: ComponentInfo): void {
       if (btn) {
         btn.textContent = 'Copied!';
         setTimeout(() => {
-          btn.textContent = 'Copy';
+          btn.textContent = 'Copy JSX';
         }, 2000);
       }
     });

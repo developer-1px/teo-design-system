@@ -1,7 +1,9 @@
+import type { PageLayout } from '@/components/types/Atom/types.ts';
+
 /**
- * Role Configuration Helper (v4.1)
+ * Role Configuration Helper (v5.0)
  *
- * Page template + Section role → 모든 특성 자동 결정
+ * Page layout + Section role → 모든 특성 자동 결정
  * - gridArea: CSS Grid 배치
  * - overflow: 스크롤 동작
  * - htmlTag: 시맨틱 HTML 태그
@@ -9,8 +11,8 @@
  * - baseStyles: 기본 Tailwind 클래스
  *
  * **책임 분리**:
- * - Page: template 선택 (어떤 레이아웃?)
- * - role-config: template + role → 모든 설정 자동 계산
+ * - Page: layout 선택 (어떤 레이아웃?)
+ * - role-config: layout + role → 모든 설정 자동 계산
  * - Section: 설정을 받아서 렌더링만
  */
 
@@ -26,7 +28,7 @@ export interface RoleConfig {
 }
 
 /**
- * Template별 Role Configuration 정의
+ * Layout별 Role Configuration 정의
  *
  * **스크롤 원칙**:
  * - Toolbar/Header/Footer: overflow-hidden (고정 영역)
@@ -35,8 +37,8 @@ export interface RoleConfig {
  * - Panel: overflow-auto (터미널 출력 등)
  */
 export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
-  // ==================== Studio Template (IDE) ====================
-  studio: {
+  // ==================== Studio Layout (IDE) ====================
+  Studio: {
     Toolbar: {
       gridArea: 'toolbar',
       overflow: 'hidden',
@@ -50,7 +52,7 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'hidden',
       htmlTag: 'nav',
       ariaProps: { role: 'navigation', 'aria-label': 'Activity Bar' },
-      baseStyles: 'flex flex-col w-12 flex-shrink-0 bg-surface-elevated border-r border-border-default',
+      baseStyles: 'flex flex-col items-center py-2 w-12 flex-shrink-0 bg-surface-elevated border-r border-border-default',
       description: '좌측 액티비티바 (아이콘 버튼들)',
     },
     PrimarySidebar: {
@@ -58,22 +60,22 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'auto',
       htmlTag: 'aside',
       ariaProps: { 'aria-label': 'Primary Sidebar' },
-      baseStyles: 'flex flex-col w-64 flex-shrink-0 bg-surface border-r border-border-default',
+      baseStyles: 'flex flex-col flex-shrink-0 bg-surface border-r border-border-default w-full h-full',
       description: '메인 사이드바 (파일 트리 등) - 스크롤',
     },
     Editor: {
       gridArea: 'editor',
-      overflow: 'hidden',
+      overflow: 'auto',
       htmlTag: 'main',
       baseStyles: 'flex-1 flex flex-col min-w-0 bg-surface',
-      description: '에디터 영역 (내부 CodeMirror가 스크롤)',
+      description: '에디터 영역 - 스크롤',
     },
     Panel: {
       gridArea: 'panel',
       overflow: 'auto',
       htmlTag: 'section',
       ariaProps: { 'aria-label': 'Panel' },
-      baseStyles: 'flex flex-col h-48 flex-shrink-0 bg-surface-sunken border-t border-border-default',
+      baseStyles: 'flex flex-col flex-shrink-0 bg-surface-sunken border-t border-border-default w-full h-full',
       description: '하단 패널 (터미널, 문제, 출력 등) - 스크롤',
     },
     SecondarySidebar: {
@@ -81,21 +83,58 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       overflow: 'auto',
       htmlTag: 'aside',
       ariaProps: { 'aria-label': 'Secondary Sidebar' },
-      baseStyles: 'flex flex-col w-56 flex-shrink-0 bg-surface border-l border-border-default',
+      baseStyles: 'flex flex-col flex-shrink-0 bg-surface border-l border-border-default w-full h-full',
       description: '우측 사이드바 - 스크롤',
     },
-    Auxiliary: {
-      gridArea: 'auxiliary',
-      overflow: 'auto',
-      htmlTag: 'aside',
-      ariaProps: { 'aria-label': 'Auxiliary Panel' },
-      baseStyles: 'flex flex-col w-80 flex-shrink-0 bg-surface-cool border-l border-border-default',
-      description: '보조 패널 - 스크롤',
+    UtilityBar: {
+      gridArea: 'utilitybar',
+      overflow: 'hidden',
+      htmlTag: 'nav',
+      ariaProps: { role: 'navigation', 'aria-label': 'Utility Bar' },
+      baseStyles: 'flex flex-col items-center py-2 w-12 flex-shrink-0 bg-surface-elevated border-l border-border-default',
+      description: '우측 보조 바 (아이콘 세로 바)',
     },
+    Container: {
+      gridArea: 'editor', // Fallback to editor area if direct child
+      overflow: 'auto',
+      htmlTag: 'section',
+      baseStyles: 'flex-1 min-h-0',
+      description: '내부 컨테이너',
+    },
+    Main: {
+      gridArea: 'editor',
+      overflow: 'auto',
+      htmlTag: 'main',
+      baseStyles: 'flex-1 min-h-0',
+      description: '내부 메인 영역',
+    },
+    // Common fallback for Studio
+    Header: {
+      gridArea: 'header',
+      overflow: 'hidden',
+      htmlTag: 'header',
+      baseStyles: 'flex items-center bg-surface-elevated border-b border-border-muted px-4 min-h-[36px]',
+      description: '섹션 상단 헤더 (unified design)',
+    },
+    Toolbar: {
+      gridArea: 'toolbar',
+      overflow: 'hidden',
+      htmlTag: 'div',
+      ariaProps: { role: 'toolbar' },
+      baseStyles: 'flex items-center bg-surface-elevated border-b border-border-default px-2 min-h-[36px]',
+      description: '상단 툴바 (unified design)',
+    },
+    Footer: {
+      gridArea: 'footer',
+      overflow: 'hidden',
+      htmlTag: 'footer',
+      baseStyles: 'flex items-center bg-surface-elevated border-t border-border-muted px-4 min-h-[28px]',
+      description: '하단 푸터',
+    }
   },
 
-  // ==================== Sidebar-Content Template ====================
-  'sidebar-content': {
+  // ==================== Sidebar Layout ====================
+  Sidebar: {
     Header: {
       gridArea: 'header',
       overflow: 'hidden',
@@ -110,6 +149,45 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       ariaProps: { role: 'navigation' },
       baseStyles: 'flex flex-col w-72 flex-shrink-0 border-r border-border-default',
       description: '네비게이션 사이드바 - 스크롤',
+    },
+    Container: {
+      gridArea: 'content',
+      overflow: 'auto',
+      htmlTag: 'section',
+      baseStyles: 'flex-1',
+      description: '컨테이너 영역',
+    },
+    Main: {
+      gridArea: 'content',
+      overflow: 'auto',
+      htmlTag: 'main',
+      baseStyles: 'flex-1',
+      description: '메인 콘텐츠 영역 - 스크롤',
+    },
+    Footer: {
+      gridArea: 'footer',
+      overflow: 'hidden',
+      htmlTag: 'footer',
+      baseStyles: 'sticky bottom-0 z-10 bg-surface-elevated border-t border-border-muted py-2 px-4',
+      description: '하단 푸터 (고정)',
+    },
+  },
+
+  // ==================== Aside Layout ====================
+  Aside: {
+    Header: {
+      gridArea: 'header',
+      overflow: 'hidden',
+      htmlTag: 'header',
+      baseStyles: 'sticky top-0 z-10 bg-surface-elevated border-b border-border-muted py-2 px-4',
+      description: '상단 헤더 (고정)',
+    },
+    Container: {
+      gridArea: 'content',
+      overflow: 'auto',
+      htmlTag: 'section',
+      baseStyles: 'flex-1',
+      description: '컨테이너 영역',
     },
     Main: {
       gridArea: 'content',
@@ -134,8 +212,8 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
     },
   },
 
-  // ==================== 3-Column Template ====================
-  '3-col': {
+  // ==================== HolyGrail Layout ====================
+  HolyGrail: {
     Header: {
       gridArea: 'header',
       overflow: 'hidden',
@@ -153,10 +231,17 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
     },
     Main: {
       gridArea: 'center',
-      overflow: 'hidden',
+      overflow: 'auto',
       htmlTag: 'main',
       baseStyles: 'flex-1 flex flex-col',
-      description: '중앙 메인 영역 (캔버스/에디터)',
+      description: '중앙 메인 영역 (캔버스/에디터) - 스크롤',
+    },
+    Container: {
+      gridArea: 'center',
+      overflow: 'auto',
+      htmlTag: 'section',
+      baseStyles: 'flex-1 flex flex-col',
+      description: '중앙 컨테이너 - 스크롤',
     },
     Aside: {
       gridArea: 'right',
@@ -165,49 +250,24 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       baseStyles: 'flex flex-col border-l border-border-default',
       description: '우측 사이드바 - 스크롤',
     },
-  },
-
-  // ==================== Presentation Template (PPT) ====================
-  presentation: {
-    Header: {
-      gridArea: 'header',
-      overflow: 'hidden',
-      htmlTag: 'header',
-      baseStyles: 'bg-surface-elevated border-b border-border-default',
-      description: '프레젠테이션 툴바',
-    },
-    Navigator: {
-      gridArea: 'left',
-      overflow: 'auto',
-      htmlTag: 'nav',
-      baseStyles: 'flex flex-col border-r border-border-default',
-      description: '슬라이드 썸네일 리스트 - 스크롤',
-    },
-    Main: {
-      gridArea: 'main',
-      overflow: 'hidden',
-      htmlTag: 'main',
-      baseStyles: 'flex-1 flex items-center justify-center bg-surface-sunken',
-      description: '슬라이드 캔버스 (고정)',
-    },
-    Aside: {
-      gridArea: 'right',
-      overflow: 'auto',
-      htmlTag: 'aside',
-      baseStyles: 'flex flex-col border-l border-border-default',
-      description: '포맷 설정 사이드바 - 스크롤',
-    },
     Footer: {
       gridArea: 'footer',
       overflow: 'hidden',
       htmlTag: 'footer',
       baseStyles: 'bg-surface-elevated border-t border-border-default',
-      description: '하단 상태바',
+      description: '하단 푸터',
     },
+    Region: {
+      gridArea: 'region',
+      overflow: 'auto',
+      htmlTag: 'section',
+      baseStyles: 'flex-1',
+      description: '임의 영역',
+    }
   },
 
-  // ==================== Master-Detail Template ====================
-  'master-detail': {
+  // ==================== Split Layout (Master-Detail) ====================
+  Split: {
     Master: {
       gridArea: 'master',
       overflow: 'auto',
@@ -224,10 +284,34 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       baseStyles: 'flex-1 flex flex-col',
       description: '상세 뷰 - 스크롤',
     },
+    Main: {
+      gridArea: 'detail',
+      overflow: 'auto',
+      htmlTag: 'main',
+      baseStyles: 'flex-1 flex flex-col',
+    },
+    Header: {
+      gridArea: 'header',
+      overflow: 'hidden',
+      htmlTag: 'header',
+      baseStyles: 'bg-surface-elevated border-b border-border-default',
+    },
+    Footer: {
+      gridArea: 'footer',
+      overflow: 'hidden',
+      htmlTag: 'footer',
+      baseStyles: 'bg-surface-elevated border-t border-border-default',
+    },
+    Toolbar: {
+      gridArea: 'toolbar',
+      overflow: 'hidden',
+      htmlTag: 'div',
+      baseStyles: 'bg-surface-elevated border-b border-border-default',
+    }
   },
 
-  // ==================== Dialog Template ====================
-  dialog: {
+  // ==================== Blank Layout (Dialog/Custom) ====================
+  Blank: {
     DialogHeader: {
       gridArea: 'dialog-header',
       overflow: 'hidden',
@@ -252,9 +336,49 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
       baseStyles: 'border-t border-border-default p-4',
       description: '다이얼로그 푸터 (액션 버튼들)',
     },
+    Container: {
+      gridArea: 'content',
+      overflow: 'auto',
+      htmlTag: 'section',
+      baseStyles: 'flex-1',
+    },
+    Main: {
+      gridArea: 'content',
+      overflow: 'auto',
+      htmlTag: 'main',
+      baseStyles: 'flex-1',
+    }
   },
 
-  // ==================== Universal (모든 template에서 fallback) ====================
+  // ==================== Single Layout ====================
+  Single: {
+    Header: {
+      gridArea: 'header',
+      overflow: 'hidden',
+      htmlTag: 'header',
+      baseStyles: 'bg-surface-elevated border-b border-border-default',
+    },
+    Main: {
+      gridArea: 'content',
+      overflow: 'auto',
+      htmlTag: 'main',
+      baseStyles: 'flex-1',
+    },
+    Container: {
+      gridArea: 'content',
+      overflow: 'auto',
+      htmlTag: 'section',
+      baseStyles: 'flex-1',
+    },
+    Footer: {
+      gridArea: 'footer',
+      overflow: 'hidden',
+      htmlTag: 'footer',
+      baseStyles: 'bg-surface-elevated border-t border-border-default',
+    }
+  },
+
+  // ==================== Universal (Fallback) ====================
   universal: {
     Container: {
       gridArea: 'container',
@@ -291,14 +415,14 @@ export const ROLE_CONFIGS: Record<string, Record<string, RoleConfig>> = {
  * Role Configuration 가져오기
  *
  * 우선순위:
- * 1. Template 특정 설정
+ * 1. Layout 특정 설정
  * 2. Universal fallback 설정
  * 3. 완전 fallback (정의되지 않은 role)
  */
-export function getRoleConfig(role: string, template?: string): RoleConfig {
-  // 1. Template 특정 설정 찾기
-  if (template && ROLE_CONFIGS[template]?.[role]) {
-    return ROLE_CONFIGS[template][role];
+export function getRoleConfig(role: string, layout?: PageLayout): RoleConfig {
+  // 1. Layout 특정 설정 찾기
+  if (layout && ROLE_CONFIGS[layout]?.[role]) {
+    return ROLE_CONFIGS[layout][role];
   }
 
   // 2. Universal 설정 찾기
@@ -308,7 +432,7 @@ export function getRoleConfig(role: string, template?: string): RoleConfig {
 
   // 3. Fallback (정의되지 않은 role)
   console.warn(
-    `[getRoleConfig] Unknown role "${role}" for template "${template}". Using fallback.`
+    `[getRoleConfig] Unknown role "${role}" for layout "${layout}". Using fallback.`
   );
   return {
     gridArea: role.toLowerCase(),
@@ -333,28 +457,28 @@ export function getOverflowClass(overflow: OverflowBehavior): string {
 }
 
 /**
- * 모든 템플릿 목록 조회 (디버깅/문서화용)
+ * 모든 레이아웃 목록 조회
  */
-export function getAllTemplates(): string[] {
+export function getAllLayouts(): string[] {
   return Object.keys(ROLE_CONFIGS).filter((t) => t !== 'universal');
 }
 
 /**
- * 특정 템플릿의 유효한 role 목록 조회
+ * 특정 레이아웃의 유효한 role 목록 조회
  */
-export function getRolesForTemplate(template: string): string[] {
-  return Object.keys(ROLE_CONFIGS[template] || {});
+export function getRolesForLayout(layout: string): string[] {
+  return Object.keys(ROLE_CONFIGS[layout] || {});
 }
 
 /**
- * Role이 특정 template에서 유효한지 검증
+ * Role이 특정 layout에서 유효한지 검증
  */
-export function isValidRoleForTemplate(role: string, template?: string): boolean {
-  if (!template) return true;
+export function isValidRoleForLayout(role: string, layout?: string): boolean {
+  if (!layout) return true;
 
-  // Template 특정 role 또는 universal role이면 유효
+  // Layout 특정 role 또는 universal role이면 유효
   return !!(
-    ROLE_CONFIGS[template]?.[role] ||
+    ROLE_CONFIGS[layout]?.[role] ||
     ROLE_CONFIGS.universal[role]
   );
 }

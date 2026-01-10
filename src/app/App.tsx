@@ -17,10 +17,10 @@ import { AppEMOJI } from '@/apps/EMOJI/AppEMOJI.tsx';
 import { AppIDE } from '@/apps/IDE/AppIDE.tsx';
 import { FloatingBar } from '@/app/widgets/FloatingBar.tsx';
 import { AppJSON } from '@/apps/JSON/AppJSON.tsx';
-import { AppLayout } from '@/apps/LAYOUT/AppLayout.tsx';
+
 import { AppPPT } from '@/apps/PPT/AppPPT.tsx';
 import { AppShowcase } from '@/apps/showcase/AppShowcase.tsx';
-import { AppTokens } from '@/apps/tokens/AppTokens.tsx';
+
 import { AppPage } from '@/apps/PAGE/AppPage.tsx';
 import { AppSection } from '@/apps/SECTION/AppSection.tsx';
 import { AppOverlay } from '@/apps/OVERLAY/AppOverlay.tsx';
@@ -45,8 +45,7 @@ function App() {
         <Route path="/design" component={AppDOCS} />
         <Route path="/builder" component={AppDSLBuilder} />
         <Route path="/showcase" component={AppShowcase} />
-        <Route path="/tokens" component={AppTokens} />
-        <Route path="/layout" component={AppLayout} />
+
         {/* IDDL Component Showcases */}
         <Route path="/page" component={AppPage} />
         <Route path="/section" component={AppSection} />
@@ -64,8 +63,8 @@ function App() {
         {/* 전역 UI 요소 (모든 앱에서 공통) */}
         <FloatingBar />
         <CommandPalette />
-      </AppProvider>
-    </Router>
+      </AppProvider >
+    </Router >
   );
 }
 

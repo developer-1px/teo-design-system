@@ -41,15 +41,11 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import type { GroupProps } from '@/components/types/Atom/types';
 import { cn } from '@/shared/lib/utils';
+import type { GroupRendererProps } from '../role-config';
 
-export interface SortableListProps extends Omit<GroupProps, 'role'> {
+export interface SortableListProps extends GroupRendererProps {
   role: 'SortableList';
-  computedDensity: 'Compact' | 'Standard' | 'Comfortable';
-  computedProminence: GroupProps['prominence'];
-  computedIntent: GroupProps['intent'];
-  Element: any;
   items: any[];
   onReorder: (items: any[]) => void;
   value?: string; // v1.0.2: 아이템의 고유 식별자 필드명 (e.g., "id")

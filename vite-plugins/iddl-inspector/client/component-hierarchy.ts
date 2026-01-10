@@ -25,10 +25,12 @@ interface Fiber {
 
 export interface ComponentInfo {
   name: string;
+  role?: string;
   props: Record<string, any>;
   className?: string;
   filePath?: string;
   fiber: Fiber;
+  element: HTMLElement;
 }
 
 /**
@@ -86,6 +88,7 @@ export function extractComponentHierarchy(element: HTMLElement): ComponentInfo[]
     if (shouldRenderFiber(currentFiber)) {
       const name = getComponentName(currentFiber);
       const props = { ...currentFiber.memoizedProps };
+      const role = props.role;
       const className = props.className;
       const filePath = getFilePath(currentFiber);
 
@@ -96,10 +99,12 @@ export function extractComponentHierarchy(element: HTMLElement): ComponentInfo[]
 
       hierarchy.push({
         name,
+        role,
         props,
         className,
         filePath,
         fiber: currentFiber,
+        element: currentFiber.stateNode instanceof HTMLElement ? currentFiber.stateNode : element as HTMLElement,
       });
     }
 

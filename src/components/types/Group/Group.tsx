@@ -25,25 +25,21 @@ import type { GroupProps, GroupRole } from '@/components/types/Atom/types.ts';
 import { getInteractiveClasses } from '@/shared/config/interactive-tokens';
 import { gapVariants } from '@/shared/config/spacing-tokens';
 import { cn } from '@/shared/lib/utils.ts';
+import { getRoleConfig, hasRenderer } from './role-config';
 
-// Import Toolbar renderer
-import { Toolbar } from './role/Toolbar';
-
-// Re-export Toolbar utilities
+// Re-export renderer utilities
 export { ToolbarDivider, ToolbarGroup } from './role/Toolbar';
-
-// Import Accordion renderer
-import { Accordion } from './role/Accordion';
-
-// Re-export Accordion utilities
 export { AccordionItem, AccordionTrigger, AccordionContent } from './role/Accordion';
 
-// Import SortableList renderer
-import { SortableList } from './role/SortableList';
-
 /**
- * Group container variants (CVA)
+ * Group container variants (CVA) - v4.1: Layout + Density only
  * v1.1.1: Density-aware spacing 추가
+ * v4.1: Role styles moved to role-config.ts (baseStyles)
+ *
+ * **남은 역할**:
+ * - Layout: 자식 배치 방식 (stack, inline, grid, etc.)
+ * - Density: 여백 조절 (Compact, Standard, Comfortable)
+ * - compoundVariants: Layout × Density 조합
  */
 const groupVariants = cva('', {
   variants: {
@@ -57,28 +53,7 @@ const groupVariants = cva('', {
       tabs: 'flex flex-col',
       steps: 'flex flex-col gap-4',
     },
-    // Role (semantic purpose)
-    role: {
-      Container: '',
-      Form: 'space-y-4',
-      Fieldset: 'border border-default rounded-lg p-4 space-y-3',
-      Toolbar: 'flex items-center gap-2',
-      FloatingToolbar: 'flex items-center gap-1 bg-surface-overlay shadow-xl rounded-full px-2 py-1', // v1.1.2: 플로팅 툴바 (화면 위에 떠있는 액션 모음)
-      List: 'flex flex-col gap-1 flex-1 overflow-y-auto',
-      Grid: 'grid gap-4',
-      Table: 'border border-default rounded-lg overflow-hidden',
-      Tabs: 'flex flex-col',
-      Steps: 'flex flex-col',
-      Split: 'grid grid-cols-2 gap-4',
-      Card: 'bg-surface-raised rounded-lg p-4', // Shadow removed per minimal-renderer-guide.md Section 2.1: Card는 페이지와 같은 레벨
-      Divider: 'bg-border-default', // v1.1.2: 구분선 (기본: 수평선, layout="inline"이면 수직선)
-      ColorIndicator: 'w-4 h-4 rounded', // v1.1.2: 색상 표시 박스 (작은 사각형, 색상은 별도 지정)
-      PreviewContainer: 'relative w-full h-full border-2 border-border-default rounded-lg p-4 bg-surface-sunken', // v1.1.2: 미리보기 컨테이너
-      PreviewCard: 'rounded-lg border-2 p-3 flex flex-col justify-center items-center', // v1.1.2: 미리보기 카드 (색상은 별도 지정)
-      Inline: 'flex items-center gap-2',
-      Accordion: 'flex flex-col gap-2',
-    },
-    // Density (v1.1.1)
+    // Density (spacing modifiers)
     density: {
       Compact: '',
       Standard: '',
@@ -86,7 +61,7 @@ const groupVariants = cva('', {
     },
   },
   compoundVariants: [
-    // Layout + Density (v1.1.1)
+    // Layout + Density combinations
     { layout: 'stack', density: 'Compact', class: '!gap-1' },
     { layout: 'stack', density: 'Comfortable', class: '!gap-4' },
     { layout: 'inline', density: 'Compact', class: '!gap-1' },
@@ -97,36 +72,9 @@ const groupVariants = cva('', {
     { layout: 'split', density: 'Comfortable', class: '!gap-6' },
     { layout: 'steps', density: 'Compact', class: '!gap-2' },
     { layout: 'steps', density: 'Comfortable', class: '!gap-6' },
-
-    // Role + Density (v1.1.1)
-    { role: 'Form', density: 'Compact', class: '!space-y-2' },
-    { role: 'Form', density: 'Comfortable', class: '!space-y-6' },
-    { role: 'Fieldset', density: 'Compact', class: '!p-2 !space-y-2' },
-    { role: 'Fieldset', density: 'Comfortable', class: '!p-6 !space-y-4' },
-    { role: 'Toolbar', density: 'Compact', class: '!gap-1' },
-    { role: 'Toolbar', density: 'Comfortable', class: '!gap-3' },
-    { role: 'FloatingToolbar', density: 'Compact', class: '!gap-1' },
-    { role: 'FloatingToolbar', density: 'Comfortable', class: '!gap-2' },
-    { role: 'List', density: 'Compact', class: '!gap-0.5' },
-    { role: 'List', density: 'Comfortable', class: '!gap-2' },
-    { role: 'Grid', density: 'Compact', class: '!gap-2' },
-    { role: 'Grid', density: 'Comfortable', class: '!gap-6' },
-    { role: 'Card', density: 'Compact', class: '!p-2' },
-    { role: 'Card', density: 'Comfortable', class: '!p-6' },
-    { role: 'Inline', density: 'Compact', class: '!gap-1' },
-    { role: 'Inline', density: 'Comfortable', class: '!gap-3' },
-
-    // v1.1.2: Divider (구분선)
-    { role: 'Divider', layout: 'stack', class: 'h-px w-full' }, // 수평선
-    { role: 'Divider', layout: 'inline', class: 'w-px h-4 mx-1' }, // 수직선
-
-    // v1.1.2: ColorIndicator (색상 표시 박스 크기 변형)
-    { role: 'ColorIndicator', density: 'Compact', class: '!w-3 !h-3' }, // 작은 크기
-    { role: 'ColorIndicator', density: 'Comfortable', class: '!w-5 !h-5' }, // 큰 크기
   ],
   defaultVariants: {
     layout: 'stack',
-    role: 'Container',
     density: 'Standard',
   },
 });
@@ -148,47 +96,7 @@ const groupStateVariants = cva('', {
   },
 });
 
-/**
- * Role → HTML 시맨틱 태그 매핑
- */
-const roleToTag: Record<GroupRole, string> = {
-  Form: 'form',
-  Fieldset: 'fieldset',
-  List: 'ul',
-  Table: 'table',
-  Card: 'article',
-  Divider: 'div',
-  ColorIndicator: 'div',
-  PreviewContainer: 'div',
-  PreviewCard: 'div',
-  Toolbar: 'div',
-  FloatingToolbar: 'div',
-  Container: 'div',
-  Grid: 'div',
-  Tabs: 'div',
-  Steps: 'ol',
-  Split: 'div',
-  Inline: 'div',
-  Accordion: 'div',
-};
-
-/**
- * Role → ARIA 속성 매핑
- */
-const roleToAria: Partial<Record<GroupRole, Record<string, string>>> = {
-  Toolbar: { role: 'toolbar' },
-  FloatingToolbar: { role: 'toolbar', 'aria-label': 'Floating toolbar' },
-  Tabs: { role: 'tablist' },
-  Table: { role: 'table' },
-  List: { role: 'list' },
-  SortableList: { role: 'listbox', 'aria-label': 'Sortable list' },
-  Grid: { role: 'grid' },
-  Form: { role: 'form' },
-  Fieldset: { role: 'group' }, // <fieldset> 태그는 role="group" 자동 적용
-  Card: { role: 'article' },
-  Steps: { role: 'list', 'aria-label': 'Progress steps' },
-  Accordion: { role: 'region' }, // 각 AccordionItem은 개별 ARIA 처리
-};
+// roleToTag and roleToAria are now in role-config.ts
 
 export function Group({
   as,
@@ -217,6 +125,10 @@ export function Group({
   defaultValue,
   accordionValue,
   onValueChange,
+  // SortableList-specific props
+  items,
+  onReorder,
+  renderItem,
   ...rest
 }: GroupProps) {
   // 조건부 렌더링 (v1.0.1)
@@ -259,10 +171,10 @@ export function Group({
   const selectionAriaProps =
     value !== undefined
       ? {
-          role: 'option',
-          'aria-selected': isSelected,
-          tabIndex: isSelected ? 0 : -1,
-        }
+        role: 'option',
+        'aria-selected': isSelected,
+        tabIndex: isSelected ? 0 : -1,
+      }
       : {};
 
   // v1.0.4: Focus management - ref 등록
@@ -296,120 +208,37 @@ export function Group({
     return <div className={groupStateVariants({ state: 'empty' })}>{emptyContent}</div>;
   }
 
-  // role에 따른 HTML 태그 결정
-  const defaultTag = roleToTag[role] || 'div'; // 기본값: div
-  const Component: any = as || defaultTag;
-
-  // role에 따른 ARIA 속성 결정
-  const ariaProps = roleToAria[role] || {};
+  // role-config에서 설정 가져오기 (v4.1)
+  const roleConfig = getRoleConfig(role);
+  const Component: any = as || roleConfig.htmlTag;
+  const ariaProps = roleConfig.ariaProps || {};
 
   // v3.1: Interactive State Token System 적용 (clickable/selectable일 때)
   const interactiveClasses = computedClickable
     ? getInteractiveClasses({
-        prominence: computedProminence,
-        intent: computedIntent,
-        config: {
-          selected: isSelected,
-          disabled: false,
-          focusable: true,
-          clickable: true,
-        },
-      })
+      prominence: computedProminence,
+      intent: computedIntent,
+      config: {
+        selected: isSelected,
+        disabled: false,
+        focusable: true,
+        clickable: true,
+      },
+    })
     : '';
 
   // v3.1: Spacing Token System 적용 (gap만 필요)
   const spacingClasses = gap
     ? `gap-${gap}` // override
     : gapVariants({
-        prominence: computedProminence as 'Hero' | 'Standard' | 'Strong' | 'Subtle',
-        density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
-      });
+      prominence: computedProminence as 'Hero' | 'Standard' | 'Strong' | 'Subtle',
+      density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
+    });
 
-  // v4.0: Toolbar role에 대해 전용 renderer 사용
-  if (role === 'Toolbar') {
-    return (
-      <GroupLayoutProvider
-        value={{
-          prominence: computedProminence,
-          role,
-          density: computedDensity,
-          intent: computedIntent,
-          depth: parentCtx.depth + 1,
-        }}
-      >
-        <Toolbar
-          role="Toolbar"
-          computedDensity={computedDensity as 'Compact' | 'Standard' | 'Comfortable'}
-          computedProminence={computedProminence}
-          computedIntent={computedIntent}
-          Element={Component}
-          onClick={onClick}
-          {...rest}
-        >
-          {children}
-        </Toolbar>
-      </GroupLayoutProvider>
-    );
-  }
+  // v4.1: 전용 renderer가 있으면 사용, 없으면 기본 렌더링
+  const Renderer = roleConfig.renderer;
 
-  // v4.0: Accordion role에 대해 전용 renderer 사용
-  if (role === 'Accordion') {
-    return (
-      <GroupLayoutProvider
-        value={{
-          prominence: computedProminence,
-          role,
-          density: computedDensity,
-          intent: computedIntent,
-          depth: parentCtx.depth + 1,
-        }}
-      >
-        <Accordion
-          role="Accordion"
-          computedDensity={computedDensity as 'Compact' | 'Standard' | 'Comfortable'}
-          computedProminence={computedProminence}
-          computedIntent={computedIntent}
-          Element={Component}
-          onClick={onClick}
-          mode={mode}
-          defaultValue={defaultValue}
-          value={accordionValue}
-          onValueChange={onValueChange}
-          {...rest}
-        >
-          {children}
-        </Accordion>
-      </GroupLayoutProvider>
-    );
-  }
-
-  // v4.0: SortableList role에 대해 전용 renderer 사용
-  if (role === 'SortableList') {
-    return (
-      <GroupLayoutProvider
-        value={{
-          prominence: computedProminence,
-          role,
-          density: computedDensity,
-          intent: computedIntent,
-          depth: parentCtx.depth + 1,
-        }}
-      >
-        <SortableList
-          role="SortableList"
-          computedDensity={computedDensity as 'Compact' | 'Standard' | 'Comfortable'}
-          computedProminence={computedProminence}
-          computedIntent={computedIntent}
-          Element={Component}
-          onClick={onClick}
-          {...rest}
-        >
-          {children}
-        </SortableList>
-      </GroupLayoutProvider>
-    );
-  }
-
+  // GroupLayoutProvider로 한 번만 래핑 (v4.1)
   return (
     <GroupLayoutProvider
       value={{
@@ -420,10 +249,35 @@ export function Group({
         depth: parentCtx.depth + 1,
       }}
     >
-      <Component
+      {Renderer ? (
+        <Renderer
+          role={role}
+          computedDensity={computedDensity as 'Compact' | 'Standard' | 'Comfortable'}
+          computedProminence={computedProminence}
+          computedIntent={computedIntent}
+          Element={Component}
+          // Accordion-specific props
+          mode={mode}
+          defaultValue={defaultValue}
+          accordionValue={accordionValue}
+          onValueChange={onValueChange}
+          // SortableList-specific props
+          items={items}
+          onReorder={onReorder}
+          renderItem={renderItem}
+          // Common props
+          onClick={onClick}
+          {...rest}
+        >
+          {children}
+        </Renderer>
+      ) : (
+        <Component
         ref={componentRef}
         className={cn(
-          // Base role-based styles
+          // Base role-based styles from role-config (v4.1)
+          roleConfig.baseStyles,
+          // Layout + Density styles (CVA v4.1)
           groupVariants({
             layout: computedLayout as
               | 'stack'
@@ -433,7 +287,6 @@ export function Group({
               | 'split'
               | 'tabs'
               | 'steps',
-            role: role as GroupRole,
             density: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
           }),
           // v3.1: Interactive State (clickable/selectable groups)
@@ -460,6 +313,7 @@ export function Group({
       >
         {children}
       </Component>
+      )}
     </GroupLayoutProvider>
   );
 }

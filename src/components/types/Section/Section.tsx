@@ -23,16 +23,16 @@
 
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { SectionProps } from '@/components/types/Atom/types.ts';
-import { TEMPLATE_SECTION_ROLES } from '@/components/types/Atom/types.ts';
+import { LAYOUT_SECTION_ROLES } from '@/components/types/Atom/types.ts';
 
 // v4.1: Role Configuration Helper
-import { getRoleConfig, getOverflowClass } from './role-config';
+import { getOverflowClass, getRoleConfig } from './role-config';
 
 // Role Renderers (v4.0)
 import { ContainerSection } from './renderers/ContainerSection';
+import { DialogSection } from './renderers/DialogSection';
 import { FrameSection } from './renderers/FrameSection';
 import { IDESection } from './renderers/IDESection';
-import { DialogSection } from './renderers/DialogSection';
 
 export function Section({
   as,
@@ -54,17 +54,21 @@ export function Section({
   const computedIntent = intent ?? parentCtx.intent ?? 'Neutral';
   const computedMode = mode ?? parentCtx.mode ?? 'view';
 
-  // v4.0: Template-aware validation (dev mode only)
-  if (import.meta.env.DEV && parentCtx.template) {
-    const template = parentCtx.template;
-    const validRoles = TEMPLATE_SECTION_ROLES[template] || [];
-    const universalRoles = TEMPLATE_SECTION_ROLES.universal || [];
-    const allValidRoles = [...new Set([...universalRoles, ...validRoles])];
+  // v5.0: Layout-aware validation (dev mode only)
+  if (import.meta.env.DEV && parentCtx.layout) {
+    const layout = parentCtx.layout;
+    const validRoles = LAYOUT_SECTION_ROLES[layout] || [];
 
-    if (!allValidRoles.includes(role)) {
+    // Check if role is valid for the current layout
+    // We treat 'Container' as valid everywhere if not explicitly restricted, but strictly speaking IDDL v5 should be explicit.
+    // However, validation in types.ts showed strict lists.
+
+    if (!validRoles.includes(role)) {
+      // Optional: Allow 'Container' as fallback if not strict? 
+      // For now, let's warn based on the definition.
       console.warn(
-        `[Section] Role "${role}" is not valid for template "${template}". ` +
-        `Valid roles: ${allValidRoles.join(', ')}`
+        `[Section] Role "${role}" is not valid for layout "${layout}". ` +
+        `Valid roles: ${validRoles.join(', ')}`
       );
     }
   }
@@ -74,8 +78,10 @@ export function Section({
     // TODO: condition 표현식 평가 구현
   }
 
-  // v4.1: Role Configuration 가져오기 (template 기반)
-  const config = getRoleConfig(role, parentCtx.template);
+  // v4.1: Role Configuration 가져오기 (template 기반 -> layout 기반)
+  // Note: getRoleConfig needs to handle layout logic or be updated. 
+  // Passing layout as second arg if expected
+  const config = getRoleConfig(role, parentCtx.layout as any);
 
   // 자동 계산된 값들
   const {

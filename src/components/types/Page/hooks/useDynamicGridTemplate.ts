@@ -14,7 +14,7 @@
 
 import { type ReactNode, useMemo } from 'react';
 import type { PageLayout, PresentationGridArea } from '@/components/types/Atom/types';
-import { getRoleConfig } from '@/components/types/Section/role-config';
+import { getRoleConfig, ROLE_CONFIGS } from '@/components/types/Section/role-config';
 
 export interface GridSizes {
   header?: string;
@@ -32,7 +32,7 @@ export interface GridSizes {
   editor?: string;
   panel?: string;
   secondarysidebar?: string;
-  auxiliary?: string;
+  utilitybar?: string;
   // Sidebar template specific
   nav?: string;
   content?: string;
@@ -72,14 +72,30 @@ function extractUsedAreas(children: ReactNode, layout?: PageLayout): Set<string>
 
       // v5.0: role 기반 gridArea 자동 계산 (role-config 사용)
       if (props?.role) {
-        // layout을 소문자로 변환하여 template 호환성 유지
-        const templateHint = layout?.toLowerCase();
-        const config = getRoleConfig(props.role, templateHint);
+        if (props.role === 'separator') return;
+
+        // v5.0: layout 이름을 Capitalized로 변환하여 ROLE_CONFIGS 키와 일치시킴
+        const layoutName = layout ? layout.charAt(0).toUpperCase() + layout.slice(1).toLowerCase() : undefined;
+
+        // 1. Layout 특정 role인 경우 (가장 중요)
+        if (layoutName && (ROLE_CONFIGS as any)[layoutName]?.[props.role]) {
+          const config = (ROLE_CONFIGS as any)[layoutName][props.role];
+          areas.add(config.gridArea);
+          return; // 핵심: 직접적인 레이아웃 영역을 찾으면 더 이상 자식으로 들어가지 않음 (nested Section 보호)
+        }
+
+        // 2. Fallback: universal role인 경우
+        if (ROLE_CONFIGS.universal[props.role]) {
+          const config = ROLE_CONFIGS.universal[props.role];
+          areas.add(config.gridArea);
+          return;
+        }
+
+        // 3. Unknown role fallback
+        const config = getRoleConfig(props.role, layoutName as any);
         areas.add(config.gridArea);
-      }
-      // Backward compatibility: 명시적 gridArea prop도 지원
-      else if (props?.gridArea) {
-        areas.add(props.gridArea);
+        // Fallback인 경우에도 일단 찾았으므로 더 깊이 들어가지 않음 (IDDL은 계층적 Section을 기본적으로 한 단계만 Grid로 봄)
+        return;
       }
 
       if (props?.children) {
@@ -120,7 +136,7 @@ function generateGridTemplate(
     editor: '1fr',
     panel: '300px',
     secondarysidebar: '300px',
-    auxiliary: '300px',
+    utilitybar: 'auto',
     // Sidebar template
     nav: '250px',
     content: '1fr',
@@ -143,76 +159,99 @@ function generateGridTemplate(
   const columns: string[] = [];
   const columnSizes: string[] = [];
 
-  // Special case: Studio template (IDE 레이아웃 with optional toolbar)
+  // Special case: Studio template (IDE 레이아웃 with optional toolbar, header, footer)
   if (
     has('toolbar') ||
+    has('header') ||
+    has('footer') ||
     has('activitybar') ||
     has('primarysidebar') ||
     has('editor') ||
     has('panel') ||
     has('secondarysidebar') ||
-    has('auxiliary')
+    has('utilitybar')
   ) {
     const studioRows: string[] = [];
     const studioRowSizes: string[] = [];
+    const leftColumns: string[] = [];
+    const leftColumnSizes: string[] = [];
+    const rightColumns: string[] = [];
+    const rightColumnSizes: string[] = [];
 
-    // Toolbar row (optional)
-    if (has('toolbar')) {
-      const toolbarRow: string[] = [];
-      const toolbarColumns: string[] = [];
-
-      // Toolbar spans all columns
-      const numColumns =
-        (has('activitybar') ? 1 : 0) +
-        (has('primarysidebar') ? 1 : 0) +
-        (has('editor') ? 1 : 0) +
-        (has('panel') ? 1 : 0) +
-        (has('secondarysidebar') ? 1 : 0) +
-        (has('auxiliary') ? 1 : 0);
-
-      for (let i = 0; i < numColumns; i++) {
-        toolbarRow.push('toolbar');
-      }
-
-      studioRows.push(toolbarRow.join(' '));
-      studioRowSizes.push(getSize('toolbar') || 'auto');
-    }
-
-    // Main content row
-    const mainRow: string[] = [];
-    const mainColumns: string[] = [];
-
+    // Define side columns
     if (has('activitybar')) {
-      mainRow.push('activitybar');
-      mainColumns.push(getSize('activitybar'));
+      leftColumns.push('activitybar');
+      leftColumnSizes.push(getSize('activitybar'));
     }
     if (has('primarysidebar')) {
-      mainRow.push('primarysidebar');
-      mainColumns.push(getSize('primarysidebar'));
-    }
-    if (has('editor')) {
-      mainRow.push('editor');
-      mainColumns.push(getSize('editor'));
-    }
-    if (has('panel')) {
-      mainRow.push('panel');
-      mainColumns.push(getSize('panel'));
-    }
-    if (has('secondarysidebar')) {
-      mainRow.push('secondarysidebar');
-      mainColumns.push(getSize('secondarysidebar'));
-    }
-    if (has('auxiliary')) {
-      mainRow.push('auxiliary');
-      mainColumns.push(getSize('auxiliary'));
+      leftColumns.push('primarysidebar');
+      leftColumnSizes.push(getSize('primarysidebar'));
     }
 
-    studioRows.push(mainRow.join(' '));
+    if (has('secondarysidebar')) {
+      rightColumns.push('secondarysidebar');
+      rightColumnSizes.push(getSize('secondarysidebar'));
+    }
+    if (has('utilitybar')) {
+      rightColumns.push('utilitybar');
+      rightColumnSizes.push(getSize('utilitybar'));
+    }
+
+    // Determine center area structure
+    const centerCols = has('editor') || has('panel') ? ['editor'] : ['.']; // Center is always 1 column wide effectively
+    const centerColSize = '1fr';
+
+    // Construct full column list for Header/Footer/Toolbar spanning
+    // Note: Grid Line alignment requires consistent column counts.
+    // We will have: [Left Cols] [Center Col] [Right Cols]
+    const allColSizes = [...leftColumnSizes, centerColSize, ...rightColumnSizes];
+    const numCols = allColSizes.length;
+
+    // Header row (Full width)
+    if (has('header')) {
+      studioRows.push(`"${new Array(numCols).fill('header').join(' ')}"`);
+      studioRowSizes.push(getSize('header'));
+    }
+
+    // Toolbar row (Full width)
+    if (has('toolbar')) {
+      studioRows.push(`"${new Array(numCols).fill('toolbar').join(' ')}"`);
+      studioRowSizes.push(getSize('toolbar'));
+    }
+
+    // Center Section (Editor + Panel)
+    // Row 1: Editor
+    // Sidebars span down, so we use their names again in the next row if needed.
+    // Actually, simply repeating the name in consecutive rows makes them span.
+
+    const row1Areas = [
+      ...leftColumns,
+      has('editor') ? 'editor' : '.',
+      ...rightColumns
+    ];
+    studioRows.push(`"${row1Areas.join(' ')}"`);
     studioRowSizes.push('1fr');
 
+    // Row 2: Panel (if exists)
+    if (has('panel')) {
+      const row2Areas = [
+        ...leftColumns, // Sidebars span this row too
+        'panel',
+        ...rightColumns // Sidebars span this row too
+      ];
+      studioRows.push(`"${row2Areas.join(' ')}"`);
+      studioRowSizes.push(getSize('panel'));
+    }
+
+    // Footer row (Full width)
+    if (has('footer')) {
+      studioRows.push(`"${new Array(numCols).fill('footer').join(' ')}"`);
+      studioRowSizes.push(getSize('footer'));
+    }
+
     return {
-      gridTemplateAreas: studioRows.map((row) => `"${row}"`).join('\n    '),
-      gridTemplateColumns: mainColumns.join(' '),
+      gridTemplateAreas: studioRows.join('\n    '),
+      gridTemplateColumns: allColSizes.join(' '),
       gridTemplateRows: studioRowSizes.join(' '),
     };
   }

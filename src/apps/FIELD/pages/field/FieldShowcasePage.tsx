@@ -19,14 +19,14 @@ export function FieldShowcasePage() {
         <Group role="Toolbar" layout="inline" density="Compact">
           {/* Using Title Standard for navbar-like title */}
           <Text role="Title" prominence="Standard" content="Field Component Library" />
-          <Group role="Divider" layout="inline" />
+          <Group role="Divider" layout="inline"><></></Group>
           <Text role="Body" prominence="Subtle" content="v2.1.0 Minimal Design" />
         </Group>
       </Section>
 
       {/* Sidebar for Navigation (Mock) */}
       <Section role="PrimarySidebar" prominence="Standard">
-        <Group role="List" layout="stack" density="Comfortable">
+        <Group role="ScrollMenu" layout="stack" density="Comfortable">
           <Text role="Label" content="COMPONENTS" prominence="Subtle" className="px-2 pt-2" />
           <Group role="Container" layout="stack" density="Standard">
             {['Input Primitives', 'Selection Controls', 'Text Areas', 'Advanced Inputs', 'States & Validation'].map(item => (
@@ -50,7 +50,7 @@ export function FieldShowcasePage() {
           </Group>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack" />
+          <Group role="Divider" layout="stack"><></></Group>
 
           {/* 1. Input Primitives */}
           <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
@@ -96,7 +96,7 @@ export function FieldShowcasePage() {
           </Group>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack" />
+          <Group role="Divider" layout="stack"><></></Group>
 
           {/* 2. Selection Controls */}
           <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
@@ -159,7 +159,7 @@ export function FieldShowcasePage() {
           </Group>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack" />
+          <Group role="Divider" layout="stack"><></></Group>
 
           {/* 3. Text Areas */}
           <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
@@ -177,7 +177,7 @@ export function FieldShowcasePage() {
           </Group>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack" />
+          <Group role="Divider" layout="stack"><></></Group>
 
           {/* 4. Advanced Inputs */}
           <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
@@ -213,7 +213,7 @@ export function FieldShowcasePage() {
           </Group>
 
           {/* Spacer */}
-          <Group role="Divider" layout="stack" />
+          <Group role="Divider" layout="stack"><></></Group>
 
           {/* 5. States & Validation */}
           <Group role="Container" layout="stack" density="Comfortable" className="gap-6">
