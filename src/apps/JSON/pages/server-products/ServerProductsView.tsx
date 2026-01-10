@@ -2,8 +2,8 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
 import { DataTable } from '@/components/types/Block/role/DataTable.tsx';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
-import { Content } from '@/components/types/Atom/Text/role/Content';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
+import { Content } from '@/components/types/Element/Text/role/Content';
 import { Section } from '@/components/types/Section/Section.tsx';
 import testData from '@/test.json';
 

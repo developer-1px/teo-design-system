@@ -5,7 +5,7 @@
 import { createElement, useEffect, useMemo, useState } from 'react';
 import type { ComponentMetadata, MockData, PropValue } from '@/apps/showcase/widgets/parser/types';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Text } from '@/components/types/Element/Text/Text';
 
 interface ComponentRendererProps {
   metadata: ComponentMetadata;

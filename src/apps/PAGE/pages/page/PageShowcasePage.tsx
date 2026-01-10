@@ -9,8 +9,10 @@ import { useState } from 'react';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Atom/Text/Text';
-import { LAYOUT_SECTION_ROLES, PageLayout, SectionRole } from '@/components/types/Atom/types';
+import { Text } from '@/components/types/Element/Text/Text';
+import type { PageLayout } from '@/components/types/Page/Page.types';
+import { LAYOUT_SECTION_ROLES } from '@/components/types/Section/role-config';
+import type { SectionRole } from '@/components/types/Section/Section.types';
 
 // Visual colors for section roles (keeping existing colors)
 const ROLE_COLORS: Partial<Record<SectionRole, string>> = {
@@ -48,56 +50,59 @@ export function PageShowcasePage() {
     <Page role="Application" layout="Studio">
       {/* Header */}
       <Section role="Toolbar" prominence="Standard">
-        <Block role="Toolbar" layout="inline" density="Compact">
+        <Block role="Toolbar" className="w-full">
           <Text role="Title" prominence="Standard" content="Page Layout Gallery" />
-          <Block role="Divider" layout="inline"><></></Block>
+          <Block role="ToolbarDivider" />
           <Text role="Body" prominence="Subtle" content="Core Layout Templates v5.0 (Live Preview)" />
         </Block>
       </Section>
 
       {/* Sidebar navigation */}
-      <Section role="PrimarySidebar" prominence="Standard">
-        <Block role="ScrollMenu" layout="stack" density="Comfortable">
-          <Text role="Label" content="LAYOUT TEMPLATES" prominence="Subtle" className="px-2 pt-2" />
-          <Block role="Container" layout="stack" density="Standard">
-            {layouts.map(layout => (
-              <Block
-                key={layout}
-                role="Inline"
-                clickable
-                onClick={() => setSelectedLayout(layout)}
-                className={`px-2 py-1 rounded-md cursor-pointer ${selectedLayout === layout ? 'bg-accent/10 text-accent font-medium' : 'hover:bg-surface-elevated'}`}
-              >
-                <Text role="Body" content={layout} prominence={selectedLayout === layout ? 'Strong' : 'Standard'} />
-              </Block>
-            ))}
-          </Block>
+      <Section role="PrimarySidebar" prominence="Standard" className="w-64">
+        <Block role="ScrollMenu" className="p-2 gap-1 h-full">
+          <Text role="Label" content="LAYOUT TEMPLATES" prominence="Subtle" className="px-2 py-2" />
+          {layouts.map(layout => (
+            <Block
+              key={layout}
+              role="Inline"
+              clickable
+              onClick={() => setSelectedLayout(layout)}
+              className={`
+                px-3 py-2 rounded-md cursor-pointer transition-colors
+                ${selectedLayout === layout
+                  ? 'bg-accent/10 text-accent font-medium'
+                  : 'hover:bg-surface-elevated text-text-secondary'}
+              `}
+            >
+              <Text role="Body" content={layout} />
+            </Block>
+          ))}
         </Block>
       </Section>
 
       {/* Main Content */}
       <Section role="Editor" prominence="Standard" mode="view">
-        <Block role="Container" layout="stack" density="Comfortable" className="p-8 gap-8 w-full h-full">
+        {/* Removing h-full to allow natural scrolling of the Section */}
+        <Block role="Container" className="p-8 gap-8 w-full max-w-6xl mx-auto">
 
-          <Block role="Container" layout="stack" density="Standard" className="gap-2">
+          <Block role="Stack" className="gap-2">
             <Text role="Title" prominence="Hero" content={selectedLayout} />
-            <Text role="Body" prominence="Subtle" content={`Standard ${selectedLayout} Layout`} />
+            <Text role="Body" prominence="Subtle" content={`Standard ${selectedLayout} Layout Preview`} />
+            <Text role="Body" content="The preview below demonstrates the layout capabilities. Resize your window to see responsiveness." />
           </Block>
 
           {/* Canvas for Layout Visualization */}
-          <Block role="Card" className="flex-1 w-full bg-surface-sunken p-8 border border-border-default rounded-xl overflow-hidden relative shadow-inner">
+          <Block role="Card" className="aspect-video w-full bg-surface-sunken p-8 border border-border-default rounded-xl shadow-inner relative overflow-hidden">
             <div className="absolute inset-8 bg-surface rounded-lg shadow-sm border border-border-default overflow-hidden">
               {/* 
                  Live Page Component 
-                 - We use role="Application" to trigger AppLayout
-                 - We override w-screen/h-screen with w-full/h-full to fit in this card
-                 - We pass explicit sizes to ensure it renders reasonably in small space
+                 - role="Application" triggers AppLayout (grid based)
+                 - w-full h-full fills the card container
                */}
               <Page
                 role="Application"
                 layout={selectedLayout}
                 className="w-full h-full relative"
-                // Provide default sizes suitable for the preview scale if needed
                 sizes={{
                   primarysidebar: '200px',
                   secondarysidebar: '200px',
@@ -108,17 +113,34 @@ export function PageShowcasePage() {
                 }}
               >
                 {validSections.map(role => (
-                  <Section key={role} role={role} className="relative group">
-                    {/* Visual overlay to identify the section */}
+                  <Section key={role} role={role} className="relative group overflow-hidden">
+                    {/* 
+                        Mock Content to demonstrate scrolling 
+                        Container/Main/Editor roles usually scroll
+                     */}
                     <div className={`
-                       absolute inset-2 
-                       rounded border-2 border-dashed 
-                       flex flex-col items-center justify-center p-2 text-center 
-                       transition-all opacity-70 group-hover:opacity-100
+                       absolute inset-0 
+                       flex flex-col
                        ${ROLE_COLORS[role] || 'bg-gray-100/50 border-gray-200 text-gray-700'}
                      `}>
-                      <Text role="Label" content={role} className="font-bold text-xs" />
-                      <div className="text-[10px] opacity-70 mt-1">{role} Area</div>
+                      {/* Header for the section */}
+                      <div className="p-2 border-b border-black/5 flex items-center justify-center bg-black/5">
+                        <Text role="Label" content={role} className="font-bold text-xs" />
+                      </div>
+
+                      {/* Scrolling content area */}
+                      <div className="flex-1 overflow-auto p-4 space-y-4">
+                        <div className="text-[10px] opacity-70 text-center uppercase tracking-wider mb-4">{role} Area</div>
+
+                        {/* Add lots of dummy content for scrolling regions */}
+                        {(['Container', 'Main', 'Editor', 'Navigator', 'Aside', 'Master', 'Detail', 'PrimarySidebar', 'SecondarySidebar'].includes(role)) && (
+                          <>
+                            {Array.from({ length: 10 }).map((_, i) => (
+                              <div key={i} className="h-8 bg-black/5 rounded w-full animate-pulse" style={{ opacity: 1 - (i * 0.1) }} />
+                            ))}
+                          </>
+                        )}
+                      </div>
                     </div>
                   </Section>
                 ))}
@@ -126,15 +148,17 @@ export function PageShowcasePage() {
             </div>
           </Block>
 
-          {/* Legend / Info */}
-          <Block role="Container" layout="stack" density="Standard" className="gap-4">
-            <Text role="Label" content="Usage" />
-            <Block role="Card" className="bg-surface-sunken p-4 font-mono text-sm border border-border-default rounded-md">
-              <Text role="Code" content={`<Page role="Application" layout="${selectedLayout}">`} className="text-blue-600" />
-              {validSections.map(role => (
-                <Text key={role} role="Code" content={`  <Section role="${role}">...</Section>`} className="text-gray-500 pl-4" />
-              ))}
-              <Text role="Code" content={`</Page>`} className="text-blue-600" />
+          {/* Code Usage Example */}
+          <Block role="Stack" className="gap-4">
+            <Text role="Label" content="Implementation" />
+            <Block role="Card" className="bg-surface-sunken p-4 font-mono text-sm border border-border-default rounded-md overflow-x-auto">
+              <pre className="text-text-secondary">
+                {`<Page role="Application" layout="${selectedLayout}">
+${validSections.map(role => `  <Section role="${role}">
+    {/* content */}
+  </Section>`).join('\n')}
+</Page>`}
+              </pre>
             </Block>
           </Block>
 

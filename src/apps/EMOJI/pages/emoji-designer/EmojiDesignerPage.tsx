@@ -20,11 +20,11 @@ import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
 import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
 import { Block } from '@/components/types/Block/Block';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/types/Block/role/Tabs';
-import { Button } from '@/components/types/Atom/Action/role/Button';
-import { Input } from '@/components/types/Atom/Field/role/Input';
-import { Select } from '@/components/types/Atom/Field/role/Select';
-import { Switch } from '@/components/types/Atom/Field/role/Switch';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Button } from '@/components/types/Element/Action/role/Button';
+import { Input } from '@/components/types/Element/Field/role/Input';
+import { Select } from '@/components/types/Element/Field/role/Select';
+import { Switch } from '@/components/types/Element/Field/role/Switch';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 

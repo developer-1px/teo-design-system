@@ -291,7 +291,7 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
         {processedContent}
       </ReactMarkdown>
 
-      <style jsx global>{`
+      <style>{`
         .markdown-body {
           font-size: 16px;
           line-height: 1.6;

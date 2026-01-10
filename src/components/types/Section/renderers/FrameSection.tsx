@@ -7,7 +7,7 @@
  * v4.1: baseStyles와 overflowClass를 props로 받음 (role-config에서 주입)
  */
 
-import type { SectionProps } from '@/components/types/Atom/types';
+import type { SectionProps } from '@/components/types/Section/Section.types';
 import { cn } from '@/shared/lib/utils';
 
 export interface FrameSectionProps extends Omit<SectionProps, 'role'> {

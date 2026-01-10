@@ -18,7 +18,7 @@
  */
 
 import type { ComponentType } from 'react';
-import type { BlockRole, BlockProps } from '@/components/types/Atom/types';
+import type { BlockRole, BlockProps } from '@/components/types/Block/Block.types';
 
 // Renderers (현재 사용 중인 것들)
 import { Toolbar } from './role/Toolbar';

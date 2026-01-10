@@ -17,8 +17,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { ThemeToggleButton } from '@/apps/IDE/widgets/ThemeSwitcher.tsx';
-import { Button } from '@/components/types/Atom/Action/role/Button.tsx';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Button } from '@/components/types/Element/Action/role/Button.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 
 interface TopToolbarProps {

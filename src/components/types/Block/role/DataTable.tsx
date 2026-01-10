@@ -11,9 +11,9 @@ import {
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { ChevronDown, ChevronsUpDown, ChevronUp, Grid3x3, Rows3 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { SearchInput } from '@/components/types/Atom/Field/role/SearchInput.tsx';
-import { Kbd } from '@/components/types/Atom/Text/role/Kbd.tsx';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { SearchInput } from '@/components/types/Element/Field/role/SearchInput.tsx';
+import { Kbd } from '@/components/types/Element/Text/role/Kbd.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { useNavigableCursor } from '@/shared/lib/keyboard';
 

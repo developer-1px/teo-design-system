@@ -8,8 +8,8 @@
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Atom/Text/Text';
-import { Field } from '@/components/types/Atom/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
+import { Field } from '@/components/types/Element/Field/Field';
 
 export function FieldShowcasePage() {
   return (

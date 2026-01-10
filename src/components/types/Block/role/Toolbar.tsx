@@ -36,8 +36,16 @@ export function Toolbar({
   sticky = false,
   border = 'none',
   Element,
+  // Ignore props not relevant to Toolbar but passed by Block generic renderer
+  mode,
+  defaultValue,
+  accordionValue,
+  onValueChange,
+  items,
+  onReorder,
+  renderItem,
   ...rest
-}: ToolbarProps) {
+}: ToolbarProps & Record<string, any>) {
   // Density에 따른 gap 조절
   const densityGap = {
     Compact: 'gap-1',

@@ -13,7 +13,7 @@
  */
 
 import { type ReactNode, useMemo } from 'react';
-import type { PageLayout, PresentationGridArea } from '@/components/types/Atom/types';
+import type { PageLayout } from '@/components/types/Page/Page.types';
 import { getRoleConfig, ROLE_CONFIGS } from '@/components/types/Section/role-config';
 
 export interface GridSizes {

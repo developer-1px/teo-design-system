@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react';
-import { cn } from '@/shared/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Progress - 프로그레스 바

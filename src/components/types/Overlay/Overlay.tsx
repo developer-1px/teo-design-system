@@ -28,8 +28,8 @@ import { cva } from 'class-variance-authority';
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { OverlayProps } from '@/components/types/Atom/types.ts';
-import { cn } from '@/shared/lib/utils.ts';
+import type { OverlayProps } from '@/components/types/Overlay/Overlay.types';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Overlay density variants (CVA) - for padding

@@ -25,9 +25,9 @@ import {
 import { type NodePath, PreviewPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel';
 import { PropertyPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PropertyPanel';
 import { TreeView } from '@/apps/DSLBuilder/widgets/dsl-builder/TreeView';
-import { Button } from '@/components/types/Atom/Action/role/Button';
-import { Select } from '@/components/types/Atom/Field/role/Select';
-import { Kbd } from '@/components/types/Atom/Text/role/Kbd';
+import { Button } from '@/components/types/Element/Action/role/Button';
+import { Select } from '@/components/types/Element/Field/role/Select';
+import { Kbd } from '@/components/types/Element/Text/role/Kbd';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 

@@ -1,5 +1,5 @@
 import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Text } from '@/components/types/Element/Text/Text';
 
 export function BlockCardsDemo() {
     return (

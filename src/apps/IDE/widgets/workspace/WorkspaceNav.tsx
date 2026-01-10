@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
 
 interface WorkspaceNavProps {

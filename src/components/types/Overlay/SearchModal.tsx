@@ -1,6 +1,6 @@
 import { Command, File, Folder, Hash, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/types/Atom/Action/role/Button.tsx';
+import { Button } from '@/components/types/Element/Action/role/Button.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 import {
   KeyboardContext,
@@ -8,7 +8,7 @@ import {
   useModalShortcut,
   useNavigableCursor,
 } from '@/shared/lib/keyboard';
-import { cn } from '@/shared/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 
 interface SearchResult {
   id: string;

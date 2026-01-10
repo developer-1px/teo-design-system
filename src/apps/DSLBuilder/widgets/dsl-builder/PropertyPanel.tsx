@@ -8,11 +8,12 @@ import type {
   AnyDSLNode,
   GroupNode,
   SectionNode,
-} from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
-import { FormField } from '@/components/types/Atom/Field/role/FormField';
-import { Input } from '@/components/types/Atom/Field/role/Input';
-import { Select } from '@/components/types/Atom/Field/role/Select';
-import type { GroupRole, Prominence } from '@/components/types/Atom/types';
+} from '@/apps/DSLBuilder/lib/dsl-builder/types';
+import { FormField } from '@/components/types/Element/Field/role/FormField';
+import { Input } from '@/components/types/Element/Field/role/Input';
+import { Select } from '@/components/types/Element/Field/role/Select';
+import type { BlockRole as GroupRole } from '@/components/types/Block/Block.types';
+import type { Prominence } from '@/components/types/Shared.types';
 
 export interface PropertyPanelProps {
   node: AnyDSLNode | null;

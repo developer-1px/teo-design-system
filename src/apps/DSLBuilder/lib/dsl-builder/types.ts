@@ -21,7 +21,7 @@ import type {
   Prominence,
   SectionRole,
   TextRole,
-} from '@/components/types/Atom/types';
+} from '@/components/types/Block/Block.types';
 
 // Region is deprecated but still used in builder for backward compatibility
 type RegionRole = 'main' | 'aside' | 'header' | 'footer' | 'nav';
@@ -61,7 +61,7 @@ export interface PageNode extends DSLNode {
   type: 'page';
   title?: string;
   description?: string;
-  layout?: import('@/components/types/Atom/types').PageLayout;
+  layout?: import('@/components/types/Page/Page.types').PageLayout;
   breadcrumbs?: Breadcrumb[];
   className?: string;
 }

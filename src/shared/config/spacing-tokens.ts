@@ -20,7 +20,7 @@
  */
 
 import { cva } from 'class-variance-authority';
-import type { Density, Prominence } from '@/components/types/Atom/types';
+import type { Density, Prominence } from '@/components/types/Shared.types';
 
 /**
  * Spacing Config - Block/Action에 전달할 spacing 설정

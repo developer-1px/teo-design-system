@@ -10,7 +10,7 @@ import {
   FolderOpen,
 } from 'lucide-react';
 import { useMemo } from 'react';
-import { type TreeNode, useTreeNavigation } from '@/shared/lib/keyboard/useTreeNavigation.ts';
+import { type TreeNode, useTreeNavigation } from '@/shared/lib/keyboard/useTreeNavigation';
 import { cn } from '@/shared/lib/utils';
 
 export interface FileNode {

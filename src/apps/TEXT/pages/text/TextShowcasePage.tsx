@@ -8,8 +8,8 @@
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Separator } from '@/components/types/Atom/Separator/Separator.tsx';
-import { Text } from '@/components/types/Atom/Text/Text.tsx';
+import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
 
 export function TextShowcasePage() {
   return (

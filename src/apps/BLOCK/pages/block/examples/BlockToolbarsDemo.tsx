@@ -1,7 +1,7 @@
 import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Atom/Text/Text';
-import { Action } from '@/components/types/Atom/Action/Action';
-import { Separator } from '@/components/types/Atom/Separator/Separator.tsx';
+import { Text } from '@/components/types/Element/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
 
 export function BlockToolbarsDemo() {
     return (

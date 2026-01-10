@@ -18,8 +18,8 @@
  */
 
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Atom/Action/Action';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Text } from '@/components/types/Element/Text/Text';
 import { SlidePreview } from './SlidePreview';
 import { useSelection } from '@/shared/lib/selection/useSelection';
 

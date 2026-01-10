@@ -18,8 +18,8 @@
 import { useState } from 'react';
 import { IDDLProvider } from '@/components/context/IDDLContext';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Field } from '@/components/types/Atom/Field/Field';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Field } from '@/components/types/Element/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
 import type { Slide } from './SlideList';
 
 interface FormatSidebarProps {

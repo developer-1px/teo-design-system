@@ -7,9 +7,9 @@ import { useMemo } from 'react';
 import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Card } from '@/components/types/Block/role/Card.tsx';
-import { Badge } from '@/components/types/Atom/Text/role/Badge.tsx';
-import { Text } from '@/components/types/Atom/Text/Text.tsx';
-import type { JsonArray, JsonObject, ViewConfig } from '../types.ts';
+import { Badge } from '@/components/types/Element/Text/role/Badge.tsx';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
+import type { JsonArray, JsonObject, ViewConfig } from '../types';
 
 interface BoardViewProps {
   data: JsonArray;

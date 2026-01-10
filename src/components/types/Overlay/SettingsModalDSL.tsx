@@ -16,9 +16,9 @@
 import { Keyboard, Layers, Palette, Settings as SettingsIcon, Type } from 'lucide-react';
 import { useState } from 'react';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
-import { Field } from '@/components/types/Atom/Field/Field.tsx';
-import { Text } from '@/components/types/Atom/Text/Text.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
+import { Field } from '@/components/types/Element/Field/Field.tsx';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
 import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 

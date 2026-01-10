@@ -1,7 +1,7 @@
-import { Action } from '@/components/types/Atom/Action/Action';
+import { Action } from '@/components/types/Element/Action/Action';
 import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Text } from '@/components/types/Element/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { ChevronRight, ChevronDown, Play, Pause, StepForward, StepBack, RefreshCw, StopCircle } from 'lucide-react';
 import { Button } from './components/ui/button';

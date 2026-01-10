@@ -21,10 +21,10 @@ import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import { BlockLayoutProvider, useBlockLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { BlockProps, BlockRole } from '@/components/types/Atom/types.ts';
+import type { BlockProps, BlockRole } from '@/components/types/Block/Block.types';
 import { getInteractiveClasses } from '@/shared/config/interactive-tokens';
 import { gapVariants } from '@/shared/config/spacing-tokens';
-import { cn } from '@/shared/lib/utils.ts';
+import { cn } from '@/shared/lib/utils';
 import { getRoleConfig, hasRenderer } from './role-config';
 
 // Re-export renderer utilities
@@ -129,6 +129,10 @@ export function Block({
   items,
   onReorder,
   renderItem,
+  // v1.0 Core: Spec support
+  // Toolbar-specific
+  sticky,
+  border,
   // v1.0 Core: Spec support
   spec,
   ...rest
@@ -299,6 +303,11 @@ export function Block({
       ) : (
         <Component
           ref={componentRef}
+          // Toolbar props
+          data-sticky={sticky}
+          data-border={border}
+          // Accordion props handled via data-attributes if needed or ignored for DOM
+          data-accordion-mode={mode}
           className={cn(
             // Base role-based styles from role-config (v4.1)
             roleConfig.baseStyles,

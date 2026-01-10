@@ -17,7 +17,7 @@ import {
 import { parseComponent } from '@/apps/showcase/widgets/parser/parseComponent';
 import type { FileTreeNode, PropValue } from '@/apps/showcase/widgets/parser/types';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Page } from '@/components/types/Page/Page.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 

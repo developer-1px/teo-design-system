@@ -16,11 +16,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
-import { Separator } from '@/components/types/Atom/Separator/Separator.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
+import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
 import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
 import { APP_CONFIGS, type AppType } from '@/app/contexts/app-context.tsx';
-import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme.ts';
+import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme';
 
 export const FloatingBar = () => {
   const [location, setLocation] = useLocation();
@@ -67,7 +67,8 @@ export const FloatingBar = () => {
               key={app.type}
               role="IconButton"
               icon={app.iconName}
-              prominence={isActive ? 'Standard' : 'Subtle'}
+              selected={isActive}
+              prominence="Subtle"
               intent={isActive ? 'Brand' : 'Neutral'}
               behavior={{
                 action: 'command',

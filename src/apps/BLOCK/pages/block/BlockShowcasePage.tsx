@@ -12,8 +12,8 @@
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 import { Block } from '@/components/types/Block/Block';
-import { Separator } from '@/components/types/Atom/Separator/Separator.tsx';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
+import { Text } from '@/components/types/Element/Text/Text';
 import { SourcePreview } from '@/shared/components/SourcePreview';
 
 // Examples & Source Code

@@ -22,7 +22,7 @@
 
 import { cva } from 'class-variance-authority';
 import { type ReactNode } from 'react';
-import type { Intent, Prominence } from '@/components/types/Atom/types';
+import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
 
 /**

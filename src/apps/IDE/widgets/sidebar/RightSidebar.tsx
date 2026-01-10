@@ -1,6 +1,6 @@
 import { Bell, Clock, GitBranch, MessageSquare, User } from 'lucide-react';
 import { useState } from 'react';
-import { Action } from '@/components/types/Atom/Action/Action.tsx';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
 
 interface RightSidebarProps {

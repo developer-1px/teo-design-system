@@ -11,9 +11,9 @@
 import { useEffect, useState } from 'react';
 import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
 import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Atom/Action/Action';
-import { Field } from '@/components/types/Atom/Field/Field';
-import { Text } from '@/components/types/Atom/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Field } from '@/components/types/Element/Field/Field';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
 import { DocsTree } from './DocsTree.tsx';

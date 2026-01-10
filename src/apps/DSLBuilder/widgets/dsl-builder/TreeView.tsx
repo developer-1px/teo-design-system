@@ -20,7 +20,7 @@ import {
   Type,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import type { AnyDSLNode, DSLNodeType } from '@/apps/DSLBuilder/lib/dsl-builder/types.ts';
+import type { AnyDSLNode, DSLNodeType } from '@/apps/DSLBuilder/lib/dsl-builder/types';
 import { type TreeNode as KeyboardTreeNode, useTreeNavigation } from '@/shared/lib/keyboard';
 import { cn } from '@/shared/lib/utils';
 
