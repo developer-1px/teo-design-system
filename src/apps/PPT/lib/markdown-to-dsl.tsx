@@ -9,7 +9,7 @@
  */
 
 import type { ReactNode } from 'react';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Atom/Text/Text';
 
 /**
@@ -108,14 +108,14 @@ export function markdownToDSL(markdown: string): ReactNode {
   const flushList = () => {
     if (listItems.length > 0) {
       elements.push(
-        <Group key={`list-${key++}`} role="List" layout="stack">
+        <Block key={`list-${key++}`} role="List" layout="stack">
           {listItems.map((item, i) => (
             <div key={i} className="flex gap-2">
               <span className="text-accent">•</span>
               <div className="flex-1">{item}</div>
             </div>
           ))}
-        </Group>
+        </Block>
       );
       listItems.length = 0; // Clear array
     }
@@ -150,14 +150,14 @@ export function markdownToDSL(markdown: string): ReactNode {
       case 'blockquote':
         flushList();
         elements.push(
-          <Group
+          <Block
             key={`quote-${key++}`}
             role="Container"
             intent="Brand"
             className="border-l-4 border-accent bg-accent/5 pl-4 py-3 my-2"
           >
             <Text role="Body" content={parsed.content} className="italic" />
-          </Group>
+          </Block>
         );
         break;
 
@@ -188,8 +188,8 @@ export function markdownToDSL(markdown: string): ReactNode {
  */
 export function slideContentToDSL(content: string): ReactNode {
   return (
-    <Group role="Container" layout="stack" density="Comfortable" className="gap-4">
+    <Block role="Container" layout="stack" density="Comfortable" className="gap-4">
       {markdownToDSL(content)}
-    </Group>
+    </Block>
   );
 }

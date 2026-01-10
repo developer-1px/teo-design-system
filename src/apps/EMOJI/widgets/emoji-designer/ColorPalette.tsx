@@ -5,7 +5,7 @@
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import type { PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types.ts';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Button } from '@/components/types/Atom/Action/role/Button';
 import { Input } from '@/components/types/Atom/Field/role/Input';
 import { Text } from '@/components/types/Atom/Text/Text';
@@ -63,7 +63,7 @@ export function ColorPalette({
       </div>
 
       {/* Add Color */}
-      <Group role="Form" direction="horizontal">
+      <Block role="Form" direction="horizontal">
         <input
           type="color"
           value={newColor}
@@ -85,7 +85,7 @@ export function ColorPalette({
         >
           <Plus size={16} />
         </Button>
-      </Group>
+      </Block>
 
       {/* Selected Color Info */}
       <div className="p-2 bg-layer-1 rounded-md">

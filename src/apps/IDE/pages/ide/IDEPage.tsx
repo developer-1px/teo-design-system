@@ -6,7 +6,7 @@
  *   - Section role="ActivityBar": 좌측 워크스페이스 네비게이션
  *   - Section role="PrimarySidebar": 파일 트리 사이드바
  *   - Section role="Editor": 에디터 영역
- *     - Group role="Container": 에디터 탭 + 코드 에디터
+ *     - Block role="Container": 에디터 탭 + 코드 에디터
  *     - BottomPanel: 터미널/출력 패널
  *   - Section role="SecondarySidebar": 우측 사이드바 (RightBar)
  *   - Section role="Auxiliary": 우측 네비게이션 (RightNav)
@@ -21,7 +21,7 @@ import { EditorTabs } from '@/apps/IDE/widgets/editor/EditorTabs';
 import { type FileNode, FileTree } from '@/apps/IDE/widgets/file-tree/FileTree';
 import { RightNav } from '@/apps/IDE/widgets/workspace/RightNav';
 import { WorkspaceNav } from '@/apps/IDE/widgets/workspace/WorkspaceNav';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SearchModalDSL as SearchModal } from '@/components/types/Overlay/SearchModalDSL';
@@ -136,12 +136,12 @@ export const IDEPage = () => {
     >
       {/* IDDL Section[ActivityBar]: Left Workspace Navigation */}
       <Section role="ActivityBar">
-        <Group role="Container">
+        <Block role="Container">
           <WorkspaceNav onViewChange={setCurrentView} />
-        </Group>
+        </Block>
 
         {/* Terminal Toggle */}
-        <Group role="Toolbar" prominence="Subtle" density="Compact">
+        <Block role="Toolbar" prominence="Subtle" density="Compact">
           <Action
             icon="Terminal"
             prominence={showBottomPanel ? 'Standard' : 'Subtle'}
@@ -149,7 +149,7 @@ export const IDEPage = () => {
             behavior={{ action: 'toggle', target: 'bottom-panel' }}
             onClick={() => setShowBottomPanel(!showBottomPanel)}
           />
-        </Group>
+        </Block>
       </Section>
 
       {/* IDDL Section[PrimarySidebar]: File Tree Sidebar */}
@@ -186,7 +186,7 @@ export const IDEPage = () => {
       {/* IDDL Section[Editor]: Editor Area */}
       <Section role="Editor">
         {/* Editor Content */}
-        <Group role="Container" className="flex-1 min-h-0 flex flex-col gap-0">
+        <Block role="Container" className="flex-1 min-h-0 flex flex-col gap-0">
           {currentView === 'files' && (
             <>
               {/* Editor Tabs */}
@@ -194,7 +194,7 @@ export const IDEPage = () => {
 
               {/* Breadcrumbs */}
               {activeFile && (
-                <Group role="Breadcrumbs" layout="inline" padding="xs" prominence="Subtle" className="border-b border-border-muted px-4">
+                <Block role="Breadcrumbs" layout="inline" padding="xs" prominence="Subtle" className="border-b border-border-muted px-4">
                   <Text role="Caption" content="src" prominence="Subtle" />
                   <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
                   <Text role="Caption" content="apps" prominence="Subtle" />
@@ -202,7 +202,7 @@ export const IDEPage = () => {
                   <Text role="Caption" content="IDE" prominence="Subtle" />
                   <Action role="Button" icon="ChevronRight" label="" prominence="Subtle" density="Compact" disabled />
                   <Text role="Caption" content={activeFile.name} prominence="Standard" />
-                </Group>
+                </Block>
               )}
 
               {/* Editor or Empty State */}
@@ -214,19 +214,19 @@ export const IDEPage = () => {
                 )
               ) : (
                 <Section role="Container">
-                  <Group role="Card" prominence="Subtle">
+                  <Block role="Card" prominence="Subtle">
                     <Text role="Body" content="No file open" />
                     <Text
                       role="Caption"
                       prominence="Subtle"
                       content="Select a file from the explorer to start editing"
                     />
-                  </Group>
+                  </Block>
                 </Section>
               )}
             </>
           )}
-        </Group>
+        </Block>
       </Section>
 
       {/* Resize Handle: Primary Sidebar */}
@@ -291,24 +291,24 @@ export const IDEPage = () => {
 
       {/* IDDL Section[Footer]: Status Bar */}
       <Section role="Footer" prominence="Subtle" density="Compact">
-        <Group role="Toolbar" justify="between" align="center" padding="xs" className="w-full">
+        <Block role="Toolbar" justify="between" align="center" padding="xs" className="w-full">
           {/* Left: Git Branch & Errors */}
-          <Group role="Inline" gap="sm" align="center">
+          <Block role="Inline" gap="sm" align="center">
             <Action role="Button" icon="GitBranch" label="main*" prominence="Subtle" density="Compact" />
             <Action role="Button" icon="RefreshCw" label="" prominence="Subtle" density="Compact" />
             <Text role="Body" content="0 errors" prominence="Subtle" size="xs" />
             <Text role="Body" content="0 warnings" prominence="Subtle" size="xs" />
-          </Group>
+          </Block>
 
           {/* Right: Cursor & Language */}
-          <Group role="Inline" gap="sm" align="center">
+          <Block role="Inline" gap="sm" align="center">
             <Text role="Body" content="Ln 12, Col 34" prominence="Subtle" size="xs" />
             <Text role="Body" content="UTF-8" prominence="Subtle" size="xs" />
             <Text role="Body" content="TypeScript React" prominence="Subtle" size="xs" />
             <Action role="Button" icon="Check" label="Prettier" prominence="Subtle" density="Compact" />
             <Action role="IconButton" icon="Bell" label="Notifications" prominence="Subtle" density="Compact" />
-          </Group>
-        </Group>
+          </Block>
+        </Block>
       </Section>
 
       {/* Modals */}

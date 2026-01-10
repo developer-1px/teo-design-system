@@ -5,8 +5,8 @@
 
 import { useMemo } from 'react';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { Group } from '@/components/types/Group/Group.tsx';
-import { Card } from '@/components/types/Group/role/Card.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
+import { Card } from '@/components/types/Block/role/Card.tsx';
 import { Badge } from '@/components/types/Atom/Text/role/Badge.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import type { JsonArray, JsonObject, ViewConfig } from '../types.ts';
@@ -37,12 +37,12 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
 
   return (
     <Section role="Container" layout="scroll-horizontal" padding="md">
-      <Group role="Board" direction="horizontal" gap="md">
+      <Block role="Board" direction="horizontal" gap="md">
         {groupedData.map(([groupName, items]) => (
-          <Group key={groupName} role="Column" layout="flex" direction="column" width="320">
+          <Block key={groupName} role="Column" layout="flex" direction="column" width="320">
             {/* 컬럼 헤더 */}
-            <Group role="Header" direction="horizontal" align="center" justify="between" padding="sm">
-              <Group role="Container" direction="horizontal" align="center" gap="xs">
+            <Block role="Header" direction="horizontal" align="center" justify="between" padding="sm">
+              <Block role="Container" direction="horizontal" align="center" gap="xs">
                 <Text
                   role="Title"
                   prominence="Primary"
@@ -51,11 +51,11 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                 <Badge variant="default" size="sm">
                   {items.length}
                 </Badge>
-              </Group>
-            </Group>
+              </Block>
+            </Block>
 
             {/* 카드 리스트 */}
-            <Group role="List" layout="scroll" flex="1" gap="sm">
+            <Block role="List" layout="scroll" flex="1" gap="sm">
               {items.map((item, index) => {
                 const keys = Object.keys(item).slice(0, 5); // 처음 5개 필드만
 
@@ -65,13 +65,13 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                     padding="sm"
                     interactive
                   >
-                    <Group role="Container" gap="xs">
+                    <Block role="Container" gap="xs">
                       {keys.map((key) => {
                         const value = item[key];
                         if (value === null || value === undefined) return null;
 
                         return (
-                          <Group key={key} role="Field" gap="xs">
+                          <Block key={key} role="Field" gap="xs">
                             <Text role="Label" prominence="Subtle" content={key} />
                             <Text
                               role="Body"
@@ -82,17 +82,17 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                                   : String(value)
                               }
                             />
-                          </Group>
+                          </Block>
                         );
                       })}
-                    </Group>
+                    </Block>
                   </Card>
                 );
               })}
-            </Group>
-          </Group>
+            </Block>
+          </Block>
         ))}
-      </Group>
+      </Block>
     </Section>
   );
 };

@@ -11,11 +11,11 @@
 
 | Document | Description |
 |----------|-------------|
-| [**IDDL 1.0 Specification (Part 1)**](./1-project/iddl-1.0-draft.md) | ⭐ **Official Core Specification** (English) |
-| [**IDDL 1.0 Specification (Korean)**](./1-project/iddl-1.0-spec-ko.md) | ⭐ **Official Core Specification** (Korean) |
-| [Standard Role Registry](./1-project/iddl-1.0-standard-roles.md) | Standard Dictionary for Section/Block/Element Roles |
-| [Developer Guide](./1-project/iddl-1.0-developer-guide-ko.md) | Practical Cheer Sheet for Developers |
-| [Renderer Guide](./1-project/iddl-1.0-renderer-guide.md) | Implementation Guide for System Engineers |
+| [**IDDL 1.0 Specification (Part 1)**](./1-project/core/iddl-1.0-draft.md) | ⭐ **Official Core Specification** (English) |
+| [**IDDL 1.0 Specification (Korean)**](./1-project/core/iddl-1.0-spec-ko.md) | ⭐ **Official Core Specification** (Korean) |
+| [Standard Role Registry](./1-project/guides/iddl-1.0-standard-roles.md) | Standard Dictionary for Section/Block/Element Roles |
+| [Developer Guide](./1-project/guides/iddl-1.0-developer-guide-ko.md) | Practical Cheat Sheet for Developers |
+| [Renderer Guide](./1-project/guides/iddl-1.0-renderer-guide.md) | Implementation Guide for System Engineers |
 
 ---
 
@@ -61,5 +61,5 @@ Page (Root)
 Documents in `./2-areas/` and `./4-archive/` may describe older versions (v4.0, v4.1).
 Please refer to the **IDDL 1.0** documents in `./1-project/` for the latest "Part 1 Core Freeze" standards.
 
-*   [Legacy v1.0.1 Spec](./2-areas/spec/iddl-spec-1.0.1.md) (Deprecated)
-*   [Legacy Component Map](./2-areas/core/3-reference/component-role-mapping.md) (See Standard Role Registry)
+*   [Legacy v1.0.1 Spec](./4-archive/2026-01-10-pre-v1-core/iddl-spec-1.0.1.md) (Archived)
+*   [Legacy Component Map](./4-archive/2026-01-10-pre-v1-core/component-role-mapping.md) (Archived)

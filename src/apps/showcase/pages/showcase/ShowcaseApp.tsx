@@ -16,7 +16,7 @@ import {
 } from '@/apps/showcase/widgets/components/Toolbar';
 import { parseComponent } from '@/apps/showcase/widgets/parser/parseComponent';
 import type { FileTreeNode, PropValue } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { Page } from '@/components/types/Page/Page.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
@@ -265,9 +265,9 @@ export function ShowcaseApp() {
   if (loading) {
     return (
       <Page role="Focus" className="items-center justify-center">
-        <Group role="Container" prominence="Standard">
+        <Block role="Container" prominence="Standard">
           <Text role="Body" prominence="Standard" content="Loading components..." />
-        </Group>
+        </Block>
       </Page>
     );
   }

@@ -5,7 +5,7 @@
  */
 
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Atom/Text/Text';
 
 interface ErrorBoundaryProps {
@@ -57,8 +57,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   render() {
     if (this.state.hasError && this.state.error) {
       return (
-        <Group role="Container" prominence="Standard" className="p-6 rounded-lg bg-surface">
-          <Group role="Container" gap={2}>
+        <Block role="Container" prominence="Standard" className="p-6 rounded-lg bg-surface">
+          <Block role="Container" gap={2}>
             <Text role="Title" prominence="Strong" intent="Critical" content="렌더링 에러" />
             <Text
               role="Body"
@@ -68,7 +68,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             />
 
             {this.state.errorInfo && (
-              <Group role="Container" gap={1} className="mt-4">
+              <Block role="Container" gap={1} className="mt-4">
                 <Text
                   role="Label"
                   prominence="Standard"
@@ -78,19 +78,19 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 <pre className="text-xs text-muted bg-surface-sunken p-3 rounded overflow-auto max-h-48">
                   {this.state.errorInfo.componentStack}
                 </pre>
-              </Group>
+              </Block>
             )}
 
             {this.state.error.stack && (
-              <Group role="Container" gap={1} className="mt-2">
+              <Block role="Container" gap={1} className="mt-2">
                 <Text role="Label" prominence="Standard" intent="Neutral" content="Error Stack:" />
                 <pre className="text-xs text-muted bg-surface-sunken p-3 rounded overflow-auto max-h-48">
                   {this.state.error.stack}
                 </pre>
-              </Group>
+              </Block>
             )}
-          </Group>
-        </Group>
+          </Block>
+        </Block>
       );
     }
 

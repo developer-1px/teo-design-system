@@ -2,7 +2,7 @@
  * Sidebar - Storybook-style Component Tree (Pure IDDL)
  *
  * Features:
- * - Folder structure (Group, Item, Overlay, Page, Section)
+ * - Folder structure (Block, Item, Overlay, Page, Section)
  * - Expandable/collapsible folders
  * - Search filter
  * - Component count
@@ -13,7 +13,7 @@
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FileTreeNode } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Field } from '@/components/types/Atom/Field/Field';
 import { Text } from '@/components/types/Atom/Text/Text';
@@ -195,7 +195,7 @@ export function Sidebar({ fileTree, selectedFile, onFileSelect }: SidebarProps) 
         const folderChildren = isExpanded && node.children ? renderTree(node.children, depth + 1) : null;
 
         return (
-          <Group key={node.path} role="Container" gap={0}>
+          <Block key={node.path} role="Container" gap={0}>
             {/* Folder Label */}
             <div
               className="flex items-center gap-1 px-2 py-1"
@@ -210,7 +210,7 @@ export function Sidebar({ fileTree, selectedFile, onFileSelect }: SidebarProps) 
               <Text role="Label" prominence="Standard" content={node.name} className="text-xs" />
             </div>
             {folderChildren}
-          </Group>
+          </Block>
         );
       } else {
         // 파일
@@ -250,26 +250,26 @@ export function Sidebar({ fileTree, selectedFile, onFileSelect }: SidebarProps) 
   return (
     <Section role="Navigator" prominence="Standard" density="Compact">
       {/* Search Header */}
-      <Group role="Form" prominence="Standard" gap={0} className="mb-2">
+      <Block role="Form" prominence="Standard" gap={0} className="mb-2">
         <Field
           type="text"
           placeholder="Search components..."
           value={searchQuery}
           onChange={(value) => setSearchQuery(value as string)}
         />
-      </Group>
+      </Block>
 
       {/* Component Tree (Folder Structure) - v3.1: Keyboard navigable */}
       <Section role="Container">
         {filteredTree.length === 0 ? (
-          <Group role="Container">
+          <Block role="Container">
             <Text role="Body" content="No components found" />
-          </Group>
+          </Block>
         ) : (
           <div ref={listRef} tabIndex={0} className="focus:outline-none">
-            <Group role="List" gap={0}>
+            <Block role="List" gap={0}>
               {renderTree(filteredTree)}
-            </Group>
+            </Block>
           </div>
         )}
       </Section>

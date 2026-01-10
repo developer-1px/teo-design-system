@@ -35,7 +35,7 @@ export type Prominence =
  * Role - UI 요소의 정체성 (What is it?)
  */
 export type Role =
-  // For Structure (Section/Group)
+  // For Structure (Section/Block)
   | 'Container' // 일반 컨테이너
   | 'Navigator' // 네비게이션
   | 'Collection' // 리스트/그리드
@@ -222,7 +222,7 @@ export interface OverlayProps extends AsProp {
 
 /**
  * Selection Model Interface (v1.0.2)
- * Group이 선택 가능한 항목들을 관리할 때 사용하는 모델
+ * Block이 선택 가능한 항목들을 관리할 때 사용하는 모델
  * v1.0.4: Focus management 추가 (registerItemRef)
  */
 export interface SelectionModel {
@@ -241,13 +241,13 @@ export interface SelectionModel {
 }
 
 /**
- * Group Props
+ * Block Props
  * v1.0.1: role 타입 변경, layout, state, emptyContent, errorContent 추가
  * v4.0: Accordion props 추가 (mode, defaultValue, value, onValueChange)
  * v1.0.2: value, selectionModel 추가 (Selection 통합)
  */
-export interface GroupProps extends AsProp {
-  role: GroupRole; // v1.0.1: Role → GroupRole
+export interface BlockProps extends AsProp {
+  role: BlockRole; // v1.0.1: Role → BlockRole
   prominence?: Prominence;
   density?: Density;
   intent?: Intent;
@@ -280,14 +280,14 @@ export interface GroupProps extends AsProp {
 
   /**
    * v1.0.2: 선택 가능한 아이템의 고유 식별자
-   * value가 있으면 Group은 Selectable Item이 됩니다.
+   * value가 있으면 Block은 Selectable Item이 됩니다.
    * 멘탈 모델: HTML의 <option value="1">과 동일
    */
   value?: string | number;
 
   /**
    * v1.0.2: Selection 관리 모델
-   * value를 가진 자식 Group들의 선택 상태를 관리합니다.
+   * value를 가진 자식 Block들의 선택 상태를 관리합니다.
    */
   selectionModel?: SelectionModel;
 
@@ -522,16 +522,16 @@ export interface ActionProps extends AsProp {
 // ============================================
 
 /**
- * Group Role - 그룹의 기능적 역할 (v4.0: 기능 중심 분류)
+ * Block Role - 블록의 기능적 역할 (v4.0: 기능 중심 분류)
  * v1.0.1: 많은 role 추가
  * v4.0: 기능적 목적에 따른 분류, 시각적 요소 허용
  *
- * Group = 기능적 컴포넌트 (Functional Component)
+ * Block = 기능적 컴포넌트 (Functional Component)
  * - 시각적 요소를 가질 수 있음 (배경, 보더, 패딩, 그림자)
  * - Template 무관하게 독립적으로 동작
  * - 재사용 가능한 UI 조합
  */
-export type GroupRole =
+export type BlockRole =
   // 레이아웃 컨테이너 (Layout Containers)
   | 'Container' // 일반 컨테이너 (기본값)
   | 'Split' // 분할 레이아웃 (Resizable)
@@ -549,7 +549,7 @@ export type GroupRole =
   // 입력 폼 (Forms)
   | 'Form' // 폼 컨테이너 (<form>)
   | 'Fieldset' // 필드 그룹 (<fieldset>)
-  // 액션 그룹 (Action Groups)
+  // 액션 그룹 (Action Blocks)
   | 'Toolbar' // 툴바/액션 모음 (가로 정렬)
   | 'FloatingToolbar' // 플로팅 툴바 (화면 위에 떠있는 액션 모음, 강조된 스타일)
   // 네비게이션 (Navigation)
@@ -564,6 +564,10 @@ export type GroupRole =
 /**
  * Layout - 레이아웃 방향
  * v1.0.1 추가
+ *
+ * * **Section vs Block**:
+ * - Section: 시각적 영역 (배경, 보더, 패딩 있음) - Figma Section과 동일
+ * - Block: 투명 레이아웃 컨테이너 (시각적 요소 없음) - Figma Block과 동일
  */
 export type Layout = 'stack' | 'inline' | 'grid' | 'table' | 'split' | 'tabs' | 'steps';
 
@@ -579,9 +583,9 @@ export type LoadState = 'idle' | 'loading' | 'error' | 'empty';
  * v1.1.0: IDE/Studio 레이아웃 전용 role 추가
  * v4.0: Template별로 그룹화, Page template의 named slot 역할
  *
- * **Section vs Group**:
+ * **Section vs Block**:
  * - Section: 시각적 영역 (배경, 보더, 패딩 있음) - Figma Section과 동일
- * - Group: 투명 레이아웃 컨테이너 (시각적 요소 없음) - Figma Group과 동일
+ * - Block: 투명 레이아웃 컨테이너 (시각적 요소 없음) - Figma Block과 동일
  *
  * **Template-aware**:
  * - Section role은 Page template에 종속됨

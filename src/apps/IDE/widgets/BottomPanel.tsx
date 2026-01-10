@@ -7,7 +7,7 @@ import {
 import { useState } from 'react';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import { cn } from '@/shared/lib/utils.ts';
 
@@ -38,11 +38,11 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
   const [activeTab, setActiveTab] = useState<TabType>('terminal');
 
   return (
-    <Group role="Container" layout="flex" direction="column" className="h-full">
+    <Block role="Container" layout="flex" direction="column" className="h-full">
       <Section role="Container" layout="flex" direction="column" flex="1">
         {/* Tab Header (Unified Design) */}
         <Section role="Header" density="Compact" className="flex items-center justify-between gap-0 p-0 h-9 border-b border-border-default">
-          <Group role="Tabs" direction="horizontal" align="center" gap="0" className="h-full">
+          <Block role="Tabs" direction="horizontal" align="center" gap="0" className="h-full">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
@@ -70,10 +70,10 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
                 </button>
               );
             })}
-          </Group>
+          </Block>
 
           {/* Actions */}
-          <Group role="Inline" align="center" gap="xs" className="px-2">
+          <Block role="Inline" align="center" gap="xs" className="px-2">
             <Action
               role="IconButton"
               icon="ChevronUp"
@@ -87,41 +87,41 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
               density="Compact"
               onClick={onClose}
             />
-          </Group>
+          </Block>
         </Section>
 
         {/* Panel Content */}
-        <Group role="Container" layout="scroll" flex="1" padding="sm">
+        <Block role="Container" layout="scroll" flex="1" padding="sm">
           {activeTab === 'terminal' && <TerminalContent />}
           {activeTab === 'problems' && <ProblemsContent />}
           {activeTab === 'output' && <OutputContent />}
           {activeTab === 'debug' && <DebugContent />}
-        </Group>
+        </Block>
       </Section>
-    </Group>
+    </Block>
   );
 };
 
 // Terminal Tab Content
 const TerminalContent = () => {
   return (
-    <Group role="List" className="font-mono" gap="sm">
-      <Group role="Inline" gap="xs">
+    <Block role="List" className="font-mono" gap="sm">
+      <Block role="Inline" gap="xs">
         <Text role="Code" prominence="Brand" content="user@macbook" />
         <Text role="Code" prominence="Subtle" content="~" />
         <Text role="Code" content="$" />
-      </Group>
-      <Group role="List" gap="xs">
-        <Group role="Inline" gap="xs">
+      </Block>
+      <Block role="List" gap="xs">
+        <Block role="Inline" gap="xs">
           <Text role="Code" prominence="Brand" content="$" />
           <Text role="Code" content="pnpm dev" />
-        </Group>
-        <Group role="List" gap="xs">
+        </Block>
+        <Block role="List" gap="xs">
           <Text role="Code" prominence="Subtle" content="VITE v5.4.21 ready in 390 ms" />
           <Text role="Code" prominence="Subtle" content="➜ Local: http://localhost:5175/" />
-        </Group>
-      </Group>
-    </Group>
+        </Block>
+      </Block>
+    </Block>
   );
 };
 
@@ -152,9 +152,9 @@ const ProblemsContent = () => {
   ];
 
   return (
-    <Group role="List" gap="xs">
+    <Block role="List" gap="xs">
       {problems.map((problem, idx) => (
-        <Group
+        <Block
           key={idx}
           role="Inline"
           align="start"
@@ -170,7 +170,7 @@ const ProblemsContent = () => {
               marginTop: '2px'
             }}
           />
-          <Group role="Container" flex="1" gap="xs">
+          <Block role="Container" flex="1" gap="xs">
             <Text role="Body" prominence="Standard" content={problem.message} />
             <Text
               role="Body"
@@ -178,17 +178,17 @@ const ProblemsContent = () => {
               content={`${problem.file}:${problem.line}:${problem.col}`}
               size="sm"
             />
-          </Group>
-        </Group>
+          </Block>
+        </Block>
       ))}
-    </Group>
+    </Block>
   );
 };
 
 // Output Tab Content
 const OutputContent = () => {
   return (
-    <Group role="List" className="font-mono" gap="xs">
+    <Block role="List" className="font-mono" gap="xs">
       <Text role="Code" prominence="Subtle" content="[12:34:56] Starting compilation..." size="sm" />
       <Text role="Code" prominence="Standard" content="[12:34:57] Compiling TypeScript..." size="sm" />
       <Text
@@ -198,16 +198,16 @@ const OutputContent = () => {
         size="sm"
       />
       <Text role="Code" prominence="Standard" content="[12:34:58] Watching for file changes..." size="sm" />
-    </Group>
+    </Block>
   );
 };
 
 // Debug Console Content
 const DebugContent = () => {
   return (
-    <Group role="Container" className="items-center justify-center h-full font-mono" gap="xs">
+    <Block role="Container" className="items-center justify-center h-full font-mono" gap="xs">
       <Text role="Code" prominence="Subtle" content="Debug console is empty" />
       <Text role="Code" prominence="Subtle" content="Start debugging to see output here" size="sm" />
-    </Group>
+    </Block>
   );
 };

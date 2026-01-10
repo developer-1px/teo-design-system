@@ -5,8 +5,8 @@
  */
 
 import { useMemo, useState } from 'react';
-import { Group } from '@/components/types/Group/Group.tsx';
-import { Divider } from '@/components/types/Group/role/Divider.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
+import { Divider } from '@/components/types/Block/role/Divider.tsx';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
 import { Badge } from '@/components/types/Atom/Text/role/Badge.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
@@ -73,22 +73,22 @@ export const DatabaseViewer = ({
       <Section role="Container" layout="flex" direction="column">
         {/* Header */}
         <Section role="Header" border="bottom">
-          <Group role="Container" padding="lg" gap="sm">
+          <Block role="Container" padding="lg" gap="sm">
             {title && (
               <Text role="Title" prominence="Hero" content={title} />
             )}
             {description && <Text role="Body" prominence="Subtle" content={description} />}
-          </Group>
+          </Block>
 
           {/* Controls */}
-          <Group
+          <Block
             role="Toolbar"
             direction="horizontal"
             padding="md"
             border="top"
             justify="between"
           >
-            <Group role="navigation" direction="horizontal" align="center" gap="md">
+            <Block role="navigation" direction="horizontal" align="center" gap="md">
               <ViewSwitcher
                 views={views}
                 activeView={activeViewId}
@@ -98,17 +98,17 @@ export const DatabaseViewer = ({
               {showStats && (
                 <>
                   <Divider orientation="vertical" spacing="none" />
-                  <Group role="Info" direction="horizontal" gap="xs">
+                  <Block role="Info" direction="horizontal" gap="xs">
                     <Badge variant="default" size="sm">
                       {stats.rows} rows
                     </Badge>
                     <Badge variant="info" size="sm">
                       {stats.cols} cols
                     </Badge>
-                  </Group>
+                  </Block>
                 </>
               )}
-            </Group>
+            </Block>
 
             {/* Density toggle (Table 뷰에서만) */}
             {activeView.type === 'table' && (
@@ -120,7 +120,7 @@ export const DatabaseViewer = ({
                 onClick={() => setDensity(density === 'compact' ? 'normal' : 'compact')}
               />
             )}
-          </Group>
+          </Block>
         </Section>
 
         {/* View Content */}

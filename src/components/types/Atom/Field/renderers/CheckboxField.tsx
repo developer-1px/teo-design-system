@@ -120,7 +120,7 @@ export function CheckboxField(props: CheckboxFieldProps) {
         {label}
       </label>
 
-      {/* Checkbox Group */}
+      {/* Checkbox Block */}
       <div className="flex flex-col gap-2">
         {field.options.map((opt) => (
           <label

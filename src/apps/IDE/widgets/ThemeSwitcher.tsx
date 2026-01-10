@@ -11,7 +11,7 @@ import { Moon as MoonIcon, Sun as SunIcon, X as XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import {
   applyThemeConfig,
@@ -62,7 +62,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
   return (
     <Section role="Container" prominence="Hero" width="320" padding="md" elevation="overlay">
       {/* Header */}
-      <Group role="Header" direction="horizontal" align="center" justify="between" padding="sm">
+      <Block role="Header" direction="horizontal" align="center" justify="between" padding="sm">
         <Text role="Title" prominence="Primary" content="Theme Settings" />
         {onClose && (
           <Action
@@ -73,13 +73,13 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
             onClick={onClose}
           />
         )}
-      </Group>
+      </Block>
 
       {/* Light/Dark Toggle */}
-      <Group role="FormSection" gap="sm" padding="sm">
+      <Block role="FormSection" gap="sm" padding="sm">
         <Text role="Label" prominence="Subtle" content="Appearance" />
-        <Group role="Grid" template="custom" gridCols={2} gap="xs">
-          <Group
+        <Block role="Grid" template="custom" gridCols={2} gap="xs">
+          <Block
             role="Button"
             direction="horizontal"
             align="center"
@@ -96,8 +96,8 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
           >
             <SunIcon size={16} />
             <Text role="Body" content="Light" />
-          </Group>
-          <Group
+          </Block>
+          <Block
             role="Button"
             direction="horizontal"
             align="center"
@@ -114,16 +114,16 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
           >
             <MoonIcon size={16} />
             <Text role="Body" content="Dark" />
-          </Group>
-        </Group>
-      </Group>
+          </Block>
+        </Block>
+      </Block>
 
       {/* Color Scheme */}
-      <Group role="FormSection" gap="sm" padding="sm">
+      <Block role="FormSection" gap="sm" padding="sm">
         <Text role="Label" prominence="Subtle" content="Color Scheme" />
-        <Group role="Grid" template="custom" gridCols={2} gap="xs">
+        <Block role="Grid" template="custom" gridCols={2} gap="xs">
           {colorSchemes.map((scheme) => (
-            <Group
+            <Block
               key={scheme.value}
               role="Button"
               direction="horizontal"
@@ -134,7 +134,7 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
               selected={config.colorScheme === scheme.value}
               onClick={() => handleColorSchemeChange(scheme.value)}
             >
-              <Group
+              <Block
                 role="ColorSwatch"
                 width="16"
                 height="16"
@@ -142,17 +142,17 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
                 style={{ backgroundColor: scheme.color }}
               />
               <Text role="Body" content={scheme.label} />
-            </Group>
+            </Block>
           ))}
-        </Group>
-      </Group>
+        </Block>
+      </Block>
 
       {/* Density */}
-      <Group role="FormSection" gap="sm" padding="sm">
+      <Block role="FormSection" gap="sm" padding="sm">
         <Text role="Label" prominence="Subtle" content="Density" />
-        <Group role="List" gap="xs">
+        <Block role="List" gap="xs">
           {densities.map((density) => (
-            <Group
+            <Block
               key={density.value}
               role="Button"
               direction="horizontal"
@@ -163,12 +163,12 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
               selected={config.density === density.value}
               onClick={() => handleDensityChange(density.value)}
             >
-              <Group role="Content" gap="xs">
+              <Block role="Content" gap="xs">
                 <Text role="Body" prominence="Primary" content={density.label} weight="medium" />
                 <Text role="Body" prominence="Subtle" content={density.description} size="sm" />
-              </Group>
+              </Block>
               {config.density === density.value && (
-                <Group
+                <Block
                   role="Indicator"
                   width="8"
                   height="8"
@@ -176,10 +176,10 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
                   prominence="Brand"
                 />
               )}
-            </Group>
+            </Block>
           ))}
-        </Group>
-      </Group>
+        </Block>
+      </Block>
     </Section>
   );
 };

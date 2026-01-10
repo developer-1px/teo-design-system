@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 
 interface RightNavProps {
   onViewChange?: (view: string | null) => void;
@@ -17,7 +17,7 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
   };
 
   return (
-    <Group role="Navigator" padding="xs" gap="xs">
+    <Block role="Navigator" padding="xs" gap="xs">
       <Action
         role="IconButton"
         icon="Sparkles"
@@ -42,7 +42,7 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
         onClick={() => handleViewChange('info')}
       />
 
-      <Group role="Spacer" flex="1" />
+      <Block role="Spacer" flex="1" />
 
       <Action
         role="IconButton"
@@ -60,6 +60,6 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
           onClick={onClose}
         />
       )}
-    </Group>
+    </Block>
   );
 };

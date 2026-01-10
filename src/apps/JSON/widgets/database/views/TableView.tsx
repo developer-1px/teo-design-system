@@ -5,7 +5,7 @@
 
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
-import { DataTable } from '@/components/types/Group/role/DataTable.tsx';
+import { DataTable } from '@/components/types/Block/role/DataTable.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
 import type { JsonArray, JsonObject, JsonValue, ViewConfig } from '../types.ts';
 

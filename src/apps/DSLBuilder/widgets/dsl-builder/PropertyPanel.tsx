@@ -89,7 +89,7 @@ export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
         </FormField>
       )}
 
-      {/* Group-specific */}
+      {/* Block-specific */}
       {node.type === 'group' && (
         <>
           <FormField label="Role" required>

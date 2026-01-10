@@ -48,7 +48,7 @@ const nodeLabels: Record<DSLNodeType, string> = {
   region: 'Region',
   section: 'Section',
   overlay: 'Overlay',
-  group: 'Group',
+  group: 'Block',
   text: 'Text',
   field: 'Field',
   action: 'Action',

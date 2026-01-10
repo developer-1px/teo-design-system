@@ -1,5 +1,5 @@
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { Action } from '@/components/types/Atom/Action/Action';
@@ -20,10 +20,10 @@ export const JsonView = () => {
             />
 
             <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
-                <Group role="Container" className="flex flex-col gap-1">
+                <Block role="Container" className="flex flex-col gap-1">
                     <div className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Data Structure</div>
                     <JsonTree data={mockJsonData} />
-                </Group>
+                </Block>
             </Section>
         </>
     );

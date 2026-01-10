@@ -8,7 +8,7 @@ import type {
   PropType,
   PropValue,
 } from '@/apps/showcase/widgets/parser/types';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import type { DataType } from '@/components/types/Atom/Field/Field';
 import { Field } from '@/components/types/Atom/Field/Field';
 import { Text } from '@/components/types/Atom/Text/Text';
@@ -55,13 +55,13 @@ export function PropsPanel({
   return (
     <Section role="Form" prominence="Standard" gap={2}>
       {/* Props Section */}
-      <Group role="Container" prominence="Standard">
+      <Block role="Container" prominence="Standard">
         <Text role="Label" prominence="Standard">
           Props
         </Text>
-      </Group>
+      </Block>
 
-      <Group role="Form" prominence="Standard" gap={1}>
+      <Block role="Form" prominence="Standard" gap={1}>
         {Object.entries(metadata.props).map(([name, prop]) => {
           const value = propValues[name];
           const dataType = mapPropTypeToDataType(prop.type);
@@ -110,11 +110,11 @@ export function PropsPanel({
             />
           );
         })}
-      </Group>
+      </Block>
 
       {/* Mock Data Section */}
       {metadata.externalDeps.length > 0 && (
-        <Group role="Form" gap={1}>
+        <Block role="Form" gap={1}>
           <Text role="Label" prominence="Standard">
             Mocks (External Dependencies)
           </Text>
@@ -134,7 +134,7 @@ export function PropsPanel({
             }}
             placeholder='{ "ChevronDown": { "size": 16 } }'
           />
-        </Group>
+        </Block>
       )}
     </Section>
   );

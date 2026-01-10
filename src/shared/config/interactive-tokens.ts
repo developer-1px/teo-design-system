@@ -28,7 +28,7 @@ import type { Intent, Prominence } from '@/components/types/Atom/types';
 export type InteractiveState = 'idle' | 'hover' | 'active' | 'selected' | 'disabled';
 
 /**
- * Interactive Config - Action/Group에 전달할 설정
+ * Interactive Config - Action/Block에 전달할 설정
  */
 export interface InteractiveConfig {
   /** 현재 선택 상태 */

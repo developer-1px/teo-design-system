@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Section } from '@/components/types/Section/Section';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Atom/Text/Text';
 import { SidebarHeader } from './SidebarHeader';
 import { ChevronRight, ChevronDown, File } from 'lucide-react';
@@ -46,7 +46,7 @@ export const SearchView = () => {
 
             <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
                 {/* Search Inputs */}
-                <Group role="Container" className="relative">
+                <Block role="Container" className="relative">
                     <div className="relative">
                         <div className="flex flex-col gap-2">
                             <div className="relative flex items-center">
@@ -87,17 +87,17 @@ export const SearchView = () => {
                             )}
                         </div>
                     </div>
-                </Group>
+                </Block>
 
                 {/* Results */}
                 {searchQuery && (
-                    <Group role="List" className="flex flex-col gap-0">
+                    <Block role="List" className="flex flex-col gap-0">
                         <div className="px-2 py-1 text-xs text-text-tertiary font-medium">
                             {mockResults.reduce((acc, curr) => acc + curr.matches.length, 0)} results in {mockResults.length} files
                         </div>
 
                         {mockResults.map((result, idx) => (
-                            <Group key={idx} role="Container" className="flex flex-col">
+                            <Block key={idx} role="Container" className="flex flex-col">
                                 {/* File Header */}
                                 <button className="flex items-center gap-1 px-2 py-1 hover:bg-surface-hover rounded-sm text-left group">
                                     <ChevronDown size={14} className="text-text-tertiary" />
@@ -115,9 +115,9 @@ export const SearchView = () => {
                                         </button>
                                     ))}
                                 </div>
-                            </Group>
+                            </Block>
                         ))}
-                    </Group>
+                    </Block>
                 )}
             </Section>
         </>

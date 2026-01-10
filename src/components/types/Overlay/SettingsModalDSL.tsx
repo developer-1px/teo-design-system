@@ -6,16 +6,16 @@
  *   - Section[Header]: 타이틀 영역
  *   - Section[Container]: 메인 영역
  *     - Section[Navigator]: 카테고리 사이드바
- *       - Group[List]: 카테고리 버튼 목록
+ *       - Block[List]: 카테고리 버튼 목록
  *     - Section[Container]: 설정 패널
- *       - Group[Form]: 설정 폼 필드들
+ *       - Block[Form]: 설정 폼 필드들
  *   - Section[Footer]: 버튼 영역
- *     - Group[Toolbar]: Cancel/Apply 버튼
+ *     - Block[Toolbar]: Cancel/Apply 버튼
  */
 
 import { Keyboard, Layers, Palette, Settings as SettingsIcon, Type } from 'lucide-react';
 import { useState } from 'react';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Atom/Action/Action.tsx';
 import { Field } from '@/components/types/Atom/Field/Field.tsx';
 import { Text } from '@/components/types/Atom/Text/Text.tsx';
@@ -157,7 +157,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
         <Section role="SplitContainer">
           {/* Sidebar - Categories */}
           <Section role="Navigator">
-            <Group role="List" density="Compact">
+            <Block role="List" density="Compact">
               {categories.map((category) => {
                 const Icon = category.icon;
                 return (
@@ -171,7 +171,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                   />
                 );
               })}
-            </Group>
+            </Block>
           </Section>
 
           {/* Settings Panel */}
@@ -182,9 +182,9 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
               content={categories.find((c) => c.id === activeCategory)?.label || ''}
             />
 
-            <Group role="Form" density="Compact">
+            <Block role="Form" density="Compact">
               {getSettingsForCategory(activeCategory).map((setting) => (
-                <Group key={setting.id} role="Inline" layout="inline" density="Compact">
+                <Block key={setting.id} role="Inline" layout="inline" density="Compact">
                   <Text role="Label" prominence="Standard" content={setting.label} />
                   {setting.type === 'select' && (
                     <Field
@@ -210,7 +210,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                     />
                   )}
                   {setting.type === 'range' && (
-                    <Group role="Inline" layout="inline" density="Compact">
+                    <Block role="Inline" layout="inline" density="Compact">
                       <Field
                         model={setting.id}
                         type="range"
@@ -230,9 +230,9 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                         align="right"
                         content={`${setting.value}${setting.id === 'fontSize' ? 'px' : ''}`}
                       />
-                    </Group>
+                    </Block>
                   )}
-                </Group>
+                </Block>
               ))}
 
               {getSettingsForCategory(activeCategory).length === 0 && (
@@ -243,17 +243,17 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                   content="Settings for this category are coming soon..."
                 />
               )}
-            </Group>
+            </Block>
           </Section>
         </Section>
       </Section>
 
       {/* Footer */}
       <Section role="DialogFooter" density="Compact">
-        <Group role="Toolbar" layout="inline" density="Compact">
+        <Block role="Toolbar" layout="inline" density="Compact">
           <Action label="Cancel" prominence="Standard" intent="Neutral" onClick={onClose} />
           <Action label="Apply" prominence="Standard" intent="Brand" onClick={onClose} />
-        </Group>
+        </Block>
       </Section>
     </Overlay>
   );

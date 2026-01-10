@@ -171,6 +171,7 @@ export function Page({
           intent={intent}
           onClick={onClick}
           sizes={sizes}
+          {...rest}
         >
           {children}
         </AppLayout>

@@ -105,7 +105,7 @@ export interface OverlayNode extends DSLNode {
 }
 
 /**
- * Group Node
+ * Block Node
  * v1.0.1: role 타입 변경, layout, state, emptyContent, errorContent 추가
  */
 export interface GroupNode extends DSLNode {

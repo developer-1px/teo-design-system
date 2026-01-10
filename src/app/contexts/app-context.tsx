@@ -83,10 +83,10 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
   },
   group: {
     type: 'group',
-    name: 'Group',
+    name: 'Block',
     icon: Boxes,
     iconName: 'Boxes',
-    description: 'Group Component Showcase (Card, Toolbar, List)',
+    description: 'Block Component Showcase (Card, Toolbar, List)',
     accentColor: '#f59e0b',
     colorScheme: 'orange',
   },

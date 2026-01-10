@@ -18,8 +18,8 @@ import {
 } from '@/apps/EMOJI/lib/emoji-designer/utils';
 import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
 import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
-import { Group } from '@/components/types/Group/Group';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/types/Group/role/Tabs';
+import { Block } from '@/components/types/Block/Block';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/types/Block/role/Tabs';
 import { Button } from '@/components/types/Atom/Action/role/Button';
 import { Input } from '@/components/types/Atom/Field/role/Input';
 import { Select } from '@/components/types/Atom/Field/role/Select';
@@ -145,7 +145,7 @@ export const EmojiDesignerPage = () => {
     <Page role="Application" layout="HolyGrail" density="Compact">
       {/* Header */}
       <Section role="Header" className="px-6 py-4">
-        <Group role="Container" direction="horizontal" className="justify-between">
+        <Block role="Container" direction="horizontal" className="justify-between">
           <div>
             <div className="flex items-center gap-2">
               <Paintbrush size={24} />
@@ -154,7 +154,7 @@ export const EmojiDesignerPage = () => {
             <Text role="Body" content="JSON 기반 픽셀 아트 이모지 디자이너" />
           </div>
 
-          <Group role="Toolbar" direction="horizontal">
+          <Block role="Toolbar" direction="horizontal">
             <label htmlFor="import-file" className="cursor-pointer">
               <div className="inline-flex items-center justify-center gap-2 rounded-md font-medium text-sm h-9 px-4 bg-transparent text-text hover:bg-black/5 active:bg-black/10 transition-colors">
                 <Upload size={16} />
@@ -173,15 +173,15 @@ export const EmojiDesignerPage = () => {
               <Download size={16} />
               Export JSON
             </Button>
-          </Group>
-        </Group>
+          </Block>
+        </Block>
       </Section>
 
       {/* Left Sidebar - Tools & Settings */}
       <Section role="Navigator" className="overflow-y-auto">
           <Section className="p-4">
             {/* Design Info */}
-            <Group role="Form">
+            <Block role="Form">
               <div>
                 <Text role="Label" className="block mb-1.5" content="Emoji Name" />
                 <Input
@@ -217,13 +217,13 @@ export const EmojiDesignerPage = () => {
                   <option value="nature">Nature</option>
                 </Select>
               </div>
-            </Group>
+            </Block>
           </Section>
 
           <Section className="p-4 border-t border-border">
             <Text role="Title" prominence="Hero" className="mb-3" content="Tools" />
 
-            <Group role="Toolbar">
+            <Block role="Toolbar">
               <Button
                 variant={state.tool === 'pen' ? 'accent' : 'ghost'}
                 onClick={() => setState((prev) => ({ ...prev, tool: 'pen' }))}
@@ -259,7 +259,7 @@ export const EmojiDesignerPage = () => {
                 <Trash2 size={16} />
                 Clear Canvas
               </Button>
-            </Group>
+            </Block>
 
             <div className="mt-4">
               <Switch
@@ -287,11 +287,11 @@ export const EmojiDesignerPage = () => {
       <Section role="Main" className="flex flex-col overflow-hidden">
           {/* Toolbar */}
           <div className="h-12 bg-layer-2 border-b border-border flex items-center justify-between px-4">
-            <Group role="Card" direction="horizontal">
+            <Block role="Card" direction="horizontal">
               <Text role="Body" content={`${state.design.size}x${state.design.size} pixels`} />
               <Text role="Body" content="•" />
               <Text role="Body" content={`${state.design.palette.length} colors`} />
-            </Group>
+            </Block>
 
             <Tabs value={previewTab} onValueChange={setPreviewTab}>
               <TabsList>
@@ -317,13 +317,13 @@ export const EmojiDesignerPage = () => {
 
               <TabsContent value="json">
                 <Section className="max-w-2xl">
-                  <Group role="Container">
+                  <Block role="Container">
                     <Text role="Title" prominence="Hero" content="Emoji JSON Data" />
                     <pre className="bg-layer-1 p-4 rounded-lg overflow-x-auto text-xs font-mono">
                       {exportDesign(state.design)}
                     </pre>
 
-                    <Group role="Toolbar" direction="horizontal">
+                    <Block role="Toolbar" direction="horizontal">
                       <Button
                         variant="ghost"
                         size="sm"
@@ -334,8 +334,8 @@ export const EmojiDesignerPage = () => {
                         <Copy size={16} />
                         Copy JSON
                       </Button>
-                    </Group>
-                  </Group>
+                    </Block>
+                  </Block>
                 </Section>
               </TabsContent>
             </Tabs>
@@ -347,7 +347,7 @@ export const EmojiDesignerPage = () => {
           <Section className="p-4">
             <Text role="Title" prominence="Hero" className="mb-3" content="Preview" />
 
-            <Group role="Container">
+            <Block role="Container">
               {/* Small preview */}
               <div className="bg-layer-1 p-4 rounded-lg flex items-center justify-center">
                 <div
@@ -419,13 +419,13 @@ export const EmojiDesignerPage = () => {
                   )}
                 </div>
               </div>
-            </Group>
+            </Block>
           </Section>
 
           <Section className="p-4 border-t border-border">
             <Text role="Title" prominence="Hero" className="mb-3" content="Design Info" />
 
-            <Group role="Card">
+            <Block role="Card">
               <div className="flex justify-between">
                 <Text role="Label" content="ID" />
                 <Text
@@ -455,7 +455,7 @@ export const EmojiDesignerPage = () => {
                   content={new Date(state.design.updatedAt).toLocaleString()}
                 />
               </div>
-            </Group>
+            </Block>
           </Section>
       </Section>
     </Page>

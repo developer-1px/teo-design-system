@@ -1,7 +1,7 @@
 /**
  * useTree - 트리 컴포넌트 헤드리스 훅
  *
- * IDDL Group role="Tree" 구현을 위한 헤드리스 로직
+ * IDDL Block role="Tree" 구현을 위한 헤드리스 로직
  * @see docs/1-project/1-type-role-aria-mapping-1.md#4-group (Tree, TreeItem)
  * @see docs/1-project/3-how-to-renderer.md (useTree 예제 참고)
  */

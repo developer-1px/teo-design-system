@@ -8,7 +8,7 @@
  */
 
 import { useState } from 'react';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Field, type FieldOption } from '@/components/types/Atom/Field/Field';
 import { Text } from '@/components/types/Atom/Text/Text';
@@ -64,19 +64,19 @@ export function AtomsShowcasePage() {
     <Section role="Container" className="min-h-screen p-8">
       {/* Header */}
       <Section role="Header" className="mb-8">
-        <Group role="Container">
+        <Block role="Container">
           <Text role="Title" content="Atoms Showcase" prominence="Hero" />
           <Text
             role="Body"
             content="IDDL 1.0.1 명세를 준수하는 모든 atoms 컴포넌트 데모"
             prominence="Standard"
           />
-        </Group>
+        </Block>
       </Section>
 
       {/* Text Component Showcase */}
       <Section role="Container" className="mb-12">
-        <Group role="Card">
+        <Block role="Card">
           <Text role="Title" content="1. Text Component (5 Roles)" prominence="Standard" />
           <Section role="Container" className="gap-4 p-4 rounded-lg">
             <Text role="Title" content="Title Role" prominence="Standard" />
@@ -95,12 +95,12 @@ export function AtomsShowcasePage() {
             <Text role="Body" content="Critical (danger/red)" intent="Critical" />
             <Text role="Body" content="Info (blue)" intent="Info" />
           </Section>
-        </Group>
+        </Block>
       </Section>
 
       {/* Action Component Showcase */}
       <Section role="Container" className="mb-12">
-        <Group role="Card">
+        <Block role="Card">
           <Text role="Title" content="2. Action Component (7 Behaviors)" prominence="Standard" />
 
           <Section role="Container" className="gap-4 p-4 rounded-lg">
@@ -168,12 +168,12 @@ export function AtomsShowcasePage() {
               </div>
             </div>
           </Section>
-        </Group>
+        </Block>
       </Section>
 
       {/* Field Component Showcase - View Mode */}
       <Section role="Container" mode="view" className="mb-12">
-        <Group role="Card">
+        <Block role="Card">
           <Text
             role="Title"
             content="3. Field Component - View Mode (21 DataTypes)"
@@ -248,12 +248,12 @@ export function AtomsShowcasePage() {
             />
             <Field label="Password" model="password" type="password" value="********" />
           </Section>
-        </Group>
+        </Block>
       </Section>
 
       {/* Field Component Showcase - Edit Mode */}
       <Section role="Container" mode="edit" className="mb-12">
-        <Group role="Card">
+        <Block role="Card">
           <Text role="Title" content="4. Field Component - Edit Mode" prominence="Standard" />
 
           <Section role="Container" className="gap-4 p-4 rounded-lg grid-cols-2">
@@ -351,7 +351,7 @@ export function AtomsShowcasePage() {
 
           <Section role="Container" className="gap-4 p-4 rounded-lg mt-4">
             <Field
-              label="Radio Group"
+              label="Radio Block"
               model="radio"
               type="radio"
               value={formData.radio}
@@ -359,7 +359,7 @@ export function AtomsShowcasePage() {
               options={radioOptions}
             />
             <Field
-              label="Checkbox Group"
+              label="Checkbox Block"
               model="checkbox"
               type="checkbox"
               value={formData.checkbox}
@@ -390,17 +390,17 @@ export function AtomsShowcasePage() {
               constraints={{ min: 0, max: 100 }}
             />
           </Section>
-        </Group>
+        </Block>
       </Section>
 
       {/* Form State Debug */}
       <Section role="Container" className="mb-8">
-        <Group role="Card">
+        <Block role="Card">
           <Text role="Title" content="5. Live Form State (Debug)" prominence="Standard" />
           <pre className="bg-layer-1 p-4 rounded-lg text-xs overflow-auto max-h-96">
             {JSON.stringify(formData, null, 2)}
           </pre>
-        </Group>
+        </Block>
       </Section>
     </Section>
   );

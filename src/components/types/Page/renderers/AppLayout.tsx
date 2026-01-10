@@ -135,7 +135,7 @@ function convertTemplateToLayout(template?: GridTemplate): PageLayout | undefine
   return mapping[template];
 }
 
-export interface AppLayoutProps {
+export interface AppLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Page layout type (v5.0)
    */
@@ -162,19 +162,6 @@ export interface AppLayoutProps {
   children: ReactNode;
 
   /**
-   * Additional CSS class
-   */
-  className?: string;
-
-  /**
-   * Click handler
-   */
-  onClick?: (e: React.MouseEvent) => void;
-
-  /**
-   * @deprecated Use `layout` instead of `template`
-   */
-  /**
    * Layout sizes (v5.0)
    */
   sizes?: Record<string, string>;
@@ -189,8 +176,9 @@ export function AppLayout(props: AppLayoutProps) {
     intent = 'Neutral',
     children,
     className,
-    onClick,
     sizes,
+    style,
+    ...rest
   } = props;
 
   // v5.0: 하위 호환성 - template → layout 매핑
@@ -201,6 +189,7 @@ export function AppLayout(props: AppLayoutProps) {
 
   // Inline style로 동적 grid 적용
   const inlineStyle = {
+    ...style, // Merge external style
     gridTemplateAreas: dynamicTemplate.gridTemplateAreas,
     gridTemplateColumns: dynamicTemplate.gridTemplateColumns,
     gridTemplateRows: dynamicTemplate.gridTemplateRows,
@@ -219,7 +208,7 @@ export function AppLayout(props: AppLayoutProps) {
       data-layout={layout}
       data-prominence={prominence}
       data-intent={intent}
-      onClick={onClick}
+      {...rest}
     >
       {children}
     </div>

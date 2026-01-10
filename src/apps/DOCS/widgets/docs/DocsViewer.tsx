@@ -2,7 +2,7 @@
  * DocsViewer - 문서 뷰어 (IDDL v1.0.1 전용)
  *
  * /apps/docs 폴더 구조 기반 문서 뷰어
- * - 순수 IDDL 컴포넌트로만 구성 (Page, Section, Group, Text, Field, Action)
+ * - 순수 IDDL 컴포넌트로만 구성 (Page, Section, Block, Text, Field, Action)
  * - 상단 헤더 고정
  * - 사이드바 네비게이션
  * - 반응형 레이아웃
@@ -10,7 +10,7 @@
 
 import { useEffect, useState } from 'react';
 import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
-import { Group } from '@/components/types/Group/Group';
+import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Atom/Action/Action';
 import { Field } from '@/components/types/Atom/Field/Field';
 import { Text } from '@/components/types/Atom/Text/Text';
@@ -68,15 +68,15 @@ export const DocsViewer = () => {
     <Page role="Application" layout="Sidebar">
       {/* 상단 고정 헤더 */}
       <Section role="Header" prominence="Standard">
-        <Group role="Toolbar" layout="inline">
+        <Block role="Toolbar" layout="inline">
           <Text role="Title" content="문서" />
-        </Group>
+        </Block>
       </Section>
 
       {/* 사이드바 - 네비게이션 */}
       <Section role="Navigator" prominence="Standard">
         {/* 검색 */}
-        <Group role="Form">
+        <Block role="Form">
           <Field
             label=""
             type="text"
@@ -84,13 +84,13 @@ export const DocsViewer = () => {
             model={searchQuery}
             onChange={(value) => setSearchQuery(value as string)}
           />
-        </Group>
+        </Block>
 
         {/* 문서 트리 - 스크롤 가능 영역 */}
         <Section role="Container">
           {searchQuery ? (
             // 검색 결과
-            <Group role="List" layout="stack">
+            <Block role="List" layout="stack">
               {filteredDocs.map((doc) => (
                 <Action
                   key={doc.path}
@@ -108,7 +108,7 @@ export const DocsViewer = () => {
                 />
               ))}
               {filteredDocs.length === 0 && <Text role="Body" content="검색 결과가 없습니다" />}
-            </Group>
+            </Block>
           ) : (
             // 트리 구조
             <DocsTree onFileClick={handleFileClick} />
@@ -121,28 +121,28 @@ export const DocsViewer = () => {
         {selectedPath ? (
           <>
             {/* 문서 제목 */}
-            <Group role="Container">
+            <Block role="Container">
               <Text
                 role="Title"
                 content={getAllDocs().find((d) => d.path === selectedPath)?.title || '문서'}
                 prominence="Hero"
               />
-            </Group>
+            </Block>
 
             {/* 문서 내용 */}
-            <Group role="Container">
+            <Block role="Container">
               {isLoading ? (
                 <Text role="Body" content="로딩 중..." />
               ) : (
                 <MarkdownRenderer content={docContent} />
               )}
-            </Group>
+            </Block>
           </>
         ) : (
-          <Group role="Container">
+          <Block role="Container">
             <Text role="Title" content="문서를 선택하세요" />
             <Text role="Body" content="왼쪽 사이드바에서 문서를 선택하면 내용이 표시됩니다" />
-          </Group>
+          </Block>
         )}
       </Section>
     </Page>

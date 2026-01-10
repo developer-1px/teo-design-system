@@ -1,23 +1,23 @@
 /**
  * FormatSidebar - 순수 IDDL 기반 포맷 설정 사이드바 (v4.0)
  *
- * 모든 레이아웃과 스타일을 IDDL Group/Text role로 표현
+ * 모든 레이아웃과 스타일을 IDDL Block/Text role로 표현
  * - 수동 div/className 제거
- * - Group layout="stack" + density로 간격 제어
+ * - Block layout="stack" + density로 간격 제어
  * - Text role="Label"로 섹션 헤더 표현
  * - 미니멀 디자인 유지 (간결한 간격, 명확한 계층)
  *
  * IDDL 구조:
  * - Section[Aside]: 사이드바 컨테이너 (외부에서 적용)
- *   - Group[Stack]: 전체 폼 컨테이너
- *     - Group[Fieldset]: 텍스트 설정
- *     - Group[Fieldset]: 배경 설정
+ *   - Block[Stack]: 전체 폼 컨테이너
+ *     - Block[Fieldset]: 텍스트 설정
+ *     - Block[Fieldset]: 배경 설정
  *     - Text[Caption]: 안내 메시지
  */
 
 import { useState } from 'react';
 import { IDDLProvider } from '@/components/context/IDDLContext';
-import { Group } from '@/components/types/Group/Group.tsx';
+import { Block } from '@/components/types/Block/Block.tsx';
 import { Field } from '@/components/types/Atom/Field/Field';
 import { Text } from '@/components/types/Atom/Text/Text';
 import type { Slide } from './SlideList';
@@ -55,10 +55,10 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
         mode: 'edit',
       }}
     >
-      <Group layout="scroll" direction="vertical" density="Comfortable">
-        <Group layout="stack" direction="vertical" density="Comfortable">
+      <Block role="Container" className="h-full overflow-y-auto" layout="stack" density="Comfortable">
+        <Block role="Container" layout="stack" density="Comfortable">
           {/* Text Formatting Section */}
-          <Group role="Fieldset" layout="stack" direction="vertical" density="Compact">
+          <Block role="Fieldset" layout="stack" direction="vertical" density="Compact">
             <Text role="Label" prominence="Secondary" content="텍스트" />
 
             <Field
@@ -93,10 +93,10 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
               value={formData.textColor}
               onChange={(value) => handleFieldChange('textColor', value)}
             />
-          </Group>
+          </Block>
 
           {/* Background Formatting Section */}
-          <Group role="Fieldset" layout="stack" direction="vertical" density="Compact">
+          <Block role="Fieldset" layout="stack" direction="vertical" density="Compact">
             <Text role="Label" prominence="Secondary" content="배경" />
 
             <Field
@@ -123,18 +123,18 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
                 { label: '초록', value: '#e8f5e9' },
               ]}
             />
-          </Group>
+          </Block>
 
           {/* Divider + Helper Text */}
-          <Group role="Container" prominence="Subtle" density="Comfortable">
+          <Block role="Container" prominence="Subtle" density="Comfortable">
             <Text
               role="Caption"
               prominence="Subtle"
               content="현재 선택된 슬라이드에 적용됩니다"
             />
-          </Group>
-        </Group>
-      </Group>
+          </Block>
+        </Block>
+      </Block>
     </IDDLProvider>
   );
 };
