@@ -33,7 +33,7 @@ export interface UseTabsReturn {
     'aria-controls': string;
     tabIndex: number;
     onClick: () => void;
-    onKeyDown: (event: React.KeyboardEvent) => void;
+    onKeyDown: (_event: React.KeyboardEvent) => void;
   };
   /** TabPanel에 적용할 props */
   getTabPanelProps: (index: number) => {
@@ -80,7 +80,7 @@ export function useTabs(options: UseTabsOptions = {}): UseTabsReturn {
         selectTab(index);
       };
 
-      const handleKeyDown = (event: React.KeyboardEvent) => {
+      const handleKeyDown = (_event: React.KeyboardEvent) => {
         // TODO: 구현 필요
         // - ArrowLeft/ArrowRight: 탭 이동
         // - Home/End: 첫/마지막 탭

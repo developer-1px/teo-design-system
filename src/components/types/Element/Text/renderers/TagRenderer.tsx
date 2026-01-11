@@ -4,9 +4,9 @@
  * Maps TextProps to Tag component props
  */
 
-import type { TextProps } from '../Text.types';
-import { Tag } from '../role/Tag';
 import { cn } from '@/shared/lib/utils';
+import { Tag } from '../role/Tag';
+import type { TextProps } from '../Text.types';
 
 /**
  * Prominence to Tag size mapping

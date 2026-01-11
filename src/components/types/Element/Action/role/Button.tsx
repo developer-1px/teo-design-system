@@ -24,6 +24,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * size - 버튼 크기
    */
   size?: 'sm' | 'md' | 'lg';
+  /**
+   * gap - 아이콘과 텍스트 사이 간격 (deprecated, move to spec)
+   */
+  gap?: string;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(

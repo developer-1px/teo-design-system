@@ -1,12 +1,11 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
-import { DataTable } from '@/components/types/Block/role/DataTable.tsx';
+import { Block } from '@/components/types/Block/Block';
+import { DataTable, type IDDLColumnDef } from '@/components/types/Block/role/DataTable.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { Block } from '@/components/types/Block/Block';
-import { IDDLColumnDef } from '@/components/types/Block/role/DataTable.tsx';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
@@ -26,7 +25,7 @@ export const ServerProductsView = () => {
 
   const data = useMemo(() => {
     if (!Array.isArray(jsonData)) return [];
-    return jsonData;
+    return jsonData as JsonObject[];
   }, [jsonData]);
 
   const columns = useMemo<IDDLColumnDef<JsonObject>[]>(() => {
@@ -56,7 +55,14 @@ export const ServerProductsView = () => {
           return <Text role="Body" content={String(value)} />;
         }
         if (typeof value === 'object') {
-          return <Text role="Caption" prominence="Subtle" className="font-mono" content={JSON.stringify(value)} />;
+          return (
+            <Text
+              role="Caption"
+              prominence="Subtle"
+              className="font-mono"
+              content={JSON.stringify(value)}
+            />
+          );
         }
 
         return <Text role="Body" content={String(value)} />;

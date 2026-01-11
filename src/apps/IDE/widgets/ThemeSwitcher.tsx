@@ -63,19 +63,19 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
     <Section role="Container" prominence="Hero" width="320" padding="md" elevation="overlay">
       {/* Header */}
       <Block role="Header" direction="horizontal" align="center" justify="between" padding="sm">
-        <Text role="Title" prominence="Primary" content="Theme Settings" />
+        <Text role="Title" prominence="Strong" content="Theme Settings" />
         {onClose && (
           <Action role="IconButton" icon="X" label="Close" density="Compact" onClick={onClose} />
         )}
       </Block>
 
       {/* Light/Dark Toggle */}
-      <Block role="FormSection" gap="sm" padding="sm">
+      <Block role="Stack" gap="sm" padding="sm">
         <Text role="Label" prominence="Subtle" content="Appearance" />
         <Block role="Grid" template="custom" gridCols={2} gap="xs">
           <Block
-            role="Button"
-            direction="horizontal"
+            clickable
+            layout="inline"
             align="center"
             justify="center"
             padding="sm"
@@ -92,8 +92,8 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
             <Text role="Body" content="Light" />
           </Block>
           <Block
-            role="Button"
-            direction="horizontal"
+            clickable
+            layout="inline"
             align="center"
             justify="center"
             padding="sm"
@@ -113,14 +113,14 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
       </Block>
 
       {/* Color Scheme */}
-      <Block role="FormSection" gap="sm" padding="sm">
+      <Block role="Stack" gap="sm" padding="sm">
         <Text role="Label" prominence="Subtle" content="Color Scheme" />
         <Block role="Grid" template="custom" gridCols={2} gap="xs">
           {colorSchemes.map((scheme) => (
             <Block
               key={scheme.value}
-              role="Button"
-              direction="horizontal"
+              clickable
+              layout="inline"
               align="center"
               padding="sm"
               gap="xs"
@@ -129,7 +129,6 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
               onClick={() => handleColorSchemeChange(scheme.value)}
             >
               <Block
-                role="ColorSwatch"
                 width="16"
                 height="16"
                 rounded="full"
@@ -142,14 +141,14 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
       </Block>
 
       {/* Density */}
-      <Block role="FormSection" gap="sm" padding="sm">
+      <Block role="Stack" gap="sm" padding="sm">
         <Text role="Label" prominence="Subtle" content="Density" />
         <Block role="List" gap="xs">
           {densities.map((density) => (
             <Block
               key={density.value}
-              role="Button"
-              direction="horizontal"
+              clickable
+              layout="inline"
               align="center"
               justify="between"
               padding="sm"
@@ -157,12 +156,12 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
               selected={config.density === density.value}
               onClick={() => handleDensityChange(density.value)}
             >
-              <Block role="Content" gap="xs">
-                <Text role="Body" prominence="Primary" content={density.label} weight="medium" />
+              <Block gap="xs">
+                <Text role="Body" prominence="Strong" content={density.label} weight="medium" />
                 <Text role="Body" prominence="Subtle" content={density.description} size="sm" />
               </Block>
               {config.density === density.value && (
-                <Block role="Indicator" width="8" height="8" rounded="full" prominence="Brand" />
+                <Block width="8" height="8" rounded="full" intent="Brand" prominence="Strong" />
               )}
             </Block>
           ))}

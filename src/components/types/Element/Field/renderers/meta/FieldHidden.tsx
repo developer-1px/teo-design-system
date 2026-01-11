@@ -13,7 +13,7 @@
  * />
  */
 
-import type { Prominence, Intent } from '@/components/types/Shared.types';
+import type { Intent, Prominence } from '@/components/types/Shared.types';
 
 export interface FieldHiddenProps {
   /**
@@ -84,8 +84,8 @@ export function FieldHidden({ model, value, onChange }: FieldHiddenProps) {
       onChange={
         onChange
           ? (e) => {
-            onChange(e.target.value);
-          }
+              onChange(e.target.value);
+            }
           : undefined
       }
     />

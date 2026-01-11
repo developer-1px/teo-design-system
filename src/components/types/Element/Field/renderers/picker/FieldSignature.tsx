@@ -17,12 +17,12 @@
  * />
  */
 
-import { Undo, Trash2 } from 'lucide-react';
+import { Trash2, Undo } from 'lucide-react';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
-import { useFieldSignature, type SignatureOutputFormat } from '../../headless/useFieldSignature';
-import { SignatureCanvasRole } from './SignatureCanvasRole';
+import { type SignatureOutputFormat, useFieldSignature } from '../../headless/useFieldSignature';
 import { errorStyles, fieldWrapperStyles, labelStyles } from '../../styles/field.styles';
+import { SignatureCanvasRole } from './SignatureCanvasRole';
 
 export interface FieldSignatureProps {
   /**

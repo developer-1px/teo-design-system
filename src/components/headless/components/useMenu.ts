@@ -6,7 +6,7 @@
  * @see docs/1-project/4-headless-hook.md
  */
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useClickOutside } from '../primitives/useClickOutside';
 import { useDisclosure } from '../primitives/useDisclosure';
 
@@ -31,7 +31,7 @@ export interface UseMenuReturn {
     'aria-haspopup': 'menu';
     'aria-expanded': boolean;
     onClick: () => void;
-    onKeyDown: (event: React.KeyboardEvent) => void;
+    onKeyDown: (_event: React.KeyboardEvent) => void;
   };
   /** Menu에 적용할 props */
   getMenuProps: () => {
@@ -43,7 +43,7 @@ export interface UseMenuReturn {
     role: 'menuitem';
     tabIndex: number;
     onClick: () => void;
-    onKeyDown: (event: React.KeyboardEvent) => void;
+    onKeyDown: (_event: React.KeyboardEvent) => void;
   };
 }
 
@@ -63,7 +63,7 @@ export interface UseMenuReturn {
 export function useMenu(options: UseMenuOptions = {}): UseMenuReturn {
   const { onOpen, onClose } = options;
   const { isOpen, open, close } = useDisclosure({ onOpen, onClose });
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex] = useState(0);
   const menuRef = useClickOutside<HTMLDivElement>({
     onClickOutside: close,
     enabled: isOpen,
@@ -78,7 +78,7 @@ export function useMenu(options: UseMenuOptions = {}): UseMenuReturn {
       }
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
+    const handleKeyDown = (_event: React.KeyboardEvent) => {
       // TODO: 구현 필요
       // - ArrowDown: 메뉴 열고 첫 번째 아이템 포커스
       // - ArrowUp: 메뉴 열고 마지막 아이템 포커스
@@ -106,7 +106,7 @@ export function useMenu(options: UseMenuOptions = {}): UseMenuReturn {
         close();
       };
 
-      const handleKeyDown = (event: React.KeyboardEvent) => {
+      const handleKeyDown = (_event: React.KeyboardEvent) => {
         // TODO: 구현 필요
         // - ArrowDown/ArrowUp: 아이템 이동
         // - Home/End: 첫/마지막 아이템

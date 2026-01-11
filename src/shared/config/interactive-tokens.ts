@@ -50,9 +50,13 @@ export const interactiveVariants = cva('transition-colors duration-150', {
   variants: {
     prominence: {
       Hero: '',
-      Standard: '',
       Strong: '',
+      Standard: '',
       Subtle: '',
+      Secondary: '',
+      Tertiary: '',
+      Elevated: '',
+      None: '',
     },
     intent: {
       Neutral: '',
@@ -61,6 +65,7 @@ export const interactiveVariants = cva('transition-colors duration-150', {
       Caution: '',
       Critical: '',
       Info: '',
+      Accent: '',
     },
     state: {
       idle: '',
@@ -356,6 +361,7 @@ export const focusVariants = cva('outline-none', {
       Caution: 'focus-visible:ring-2 focus-visible:ring-caution focus-visible:ring-offset-2',
       Critical: 'focus-visible:ring-2 focus-visible:ring-critical focus-visible:ring-offset-2',
       Info: 'focus-visible:ring-2 focus-visible:ring-info focus-visible:ring-offset-2',
+      Accent: 'focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
     },
   },
   defaultVariants: {

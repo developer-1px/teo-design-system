@@ -30,8 +30,8 @@ export function BlockCardsDemo() {
           />
         </Block>
       </Block>
-      <Block role="PreviewContainer" className="h-32 flex items-center justify-center">
-        <Text role="Caption" content="PreviewContainer (Sunken Background)" />
+      <Block role="Card" className="h-32 flex items-center justify-center">
+        <Text role="Caption" content="Card (Sunken Background)" />
       </Block>
     </Block>
   );

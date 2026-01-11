@@ -20,7 +20,7 @@
  */
 
 import { cn } from '@/shared/lib/utils';
-import type { BlockRendererProps } from '../../Block.types';
+import type { BlockRendererProps } from '../Block.types';
 
 export interface ToolbarProps extends BlockRendererProps {
   role: 'Toolbar';

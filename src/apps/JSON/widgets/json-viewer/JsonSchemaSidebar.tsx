@@ -1,10 +1,10 @@
 import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Text } from '@/components/types/Element/Text/Text';
+import { Section } from '@/components/types/Section/Section';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };
@@ -63,7 +63,12 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
         </Text>
       </Block>
       <Block role="Container" className="flex-1 flex items-center justify-center px-4 py-8">
-        <Text role="Body" prominence="Subtle" className="text-center" content="No data to analyze" />
+        <Text
+          role="Body"
+          prominence="Subtle"
+          className="text-center"
+          content="No data to analyze"
+        />
       </Block>
     </Section>
   );
@@ -100,22 +105,39 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
                   <ChevronRight size={12} />
                 )}
                 <Info size={12} />
-                <Text role="Body" size="sm">Analysis</Text>
+                <Text role="Body" size="sm">
+                  Analysis
+                </Text>
               </Block>
             </Action>
             {expandedSections.has('analysis') && (
               <Block role="Stack" gap={1} className="px-3 pb-2 mt-1">
                 <Block role="Inline" layout="inline" justify="between" className="px-2">
                   <Text role="Caption" prominence="Subtle" content="Properties" />
-                  <Text role="Caption" prominence="Standard" className="font-mono" content={String(schema.analysis.totalKeys)} />
+                  <Text
+                    role="Caption"
+                    prominence="Standard"
+                    className="font-mono"
+                    content={String(schema.analysis?.totalKeys || 0)}
+                  />
                 </Block>
                 <Block role="Inline" layout="inline" justify="between" className="px-2">
                   <Text role="Caption" prominence="Subtle" content="Depth" />
-                  <Text role="Caption" prominence="Standard" className="font-mono" content={String(schema.analysis.depth)} />
+                  <Text
+                    role="Caption"
+                    prominence="Standard"
+                    className="font-mono"
+                    content={String(schema.analysis?.depth || 0)}
+                  />
                 </Block>
                 <Block role="Inline" layout="inline" justify="between" className="px-2">
                   <Text role="Caption" prominence="Subtle" content="Types" />
-                  <Text role="Caption" prominence="Standard" className="font-mono" content={Array.from(schema.analysis.types).join(', ')} />
+                  <Text
+                    role="Caption"
+                    prominence="Standard"
+                    className="font-mono"
+                    content={Array.from(schema.analysis?.types || []).join(', ')}
+                  />
                 </Block>
               </Block>
             )}
@@ -138,7 +160,9 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
                 <ChevronRight size={12} />
               )}
               <Code size={12} />
-              <Text role="Body" size="sm">Interface</Text>
+              <Text role="Body" size="sm">
+                Interface
+              </Text>
             </Block>
           </Action>
           {expandedSections.has('typescript') && (

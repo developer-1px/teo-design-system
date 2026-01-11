@@ -12,6 +12,7 @@ import {
   Layers,
   Layout,
   Presentation,
+  Scaling,
   Smile,
   Type,
   Zap,
@@ -32,7 +33,8 @@ export type AppType =
   | 'field'
   | 'action'
   | 'text'
-  | 'behavior';
+  | 'behavior'
+  | 'adaptive';
 
 import type { LucideIcon } from 'lucide-react';
 
@@ -164,6 +166,16 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     description: 'Docs, Components, DSL & Builder',
     accentColor: '#059669',
     colorScheme: 'emerald',
+  },
+
+  adaptive: {
+    type: 'adaptive',
+    name: 'Adaptive Scale',
+    icon: Scaling,
+    iconName: 'Scaling',
+    description: 'Adaptive Scale System Demo (prominence × density × type)',
+    accentColor: '#ec4899',
+    colorScheme: 'pink',
   },
 };
 

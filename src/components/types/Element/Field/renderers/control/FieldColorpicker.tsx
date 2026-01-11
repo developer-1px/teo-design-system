@@ -20,7 +20,7 @@
 
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
-import { useFieldColorpicker, type ColorFormat } from '../../headless/useFieldColorpicker';
+import { type ColorFormat, useFieldColorpicker } from '../../headless/useFieldColorpicker';
 import { errorStyles, fieldWrapperStyles, labelStyles } from '../../styles/field.styles';
 
 export interface FieldColorpickerProps {
@@ -193,9 +193,7 @@ export function FieldColorpicker({
         {/* Preset swatches */}
         {presets.length > 0 && (
           <div className="flex items-center gap-2">
-            {variant !== 'swatch-only' && (
-              <span className="text-xs text-subtle">Presets:</span>
-            )}
+            {variant !== 'swatch-only' && <span className="text-xs text-subtle">Presets:</span>}
             <div className="flex gap-1.5">
               {presets.map((preset) => (
                 <button
@@ -206,7 +204,9 @@ export function FieldColorpicker({
                   className={cn(
                     'w-8 h-8 rounded-md border-2 cursor-pointer transition-transform',
                     'hover:scale-110 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2',
-                    colorpicker.value === preset ? 'border-accent ring-2 ring-accent' : 'border-border',
+                    colorpicker.value === preset
+                      ? 'border-accent ring-2 ring-accent'
+                      : 'border-border',
                     'disabled:opacity-50 disabled:cursor-not-allowed'
                   )}
                   style={{ backgroundColor: preset }}

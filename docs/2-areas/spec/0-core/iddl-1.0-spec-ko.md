@@ -413,15 +413,15 @@ export interface BlockProps extends BaseProps {
 export interface TextProps extends BaseProps {
   role: 'Title' | 'Heading' | 'Body' | 'Label' | 'Caption';
   content?: string;
-  align?: 'left' | 'center' | 'right';
   icon?: string;
+  // align은 role에 따라 자동 결정됨
 }
 
 export interface ImageProps extends BaseProps {
   src: string;
   alt: string;
-  aspectRatio?: 'auto' | '1:1' | '16:9' | '4:3';
-  fit?: 'cover' | 'contain';
+  // aspectRatio와 fit은 spec 객체에 포함되어야 함
+  // spec?: { aspectRatio?: 'auto' | '1:1' | '16:9' | '4:3'; fit?: 'cover' | 'contain' }
 }
 
 export interface VideoProps extends BaseProps {
@@ -459,9 +459,9 @@ export interface ActionProps extends BaseProps {
 
 export interface SeparatorProps extends BaseProps {
   type?: 'line' | 'space';
-  size?: 'small' | 'medium' | 'large';
   orientation?: 'horizontal' | 'vertical';
   content?: string;
+  // size는 density에서 자동 계산됨
 }
 ```
 

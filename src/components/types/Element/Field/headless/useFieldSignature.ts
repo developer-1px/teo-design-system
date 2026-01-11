@@ -7,7 +7,7 @@
  * @see docs/2-areas/spec/4-element/field/field.spec.md#644-signature
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type SignatureOutputFormat = 'png' | 'jpeg' | 'svg' | 'dataUrl';
 
@@ -72,7 +72,9 @@ export interface UseSignatureFieldReturn {
   /**
    * Start drawing
    */
-  startDrawing: (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => void;
+  startDrawing: (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => void;
 
   /**
    * Continue drawing

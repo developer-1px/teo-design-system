@@ -106,12 +106,12 @@ export interface SelectableContext {
   getSelectedIds: () => string[];
 
   // === Actions ===
-  select: (id: string) => void;           // 단일 선택 (나머지 해제)
-  toggle: (id: string) => void;           // 토글
-  selectRange: (toId: string) => void;    // anchor → toId 범위
-  selectAll: () => void;                  // 전체 선택
-  clearSelection: () => void;             // 전체 해제
-  setAnchor: (id: string) => void;        // anchor 설정
+  select: (id: string) => void; // 단일 선택 (나머지 해제)
+  toggle: (id: string) => void; // 토글
+  selectRange: (toId: string) => void; // anchor → toId 범위
+  selectAll: () => void; // 전체 선택
+  clearSelection: () => void; // 전체 해제
+  setAnchor: (id: string) => void; // anchor 설정
 
   // === Registration ===
   registerItem: (item: SelectableItem) => void;

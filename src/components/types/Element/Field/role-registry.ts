@@ -17,13 +17,13 @@ const fieldRenderers = new Map<string, ComponentType<FieldProps>>();
  * @param component - The React component to render
  */
 export function registerField(role: string, component: ComponentType<FieldProps>) {
-    if (fieldRenderers.has(role)) {
-        // Warn in development if overwriting (might be intentional for overrides, but good to know)
-        if (process.env.NODE_ENV === 'development') {
-            console.warn(`[FieldRegistry] Overwriting renderer for role "${role}"`);
-        }
+  if (fieldRenderers.has(role)) {
+    // Warn in development if overwriting (might be intentional for overrides, but good to know)
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`[FieldRegistry] Overwriting renderer for role "${role}"`);
     }
-    fieldRenderers.set(role, component);
+  }
+  fieldRenderers.set(role, component);
 }
 
 /**
@@ -32,12 +32,12 @@ export function registerField(role: string, component: ComponentType<FieldProps>
  * @returns The component or undefined
  */
 export function getFieldRenderer(role: string): ComponentType<FieldProps> | undefined {
-    return fieldRenderers.get(role);
+  return fieldRenderers.get(role);
 }
 
 /**
  * Get all registered roles (useful for debugging or listing available fields)
  */
 export function getRegisteredRoles(): string[] {
-    return Array.from(fieldRenderers.keys());
+  return Array.from(fieldRenderers.keys());
 }

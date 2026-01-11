@@ -13,8 +13,8 @@
 
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { ActionProps } from '@/components/types/Element/Action/Action.types';
-import { getRoleConfig, hasRenderer } from './role-registry';
 import { ButtonAction } from './renderers/ButtonAction';
+import { getRoleConfig, hasRenderer } from './role-registry';
 
 /**
  * Action 컴포넌트
@@ -30,7 +30,6 @@ export function Action({
   prominence,
   intent,
   density,
-  size, // ✨ NEW
   behavior,
   disabled,
   confirm,
@@ -47,12 +46,6 @@ export function Action({
   const computedProminence = prominence ?? ctx.prominence ?? 'Standard';
   const computedIntent = intent ?? ctx.intent ?? 'Neutral';
   const computedDensity = density ?? ctx.density ?? 'Standard';
-
-  // size prop이 있으면 사용, 없으면 density에서 유도 (v4.1)
-  const computedSize = size ?? (
-    computedDensity === 'Compact' ? 'sm' :
-      computedDensity === 'Comfortable' ? 'lg' : 'md'
-  );
 
   if (hidden) return null;
 
@@ -144,7 +137,6 @@ export function Action({
     computedProminence,
     computedIntent,
     computedDensity: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
-    computedSize: computedSize as 'xs' | 'sm' | 'md' | 'lg' | 'icon', // ✨ NEW
     isDisabled,
     handleClick,
     Element,

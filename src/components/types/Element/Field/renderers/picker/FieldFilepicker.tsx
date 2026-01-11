@@ -13,11 +13,12 @@
  */
 
 import { CloudUpload, File as FileIcon, Image as ImageIcon, Trash2, X } from 'lucide-react';
-import React, { useRef, useState } from 'react';
+import type React from 'react';
+import { useRef, useState } from 'react';
+import { Text } from '@/components/types/Element/Text/Text';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
-import { fieldWrapperStyles, labelStyles, errorStyles } from '../../styles/field.styles';
-import { Text } from '@/components/types/Element/Text/Text';
+import { errorStyles, fieldWrapperStyles, labelStyles } from '../../styles/field.styles';
 
 export interface FieldFilepickerProps {
   label: string;
@@ -119,7 +120,7 @@ export function FieldFilepicker(props: FieldFilepickerProps) {
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / k ** i).toFixed(2)) + ' ' + sizes[i];
   };
 
   return (
@@ -149,17 +150,21 @@ export function FieldFilepicker(props: FieldFilepickerProps) {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           className={cn(
-            "border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-center transition-all cursor-pointer group",
+            'border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center text-center transition-all cursor-pointer group',
             isDragOver
-              ? "border-accent bg-accent/5"
-              : "border-border bg-layer-1 hover:border-accent/50 hover:bg-layer-2",
-            disabled && "opacity-50 cursor-not-allowed pointer-events-none"
+              ? 'border-accent bg-accent/5'
+              : 'border-border bg-layer-1 hover:border-accent/50 hover:bg-layer-2',
+            disabled && 'opacity-50 cursor-not-allowed pointer-events-none'
           )}
         >
-          <div className={cn(
-            "p-3 rounded-full mb-3 transition-colors",
-            isDragOver ? "bg-accent/10 text-accent" : "bg-layer-2 text-muted group-hover:text-text group-hover:bg-layer-3"
-          )}>
+          <div
+            className={cn(
+              'p-3 rounded-full mb-3 transition-colors',
+              isDragOver
+                ? 'bg-accent/10 text-accent'
+                : 'bg-layer-2 text-muted group-hover:text-text group-hover:bg-layer-3'
+            )}
+          >
             <CloudUpload size={24} />
           </div>
           <Text role="Body" prominence="Strong" content="Click to upload or drag and drop" />
@@ -167,7 +172,7 @@ export function FieldFilepicker(props: FieldFilepickerProps) {
             role="Body"
             prominence="Subtle"
             className="text-xs mt-1"
-            content={type === 'image' ? "SVG, PNG, JPG or GIF" : "Any file types"}
+            content={type === 'image' ? 'SVG, PNG, JPG or GIF' : 'Any file types'}
           />
         </div>
       ) : (
@@ -189,8 +194,18 @@ export function FieldFilepicker(props: FieldFilepickerProps) {
 
           {/* Info */}
           <div className="flex-1 min-w-0">
-            <Text role="Body" prominence="Strong" className="truncate" content={selectedFile.name} />
-            <Text role="Body" prominence="Subtle" className="text-xs" content={formatFileSize(selectedFile.size)} />
+            <Text
+              role="Body"
+              prominence="Strong"
+              className="truncate"
+              content={selectedFile.name}
+            />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              className="text-xs"
+              content={formatFileSize(selectedFile.size)}
+            />
           </div>
 
           {/* Remove Button */}

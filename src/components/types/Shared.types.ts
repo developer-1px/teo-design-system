@@ -20,7 +20,11 @@ export type Prominence =
   | 'Hero' // (L1) 최상위: 화면 전체를 압도 (Full-width, Huge typography)
   | 'Strong' // (L2) 강조: 시선을 끄는 솔리드 컬러 (Filled Button, Primary CTA)
   | 'Standard' // (L3) 표준: 일반적인 UI 요소 (대부분의 버튼, 텍스트, 카드)
-  | 'Subtle'; // (L4) 미세: 배경에 녹아드는 요소 (Caption, Placeholder, Disabled)
+  | 'Subtle' // (L4) 미세: 배경에 녹아드는 요소 (Caption, Placeholder, Disabled)
+  | 'Secondary' // Legacy alias
+  | 'Tertiary' // Legacy alias
+  | 'Elevated' // Legacy alias
+  | 'None'; // Legacy alias (Full transparent/No prominence)
 
 /**
  * Density - 정보 밀도 (Spatial Hierarchy)
@@ -37,10 +41,30 @@ export type Density =
 export type Intent =
   | 'Neutral' // 기본 (Gray/Black)
   | 'Brand' // 브랜드 강조 (Primary Color)
+  | 'Accent' // Legacy alias (Brand/Highlight)
   | 'Positive' // 긍정/성공 (Green) - v1.0.0의 Success
   | 'Caution' // 주의/경고 (Yellow/Orange) - v1.0.0의 Warning
   | 'Critical' // 위험/파괴 (Red) - v1.0.0의 Danger
   | 'Info'; // 참고 정보 (Blue)
+
+export interface LayoutContextValue {
+  prominence?: Prominence;
+  role?: string; // Generic role (Section or Block)
+  density?: Density;
+  intent?: Intent;
+  depth: number;
+  layout?: string; // v5.1: Page Layout name (e.g. "ide", "docs")
+  mode?: 'view' | 'edit';
+  type?: string; // v5.2: Section Type (Bar, Panel, etc.)
+  scale?: any; // v5.2: Type Scale Tokens
+
+  // v5.1 Section Design Context (Optional propagated properties)
+  preferIconOnly?: boolean;
+  truncateText?: boolean;
+  tooltipRequired?: boolean;
+  direction?: 'horizontal' | 'vertical' | 'none';
+  sizeMode?: 'fixed' | 'narrow' | 'medium' | 'wide' | 'flexible' | 'readable' | 'auto';
+}
 
 /**
  * Role - UI 요소의 정체성 (What is it?)

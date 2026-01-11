@@ -129,7 +129,11 @@ export const SlideList = ({
                 role="Container"
                 className="absolute top-1.5 left-1.5 z-10 bg-layer-1/90 backdrop-blur-sm rounded px-1.5 py-0.5 shadow-sm"
               >
-                <Text role="Caption" prominence="Strong" className="font-semibold text-[10px] leading-none">
+                <Text
+                  role="Caption"
+                  prominence="Strong"
+                  className="font-semibold text-[10px] leading-none"
+                >
                   {index + 1}
                 </Text>
               </Block>
@@ -144,7 +148,10 @@ export const SlideList = ({
                 role="Container"
                 className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               >
-                <Text role="Caption" className="text-white text-[10px] font-medium truncate leading-tight">
+                <Text
+                  role="Caption"
+                  className="text-white text-[10px] font-medium truncate leading-tight"
+                >
                   {slide.title || '제목 없음'}
                 </Text>
               </Block>

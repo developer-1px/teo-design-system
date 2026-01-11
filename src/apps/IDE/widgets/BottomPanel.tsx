@@ -142,7 +142,11 @@ const ProblemsContent = () => {
   return (
     <Block role="Stack" gap={1}>
       {problems.map((problem, idx) => (
-        <Block key={idx} role="Group" className="hover:bg-surface-hover p-2 cursor-pointer rounded-sm">
+        <Block
+          key={idx}
+          role="Group"
+          className="hover:bg-surface-hover p-2 cursor-pointer rounded-sm"
+        >
           <Block role="Row" layout="inline" align="start" className="gap-3">
             <Action role="IconButton" icon="AlertCircle" disabled className="shrink-0 mt-[3px]" />
             <Block role="Stack" gap={0} className="flex-1">
@@ -176,12 +180,7 @@ const OutputContent = () => {
         content="[12:34:57] Compiling TypeScript..."
         size="sm"
       />
-      <Text
-        role="Code"
-        intent="Positive"
-        content="[12:34:58] Compilation successful"
-        size="sm"
-      />
+      <Text role="Code" intent="Positive" content="[12:34:58] Compilation successful" size="sm" />
       <Text
         role="Code"
         prominence="Standard"

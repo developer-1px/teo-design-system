@@ -55,7 +55,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
 
       let startIndex = 0;
       if (currentId) {
-        const currentIndex = items.findIndex(item => item.id === currentId);
+        const currentIndex = items.findIndex((item) => item.id === currentId);
         if (currentIndex !== -1) {
           startIndex = currentIndex;
         }
@@ -93,7 +93,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
    */
   const setFocusedId = useCallback(
     (id: string | null) => {
-      setState(prev => ({ ...prev, focusedId: id }));
+      setState((prev) => ({ ...prev, focusedId: id }));
       onFocusChange?.(id);
     },
     [onFocusChange]
@@ -126,7 +126,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
    */
   const focusFirst = useCallback(() => {
     const items = getSortedItems();
-    const first = items.find(item => !skipDisabled || !item.disabled);
+    const first = items.find((item) => !skipDisabled || !item.disabled);
     if (first) {
       setFocusedId(first.id);
       first.ref.focus();
@@ -138,7 +138,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
    */
   const focusLast = useCallback(() => {
     const items = getSortedItems();
-    const last = items.reverse().find(item => !skipDisabled || !item.disabled);
+    const last = items.reverse().find((item) => !skipDisabled || !item.disabled);
     if (last) {
       setFocusedId(last.id);
       last.ref.focus();
@@ -163,7 +163,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
    * Register item
    */
   const registerItem = useCallback((item: NavigableItem) => {
-    setState(prev => {
+    setState((prev) => {
       const newItems = new Map(prev.items);
       newItems.set(item.id, item);
       return { ...prev, items: newItems };
@@ -174,7 +174,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
    * Unregister item
    */
   const unregisterItem = useCallback((id: string) => {
-    setState(prev => {
+    setState((prev) => {
       const newItems = new Map(prev.items);
       newItems.delete(id);
       return { ...prev, items: newItems };
@@ -185,7 +185,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
    * Update item
    */
   const updateItem = useCallback((id: string, updates: Partial<NavigableItem>) => {
-    setState(prev => {
+    setState((prev) => {
       const item = prev.items.get(id);
       if (!item) return prev;
 
@@ -209,13 +209,13 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
 
       // Update buffer
       const newBuffer = state.typeaheadBuffer + char.toLowerCase();
-      setState(prev => ({ ...prev, typeaheadBuffer: newBuffer }));
+      setState((prev) => ({ ...prev, typeaheadBuffer: newBuffer }));
 
       // Find matching item
       const items = getSortedItems();
-      const match = items.find(item =>
-        item.textValue.toLowerCase().startsWith(newBuffer) &&
-        (!skipDisabled || !item.disabled)
+      const match = items.find(
+        (item) =>
+          item.textValue.toLowerCase().startsWith(newBuffer) && (!skipDisabled || !item.disabled)
       );
 
       if (match) {
@@ -225,7 +225,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
 
       // Reset buffer after 500ms
       typeaheadTimeoutRef.current = setTimeout(() => {
-        setState(prev => ({ ...prev, typeaheadBuffer: '' }));
+        setState((prev) => ({ ...prev, typeaheadBuffer: '' }));
         typeaheadTimeoutRef.current = null;
       }, 500);
     },
@@ -270,10 +270,7 @@ export function useNavigable(props: Omit<NavigableProps, 'children'>): Navigable
   /**
    * Check if item is focused
    */
-  const isFocused = useCallback(
-    (id: string) => state.focusedId === id,
-    [state.focusedId]
-  );
+  const isFocused = useCallback((id: string) => state.focusedId === id, [state.focusedId]);
 
   /**
    * Get container props

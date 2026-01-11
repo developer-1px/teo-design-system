@@ -16,16 +16,22 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
    * padding - 카드 패딩
    */
   padding?: 'none' | 'sm' | 'md' | 'lg';
+  /**
+   * interactive - 호버 효과 및 클릭 가능 여부
+   */
+  interactive?: boolean;
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant = 'default', padding = 'md', children, ...props }, ref) => {
+  ({ className, variant = 'default', padding = 'md', interactive, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={cn(
           // Base styles
           'bg-surface-raised rounded-lg',
+          interactive &&
+            'cursor-pointer transition-all hover:ring-2 hover:ring-primary active:scale-[0.98]',
 
           // Variants
           {

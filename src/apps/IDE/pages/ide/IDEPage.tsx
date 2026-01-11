@@ -2,13 +2,12 @@
  * IDEPage - IDDL based IDE Application (IDDL v5.0 compliant)
  */
 
-import { useEffect, useState, useMemo } from 'react';
-import { buildFileTree, getFilePaths, loadFileContent } from '@/apps/IDE/lib/file-loader';
+import { useMemo, useState } from 'react';
+import { type FileNode, loadFileContent } from '@/apps/IDE/lib/file-loader';
 import { BottomPanel } from '@/apps/IDE/widgets/BottomPanel';
 import { CodeEditor } from '@/apps/IDE/widgets/editor/CodeEditor';
 import { ComponentPreview } from '@/apps/IDE/widgets/editor/ComponentPreview';
 import { EditorTabs } from '@/apps/IDE/widgets/editor/EditorTabs';
-import { type FileNode } from '@/apps/IDE/lib/file-loader';
 import { DebugView } from '@/apps/IDE/widgets/sidebar-views/DebugView';
 import { ExtensionsView } from '@/apps/IDE/widgets/sidebar-views/ExtensionsView';
 import { JsonView } from '@/apps/IDE/widgets/sidebar-views/JsonView';
@@ -21,14 +20,14 @@ import { TokensView } from '@/apps/IDE/widgets/sidebar-views/TokensView';
 import { RightNav } from '@/apps/IDE/widgets/workspace/RightNav';
 import { WorkspaceNav } from '@/apps/IDE/widgets/workspace/WorkspaceNav';
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
 import { SearchModalDSL as SearchModal } from '@/components/types/Overlay/SearchModalDSL';
 import { SettingsModalDSL as SettingsModal } from '@/components/types/Overlay/SettingsModalDSL';
 import { Page } from '@/components/types/Page/Page.tsx';
 import { RightBar } from '@/components/types/Section/role/RightBar.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { type TreeNode } from '@/shared/lib/keyboard/useTreeNavigation';
+import type { TreeNode } from '@/shared/lib/keyboard/useTreeNavigation';
 
 interface OpenFile {
   path: string;
@@ -40,7 +39,7 @@ export const IDEPage = () => {
   const [currentView, setCurrentView] = useState('files');
   const [rightPanelView, setRightPanelView] = useState<string | null>('ai');
   const [showBottomPanel, setShowBottomPanel] = useState(false);
-  const [fileTreeData, setFileTreeData] = useState<FileNode[]>([]);
+  const [fileTreeData] = useState<FileNode[]>([]);
   const [openFiles, setOpenFiles] = useState<OpenFile[]>([]);
   const [activeFilePath, setActiveFilePath] = useState<string | null>(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
@@ -157,17 +156,15 @@ export const IDEPage = () => {
 
       {/* 2. Primary Sidebar */}
       {currentView !== 'none' && (
-        <Section
-          role="PrimarySidebar"
-        >
+        <Section role="PrimarySidebar">
           {currentView === 'files' && (
             <Block role="Stack" gap={0} className="h-full">
-              <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default h-9 items-center flex-none">
-                <Text
-                  role="Caption"
-                  prominence="Subtle"
-                  content="EXPLORER"
-                />
+              <Block
+                role="Toolbar"
+                density="Compact"
+                className="px-3 border-b border-border-default h-9 items-center flex-none"
+              >
+                <Text role="Caption" prominence="Subtle" content="EXPLORER" />
               </Block>
               <Block role="ScrollArea" className="flex-1">
                 <Block
@@ -222,7 +219,12 @@ export const IDEPage = () => {
       </Section>
 
       {/* 7. Footer */}
-      <Section role="Footer" prominence="Subtle" density="Compact" className="border-t border-border-default">
+      <Section
+        role="Footer"
+        prominence="Subtle"
+        density="Compact"
+        className="border-t border-border-default"
+      >
         <Block role="Toolbar" justify="between" align="center" padding="xs" className="w-full">
           {/* Left: Git Branch & Errors */}
           <Block role="Inline" gap="sm" align="center">

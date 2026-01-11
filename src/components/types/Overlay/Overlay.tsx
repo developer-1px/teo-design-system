@@ -30,8 +30,8 @@ import { X } from 'lucide-react';
 import { useEffect } from 'react';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { OverlayProps } from '@/components/types/Overlay/Overlay.types';
-import { getRoleConfig } from './role-registry';
 import { cn } from '@/shared/lib/utils';
+import { getRoleConfig } from './role-registry';
 
 /**
  * Overlay density variants (CVA) - for padding

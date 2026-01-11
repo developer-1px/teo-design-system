@@ -1,7 +1,7 @@
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/types/Block/Block';
 import { Field } from '@/components/types/Element/Field/Field';
 import { Text } from '@/components/types/Element/Text/Text';
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
 export function FieldShowcasePage() {
   const categories = [
@@ -45,7 +45,12 @@ export function FieldShowcasePage() {
         {/* 1.1 Textbox */}
         <Block role="Stack" gap={4} className="mt-8">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="1.1 Textbox" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="1.1 Textbox"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -88,7 +93,12 @@ export function FieldShowcasePage() {
         {/* 1.2 Searchbox */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="1.2 Searchbox" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="1.2 Searchbox"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -110,7 +120,12 @@ export function FieldShowcasePage() {
         {/* 1.3 Spinbutton */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="1.3 Spinbutton" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="1.3 Spinbutton"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -132,7 +147,12 @@ export function FieldShowcasePage() {
         {/* 1.4 Otp */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="1.4 Otp" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="1.4 Otp"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -176,7 +196,12 @@ export function FieldShowcasePage() {
         {/* 2.1 Checkbox */}
         <Block role="Stack" gap={4} className="mt-8">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="2.1 Checkbox" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="2.1 Checkbox"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -198,7 +223,12 @@ export function FieldShowcasePage() {
         {/* 2.2 Switch */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="2.2 Switch" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="2.2 Switch"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -220,7 +250,12 @@ export function FieldShowcasePage() {
         {/* 2.3 Radio */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="2.3 Radio" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="2.3 Radio"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -249,7 +284,12 @@ export function FieldShowcasePage() {
         {/* 2.4 Combobox */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="2.4 Combobox" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="2.4 Combobox"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -296,7 +336,12 @@ export function FieldShowcasePage() {
         {/* 2.5 Listbox */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="2.5 Listbox" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="2.5 Listbox"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -348,7 +393,12 @@ export function FieldShowcasePage() {
         {/* 3.1 Slider */}
         <Block role="Stack" gap={4} className="mt-8">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="3.1 Slider" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="3.1 Slider"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -377,7 +427,12 @@ export function FieldShowcasePage() {
         {/* 3.2 Colorpicker */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="3.2 Colorpicker" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="3.2 Colorpicker"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -459,7 +514,12 @@ export function FieldShowcasePage() {
         {/* 4.1 Datepicker */}
         <Block role="Stack" gap={4} className="mt-8">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="4.1 Datepicker" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="4.1 Datepicker"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -468,15 +528,30 @@ export function FieldShowcasePage() {
           </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
-            <Field role="Datepicker" label="Date Picker" model="demo.date" spec={{ type: 'date' }} />
-            <Field role="Datepicker" label="Date & Time Picker" model="demo.datetime" spec={{ type: 'datetime' }} />
+            <Field
+              role="Datepicker"
+              label="Date Picker"
+              model="demo.date"
+              spec={{ type: 'date' }}
+            />
+            <Field
+              role="Datepicker"
+              label="Date & Time Picker"
+              model="demo.datetime"
+              spec={{ type: 'datetime' }}
+            />
           </Block>
         </Block>
 
         {/* 4.2 Timepicker */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="4.2 Timepicker" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="4.2 Timepicker"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -485,14 +560,24 @@ export function FieldShowcasePage() {
           </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
-            <Field role="Datepicker" label="Time Picker" model="demo.time" spec={{ type: 'time' }} />
+            <Field
+              role="Datepicker"
+              label="Time Picker"
+              model="demo.time"
+              spec={{ type: 'time' }}
+            />
           </Block>
         </Block>
 
         {/* 4.3 Filepicker */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="4.3 Filepicker" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="4.3 Filepicker"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -513,7 +598,12 @@ export function FieldShowcasePage() {
         {/* 4.4 Signature */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="4.4 Signature" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="4.4 Signature"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -540,7 +630,12 @@ export function FieldShowcasePage() {
         {/* 4.5 Calendar */}
         <Block role="Stack" gap={4} className="mt-12">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="4.5 Calendar" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="4.5 Calendar"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -548,13 +643,12 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable" className="mt-4">
             <Field
-              role="Calendar"
+              role="DateInput"
               label="Meeting Date"
               model="demo.meetingDate"
               defaultValue="2026-01-11"
-              spec={{}}
             />
           </Block>
         </Block>
@@ -584,7 +678,12 @@ export function FieldShowcasePage() {
         {/* 5.1 Hidden */}
         <Block role="Stack" gap={4} className="mt-8">
           <Block role="Stack" gap={1}>
-            <Text role="Title" prominence="Strong" content="5.1 Hidden" className="text-xl font-semibold" />
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="5.1 Hidden"
+              className="text-xl font-semibold"
+            />
             <Text
               role="Body"
               prominence="Subtle"
@@ -603,7 +702,11 @@ export function FieldShowcasePage() {
             <code className="text-xs text-muted font-mono bg-layer-1 px-3 py-2 rounded border border-border">
               {'<Field role="Hidden" model="demo.userId" value="12345" />'}
             </code>
-            <Text role="Body" prominence="Subtle" content="👆 Check browser DevTools to see the hidden input" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="👆 Check browser DevTools to see the hidden input"
+            />
           </Block>
         </Block>
       </Block>
@@ -638,11 +741,7 @@ export function FieldShowcasePage() {
               content="Prominence Levels"
               className="text-xl font-semibold"
             />
-            <Text
-              role="Body"
-              prominence="Subtle"
-              content="Hero → Standard → Strong → Subtle"
-            />
+            <Text role="Body" prominence="Subtle" content="Hero → Standard → Strong → Subtle" />
           </Block>
 
           <Block role="Stack" gap={6} className="mt-4">

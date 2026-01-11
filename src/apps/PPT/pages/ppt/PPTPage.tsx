@@ -19,10 +19,10 @@ import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas.t
 import { FormatSidebar } from '@/apps/PPT/widgets/presentation/FormatSidebar.tsx';
 import { PresentationToolbar } from '@/apps/PPT/widgets/presentation/PresentationToolbar.tsx';
 import { type Slide, SlideList } from '@/apps/PPT/widgets/presentation/SlideList.tsx';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
+import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
 import { Page } from '@/components/types/Page/Page.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
 import { PresentationModePage } from './PresentationModePage';
 
 // 초기 샘플 슬라이드 데이터 (fallback)
@@ -48,6 +48,7 @@ const fallbackSlides: Slide[] = [
 ];
 
 export const PPTPage = () => {
+  const [title] = useState('AI 시대: 결정, 책임, 경험, 소통');
   const [slides, setSlides] = useState<Slide[]>(fallbackSlides);
   const [activeSlideId, setActiveSlideId] = useState<string>('1');
   const [isPresentationMode, setIsPresentationMode] = useState(false);
@@ -184,6 +185,17 @@ export const PPTPage = () => {
   // 편집 모드 (기본) - Refactored to Studio Layout (IDDL v5.0)
   return (
     <Page title="Presentation" role="Application" layout="Studio" density="Compact">
+      {/* Header: Global Toolbar */}
+      <Section role="Header">
+        <PresentationToolbar
+          title={title}
+          onPrevSlide={handlePrevSlide}
+          onNextSlide={handleNextSlide}
+          onPlay={handlePlay}
+          canGoPrev={currentIndex > 0}
+          canGoNext={currentIndex < slides.length - 1}
+        />
+      </Section>
 
       {/* Primary Sidebar: Slide List */}
       <Section
@@ -235,12 +247,7 @@ export const PPTPage = () => {
 
       {/* Error Toast */}
       {errorMessage && (
-        <Overlay
-          role="Toast"
-          isOpen={true}
-          intent="Critical"
-          onClose={() => setErrorMessage(null)}
-        >
+        <Overlay role="Toast" isOpen={true} intent="Critical" onClose={() => setErrorMessage(null)}>
           <Text role="Body" content={errorMessage} />
         </Overlay>
       )}

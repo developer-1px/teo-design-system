@@ -9,9 +9,13 @@
 import type { BaseRoleConfig } from '../../shared/role.base';
 import type { ActionProps } from './Action.types';
 import { ButtonAction } from './renderers/ButtonAction';
+import { ChipAction } from './renderers/ChipAction';
 import { IconButtonAction } from './renderers/IconButtonAction';
 import { LinkAction } from './renderers/LinkAction';
+import { ListItemAction } from './renderers/ListItemAction';
+import { MenuItemAction } from './renderers/MenuItemAction';
 import { ResizeHandleAction } from './renderers/ResizeHandleAction';
+import { TabAction } from './renderers/TabAction';
 
 /**
  * Action Role Configuration
@@ -68,8 +72,6 @@ export const ROLE_REGISTRY: Record<string, ActionRoleConfig> = {
 
   /**
    * ResizeHandle - 리사이즈 핸들 (v4.1)
-   *
-   * 그리드 영역 사이에서 크기를 조절하는 핸들
    */
   ResizeHandle: {
     htmlTag: 'div',
@@ -77,6 +79,85 @@ export const ROLE_REGISTRY: Record<string, ActionRoleConfig> = {
     baseStyles: '',
     renderer: ResizeHandleAction,
     description: 'Grid-aware resize handle',
+  },
+
+  // ... (existing code)
+
+  // ==================== Migrated from Block ====================
+  Tab: {
+    htmlTag: 'button',
+    ariaProps: { role: 'tab' },
+    baseStyles: '', // Renderer handles styles
+    renderer: TabAction,
+    description: 'Tab Item (Migrated)',
+  },
+  MenuItem: {
+    htmlTag: 'button',
+    ariaProps: { role: 'menuitem' },
+    baseStyles: '', // Renderer handles styles
+    renderer: MenuItemAction,
+    description: 'Menu Item (Migrated)',
+  },
+  ListItem: {
+    htmlTag: 'div',
+    ariaProps: { role: 'listitem' },
+    baseStyles: '', // Renderer handles styles
+    renderer: ListItemAction,
+    description: 'List Item (Migrated)',
+  },
+  Chip: {
+    htmlTag: 'button',
+    baseStyles: '', // Renderer handles styles
+    renderer: ChipAction,
+    description: 'Chip/Tag (Interactive)',
+  },
+  BreadcrumbItem: {
+    htmlTag: 'a', // or button
+    baseStyles: 'hover:text-text-primary hover:underline',
+    renderer: LinkAction,
+    description: 'Breadcrumb Item',
+  },
+  StepItem: {
+    htmlTag: 'button',
+    baseStyles: 'flex items-center gap-2',
+    renderer: ButtonAction,
+    description: 'Stepper Item',
+  },
+  PageButton: {
+    htmlTag: 'button',
+    baseStyles: 'w-8 h-8 flex items-center justify-center rounded hover:bg-surface-hover',
+    renderer: ButtonAction,
+    description: 'Pagination Item',
+  },
+  Notification: {
+    htmlTag: 'div',
+    baseStyles: 'p-4 border-b border-border-default hover:bg-surface-hover cursor-pointer',
+    renderer: ButtonAction, // Placeholder
+    description: 'Notification Item',
+  },
+  DropdownTrigger: {
+    htmlTag: 'button',
+    baseStyles: '',
+    renderer: ButtonAction,
+    description: 'Dropdown Trigger',
+  },
+  AccordionTrigger: {
+    htmlTag: 'button',
+    baseStyles: 'flex items-center justify-between w-full py-2 font-medium',
+    renderer: ButtonAction,
+    description: 'Accordion Trigger',
+  },
+  TooltipTrigger: {
+    htmlTag: 'span',
+    baseStyles: 'cursor-help',
+    renderer: ButtonAction,
+    description: 'Tooltip Trigger',
+  },
+  TreeItem: {
+    htmlTag: 'div',
+    baseStyles: 'flex items-center gap-1 py-0.5 px-2 hover:bg-surface-hover cursor-pointer',
+    renderer: ButtonAction,
+    description: 'Tree Node',
   },
 };
 
@@ -90,7 +171,10 @@ export function getRoleConfig(role: string): ActionRoleConfig {
   const config = ROLE_REGISTRY[role];
 
   if (!config) {
-    console.warn(`[Action] Unknown role "${role}". Using Button fallback. Available roles:`, Object.keys(ROLE_REGISTRY));
+    console.warn(
+      `[Action] Unknown role "${role}". Using Button fallback. Available roles:`,
+      Object.keys(ROLE_REGISTRY)
+    );
 
     // Fallback to Button
     return ROLE_REGISTRY.Button;

@@ -16,9 +16,9 @@ import { getInputStyles } from './styles/field.styles'; // Ensure styles are ava
 // Types
 export type { FieldOption } from '@/components/types/Element/Field/Field.types';
 
+import { FieldTextbox } from './renderers/input/FieldTextbox'; // Fallback
 // Registry
 import { getFieldRenderer } from './role-registry';
-import { FieldTextbox } from './renderers/input/FieldTextbox'; // Fallback
 
 /**
  * Field view text variants (CVA)
@@ -109,8 +109,35 @@ export function Field({ as, ...props }: FieldProps) {
   }
 
   // 2. Edit Mode (Resolve Renderer via Registry)
-  const role = props.role;
-  const Renderer = getFieldRenderer(role);
+  // IDDL 2.0 conversion: Map legacy 'type' to 'role' if role is missing
+  let role = props.role;
+  if (!role && props.type) {
+    const typeMapping: Record<string, any> = {
+      text: 'Textbox',
+      number: 'Spinbutton',
+      currency: 'Spinbutton',
+      email: 'Textbox',
+      url: 'Textbox',
+      phone: 'Textbox',
+      password: 'Textbox',
+      textarea: 'Textbox',
+      date: 'Datepicker',
+      datetime: 'Datepicker',
+      time: 'Timepicker',
+      select: 'Select',
+      multiselect: 'Combobox',
+      radio: 'Radio',
+      checkbox: 'Checkbox',
+      boolean: 'Checkbox',
+      color: 'Colorpicker',
+      rating: 'Rating',
+      range: 'Slider',
+      file: 'Filepicker',
+    };
+    role = typeMapping[props.type] || 'Textbox';
+  }
+
+  const Renderer = getFieldRenderer(role || 'Textbox');
 
   // 3. Fallback Handling
   if (!Renderer) {
@@ -119,22 +146,31 @@ export function Field({ as, ...props }: FieldProps) {
     }
     // Fallback to Textbox
     return (
-      <Component data-role={props.role} data-error="unknown-role">
+      <Component data-role={role} data-error="unknown-role">
         <FieldTextbox {...(props as any)} role="Textbox" />
       </Component>
     );
   }
 
   // 4. Render Field
+  // Merge compatibility props into spec for the renderer
+  const mergedSpec = {
+    ...props.spec,
+    ...(props.options ? { options: props.options } : {}),
+    ...(props.constraints ? props.constraints : {}),
+    ...(props.type === 'textarea' ? { multiline: true } : {}),
+    ...(props.type === 'datetime' ? { variant: 'datetime' } : {}),
+  };
+
   return (
     <Component
       data-dsl-component="field"
       data-mode={mode}
-      data-role={props.role}
+      data-role={role}
       data-prominence={computedProminence}
       data-intent={computedIntent}
     >
-      <Renderer {...props} {...(props.spec as any)} />
+      <Renderer {...props} role={role as any} spec={mergedSpec as any} />
     </Component>
   );
 }

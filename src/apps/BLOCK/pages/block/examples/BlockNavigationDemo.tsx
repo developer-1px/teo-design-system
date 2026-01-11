@@ -52,18 +52,18 @@ export function BlockNavigationDemo() {
         />
       </Block>
 
-      {/* Steps */}
+      {/* Stepper */}
       <Block role="Card" className="p-4 gap-4">
-        <Text role="Label" content="Steps (role='Steps')" />
-        <Block role="Steps" className="items-center !flex-row">
-          <Block role="Inline" gap="2">
+        <Text role="Label" content="Stepper (role='Stepper')" />
+        <Block role="Stepper" className="items-center !flex-row">
+          <Block role="Inline" density="Compact">
             <div className="w-6 h-6 rounded-full bg-surface-accent-default text-text-inverse flex items-center justify-center text-xs">
               1
             </div>
             <Text role="Body" content="Step 1" />
           </Block>
           <div className="w-8 h-px bg-border-default" />
-          <Block role="Inline" gap="2">
+          <Block role="Inline" density="Compact">
             <div className="w-6 h-6 rounded-full bg-surface-raised border border-border-default flex items-center justify-center text-xs">
               2
             </div>

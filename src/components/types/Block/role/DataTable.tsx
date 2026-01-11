@@ -10,11 +10,10 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { ChevronDown, ChevronsUpDown, ChevronUp, Grid3x3, Rows3 } from 'lucide-react';
+import { ChevronDown, ChevronsUpDown, ChevronUp, Grid3x3, Rows3, Search, X } from 'lucide-react';
 import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react'; // ✨ NEW
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Search, X } from 'lucide-react';
 import { Kbd } from '@/components/types/Element/Text/role/Kbd.tsx';
 import { useNavigableCursor } from '@/shared/lib/keyboard';
 
@@ -29,8 +28,9 @@ interface CellPosition {
  * IDDL Column Definition (v4.1)
  * cell renderer must return a ReactElement (IDDL Component preferred)
  */
-export interface IDDLColumnDef<TData, TValue = unknown> extends Omit<ColumnDef<TData, TValue>, 'cell'> {
-  cell: (props: CellContext<TData, TValue>) => ReactElement;
+export interface IDDLColumnDef<TData, TValue = unknown>
+  extends Omit<ColumnDef<TData, TValue>, 'cell'> {
+  cell?: (props: CellContext<TData, TValue>) => ReactElement;
 }
 
 interface DataTableProps<TData, TValue> {
@@ -112,7 +112,7 @@ export function DataTable<TData, TValue>({
   const { cursorIndex, getItemProps } = useNavigableCursor({
     type: 'list',
     items: rows,
-    onSelect: (row) => { },
+    onSelect: (row) => {},
   });
 
   // Cell 선택 모드 키보드 네비게이션
@@ -263,14 +263,14 @@ export function DataTable<TData, TValue>({
         <Block role="Inline" layout="inline" density="Compact" className="gap-1">
           <Action
             icon={Rows3}
-            prominence={selectionMode === 'row' ? 'Primary' : 'Secondary'}
+            prominence={selectionMode === 'row' ? 'Strong' : 'Standard'}
             intent={selectionMode === 'row' ? 'Brand' : 'Neutral'}
             onClick={() => setSelectionMode('row')}
             title="Row selection mode"
           />
           <Action
             icon={Grid3x3}
-            prominence={selectionMode === 'cell' ? 'Primary' : 'Secondary'}
+            prominence={selectionMode === 'cell' ? 'Strong' : 'Standard'}
             intent={selectionMode === 'cell' ? 'Brand' : 'Neutral'}
             onClick={() => setSelectionMode('cell')}
             title="Cell selection mode"
@@ -283,8 +283,9 @@ export function DataTable<TData, TValue>({
         <div className="text-sm" style={{ minWidth: 'max-content' }}>
           {/* Header */}
           <div
-            className={`sticky top-0 z-10 bg-surface/95 backdrop-blur-sm transition-colors ${hoveredRowIndex !== null ? 'bg-accent/5' : ''
-              }`}
+            className={`sticky top-0 z-10 bg-surface/95 backdrop-blur-sm transition-colors ${
+              hoveredRowIndex !== null ? 'bg-accent/5' : ''
+            }`}
           >
             {table.getHeaderGroups().map((headerGroup) => (
               <div key={headerGroup.id} className="flex">
@@ -295,8 +296,9 @@ export function DataTable<TData, TValue>({
                   return (
                     <div
                       key={header.id}
-                      className={`text-left font-medium text-muted whitespace-nowrap ${density === 'compact' ? 'px-2 py-1 text-xs' : 'px-3 py-1.5 text-sm'
-                        }`}
+                      className={`text-left font-medium text-muted whitespace-nowrap ${
+                        density === 'compact' ? 'px-2 py-1 text-xs' : 'px-3 py-1.5 text-sm'
+                      }`}
                       style={{ width: `${width}px`, minWidth: `${width}px` }}
                     >
                       {header.isPlaceholder ? null : (
@@ -362,28 +364,29 @@ export function DataTable<TData, TValue>({
                         }
                       }
                     }}
-                    className={`flex absolute transition-colors ${selectionMode === 'row' ? 'cursor-pointer' : ''
-                      } ${
+                    className={`flex absolute transition-colors ${
+                      selectionMode === 'row' ? 'cursor-pointer' : ''
+                    } ${
                       // Row 선택 모드
                       selectionMode === 'row'
                         ? // 선택된 행: 고정 스타일 (hover 없음)
-                        isSelected
+                          isSelected
                           ? 'bg-accent/10 ring-2 ring-accent ring-inset'
                           : // Hover된 행: 얇은 반투명 배경
-                          isHovered
+                            isHovered
                             ? 'bg-black/[0.02]'
                             : // 키보드 커서: focus outline만
-                            isCursor
+                              isCursor
                               ? 'ring-2 ring-accent ring-inset'
                               : // 일반 행: zebra striping만
-                              isEven
+                                isEven
                                 ? 'bg-surface'
                                 : 'bg-surface-sunken'
                         : // Cell 선택 모드: zebra striping만
-                        isEven
+                          isEven
                           ? 'bg-surface'
                           : 'bg-surface-sunken'
-                      }`}
+                    }`}
                     style={{
                       height: `${virtualRow.size}px`,
                       transform: `translateY(${virtualRow.start}px)`,
@@ -410,12 +413,15 @@ export function DataTable<TData, TValue>({
                               setSelectedCell({ rowIndex: virtualRow.index, colIndex });
                             }
                           }}
-                          className={`text-text whitespace-nowrap overflow-hidden text-ellipsis flex items-center transition-colors ${density === 'compact' ? 'px-2 py-0.5 text-xs' : 'px-3 py-1.5 text-sm'
-                            } ${selectionMode === 'cell' ? 'cursor-pointer hover:bg-black/[0.02]' : ''
-                            } ${isCellSelected
+                          className={`text-text whitespace-nowrap overflow-hidden text-ellipsis flex items-center transition-colors ${
+                            density === 'compact' ? 'px-2 py-0.5 text-xs' : 'px-3 py-1.5 text-sm'
+                          } ${
+                            selectionMode === 'cell' ? 'cursor-pointer hover:bg-black/[0.02]' : ''
+                          } ${
+                            isCellSelected
                               ? 'bg-accent/10 ring-2 ring-accent ring-inset !font-medium'
                               : ''
-                            }`}
+                          }`}
                           style={{ width: `${width}px`, minWidth: `${width}px` }}
                         >
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}

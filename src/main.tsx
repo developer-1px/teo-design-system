@@ -11,6 +11,7 @@ initializeTheme();
 
 // Initialize IDDL Fields (Register Spec Roles)
 import { registerDefaultFields } from '@/components/types/Element/Field/init-fields';
+
 registerDefaultFields();
 
 // Note: AppProvider moved inside App.tsx (needs to be inside Router context)

@@ -19,7 +19,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebarDSL } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL';
 import { Block } from '@/components/types/Block/Block';
-import { DataTable } from '@/components/types/Block/role/DataTable.tsx';
+import { DataTable, type IDDLColumnDef } from '@/components/types/Block/role/DataTable.tsx';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Field } from '@/components/types/Element/Field/Field';
 import { Badge } from '@/components/types/Element/Text/role/Badge';
@@ -98,13 +98,15 @@ export const ServerProductsViewDSL = () => {
         const bVal = (b as JsonObject)[sortColumn];
 
         if (aVal === bVal) return 0;
+        if (aVal === null || aVal === undefined) return 1;
+        if (bVal === null || bVal === undefined) return -1;
 
         const comparison = aVal < bVal ? -1 : 1;
         return sortDirection === 'asc' ? comparison : -comparison;
       });
     }
 
-    return processed;
+    return processed as JsonObject[];
   }, [jsonData, searchQuery, filterColumn, sortColumn, sortDirection]);
 
   // Column Options for Fields
@@ -115,7 +117,7 @@ export const ServerProductsViewDSL = () => {
     }));
   }, [allColumnKeys]);
 
-  const columns = useMemo<ColumnDef<JsonObject>[]>(() => {
+  const columns = useMemo<IDDLColumnDef<JsonObject>[]>(() => {
     if (data.length === 0) return [];
 
     const firstItem = data[0] as JsonObject;
@@ -127,7 +129,7 @@ export const ServerProductsViewDSL = () => {
     return filteredKeys.map((key) => ({
       accessorKey: key,
       header: key,
-      cell: (info) => {
+      cell: (info: any) => {
         const value = info.getValue() as JsonValue;
 
         // IDDL Text로 렌더링

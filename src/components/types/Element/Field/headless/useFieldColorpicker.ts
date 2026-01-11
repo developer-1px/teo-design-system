@@ -7,7 +7,7 @@
  * @see docs/2-areas/spec/4-element/field/field.spec.md#632-colorpicker
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export type ColorFormat = 'hex' | 'rgb' | 'hsl' | 'hsv';
 
@@ -106,7 +106,9 @@ function convertColor(color: string, targetFormat: ColorFormat): string {
 /**
  * useColorpickerField Hook
  */
-export function useFieldColorpicker(options: UseColorpickerFieldOptions): UseColorpickerFieldReturn {
+export function useFieldColorpicker(
+  options: UseColorpickerFieldOptions
+): UseColorpickerFieldReturn {
   const {
     format = 'hex',
     alpha = false,

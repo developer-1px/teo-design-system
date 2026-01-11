@@ -1,7 +1,7 @@
 import { FileCode, FileJson, FileType, X } from 'lucide-react';
 import { useState } from 'react';
-import { Action } from '@/components/types/Element/Action/Action';
 import { Block } from '@/components/types/Block/Block';
+import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
@@ -83,7 +83,7 @@ export const EditorTabs = ({ onTabChange }: EditorTabsProps) => {
                     content={tab.name}
                   />
                   {tab.isDirty && (
-                    <Block role="Badge" className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    <Text role="Badge" className="w-1.5 h-1.5 rounded-full bg-accent" content="" />
                   )}
                 </Block>
                 <Action

@@ -49,7 +49,7 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
               padding="sm"
             >
               <Block role="Container" direction="horizontal" align="center" gap="xs">
-                <Text role="Title" prominence="Primary" content={groupName} />
+                <Text role="Title" prominence="Strong" content={groupName} />
                 <Badge variant="default" size="sm">
                   {items.length}
                 </Badge>
@@ -73,7 +73,7 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                             <Text role="Label" prominence="Subtle" content={key} />
                             <Text
                               role="Body"
-                              prominence="Primary"
+                              prominence="Strong"
                               content={
                                 typeof value === 'object'
                                   ? JSON.stringify(value).substring(0, 30) + '...'

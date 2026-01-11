@@ -72,7 +72,13 @@ export interface UsePopoverReturn {
  * )}
  */
 export function usePopover(options: UsePopoverOptions = {}): UsePopoverReturn {
-  const { placement = 'bottom', closeOnEsc = true, closeOnBlur = true, onOpen, onClose } = options;
+  const {
+    placement: _placement = 'bottom',
+    closeOnEsc = true,
+    closeOnBlur = true,
+    onOpen,
+    onClose,
+  } = options;
 
   const { isOpen, open, close, toggle } = useDisclosure({ onOpen, onClose });
   const popoverRef = useClickOutside<HTMLDivElement>({

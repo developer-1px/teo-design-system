@@ -85,7 +85,7 @@ export function useAccordion(options: UseAccordionOptions = {}): UseAccordionRet
         toggle(index);
       };
 
-      const handleKeyDown = (event: React.KeyboardEvent) => {
+      const handleKeyDown = (_event: React.KeyboardEvent) => {
         // TODO: 구현 필요
         // - ArrowDown: 다음 트리거로 포커스
         // - ArrowUp: 이전 트리거로 포커스

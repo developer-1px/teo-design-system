@@ -1,20 +1,9 @@
-import {
-  ChevronDown,
-  ChevronRight,
-  Pause,
-  Play,
-  RefreshCw,
-  StepBack,
-  StepForward,
-  StopCircle,
-} from 'lucide-react';
+import { ChevronDown, Play } from 'lucide-react';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section';
-import { cn } from '@/shared/lib/utils';
 import { Button } from './components/ui/button';
-import { Input } from './components/ui/input';
 import { SidebarHeader } from './SidebarHeader';
 
 export const DebugView = () => {

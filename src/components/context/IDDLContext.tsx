@@ -7,6 +7,13 @@
 
 import { createContext, useContext } from 'react';
 import type { BlockRole } from '@/components/types/Block/Block.types';
+/**
+ * IDDL Context
+ * Section과 Block이 자동으로 이 Context를 제공
+ * v4.1: template 추가 (Page template을 Section으로 전파)
+ * v5.0: layout 추가 (Page layout을 Section으로 전파)
+ */
+import type { SectionType, TypeScaleTokens } from '@/components/types/Section/Section.types';
 import type { LayoutContextValue } from '@/components/types/Shared.types';
 
 /**
@@ -14,13 +21,16 @@ import type { LayoutContextValue } from '@/components/types/Shared.types';
  * Section과 Block이 자동으로 이 Context를 제공
  * v4.1: template 추가 (Page template을 Section으로 전파)
  * v5.0: layout 추가 (Page layout을 Section으로 전파)
+ * v5.2: Type system & Scale tokens
  */
 export const IDDLContext = createContext<LayoutContextValue>({
   prominence: 'Standard',
   density: 'Standard',
   intent: 'Neutral',
   depth: 0,
-  layout: undefined, // v5.0: Page layout (Section role validation & config용)
+  layout: undefined,
+  type: undefined,
+  scale: undefined,
 });
 
 /**

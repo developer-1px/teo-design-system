@@ -4,7 +4,7 @@
  * Navigable behavior를 하위 컴포넌트에서 사용할 수 있도록 Context 제공
  */
 
-import { createContext, useContext, useEffect, useRef, type ReactNode } from 'react';
+import { createContext, type ReactNode, useContext, useEffect, useRef } from 'react';
 import type { NavigableContext as NavigableContextType, NavigableItem } from './types';
 
 /**

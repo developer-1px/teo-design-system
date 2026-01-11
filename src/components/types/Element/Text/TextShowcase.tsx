@@ -47,7 +47,11 @@ export function TextShowcase() {
           <div className="space-y-3">
             <Text role="Body" content="Hero body text (lead paragraph)" prominence="Hero" />
             <Text role="Body" content="Strong body text (emphasis)" prominence="Strong" />
-            <Text role="Body" content="Standard body text (normal paragraph)" prominence="Standard" />
+            <Text
+              role="Body"
+              content="Standard body text (normal paragraph)"
+              prominence="Standard"
+            />
             <Text role="Body" content="Subtle body text (muted)" prominence="Subtle" />
           </div>
         </div>
@@ -81,12 +85,7 @@ export function TextShowcase() {
 
           <Text role="Body">
             Read more in the{' '}
-            <Text
-              role="Link"
-              content="documentation"
-              spec={{ href: '/docs', target: '_blank' }}
-            />
-            .
+            <Text role="Link" content="documentation" spec={{ href: '/docs', target: '_blank' }} />.
           </Text>
         </div>
       </section>

@@ -8,11 +8,11 @@
  * → "3 minutes ago" (실시간 업데이트)
  */
 
+import { cva } from 'class-variance-authority';
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { cva } from 'class-variance-authority';
-import type { TextProps } from '../Text.types';
 import { cn } from '@/shared/lib/utils';
+import type { TextProps } from '../Text.types';
 
 /**
  * Time format options

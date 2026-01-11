@@ -78,7 +78,8 @@ export const Body: SimpleRoleConfig = {
 export const Label: SimpleRoleConfig = {
   type: 'simple',
   htmlTag: 'label',
-  baseStyles: 'text-sm font-medium leading-none text-text peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+  baseStyles:
+    'text-sm font-medium leading-none text-text peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
   prominence: {
     Hero: 'text-base font-semibold',
     Strong: 'text-sm font-semibold',

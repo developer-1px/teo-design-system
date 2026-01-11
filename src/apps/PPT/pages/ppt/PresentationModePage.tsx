@@ -132,7 +132,7 @@ export const PresentationModePage = ({
             density="Comfortable"
           >
             <Text role="Body" prominence="Subtle" content="슬라이드가 없습니다" />
-            <Action prominence="Secondary" onClick={onExit}>
+            <Action role="Button" prominence="Secondary" onClick={onExit}>
               나가기 (Esc)
             </Action>
           </Block>
@@ -199,7 +199,7 @@ export const PresentationModePage = ({
         />
 
         {/* Divider */}
-        <Separator orientation="vertical" prominence="Subtle" className="h-6 opacity-20" />
+        <Separator orientation="vertical" className="h-6 opacity-20" />
 
         {/* Exit Button */}
         <Action

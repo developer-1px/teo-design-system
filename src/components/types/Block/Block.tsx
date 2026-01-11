@@ -179,10 +179,12 @@ export function Block({
   // This helps apply correct blockVariants when no specific Renderer is used
   let computedLayout = layout;
   if (!computedLayout) {
-    if (['Stack', 'Group'].includes(role)) computedLayout = 'stack';
-    else if (['Row', 'Inline', 'Toolbar', 'FloatingToolbar', 'Breadcrumbs'].includes(role)) computedLayout = 'inline';
-    else if (role === 'Grid') computedLayout = 'grid';
-    else if (role === 'Split') computedLayout = 'split';
+    const r = role as string;
+    if (['Stack', 'Group'].includes(r)) computedLayout = 'stack';
+    else if (['Row', 'Inline', 'Toolbar', 'FloatingToolbar', 'Breadcrumbs'].includes(r))
+      computedLayout = 'inline';
+    else if (r === 'Grid') computedLayout = 'grid';
+    else if (r === 'Split' || r === 'Splitter') computedLayout = 'split';
     else computedLayout = 'stack'; // Default fallback
   }
 
@@ -195,7 +197,8 @@ export function Block({
   // v1.0.2: Selection logic
   const isSelectable = value !== undefined;
   const computedClickable = clickable || isSelectable;
-  const isSelected = value !== undefined && selectionModel ? selectionModel.isSelected(value) : selected;
+  const isSelected =
+    value !== undefined && selectionModel ? selectionModel.isSelected(value) : selected;
 
   const handleClick = (e: React.MouseEvent) => {
     if (value !== undefined && selectionModel?.handleItemClick) {
@@ -204,9 +207,10 @@ export function Block({
     onClick?.(e);
   };
 
-  const selectionAriaProps = value !== undefined
-    ? { role: 'option', 'aria-selected': isSelected, tabIndex: isSelected ? 0 : -1 }
-    : {};
+  const selectionAriaProps =
+    value !== undefined
+      ? { role: 'option', 'aria-selected': isSelected, tabIndex: isSelected ? 0 : -1 }
+      : {};
 
   // v1.0.4: Focus management - ref 등록
   const componentRef = useRef<HTMLElement>(null);
@@ -225,32 +229,34 @@ export function Block({
       </div>
     );
   }
-  if (state === 'error' && errorContent) return <div className={blockStateVariants({ state: 'error' })}>{errorContent}</div>;
-  if (state === 'empty' && emptyContent) return <div className={blockStateVariants({ state: 'empty' })}>{emptyContent}</div>;
+  if (state === 'error' && errorContent)
+    return <div className={blockStateVariants({ state: 'error' })}>{errorContent}</div>;
+  if (state === 'empty' && emptyContent)
+    return <div className={blockStateVariants({ state: 'empty' })}>{emptyContent}</div>;
 
   const Renderer = roleConfig?.renderer;
 
   // v3.1: Interactive & Spacing Tokens
   const interactiveClasses = computedClickable
     ? getInteractiveClasses({
-      prominence: computedProminence,
-      intent: computedIntent,
-      config: { selected: isSelected, disabled: false, focusable: true, clickable: true },
-    })
+        prominence: computedProminence,
+        intent: computedIntent,
+        config: { selected: isSelected, disabled: false, focusable: true, clickable: true },
+      })
     : '';
 
   const gapClasses = gap
     ? `gap-${gap}`
     : gapVariants({
-      prominence: computedProminence as any,
-      density: computedDensity as any,
-    });
+        prominence: computedProminence as any,
+        density: computedDensity as any,
+      });
 
   const paddingClasses = roleConfig?.autoPadding
     ? paddingVariants({
-      prominence: computedProminence as any,
-      density: computedDensity as any,
-    })
+        prominence: computedProminence as any,
+        density: computedDensity as any,
+      })
     : '';
 
   // v5.2: Section Overrides (Apply baseStyles from section context)

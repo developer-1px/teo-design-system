@@ -40,7 +40,7 @@ export type Placement =
  * v1.0.1: role 타입 변경, placement 확장, isOpen, dismissable, condition 추가
  */
 export interface OverlayProps extends AsProp {
-  id: string; // v1.0.1: 필수로 변경
+  id?: string; // v1.0.1: 필수로 변경 -> v5.0: 다시 선택사항으로 (컴포넌트 내부 생성 허용 예정)
   role: OverlayRole; // v1.0.1: role 확장
   prominence?: Prominence;
   density?: Density;

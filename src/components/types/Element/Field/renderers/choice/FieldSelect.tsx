@@ -20,7 +20,12 @@ import type { FieldOption } from '@/components/types/Element/Field/Field.types';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
 import { useFieldSelect } from '../../headless/useFieldSelect';
-import { errorStyles, fieldWrapperStyles, labelStyles, selectStyles } from '../../styles/field.styles';
+import {
+  errorStyles,
+  fieldWrapperStyles,
+  labelStyles,
+  selectStyles,
+} from '../../styles/field.styles';
 
 export interface FieldSelectProps {
   /**

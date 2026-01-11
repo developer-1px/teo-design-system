@@ -82,20 +82,20 @@ function extractUsedAreas(children: ReactNode, layout?: PageLayout): Set<string>
         // 1. Layout 특정 role인 경우 (가장 중요)
         if (layoutName && (ROLE_REGISTRY as any)[layoutName]?.[props.role]) {
           const config = (ROLE_REGISTRY as any)[layoutName][props.role];
-          areas.add(config.gridArea);
+          if (config.gridArea) areas.add(config.gridArea);
           return; // 핵심: 직접적인 레이아웃 영역을 찾으면 더 이상 자식으로 들어가지 않음 (nested Section 보호)
         }
 
         // 2. Fallback: universal role인 경우
         if (ROLE_REGISTRY.universal[props.role]) {
           const config = ROLE_REGISTRY.universal[props.role];
-          areas.add(config.gridArea);
+          if (config.gridArea) areas.add(config.gridArea);
           return;
         }
 
         // 3. Unknown role fallback
         const config = getRoleConfig(props.role, layoutName as any);
-        areas.add(config.gridArea);
+        if (config.gridArea) areas.add(config.gridArea);
         // Fallback인 경우에도 일단 찾았으므로 더 깊이 들어가지 않음 (IDDL은 계층적 Section을 기본적으로 한 단계만 Grid로 봄)
         return;
       }

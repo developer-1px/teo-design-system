@@ -47,7 +47,14 @@ export function Tabs({ value, onValueChange, children, className, ...props }: Ta
 /**
  * TabsList - 탭 버튼 컨테이너
  */
-export interface TabsListProps extends HTMLAttributes<HTMLDivElement> {}
+import type { Density, Intent, Prominence } from '@/components/types/Shared.types';
+
+export interface TabsListProps extends HTMLAttributes<HTMLDivElement> {
+  gap?: number | string;
+  density?: Density;
+  prominence?: Prominence;
+  intent?: Intent;
+}
 
 export function TabsList({ className, children, ...props }: TabsListProps) {
   return (

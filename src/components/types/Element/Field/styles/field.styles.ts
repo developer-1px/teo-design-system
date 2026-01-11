@@ -8,15 +8,9 @@
  * @see src/shared/iddl/resolve.ts
  */
 
-import { iddl } from '@/shared/iddl';
-import type {
-  Intent,
-  Prominence,
-  Density,
-  InputSpec,
-  TextSpec
-} from '@/shared/iddl/types';
 import { cva } from 'class-variance-authority';
+import { iddl } from '@/shared/iddl';
+import type { Density, InputSpec, Intent, Prominence, TextSpec } from '@/shared/iddl/types';
 
 // Re-export VariantProps mostly for compatibility, but mapped to IDDL types
 export interface FieldWrapperProps {
@@ -41,7 +35,7 @@ export function labelStyles({ prominence = 'Standard', required }: LabelProps) {
   return iddl({
     role: 'Label',
     prominence,
-    spec: { role: 'Label', required } as TextSpec
+    spec: { role: 'Label', required } as TextSpec,
   });
 }
 
@@ -56,13 +50,7 @@ export interface InputProps {
   multiple?: boolean; // Added for Select
 }
 
-export function inputStyles({
-  prominence,
-  density,
-  intent,
-  error,
-  dataType
-}: InputProps) {
+export function inputStyles({ prominence, density, intent, error, dataType }: InputProps) {
   return iddl({
     role: 'Input',
     intent,
@@ -70,8 +58,8 @@ export function inputStyles({
     density,
     spec: {
       type: dataType,
-      error
-    } as InputSpec
+      error,
+    } as InputSpec,
   });
 }
 
@@ -85,7 +73,7 @@ export function textareaStyles({
   intent,
   error,
   dataType,
-  rows
+  rows,
 }: TextareaProps) {
   return iddl({
     role: 'Input',
@@ -96,8 +84,8 @@ export function textareaStyles({
       type: dataType,
       error,
       multiline: true,
-      rows
-    } as InputSpec
+      rows,
+    } as InputSpec,
   });
 }
 
@@ -204,7 +192,8 @@ export const optionLabelStyles = cva(['flex items-center gap-2 cursor-pointer te
   variants: {
     prominence: {
       Hero: 'text-lg',
-      Standard: 'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+      Standard:
+        'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
       Strong: 'text-sm font-medium leading-none',
       Subtle: 'text-xs text-muted',
     },

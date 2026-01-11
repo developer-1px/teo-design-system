@@ -8,8 +8,8 @@
  */
 
 import { forwardRef } from 'react';
-import type { TextProps } from '../Text.types';
 import { cn } from '@/shared/lib/utils';
+import type { TextProps } from '../Text.types';
 
 /**
  * Intent → Variant 매핑
@@ -27,7 +27,10 @@ const intentToVariant = {
  * Badge Renderer Component
  */
 export const BadgeRenderer = forwardRef<HTMLSpanElement, TextProps>(
-  ({ content, children, intent = 'Neutral', prominence = 'Standard', spec, className, ...props }, ref) => {
+  (
+    { content, children, intent = 'Neutral', prominence = 'Standard', spec, className, ...props },
+    ref
+  ) => {
     // Intent에서 variant 결정
     const variant = intentToVariant[intent as keyof typeof intentToVariant] || 'default';
 

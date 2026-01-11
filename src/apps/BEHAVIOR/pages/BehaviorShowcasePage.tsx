@@ -7,16 +7,15 @@
  * 3. Navigable + Selectable: 통합 (슬라이드 썸네일)
  */
 
-import { useState } from 'react';
 import { Check } from 'lucide-react';
+import { useState } from 'react';
 import { ShowcasePage } from '@/components/showcase/ShowcasePage';
+import { Block } from '@/components/types/Block/Block';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Navigable } from '@/shared/lib/behavior/Navigable/Navigable';
 import { useNavigableContext } from '@/shared/lib/behavior/Navigable/NavigableContext';
 import { Selectable } from '@/shared/lib/behavior/Selectable/Selectable';
 import { useSelectableContext } from '@/shared/lib/behavior/Selectable/SelectableContext';
-import { Section } from '@/components/types/Section/Section';
-import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Element/Text/Text';
 import { cn } from '@/shared/lib/utils';
 
 // ==================== Example 1: Navigable Only ====================
@@ -29,7 +28,7 @@ const FILES = [
   { id: 'file-5', name: 'docs', type: 'folder' },
 ];
 
-function NavigableFileItem({ file }: { file: typeof FILES[0] }) {
+function NavigableFileItem({ file }: { file: (typeof FILES)[0] }) {
   const navigable = useNavigableContext();
   const focused = navigable.isFocused(file.id);
   const itemProps = navigable.getItemProps(file.id);
@@ -94,7 +93,7 @@ const TASKS = [
   { id: 'task-5', text: 'Deploy to production' },
 ];
 
-function SelectableTaskItem({ task }: { task: typeof TASKS[0] }) {
+function SelectableTaskItem({ task }: { task: (typeof TASKS)[0] }) {
   const selectable = useSelectableContext();
   const selected = selectable.isSelected(task.id);
   const itemProps = selectable.getItemProps(task.id);
@@ -190,7 +189,7 @@ const SLIDES = [
   { id: 'slide-8', title: 'Q&A', content: 'Questions and answers' },
 ];
 
-function SlideThumbItem({ slide, index }: { slide: typeof SLIDES[0]; index: number }) {
+function SlideThumbItem({ slide, index }: { slide: (typeof SLIDES)[0]; index: number }) {
   const navigable = useNavigableContext();
   const selectable = useSelectableContext();
 

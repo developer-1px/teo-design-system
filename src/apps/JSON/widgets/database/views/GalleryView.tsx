@@ -54,7 +54,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                   // 첫 번째 필드는 제목처럼 크게
                   if (i === 0) {
                     return (
-                      <Text key={key} role="Title" prominence="Primary" content={String(value)} />
+                      <Text key={key} role="Title" prominence="Strong" content={String(value)} />
                     );
                   }
 

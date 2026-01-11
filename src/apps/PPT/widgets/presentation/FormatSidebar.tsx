@@ -76,22 +76,21 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
             />
 
             <Field
-              role="Input"
-              type="number"
+              role="NumberInput"
               label="크기 (pt)"
               model="fontSize"
               value={formData.fontSize}
               onChange={(value) => handleFieldChange('fontSize', value)}
-              constraints={{ min: 8, max: 72 }}
+              spec={{ min: 8, max: 72 }}
             />
 
             <Field
-              role="Input"
-              type="color"
+              role="TextInput"
               label="색상"
               model="textColor"
               value={formData.textColor}
               onChange={(value) => handleFieldChange('textColor', value)}
+              spec={{ inputMode: 'text' }}
             />
           </Block>
 

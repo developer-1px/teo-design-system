@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
 import { useDynamicGridTemplate } from '@/components/types/Page/hooks/useDynamicGridTemplate';
-import type { PageProps, PageRole, PageLayout } from '@/components/types/Page/Page.types';
-import { getRoleConfig } from './role-registry';
+import type { PageLayout, PageProps, PageRole } from '@/components/types/Page/Page.types';
 import { cn } from '@/shared/lib/utils';
+import { getRoleConfig } from './role-registry';
 
 /**
  * Page Physics Variants (Role-based)
@@ -102,7 +102,11 @@ export function Page({
       if (!child) return;
       const childRole = child.props?.role;
 
-      if (childRole === 'Header' || childRole === 'Toolbar' || childRole === 'Nav' && layout === 'Single') {
+      if (
+        childRole === 'Header' ||
+        childRole === 'Toolbar' ||
+        (childRole === 'Nav' && layout === 'Single')
+      ) {
         top.push(child);
       } else if (childRole === 'Footer' || childRole === 'Status' || childRole === 'Dock') {
         bottom.push(child);
@@ -111,36 +115,47 @@ export function Page({
       }
     });
 
-    const isHorizontalMiddle = layout === 'Sidebar' || layout === 'Aside' || layout === 'HolyGrail' || layout === 'Split';
+    const isHorizontalMiddle =
+      layout === 'Sidebar' || layout === 'Aside' || layout === 'HolyGrail' || layout === 'Split';
 
     return (
       <>
         {top.length > 0 && <div className="flex flex-col w-full flex-shrink-0 z-20">{top}</div>}
-        <div className={cn(
-          "flex-1 flex w-full",
-          isHorizontalMiddle ? "flex-row" : "flex-col",
-          maxWidth && isDocument ? "mx-auto" : ""
-        )}
-          style={maxWidth && isDocument ? { maxWidth: typeof maxWidth === 'number' ? maxWidth : undefined } : {}}
+        <div
+          className={cn(
+            'flex-1 flex w-full',
+            isHorizontalMiddle ? 'flex-row' : 'flex-col',
+            maxWidth && isDocument ? 'mx-auto' : ''
+          )}
+          style={
+            maxWidth && isDocument
+              ? { maxWidth: typeof maxWidth === 'number' ? maxWidth : undefined }
+              : {}
+          }
         >
           {middle}
         </div>
-        {bottom.length > 0 && <div className="flex flex-col w-full flex-shrink-0 z-10">{bottom}</div>}
+        {bottom.length > 0 && (
+          <div className="flex flex-col w-full flex-shrink-0 z-10">{bottom}</div>
+        )}
       </>
     );
   };
 
   // Grid styles for Application role
-  const gridStyles = isApplication ? {
-    display: 'grid',
-    gridTemplateAreas: dynamicTemplate.gridTemplateAreas,
-    gridTemplateColumns: dynamicTemplate.gridTemplateColumns,
-    gridTemplateRows: dynamicTemplate.gridTemplateRows,
-  } : {};
+  const gridStyles = isApplication
+    ? {
+        display: 'grid',
+        gridTemplateAreas: dynamicTemplate.gridTemplateAreas,
+        gridTemplateColumns: dynamicTemplate.gridTemplateColumns,
+        gridTemplateRows: dynamicTemplate.gridTemplateRows,
+      }
+    : {};
 
   // Additional classes for Document role constraints
-  const documentConstraintClass =
-    isDocument ? cn(getMaxWidthClass(maxWidth), centered ? 'mx-auto' : '') : '';
+  const documentConstraintClass = isDocument
+    ? cn(getMaxWidthClass(maxWidth), centered ? 'mx-auto' : '')
+    : '';
 
   if (loading) {
     return (
@@ -203,4 +218,3 @@ export function Page({
     </LayoutProvider>
   );
 }
-

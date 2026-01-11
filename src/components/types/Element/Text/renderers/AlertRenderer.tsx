@@ -4,14 +4,16 @@
  * Maps TextProps to Alert component props
  */
 
-import type { TextProps } from '../Text.types';
-import { Alert } from '../role/Alert';
 import { cn } from '@/shared/lib/utils';
+import { Alert } from '../role/Alert';
+import type { TextProps } from '../Text.types';
 
 /**
  * Intent to Alert variant mapping
  */
-const intentToVariant = (intent?: TextProps['intent']): 'info' | 'success' | 'warning' | 'error' => {
+const intentToVariant = (
+  intent?: TextProps['intent']
+): 'info' | 'success' | 'warning' | 'error' => {
   switch (intent) {
     case 'Positive':
       return 'success';

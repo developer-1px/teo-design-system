@@ -88,13 +88,14 @@ export function ButtonAction({
         // Spacing (gap, padding based on prominence × density)
         spacingClasses,
         // ✨ NEW: Size variants override height/padding if size prop is used
-        computedSize !== 'md' && {
-          xs: 'h-7 px-2 text-xs gap-1',
-          sm: 'h-8 px-3 text-sm gap-1.5',
-          md: 'h-9 px-4 text-base gap-2',
-          lg: 'h-10 px-6 text-lg gap-3',
-          icon: 'h-9 w-9 p-0',
-        }[computedSize],
+        computedSize !== 'md' &&
+          {
+            xs: 'h-7 px-2 text-xs gap-1',
+            sm: 'h-8 px-3 text-sm gap-1.5',
+            md: 'h-9 px-4 text-base gap-2',
+            lg: 'h-10 px-6 text-lg gap-3',
+            icon: 'h-9 w-9 p-0',
+          }[computedSize],
         // Loading cursor
         loading && 'cursor-wait'
         // Custom className override

@@ -24,8 +24,15 @@
 import { cva } from 'class-variance-authority';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import { Text } from '@/components/types/Element/Text/Text';
-import type { SectionProps, SectionRole } from '@/components/types/Section/Section.types';
-import { getRoleConfig } from './configs/registry';
+import type {
+  SectionDesignContext,
+  SectionProps,
+  SectionRole,
+  SectionType,
+} from '@/components/types/Section/Section.types';
+import { getSectionRoleConfig } from './configs/registry';
+import { SECTION_DESIGN_CONTEXTS, SECTION_RULES } from './configs/section-spec';
+import { TYPE_SCALES } from './configs/section-tokens';
 
 // Styles for Section Variants
 const sectionVariants = cva('flex flex-col relative', {
@@ -47,7 +54,7 @@ const sectionVariants = cva('flex flex-col relative', {
 
 export function Section({
   as,
-  role = 'Main', // Default to Main per spec suggestion
+  role = 'Main',
   title,
   actions,
   scrollable,
@@ -55,6 +62,7 @@ export function Section({
   prominence,
   density,
   intent,
+  type, // Override prop
   mode,
   children,
   id,
@@ -64,19 +72,31 @@ export function Section({
   collapsible, // ✨ NEW (v4.1)
   ...rest
 }: SectionProps) {
+  // Spec Configuration (v5)
+  const specContext =
+    SECTION_DESIGN_CONTEXTS[role as SectionRole] || SECTION_DESIGN_CONTEXTS['Main'];
+
   const parentCtx = useLayoutContext();
-  const computedDensity = density ?? parentCtx.density ?? 'Standard';
+  // v5: Use spec default density if not provided in props or parent
+  const computedDensity = density ?? parentCtx.density ?? specContext.defaultDensity;
   const computedIntent = intent ?? parentCtx.intent ?? 'Neutral';
   const computedMode = mode ?? parentCtx.mode ?? 'view';
 
+  // v5.2: Type Resolution
+  const computedType: SectionType = type || specContext.type || 'Stage';
+  const scale = TYPE_SCALES[computedType];
+
   // Validation
-  if (import.meta.env.DEV && parentCtx.layout) {
-    // Helper to check validity or alias
-    // For now we trust strict validation, but maybe allow aliases if mapped?
+  if (import.meta.env.DEV) {
+    // Basic Spec Validation
+    const rules = SECTION_RULES[role as SectionRole];
+    if (rules) {
+      // Validation logic would go here
+    }
   }
 
   // Configuration
-  const config = getRoleConfig(role as string, parentCtx.layout as any);
+  const config = getSectionRoleConfig(role as string, parentCtx.layout as any);
   const { gridArea: configGridArea, overflow, htmlTag, ariaProps, baseStyles } = config;
 
   const Element: any = as || htmlTag || 'section';
@@ -94,20 +114,31 @@ export function Section({
   const isHorizontalCollapse =
     role === 'PrimarySidebar' || role === 'SecondarySidebar' || role === 'Nav' || role === 'Aside';
 
+  // Dimensions from scale
+  const { dimensions } = scale;
+  const dimensionStyles: React.CSSProperties = {
+    minWidth: dimensions.minWidth,
+    maxWidth: dimensions.maxWidth,
+    minHeight: dimensions.minHeight,
+    maxHeight: dimensions.maxHeight,
+    width: dimensions.fixedWidth,
+    height: dimensions.fixedHeight,
+  };
+
   const collapsibleStyle: React.CSSProperties = isCollapsible
     ? {
-      ...(isHorizontalCollapse
-        ? {
-          width: isCollapsed
-            ? collapsibleConfig?.collapsedSize ?? 0
-            : collapsibleConfig?.expandedSize ?? 'auto',
-        }
-        : {
-          height: isCollapsed
-            ? collapsibleConfig?.collapsedSize ?? 0
-            : collapsibleConfig?.expandedSize ?? 'auto',
-        }),
-    }
+        ...(isHorizontalCollapse
+          ? {
+              width: isCollapsed
+                ? (collapsibleConfig?.collapsedSize ?? 0)
+                : (collapsibleConfig?.expandedSize ?? 'auto'),
+            }
+          : {
+              height: isCollapsed
+                ? (collapsibleConfig?.collapsedSize ?? 0)
+                : (collapsibleConfig?.expandedSize ?? 'auto'),
+            }),
+      }
     : {};
 
   const transitionClass =
@@ -117,11 +148,19 @@ export function Section({
     <LayoutProvider
       value={{
         role: role as SectionRole,
+        type: computedType,
+        scale,
         prominence,
         density: computedDensity,
         intent: computedIntent,
         depth: parentCtx.depth + 1,
         mode: computedMode,
+        // v5.1 Design Context Propagation
+        preferIconOnly: specContext.preferIconOnly,
+        truncateText: specContext.truncateText,
+        tooltipRequired: specContext.tooltipRequired,
+        direction: specContext.direction,
+        sizeMode: specContext.sizeMode,
       }}
     >
       <Element
@@ -135,6 +174,7 @@ export function Section({
         `}
         style={{
           gridArea: computedGridArea,
+          ...dimensionStyles, // Apply Physical Constraints
           ...collapsibleStyle,
           ...rest.style, // Pass through style if any
         }}

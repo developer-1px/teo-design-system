@@ -6,7 +6,7 @@
  * @see https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export type Orientation = 'horizontal' | 'vertical' | 'both';
 
@@ -27,7 +27,7 @@ export interface UseRovingFocusReturn {
   /** 아이템에 적용할 props를 반환하는 함수 */
   getItemProps: (index: number) => {
     tabIndex: number;
-    onKeyDown: (event: React.KeyboardEvent) => void;
+    onKeyDown: (_event: React.KeyboardEvent) => void;
     onFocus: () => void;
     ref: React.RefCallback<HTMLElement>;
   };
@@ -53,7 +53,7 @@ export function useRovingFocus(options: UseRovingFocusOptions = {}): UseRovingFo
 
   const getItemProps = useCallback(
     (index: number) => {
-      const handleKeyDown = (event: React.KeyboardEvent) => {
+      const handleKeyDown = (_event: React.KeyboardEvent) => {
         // TODO: 구현 필요
         // - ArrowRight/ArrowDown: 다음 아이템
         // - ArrowLeft/ArrowUp: 이전 아이템

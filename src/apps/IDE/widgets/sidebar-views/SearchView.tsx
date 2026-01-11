@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section';
+
 import { Input } from './components/ui/input';
 import { SidebarHeader } from './SidebarHeader';
 
@@ -22,8 +22,8 @@ export const SearchView = ({ onFileClick }: SearchViewProps) => {
       file: 'src/App.tsx',
       path: '/src/App.tsx',
       matches: [
-        { line: 12, text: 'import { IDEPage } from "./pages/ide/IDEPage";' },
-        { line: 40, text: '<Route path="/ide" component={AppIDE} />' },
+        { line: 12, content: 'import { IDEPage } from "./pages/ide/IDEPage";' },
+        { line: 40, content: '<Route path="/ide" component={AppIDE} />' },
       ],
     },
     {

@@ -14,6 +14,7 @@ import { useHashLocation } from 'wouter/use-hash-location';
 import { AppProvider } from '@/app/contexts/app-context.tsx';
 import { FloatingBar } from '@/app/widgets/FloatingBar.tsx';
 import { AppAction } from '@/apps/ACTION/AppAction.tsx';
+import { AppAdaptive } from '@/apps/ADAPTIVE/AppAdaptive.tsx';
 import { AppBehavior } from '@/apps/BEHAVIOR/AppBehavior.tsx';
 import { AppBlock } from '@/apps/BLOCK/AppBlock.tsx';
 import { AppDOCS } from '@/apps/DOCS/AppDOCS.tsx';
@@ -25,6 +26,7 @@ import { AppOverlay } from '@/apps/OVERLAY/AppOverlay.tsx';
 import { AppPage } from '@/apps/PAGE/AppPage.tsx';
 import { AppPPT } from '@/apps/PPT/AppPPT.tsx';
 import { AppSection } from '@/apps/SECTION/AppSection.tsx';
+import { SectionTypeShowcase } from '@/apps/SHOWCASE/pages/SectionTypeShowcase';
 import { AppText } from '@/apps/TEXT/AppText.tsx';
 import { CommandPalette } from '@/components/types/Overlay/CommandPalette.tsx';
 
@@ -44,12 +46,16 @@ function App() {
         {/* IDDL Component Showcases */}
         <Route path="/page" component={AppPage} />
         <Route path="/section" component={AppSection} />
+        <Route path="/section-type" component={SectionTypeShowcase} />
         <Route path="/overlay" component={AppOverlay} />
         <Route path="/block" component={AppBlock} />
         <Route path="/field" component={AppField} />
         <Route path="/action" component={AppAction} />
         <Route path="/text" component={AppText} />
         <Route path="/behavior" component={AppBehavior} />
+
+        {/* Research & Demos */}
+        <Route path="/adaptive" component={AppAdaptive} />
 
         {/* Default redirect to IDE */}
         <Route path="/">

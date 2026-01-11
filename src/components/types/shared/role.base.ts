@@ -6,6 +6,7 @@
  * @see docs/architecture/registry-pattern.md
  */
 
+import type React from 'react';
 import type { ComponentType } from 'react';
 
 /**
@@ -146,14 +147,18 @@ export type RoleConfig<Props = any> = SimpleRoleConfig<Props> | ComplexRoleConfi
 /**
  * Type guard: Check if config is simple role
  */
-export function isSimpleConfig<Props>(config: RoleConfig<Props>): config is SimpleRoleConfig<Props> {
+export function isSimpleConfig<Props>(
+  config: RoleConfig<Props>
+): config is SimpleRoleConfig<Props> {
   return config.type === 'simple';
 }
 
 /**
  * Type guard: Check if config is complex role
  */
-export function isComplexConfig<Props>(config: RoleConfig<Props>): config is ComplexRoleConfig<Props> {
+export function isComplexConfig<Props>(
+  config: RoleConfig<Props>
+): config is ComplexRoleConfig<Props> {
   return config.type === 'complex';
 }
 

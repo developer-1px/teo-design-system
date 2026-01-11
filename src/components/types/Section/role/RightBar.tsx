@@ -1,9 +1,20 @@
-import { GitBranch, FolderOpen, Settings, Info, Sparkles, ChevronDown, File } from 'lucide-react';
+import {
+  ChevronDown,
+  Download,
+  File,
+  FolderOpen,
+  GitBranch,
+  Info,
+  Play,
+  Settings,
+  Sparkles,
+  Upload,
+} from 'lucide-react';
 import { AIAgentChat } from '@/apps/IDE/widgets/chat/AIAgentChat.tsx';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Section } from '@/components/types/Section/Section.tsx';
 import { Block } from '@/components/types/Block/Block';
+import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
+import { Section } from '@/components/types/Section/Section.tsx';
 
 interface RightBarProps {
   view: string | null;
@@ -36,11 +47,7 @@ export const RightBar = ({
   };
 
   return (
-    <Block
-      role="Stack"
-      gap="none"
-      className="h-full bg-surface-cool"
-    >
+    <Block role="Stack" gap="none" className="h-full bg-surface-cool">
       {renderContent()}
     </Block>
   );
@@ -70,7 +77,12 @@ const GitPanel = ({ currentBranch }: { currentBranch: string }) => {
         <Block role="Stack" gap={4} className="p-3">
           {/* Current Branch */}
           <Block role="Group" gap={2}>
-            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Current Branch" />
+            <Text
+              role="Caption"
+              prominence="Subtle"
+              className="font-semibold"
+              content="Current Branch"
+            />
             <Block role="Card" prominence="Subtle" className="flex items-center gap-2 px-3 py-2">
               <GitBranch size={14} />
               <Text role="Body" size="sm" content={currentBranch} />
@@ -81,16 +93,40 @@ const GitPanel = ({ currentBranch }: { currentBranch: string }) => {
           <Block role="Group" gap={2}>
             <Text role="Caption" prominence="Subtle" className="font-semibold" content="Actions" />
             <Block role="Stack" gap={1}>
-              <Action role="Button" icon="Download" label="Pull" prominence="Subtle" className="w-full justify-start" />
-              <Action role="Button" icon="Upload" label="Push" prominence="Subtle" className="w-full justify-start" />
-              <Action role="Button" icon="GitBranch" label="Branches" prominence="Subtle" className="w-full justify-start" />
+              <Action
+                role="Button"
+                icon={<Download size={14} />}
+                label="Pull"
+                prominence="Subtle"
+                className="w-full justify-start"
+              />
+              <Action
+                role="Button"
+                icon={<Upload size={14} />}
+                label="Push"
+                prominence="Subtle"
+                className="w-full justify-start"
+              />
+              <Action
+                role="Button"
+                icon={<GitBranch size={14} />}
+                label="Branches"
+                prominence="Subtle"
+                className="w-full justify-start"
+              />
             </Block>
           </Block>
 
           {/* Changes */}
           <Block role="Group" gap={2}>
             <Text role="Caption" prominence="Subtle" className="font-semibold" content="Changes" />
-            <Text role="Body" size="xs" prominence="Subtle" className="px-2 py-4 text-center italic" content="No changes detected" />
+            <Text
+              role="Body"
+              size="xs"
+              prominence="Subtle"
+              className="px-2 py-4 text-center italic"
+              content="No changes detected"
+            />
           </Block>
         </Block>
       </Block>
@@ -135,17 +171,37 @@ const ProjectInfoPanel = ({
 
           {/* Stats */}
           <Block role="Group" gap={2}>
-            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Quick Stats" />
+            <Text
+              role="Caption"
+              prominence="Subtle"
+              className="font-semibold"
+              content="Quick Stats"
+            />
             <Block role="Stack" gap={1}>
-              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
+              <Block
+                role="Inline"
+                layout="inline"
+                justify="between"
+                className="px-3 py-2 rounded bg-surface-sunken"
+              >
                 <Text role="Caption" prominence="Subtle" content="Files" />
                 <Text role="Caption" className="font-mono" content="42" />
               </Block>
-              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
+              <Block
+                role="Inline"
+                layout="inline"
+                justify="between"
+                className="px-3 py-2 rounded bg-surface-sunken"
+              >
                 <Text role="Caption" prominence="Subtle" content="Components" />
                 <Text role="Caption" className="font-mono" content="18" />
               </Block>
-              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
+              <Block
+                role="Inline"
+                layout="inline"
+                justify="between"
+                className="px-3 py-2 rounded bg-surface-sunken"
+              >
                 <Text role="Caption" prominence="Subtle" content="Lines" />
                 <Text role="Caption" className="font-mono" content="2,547" />
               </Block>
@@ -154,11 +210,34 @@ const ProjectInfoPanel = ({
 
           {/* Run Configs */}
           <Block role="Group" gap={2}>
-            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Run Configurations" />
+            <Text
+              role="Caption"
+              prominence="Subtle"
+              className="font-semibold"
+              content="Run Configurations"
+            />
             <Block role="Stack" gap={1}>
-              <Action role="Button" icon="Play" label="dev" prominence="Subtle" className="w-full justify-start" />
-              <Action role="Button" icon="Play" label="build" prominence="Subtle" className="w-full justify-start" />
-              <Action role="Button" icon="Play" label="test" prominence="Subtle" className="w-full justify-start" />
+              <Action
+                role="Button"
+                icon={<Play size={14} />}
+                label="dev"
+                prominence="Subtle"
+                className="w-full justify-start"
+              />
+              <Action
+                role="Button"
+                icon={<Play size={14} />}
+                label="build"
+                prominence="Subtle"
+                className="w-full justify-start"
+              />
+              <Action
+                role="Button"
+                icon={<Play size={14} />}
+                label="test"
+                prominence="Subtle"
+                className="w-full justify-start"
+              />
             </Block>
           </Block>
         </Block>
@@ -184,15 +263,30 @@ const SettingsPanel = ({ onOpenSettings }: { onOpenSettings?: () => void }) => {
           <Block role="Group" gap={2}>
             <Text role="Caption" prominence="Subtle" className="font-semibold" content="Editor" />
             <Block role="Stack" gap={1}>
-              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+              <Block
+                role="Inline"
+                layout="inline"
+                justify="between"
+                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
+              >
                 <Text role="Body" size="sm" content="Auto Save" />
                 <input type="checkbox" className="accent-accent" defaultChecked />
               </Block>
-              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+              <Block
+                role="Inline"
+                layout="inline"
+                justify="between"
+                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
+              >
                 <Text role="Body" size="sm" content="Format on Save" />
                 <input type="checkbox" className="accent-accent" defaultChecked />
               </Block>
-              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+              <Block
+                role="Inline"
+                layout="inline"
+                justify="between"
+                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
+              >
                 <Text role="Body" size="sm" content="Line Numbers" />
                 <input type="checkbox" className="accent-accent" defaultChecked />
               </Block>
@@ -200,13 +294,28 @@ const SettingsPanel = ({ onOpenSettings }: { onOpenSettings?: () => void }) => {
           </Block>
 
           <Block role="Group" gap={2}>
-            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Appearance" />
+            <Text
+              role="Caption"
+              prominence="Subtle"
+              className="font-semibold"
+              content="Appearance"
+            />
             <Block role="Stack" gap={1}>
-              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+              <Block
+                role="Inline"
+                layout="inline"
+                justify="between"
+                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
+              >
                 <Text role="Body" size="sm" content="Minimap" />
                 <input type="checkbox" className="accent-accent" />
               </Block>
-              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+              <Block
+                role="Inline"
+                layout="inline"
+                justify="between"
+                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
+              >
                 <Text role="Body" size="sm" content="Breadcrumbs" />
                 <input type="checkbox" className="accent-accent" defaultChecked />
               </Block>
@@ -215,7 +324,7 @@ const SettingsPanel = ({ onOpenSettings }: { onOpenSettings?: () => void }) => {
 
           <Action
             role="Button"
-            icon="Settings"
+            icon={<Settings size={14} />}
             label="Open Settings"
             prominence="Subtle"
             className="w-full justify-start"

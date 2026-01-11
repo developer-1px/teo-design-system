@@ -9,11 +9,11 @@
 
 import { cva } from 'class-variance-authority';
 import type React from 'react';
-import { useLayoutContext, useBlockLayoutContext } from '@/components/context/IDDLContext.tsx';
+import { useBlockLayoutContext, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { TextProps } from '@/components/types/Element/Text/Text.types';
+import { cn } from '@/shared/lib/utils';
 import { getRoleConfig } from './configs/registry';
 import { isComplexConfig } from './configs/types';
-import { cn } from '@/shared/lib/utils';
 
 /**
  * Intent-based color variants
@@ -104,7 +104,8 @@ export function Text({
   const config = getRoleConfig(role);
 
   // v5.1: Panel/Sidebar 스타일링 (Label role에만 적용)
-  const isPanelContext = blockCtx.sectionRole &&
+  const isPanelContext =
+    blockCtx.sectionRole &&
     ['PrimarySidebar', 'SecondarySidebar', 'Panel', 'Aside'].includes(blockCtx.sectionRole);
   const isPanelLabel = role === 'Label' && isPanelContext;
 
@@ -133,8 +134,23 @@ export function Text({
   // Determine HTML tag
   const Element: any = as || getHtmlTag(role, computedProminence, htmlTag, spec);
 
+  // v5.2: Adaptive Scaling
+  // If scale context exists, we override the class-based sizing with precise pixels from tokens
+  const enableAdaptiveScaling =
+    ctx.scale && ['Hero', 'Standard', 'Subtle'].includes(computedProminence);
+
+  const adaptiveStyle: React.CSSProperties = enableAdaptiveScaling
+    ? {
+        fontSize: ctx.scale?.text[computedProminence as 'Hero' | 'Standard' | 'Subtle'],
+        lineHeight: '1.5', // consistent line height
+      }
+    : {};
+
   // Get prominence-specific styles
-  const prominenceClass = prominenceStyles?.[computedProminence as keyof typeof prominenceStyles] || '';
+  // If adaptive scaling is on, we might want to disable some class-based sizing to avoid conflict,
+  // but usually inline style wins. However, let's keep the classes for weight/color.
+  const prominenceClass =
+    prominenceStyles?.[computedProminence as keyof typeof prominenceStyles] || '';
 
   // Render content with highlighting
   const renderContent = () => {
@@ -183,6 +199,10 @@ export function Text({
       rel={role === 'Link' && spec?.external ? 'noopener noreferrer' : spec?.rel}
       // Label role: for attribute
       htmlFor={role === 'Label' ? spec?.for : undefined}
+      style={{
+        ...adaptiveStyle,
+        ...rest.style,
+      }}
       {...rest}
     >
       {renderContent()}
@@ -193,5 +213,5 @@ export function Text({
 /**
  * Re-export registry utilities for custom role registration
  */
-export { registerTextRole, getRoleConfig, getRegisteredRoles } from './configs/registry';
-export type { RoleConfig, SimpleRoleConfig, ComplexRoleConfig } from './configs/types';
+export { getRegisteredRoles, getRoleConfig, registerTextRole } from './configs/registry';
+export type { ComplexRoleConfig, RoleConfig, SimpleRoleConfig } from './configs/types';

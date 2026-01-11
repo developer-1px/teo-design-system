@@ -64,6 +64,10 @@ const prominenceFactors: Record<Prominence, number> = {
   Standard: 1.0,
   Strong: 0.75,
   Subtle: 0.5,
+  Secondary: 0.75,
+  Tertiary: 0.5,
+  Elevated: 1.2,
+  None: 0,
 };
 
 /**
@@ -187,6 +191,10 @@ export const spacingVariants = cva('', {
       Standard: '',
       Strong: '',
       Subtle: '',
+      Secondary: '',
+      Tertiary: '',
+      Elevated: '',
+      None: '',
     },
     density: {
       Comfortable: '',
@@ -231,6 +239,10 @@ export const gapVariants = cva('', {
       Standard: '',
       Strong: '',
       Subtle: '',
+      Secondary: '',
+      Tertiary: '',
+      Elevated: '',
+      None: '',
     },
     density: {
       Comfortable: '',
@@ -275,6 +287,10 @@ export const paddingVariants = cva('', {
       Standard: '',
       Strong: '',
       Subtle: '',
+      Secondary: '',
+      Tertiary: '',
+      Elevated: '',
+      None: '',
     },
     density: {
       Comfortable: '',

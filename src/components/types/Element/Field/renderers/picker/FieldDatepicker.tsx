@@ -15,11 +15,11 @@
 
 import { Calendar, Clock } from 'lucide-react';
 import { useRef } from 'react';
+import { usePopover } from '@/components/headless/components/usePopover';
 import type { FieldConstraints } from '@/components/types/Element/Field/Field.types';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
 import { fieldWrapperStyles, inputStyles, labelStyles } from '../../styles/field.styles';
-import { usePopover } from '@/components/headless/components/usePopover';
 import { FieldCalendar } from './FieldCalendar';
 
 export interface FieldDatepickerProps {
@@ -78,7 +78,7 @@ export function FieldDatepicker(props: FieldDatepickerProps) {
   const { ref: hookRef, ...popoverProps } = getPopoverProps();
 
   return (
-    <div className={cn(fieldWrapperStyles({ density }), className, "relative")}>
+    <div className={cn(fieldWrapperStyles({ density }), className, 'relative')}>
       {/* Label */}
       <label htmlFor={model} className={labelStyles({ prominence, required })}>
         {label}
@@ -86,9 +86,7 @@ export function FieldDatepicker(props: FieldDatepickerProps) {
 
       {/* Trigger Input */}
       <div className="relative group">
-        <div
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted group-hover:text-text transition-colors"
-        >
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted group-hover:text-text transition-colors">
           {getFormatIcon()}
         </div>
         <input
@@ -105,7 +103,7 @@ export function FieldDatepicker(props: FieldDatepickerProps) {
               intent,
               dataType: 'text', // use text style
             }),
-            "pl-10 cursor-pointer"
+            'pl-10 cursor-pointer'
           )}
         />
       </div>
@@ -156,7 +154,10 @@ export function FieldDatepicker(props: FieldDatepickerProps) {
                 className="bg-layer-2 border border-border rounded px-2 py-1 text-xs"
                 value={value && value.includes('T') ? value.split('T')[1] : '00:00'}
                 onChange={(e) => {
-                  const datePart = value && value.includes('T') ? value.split('T')[0] : (new Date().toISOString().split('T')[0]);
+                  const datePart =
+                    value && value.includes('T')
+                      ? value.split('T')[0]
+                      : new Date().toISOString().split('T')[0];
                   onChange?.(`${datePart}T${e.target.value}`);
                 }}
               />
