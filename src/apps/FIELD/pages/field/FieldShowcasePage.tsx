@@ -6,255 +6,793 @@ import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 export function FieldShowcasePage() {
   const categories = [
     { id: 'all', label: 'All Examples' },
-    { id: 'single', label: 'Single Value' },
-    { id: 'selection', label: 'Selection' },
-    { id: 'number', label: 'Number & Range' },
-    { id: 'date', label: 'Date & Time' },
-    { id: 'file', label: 'File & Others' },
+    { id: 'input', label: 'Input Category' },
+    { id: 'choice', label: 'Choice Category' },
+    { id: 'control', label: 'Control Category' },
+    { id: 'picker', label: 'Picker Category' },
+    { id: 'meta', label: 'Meta Category' },
+    { id: 'variants', label: 'Variants' },
   ];
 
   return (
     <ShowcasePage
-      title="Field Roles"
-      subtitle="IDDL 2.0 Spec"
-      description="Comprehensive catalog of Field roles defined in IDDL 2.0."
+      title="IDDL Field Specification"
+      subtitle="Complete Field Role Catalog (16 Roles)"
+      description="All Field roles defined in docs/2-areas/spec/4-element/field/field.spec.md"
       categories={categories}
       activeCategoryId="all"
       mode="edit"
     >
-      {/* 1. Single Value Inputs */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <div className="flex flex-col gap-1">
-          <Text role="Title" prominence="Strong" content="1. Single Value Inputs" />
-          <Text role="Body" prominence="Subtle" content="Standard text-based inputs." />
+      {/* ========================================
+          1. INPUT CATEGORY
+          Keyboard-driven text entry
+          ======================================== */}
+      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
+        <div className="flex flex-col gap-3">
+          <Text
+            role="Title"
+            prominence="Hero"
+            content="1. Input Category"
+            className="text-3xl font-bold"
+          />
+          <Text
+            role="Body"
+            prominence="Standard"
+            content="Keyboard-driven text entry. User types value as primary interaction."
+            className="text-base"
+          />
         </div>
 
-        <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable">
-          <Field
-            role="TextInput"
-            label="Text Input"
-            model="demo.text"
-            placeholder="Basic text input"
-            spec={{ maxLength: 50, pattern: '[A-Za-z]+' }}
-          />
-          <Field
-            role="EmailInput"
-            label="Email Input"
-            model="demo.email"
-            placeholder="user@example.com"
-            spec={{ autoComplete: 'email' }}
-          />
-          <Field
-            role="PasswordInput"
-            label="Password Input"
-            model="demo.password"
-            placeholder="••••••••"
-            spec={{ revealable: true }}
-          />
-          <Field
-            role="SearchInput"
-            label="Search Input"
-            model="demo.search"
-            placeholder="Search..."
-            spec={{ clearable: true }}
-          />
-          <Field
-            role="OTPInput"
-            label="OTP Input"
-            model="demo.otp"
-            placeholder="123456"
-            spec={{ length: 6, numeric: true }}
-          />
-          <Field
-            role="TextArea"
-            label="Text Area"
-            model="demo.textarea"
-            placeholder="Multiline text area..."
-            spec={{ rows: 4, maxLength: 200 }}
-          />
+        {/* 1.1 Textbox */}
+        <Block role="Container" layout="stack" gap={4} className="mt-8">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="1.1 Textbox" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Single-line or multi-line text input. Supports format variants (email, password, tel, url)."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Textbox"
+              label="Text Input (Basic)"
+              model="demo.text"
+              placeholder="Enter text..."
+              spec={{ type: 'text', maxLength: 50 }}
+            />
+            <Field
+              role="Textbox"
+              label="Email Input"
+              model="demo.email"
+              placeholder="user@example.com"
+              spec={{ type: 'email', autoComplete: 'email' }}
+            />
+            <Field
+              role="Textbox"
+              label="Password Input"
+              model="demo.password"
+              placeholder="••••••••"
+              spec={{ type: 'password', revealable: true }}
+            />
+            <Field
+              role="Textarea"
+              label="Text Area (Multiline)"
+              model="demo.textarea"
+              placeholder="Enter multiline text..."
+              spec={{ rows: 4, maxLength: 200 }}
+            />
+          </Block>
+        </Block>
+
+        {/* 1.2 Searchbox */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="1.2 Searchbox" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Text input optimized for search queries with debounce and minChars support."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Textbox"
+              label="Search Input"
+              model="demo.search"
+              placeholder="Search..."
+              spec={{ clearable: true }}
+            />
+          </Block>
+        </Block>
+
+        {/* 1.3 Spinbutton */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="1.3 Spinbutton" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Numeric input with increment/decrement controls. Supports format (integer, decimal, currency, percent)."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Spinbutton"
+              label="Number Input (Spinbutton)"
+              model="demo.number"
+              defaultValue={10}
+              spec={{ min: 0, max: 100, step: 5 }}
+            />
+          </Block>
+        </Block>
+
+        {/* 1.4 Otp */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="1.4 Otp" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="One-time password / PIN code input. Auto-advance, paste handling, masked option."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Otp"
+              label="OTP Input (6-digit)"
+              model="demo.otp"
+              placeholder="123456"
+              spec={{ length: 6, numeric: true }}
+            />
+          </Block>
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      {/* Divider */}
+      <div className="h-px bg-border my-16" />
 
-      {/* 2. Selection Inputs */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <div className="flex flex-col gap-1">
-          <Text role="Title" prominence="Strong" content="2. Selection Inputs" />
-          <Text role="Body" prominence="Subtle" content="Selection from options." />
+      {/* ========================================
+          2. CHOICE CATEGORY
+          User selects from options (items property REQUIRED)
+          ======================================== */}
+      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
+        <div className="flex flex-col gap-3">
+          <Text
+            role="Title"
+            prominence="Hero"
+            content="2. Choice Category"
+            className="text-3xl font-bold"
+          />
+          <Text
+            role="Body"
+            prominence="Standard"
+            content="User selects from options. `items` property REQUIRED (except single Checkbox/Switch)."
+            className="text-base"
+          />
         </div>
 
-        <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="items-start">
-          <Field
-            role="Select"
-            label="Select (Single)"
-            model="demo.select"
-            placeholder="Select an option"
-            spec={{
-              options: [
-                { label: 'Option A', value: 'a' },
-                { label: 'Option B', value: 'b' },
-                { label: 'Option C', value: 'c' },
-              ],
-            }}
-          />
-          <Field
-            role="Select"
-            label="Select (Multiple)"
-            model="demo.multiselect"
-            placeholder="Select multiple"
-            spec={{
-              multiple: true,
-              options: [
-                { label: 'Red', value: 'red' },
-                { label: 'Green', value: 'green' },
-                { label: 'Blue', value: 'blue' },
-              ],
-            }}
-          />
-          <Field
-            role="RadioGroup"
-            label="Radio Group"
-            model="demo.radio"
-            defaultValue="b"
-            spec={{
-              legend: 'Pick one',
-              options: [
-                { label: 'Choice A', value: 'a' },
-                { label: 'Choice B', value: 'b' },
-              ],
-            }}
-          />
-          <Field
-            role="Checkbox"
-            label="Checkbox (Single)"
-            model="demo.check"
-            defaultValue={true}
-            spec={{
-              indeterminate: false
-            }}
-          />
-          <Field
-            role="Switch"
-            label="Switch"
-            model="demo.switch"
-            defaultValue={false}
-            spec={{}}
-          />
-          <Field
-            role="Combobox"
-            label="Combobox"
-            model="demo.combobox"
-            placeholder="Type to search..."
-            spec={{
-              filter: 'contains',
-              freeSolo: true,
-              options: [
-                { label: 'Apple', value: 'apple' },
-                { label: 'Banana', value: 'banana' },
-                { label: 'Cherry', value: 'cherry' },
-              ]
-            }}
-          />
+        {/* 2.1 Checkbox */}
+        <Block role="Container" layout="stack" gap={4} className="mt-8">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="2.1 Checkbox" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Boolean or multi-select control. Single checkbox without items, or checkbox group with items."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Checkbox"
+              label="Single Checkbox (Boolean)"
+              model="demo.check"
+              defaultValue={true}
+              spec={{ indeterminate: false }}
+            />
+          </Block>
+        </Block>
+
+        {/* 2.2 Switch */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="2.2 Switch" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Toggle control for on/off states. Semantically distinct from Checkbox - use for immediate-effect toggles."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Switch"
+              label="Switch Toggle"
+              model="demo.switch"
+              defaultValue={false}
+              spec={{}}
+            />
+          </Block>
+        </Block>
+
+        {/* 2.3 Radio */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="2.3 Radio" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Single-select from mutually exclusive options. items is REQUIRED. Supports segmented variant."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Radio"
+              label="Radio Group"
+              model="demo.radio"
+              defaultValue="b"
+              spec={{
+                legend: 'Pick one option',
+                options: [
+                  { label: 'Choice A', value: 'a' },
+                  { label: 'Choice B', value: 'b' },
+                  { label: 'Choice C', value: 'c' },
+                ],
+              }}
+            />
+          </Block>
+        </Block>
+
+        {/* 2.4 Combobox */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="2.4 Combobox" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Dropdown selection with optional search, creatable, multiple, async loading. items REQUIRED."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Combobox"
+              label="Combobox (Searchable)"
+              model="demo.combobox"
+              placeholder="Type to search..."
+              spec={{
+                filter: 'contains',
+                freeSolo: true,
+                options: [
+                  { label: 'Apple', value: 'apple' },
+                  { label: 'Banana', value: 'banana' },
+                  { label: 'Cherry', value: 'cherry' },
+                  { label: 'Date', value: 'date' },
+                  { label: 'Elderberry', value: 'elderberry' },
+                ],
+              }}
+            />
+            <Field
+              role="Select"
+              label="Select (Dropdown - Multiple)"
+              model="demo.multiselect"
+              placeholder="Select multiple options"
+              spec={{
+                multiple: true,
+                options: [
+                  { label: 'Red', value: 'red' },
+                  { label: 'Green', value: 'green' },
+                  { label: 'Blue', value: 'blue' },
+                  { label: 'Yellow', value: 'yellow' },
+                ],
+              }}
+            />
+          </Block>
+        </Block>
+
+        {/* 2.5 Listbox */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="2.5 Listbox" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Always-visible selection list (not a dropdown). Supports multiple selection, keyboard navigation, virtualization."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Listbox"
+              label="Listbox (Always Visible)"
+              model="demo.listbox"
+              spec={{
+                options: [
+                  { label: 'Spring', value: 'spring' },
+                  { label: 'Summer', value: 'summer' },
+                  { label: 'Fall', value: 'fall' },
+                  { label: 'Winter', value: 'winter' },
+                ],
+                multiple: true,
+                virtualize: false,
+              }}
+            />
+          </Block>
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      {/* Divider */}
+      <div className="h-px bg-border my-16" />
 
-      {/* 3. Number & Range Inputs */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <div className="flex flex-col gap-1">
-          <Text role="Title" prominence="Strong" content="3. Number & Range Inputs" />
+      {/* ========================================
+          3. CONTROL CATEGORY
+          User manipulates continuous value (drag, click)
+          ======================================== */}
+      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
+        <div className="flex flex-col gap-3">
+          <Text
+            role="Title"
+            prominence="Hero"
+            content="3. Control Category"
+            className="text-3xl font-bold"
+          />
+          <Text
+            role="Body"
+            prominence="Standard"
+            content="User manipulates continuous or discrete value range via pointer interaction (mouse/touch)."
+            className="text-base"
+          />
         </div>
 
-        <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable">
-          <Field
-            role="NumberInput"
-            label="Number Input"
-            model="demo.number"
-            defaultValue={10}
-            spec={{ min: 0, max: 100, step: 5 }}
-          />
-          <Field
-            role="Slider"
-            label="Slider"
-            model="demo.slider"
-            defaultValue={50}
-            spec={{ min: 0, max: 100, step: 1, range: false }}
-          />
-          <Field
-            role="Rating"
-            label="Rating"
-            model="demo.rating"
-            defaultValue={3}
-            spec={{ max: 5, step: 0.5 }}
-          />
+        {/* 3.1 Slider */}
+        <Block role="Container" layout="stack" gap={4} className="mt-8">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="3.1 Slider" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Slider for selecting numeric value(s). Supports dual-handle range, marks, orientation, rating variant."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Spinbutton"
+              label="Slider (Single Handle)"
+              model="demo.slider"
+              defaultValue={50}
+              spec={{ type: 'range', min: 0, max: 100, step: 1, range: false }}
+            />
+            <Field
+              role="Rating"
+              label="Rating (Slider Variant)"
+              model="demo.rating"
+              defaultValue={3}
+              spec={{ max: 5, step: 0.5 }}
+            />
+          </Block>
+        </Block>
+
+        {/* 3.2 Colorpicker */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="3.2 Colorpicker" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Color selection with format (hex/rgb/hsl/hsv), alpha, presets, and variant options (default/compact/swatch-only)."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Colorpicker"
+              label="Color Picker (Default)"
+              model="demo.color1"
+              defaultValue="#3b82f6"
+              spec={{
+                format: 'hex',
+                alpha: false,
+                presets: ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'],
+                variant: 'default',
+              }}
+            />
+            <Field
+              role="Colorpicker"
+              label="Color Picker (Compact)"
+              model="demo.color2"
+              defaultValue="#10b981"
+              spec={{
+                format: 'hex',
+                alpha: false,
+                presets: ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6'],
+                variant: 'compact',
+              }}
+            />
+            <Field
+              role="Colorpicker"
+              label="Brand Colors (Swatch Only)"
+              model="demo.color3"
+              defaultValue="#ef4444"
+              spec={{
+                format: 'hex',
+                alpha: false,
+                presets: [
+                  '#ef4444',
+                  '#f97316',
+                  '#eab308',
+                  '#22c55e',
+                  '#3b82f6',
+                  '#8b5cf6',
+                  '#ec4899',
+                  '#6366f1',
+                ],
+                variant: 'swatch-only',
+              }}
+            />
+          </Block>
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      {/* Divider */}
+      <div className="h-px bg-border my-16" />
 
-      {/* 4. Date & Time Inputs */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <div className="flex flex-col gap-1">
-          <Text role="Title" prominence="Strong" content="4. Date & Time Inputs" />
+      {/* ========================================
+          4. PICKER CATEGORY
+          User invokes specialized UI (popup/system interface)
+          ======================================== */}
+      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
+        <div className="flex flex-col gap-3">
+          <Text
+            role="Title"
+            prominence="Hero"
+            content="4. Picker Category"
+            className="text-3xl font-bold"
+          />
+          <Text
+            role="Body"
+            prominence="Standard"
+            content="User invokes specialized interface for value selection. Returns structured value appropriate to role."
+            className="text-base"
+          />
         </div>
 
-        <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable">
-          <Field
-            role="DateInput"
-            label="Date"
-            model="demo.date"
-            spec={{}}
-          />
-          <Field
-            role="TimeInput"
-            label="Time"
-            model="demo.time"
-            spec={{}}
-          />
-          <Field
-            role="DateTimeInput"
-            label="Date & Time"
-            model="demo.datetime"
-            spec={{}}
-          />
+        {/* 4.1 Datepicker */}
+        <Block role="Container" layout="stack" gap={4} className="mt-8">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="4.1 Datepicker" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Date selection with calendar interface. Supports range, variants (date/datetime/month/year/week), min/max, disabled dates."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field role="Datepicker" label="Date Picker" model="demo.date" spec={{ type: 'date' }} />
+            <Field role="Datepicker" label="Date & Time Picker" model="demo.datetime" spec={{ type: 'datetime' }} />
+          </Block>
+        </Block>
+
+        {/* 4.2 Timepicker */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="4.2 Timepicker" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Time selection. Supports format (12h/24h), minute/second step, min/max time constraints."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field role="Datepicker" label="Time Picker" model="demo.time" spec={{ type: 'time' }} />
+          </Block>
+        </Block>
+
+        {/* 4.3 Filepicker */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="4.3 Filepicker" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="File upload. Supports accept (MIME types), multiple, maxSize, drag-drop, preview, avatar variant."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Filepicker"
+              label="File Upload"
+              model="demo.file"
+              spec={{ accept: 'image/*', multiple: false }}
+            />
+          </Block>
+        </Block>
+
+        {/* 4.4 Signature */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="4.4 Signature" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Signature capture with HTML Canvas. Supports penColor, penWidth, backgroundColor, outputFormat, trimWhitespace."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 1 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Signature"
+              label="Your Signature"
+              model="demo.signature"
+              spec={{
+                penColor: '#000000',
+                penWidth: 2,
+                backgroundColor: '#FFFFFF',
+                outputFormat: 'png',
+                trimWhitespace: true,
+              }}
+            />
+          </Block>
+        </Block>
+
+        {/* 4.5 Calendar */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="4.5 Calendar" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Visual calendar interface for date selection. Useful for scheduling or dashboard filters."
+            />
+          </div>
+
+          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+            <Field
+              role="Calendar"
+              label="Meeting Date"
+              model="demo.meetingDate"
+              defaultValue="2026-01-11"
+              spec={{}}
+            />
+          </Block>
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      {/* Divider */}
+      <div className="h-px bg-border my-16" />
 
-      {/* 5. File & Other Inputs */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <div className="flex flex-col gap-1">
-          <Text role="Title" prominence="Strong" content="5. File & Others" />
+      {/* ========================================
+          5. META CATEGORY
+          No direct interaction (Hidden or programmatic)
+          ======================================== */}
+      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
+        <div className="flex flex-col gap-3">
+          <Text
+            role="Title"
+            prominence="Hero"
+            content="5. Meta Category"
+            className="text-3xl font-bold"
+          />
+          <Text
+            role="Body"
+            prominence="Standard"
+            content="No visible UI. Participates in form submission but not rendered to user."
+            className="text-base"
+          />
         </div>
 
-        <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable">
+        {/* 5.1 Hidden */}
+        <Block role="Container" layout="stack" gap={4} className="mt-8">
+          <div className="flex flex-col gap-1">
+            <Text role="Title" prominence="Strong" content="5.1 Hidden" className="text-xl font-semibold" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Non-visible field for form data. Renders as <input type='hidden'>. No spec options."
+            />
+          </div>
+
+          <div className="flex flex-col gap-4 p-6 bg-layer-2 rounded-lg border border-border mt-4">
+            <Text role="Label" prominence="Strong" content="Hidden Field Example" />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Hidden fields have no visible UI. Inspect DevTools to see the hidden input element below:"
+            />
+            <Field role="Hidden" model="demo.userId" value="12345" />
+            <code className="text-xs text-muted font-mono bg-layer-1 px-3 py-2 rounded border border-border">
+              {'<Field role="Hidden" model="demo.userId" value="12345" />'}
+            </code>
+            <Text role="Body" prominence="Subtle" content="👆 Check browser DevTools to see the hidden input" />
+          </div>
+        </Block>
+      </Block>
+
+      {/* Divider */}
+      <div className="h-px bg-border my-16" />
+
+      {/* ========================================
+          6. PROMINENCE & INTENT VARIANTS
+          Visual hierarchy and semantic meaning
+          ======================================== */}
+      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
+        <div className="flex flex-col gap-3">
+          <Text
+            role="Title"
+            prominence="Hero"
+            content="6. Prominence & Intent Variants"
+            className="text-3xl font-bold"
+          />
+          <Text
+            role="Body"
+            prominence="Standard"
+            content="All Fields support prominence and intent props for visual hierarchy and semantic meaning."
+            className="text-base"
+          />
+        </div>
+
+        {/* Prominence variants */}
+        <Block role="Container" layout="stack" gap={4} className="mt-8">
+          <div className="flex flex-col gap-1">
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="Prominence Levels"
+              className="text-xl font-semibold"
+            />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Hero → Standard → Strong → Subtle"
+            />
+          </div>
+
+          <div className="flex flex-col gap-6 mt-4">
+            <Field
+              role="Textbox"
+              label="Hero Prominence"
+              model="demo.prominence1"
+              placeholder="Hero level input"
+              prominence="Hero"
+            />
+            <Field
+              role="Textbox"
+              label="Standard Prominence (Default)"
+              model="demo.prominence2"
+              placeholder="Standard level input"
+              prominence="Standard"
+            />
+            <Field
+              role="Textbox"
+              label="Strong Prominence"
+              model="demo.prominence3"
+              placeholder="Strong level input"
+              prominence="Strong"
+            />
+            <Field
+              role="Textbox"
+              label="Subtle Prominence"
+              model="demo.prominence4"
+              placeholder="Subtle level input"
+              prominence="Subtle"
+            />
+          </div>
+        </Block>
+
+        {/* Intent variants */}
+        <Block role="Container" layout="stack" gap={4} className="mt-12">
+          <div className="flex flex-col gap-1">
+            <Text
+              role="Title"
+              prominence="Strong"
+              content="Intent Colors"
+              className="text-xl font-semibold"
+            />
+            <Text
+              role="Body"
+              prominence="Subtle"
+              content="Neutral → Brand → Positive → Caution → Critical"
+            />
+          </div>
+
+          <div className="flex flex-col gap-6 mt-4">
+            <Field
+              role="Textbox"
+              label="Neutral Intent (Default)"
+              model="demo.intent1"
+              placeholder="Neutral"
+              intent="Neutral"
+            />
+            <Field
+              role="Textbox"
+              label="Brand Intent"
+              model="demo.intent2"
+              placeholder="Brand color"
+              intent="Brand"
+            />
+            <Field
+              role="Textbox"
+              label="Positive Intent (Success)"
+              model="demo.intent3"
+              placeholder="Success"
+              intent="Positive"
+            />
+            <Field
+              role="Textbox"
+              label="Caution Intent (Warning)"
+              model="demo.intent4"
+              placeholder="Warning"
+              intent="Caution"
+              error="This is a warning message"
+            />
+            <Field
+              role="Textbox"
+              label="Critical Intent (Error)"
+              model="demo.intent5"
+              placeholder="Error"
+              intent="Critical"
+              error="This field has an error"
+            />
+          </div>
+        </Block>
+      </Block>
+
+      {/* Divider */}
+      <div className="h-px bg-border my-16" />
+
+      {/* ========================================
+          7. DENSITY VARIANTS
+          Spacing control
+          ======================================== */}
+      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
+        <div className="flex flex-col gap-3">
+          <Text
+            role="Title"
+            prominence="Hero"
+            content="7. Density Variants"
+            className="text-3xl font-bold"
+          />
+          <Text
+            role="Body"
+            prominence="Standard"
+            content="Control spacing with density prop: Comfortable → Standard → Compact"
+            className="text-base"
+          />
+        </div>
+
+        <Block role="Grid" spec={{ columns: 3 }} gap={12} density="Comfortable" className="mt-8">
           <Field
-            role="FileInput"
-            label="File Upload"
-            model="demo.file"
-            spec={{ accept: 'image/*', multiple: false }}
+            role="Textbox"
+            label="Comfortable Density"
+            model="demo.density1"
+            placeholder="More spacious"
+            density="Comfortable"
           />
           <Field
-            role="TagInput"
-            label="Tag Input"
-            model="demo.tags"
-            placeholder="Add tags..."
-            spec={{ maxItems: 5 }}
+            role="Textbox"
+            label="Standard Density (Default)"
+            model="demo.density2"
+            placeholder="Normal spacing"
+            density="Standard"
+          />
+          <Field
+            role="Textbox"
+            label="Compact Density"
+            model="demo.density3"
+            placeholder="Tight spacing"
+            density="Compact"
           />
         </Block>
       </Block>
     </ShowcasePage>
   );
 }
-

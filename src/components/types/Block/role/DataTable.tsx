@@ -13,7 +13,7 @@ import { ChevronDown, ChevronsUpDown, ChevronUp, Grid3x3, Rows3 } from 'lucide-r
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { SearchInput } from '@/components/types/Element/Field/role/SearchInput.tsx';
+import { Search, X } from 'lucide-react';
 import { Kbd } from '@/components/types/Element/Text/role/Kbd.tsx';
 import { useNavigableCursor } from '@/shared/lib/keyboard';
 
@@ -103,7 +103,7 @@ export function DataTable<TData, TValue>({
   const { cursorIndex, getItemProps } = useNavigableCursor({
     type: 'list',
     items: rows,
-    onSelect: (row) => {},
+    onSelect: (row) => { },
   });
 
   // Cell 선택 모드 키보드 네비게이션
@@ -230,13 +230,24 @@ export function DataTable<TData, TValue>({
       <Block role="Toolbar" layout="inline" density="Compact" className="px-3 py-2 gap-2">
         {/* Search Input */}
         <div className="flex-1">
-          <SearchInput
-            placeholder="Search all columns..."
-            value={globalFilter ?? ''}
-            onChange={(e) => setGlobalFilter(e.target.value)}
-            onClear={() => setGlobalFilter('')}
-            variant="ghost"
-          />
+          <div className="relative flex items-center w-full">
+            <Search size={14} className="absolute left-2 text-muted" />
+            <input
+              type="text"
+              placeholder="Search all columns..."
+              value={globalFilter ?? ''}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              className="h-8 pl-8 pr-8 w-full bg-layer-2 rounded border border-border text-sm focus:outline-none focus:border-accent transition-colors"
+            />
+            {(globalFilter ?? '') && (
+              <button
+                onClick={() => setGlobalFilter('')}
+                className="absolute right-2 p-0.5 text-muted hover:text-text rounded-full hover:bg-layer-3"
+              >
+                <X size={12} />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Selection Mode Toggle */}
@@ -263,9 +274,8 @@ export function DataTable<TData, TValue>({
         <div className="text-sm" style={{ minWidth: 'max-content' }}>
           {/* Header */}
           <div
-            className={`sticky top-0 z-10 bg-surface/95 backdrop-blur-sm transition-colors ${
-              hoveredRowIndex !== null ? 'bg-accent/5' : ''
-            }`}
+            className={`sticky top-0 z-10 bg-surface/95 backdrop-blur-sm transition-colors ${hoveredRowIndex !== null ? 'bg-accent/5' : ''
+              }`}
           >
             {table.getHeaderGroups().map((headerGroup) => (
               <div key={headerGroup.id} className="flex">
@@ -276,9 +286,8 @@ export function DataTable<TData, TValue>({
                   return (
                     <div
                       key={header.id}
-                      className={`text-left font-medium text-muted whitespace-nowrap ${
-                        density === 'compact' ? 'px-2 py-1 text-xs' : 'px-3 py-1.5 text-sm'
-                      }`}
+                      className={`text-left font-medium text-muted whitespace-nowrap ${density === 'compact' ? 'px-2 py-1 text-xs' : 'px-3 py-1.5 text-sm'
+                        }`}
                       style={{ width: `${width}px`, minWidth: `${width}px` }}
                     >
                       {header.isPlaceholder ? null : (
@@ -344,29 +353,28 @@ export function DataTable<TData, TValue>({
                         }
                       }
                     }}
-                    className={`flex absolute transition-colors ${
-                      selectionMode === 'row' ? 'cursor-pointer' : ''
-                    } ${
+                    className={`flex absolute transition-colors ${selectionMode === 'row' ? 'cursor-pointer' : ''
+                      } ${
                       // Row 선택 모드
                       selectionMode === 'row'
                         ? // 선택된 행: 고정 스타일 (hover 없음)
-                          isSelected
+                        isSelected
                           ? 'bg-accent/10 ring-2 ring-accent ring-inset'
                           : // Hover된 행: 얇은 반투명 배경
-                            isHovered
+                          isHovered
                             ? 'bg-black/[0.02]'
                             : // 키보드 커서: focus outline만
-                              isCursor
+                            isCursor
                               ? 'ring-2 ring-accent ring-inset'
                               : // 일반 행: zebra striping만
-                                isEven
+                              isEven
                                 ? 'bg-surface'
                                 : 'bg-surface-sunken'
                         : // Cell 선택 모드: zebra striping만
-                          isEven
+                        isEven
                           ? 'bg-surface'
                           : 'bg-surface-sunken'
-                    }`}
+                      }`}
                     style={{
                       height: `${virtualRow.size}px`,
                       transform: `translateY(${virtualRow.start}px)`,
@@ -393,15 +401,12 @@ export function DataTable<TData, TValue>({
                               setSelectedCell({ rowIndex: virtualRow.index, colIndex });
                             }
                           }}
-                          className={`text-text whitespace-nowrap overflow-hidden text-ellipsis flex items-center transition-colors ${
-                            density === 'compact' ? 'px-2 py-0.5 text-xs' : 'px-3 py-1.5 text-sm'
-                          } ${
-                            selectionMode === 'cell' ? 'cursor-pointer hover:bg-black/[0.02]' : ''
-                          } ${
-                            isCellSelected
+                          className={`text-text whitespace-nowrap overflow-hidden text-ellipsis flex items-center transition-colors ${density === 'compact' ? 'px-2 py-0.5 text-xs' : 'px-3 py-1.5 text-sm'
+                            } ${selectionMode === 'cell' ? 'cursor-pointer hover:bg-black/[0.02]' : ''
+                            } ${isCellSelected
                               ? 'bg-accent/10 ring-2 ring-accent ring-inset !font-medium'
                               : ''
-                          }`}
+                            }`}
                           style={{ width: `${width}px`, minWidth: `${width}px` }}
                         >
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
