@@ -26,30 +26,27 @@ export function FieldShowcasePage() {
       {/* ========================================
           1. INPUT CATEGORY
           ======================================== */}
-      <Block role="Stack" gap={12}>
-        <Block role="Stack" gap={3}>
+      <Block role="Stack">
+        <Block role="Stack">
           <Text
             role="Title"
             prominence="Hero"
             content="1. Input Category"
-            className="text-3xl font-bold"
           />
           <Text
             role="Body"
             prominence="Standard"
             content="Keyboard-driven text entry. User types value as primary interaction."
-            className="text-base"
           />
         </Block>
 
         {/* 1.1 Textbox */}
-        <Block role="Stack" gap={4} className="mt-8">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="1.1 Textbox"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -58,7 +55,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Textbox"
               label="Text Input (Basic)"
@@ -91,7 +88,7 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 1.2 Searchbox */}
-        <Block role="Stack" gap={4} className="mt-12">
+        <Block role="Stack">
           <Block role="Stack" gap={1}>
             <Text
               role="Title"
@@ -118,13 +115,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 1.3 Spinbutton */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="1.3 Spinbutton"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -133,7 +129,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Spinbutton"
               label="Number Input (Spinbutton)"
@@ -145,13 +141,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 1.4 Otp */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="1.4 Otp"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -160,7 +155,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Otp"
               label="OTP Input (6-digit)"
@@ -172,35 +167,32 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* ========================================
           2. CHOICE CATEGORY
           ======================================== */}
-      <Block role="Stack" gap={12}>
-        <Block role="Stack" gap={3}>
+      <Block role="Stack">
+        <Block role="Stack">
           <Text
             role="Title"
             prominence="Hero"
             content="2. Choice Category"
-            className="text-3xl font-bold"
           />
           <Text
             role="Body"
             prominence="Standard"
             content="User selects from options. `items` property REQUIRED (except single Checkbox/Switch)."
-            className="text-base"
           />
         </Block>
 
         {/* 2.1 Checkbox */}
-        <Block role="Stack" gap={4} className="mt-8">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="2.1 Checkbox"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -209,7 +201,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Checkbox"
               label="Single Checkbox (Boolean)"
@@ -334,13 +326,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 2.5 Listbox */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="2.5 Listbox"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -349,7 +340,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Listbox"
               label="Listbox (Always Visible)"
@@ -369,35 +360,32 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* ========================================
           3. CONTROL CATEGORY
           ======================================== */}
-      <Block role="Stack" gap={12}>
-        <Block role="Stack" gap={3}>
+      <Block role="Stack">
+        <Block role="Stack">
           <Text
             role="Title"
             prominence="Hero"
             content="3. Control Category"
-            className="text-3xl font-bold"
           />
           <Text
             role="Body"
             prominence="Standard"
             content="User manipulates continuous or discrete value range via pointer interaction (mouse/touch)."
-            className="text-base"
           />
         </Block>
 
         {/* 3.1 Slider */}
-        <Block role="Stack" gap={4} className="mt-8">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="3.1 Slider"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -406,7 +394,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Spinbutton"
               label="Slider (Single Handle)"
@@ -425,13 +413,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 3.2 Colorpicker */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="3.2 Colorpicker"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -440,7 +427,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Colorpicker"
               label="Color Picker (Default)"
@@ -490,7 +477,7 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* ========================================
           4. PICKER CATEGORY
@@ -512,13 +499,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.1 Datepicker */}
-        <Block role="Stack" gap={4} className="mt-8">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="4.1 Datepicker"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -527,7 +513,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Datepicker"
               label="Date Picker"
@@ -544,13 +530,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.2 Timepicker */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="4.2 Timepicker"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -559,7 +544,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Datepicker"
               label="Time Picker"
@@ -570,13 +555,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.3 Filepicker */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="4.3 Filepicker"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -585,7 +569,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="Filepicker"
               label="File Upload"
@@ -596,13 +580,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.4 Signature */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="4.4 Signature"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -611,7 +594,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 1 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 1 }} density="Comfortable">
             <Field
               role="Signature"
               label="Your Signature"
@@ -628,13 +611,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.5 Calendar */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="4.5 Calendar"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -643,7 +625,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable">
             <Field
               role="DateInput"
               label="Meeting Date"
@@ -654,35 +636,32 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* ========================================
           5. META CATEGORY
           ======================================== */}
-      <Block role="Stack" gap={12}>
-        <Block role="Stack" gap={3}>
+      <Block role="Stack">
+        <Block role="Stack">
           <Text
             role="Title"
             prominence="Hero"
             content="5. Meta Category"
-            className="text-3xl font-bold"
           />
           <Text
             role="Body"
             prominence="Standard"
             content="No visible UI. Participates in form submission but not rendered to user."
-            className="text-base"
           />
         </Block>
 
         {/* 5.1 Hidden */}
-        <Block role="Stack" gap={4} className="mt-8">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="5.1 Hidden"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -691,7 +670,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Card" className="p-6 bg-layer-2 mt-4" gap={4}>
+          <Block role="Card">
             <Text role="Label" prominence="Strong" content="Hidden Field Example" />
             <Text
               role="Body"
@@ -716,35 +695,32 @@ export function FieldShowcasePage() {
       {/* ========================================
           6. PROMINENCE & INTENT VARIANTS
           ======================================== */}
-      <Block role="Stack" gap={12}>
-        <Block role="Stack" gap={3}>
+      <Block role="Stack">
+        <Block role="Stack">
           <Text
             role="Title"
             prominence="Hero"
             content="6. Prominence & Intent Variants"
-            className="text-3xl font-bold"
           />
           <Text
             role="Body"
             prominence="Standard"
             content="All Fields support prominence and intent props for visual hierarchy and semantic meaning."
-            className="text-base"
           />
         </Block>
 
         {/* Prominence variants */}
-        <Block role="Stack" gap={4} className="mt-8">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="Prominence Levels"
-              className="text-xl font-semibold"
             />
             <Text role="Body" prominence="Subtle" content="Hero → Standard → Strong → Subtle" />
           </Block>
 
-          <Block role="Stack" gap={6} className="mt-4">
+          <Block role="Stack">
             <Field
               role="Textbox"
               label="Hero Prominence"
@@ -777,13 +753,12 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* Intent variants */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
               content="Intent Colors"
-              className="text-xl font-semibold"
             />
             <Text
               role="Body"
@@ -792,7 +767,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Stack" gap={6} className="mt-4">
+          <Block role="Stack">
             <Field
               role="Textbox"
               label="Neutral Intent (Default)"
@@ -834,28 +809,26 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* ========================================
           7. DENSITY VARIANTS
           ======================================== */}
-      <Block role="Stack" gap={12}>
-        <Block role="Stack" gap={3}>
+      <Block role="Stack">
+        <Block role="Stack">
           <Text
             role="Title"
             prominence="Hero"
             content="7. Density Variants"
-            className="text-3xl font-bold"
           />
           <Text
             role="Body"
             prominence="Standard"
             content="Control spacing with density prop: Comfortable → Standard → Compact"
-            className="text-base"
           />
         </Block>
 
-        <Block role="Grid" spec={{ columns: 3 }} gap={12} density="Comfortable" className="mt-8">
+        <Block role="Grid" spec={{ columns: 3 }} density="Comfortable">
           <Field
             role="Textbox"
             label="Comfortable Density"

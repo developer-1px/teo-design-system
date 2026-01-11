@@ -1,5 +1,6 @@
 import type { ActionRendererProps } from '@/components/types/Element/Action/Action.types';
 import { cn } from '@/shared/lib/utils';
+import { getInteractiveClasses } from '@/shared/config/interactive-tokens';
 
 export function TabAction({
   className,
@@ -8,24 +9,47 @@ export function TabAction({
   icon,
   active,
   selected,
+  computedProminence,
+  computedIntent,
+  computedDensity,
+  role,
+  handleClick,
+  isDisabled,
+  tokens,
+  Element = 'button',
   ...props
 }: ActionRendererProps) {
-  // Tabs often have an active state indicated by border-bottom or background
-  const isSelected = active || selected;
+  const interactiveClasses = getInteractiveClasses({
+    prominence: computedProminence,
+    intent: computedIntent,
+    config: {
+      selected,
+      disabled: isDisabled,
+      clickable: true,
+    },
+    skipIdle: true,
+  });
+
   return (
-    <button
-      role="tab"
-      aria-selected={isSelected}
+    <Element
+      onClick={handleClick}
       className={cn(
-        'flex items-center gap-2 px-3 py-2 border-b-2 border-transparent transition-colors text-sm font-medium',
-        'hover:text-text-primary text-text-subtle',
-        isSelected && 'border-primary text-primary',
+        'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 outline-none overflow-hidden',
+        tokens.surface.background,
+        tokens.typography.color,
+        tokens.geometry.width,
+        tokens.geometry.color,
+        tokens.geometry.radius,
+        tokens.geometry.outline,
+        tokens.geometry.outlineOffset,
+        tokens.shadow.boxShadow,
+        interactiveClasses,
         className
       )}
       {...props}
     >
-      {icon && <span>{icon}</span>}
-      <span>{children || label}</span>
-    </button>
+      {icon && <span className="opacity-70">{icon}</span>}
+      <span className="whitespace-nowrap">{children || label}</span>
+    </Element>
   );
 }

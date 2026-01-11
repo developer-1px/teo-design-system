@@ -59,8 +59,8 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
         mode: 'edit',
       }}
     >
-      <Block role="Container" className="h-full overflow-y-auto p-4" density="Comfortable">
-        <Block role="Stack" density="Comfortable" className="gap-6">
+      <Block role="Container" density="Comfortable">
+        <Block role="Stack" density="Comfortable">
           {/* Text Formatting Section */}
           <Block role="Fieldset" density="Compact">
             <Text role="Label" prominence="Strong" content="텍스트" />

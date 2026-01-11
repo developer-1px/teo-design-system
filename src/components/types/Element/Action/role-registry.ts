@@ -15,6 +15,7 @@ import { LinkAction } from './renderers/LinkAction';
 import { ListItemAction } from './renderers/ListItemAction';
 import { MenuItemAction } from './renderers/MenuItemAction';
 import { ResizeHandleAction } from './renderers/ResizeHandleAction';
+import { SurfaceAction } from './renderers/SurfaceAction';
 import { TabAction } from './renderers/TabAction';
 
 /**
@@ -158,6 +159,18 @@ export const ROLE_REGISTRY: Record<string, ActionRoleConfig> = {
     baseStyles: 'flex items-center gap-1 py-0.5 px-2 hover:bg-surface-hover cursor-pointer',
     renderer: ButtonAction,
     description: 'Tree Node',
+  },
+  Card: {
+    htmlTag: 'div',
+    baseStyles: 'bg-surface border border-border-default rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer p-6 flex flex-col gap-4',
+    renderer: SurfaceAction,
+    description: 'Interactive Card',
+  },
+  Row: {
+    htmlTag: 'div',
+    baseStyles: 'flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-surface-hover transition-colors w-full',
+    renderer: SurfaceAction,
+    description: 'Interactive Row',
   },
 };
 

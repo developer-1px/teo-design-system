@@ -18,19 +18,19 @@ export function useIDDLToken(localInput: Partial<TokenInput>): TokenOutput {
     // Local props override context, but Context provides defaults.
     // SectionType comes from LayoutContext (mapped to 'type' in IDDLContext)
     const mergedInput: TokenInput = useMemo(() => ({
-        role: localInput.role || 'Box', // Fallback role
+        role: localInput.role || 'Box',
 
         // Contextual derivations
-        sectionRole: blockContext.sectionRole, // Provided by Block Context
-        sectionType: context.type,             // Provided by Section (Layout) Context
+        sectionRole: localInput.sectionRole || blockContext.sectionRole,
+        sectionType: localInput.sectionType || context.type,
 
-        // Inheritable props
-        prominence: localInput.prominence ?? context.prominence,
-        intent: localInput.intent ?? context.intent,
-        density: densityMap(context.density), // Ensure string match if needed
+        // Inheritable props (Local overrides Context)
+        prominence: localInput.prominence ?? context.prominence ?? 'Standard',
+        intent: localInput.intent ?? context.intent ?? 'Neutral',
+        density: localInput.density ?? context.density ?? 'Standard',
 
         // Local-only state
-        state: localInput.state,
+        state: localInput.state || {},
     }), [localInput, context, blockContext]);
 
     // 3. Resolve Tokens (Memoized)

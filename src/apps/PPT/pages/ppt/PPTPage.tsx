@@ -215,7 +215,7 @@ export const PPTPage = () => {
 
   // 편집 모드 (기본) - Refactored to Studio Layout (IDDL v5.0)
   return (
-    <Page title="Presentation" role="Application" layout="Studio" density="Compact">
+    <Page title="Presentation" role="Application" layout="Workbench" density="Compact">
       {/* Header: Global Toolbar */}
       <Section role="Header">
         <PresentationToolbar

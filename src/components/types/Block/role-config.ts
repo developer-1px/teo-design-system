@@ -69,17 +69,17 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
   Card: {
     htmlTag: 'article',
     ariaProps: { role: 'article' },
-    baseStyles: 'bg-surface border border-border-default rounded-lg shadow-sm', // Default style
+    baseStyles: 'relative overflow-hidden', // Minimal layout focus, tokens handle visuals
     renderer: Layout.Card,
     autoPadding: true,
     description: '콘텐츠 그룹 컨테이너',
     sectionOverrides: {
-      Panel: { baseStyles: 'bg-transparent border-0 shadow-none rounded-none p-0' }, // Flat container in Panel
-      Sidebar: { baseStyles: 'bg-transparent border-0 shadow-none rounded-none p-0 gap-1' }, // Nav container
+      Panel: { baseStyles: 'bg-transparent border-0 shadow-none' },
+      Sidebar: { baseStyles: 'bg-transparent border-0 shadow-none' },
       Header: {
         baseStyles:
-          'bg-surface-elevated border-b border-border-default rounded-none shadow-none px-4',
-      }, // Header wrapper
+          'bg-slate-50/50 border-b border-border-default/20 rounded-none shadow-none px-4',
+      },
     },
   },
   SearchBar: { htmlTag: 'div', baseStyles: 'relative', description: '검색 바' },
@@ -349,7 +349,7 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
   FloatingToolbar: {
     htmlTag: 'div',
     baseStyles:
-      'absolute bottom-4 left-1/2 -translate-x-1/2 shadow-xl rounded-full bg-surface-overlay border border-border-default px-4 py-2 flex items-center gap-2',
+      'fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 flex items-center gap-4 z-50',
     description: '플로팅 툴바',
   },
   ToolbarDivider: {

@@ -94,9 +94,9 @@ export const SlideList = ({
   const { role: ariaRole, ...containerProps } = selection.getContainerProps();
 
   return (
-    <Block role="Container" density="Comfortable" {...containerProps} className="p-3">
+    <Block role="Container" density="Comfortable" {...containerProps}>
       {/* Toolbar: Add Button */}
-      <Block role="Toolbar" density="Comfortable" className="mb-3">
+      <Block role="Toolbar" density="Comfortable">
         <Action icon="Plus" onClick={onSlideAdd} />
         {selection.selectedItems.length > 0 && (
           <Text role="Caption" prominence="Subtle">
@@ -112,7 +112,6 @@ export const SlideList = ({
         items={slides}
         value="id"
         onReorder={onReorder}
-        className="gap-3"
         renderItem={(slide: Slide, index: number) => {
           return (
             <Block
@@ -122,38 +121,31 @@ export const SlideList = ({
               intent="Neutral"
               value={slide.id}
               selectionModel={selectionModel}
-              className="group relative bg-white border-2 border-border rounded-md shadow-sm hover:border-border-emphasis hover:shadow-md data-[selected=true]:border-accent data-[selected=true]:shadow-lg data-[selected=true]:ring-2 data-[selected=true]:ring-accent/20 transition-all duration-200 cursor-move overflow-hidden"
             >
               {/* Slide Number Badge - Absolute positioned */}
               <Block
                 role="Container"
-                className="absolute top-1.5 left-1.5 z-10 bg-layer-1/90 backdrop-blur-sm rounded px-1.5 py-0.5 shadow-sm"
               >
                 <Text
                   role="Caption"
                   prominence="Strong"
-                  className="font-semibold text-[10px] leading-none"
-                >
-                  {index + 1}
-                </Text>
+                  content={index + 1}
+                />
               </Block>
 
               {/* Thumbnail Container */}
-              <Block role="Container" className="aspect-[16/9] overflow-hidden bg-layer-0">
+              <Block role="Container">
                 <SlidePreview slide={slide} scale={0.15} />
               </Block>
 
               {/* Slide Title - Bottom overlay */}
               <Block
                 role="Container"
-                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               >
                 <Text
                   role="Caption"
-                  className="text-white text-[10px] font-medium truncate leading-tight"
-                >
-                  {slide.title || '제목 없음'}
-                </Text>
+                  content={slide.title || '제목 없음'}
+                />
               </Block>
             </Block>
           );

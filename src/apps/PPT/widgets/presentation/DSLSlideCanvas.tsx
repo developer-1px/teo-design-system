@@ -42,8 +42,8 @@ export const DSLSlideCanvas = ({
   if (!slide) {
     return (
       <Section role="Container">
-        <Block role="Center">
-          <Block role="Stack" density="Comfortable" className="text-center">
+        <Block role="Container">
+          <Block role="Stack" density="Comfortable">
             <Text role="Body" prominence="Subtle" content="슬라이드를 선택하세요" />
             <Text
               role="Caption"
@@ -59,13 +59,12 @@ export const DSLSlideCanvas = ({
   return (
     <Section role="Container">
       {/* Canvas Container - 중앙 정렬 */}
-      <Block role="Center" className="p-8">
+      <Block role="Container">
         {/* Slide Canvas - 16:9 aspect ratio container */}
         <Block
           role="Container"
           prominence="Standard"
           density="Comfortable"
-          className="relative w-full max-w-5xl aspect-[16/9]"
         >
           {/* Slide Content Container */}
           <Section
@@ -84,7 +83,7 @@ export const DSLSlideCanvas = ({
               )}
 
               {/* Content Area - Scrollable */}
-              <Block role="Container" layout="stack" density="Standard">
+              <Block role="Container" density="Standard">
                 {slide.content ? (
                   slideContentToDSL(slide.content)
                 ) : (
@@ -100,7 +99,6 @@ export const DSLSlideCanvas = ({
               role="Toolbar"
               prominence="Standard"
               density="Compact"
-              className="absolute right-3 top-3 bg-white/90 backdrop-blur-sm rounded shadow-md opacity-0 hover:opacity-100 transition-opacity duration-200"
               onMouseEnter={() => setShowEditTools(true)}
               onMouseLeave={() => setShowEditTools(false)}
             >
@@ -108,13 +106,13 @@ export const DSLSlideCanvas = ({
                 icon="Type"
                 intent="Neutral"
                 onClick={() => setIsEditingTitle(!isEditingTitle)}
-                prominence={isEditingTitle ? 'Primary' : 'Secondary'}
+                prominence={isEditingTitle ? 'Hero' : 'Standard'}
               />
               <Action
                 icon="FileText"
                 intent="Neutral"
                 onClick={() => setIsEditingContent(!isEditingContent)}
-                prominence={isEditingContent ? 'Primary' : 'Secondary'}
+                prominence={isEditingContent ? 'Hero' : 'Standard'}
               />
               <Action icon="Image" intent="Neutral" onClick={() => console.log('Add image')} />
               <Action icon="Shapes" intent="Neutral" onClick={() => console.log('Add shape')} />
@@ -127,7 +125,6 @@ export const DSLSlideCanvas = ({
               role="Toolbar"
               prominence="Subtle"
               density="Compact"
-              className="absolute left-3 top-3 bg-white/80 backdrop-blur-sm rounded"
             >
               <Text role="Caption" content={`${currentIndex + 1} / ${totalSlides}`} />
             </Block>
@@ -139,28 +136,27 @@ export const DSLSlideCanvas = ({
               role="Toolbar"
               density="Compact"
               prominence="Subtle"
-              className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-sm rounded px-3 py-2"
             >
-              <Block role="Inline" density="Compact">
+              <Block role="Toolbar" density="Compact">
                 <Text role="Code" content="←" />
                 <Text role="Code" content="→" />
                 <Text role="Caption" prominence="Subtle" content="이전/다음" />
               </Block>
-              <Block role="Container" className="w-px h-4 bg-border" />
-              <Block role="Inline" density="Compact">
+              <Block role="Container" />
+              <Block role="Toolbar" density="Compact">
                 <Text role="Code" content="Space" />
                 <Text role="Caption" prominence="Subtle" content="다음" />
               </Block>
-              <Block role="Container" className="w-px h-4 bg-border" />
-              <Block role="Inline" density="Compact">
+              <Block role="Container" />
+              <Block role="Toolbar" density="Compact">
                 <Text role="Code" content="Home" />
                 <Text role="Code" content="End" />
                 <Text role="Caption" prominence="Subtle" content="처음/끝" />
               </Block>
               {editable && (
                 <>
-                  <Block role="Container" className="w-px h-4 bg-border" />
-                  <Block role="Inline" density="Compact">
+                  <Block role="Container" />
+                  <Block role="Toolbar" density="Compact">
                     <Text role="Caption" prominence="Subtle" content="우측 상단에서 편집" />
                   </Block>
                 </>

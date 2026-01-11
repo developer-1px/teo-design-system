@@ -62,9 +62,9 @@ export const JsonSchemaSidebarDSL = ({
   // No data state
   if (!schema.typescript) {
     return (
-      <Section className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden rounded-md">
+      <Section>
         <div className="px-4 py-3">
-          <Block role="Container" className="flex items-center gap-2">
+          <Block role="Container">
             <Code size={16} />
             <Text role="Title" prominence="Hero" content="Schema" />
           </Block>
@@ -72,7 +72,7 @@ export const JsonSchemaSidebarDSL = ({
 
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <Block role="Card">
-            <Text role="Body" className="text-center" content="No data to analyze" />
+            <Text role="Body" content="No data to analyze" />
           </Block>
         </div>
       </Section>
@@ -80,10 +80,10 @@ export const JsonSchemaSidebarDSL = ({
   }
 
   return (
-    <Section className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden rounded-md">
+    <Section>
       {/* Header */}
       <div className="px-3 py-2">
-        <Block role="Container" className="flex items-center gap-2">
+        <Block role="Container">
           <Code size={14} />
           <Text role="Title" content="Schema" />
         </Block>
@@ -117,7 +117,6 @@ export const JsonSchemaSidebarDSL = ({
                     <Text
                       role="Body"
                       prominence="Hero"
-                      className="font-mono"
                       content={String(schema.analysis.totalKeys)}
                     />
                   </div>
@@ -127,7 +126,6 @@ export const JsonSchemaSidebarDSL = ({
                     <Text
                       role="Body"
                       prominence="Hero"
-                      className="font-mono"
                       content={String(schema.analysis.depth)}
                     />
                   </div>
@@ -137,7 +135,6 @@ export const JsonSchemaSidebarDSL = ({
                     <Text
                       role="Body"
                       prominence="Hero"
-                      className="font-mono"
                       content={Array.from(schema.analysis.types).join(', ')}
                     />
                   </div>
@@ -171,7 +168,6 @@ export const JsonSchemaSidebarDSL = ({
                 <Block
                   as="pre"
                   prominence="Hero"
-                  className="font-mono whitespace-pre overflow-x-auto bg-layer-3 p-2 rounded text-xs"
                 >
                   {schema.typescript}
                 </Block>

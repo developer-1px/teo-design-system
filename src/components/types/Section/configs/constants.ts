@@ -8,9 +8,9 @@ export const LAYOUT_SECTION_ROLES: Record<PageLayout, SectionRole[]> = {
   Single: ['Header', 'Main', 'Footer'],
   Sidebar: ['Header', 'Nav', 'Main', 'Footer'],
   Aside: ['Header', 'Main', 'Aside', 'Footer'],
-  HolyGrail: ['Header', 'Nav', 'Main', 'Aside', 'Footer'],
+  ThreeColumn: ['Header', 'Nav', 'Main', 'Aside', 'Footer'],
   Split: ['Header', 'Master', 'Detail', 'Footer', 'Toolbar'],
-  Studio: [
+  Workbench: [
     'Header',
     'Toolbar',
     'ActivityBar',

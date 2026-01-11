@@ -134,19 +134,19 @@ export const ServerProductsViewDSL = () => {
 
         // IDDL Text로 렌더링
         if (value === null) {
-          return <Text role="Caption" prominence="Subtle" className="italic" content="null" />;
+          return <Text role="Caption" prominence="Subtle" content="null" />;
         }
         if (value === undefined) {
-          return <Text role="Caption" prominence="Subtle" className="italic" content="undefined" />;
+          return <Text role="Caption" prominence="Subtle" content="undefined" />;
         }
         if (typeof value === 'boolean') {
-          return <Text role="Body" className="text-accent" content={String(value)} />;
+          return <Text role="Body" content={String(value)} />;
         }
         if (typeof value === 'number') {
           return <Text role="Body" content={String(value)} />;
         }
         if (typeof value === 'object') {
-          return <Text role="Caption" className="font-mono" content={JSON.stringify(value)} />;
+          return <Text role="Caption" content={JSON.stringify(value)} />;
         }
 
         return <Text role="Body" content={String(value)} />;
@@ -156,25 +156,22 @@ export const ServerProductsViewDSL = () => {
 
   return (
     <Page role="Application">
-      <Section role="Container" className="flex flex-1 h-full gap-0 overflow-hidden">
+      <Section role="Container">
         {/* Sidebar - Schema */}
         {showSidebar && <JsonSchemaSidebarDSL data={data} interfaceName="Item" />}
 
         {/* Main Content Area */}
         <Section
           role="Main"
-          className="flex flex-col flex-1 h-full bg-layer-2-cool boundary-shadow-left rounded-md"
         >
           {/* Notion-style Control Bar */}
-          <Section role="Header" className="border-b border-border bg-layer-3">
+          <Section role="Header">
             <Block
               role="Toolbar"
-              layout="inline"
               density="Compact"
-              className="h-12 items-center justify-between px-3"
             >
               {/* Left: Sidebar Toggle + Search + Filter */}
-              <Block role="Toolbar" layout="inline" density="Compact" className="gap-2 flex-1">
+              <Block role="Toolbar" density="Compact">
                 <Action
                   icon={showSidebar ? 'PanelLeftClose' : 'PanelLeft'}
                   intent="Neutral"
@@ -191,7 +188,6 @@ export const ServerProductsViewDSL = () => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setSearchQuery(e.target.value)
                   }
-                  className="w-64"
                 />
 
                 <Field
@@ -203,12 +199,11 @@ export const ServerProductsViewDSL = () => {
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                     setFilterColumn(e.target.value)
                   }
-                  className="w-40"
                 />
               </Block>
 
               {/* Center: View Type */}
-              <Block role="Toolbar" layout="inline" density="Compact" className="gap-2">
+              <Block role="Toolbar" density="Compact">
                 <Field
                   model="viewType"
                   type="radio"
@@ -227,9 +222,7 @@ export const ServerProductsViewDSL = () => {
               {/* Right: Sort + Density */}
               <Block
                 role="Toolbar"
-                layout="inline"
                 density="Compact"
-                className="gap-2 flex-1 justify-end"
               >
                 <Field
                   label="Sort by"
@@ -240,7 +233,6 @@ export const ServerProductsViewDSL = () => {
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                     setSortColumn(e.target.value)
                   }
-                  className="w-36"
                 />
 
                 <Field
@@ -269,17 +261,15 @@ export const ServerProductsViewDSL = () => {
           {/* Stats Bar */}
           <Block
             role="Container"
-            layout="inline"
             density="Compact"
-            className="gap-2 px-3 py-2 bg-layer-2 border-b border-border"
           >
-            <Badge variant="default" size="sm">
+            <Badge intent="Neutral">
               {data.length} rows
             </Badge>
-            <Badge variant="info" size="sm">
+            <Badge intent="Info">
               {columns.length} cols
             </Badge>
-            <Badge variant="default" size="sm">
+            <Badge intent="Neutral">
               {visibleColumns.length}/{allColumnKeys.length} visible
             </Badge>
           </Block>

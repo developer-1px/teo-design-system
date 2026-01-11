@@ -388,11 +388,13 @@ export function getInteractiveClasses({
   intent = 'Neutral',
   config = {},
   className,
+  skipIdle = false,
 }: {
   prominence?: Prominence;
   intent?: Intent;
   config?: InteractiveConfig;
   className?: string;
+  skipIdle?: boolean;
 }): string {
   const { selected = false, disabled = false, focusable = true } = config;
 
@@ -405,11 +407,13 @@ export function getInteractiveClasses({
   }
 
   // Interactive variants 적용
-  const interactiveClass = interactiveVariants({
-    prominence,
-    intent,
-    state,
-  });
+  const interactiveClass = (skipIdle && state === 'idle')
+    ? ''
+    : interactiveVariants({
+      prominence,
+      intent,
+      state,
+    });
 
   // Focus variants 적용 (disabled가 아니고 focusable일 때만)
   const focusClass = !disabled && focusable ? focusVariants({ intent }) : '';

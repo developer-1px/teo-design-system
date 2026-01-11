@@ -84,13 +84,13 @@ export function SortableList({
   computedProminence,
   computedIntent,
   Element,
-  items = [],
-  onReorder,
-  value = 'id', // v1.0.2: 아이템의 고유 식별자 필드명 (기본값: 'id')
-  renderItem,
+  spec,
   ...rest
-}: SortableListProps) {
-  const valueKey = value;
+}: BlockRendererProps) {
+  const items = (spec?.items as any[]) || [];
+  const onReorder = spec?.onReorder as (items: any[]) => void;
+  const renderItem = spec?.renderItem as (item: any, index: number) => ReactNode;
+  const valueKey = (spec?.value as string) || 'id';
   // Density에 따른 gap 조절
   const densityGap = {
     Compact: 'gap-1',

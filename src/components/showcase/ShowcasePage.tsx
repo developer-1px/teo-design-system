@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Element/Text/Text';
 import { Page } from '@/components/types/Page/Page';
+import { Action } from '@/components/types/Element/Action/Action';
 import { Section } from '@/components/types/Section/Section';
 
 export interface ShowcaseCategory {
@@ -38,41 +39,31 @@ export const ShowcasePage = ({
       <Section
         role="Sidebar"
         prominence="Subtle"
-        width="280px"
+        width="300px"
         className="border-r border-border-default h-full"
       >
         {sidebar ? (
           sidebar
         ) : (
-          <Block role="Container" layout="stack" gap={4} className="h-full">
+          <Block role="Stack" className="h-full">
             {/* Sidebar Header */}
-            <Block
-              role="Container"
-              layout="stack"
-              gap={2}
-              className="p-4 border-b border-border-default"
-            >
-              <Text role="Label" prominence="Strong" content={title} />
-              {subtitle && <Text role="Caption" prominence="Subtle" content={subtitle} />}
+            <Block role="Stack" className="p-6 border-b border-border-default">
+              <Text role="Heading" prominence="Strong" content={title} />
+              {subtitle && <Text role="Caption" prominence="Subtle" content={subtitle} className="mt-1" />}
             </Block>
 
             {/* Category List */}
-            <Block role="List" layout="stack" className="p-2">
+            <Block role="List" className="p-2">
               {categories.map((category) => (
-                <Block
+                <Action
                   key={category.id}
                   role="ListItem"
-                  layout="inline"
-                  clickable
                   selected={activeCategoryId === category.id}
-                  className={`p-2 rounded-md ${activeCategoryId === category.id
-                      ? 'bg-surface-active'
-                      : 'hover:bg-surface-hover'
-                    }`}
                   onClick={() => onCategoryChange?.(category.id)}
+                  className="rounded-lg"
                 >
-                  <Text role="Body" content={category.label} />
-                </Block>
+                  <Text role="Label" content={category.label} className="font-medium" />
+                </Action>
               ))}
             </Block>
           </Block>
@@ -87,7 +78,7 @@ export const ShowcasePage = ({
           prominence="Elevated"
           className="h-14 border-b border-border-default px-6 flex items-center justify-between bg-surface/50 backdrop-blur-md sticky top-0 z-10"
         >
-          <Block role="Inline" layout="inline" gap={2} className="items-center">
+          <Block role="Stack" className="items-center flex-row gap-2">
             <Text role="Title" size="md" content={title} />
             {activeCategoryId && (
               <>
@@ -103,14 +94,9 @@ export const ShowcasePage = ({
         </Section>
 
         {/* Content */}
-        <Block role="Container" layout="stack" className="p-8 max-w-5xl mx-auto space-y-12 pb-32">
+        <Block role="Stack" className="p-10 w-full space-y-20 pb-40">
           {description && (
-            <Block
-              role="Container"
-              layout="stack"
-              gap={2}
-              className="px-6 py-4 bg-layer-2 border border-border-default rounded-xl"
-            >
+            <Block role="Stack" className="px-8 py-5 bg-surface-sunken/30 border border-border-muted rounded-2xl max-w-4xl">
               <Text role="Body" prominence="Standard" content={description} />
             </Block>
           )}

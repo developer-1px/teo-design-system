@@ -20,8 +20,8 @@ export function TextShowcasePage() {
       activeCategoryId="matrix"
     >
       {/* 1. Typography Matrix (Role x Prominence) */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="1. Typography Matrix" />
           <Text
             role="Body"
@@ -31,22 +31,22 @@ export function TextShowcasePage() {
         </Block>
 
         {/* Title Role */}
-        <Block role="Card" density="Standard" className="p-6" gap={6}>
+        <Block role="Card" density="Standard">
           <Text role="Label" content="Title Role" prominence="Subtle" />
-          <Block role="Grid" spec={{ columns: 2 }} gap={8}>
-            <Block role="Stack" gap={0.5}>
+          <Block role="Grid" spec={{ columns: 2 }}>
+            <Block role="Stack">
               <Text role="Title" prominence="Hero" content="Hero Title" />
               <Text role="Caption" content="prominence='Hero' (Page Titles)" />
             </Block>
-            <Block role="Stack" gap={0.5}>
+            <Block role="Stack">
               <Text role="Title" prominence="Strong" content="Strong Title" />
               <Text role="Caption" content="prominence='Strong' (Section Headers)" />
             </Block>
-            <Block role="Stack" gap={0.5}>
+            <Block role="Stack">
               <Text role="Title" prominence="Standard" content="Standard Title" />
               <Text role="Caption" content="prominence='Standard' (Card Titles)" />
             </Block>
-            <Block role="Stack" gap={0.5}>
+            <Block role="Stack">
               <Text role="Title" prominence="Subtle" content="Subtle Title" />
               <Text role="Caption" content="prominence='Subtle' (Block Headers)" />
             </Block>
@@ -54,14 +54,14 @@ export function TextShowcasePage() {
         </Block>
 
         {/* Body Role */}
-        <Block role="Card" density="Standard" className="p-6" gap={6}>
+        <Block role="Card" density="Standard">
           <Text role="Label" content="Body Role" prominence="Subtle" />
-          <Block role="Stack" gap={4}>
-            <Block role="Stack" gap={1}>
+          <Block role="Stack">
+            <Block role="Stack">
               <Text role="Body" prominence="Hero" content="Hero Body used for lead paragraphs." />
               <Text role="Caption" content="prominence='Hero' (Lead Text)" />
             </Block>
-            <Block role="Stack" gap={1}>
+            <Block role="Stack">
               <Text
                 role="Body"
                 prominence="Strong"
@@ -69,7 +69,7 @@ export function TextShowcasePage() {
               />
               <Text role="Caption" content="prominence='Strong' (Emphasis)" />
             </Block>
-            <Block role="Stack" gap={1}>
+            <Block role="Stack">
               <Text
                 role="Body"
                 prominence="Standard"
@@ -77,7 +77,7 @@ export function TextShowcasePage() {
               />
               <Text role="Caption" content="prominence='Standard' (Default)" />
             </Block>
-            <Block role="Stack" gap={1}>
+            <Block role="Stack">
               <Text
                 role="Body"
                 prominence="Subtle"
@@ -89,91 +89,58 @@ export function TextShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* 2. Intent Colors */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="2. Intent Colors" />
           <Text role="Body" prominence="Subtle" content="Semantic colors applied to text." />
         </Block>
 
-        <Block role="Grid" gap={6} spec={{ columns: 3 }}>
-          <Block
-            role="Card"
-            className="p-4 items-center justify-center border-l-4 border-l-current text-text-primary"
-          >
+        <Block role="Grid" spec={{ columns: 3 }}>
+          <Block role="Card">
             <Text role="Body" intent="Neutral" content="Neutral Intent" prominence="Strong" />
           </Block>
-          <Block
-            role="Card"
-            className="p-4 items-center justify-center border-l-4 border-l-current text-brand-primary"
-          >
+          <Block role="Card">
             <Text role="Body" intent="Brand" content="Brand Intent" prominence="Strong" />
           </Block>
-          <Block
-            role="Card"
-            className="p-4 items-center justify-center border-l-4 border-l-green-500"
-          >
+          <Block role="Card">
             <Text role="Body" intent="Positive" content="Positive Intent" prominence="Strong" />
           </Block>
-          <Block
-            role="Card"
-            className="p-4 items-center justify-center border-l-4 border-l-yellow-500"
-          >
+          <Block role="Card">
             <Text role="Body" intent="Caution" content="Caution Intent" prominence="Strong" />
           </Block>
-          <Block
-            role="Card"
-            className="p-4 items-center justify-center border-l-4 border-l-red-500"
-          >
+          <Block role="Card">
             <Text role="Body" intent="Critical" content="Critical Intent" prominence="Strong" />
           </Block>
-          <Block
-            role="Card"
-            className="p-4 items-center justify-center border-l-4 border-l-blue-500"
-          >
+          <Block role="Card">
             <Text role="Body" intent="Info" content="Info Intent" prominence="Strong" />
           </Block>
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* 3. Alignment */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="3. Alignment" />
           <Text role="Body" prominence="Subtle" content="Text alignment utilities." />
         </Block>
 
-        <Block role="Card" className="p-6" gap={4}>
-          <Text
-            role="Body"
-            align="left"
-            content="Left Aligned Text (Default)"
-            className="bg-surface-sunken p-2"
-          />
-          <Text
-            role="Body"
-            align="center"
-            content="Center Aligned Text"
-            className="bg-surface-sunken p-2"
-          />
-          <Text
-            role="Body"
-            align="right"
-            content="Right Aligned Text"
-            className="bg-surface-sunken p-2"
-          />
+        <Block role="Card">
+          <Text role="Body" content="Left Aligned Text (Default)" />
+          <Text role="Body" content="Center Aligned Text" />
+          <Text role="Body" content="Right Aligned Text" />
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* 4. Highlighting */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="4. Search Highlighting" />
           <Text
             role="Body"
@@ -182,39 +149,39 @@ export function TextShowcasePage() {
           />
         </Block>
 
-        <Block role="Card" className="p-6">
+        <Block role="Card">
           <Text
             role="Body"
             prominence="Standard"
             content="The intent-driven design language allows for quick semantic updates."
             highlight="intent-driven"
           />
-          <Text role="Caption" content="highlight='intent-driven'" className="mt-2" />
+          <Text role="Caption" content="highlight='intent-driven'" />
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-16" />
+      <Block role="Divider" />
 
       {/* 5. Code & Monospace */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="5. Technical Text" />
           <Text role="Body" prominence="Subtle" content="Monospaced styles for code and keys." />
         </Block>
 
-        <Block role="Grid" density="Standard" gap={8} spec={{ columns: 2 }}>
-          <Block role="Stack" gap={2}>
+        <Block role="Grid" density="Standard" spec={{ columns: 2 }}>
+          <Block role="Stack">
             <Text role="Label" content="Inline Code" />
             <div>
-              <Text role="Body" content="Run the command " className="inline" />
+              <Text role="Body" content="Run the command " />
               <Text role="Code" content="npm run dev" />
-              <Text role="Body" content=" to start the server." className="inline" />
+              <Text role="Body" content=" to start the server." />
             </div>
           </Block>
 
-          <Block role="Stack" gap={2}>
+          <Block role="Stack">
             <Text role="Label" content="Code Block (Mock)" />
-            <Block role="Card" className="bg-surface-sunken p-4 font-mono text-sm">
+            <Block role="Card">
               <Text role="Code" content="import { Text } from '@/iddl';" />
               <Text role="Code" content="<Text role='Title' />" />
             </Block>

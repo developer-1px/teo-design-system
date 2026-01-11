@@ -34,12 +34,15 @@ export interface SpacingTokens {
 export interface SurfaceTokens {
     background: string;
     opacity: number;
+    blur: string; // e.g. "backdrop-blur-md"
 }
 
-export interface BorderTokens {
-    width: number;
-    color: string;
-    radius: string;
+export interface GeometryTokens {
+    width: string;  // e.g. "border-2"
+    color: string;  // e.g. "border-primary"
+    radius: string; // e.g. "rounded-lg"
+    outline: string; // e.g. "outline-1 outline-primary"
+    outlineOffset: string; // e.g. "outline-offset-2"
 }
 
 export interface TypographyTokens {
@@ -56,7 +59,7 @@ export interface ShadowTokens {
 export interface TokenOutput {
     spacing: SpacingTokens;
     surface: SurfaceTokens;
-    border: BorderTokens;
+    geometry: GeometryTokens;
     typography: TypographyTokens;
     shadow: ShadowTokens;
 }

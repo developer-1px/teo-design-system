@@ -127,12 +127,10 @@ export const PresentationModePage = ({
         <Section role="Container">
           <Block
             role="Container"
-            layout="stack"
-            className="items-center justify-center h-full"
             density="Comfortable"
           >
             <Text role="Body" prominence="Subtle" content="슬라이드가 없습니다" />
-            <Action role="Button" prominence="Secondary" onClick={onExit}>
+            <Action role="Button" onClick={onExit}>
               나가기 (Esc)
             </Action>
           </Block>
@@ -146,10 +144,6 @@ export const PresentationModePage = ({
       {/* Slide Container with Transition */}
       <Section
         role="Container"
-        className={`
-          transition-opacity duration-300
-          ${isTransitioning ? 'opacity-0' : 'opacity-100'}
-        `}
       >
         <DSLSlideCanvas
           slide={currentSlide}
@@ -163,10 +157,8 @@ export const PresentationModePage = ({
       {/* IDDL Exception: absolute positioning + bg-black for overlay - Overlay component로 대체 가능 */}
       <Block
         role="Toolbar"
-        layout="inline"
         density="Compact"
         prominence="Subtle"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-sm rounded-lg px-4 py-2"
       >
         {/* Previous Button */}
         <Action
@@ -176,7 +168,6 @@ export const PresentationModePage = ({
           intent="Neutral"
           disabled={currentIndex === 0}
           onClick={goToPrevSlide}
-          className="text-white hover:text-white/80"
         />
 
         {/* Slide Counter */}
@@ -184,7 +175,6 @@ export const PresentationModePage = ({
           role="Body"
           prominence="Standard"
           content={`${currentIndex + 1} / ${slides.length}`}
-          className="text-white min-w-[60px] text-center"
         />
 
         {/* Next Button */}
@@ -195,11 +185,10 @@ export const PresentationModePage = ({
           intent="Neutral"
           disabled={currentIndex === slides.length - 1}
           onClick={goToNextSlide}
-          className="text-white hover:text-white/80"
         />
 
         {/* Divider */}
-        <Separator orientation="vertical" className="h-6 opacity-20" />
+        <Block role="DividerVertical" />
 
         {/* Exit Button */}
         <Action
@@ -207,7 +196,6 @@ export const PresentationModePage = ({
           prominence="Tertiary"
           intent="Neutral"
           onClick={onExit}
-          className="text-white hover:text-white/80"
         >
           나가기 (Esc)
         </Action>
@@ -218,12 +206,11 @@ export const PresentationModePage = ({
         role="Container"
         prominence="Subtle"
         density="Compact"
-        className="absolute top-4 right-4 bg-black/40 backdrop-blur-sm rounded px-3 py-2"
       >
-        <Block role="Inline" layout="inline" density="Compact">
-          <Text role="Code" content="←" className="text-white" />
-          <Text role="Code" content="→" className="text-white" />
-          <Text role="Caption" prominence="Subtle" content="탐색" className="text-white/70" />
+        <Block role="Toolbar" density="Compact">
+          <Text role="Code" content="←" />
+          <Text role="Code" content="→" />
+          <Text role="Caption" prominence="Subtle" content="탐색" />
         </Block>
       </Block>
     </Page>

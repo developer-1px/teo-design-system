@@ -85,13 +85,14 @@ export function Accordion({
   computedDensity,
   computedProminence,
   computedIntent,
-  mode = 'single',
-  defaultValue,
-  value: controlledValue,
-  onValueChange: controlledOnValueChange,
+  spec,
   Element,
   ...rest
-}: AccordionProps) {
+}: BlockRendererProps) {
+  const mode = (spec?.mode as 'single' | 'multiple') || 'single';
+  const defaultValue = spec?.defaultValue as string | string[];
+  const controlledValue = spec?.value as string | string[];
+  const controlledOnValueChange = spec?.onValueChange as (value: string | string[]) => void;
   // Uncontrolled mode: 내부 state 사용
   const [internalValue, setInternalValue] = useState<string | string[]>(
     defaultValue ?? (mode === 'single' ? '' : [])

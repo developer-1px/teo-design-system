@@ -50,11 +50,11 @@ export const TableView = ({
 
           // null/undefined
           if (value === null) {
-            return <Text role="Caption" prominence="Subtle" className="italic" content="null" />;
+            return <Text role="Caption" prominence="Subtle" content="null" />;
           }
           if (value === undefined) {
             return (
-              <Text role="Caption" prominence="Subtle" className="italic" content="undefined" />
+              <Text role="Caption" prominence="Subtle" content="undefined" />
             );
           }
 
@@ -63,7 +63,6 @@ export const TableView = ({
             return (
               <Text
                 role="Body"
-                className="text-accent font-medium"
                 content={String(value)}
                 highlight={searchQuery}
               />
@@ -75,7 +74,6 @@ export const TableView = ({
             return (
               <Text
                 role="Body"
-                className="font-mono"
                 content={value.toLocaleString()}
                 highlight={searchQuery}
               />
@@ -88,7 +86,6 @@ export const TableView = ({
               <Text
                 role="Caption"
                 prominence="Subtle"
-                className="font-mono text-xs"
                 content={`[Array] x${value.length}`}
               />
             );
@@ -101,7 +98,6 @@ export const TableView = ({
               <Text
                 role="Caption"
                 prominence="Subtle"
-                className="font-mono text-xs"
                 content={keys.length > 0 ? `{Object} ${keys.length} keys` : '{Object}'}
               />
             );

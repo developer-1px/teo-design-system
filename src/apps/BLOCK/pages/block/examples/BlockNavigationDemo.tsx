@@ -4,14 +4,14 @@ import { Text } from '@/components/types/Element/Text/Text';
 
 export function BlockNavigationDemo() {
   return (
-    <Block role="Container" density="Comfortable" className="gap-6">
+    <Block role="Container" density="Comfortable">
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="5. Navigation" />
         <Text role="Body" prominence="Subtle" content="Components for wayfinding and structure." />
       </div>
 
       {/* Breadcrumbs */}
-      <Block role="Card" className="p-4 gap-4">
+      <Block role="Card">
         <Text role="Label" content="Breadcrumbs (role='Breadcrumbs')" />
         <Block role="Breadcrumbs">
           <Text role="Caption" content="Home" />
@@ -37,9 +37,9 @@ export function BlockNavigationDemo() {
       </Block>
 
       {/* Accordion */}
-      <Block role="Card" className="p-4 gap-4">
+      <Block role="Card">
         <Text role="Label" content="Accordion (role='Accordion')" />
-        <Block role="Accordion" className="w-full max-w-sm">
+        <Block role="Accordion">
           {/* Note: Accordion implementation handles Items internally if using the specialized renderer context */}
           {/* But effectively we use AccordionItem, AccordionTrigger, AccordionContent exported from Block */}
           {/* Dummy content */}
@@ -53,9 +53,9 @@ export function BlockNavigationDemo() {
       </Block>
 
       {/* Stepper */}
-      <Block role="Card" className="p-4 gap-4">
+      <Block role="Card">
         <Text role="Label" content="Stepper (role='Stepper')" />
-        <Block role="Stepper" className="items-center !flex-row">
+        <Block role="Stepper">
           <Block role="Inline" density="Compact">
             <div className="w-6 h-6 rounded-full bg-surface-accent-default text-text-inverse flex items-center justify-center text-xs">
               1

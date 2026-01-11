@@ -88,7 +88,7 @@ export const IDEPage = () => {
 
   // Helper to render Editor Part
   const EditorArea = (
-    <Section role="Editor" className="h-full flex flex-col">
+    <Section role="Editor">
       {/* Editor Tabs */}
       {openFiles.length > 0 && <EditorTabs />}
 
@@ -97,22 +97,20 @@ export const IDEPage = () => {
         <Block
           role="Breadcrumbs"
           layout="inline"
-          padding="xs"
           prominence="Subtle"
-          className="border-b border-border-muted px-4"
         >
           <Text role="Caption" content="src" prominence="Subtle" />
-          <Block role="DividerVertical" className="mx-1 h-3" />
+          <Block role="DividerVertical" />
           <Text role="Caption" content="apps" prominence="Subtle" />
-          <Block role="DividerVertical" className="mx-1 h-3" />
+          <Block role="DividerVertical" />
           <Text role="Caption" content="IDE" prominence="Subtle" />
-          <Block role="DividerVertical" className="mx-1 h-3" />
+          <Block role="DividerVertical" />
           <Text role="Caption" content={activeFile.name} prominence="Standard" />
         </Block>
       )}
 
       {/* Editor or Empty State */}
-      <Block role="Container" className="flex-1 min-h-0 relative">
+      <Block role="Container">
         {activeFile ? (
           activeFile.name.endsWith('.tsx') || activeFile.name.endsWith('.jsx') ? (
             <ComponentPreview path={activeFile.path} filename={activeFile.name} />
@@ -120,9 +118,9 @@ export const IDEPage = () => {
             <CodeEditor content={activeFile.content} filename={activeFile.name} />
           )
         ) : (
-          <Block role="Stack" className="h-full items-center justify-center p-8">
-            <Block role="Card" prominence="Subtle" className="text-center max-w-sm">
-              <Text role="Heading" content="No File Open" className="mb-2" />
+          <Block role="Stack">
+            <Block role="Card" prominence="Subtle">
+              <Text role="Heading" content="No File Open" />
               <Text
                 role="Body"
                 prominence="Subtle"
@@ -136,10 +134,10 @@ export const IDEPage = () => {
   );
 
   return (
-    <Page title="IDE" role="Application" layout="Studio" density="Compact">
+    <Page title="IDE" role="Application" layout="Workbench" density="Compact">
       {/* 1. Activity Bar */}
       <Section role="ActivityBar">
-        <Block role="Container" flex="1">
+        <Block role="Container">
           <WorkspaceNav onViewChange={setCurrentView} />
         </Block>
 
@@ -158,15 +156,14 @@ export const IDEPage = () => {
       {currentView !== 'none' && (
         <Section role="PrimarySidebar">
           {currentView === 'files' && (
-            <Block role="Stack" gap={0} className="h-full">
+            <Block role="Stack">
               <Block
                 role="Toolbar"
                 density="Compact"
-                className="px-3 border-b border-border-default h-9 items-center flex-none"
               >
                 <Text role="Caption" prominence="Subtle" content="EXPLORER" />
               </Block>
-              <Block role="ScrollArea" className="flex-1">
+              <Block role="ScrollArea">
                 <Block
                   role="Tree"
                   data={treeNodes}
@@ -198,13 +195,13 @@ export const IDEPage = () => {
 
       {/* 4. Panel */}
       {showBottomPanel && (
-        <Section role="Panel" className="border-t border-border-default bg-surface">
+        <Section role="Panel">
           <BottomPanel onClose={() => setShowBottomPanel(false)} />
         </Section>
       )}
 
       {/* 5. Secondary Sidebar */}
-      <Section role="SecondarySidebar" className="border-l border-border-default bg-surface">
+      <Section role="SecondarySidebar">
         <RightBar
           view={rightPanelView}
           projectName="ide-ui-kit"
@@ -214,7 +211,7 @@ export const IDEPage = () => {
       </Section>
 
       {/* 6. Utility Bar */}
-      <Section role="UtilityBar" className="border-l border-border-default bg-surface">
+      <Section role="UtilityBar">
         <RightNav onViewChange={setRightPanelView} onClose={() => setRightPanelView(null)} />
       </Section>
 
@@ -223,11 +220,10 @@ export const IDEPage = () => {
         role="Footer"
         prominence="Subtle"
         density="Compact"
-        className="border-t border-border-default"
       >
-        <Block role="Toolbar" justify="between" align="center" padding="xs" className="w-full">
+        <Block role="Toolbar">
           {/* Left: Git Branch & Errors */}
-          <Block role="Inline" gap="sm" align="center">
+          <Block role="Inline">
             <Action
               role="Button"
               icon="GitBranch"
@@ -241,7 +237,7 @@ export const IDEPage = () => {
           </Block>
 
           {/* Right: Cursor & Language */}
-          <Block role="Inline" gap="sm" align="center">
+          <Block role="Inline">
             <Text role="Body" content="Ln 12, Col 34" prominence="Subtle" size="xs" />
             <Text role="Body" content="UTF-8" prominence="Subtle" size="xs" />
             <Text role="Body" content="TypeScript React" prominence="Subtle" size="xs" />

@@ -5,18 +5,17 @@ import { Text } from '@/components/types/Element/Text/Text';
 
 export function BlockToolbarsDemo() {
   return (
-    <Block role="Container" density="Comfortable" className="gap-6">
+    <Block role="Container" density="Comfortable">
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="4. Toolbars" />
         <Text role="Body" prominence="Subtle" content="Horizontal grouping for actions." />
       </div>
 
-      <Block role="Card" className="p-6 gap-6">
-        <Block role="Container" className="gap-2">
+      <Block role="Card">
+        <Block role="Container">
           <Text role="Label" content="Standard Toolbar" />
           <Block
             role="Toolbar"
-            className="p-2 bg-surface-sunken rounded-md border border-border-default"
           >
             <Action role="IconButton" icon="Bold" prominence="Subtle" label="Bold" />
             <Action role="IconButton" icon="Italic" prominence="Subtle" label="Italic" />
@@ -28,7 +27,7 @@ export function BlockToolbarsDemo() {
           </Block>
         </Block>
 
-        <Block role="Container" className="gap-2">
+        <Block role="Container">
           <Text role="Label" content="Floating Toolbar" />
           <div className="h-20 relative bg-surface-sunken rounded-md flex items-center justify-center border border-border-dashed">
             <Block role="FloatingToolbar">

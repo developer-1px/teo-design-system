@@ -11,16 +11,19 @@
  * @see spec/iddl-spec-1.0.1.md#413-action-node
  */
 
-import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
+import { useLayoutContext, useBlockLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { ActionProps } from '@/components/types/Element/Action/Action.types';
+import { cn } from '@/shared/lib/utils';
 import { ButtonAction } from './renderers/ButtonAction';
 import { getRoleConfig } from './role-registry';
+import { useIDDLToken } from '@/shared/iddl/token-engine';
 
 /**
  * Action 컴포넌트
  * v1.0.1: behavior, loading 추가
  * v3.1: Interactive & Spacing Token System 통합
  * v4.0: Role Renderer 패턴 적용
+ * v6.0: IDDL Token Engine 통합
  */
 export function Action({
   as,
@@ -41,11 +44,26 @@ export function Action({
   ...rest
 }: ActionProps) {
   const ctx = useLayoutContext();
+  const blockCtx = useBlockLayoutContext();
 
   // 부모 컨텍스트에서 상속
   const computedProminence = prominence ?? ctx.prominence ?? 'Standard';
   const computedIntent = intent ?? ctx.intent ?? 'Neutral';
   const computedDensity = density ?? ctx.density ?? 'Standard';
+
+  // ⚡️ IDDL Token Engine Integration (v6.0)
+  const tokens = useIDDLToken({
+    role,
+    sectionRole: blockCtx.sectionRole,
+    prominence: computedProminence,
+    intent: computedIntent,
+    density: computedDensity,
+    state: {
+      selected,
+      disabled: loading || (typeof disabled === 'boolean' ? disabled : false)
+      // Note: disabled expression string not fully parsed here yet, falling back to boolean check
+    }
+  });
 
   if (hidden) return null;
 
@@ -122,8 +140,11 @@ export function Action({
     }
   };
 
+  // v4.1: Registry-based role delegation
+  const config = getRoleConfig(role);
+
   // behavior에 따라 element 결정 (as prop이 있으면 우선 사용)
-  const defaultElement = behavior?.action === 'navigate' ? 'a' : 'button';
+  const defaultElement = behavior?.action === 'navigate' ? 'a' : (config.htmlTag || 'button');
   const Element: any = as || defaultElement;
   const href = behavior?.action === 'navigate' ? behavior.to : undefined;
   const target = behavior?.action === 'navigate' ? behavior.target : undefined;
@@ -144,14 +165,15 @@ export function Action({
     target,
     children,
     behavior,
+    // v6.0: Don't pass config.baseStyles to renderer; Renderer uses Tokens + custom className
+    className: (rest as any).className,
+    tokens, // v6.0: Pass tokens to renderer
     ...rest,
   };
 
-  // v4.1: Registry-based role delegation
-  const config = getRoleConfig(role);
   if (config.renderer) {
     const Renderer = config.renderer;
-    return <Renderer {...rendererProps} />;
+    return <Renderer {...rendererProps} role={role} />;
   }
 
   // Fallback (should not happen if registry is complete)

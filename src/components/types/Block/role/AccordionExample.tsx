@@ -6,7 +6,8 @@
 
 import { ChevronRight, Plus } from 'lucide-react';
 import { useState } from 'react';
-import { AccordionContent, AccordionItem, AccordionTrigger, Block } from '../Block';
+import { Block } from '../Block';
+import { AccordionContent, AccordionItem, AccordionTrigger } from './Accordion';
 
 /**
  * 예시 1: 기본 Accordion (Single mode)

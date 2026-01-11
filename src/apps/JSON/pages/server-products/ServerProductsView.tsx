@@ -43,13 +43,13 @@ export const ServerProductsView = () => {
 
         // Render raw value
         if (value === null) {
-          return <Text role="Caption" prominence="Subtle" className="italic" content="null" />;
+          return <Text role="Caption" prominence="Subtle" content="null" />;
         }
         if (value === undefined) {
-          return <Text role="Caption" prominence="Subtle" className="italic" content="undefined" />;
+          return <Text role="Caption" prominence="Subtle" content="undefined" />;
         }
         if (typeof value === 'boolean') {
-          return <Text role="Body" className="text-accent" content={String(value)} />;
+          return <Text role="Body" content={String(value)} />;
         }
         if (typeof value === 'number') {
           return <Text role="Body" content={String(value)} />;
@@ -59,7 +59,6 @@ export const ServerProductsView = () => {
             <Text
               role="Caption"
               prominence="Subtle"
-              className="font-mono"
               content={JSON.stringify(value)}
             />
           );
@@ -71,18 +70,17 @@ export const ServerProductsView = () => {
   }, [data]);
 
   return (
-    <Block role="Container" layout="inline" gap="none" className="flex-1 h-full overflow-hidden">
+    <Block role="Container">
       {/* Left Sidebar - Schema */}
       {showSidebar && <JsonSchemaSidebar data={data} interfaceName="Item" />}
 
       {/* Main Content */}
       <Section
         role="Container"
-        className="flex-1 h-full bg-layer-2-cool border-l border-border-default shadow-sm"
       >
         {/* Header - IDDL Toolbar */}
-        <Block role="Toolbar" layout="inline" justify="between" className="px-3 py-2">
-          <Block role="Inline" layout="inline" className="gap-2">
+        <Block role="Toolbar">
+          <Block role="Toolbar">
             <Action
               role="IconButton"
               icon={showSidebar ? 'PanelLeftClose' : 'PanelLeft'}
@@ -91,13 +89,13 @@ export const ServerProductsView = () => {
               selected={showSidebar}
               onClick={() => setShowSidebar(!showSidebar)}
             />
-            <Block role="Spacer" orientation="vertical" className="w-px h-4 bg-border-primary" />
+            <Block role="DividerVertical" />
             <Text role="Caption" prominence="Subtle">
               {data.length} {data.length === 1 ? 'row' : 'rows'} • {columns.length}{' '}
               {columns.length === 1 ? 'col' : 'cols'}
             </Text>
           </Block>
-          <Block role="Inline" layout="inline" className="gap-1">
+          <Block role="Toolbar">
             <Action
               role="IconButton"
               icon={density === 'compact' ? 'Maximize2' : 'Minimize2'}
@@ -109,7 +107,7 @@ export const ServerProductsView = () => {
         </Block>
 
         {/* Data Table */}
-        <Block role="Container" className="flex-1 min-h-0">
+        <Block role="Container">
           <DataTable columns={columns} data={data} density={density} />
         </Block>
       </Section>

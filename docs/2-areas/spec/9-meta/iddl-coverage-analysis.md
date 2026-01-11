@@ -162,64 +162,15 @@ IDDL 1.0.1로 **표현 불가능**한 패턴들. Custom Node 확장이 필요.
 
 ---
 
-## 3. 추가 개선 제안
+## 3. 향후 고려 사항
 
-### 3.1. 즉시 추가 고려
+### 3.1. 의도 중심의 기능 확장
+- **자동화된 반응성**: `responsive` 속성을 직접 명시하기보다, `PageLayout`과 `SectionRole`에 따라 Renderer가 뷰포트 크기에 맞춰 자동으로 요소를 숨기거나 재배치하는 휴리스틱을 강화합니다.
+- **데이터 바인딩 표준**: `dataSource`와 같은 명시적 prop 대신, Part 2에서 정의될 `model` 표현식을 통해 상위 컨텍스트로부터 데이터를 주입받는 자동화된 인터페이스를 구축합니다.
 
-**3.1.1. Responsive 힌트**
-```typescript
-interface BaseNode {
-  responsive?: {
-    hiddenOn?: ('mobile' | 'tablet' | 'desktop')[];
-    prominenceOn?: Record<'mobile' | 'tablet' | 'desktop', Prominence>;
-  };
-}
-```
+### 3.2. 인터랙션의 추상화
+- 드래그 앤 드롭, 정렬 등의 동작은 `role` (예: `SortableList`, `DraggableCard`)에 내장된 기본 기능으로 제공하거나 `behavior` 객체를 통해 선언하되, 저수준의 제어 속성 노출은 최소화합니다.
 
-**3.1.2. Custom Node (확장 포인트)**
-```typescript
-interface CustomNode extends BaseNode {
-  type: 'Custom';
-  component: string;  // 렌더러가 매핑할 컴포넌트
-  props?: Record<string, unknown>;
-  children?: AnyNode[];
-}
-```
-
-**3.1.3. Collection Binding**
-```typescript
-interface GroupNode {
-  // Collection (List/Grid/Table)용
-  dataSource?: string;  // 바인딩할 배열 경로
-  itemKey?: string;     // 각 아이템의 고유 키
-  sortable?: boolean;   // 정렬 가능 여부
-  selectable?: 'none' | 'single' | 'multiple';
-}
-```
-
-### 3.2. 향후 버전 고려
-
-**3.2.1. Interaction Spec (별도 레이어)**
-```typescript
-interface InteractionSpec {
-  // 드래그앤드롭, 키보드 내비게이션 등
-  dragDrop?: {
-    source: string;  // 노드 id
-    target: string;
-    onDrop: string;  // command
-  };
-  shortcuts?: Record<string, string>;  // key → command
-}
-```
-
-**3.2.2. Animation Hints**
-```typescript
-interface TransitionHint {
-  enter?: 'fade' | 'slide' | 'scale';
-  exit?: 'fade' | 'slide' | 'scale';
-  duration?: 'fast' | 'normal' | 'slow';
-}
-```
 
 ---
 

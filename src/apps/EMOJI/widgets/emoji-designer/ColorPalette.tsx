@@ -63,7 +63,7 @@ export function ColorPalette({
       </div>
 
       {/* Add Color */}
-      <Block role="Form" direction="horizontal">
+      <Block role="Form">
         <input
           type="color"
           value={newColor}
@@ -78,8 +78,7 @@ export function ColorPalette({
           placeholder="#000000"
         />
         <Button
-          variant="ghost"
-          size="sm"
+          prominence="Subtle"
           onClick={() => {
             onAddColor(newColor);
           }}
@@ -90,8 +89,8 @@ export function ColorPalette({
 
       {/* Selected Color Info */}
       <div className="p-2 bg-layer-1 rounded-md">
-        <Text role="Label" className="text-xs mb-1" content="Selected Color" />
-        <Text role="Body" prominence="Hero" className="font-mono text-xs" content={selectedColor} />
+        <Text role="Label" content="Selected Color" />
+        <Text role="Body" prominence="Hero" content={selectedColor} />
       </div>
     </div>
   );

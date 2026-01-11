@@ -113,7 +113,7 @@ export const PresentationToolbar = ({
           />
 
           {/* Separator */}
-          <Block role="Container" className="w-px h-5 bg-border mx-1" />
+          <Block role="DividerVertical" />
 
           {/* File Actions */}
           <Action

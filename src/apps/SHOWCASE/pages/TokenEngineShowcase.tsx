@@ -1,86 +1,135 @@
-import React from 'react';
-import { IDDLProvider } from '@/components/context/IDDLContext';
-import { useIDDLToken } from '@/shared/iddl/token-engine';
+import React, { useState } from 'react';
+import { Page } from '@/components/types/Page/Page';
+import { Section } from '@/components/types/Section/Section';
+import { Block } from '@/components/types/Block/Block';
+import { Action } from '@/components/types/Element/Action/Action';
+import { Text } from '@/components/types/Element/Text/Text';
+import { useSelection } from '@/shared/lib/selection/useSelection';
+import { cn } from '@/shared/lib/utils';
 
-// 1. A Component that uses the Engine
-const TokenButton = ({ label, role = 'Button' }: { label: string; role?: string }) => {
-    // Hook usage: Local props + Context override
-    const tokens = useIDDLToken({ role, prominence: 'Standard' });
-    const styles = tokens.spacing; // padding, gap
-    const bg = tokens.surface.background;
-
-    return (
-        <div className="flex flex-col gap-2">
-            <button
-                style={{
-                    padding: styles.padding,
-                    gap: styles.gap
-                }}
-                className={`border rounded flex items-center justify-center transition-all ${bg}`}
-            >
-                {label}
-            </button>
-            <div className="text-[10px] text-gray-500 font-mono">
-                p: {styles.padding}
-            </div>
-        </div>
-    );
-};
-
-// 2. The Verification Page
+/**
+ * TokenEngineShowcase 
+ * 
+ * v7.0 Ready: Verification of Token Engine, Selection System, and Role Registry.
+ */
 export const TokenEngineShowcase = () => {
+    const [selectedId, setSelectedId] = useState<string | number>('1');
+
+    // Sample data for selection test
+    const items = [
+        { id: '1', title: 'Concept Architecture' },
+        { id: '2', title: 'Token Engine v6.0' },
+        { id: '3', title: 'Selection System' },
+        { id: '4', title: 'Adaptive Layout' },
+    ];
+
+    const selection = useSelection({
+        items,
+        getId: (item) => item.id,
+        initialSelectedIds: [selectedId as string],
+        onSelectionChange: (selected) => {
+            if (selected.length > 0) setSelectedId(selected[0].id);
+        }
+    });
+
+    const selectionModel = {
+        selectedValues: selection.selectedIds,
+        isSelected: selection.isSelected,
+        handleItemClick: selection.handleItemClick,
+        registerItemRef: selection.registerItemRef,
+    };
+
     return (
-        <div className="p-8 space-y-8">
-            <h1 className="text-2xl font-bold">Token Engine Verification</h1>
-            <p className="text-gray-600">
-                Verifying "Adaptive Scale": The same &lt;Button&gt; renders differently based on SectionType context.
-            </p>
+        <Page role="Document">
+            {/* 1. Sidebar for Navigation & Info */}
+            <Section role="Sidebar" prominence="Subtle">
+                <Block role="Stack">
+                    <Block role="Stack">
+                        <Text role="Heading" prominence="Strong" content="IDDL Surface" />
+                        <Text role="Caption" prominence="Subtle" content="Minimal & Airy (v6.2)" />
+                    </Block>
 
-            <div className="grid grid-cols-4 gap-4">
-                {/* Scenario A: Stage (Comfortable, large) */}
-                <IDDLProvider value={{ type: 'Stage', density: 'Standard', prominence: 'Standard', intent: 'Neutral', depth: 0 }}>
-                    <div className="border p-4 rounded bg-gray-50">
-                        <h3 className="font-bold mb-4">Stage (Scale: 1.0)</h3>
-                        <TokenButton label="Stage Button" />
-                    </div>
-                </IDDLProvider>
+                    <Block role="Stack">
+                        <Text role="Label" content="Status" />
+                        <Block role="List">
+                            {items.map((item) => (
+                                <Block
+                                    key={item.id}
+                                    role="ListItem"
+                                    value={item.id}
+                                    selectionModel={selectionModel}
+                                >
+                                    <Block role="Stack">
+                                        <div className={`w-1 h-1 rounded-full transition-all ${selection.isSelected(item.id) ? 'bg-primary scale-150' : 'bg-transparent'}`} />
+                                        <Text role="Label" content={item.title} prominence={selection.isSelected(item.id) ? 'Strong' : 'Standard'} />
+                                    </Block>
+                                </Block>
+                            ))}
+                        </Block>
+                    </Block>
+                </Block>
+            </Section>
 
-                {/* Scenario B: Panel (Slightly smaller) */}
-                <IDDLProvider value={{ type: 'Panel', density: 'Standard', prominence: 'Standard', intent: 'Neutral', depth: 0 }}>
-                    <div className="border p-4 rounded bg-gray-50">
-                        <h3 className="font-bold mb-4">Panel (Scale: 0.9)</h3>
-                        <TokenButton label="Panel Button" />
-                    </div>
-                </IDDLProvider>
+            {/* 2. Main Content */}
+            <Section role="Main" prominence="Standard">
+                <Block role="Stack">
 
-                {/* Scenario C: Bar (Tight vertical) */}
-                <IDDLProvider value={{ type: 'Bar', density: 'Standard', prominence: 'Standard', intent: 'Neutral', depth: 0 }}>
-                    <div className="border p-4 rounded bg-gray-50">
-                        <h3 className="font-bold mb-4">Bar (Scale: 0.8)</h3>
-                        <TokenButton label="Bar Button" />
-                    </div>
-                </IDDLProvider>
+                    {/* Header */}
+                    <Block role="Stack">
+                        <Text role="Title" prominence="Strong" content="Surface Over Boundaries" />
+                        <Text role="Body" prominence="Standard" content="Borders are minimized. Boundaries are defined by subtle background shifts and soft, airy shadows that spread naturally across the canvas." />
+                    </Block>
 
-                {/* Scenario D: Rail (Very tight) */}
-                <IDDLProvider value={{ type: 'Rail', density: 'Standard', prominence: 'Standard', intent: 'Neutral', depth: 0 }}>
-                    <div className="border p-4 rounded bg-gray-50">
-                        <h3 className="font-bold mb-4">Rail (Scale: 0.7)</h3>
-                        <TokenButton label="Rail Button" />
-                    </div>
-                </IDDLProvider>
-            </div>
+                    {/* Matrix Section */}
+                    <Block role="Stack">
+                        <Text role="Heading" prominence="Strong" content="1. Refined Intent Matrix" />
+                        <Block role="Grid" spec={{ columns: 6 }}>
+                            {['Neutral', 'Brand', 'Positive', 'Caution', 'Critical', 'Info'].map(intent => (
+                                <Block key={intent} role="Stack">
+                                    <Text role="Caption" prominence="Subtle" content={intent} />
+                                    <Action role="Button" prominence="Hero" intent={intent as any} label="Hero" />
+                                    <Action role="Button" prominence="Strong" intent={intent as any} label="Strong" />
+                                    <Action role="Button" prominence="Standard" intent={intent as any} label="Std" />
+                                    <Action role="Button" prominence="Subtle" intent={intent as any} label="Subtle" />
+                                </Block>
+                            ))}
+                        </Block>
+                    </Block>
 
-            <div className="mt-8 border-t pt-8">
-                <h2 className="text-xl font-bold mb-4">Role Base Defaults</h2>
-                <div className="grid grid-cols-3 gap-4">
-                    {/* Verify different roles */}
-                    <IDDLProvider value={{ type: 'Stage', density: 'Standard', prominence: 'Standard', intent: 'Neutral', depth: 0 }}>
-                        <TokenButton label="Button" role="Button" />
-                        <TokenButton label="Icon Button" role="IconButton" />
-                        <TokenButton label="Tag" role="Tag" />
-                    </IDDLProvider>
-                </div>
-            </div>
-        </div>
+                    {/* Interactive Selection Section */}
+                    <Block role="Stack">
+                        <Block role="Stack">
+                            <Text role="Heading" prominence="Strong" content="2. Surface & Outline Selection" />
+                            <Text role="Caption" prominence="Subtle" content="Selection uses 'outline' (CSS) to preserve layout geometry. Inner blocks remain transparent to emphasize the parent surface." />
+                        </Block>
+                        <Block role="Grid" spec={{ columns: 2 }}>
+                            {items.map(item => (
+                                <Block
+                                    key={item.id}
+                                    role="Card"
+                                    prominence={selection.isSelected(item.id) ? 'Strong' : 'Standard'}
+                                    intent="Neutral"
+                                    value={item.id}
+                                    selectionModel={selectionModel}
+                                    className="cursor-pointer group transition-all"
+                                    style={{ padding: '4rem' }}
+                                >
+                                    <Block role="Stack">
+                                        <div className="flex items-center justify-between h-8">
+                                            <Text role="Heading" content={item.title} prominence="Strong" />
+                                            <div className={cn(
+                                                "w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300",
+                                                selection.isSelected(item.id) ? "opacity-100 scale-100" : "opacity-0 scale-0"
+                                            )} />
+                                        </div>
+                                        <Text role="Body" content="This component uses depth and outlines for state. Notice how nested stacks stay transparent during selection." />
+                                    </Block>
+                                </Block>
+                            ))}
+                        </Block>
+                    </Block>
+                </Block>
+            </Section>
+        </Page>
     );
 };
