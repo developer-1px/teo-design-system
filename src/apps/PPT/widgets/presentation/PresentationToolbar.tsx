@@ -23,6 +23,11 @@ interface PresentationToolbarProps {
   onPlay?: () => void;
   canGoPrev?: boolean;
   canGoNext?: boolean;
+  onSave?: () => void;
+  onExport?: () => void;
+  onSettings?: () => void;
+  onUndo?: () => void;
+  onRedo?: () => void;
 }
 
 export const PresentationToolbar = ({
@@ -32,6 +37,11 @@ export const PresentationToolbar = ({
   onPlay,
   canGoPrev = true,
   canGoNext = true,
+  onSave,
+  onExport,
+  onSettings,
+  onUndo,
+  onRedo,
 }: PresentationToolbarProps) => {
   return (
     <Section role="Header" prominence="Elevated">
@@ -80,9 +90,59 @@ export const PresentationToolbar = ({
           />
         </Block>
 
-        {/* 우측: 여백 (향후 확장 가능) */}
+        {/* 우측: 편집 & 파일 액션 */}
         <Block role="Toolbar" density="Compact">
-          {/* Placeholder for future actions */}
+          {/* Undo/Redo */}
+          <Action
+            icon="Undo"
+            intent="Neutral"
+            behavior={{ action: 'command', command: 'edit.undo' }}
+            onClick={(e) => {
+              e.preventDefault();
+              onUndo?.();
+            }}
+          />
+          <Action
+            icon="Redo"
+            intent="Neutral"
+            behavior={{ action: 'command', command: 'edit.redo' }}
+            onClick={(e) => {
+              e.preventDefault();
+              onRedo?.();
+            }}
+          />
+
+          {/* Separator */}
+          <Block role="Container" className="w-px h-5 bg-border mx-1" />
+
+          {/* File Actions */}
+          <Action
+            icon="Save"
+            intent="Neutral"
+            behavior={{ action: 'command', command: 'file.save' }}
+            onClick={(e) => {
+              e.preventDefault();
+              onSave?.();
+            }}
+          />
+          <Action
+            icon="Download"
+            intent="Neutral"
+            behavior={{ action: 'command', command: 'file.export' }}
+            onClick={(e) => {
+              e.preventDefault();
+              onExport?.();
+            }}
+          />
+          <Action
+            icon="Settings"
+            intent="Neutral"
+            behavior={{ action: 'command', command: 'app.settings' }}
+            onClick={(e) => {
+              e.preventDefault();
+              onSettings?.();
+            }}
+          />
         </Block>
       </Block>
     </Section>

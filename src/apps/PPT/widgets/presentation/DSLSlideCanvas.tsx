@@ -7,8 +7,10 @@
  * - 미니멀 디자인 유지
  */
 
+import { useState } from 'react';
 import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
 import { Block } from '@/components/types/Block/Block.tsx';
+import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
 import type { Slide } from './SlideList';
@@ -19,6 +21,10 @@ interface DSLSlideCanvasProps {
   totalSlides?: number;
   /** Fullscreen 모드 여부 (프레젠테이션 모드용) */
   fullscreen?: boolean;
+  /** 편집 모드 여부 */
+  editable?: boolean;
+  /** 슬라이드 업데이트 핸들러 */
+  onSlideUpdate?: (updates: Partial<Slide>) => void;
 }
 
 export const DSLSlideCanvas = ({
@@ -26,7 +32,12 @@ export const DSLSlideCanvas = ({
   currentIndex,
   totalSlides,
   fullscreen = false,
+  editable = true,
+  onSlideUpdate,
 }: DSLSlideCanvasProps) => {
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [isEditingContent, setIsEditingContent] = useState(false);
+  const [showEditTools, setShowEditTools] = useState(false);
   // Empty state
   if (!slide) {
     return (
@@ -83,6 +94,33 @@ export const DSLSlideCanvas = ({
             </Block>
           </Section>
 
+          {/* Edit Tools - Top right overlay */}
+          {!fullscreen && editable && (
+            <Block
+              role="Toolbar"
+              prominence="Standard"
+              density="Compact"
+              className="absolute right-3 top-3 bg-white/90 backdrop-blur-sm rounded shadow-md opacity-0 hover:opacity-100 transition-opacity duration-200"
+              onMouseEnter={() => setShowEditTools(true)}
+              onMouseLeave={() => setShowEditTools(false)}
+            >
+              <Action
+                icon="Type"
+                intent="Neutral"
+                onClick={() => setIsEditingTitle(!isEditingTitle)}
+                prominence={isEditingTitle ? 'Primary' : 'Secondary'}
+              />
+              <Action
+                icon="FileText"
+                intent="Neutral"
+                onClick={() => setIsEditingContent(!isEditingContent)}
+                prominence={isEditingContent ? 'Primary' : 'Secondary'}
+              />
+              <Action icon="Image" intent="Neutral" onClick={() => console.log('Add image')} />
+              <Action icon="Shapes" intent="Neutral" onClick={() => console.log('Add shape')} />
+            </Block>
+          )}
+
           {/* Slide Number - Top left overlay */}
           {!fullscreen && currentIndex !== undefined && totalSlides !== undefined && (
             <Block
@@ -101,22 +139,32 @@ export const DSLSlideCanvas = ({
               role="Toolbar"
               density="Compact"
               prominence="Subtle"
-              className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-sm rounded"
+              className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-sm rounded px-3 py-2"
             >
               <Block role="Inline" density="Compact">
                 <Text role="Code" content="←" />
                 <Text role="Code" content="→" />
                 <Text role="Caption" prominence="Subtle" content="이전/다음" />
               </Block>
+              <Block role="Container" className="w-px h-4 bg-border" />
               <Block role="Inline" density="Compact">
                 <Text role="Code" content="Space" />
                 <Text role="Caption" prominence="Subtle" content="다음" />
               </Block>
+              <Block role="Container" className="w-px h-4 bg-border" />
               <Block role="Inline" density="Compact">
                 <Text role="Code" content="Home" />
                 <Text role="Code" content="End" />
                 <Text role="Caption" prominence="Subtle" content="처음/끝" />
               </Block>
+              {editable && (
+                <>
+                  <Block role="Container" className="w-px h-4 bg-border" />
+                  <Block role="Inline" density="Compact">
+                    <Text role="Caption" prominence="Subtle" content="우측 상단에서 편집" />
+                  </Block>
+                </>
+              )}
             </Block>
           )}
         </Block>

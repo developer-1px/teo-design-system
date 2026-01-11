@@ -37,6 +37,10 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
     fontSize: activeSlide?.fontSize || 24,
     textColor: activeSlide?.textColor || '#000000',
     backgroundColor: activeSlide?.backgroundColor || '#ffffff',
+    textAlign: 'center',
+    verticalAlign: 'center',
+    animation: 'none',
+    fontWeight: 'normal',
   });
 
   const handleFieldChange = (field: string, value: any) => {
@@ -85,12 +89,25 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
             />
 
             <Field
-              role="TextInput"
+              role="Input"
+              type="color"
               label="색상"
               model="textColor"
               value={formData.textColor}
               onChange={(value) => handleFieldChange('textColor', value)}
-              spec={{ inputMode: 'text' }}
+            />
+
+            <Field
+              role="Select"
+              label="굵기"
+              model="fontWeight"
+              value={formData.fontWeight}
+              onChange={(value) => handleFieldChange('fontWeight', value)}
+              options={[
+                { label: '보통', value: 'normal' },
+                { label: '중간', value: 'medium' },
+                { label: '굵게', value: 'bold' },
+              ]}
             />
           </Block>
 
@@ -120,6 +137,57 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
                 { label: '주황', value: '#fff3e0' },
                 { label: '보라', value: '#f3e5f5' },
                 { label: '초록', value: '#e8f5e9' },
+              ]}
+            />
+          </Block>
+
+          {/* Layout Section */}
+          <Block role="Fieldset" density="Compact">
+            <Text role="Label" prominence="Strong" content="레이아웃" />
+
+            <Field
+              role="Radio"
+              label="수평 정렬"
+              model="textAlign"
+              value={formData.textAlign}
+              onChange={(value) => handleFieldChange('textAlign', value)}
+              options={[
+                { label: '왼쪽', value: 'left' },
+                { label: '가운데', value: 'center' },
+                { label: '오른쪽', value: 'right' },
+              ]}
+            />
+
+            <Field
+              role="Radio"
+              label="수직 정렬"
+              model="verticalAlign"
+              value={formData.verticalAlign}
+              onChange={(value) => handleFieldChange('verticalAlign', value)}
+              options={[
+                { label: '위', value: 'top' },
+                { label: '가운데', value: 'center' },
+                { label: '아래', value: 'bottom' },
+              ]}
+            />
+          </Block>
+
+          {/* Animation Section */}
+          <Block role="Fieldset" density="Compact">
+            <Text role="Label" prominence="Strong" content="애니메이션" />
+
+            <Field
+              role="Select"
+              label="전환 효과"
+              model="animation"
+              value={formData.animation}
+              onChange={(value) => handleFieldChange('animation', value)}
+              options={[
+                { label: '없음', value: 'none' },
+                { label: '페이드', value: 'fade' },
+                { label: '슬라이드', value: 'slide' },
+                { label: '줌', value: 'zoom' },
+                { label: '회전', value: 'rotate' },
               ]}
             />
           </Block>

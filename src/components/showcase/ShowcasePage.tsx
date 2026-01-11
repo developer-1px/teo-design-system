@@ -33,7 +33,7 @@ export const ShowcasePage = ({
   mode = 'view',
 }: ShowcasePageProps) => {
   return (
-    <Page role="Application">
+    <Page role="Document" layout="Sidebar">
       {/* Sidebar Section */}
       <Section
         role="Sidebar"
@@ -65,11 +65,10 @@ export const ShowcasePage = ({
                   layout="inline"
                   clickable
                   selected={activeCategoryId === category.id}
-                  className={`p-2 rounded-md ${
-                    activeCategoryId === category.id
+                  className={`p-2 rounded-md ${activeCategoryId === category.id
                       ? 'bg-surface-active'
                       : 'hover:bg-surface-hover'
-                  }`}
+                    }`}
                   onClick={() => onCategoryChange?.(category.id)}
                 >
                   <Text role="Body" content={category.label} />

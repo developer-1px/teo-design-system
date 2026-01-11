@@ -51,6 +51,10 @@ const sectionVariants = cva('flex flex-col relative', {
   },
 });
 
+import { useIDDLToken } from '@/shared/iddl/token-engine';
+import { createPortal } from 'react-dom';
+import { useLayoutPortal } from '@/components/types/Page/context/LayoutPortalContext';
+
 export function Section({
   as,
   role = 'Main',
@@ -83,6 +87,21 @@ export function Section({
   // v5.2: Type Resolution
   const computedType: SectionType = type || specContext.type || 'Stage';
   const scale = TYPE_SCALES[computedType];
+
+  // ============================================
+  // ⚡️ IDDL Token Engine Integration (v6.0)
+  // ============================================
+  const tokens = useIDDLToken({
+    role: role as string,
+    sectionRole: role as string,
+    sectionType: computedType,
+    prominence,
+    intent: computedIntent,
+    density: computedDensity,
+    state: { hover: false } // Basic state for now
+  });
+
+  const portalContext = useLayoutPortal();
 
   // Validation
   if (import.meta.env.DEV) {
@@ -125,24 +144,24 @@ export function Section({
 
   const collapsibleStyle: React.CSSProperties = isCollapsible
     ? {
-        ...(isHorizontalCollapse
-          ? {
-              width: isCollapsed
-                ? (collapsibleConfig?.collapsedSize ?? 0)
-                : (collapsibleConfig?.expandedSize ?? 'auto'),
-            }
-          : {
-              height: isCollapsed
-                ? (collapsibleConfig?.collapsedSize ?? 0)
-                : (collapsibleConfig?.expandedSize ?? 'auto'),
-            }),
-      }
+      ...(isHorizontalCollapse
+        ? {
+          width: isCollapsed
+            ? (collapsibleConfig?.collapsedSize ?? 0)
+            : (collapsibleConfig?.expandedSize ?? 'auto'),
+        }
+        : {
+          height: isCollapsed
+            ? (collapsibleConfig?.collapsedSize ?? 0)
+            : (collapsibleConfig?.expandedSize ?? 'auto'),
+        }),
+    }
     : {};
 
   const transitionClass =
     isCollapsible && useTransition ? 'transition-all duration-200 ease-in-out' : '';
 
-  return (
+  const content = (
     <LayoutProvider
       value={{
         role: role as SectionRole,
@@ -174,6 +193,13 @@ export function Section({
           gridArea: computedGridArea,
           ...dimensionStyles, // Apply Physical Constraints
           ...collapsibleStyle,
+          // Token Engine Styles
+          padding: tokens.spacing.padding,
+          gap: tokens.spacing.gap,
+          backgroundColor: variant !== 'Plain' ? tokens.surface.background : undefined,
+          borderRadius: variant === 'Card' ? tokens.border.radius : undefined,
+          borderWidth: variant !== 'Plain' ? tokens.border.width : undefined,
+          borderColor: variant !== 'Plain' ? tokens.border.color : undefined,
           ...rest.style, // Pass through style if any
         }}
         {...ariaProps}
@@ -194,4 +220,15 @@ export function Section({
       </Element>
     </LayoutProvider>
   );
+
+  // Portal Logic
+  if (portalContext) {
+    const slot = portalContext.register(role as string);
+    // If we have a slot, and it's NOT center (default child location), and the DOM node exists
+    if (slot && slot !== 'center' && portalContext.slots[slot]?.current) {
+      return createPortal(content, portalContext.slots[slot].current!);
+    }
+  }
+
+  return content;
 }

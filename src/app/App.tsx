@@ -27,6 +27,7 @@ import { AppPage } from '@/apps/PAGE/AppPage.tsx';
 import { AppPPT } from '@/apps/PPT/AppPPT.tsx';
 import { AppSection } from '@/apps/SECTION/AppSection.tsx';
 import { SectionTypeShowcase } from '@/apps/SHOWCASE/pages/SectionTypeShowcase';
+import { TokenEngineShowcase } from '@/apps/SHOWCASE/pages/TokenEngineShowcase';
 import { AppText } from '@/apps/TEXT/AppText.tsx';
 import { CommandPalette } from '@/components/types/Overlay/CommandPalette.tsx';
 
@@ -54,7 +55,10 @@ function App() {
         <Route path="/text" component={AppText} />
         <Route path="/behavior" component={AppBehavior} />
 
-        {/* Research & Demos */}
+        <Route path="/behavior" component={AppBehavior} />
+
+        {/* Verification & Demos */}
+        <Route path="/token-engine" component={TokenEngineShowcase} />
         <Route path="/adaptive" component={AppAdaptive} />
 
         {/* Default redirect to IDE */}

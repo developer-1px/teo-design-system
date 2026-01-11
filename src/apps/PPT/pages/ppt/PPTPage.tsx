@@ -52,7 +52,7 @@ export const PPTPage = () => {
   const [slides, setSlides] = useState<Slide[]>(fallbackSlides);
   const [activeSlideId, setActiveSlideId] = useState<string>('1');
   const [isPresentationMode, setIsPresentationMode] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<{ text: string; intent: 'Critical' | 'Positive' | 'Info' } | null>(null);
 
   // ai-era-slides.md 파일 로드 및 파싱
   useEffect(() => {
@@ -132,7 +132,7 @@ export const PPTPage = () => {
   const handleSlidesDelete = (slidesToDelete: Slide[]) => {
     if (slides.length === slidesToDelete.length) {
       // 모든 슬라이드 삭제는 불가
-      setErrorMessage('마지막 슬라이드는 삭제할 수 없습니다.');
+      setToastMessage({ text: '마지막 슬라이드는 삭제할 수 없습니다.', intent: 'Critical' });
       return;
     }
 
@@ -170,6 +170,37 @@ export const PPTPage = () => {
     setSlides([...slides, ...newSlides]);
   };
 
+  // Toolbar handlers
+  const handleSave = () => {
+    console.log('Saving presentation...', slides);
+    setToastMessage({ text: '프레젠테이션이 저장되었습니다.', intent: 'Positive' });
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleExport = () => {
+    console.log('Exporting presentation...', slides);
+    setToastMessage({ text: '프레젠테이션을 내보내는 중...', intent: 'Info' });
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleSettings = () => {
+    console.log('Opening settings...');
+    setToastMessage({ text: '설정 기능은 준비 중입니다.', intent: 'Info' });
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleUndo = () => {
+    console.log('Undo');
+    setToastMessage({ text: '실행 취소', intent: 'Info' });
+    setTimeout(() => setToastMessage(null), 2000);
+  };
+
+  const handleRedo = () => {
+    console.log('Redo');
+    setToastMessage({ text: '다시 실행', intent: 'Info' });
+    setTimeout(() => setToastMessage(null), 2000);
+  };
+
   // 프레젠테이션 모드 (전체화면)
   if (isPresentationMode) {
     return (
@@ -194,6 +225,11 @@ export const PPTPage = () => {
           onPlay={handlePlay}
           canGoPrev={currentIndex > 0}
           canGoNext={currentIndex < slides.length - 1}
+          onSave={handleSave}
+          onExport={handleExport}
+          onSettings={handleSettings}
+          onUndo={handleUndo}
+          onRedo={handleRedo}
         />
       </Section>
 
@@ -226,6 +262,8 @@ export const PPTPage = () => {
           slide={activeSlide}
           currentIndex={currentIndex}
           totalSlides={slides.length}
+          editable={true}
+          onSlideUpdate={handleSlideUpdate}
         />
       </Section>
 
@@ -245,10 +283,10 @@ export const PPTPage = () => {
         />
       </Section>
 
-      {/* Error Toast */}
-      {errorMessage && (
-        <Overlay role="Toast" isOpen={true} intent="Critical" onClose={() => setErrorMessage(null)}>
-          <Text role="Body" content={errorMessage} />
+      {/* Toast Messages */}
+      {toastMessage && (
+        <Overlay role="Toast" isOpen={true} intent={toastMessage.intent} onClose={() => setToastMessage(null)}>
+          <Text role="Body" content={toastMessage.text} />
         </Overlay>
       )}
     </Page>
