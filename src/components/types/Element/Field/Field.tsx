@@ -7,31 +7,18 @@
  * @see docs/2-areas/spec/5-field/field.spec.md
  */
 
-import { useState, useEffect } from 'react';
 import { cva } from 'class-variance-authority';
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { FieldProps, FieldRole, FieldSpec } from '@/components/types/Element/Field/Field.types';
+import type { FieldProps } from '@/components/types/Element/Field/Field.types';
 import { cn } from '@/shared/lib/utils';
+import { getInputStyles } from './styles/field.styles'; // Ensure styles are available
 
-// Re-export types for convenience
+// Types
 export type { FieldOption } from '@/components/types/Element/Field/Field.types';
 
-// Renderers
-import { BooleanField } from './renderers/BooleanField'; // Maps to Switch
-import { CheckboxField } from './renderers/CheckboxField'; // Maps to Checkbox
-import { ColorField } from './renderers/ColorField'; // Legacy? Or keeps it? Spec doesn't mention Color explicitly in the main table, but maybe under mapped? Ah, spec didn't list ColorInput. I'll keep it if needed or remove if strictly following spec. Spec v0.1 has no ColorInput. I'll comment it out or leave for now.
-import { DateField } from './renderers/DateField'; // Maps to Date/Time
-import { FileField } from './renderers/FileField'; // Maps to FileInput
-import { NumberField } from './renderers/NumberField'; // Maps to NumberInput, Slider?
-import { OTPField } from './renderers/OTPField';
-import { RadioField } from './renderers/RadioField'; // Maps to RadioGroup
-import { RatingField } from './renderers/RatingField'; // Maps to Rating
-import { SelectField } from './renderers/SelectField'; // Maps to Select
-import { TextareaField } from './renderers/TextareaField'; // Maps to TextArea
-import { TextField } from './renderers/TextField'; // Maps to TextInput, Email, Password, Search, etc.
-
-// Shared Styles
-import { inputStyles } from './styles/field.styles';
+// Registry
+import { getFieldRenderer } from './registry';
+import { FieldTextbox } from './renderers/input/FieldTextbox'; // Fallback
 
 /**
  * Field view text variants (CVA)
@@ -83,354 +70,6 @@ function FieldView({
 }
 
 /**
- * Utility: onChange 핸들러 변환 (Renderer의 onChange를 React 이벤트로 변환)
- */
-function createChangeHandler(controlledOnChange?: (event: any) => void) {
-  return (val: any) => {
-    if (controlledOnChange) {
-      // Compat: emulate event-like object or pass direct value depending on what consumers expect.
-      // Originally consumers might expect event. But React Controlled often uses value.
-      // IDDL spec says "onChange is forbidden, use command/binding".
-      // But for React Controlled usage here:
-      controlledOnChange(val);
-    }
-  };
-}
-
-/**
- * Edit Mode: 데이터를 입력 폼으로 표시
- */
-/**
- * Edit Mode: 데이터를 입력 폼으로 표시
- */
-function FieldEdit(props: FieldProps) {
-  const {
-    role,
-    spec,
-    label,
-    model,
-    placeholder,
-    required,
-    disabled,
-    value: propValue,
-    onChange: propOnChange,
-    prominence,
-    intent,
-    density,
-    className,
-    description,
-    defaultValue, // Add this to FieldTypes! But for now we extract it if present in props usage
-  } = props as FieldProps & { defaultValue?: any };
-
-  // Internal state for semi-controlled usage (Showcase)
-  const [internalValue, setInternalValue] = useState(propValue !== undefined ? propValue : defaultValue);
-
-  // Sync internal value if propValue changes
-  useEffect(() => {
-    if (propValue !== undefined) {
-      setInternalValue(propValue);
-    }
-  }, [propValue]);
-
-  const controlledValue = propValue !== undefined ? propValue : internalValue;
-
-  // Get density from parent context
-  const ctx = useLayoutContext();
-  const computedDensity = density ?? ctx.density ?? 'Standard';
-
-  // Shared onChange handler
-  const handleChange = (val: any) => {
-    // If not controlled (propValue is undefined), update internal state
-    if (propValue === undefined) {
-      setInternalValue(val);
-    }
-    // Always call parent handler
-    if (propOnChange) { // Fixed: createChangeHandler logic inlined
-      propOnChange(val);
-    }
-  };
-
-  // Common props passed to all renderers
-  const commonProps = {
-    label: label || '', // Some renderers require label
-    model: model || '',
-    prominence,
-    intent,
-    required,
-    placeholder,
-    disabled,
-    density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
-    className,
-  };
-
-  /**
-   * Dispatch Logic based on Field Role
-   */
-  switch (role) {
-    // 1. Text Inputs
-    case 'TextInput':
-    case 'EmailInput':
-    case 'PasswordInput':
-      {
-        const typeMap: Record<string, 'text' | 'email' | 'password' | 'url'> = {
-          TextInput: 'text',
-          EmailInput: 'email',
-          PasswordInput: 'password',
-        };
-        const inputType = typeMap[role] || 'text';
-        const s = spec as any;
-
-        return (
-          <TextField
-            {...commonProps}
-            type={inputType}
-            constraints={{
-              maxLength: s?.maxLength,
-              pattern: s?.pattern,
-            }}
-            value={controlledValue as string}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'SearchInput':
-      {
-        const s = spec as any;
-        return (
-          <TextField
-            {...commonProps}
-            type="text"
-            clearable={s?.clearable}
-            value={controlledValue as string}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'OTPInput':
-      {
-        const s = spec as any;
-        return (
-          <OTPField
-            {...commonProps}
-            length={s?.length}
-            numeric={s?.numeric}
-            value={controlledValue as string}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'TextArea':
-      {
-        const s = spec as any;
-        return (
-          <TextareaField
-            {...commonProps}
-            type="textarea"
-            constraints={{
-              maxLength: s?.maxLength,
-              // rows not directly supported in interface yet, but can pass via style or new prop if added
-            }}
-            value={controlledValue as string}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    // 2. Number Inputs
-    case 'NumberInput':
-      {
-        const s = spec as any;
-        return (
-          <NumberField
-            {...commonProps}
-            type="number"
-            constraints={{
-              min: s?.min,
-              max: s?.max,
-              step: s?.step,
-            }}
-            value={controlledValue as number}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'Slider':
-      {
-        const s = spec as any;
-        // Start with NumberField role="range" or similar if available, or create Slider renderer later.
-        // Current NumberField supports 'range'.
-        return (
-          <NumberField
-            {...commonProps}
-            type="range"
-            constraints={{
-              min: s?.min,
-              max: s?.max,
-              step: s?.step,
-            }}
-            value={controlledValue as number}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    // 3. Selection Inputs
-    case 'Select':
-      {
-        const s = spec as any;
-        return (
-          <SelectField
-            {...commonProps}
-            type={s?.multiple ? 'multiselect' : 'select'}
-            options={s?.options || []}
-            value={controlledValue}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'Combobox':
-      {
-        // TODO: Implement Combobox renderer. Fallback to Select.
-        const s = spec as any;
-        return (
-          <SelectField
-            {...commonProps}
-            type="select"
-            options={s?.options || []}
-            value={controlledValue}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'RadioGroup':
-      {
-        const s = spec as any;
-        return (
-          <RadioField
-            {...commonProps}
-            type="radio"
-            options={s?.options || []}
-            value={controlledValue}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'Checkbox':
-      {
-        return (
-          <BooleanField
-            {...commonProps}
-            type="boolean"
-            value={controlledValue as boolean}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'Switch':
-      {
-        // TODO: Update BooleanField to support 'switch' variant or create SwitchField
-        return (
-          <BooleanField
-            {...commonProps}
-            type="boolean"
-            value={controlledValue as boolean}
-            onChange={handleChange}
-          // variant="switch" ??
-          />
-        );
-      }
-
-    // 4. Date/File Inputs
-    case 'DateInput':
-    case 'TimeInput':
-    case 'DateTimeInput':
-      {
-        const typeMap: Record<string, 'date' | 'datetime'> = {
-          DateInput: 'date',
-          TimeInput: 'date', // Fallback
-          DateTimeInput: 'datetime',
-        };
-        const s = spec as any;
-        return (
-          <DateField
-            {...commonProps}
-            type={typeMap[role] || 'date'}
-            constraints={{
-              min: s?.min, // string format
-              max: s?.max,
-            }}
-            value={controlledValue as string}
-            onChange={handleChange}
-          />
-        );
-      }
-    case 'FileInput':
-      {
-        const s = spec as any;
-        return (
-          <FileField
-            {...commonProps}
-            type="file"
-            // accept={s?.accept}
-            // multiple={s?.multiple}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    // 5. Complex
-    case 'Rating':
-      {
-        const s = spec as any;
-        return (
-          <RatingField
-            {...commonProps}
-            type="rating"
-            constraints={{
-              max: s?.max,
-              step: s?.step,
-            }}
-            value={controlledValue as number}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    case 'TagInput':
-      {
-        // TODO: Implement TagInput. Fallback to TextField or Select.
-        return (
-          <TextField
-            {...commonProps}
-            type="text"
-            value={controlledValue as string}
-            onChange={handleChange}
-          />
-        );
-      }
-
-    default:
-      console.warn(`[Field] Unimplemented role "${role}". Falling back to TextInput.`);
-      return (
-        <TextField
-          {...commonProps}
-          type="text"
-          value={controlledValue as string}
-          onChange={handleChange}
-        />
-      );
-  }
-}
-
-/**
  * Field 컴포넌트: 모드에 따라 View 또는 Edit 렌더링
  */
 export function Field({ as, ...props }: FieldProps) {
@@ -441,6 +80,7 @@ export function Field({ as, ...props }: FieldProps) {
   const computedProminence = props.prominence ?? ctx.prominence ?? 'Primary';
   const computedIntent = props.intent ?? ctx.intent ?? 'Neutral';
 
+  // Determine mode
   const mode = modeOverride ?? ctx.mode ?? 'edit';
 
   if (hidden) return null;
@@ -448,6 +88,44 @@ export function Field({ as, ...props }: FieldProps) {
   // as prop이 있으면 사용, 없으면 div
   const Component = as || 'div';
 
+  // 1. View Mode (Read-only)
+  if (mode === 'view') {
+    return (
+      <Component
+        data-dsl-component="field"
+        data-mode={mode}
+        data-role={props.role}
+        data-prominence={computedProminence}
+        data-intent={computedIntent}
+      >
+        <FieldView
+          label={props.label}
+          model={props.model}
+          value={props.value}
+          prominence={computedProminence}
+        />
+      </Component>
+    );
+  }
+
+  // 2. Edit Mode (Resolve Renderer via Registry)
+  const role = props.role;
+  const Renderer = getFieldRenderer(role);
+
+  // 3. Fallback Handling
+  if (!Renderer) {
+    if (import.meta.env.DEV) {
+      console.warn(`[Field] Unknown role "${role}". Falling back to Textbox.`);
+    }
+    // Fallback to Textbox
+    return (
+      <Component data-role={props.role} data-error="unknown-role">
+        <FieldTextbox {...(props as any)} role="Textbox" />
+      </Component>
+    );
+  }
+
+  // 4. Render Field
   return (
     <Component
       data-dsl-component="field"
@@ -456,16 +134,7 @@ export function Field({ as, ...props }: FieldProps) {
       data-prominence={computedProminence}
       data-intent={computedIntent}
     >
-      {mode === 'view' ? (
-        <FieldView
-          label={props.label}
-          model={props.model}
-          value={props.value}
-          prominence={computedProminence}
-        />
-      ) : (
-        <FieldEdit {...props} />
-      )}
+      <Renderer {...props} {...(props.spec as any)} />
     </Component>
   );
 }

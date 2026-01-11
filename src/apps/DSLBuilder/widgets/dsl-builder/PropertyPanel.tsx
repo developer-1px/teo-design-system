@@ -6,9 +6,7 @@ import { Check, Copy } from 'lucide-react';
 import { useState } from 'react';
 import type { AnyDSLNode, GroupNode, SectionNode } from '@/apps/DSLBuilder/lib/dsl-builder/types';
 import type { BlockRole as GroupRole } from '@/components/types/Block/Block.types';
-import { FormField } from '@/components/types/Element/Field/role/FormField';
-import { Input } from '@/components/types/Element/Field/role/Input';
-import { Select } from '@/components/types/Element/Field/role/Select';
+// Custom imports removed
 import type { Prominence } from '@/components/types/Shared.types';
 
 export interface PropertyPanelProps {
@@ -65,15 +63,22 @@ export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
         </h3>
 
         {/* ID (read-only) */}
-        <FormField label="ID">
-          <Input value={node.id} disabled variant="ghost" />
-        </FormField>
+        <div className="space-y-1">
+          <label className="text-xs font-medium text-text-secondary">ID</label>
+          <input
+            className="w-full text-xs bg-layer-2 border border-border rounded px-2 py-1.5 opacity-60 cursor-not-allowed"
+            value={node.id}
+            disabled
+          />
+        </div>
       </div>
 
       {/* Section-specific */}
       {node.type === 'section' && (
-        <FormField label="Prominence">
-          <Select
+        <div className="space-y-1">
+          <label className="text-xs font-medium text-text-secondary">Prominence</label>
+          <select
+            className="w-full text-xs bg-layer-2 border border-border rounded px-2 py-1.5 focus:outline-none focus:border-accent"
             value={(node as SectionNode).prominence || 'Standard'}
             onChange={(e) => onUpdate({ prominence: e.target.value as Prominence })}
           >
@@ -82,15 +87,20 @@ export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
                 {p}
               </option>
             ))}
-          </Select>
-        </FormField>
+          </select>
+        </div>
       )}
 
       {/* Block-specific */}
       {node.type === 'group' && (
         <>
-          <FormField label="Role" required>
-            <Select
+          <div className="space-y-1">
+            <div className="flex gap-0.5">
+              <label className="text-xs font-medium text-text-secondary">Role</label>
+              <span className="text-red-500 text-xs">*</span>
+            </div>
+            <select
+              className="w-full text-xs bg-layer-2 border border-border rounded px-2 py-1.5 focus:outline-none focus:border-accent"
               value={(node as GroupNode).role}
               onChange={(e) => onUpdate({ role: e.target.value as GroupRole })}
             >
@@ -99,11 +109,13 @@ export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
                   {role}
                 </option>
               ))}
-            </Select>
-          </FormField>
+            </select>
+          </div>
 
-          <FormField label="Prominence">
-            <Select
+          <div className="space-y-1">
+            <label className="text-xs font-medium text-text-secondary">Prominence</label>
+            <select
+              className="w-full text-xs bg-layer-2 border border-border rounded px-2 py-1.5 focus:outline-none focus:border-accent"
               value={(node as GroupNode).prominence || ''}
               onChange={(e) => {
                 const value = e.target.value;
@@ -118,11 +130,13 @@ export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
                   {p}
                 </option>
               ))}
-            </Select>
-          </FormField>
+            </select>
+          </div>
 
-          <FormField label="Direction">
-            <Select
+          <div className="space-y-1">
+            <label className="text-xs font-medium text-text-secondary">Direction</label>
+            <select
+              className="w-full text-xs bg-layer-2 border border-border rounded px-2 py-1.5 focus:outline-none focus:border-accent"
               value={(node as GroupNode).direction || 'vertical'}
               onChange={(e) =>
                 onUpdate({
@@ -132,19 +146,21 @@ export function PropertyPanel({ node, onUpdate }: PropertyPanelProps) {
             >
               <option value="vertical">Vertical</option>
               <option value="horizontal">Horizontal</option>
-            </Select>
-          </FormField>
+            </select>
+          </div>
         </>
       )}
 
       {/* Common className */}
-      <FormField label="Custom Class">
-        <Input
+      <div className="space-y-1">
+        <label className="text-xs font-medium text-text-secondary">Custom Class</label>
+        <input
+          className="w-full text-xs bg-layer-2 border border-border rounded px-2 py-1.5 focus:outline-none focus:border-accent"
           value={node.className || ''}
           onChange={(e) => onUpdate({ className: e.target.value })}
           placeholder="Enter custom classes..."
         />
-      </FormField>
+      </div>
 
       {/* Node Props JSON Viewer */}
       <div className="mt-4 pt-4 border-t border-border">

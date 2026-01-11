@@ -26,7 +26,7 @@ import { type NodePath, PreviewPanel } from '@/apps/DSLBuilder/widgets/dsl-build
 import { PropertyPanel } from '@/apps/DSLBuilder/widgets/dsl-builder/PropertyPanel';
 import { TreeView } from '@/apps/DSLBuilder/widgets/dsl-builder/TreeView';
 import { Button } from '@/components/types/Element/Action/role/Button';
-import { Select } from '@/components/types/Element/Field/role/Select';
+// Select removed, using native
 import { Kbd } from '@/components/types/Element/Text/role/Kbd';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
@@ -378,13 +378,17 @@ export const DSLBuilderPage = () => {
           {/* Template Selector */}
           <div className="mt-2 space-y-1">
             <label className="text-xs font-medium text-text-secondary">Template</label>
-            <Select value={currentTemplateId} onChange={(e) => loadTemplate(e.target.value)}>
+            <select
+              className="w-full text-sm bg-layer-2 border border-border rounded px-2 py-1.5 focus:outline-none focus:border-accent"
+              value={currentTemplateId}
+              onChange={(e) => loadTemplate(e.target.value)}
+            >
               {templates.map((template) => (
                 <option key={template.id} value={template.id}>
                   {template.name}
                 </option>
               ))}
-            </Select>
+            </select>
           </div>
 
           {/* Import Button */}

@@ -7,7 +7,7 @@ import { useState } from 'react';
 import type { PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types';
 import { Block } from '@/components/types/Block/Block';
 import { Button } from '@/components/types/Element/Action/role/Button';
-import { Input } from '@/components/types/Element/Field/role/Input';
+// Input removed
 import { Text } from '@/components/types/Element/Text/Text';
 import { cn } from '@/shared/lib/utils';
 
@@ -70,10 +70,11 @@ export function ColorPalette({
           onChange={(e) => setNewColor(e.target.value)}
           className="h-9 w-20 rounded border border-border cursor-pointer"
         />
-        <Input
+        <input
+          type="text"
           value={newColor}
           onChange={(e) => setNewColor(e.target.value)}
-          className="flex-1"
+          className="flex-1 h-9 px-3 bg-layer-2 border border-border rounded text-sm focus:outline-none focus:border-accent"
           placeholder="#000000"
         />
         <Button

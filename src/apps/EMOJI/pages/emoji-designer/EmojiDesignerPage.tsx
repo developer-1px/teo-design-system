@@ -21,9 +21,7 @@ import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
 import { Block } from '@/components/types/Block/Block';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/types/Block/role/Tabs';
 import { Button } from '@/components/types/Element/Action/role/Button';
-import { Input } from '@/components/types/Element/Field/role/Input';
-import { Select } from '@/components/types/Element/Field/role/Select';
-import { Switch } from '@/components/types/Element/Field/role/Switch';
+// Imports removed
 import { Text } from '@/components/types/Element/Text/Text';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
@@ -184,7 +182,8 @@ export const EmojiDesignerPage = () => {
           <Block role="Form">
             <div>
               <Text role="Label" className="block mb-1.5" content="Emoji Name" />
-              <Input
+              <input
+                className="w-full h-8 px-2 bg-layer-2 border border-border rounded text-xs focus:outline-none focus:border-accent"
                 value={state.design.name}
                 onChange={(e) =>
                   setState((prev) => ({
@@ -197,7 +196,8 @@ export const EmojiDesignerPage = () => {
 
             <div>
               <Text role="Label" className="block mb-1.5" content="Grid Size" />
-              <Select
+              <select
+                className="w-full h-8 px-2 bg-layer-2 border border-border rounded text-xs focus:outline-none focus:border-accent"
                 value={state.design.size}
                 onChange={(e) => handleResizeGrid(Number(e.target.value))}
               >
@@ -205,17 +205,20 @@ export const EmojiDesignerPage = () => {
                 <option value={16}>16x16</option>
                 <option value={24}>24x24</option>
                 <option value={32}>32x32</option>
-              </Select>
+              </select>
             </div>
 
             <div>
               <Text role="Label" className="block mb-1.5" content="Preset Palette" />
-              <Select onChange={(e) => handleLoadPreset(e.target.value)}>
+              <select
+                className="w-full h-8 px-2 bg-layer-2 border border-border rounded text-xs focus:outline-none focus:border-accent"
+                onChange={(e) => handleLoadPreset(e.target.value)}
+              >
                 <option value="">Select preset...</option>
                 <option value="classic">Classic</option>
                 <option value="skin">Skin Tones</option>
                 <option value="nature">Nature</option>
-              </Select>
+              </select>
             </div>
           </Block>
         </Section>
@@ -262,11 +265,15 @@ export const EmojiDesignerPage = () => {
           </Block>
 
           <div className="mt-4">
-            <Switch
-              label="Show Grid"
-              checked={state.showGrid}
-              onChange={(e) => setState((prev) => ({ ...prev, showGrid: e.target.checked }))}
-            />
+            <label className="flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={state.showGrid}
+                onChange={(e) => setState((prev) => ({ ...prev, showGrid: e.target.checked }))}
+                className="rounded border-border text-accent focus:ring-accent"
+              />
+              <span className="text-sm font-medium text-text">Show Grid</span>
+            </label>
           </div>
         </Section>
 
