@@ -114,6 +114,12 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
     description: '항목 리스트',
   },
 
+  ListItem: {
+    htmlTag: 'li',
+    baseStyles: 'flex items-center gap-2',
+    description: '리스트 아이템',
+  },
+
   SortableList: {
     htmlTag: 'div',
     ariaProps: { role: 'listbox', 'aria-label': 'Sortable list' },

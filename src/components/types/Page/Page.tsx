@@ -1,18 +1,9 @@
-/**
- * Page - Application Root (IDDL v5.0 Final)
- *
- * **Physics (Role)**: Controls Scroll & Viewport behavior.
- * **Zoning (Layout)**: Controls Grid/Flex structure.
- *
- * This component acts as the "God Component" for the page structure,
- * enforcing the physical laws defined in the IDDL spec.
- */
-
+import React, { useState, useEffect } from 'react';
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
 import { useDynamicGridTemplate } from '@/components/types/Page/hooks/useDynamicGridTemplate';
-import type { PageProps } from '@/components/types/Page/Page.types';
+import type { PageProps, PageRole, PageLayout } from '@/components/types/Page/Page.types';
 import { cn } from '@/shared/lib/utils';
 
 /**
@@ -23,8 +14,8 @@ const pagePhysicsVariants = cva(
   {
     variants: {
       role: {
-        Document: 'relative min-h-screen w-full overflow-y-auto flex flex-col', // Standard Web
-        Application: 'relative h-screen w-screen overflow-hidden grid', // App Shell
+        Document: 'relative min-h-screen w-full overflow-y-auto flex flex-col', // Standard Web (Flow)
+        Application: 'relative h-screen w-screen overflow-hidden grid', // App Shell (Grid)
         Focus:
           'relative min-h-screen w-full overflow-y-auto flex flex-col items-center justify-center', // Center
         Fullscreen: 'fixed inset-0 z-50 h-full w-full overflow-hidden', // Kiosk
@@ -86,48 +77,66 @@ export function Page({
   className,
   onClick,
   condition,
-  // Note: gap, breadcrumbs, direction, template are REMOVED (Legacy)
   ...rest
 }: PageProps) {
   // Feature: Dynamic Grid Template Calculation
-  // Analyzes <Section> children to build grid-areas automatically.
   const dynamicTemplate = useDynamicGridTemplate(children, layout);
 
-  // Layout Styles (Applied only if role supports Grid layout)
-  // Document role uses Flex usually, but can use Grid if layout is complex (like HolyGrail).
-  // Application role ALWAYS uses Grid.
-  // Focus uses Flex Center.
+  // Layout logic
+  const isDocument = role === 'Document';
+  const isApplication = role === 'Application';
 
-  const hasDynamicLayout =
-    layout &&
-    ['Single', 'Sidebar', 'Split', 'Aside', 'HolyGrail', 'Mobile', 'Studio'].includes(layout);
+  // Grouping children for Document (Flex flow)
+  const renderDocumentContent = () => {
+    const top: React.ReactNode[] = [];
+    const middle: React.ReactNode[] = [];
+    const bottom: React.ReactNode[] = [];
 
-  const isGridPowered = role === 'Application' || (role === 'Document' && hasDynamicLayout);
+    // Simple heuristic: Header/Toolbar/Dock at top/bottom
+    React.Children.forEach(children, (child: any) => {
+      if (!child) return;
+      const childRole = child.props?.role;
 
-  const layoutStyles = isGridPowered
-    ? {
-      display: 'grid',
-      gridTemplateAreas: dynamicTemplate.gridTemplateAreas,
-      gridTemplateColumns: dynamicTemplate.gridTemplateColumns,
-      gridTemplateRows: dynamicTemplate.gridTemplateRows,
-    }
-    : {};
+      if (childRole === 'Header' || childRole === 'Toolbar' || childRole === 'Nav' && layout === 'Single') {
+        top.push(child);
+      } else if (childRole === 'Footer' || childRole === 'Status' || childRole === 'Dock') {
+        bottom.push(child);
+      } else {
+        middle.push(child);
+      }
+    });
+
+    const isHorizontalMiddle = layout === 'Sidebar' || layout === 'Aside' || layout === 'HolyGrail' || layout === 'Split';
+
+    return (
+      <>
+        {top.length > 0 && <div className="flex flex-col w-full flex-shrink-0 z-20">{top}</div>}
+        <div className={cn(
+          "flex-1 flex w-full",
+          isHorizontalMiddle ? "flex-row" : "flex-col",
+          maxWidth && isDocument ? "mx-auto" : ""
+        )}
+          style={maxWidth && isDocument ? { maxWidth: typeof maxWidth === 'number' ? maxWidth : undefined } : {}}
+        >
+          {middle}
+        </div>
+        {bottom.length > 0 && <div className="flex flex-col w-full flex-shrink-0 z-10">{bottom}</div>}
+      </>
+    );
+  };
+
+  // Grid styles for Application role
+  const gridStyles = isApplication ? {
+    display: 'grid',
+    gridTemplateAreas: dynamicTemplate.gridTemplateAreas,
+    gridTemplateColumns: dynamicTemplate.gridTemplateColumns,
+    gridTemplateRows: dynamicTemplate.gridTemplateRows,
+  } : {};
 
   // Additional classes for Document role constraints
   const documentConstraintClass =
-    role === 'Document'
-      ? cn(
-        getMaxWidthClass(maxWidth),
-        centered ? 'mx-auto' : ''
-      )
-      : '';
+    isDocument ? cn(getMaxWidthClass(maxWidth), centered ? 'mx-auto' : '') : '';
 
-  // Condition check
-  if (condition) {
-    // TODO: Evaluate condition string
-  }
-
-  // Loading State
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-surface">
@@ -139,7 +148,6 @@ export function Page({
     );
   }
 
-  // Error State
   if (error) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-surface-base">
@@ -151,6 +159,12 @@ export function Page({
     );
   }
 
+  // Layout Styles
+  const layoutStyles: React.CSSProperties = {
+    ...gridStyles,
+    '--iddl-sidebar-width': layout === 'Sidebar' ? '288px' : layout === 'Aside' ? '256px' : 'auto',
+  } as React.CSSProperties;
+
   return (
     <LayoutProvider
       value={{
@@ -158,18 +172,18 @@ export function Page({
         density,
         intent,
         mode: 'view',
-        layout, // Important: Passed down directly for Section validation
+        layout,
         depth: 0,
-        role, // Pass role down so children know their physics context?
+        role,
       }}
     >
       <Component
         className={cn(
           pagePhysicsVariants({ role, prominence }),
-          documentConstraintClass,
+          !isApplication && documentConstraintClass,
           className
         )}
-        style={{ ...layoutStyles }}
+        style={layoutStyles}
         data-dsl-component="page"
         data-role={role}
         data-layout={layout}
@@ -179,9 +193,9 @@ export function Page({
         onClick={onClick}
         {...rest}
       >
-        {/* Title/Description Header (Optional, mostly for Document) */}
-        {children}
+        {isDocument ? renderDocumentContent() : children}
       </Component>
     </LayoutProvider>
   );
 }
+

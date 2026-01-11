@@ -1,40 +1,36 @@
 /**
- * Field - 데이터 바인딩 (IDDL v1.0.1)
+ * Field - 데이터 바인딩 (IDDL v2.0)
  *
- * 실제 데이터 모델과 바인딩되는 요소.
- * 부모 컨텍스트의 mode에 따라 Text(View) 또는 Input(Edit)으로 렌더링됩니다.
+ * IDDL 2.0 Field Role Catalog 기반 렌더링
+ * role + spec 조합으로 다양한 입력 필드를 표현합니다.
  *
- * v1.0.1: 14개 신규 dataType, constraints, dependsOn, modeOverride, condition 추가, CVA 적용
- * v2.0.0: Headless + Renderer 패턴 도입 (로직과 프레젠테이션 분리)
- * v2.0.1: role + type + value 일관성 체계 (dataType → type)
- * v3.0.0: role 기반 구조로 전환 (role="Input|Select|Radio|Checkbox|Rating" + type)
- * v3.1.0: Legacy → Renderer 마이그레이션 완료 (모든 21개 타입 Renderer화, 548줄 → 417줄)
- *
- * @see spec/iddl-spec-1.0.1.md#412-field-node
+ * @see docs/2-areas/spec/5-field/field.spec.md
  */
 
+import { useState, useEffect } from 'react';
 import { cva } from 'class-variance-authority';
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { FieldOption, FieldProps } from '@/components/types/Element/Field/Field.types';
+import type { FieldProps, FieldRole, FieldSpec } from '@/components/types/Element/Field/Field.types';
 import { cn } from '@/shared/lib/utils';
 
 // Re-export types for convenience
 export type { FieldOption } from '@/components/types/Element/Field/Field.types';
 
-import { BooleanField } from './renderers/BooleanField';
-import { CheckboxField } from './renderers/CheckboxField';
-import { ColorField } from './renderers/ColorField';
-import { DateField } from './renderers/DateField';
-import { FileField } from './renderers/FileField';
-import { NumberField } from './renderers/NumberField';
-import { RadioField } from './renderers/RadioField';
-import { RatingField } from './renderers/RatingField';
-import { SelectField } from './renderers/SelectField';
-import { TextareaField } from './renderers/TextareaField';
-// Renderers (v2.0.0, v3.1.0 expanded)
-import { TextField } from './renderers/TextField';
+// Renderers
+import { BooleanField } from './renderers/BooleanField'; // Maps to Switch
+import { CheckboxField } from './renderers/CheckboxField'; // Maps to Checkbox
+import { ColorField } from './renderers/ColorField'; // Legacy? Or keeps it? Spec doesn't mention Color explicitly in the main table, but maybe under mapped? Ah, spec didn't list ColorInput. I'll keep it if needed or remove if strictly following spec. Spec v0.1 has no ColorInput. I'll comment it out or leave for now.
+import { DateField } from './renderers/DateField'; // Maps to Date/Time
+import { FileField } from './renderers/FileField'; // Maps to FileInput
+import { NumberField } from './renderers/NumberField'; // Maps to NumberInput, Slider?
+import { OTPField } from './renderers/OTPField';
+import { RadioField } from './renderers/RadioField'; // Maps to RadioGroup
+import { RatingField } from './renderers/RatingField'; // Maps to Rating
+import { SelectField } from './renderers/SelectField'; // Maps to Select
+import { TextareaField } from './renderers/TextareaField'; // Maps to TextArea
+import { TextField } from './renderers/TextField'; // Maps to TextInput, Email, Password, Search, etc.
 
-// Shared Styles (v2.1.0 - only for fallback)
+// Shared Styles
 import { inputStyles } from './styles/field.styles';
 
 /**
@@ -63,8 +59,8 @@ function FieldView({
   value,
   prominence,
 }: {
-  label: string;
-  model: string;
+  label?: string;
+  model?: string;
   value?: any;
   prominence?: string;
   className?: string;
@@ -73,14 +69,14 @@ function FieldView({
 
   return (
     <div className={cn('flex flex-col gap-1')}>
-      <span className="text-xs text-muted font-medium">{label}</span>
+      {label && <span className="text-xs text-muted font-medium">{label}</span>}
       <span
         className={fieldViewVariants({
           prominence: prominence as 'Hero' | 'Standard' | 'Strong' | 'Subtle',
         })}
         data-model={model}
       >
-        {displayValue}
+        {String(displayValue)}
       </span>
     </div>
   );
@@ -92,358 +88,362 @@ function FieldView({
 function createChangeHandler(controlledOnChange?: (event: any) => void) {
   return (val: any) => {
     if (controlledOnChange) {
-      const event = { target: { value: val } };
-      controlledOnChange(event as any);
+      // Compat: emulate event-like object or pass direct value depending on what consumers expect.
+      // Originally consumers might expect event. But React Controlled often uses value.
+      // IDDL spec says "onChange is forbidden, use command/binding".
+      // But for React Controlled usage here:
+      controlledOnChange(val);
     }
   };
 }
 
 /**
- * Utility: Renderer 선택 로직 (role과 type 기반)
- * v3.1.0: 모든 21개 타입 지원 (Legacy fallback 제거)
- * @returns { renderer: Component, rendererType: string } | null
+ * Edit Mode: 데이터를 입력 폼으로 표시
  */
-function getRendererConfig(role?: string, type?: string) {
-  // role 기반 우선 매핑
-  if (role === 'Input') {
-    if (!type || ['text', 'email', 'url', 'phone', 'password'].includes(type)) {
-      return {
-        renderer: TextField,
-        rendererType: (type || 'text') as 'text' | 'email' | 'url' | 'phone' | 'password',
-      };
-    }
-    if (['number', 'currency', 'range'].includes(type)) {
-      return { renderer: NumberField, rendererType: type as 'number' | 'currency' | 'range' };
-    }
-  }
-
-  if (role === 'Select') {
-    return {
-      renderer: SelectField,
-      rendererType: (type === 'multiselect' ? 'multiselect' : 'select') as 'select' | 'multiselect',
-    };
-  }
-
-  if (role === 'Radio') {
-    return { renderer: RadioField, rendererType: 'radio' as const };
-  }
-
-  if (role === 'Rating') {
-    return { renderer: RatingField, rendererType: 'rating' as const };
-  }
-
-  // type 기반 fallback (하위 호환성)
-  if (!type) return null;
-
-  // Text-based inputs
-  if (['text', 'email', 'url', 'phone', 'password'].includes(type)) {
-    return {
-      renderer: TextField,
-      rendererType: type as 'text' | 'email' | 'url' | 'phone' | 'password',
-    };
-  }
-
-  // Number inputs
-  if (['number', 'currency', 'range'].includes(type)) {
-    return { renderer: NumberField, rendererType: type as 'number' | 'currency' | 'range' };
-  }
-
-  // Selection inputs
-  if (['select', 'multiselect'].includes(type)) {
-    return { renderer: SelectField, rendererType: type as 'select' | 'multiselect' };
-  }
-
-  if (type === 'radio') {
-    return { renderer: RadioField, rendererType: 'radio' as const };
-  }
-
-  if (type === 'rating') {
-    return { renderer: RatingField, rendererType: 'rating' as const };
-  }
-
-  // Date/Time inputs (NEW v3.1.0)
-  if (['date', 'datetime'].includes(type)) {
-    return { renderer: DateField, rendererType: type as 'date' | 'datetime' };
-  }
-
-  // Boolean input (NEW v3.1.0)
-  if (type === 'boolean') {
-    return { renderer: BooleanField, rendererType: 'boolean' as const };
-  }
-
-  // Checkbox group (NEW v3.1.0)
-  if (type === 'checkbox') {
-    return { renderer: CheckboxField, rendererType: 'checkbox' as const };
-  }
-
-  // Textarea (NEW v3.1.0)
-  if (['textarea', 'richtext'].includes(type)) {
-    return { renderer: TextareaField, rendererType: type as 'textarea' | 'richtext' };
-  }
-
-  // File uploads (NEW v3.1.0)
-  if (['file', 'image'].includes(type)) {
-    return { renderer: FileField, rendererType: type as 'file' | 'image' };
-  }
-
-  // Color picker (NEW v3.1.0)
-  if (type === 'color') {
-    return { renderer: ColorField, rendererType: 'color' as const };
-  }
-
-  return null;
-}
-
 /**
- * Edit Mode: 데이터를 입력 폼으로 표시 (v1.0.1: 21개 type)
- * IDDL-only: prominence와 type만으로 스타일 결정
- * v1.0.2: clearable 지원 추가
- * v2.0.0: Headless + Renderer 패턴 적용 (우선순위 높은 타입부터)
- * v2.0.1: dataType → type으로 rename
- * v3.0.0: role 기반 구조 (role 우선, type은 세부 variant)
- * v3.1.0: 반복 코드 제거 - createChangeHandler, getRendererConfig 유틸리티 사용
+ * Edit Mode: 데이터를 입력 폼으로 표시
  */
 function FieldEdit(props: FieldProps) {
   const {
     role,
+    spec,
     label,
     model,
-    type,
     placeholder,
     required,
-    options,
-    constraints,
-    clearable,
-    value: controlledValue,
-    onChange: controlledOnChange,
+    disabled,
+    value: propValue,
+    onChange: propOnChange,
     prominence,
     intent,
-  } = props;
+    density,
+    className,
+    description,
+    defaultValue, // Add this to FieldTypes! But for now we extract it if present in props usage
+  } = props as FieldProps & { defaultValue?: any };
+
+  // Internal state for semi-controlled usage (Showcase)
+  const [internalValue, setInternalValue] = useState(propValue !== undefined ? propValue : defaultValue);
+
+  // Sync internal value if propValue changes
+  useEffect(() => {
+    if (propValue !== undefined) {
+      setInternalValue(propValue);
+    }
+  }, [propValue]);
+
+  const controlledValue = propValue !== undefined ? propValue : internalValue;
 
   // Get density from parent context
   const ctx = useLayoutContext();
-  const computedDensity = props.density ?? ctx.density ?? 'Standard';
+  const computedDensity = density ?? ctx.density ?? 'Standard';
 
   // Shared onChange handler
-  const handleChange = createChangeHandler(controlledOnChange);
+  const handleChange = (val: any) => {
+    // If not controlled (propValue is undefined), update internal state
+    if (propValue === undefined) {
+      setInternalValue(val);
+    }
+    // Always call parent handler
+    if (propOnChange) { // Fixed: createChangeHandler logic inlined
+      propOnChange(val);
+    }
+  };
 
-  // Shared common props
+  // Common props passed to all renderers
   const commonProps = {
-    label,
-    model,
+    label: label || '', // Some renderers require label
+    model: model || '',
     prominence,
     intent,
     required,
     placeholder,
+    disabled,
+    density: computedDensity as 'Comfortable' | 'Standard' | 'Compact',
+    className,
   };
 
-  // Try to get renderer from role/type mapping
-  const rendererConfig = getRendererConfig(role, type);
+  /**
+   * Dispatch Logic based on Field Role
+   */
+  switch (role) {
+    // 1. Text Inputs
+    case 'TextInput':
+    case 'EmailInput':
+    case 'PasswordInput':
+      {
+        const typeMap: Record<string, 'text' | 'email' | 'password' | 'url'> = {
+          TextInput: 'text',
+          EmailInput: 'email',
+          PasswordInput: 'password',
+        };
+        const inputType = typeMap[role] || 'text';
+        const s = spec as any;
 
-  if (rendererConfig) {
-    const { renderer: Renderer, rendererType } = rendererConfig;
+        return (
+          <TextField
+            {...commonProps}
+            type={inputType}
+            constraints={{
+              maxLength: s?.maxLength,
+              pattern: s?.pattern,
+            }}
+            value={controlledValue as string}
+            onChange={handleChange}
+          />
+        );
+      }
 
-    // TextField-specific props
-    if (Renderer === TextField) {
+    case 'SearchInput':
+      {
+        const s = spec as any;
+        return (
+          <TextField
+            {...commonProps}
+            type="text"
+            clearable={s?.clearable}
+            value={controlledValue as string}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    case 'OTPInput':
+      {
+        const s = spec as any;
+        return (
+          <OTPField
+            {...commonProps}
+            length={s?.length}
+            numeric={s?.numeric}
+            value={controlledValue as string}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    case 'TextArea':
+      {
+        const s = spec as any;
+        return (
+          <TextareaField
+            {...commonProps}
+            type="textarea"
+            constraints={{
+              maxLength: s?.maxLength,
+              // rows not directly supported in interface yet, but can pass via style or new prop if added
+            }}
+            value={controlledValue as string}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    // 2. Number Inputs
+    case 'NumberInput':
+      {
+        const s = spec as any;
+        return (
+          <NumberField
+            {...commonProps}
+            type="number"
+            constraints={{
+              min: s?.min,
+              max: s?.max,
+              step: s?.step,
+            }}
+            value={controlledValue as number}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    case 'Slider':
+      {
+        const s = spec as any;
+        // Start with NumberField role="range" or similar if available, or create Slider renderer later.
+        // Current NumberField supports 'range'.
+        return (
+          <NumberField
+            {...commonProps}
+            type="range"
+            constraints={{
+              min: s?.min,
+              max: s?.max,
+              step: s?.step,
+            }}
+            value={controlledValue as number}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    // 3. Selection Inputs
+    case 'Select':
+      {
+        const s = spec as any;
+        return (
+          <SelectField
+            {...commonProps}
+            type={s?.multiple ? 'multiselect' : 'select'}
+            options={s?.options || []}
+            value={controlledValue}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    case 'Combobox':
+      {
+        // TODO: Implement Combobox renderer. Fallback to Select.
+        const s = spec as any;
+        return (
+          <SelectField
+            {...commonProps}
+            type="select"
+            options={s?.options || []}
+            value={controlledValue}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    case 'RadioGroup':
+      {
+        const s = spec as any;
+        return (
+          <RadioField
+            {...commonProps}
+            type="radio"
+            options={s?.options || []}
+            value={controlledValue}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    case 'Checkbox':
+      {
+        return (
+          <BooleanField
+            {...commonProps}
+            type="boolean"
+            value={controlledValue as boolean}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    case 'Switch':
+      {
+        // TODO: Update BooleanField to support 'switch' variant or create SwitchField
+        return (
+          <BooleanField
+            {...commonProps}
+            type="boolean"
+            value={controlledValue as boolean}
+            onChange={handleChange}
+          // variant="switch" ??
+          />
+        );
+      }
+
+    // 4. Date/File Inputs
+    case 'DateInput':
+    case 'TimeInput':
+    case 'DateTimeInput':
+      {
+        const typeMap: Record<string, 'date' | 'datetime'> = {
+          DateInput: 'date',
+          TimeInput: 'date', // Fallback
+          DateTimeInput: 'datetime',
+        };
+        const s = spec as any;
+        return (
+          <DateField
+            {...commonProps}
+            type={typeMap[role] || 'date'}
+            constraints={{
+              min: s?.min, // string format
+              max: s?.max,
+            }}
+            value={controlledValue as string}
+            onChange={handleChange}
+          />
+        );
+      }
+    case 'FileInput':
+      {
+        const s = spec as any;
+        return (
+          <FileField
+            {...commonProps}
+            type="file"
+            // accept={s?.accept}
+            // multiple={s?.multiple}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    // 5. Complex
+    case 'Rating':
+      {
+        const s = spec as any;
+        return (
+          <RatingField
+            {...commonProps}
+            type="rating"
+            constraints={{
+              max: s?.max,
+              step: s?.step,
+            }}
+            value={controlledValue as number}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    case 'TagInput':
+      {
+        // TODO: Implement TagInput. Fallback to TextField or Select.
+        return (
+          <TextField
+            {...commonProps}
+            type="text"
+            value={controlledValue as string}
+            onChange={handleChange}
+          />
+        );
+      }
+
+    default:
+      console.warn(`[Field] Unimplemented role "${role}". Falling back to TextInput.`);
       return (
-        <Renderer
+        <TextField
           {...commonProps}
-          type={rendererType as 'text' | 'email' | 'url' | 'phone' | 'password'}
-          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-          constraints={constraints}
-          clearable={clearable}
-          value={controlledValue as string | undefined}
+          type="text"
+          value={controlledValue as string}
           onChange={handleChange}
         />
       );
-    }
-
-    // NumberField-specific props
-    if (Renderer === NumberField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'number' | 'currency' | 'range'}
-          constraints={constraints}
-          value={controlledValue as number | undefined}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // SelectField-specific props
-    if (Renderer === SelectField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'select' | 'multiselect'}
-          options={options || []}
-          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-          value={controlledValue}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // RadioField-specific props
-    if (Renderer === RadioField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'radio'}
-          options={options || []}
-          value={controlledValue as string | number | boolean | undefined}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // RatingField-specific props
-    if (Renderer === RatingField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'rating'}
-          constraints={constraints}
-          value={controlledValue as number | undefined}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // DateField-specific props (NEW v3.1.0)
-    if (Renderer === DateField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'date' | 'datetime'}
-          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-          constraints={constraints}
-          value={controlledValue as string | undefined}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // BooleanField-specific props (NEW v3.1.0)
-    if (Renderer === BooleanField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'boolean'}
-          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-          value={controlledValue as boolean | undefined}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // CheckboxField-specific props (NEW v3.1.0)
-    if (Renderer === CheckboxField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'checkbox'}
-          options={options || []}
-          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-          value={controlledValue as Array<string | number | boolean> | undefined}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // TextareaField-specific props (NEW v3.1.0)
-    if (Renderer === TextareaField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'textarea' | 'richtext'}
-          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-          constraints={constraints}
-          value={controlledValue as string | undefined}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // FileField-specific props (NEW v3.1.0)
-    if (Renderer === FileField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'file' | 'image'}
-          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-          onChange={handleChange}
-        />
-      );
-    }
-
-    // ColorField-specific props (NEW v3.1.0)
-    if (Renderer === ColorField) {
-      return (
-        <Renderer
-          {...commonProps}
-          type={rendererType as 'color'}
-          density={computedDensity as 'Comfortable' | 'Standard' | 'Compact'}
-          value={controlledValue as string | undefined}
-          onChange={handleChange}
-        />
-      );
-    }
   }
-
-  // Fallback: 알 수 없는 타입은 기본 text input으로 처리
-  console.warn(`[Field] Unknown type "${type}" for model "${model}". Falling back to text input.`);
-  return (
-    <div className={cn('flex flex-col gap-1')}>
-      <label htmlFor={model} className="text-sm text-text font-medium">
-        {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
-      </label>
-      <input
-        id={model}
-        name={model}
-        type="text"
-        placeholder={placeholder}
-        required={required}
-        className={inputStyles({
-          prominence,
-          density: computedDensity as any,
-          intent,
-          dataType: 'text',
-        })}
-        data-model={model}
-      />
-    </div>
-  );
 }
 
 /**
- * Field 컴포넌트: 모드에 따라 View 또는 Edit 렌더링 (v1.0.1)
+ * Field 컴포넌트: 모드에 따라 View 또는 Edit 렌더링
  */
 export function Field({ as, ...props }: FieldProps) {
   const ctx = useLayoutContext();
-
-  // 조건부 렌더링 (v1.0.1)
-  // TODO: condition 표현식 평가 구현
-  if (props.condition) {
-    // 현재는 조건부 렌더링 미구현
-  }
+  const { modeOverride, hidden } = props as any; // Legacy props access
 
   // 부모 컨텍스트에서 상속
   const computedProminence = props.prominence ?? ctx.prominence ?? 'Primary';
   const computedIntent = props.intent ?? ctx.intent ?? 'Neutral';
 
-  // modeOverride가 있으면 우선 사용 (v1.0.1)
-  const mode = props.modeOverride ?? ctx.mode ?? 'edit';
+  const mode = modeOverride ?? ctx.mode ?? 'edit';
 
-  // dependsOn 처리 (v1.0.1)
-  // TODO: dependsOn 표현식 평가 구현
-  if (props.dependsOn) {
-    // 현재는 의존성 체크 미구현
-  }
-
-  if (props.hidden) return null;
+  if (hidden) return null;
 
   // as prop이 있으면 사용, 없으면 div
   const Component = as || 'div';
@@ -452,9 +452,9 @@ export function Field({ as, ...props }: FieldProps) {
     <Component
       data-dsl-component="field"
       data-mode={mode}
+      data-role={props.role}
       data-prominence={computedProminence}
       data-intent={computedIntent}
-      data-depends-on={props.dependsOn}
     >
       {mode === 'view' ? (
         <FieldView
