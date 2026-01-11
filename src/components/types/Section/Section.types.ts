@@ -3,7 +3,6 @@
  */
 
 import type { ReactNode } from 'react';
-import type { PageLayout } from '../Page/Page.types';
 import type { AsProp, Density, Intent, Prominence } from '../Shared.types';
 
 /**

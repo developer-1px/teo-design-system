@@ -520,8 +520,8 @@ body[data-debug-mode="1"]::before {
   function getMaxZIndex(target, current) {
     const parent = target.parentElement;
     if (!parent || parent === document.body) return current;
-    const zIndex = parseInt(window.getComputedStyle(parent).zIndex);
-    return getMaxZIndex(parent, isNaN(zIndex) ? current : Math.max(zIndex, current));
+    const zIndex = parseInt(window.getComputedStyle(parent).zIndex, 10);
+    return getMaxZIndex(parent, Number.isNaN(zIndex) ? current : Math.max(zIndex, current));
   }
   function getSelectorsForMode(debugMode2) {
     if (debugMode2 === 1) {

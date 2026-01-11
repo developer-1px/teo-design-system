@@ -49,7 +49,7 @@ export function Stepper({ Element, children, className, spec, ...props }: BlockR
   const current = 1; // 0-indexed usually, but visual is 2nd step
   return (
     <Element className={cn('flex items-center w-full', className)} {...props}>
-      {steps.map((step, i) => (
+      {steps.map((_step, i) => (
         <div key={i} className="flex flex-1 items-center">
           <div
             className={cn(

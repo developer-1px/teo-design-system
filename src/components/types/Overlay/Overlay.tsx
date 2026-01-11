@@ -138,7 +138,7 @@ export function Overlay({
   ...rest
 }: OverlayProps) {
   // v4.1: Role registry validation
-  const roleConfig = getRoleConfig(role);
+  const _roleConfig = getRoleConfig(role);
 
   // 조건부 렌더링 (v1.0.1)
   // TODO: condition 표현식 평가 구현

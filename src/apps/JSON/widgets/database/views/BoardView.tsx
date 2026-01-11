@@ -76,7 +76,7 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                               prominence="Strong"
                               content={
                                 typeof value === 'object'
-                                  ? JSON.stringify(value).substring(0, 30) + '...'
+                                  ? `${JSON.stringify(value).substring(0, 30)}...`
                                   : String(value)
                               }
                             />

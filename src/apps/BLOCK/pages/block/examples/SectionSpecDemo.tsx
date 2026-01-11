@@ -1,4 +1,4 @@
-import { IDDLProvider, useIDDLContext } from '@/components/context/IDDLContext';
+import { useIDDLContext } from '@/components/context/IDDLContext';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';

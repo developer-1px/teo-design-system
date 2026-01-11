@@ -1,4 +1,4 @@
-import type { ColumnDef } from '@tanstack/react-table';
+// ColumnDef import removed - unused
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
 import { Block } from '@/components/types/Block/Block';

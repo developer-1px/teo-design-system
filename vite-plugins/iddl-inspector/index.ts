@@ -43,7 +43,7 @@ export function iddlInspector(): Plugin {
         const valueIndex = code.indexOf('value: null', defineIndex);
         if (valueIndex === -1) return;
 
-        let newCode = code.slice(0, valueIndex) + 'value: source' + code.slice(valueIndex + 11);
+        let newCode = `${code.slice(0, valueIndex)}value: source${code.slice(valueIndex + 11)}`;
 
         if (code.includes('function ReactElement(type, key, self, source,')) {
           return newCode;
@@ -80,7 +80,7 @@ export function iddlInspector(): Plugin {
       order: 'pre',
       filter: { id: /^vite-plugin-iddl-inspector\/client$/u },
       handler(source) {
-        return '\0' + source;
+        return `\0${source}`;
       },
     },
 

@@ -1,4 +1,4 @@
-import { ClipboardList, Play, RefreshCw } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Section } from '@/components/types/Section/Section';

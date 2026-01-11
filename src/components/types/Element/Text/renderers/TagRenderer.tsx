@@ -15,9 +15,6 @@ const prominenceToSize = (prominence?: TextProps['prominence']): 'sm' | 'md' => 
   switch (prominence) {
     case 'Subtle':
       return 'sm';
-    case 'Hero':
-    case 'Strong':
-    case 'Standard':
     default:
       return 'md';
   }

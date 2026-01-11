@@ -1,20 +1,8 @@
-import {
-  ChevronDown,
-  Download,
-  File,
-  FolderOpen,
-  GitBranch,
-  Info,
-  Play,
-  Settings,
-  Sparkles,
-  Upload,
-} from 'lucide-react';
+import { Download, FolderOpen, GitBranch, Play, Settings, Upload } from 'lucide-react';
 import { AIAgentChat } from '@/apps/IDE/widgets/chat/AIAgentChat.tsx';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section.tsx';
 
 interface RightBarProps {
   view: string | null;

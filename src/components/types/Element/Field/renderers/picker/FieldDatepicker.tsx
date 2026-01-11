@@ -46,7 +46,7 @@ export function FieldDatepicker(props: FieldDatepickerProps) {
     prominence = 'Standard',
     intent = 'Neutral',
     density = 'Standard',
-    constraints,
+    _constraints,
     required = false,
     placeholder,
     value,
@@ -72,7 +72,7 @@ export function FieldDatepicker(props: FieldDatepickerProps) {
     return <Calendar size={16} />;
   };
 
-  const popoverRef = useRef<HTMLDivElement>(null);
+  const _popoverRef = useRef<HTMLDivElement>(null);
 
   // Apply popover props to the ref inside the component
   const { ref: hookRef, ...popoverProps } = getPopoverProps();
@@ -131,11 +131,11 @@ export function FieldDatepicker(props: FieldDatepickerProps) {
             <FieldCalendar
               label="" // Embedded, so no label
               model={`${model}-calendar`}
-              value={value && value.includes('T') ? value.split('T')[0] : value}
+              value={value?.includes('T') ? value.split('T')[0] : value}
               onChange={(date) => {
                 if (type === 'datetime') {
                   // Append time if needed, currently simplifed to just Date
-                  const currentTime = value && value.includes('T') ? value.split('T')[1] : '00:00';
+                  const currentTime = value?.includes('T') ? value.split('T')[1] : '00:00';
                   handleDateSelect(`${date}T${currentTime}`);
                 } else {
                   handleDateSelect(date);
@@ -152,12 +152,11 @@ export function FieldDatepicker(props: FieldDatepickerProps) {
               <input
                 type="time"
                 className="bg-layer-2 border border-border rounded px-2 py-1 text-xs"
-                value={value && value.includes('T') ? value.split('T')[1] : '00:00'}
+                value={value?.includes('T') ? value.split('T')[1] : '00:00'}
                 onChange={(e) => {
-                  const datePart =
-                    value && value.includes('T')
-                      ? value.split('T')[0]
-                      : new Date().toISOString().split('T')[0];
+                  const datePart = value?.includes('T')
+                    ? value.split('T')[0]
+                    : new Date().toISOString().split('T')[0];
                   onChange?.(`${datePart}T${e.target.value}`);
                 }}
               />

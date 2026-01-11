@@ -12,13 +12,13 @@
  * />
  */
 
-import { CloudUpload, File as FileIcon, Image as ImageIcon, Trash2, X } from 'lucide-react';
+import { CloudUpload, File as FileIcon, Trash2 } from 'lucide-react';
 import type React from 'react';
 import { useRef, useState } from 'react';
 import { Text } from '@/components/types/Element/Text/Text';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
-import { errorStyles, fieldWrapperStyles, labelStyles } from '../../styles/field.styles';
+import { fieldWrapperStyles, labelStyles } from '../../styles/field.styles';
 
 export interface FieldFilepickerProps {
   label: string;
@@ -120,7 +120,7 @@ export function FieldFilepicker(props: FieldFilepickerProps) {
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / k ** i).toFixed(2)) + ' ' + sizes[i];
+    return `${parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
   };
 
   return (

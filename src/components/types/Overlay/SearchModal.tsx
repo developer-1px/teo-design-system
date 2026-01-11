@@ -61,7 +61,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   const { cursorIndex, getItemProps } = useNavigableCursor({
     type: 'list',
     items: results,
-    onSelect: (result) => {
+    onSelect: (_result) => {
       onClose();
     },
     enabled: isOpen,

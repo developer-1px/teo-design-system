@@ -7,12 +7,7 @@
  * - 드래그 가능
  */
 
-import {
-  type FilterLevel,
-  getAllFilterLevels,
-  getCurrentFilterLevel,
-  getFilterConfig,
-} from './filter-state';
+import { getCurrentFilterLevel, getFilterConfig } from './filter-state';
 import {
   getSelectedComponentDetails,
   getSelectedIndex,
@@ -291,7 +286,7 @@ export function updatePanelContent(components: ComponentListItem[]): void {
   setupDragFunctionality(panelDiv);
 
   // 각 컴포넌트 항목에 hover/click 이벤트
-  components.forEach((item, index) => {
+  components.forEach((_item, index) => {
     const itemEl = panelDiv?.querySelector(`[data-component-index="${index}"]`) as HTMLElement;
     if (!itemEl) return;
 

@@ -96,7 +96,7 @@ export function useTabs(options: UseTabsOptions = {}): UseTabsReturn {
         onKeyDown: handleKeyDown,
       };
     },
-    [selectedIndex, selectTab, activateOnFocus]
+    [selectedIndex, selectTab]
   );
 
   const getTabPanelProps = useCallback(

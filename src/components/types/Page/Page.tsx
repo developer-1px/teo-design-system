@@ -1,9 +1,9 @@
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
 import { useDynamicGridTemplate } from '@/components/types/Page/hooks/useDynamicGridTemplate';
-import type { PageLayout, PageProps, PageRole } from '@/components/types/Page/Page.types';
+import type { PageProps } from '@/components/types/Page/Page.types';
 import { cn } from '@/shared/lib/utils';
 import { getRoleConfig } from './role-registry';
 
@@ -82,7 +82,7 @@ export function Page({
   ...rest
 }: PageProps) {
   // v4.1: Role registry validation
-  const roleConfig = getRoleConfig(role);
+  const _roleConfig = getRoleConfig(role);
 
   // Feature: Dynamic Grid Template Calculation
   const dynamicTemplate = useDynamicGridTemplate(children, layout);

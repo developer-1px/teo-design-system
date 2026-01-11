@@ -254,7 +254,7 @@ function Example3_NavigableSelectable() {
     }
   };
 
-  const handleActivate = (slideId: string) => {
+  const __handleActivate = (slideId: string) => {
     setActiveSlide(slideId);
     setTimeout(() => setActiveSlide(null), 1000); // Reset after 1s
   };

@@ -52,7 +52,7 @@ export function buildFileTree(paths: string[]): FileNode[] {
 
     parts.forEach((part, index) => {
       const isFile = index === parts.length - 1;
-      const currentPath = '/' + parts.slice(0, index + 1).join('/');
+      const currentPath = `/${parts.slice(0, index + 1).join('/')}`;
 
       // Create entry if it doesn't exist
       if (!currentLevel[part]) {

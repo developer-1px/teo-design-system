@@ -81,7 +81,7 @@ export function useRovingFocus(options: UseRovingFocusOptions = {}): UseRovingFo
         ref,
       };
     },
-    [focusedIndex, orientation, loop]
+    [focusedIndex]
   );
 
   return {

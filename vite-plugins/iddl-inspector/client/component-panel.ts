@@ -12,11 +12,11 @@ import type { ComponentInfo } from './component-hierarchy';
 import { formatComponentInfo } from './component-hierarchy';
 
 let panelDiv: HTMLDivElement | null = null;
-let currentMode: 'hierarchy' | 'details' = 'hierarchy';
-let selectedComponent: ComponentInfo | null = null;
+let _currentMode: 'hierarchy' | 'details' = 'hierarchy';
+let _selectedComponent: ComponentInfo | null = null;
 let selectedIndex: number | null = null; // 선택된 항목 인덱스
 let hoveredIndex: number | null = null; // hover된 항목 인덱스
-let clickedRect: DOMRect | null = null;
+let _clickedRect: DOMRect | null = null;
 let currentHierarchy: ComponentInfo[] = [];
 
 /**
@@ -136,7 +136,7 @@ function updateItemStyle(index: number): void {
 function renderHierarchyList(hierarchy: ComponentInfo[]): void {
   if (!panelDiv) return;
 
-  currentMode = 'hierarchy';
+  _currentMode = 'hierarchy';
 
   const header = `
     <div style="
@@ -202,7 +202,7 @@ function renderHierarchyList(hierarchy: ComponentInfo[]): void {
     })
     .join('');
 
-  panelDiv.innerHTML = header + `<div style="overflow-y: auto; flex: 1;">${listItems}</div>`;
+  panelDiv.innerHTML = `${header}<div style="overflow-y: auto; flex: 1;">${listItems}</div>`;
 
   // 이벤트 리스너 등록
   panelDiv.querySelector('#iddl-close-panel')?.addEventListener('click', hidePanel);
@@ -236,7 +236,7 @@ function renderHierarchyList(hierarchy: ComponentInfo[]): void {
     item.addEventListener('click', () => {
       const prevSelected = selectedIndex;
       selectedIndex = index;
-      selectedComponent = info;
+      _selectedComponent = info;
 
       // 이전 선택 항목 스타일 업데이트
       if (prevSelected !== null && prevSelected !== index) {
@@ -314,7 +314,7 @@ function getComputedStylesHtml(element: HTMLElement): string {
 function renderDetailsView(info: ComponentInfo): void {
   if (!panelDiv) return;
 
-  currentMode = 'details';
+  _currentMode = 'details';
 
   const formattedInfo = formatComponentInfo(info);
   const cssHtml = getComputedStylesHtml(info.element);
@@ -438,7 +438,7 @@ function renderDetailsView(info: ComponentInfo): void {
  * Panel 표시 (계층구조 목록)
  */
 export function showPanel(hierarchy: ComponentInfo[], rect: DOMRect): void {
-  clickedRect = rect;
+  _clickedRect = rect;
   currentHierarchy = hierarchy;
 
   if (!panelDiv) {
@@ -456,11 +456,11 @@ export function hidePanel(): void {
     panelDiv.remove();
     panelDiv = null;
   }
-  currentMode = 'hierarchy';
-  selectedComponent = null;
+  _currentMode = 'hierarchy';
+  _selectedComponent = null;
   selectedIndex = null; // 선택 상태 초기화
   hoveredIndex = null; // Hover 상태 초기화
-  clickedRect = null;
+  _clickedRect = null;
   currentHierarchy = [];
 }
 

@@ -38,7 +38,7 @@ export const ColorSwatch = ({
       const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
       if (match) {
         const [, r, g, b] = match;
-        const hex = '#' + [r, g, b].map((x) => parseInt(x).toString(16).padStart(2, '0')).join('');
+        const hex = `#${[r, g, b].map((x) => parseInt(x, 10).toString(16).padStart(2, '0')).join('')}`;
         setHexColor(hex);
       }
     }

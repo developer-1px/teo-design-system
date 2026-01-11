@@ -118,7 +118,7 @@ export const PresentationModePage = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, slides.length, onExit]);
+  }, [onExit, goToFirstSlide, goToLastSlide, goToNextSlide, goToPrevSlide]);
 
   // Empty state
   if (slides.length === 0) {

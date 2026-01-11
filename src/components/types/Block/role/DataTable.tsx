@@ -92,7 +92,7 @@ export function DataTable<TData, TValue>({
   useEffect(() => {
     setSelectedRowIndex(null);
     setSelectedCell(null);
-  }, [globalFilter, sorting]);
+  }, []);
 
   // 외부에서 선택 초기화 요청시
   useEffect(() => {
@@ -106,13 +106,13 @@ export function DataTable<TData, TValue>({
   useEffect(() => {
     setSelectedRowIndex(null);
     setSelectedCell(null);
-  }, [selectionMode]);
+  }, []);
 
   // 키보드 네비게이션 (행 선택)
   const { cursorIndex, getItemProps } = useNavigableCursor({
     type: 'list',
     items: rows,
-    onSelect: (row) => {},
+    onSelect: (_row) => {},
   });
 
   // Cell 선택 모드 키보드 네비게이션

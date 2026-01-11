@@ -6,7 +6,6 @@
  */
 
 import * as Icons from 'lucide-react';
-import React from 'react';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Text } from '@/components/types/Element/Text/Text';
 import { useTreeNavigation } from '@/shared/lib/keyboard/useTreeNavigation';
@@ -46,14 +45,13 @@ export function Tree({
         'w-full py-1 focus:outline-none focus:ring-1 focus:ring-accent/30 rounded',
         className
       )}
-      tabIndex={0}
       {...rest}
     >
       {flatNodes.map((node, index) => {
         const { onClick, onKeyDown, tabIndex } = getNodeProps(index);
         const isSelected = cursorIndex === index;
         const hasChildren = node.type === 'folder' && node.children && node.children.length > 0;
-        const isExpanded = node.type === 'folder' && node.isOpen; // useTreeNavigation internal state? Wait, check hook again.
+        const __isExpanded = node.type === 'folder' && node.isOpen; // useTreeNavigation internal state? Wait, check hook again.
 
         // Actually, internal state of hook doesn't expose isOpen on FlatNode directly in the same way.
         // Let's re-verify useTreeNavigation.ts

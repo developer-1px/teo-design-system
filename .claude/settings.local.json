@@ -43,7 +43,8 @@
       "Bash(sort:*)",
       "Bash(if grep -q \"from ''../../Block.types''\" \"$file\")",
       "Bash(then)",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(pnpm biome check:*)"
     ],
     "deny": [],
     "ask": []

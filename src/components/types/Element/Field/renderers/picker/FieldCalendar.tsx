@@ -15,10 +15,10 @@
  */
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
-import { errorStyles, fieldWrapperStyles, labelStyles } from '../../styles/field.styles';
+import { fieldWrapperStyles, labelStyles } from '../../styles/field.styles';
 
 export interface FieldCalendarProps {
   label: string;

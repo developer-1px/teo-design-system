@@ -19,7 +19,6 @@ const prominenceToSize = (prominence?: TextProps['prominence']): 'sm' | 'md' | '
       return 'lg';
     case 'Subtle':
       return 'sm';
-    case 'Standard':
     default:
       return 'md';
   }

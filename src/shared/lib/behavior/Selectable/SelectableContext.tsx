@@ -63,8 +63,8 @@ export function useSelectableItem(id: string, disabled = false) {
   useEffect(() => {
     // For Selectable, we only need to update disabled state
     // (unlike Navigable which also tracks textValue for typeahead)
-    const currentItem = context.selectedIds; // Just to trigger re-render
-  }, [disabled, context]);
+    const _currentItem = context.selectedIds; // Just to trigger re-render
+  }, [context]);
 
   return {
     isSelected: context.isSelected(id),

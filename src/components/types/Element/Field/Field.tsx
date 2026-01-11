@@ -11,7 +11,6 @@ import { cva } from 'class-variance-authority';
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { FieldProps } from '@/components/types/Element/Field/Field.types';
 import { cn } from '@/shared/lib/utils';
-import { getInputStyles } from './styles/field.styles'; // Ensure styles are available
 
 // Types
 export type { FieldOption } from '@/components/types/Element/Field/Field.types';

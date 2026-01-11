@@ -6,7 +6,7 @@
  * @see docs/architecture/registry-pattern.md
  */
 
-import type { BaseRoleConfig } from '../../shared/role.base';
+import type { BaseRoleConfig } from '../shared/role.base';
 import type { OverlayProps } from './Overlay.types';
 
 /**

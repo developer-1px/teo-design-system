@@ -1,14 +1,14 @@
 (() => {
   var FilterLevel = /* @__PURE__ */ ((FilterLevel2) => {
-    FilterLevel2['Page'] = 'Page';
-    FilterLevel2['Section'] = 'Section';
-    FilterLevel2['Group'] = 'Group';
-    FilterLevel2['Atom'] = 'Atom';
-    FilterLevel2['All'] = 'All';
+    FilterLevel2.Page = 'Page';
+    FilterLevel2.Section = 'Section';
+    FilterLevel2.Group = 'Group';
+    FilterLevel2.Atom = 'Atom';
+    FilterLevel2.All = 'All';
     return FilterLevel2;
   })(FilterLevel || {});
   const FILTER_CONFIGS = {
-    ['Page']:
+    Page:
       /* Page */
       {
         level: 'Page',
@@ -16,7 +16,7 @@
         label: 'Page',
         description: '최상위 Page 컴포넌트',
       },
-    ['Section']:
+    Section:
       /* Section */
       {
         level: 'Section',
@@ -24,7 +24,7 @@
         label: 'Section',
         description: 'Section 레이아웃 영역',
       },
-    ['Group']:
+    Group:
       /* Group */
       {
         level: 'Group',
@@ -32,7 +32,7 @@
         label: 'Group',
         description: 'Group 논리적 그룹',
       },
-    ['Atom']:
+    Atom:
       /* Atom */
       {
         level: 'Atom',
@@ -40,7 +40,7 @@
         label: 'Atom',
         description: 'Atom (Field, Action, Text)',
       },
-    ['All']:
+    All:
       /* All */
       {
         level: 'All',
@@ -622,7 +622,7 @@ ${details.htmlCode}`;
       hidePanel();
     });
     setupDragFunctionality(panelDiv);
-    components.forEach((item, index) => {
+    components.forEach((_item, index) => {
       const itemEl = panelDiv?.querySelector(`[data-component-index="${index}"]`);
       if (!itemEl) return;
       const selectedIdx2 = getSelectedIndex();

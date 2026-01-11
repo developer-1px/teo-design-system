@@ -9,7 +9,7 @@
  */
 
 import { extractComponentHierarchy } from './component-hierarchy';
-import { hidePanel, isPanelVisible, showPanel } from './component-panel';
+import { hidePanel, showPanel } from './component-panel';
 import { activateInspectMode, deactivateInspectMode, isInspectModeActive } from './overlay';
 
 let clickHandler: ((e: MouseEvent) => void) | null = null;

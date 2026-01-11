@@ -40,7 +40,7 @@ export const BadgeRenderer = forwardRef<HTMLSpanElement, TextProps>(
     // spec 옵션
     const dot = spec?.dot ?? false; // Dot indicator만 표시
     const pulse = spec?.pulse ?? false; // Pulse animation
-    const icon = spec?.icon; // Icon (미구현)
+    const _icon = spec?.icon; // Icon (미구현)
 
     // Dot only mode
     if (dot) {

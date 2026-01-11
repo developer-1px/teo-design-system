@@ -9,7 +9,6 @@
  */
 
 import { cva } from 'class-variance-authority';
-import type React from 'react';
 import { useEffect, useState } from 'react';
 import { cn } from '@/shared/lib/utils';
 import type { TextProps } from '../Text.types';
@@ -115,8 +114,6 @@ function formatAbsoluteTime(date: Date, format: TimeFormat, locale = 'en-US'): s
 
     case 'iso':
       return date.toISOString();
-
-    case 'absolute':
     default:
       return new Intl.DateTimeFormat(locale, {
         year: 'numeric',

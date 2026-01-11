@@ -33,7 +33,7 @@ export const useFocusScope = (options: FocusScopeOptions = {}) => {
     if (restoreFocus) {
       const previouslyFocused = document.activeElement as HTMLElement;
       return () => {
-        if (previouslyFocused && previouslyFocused.focus) {
+        if (previouslyFocused?.focus) {
           previouslyFocused.focus();
         }
       };

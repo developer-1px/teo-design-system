@@ -53,9 +53,9 @@ function inferType(value: JsonValue, key: string, interfaceNames: Set<string>): 
 
     // 배열이 모두 객체인 경우 → nested interface
     if (hasObject && itemTypes.size === 1 && firstObject) {
-      const interfaceName = capitalize(key) + 'Item';
+      const interfaceName = `${capitalize(key)}Item`;
       return {
-        type: interfaceName + '[]',
+        type: `${interfaceName}[]`,
         isOptional: false,
         isArray: true,
         arrayItemType: interfaceName,
@@ -209,7 +209,7 @@ function generateInterfaceFromArray(
 
   // Nested interfaces 추가
   if (nestedInterfaces.length > 0) {
-    result = nestedInterfaces.join('\n\n') + '\n\n' + result;
+    result = `${nestedInterfaces.join('\n\n')}\n\n${result}`;
   }
 
   return result;

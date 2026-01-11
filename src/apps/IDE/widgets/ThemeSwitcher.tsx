@@ -7,7 +7,7 @@
  * 3. Density Selection
  */
 
-import { Moon as MoonIcon, Sun as SunIcon, X as XIcon } from 'lucide-react';
+import { Moon as MoonIcon, Sun as SunIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';

@@ -14,7 +14,7 @@
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { ActionProps } from '@/components/types/Element/Action/Action.types';
 import { ButtonAction } from './renderers/ButtonAction';
-import { getRoleConfig, hasRenderer } from './role-registry';
+import { getRoleConfig } from './role-registry';
 
 /**
  * Action 컴포넌트

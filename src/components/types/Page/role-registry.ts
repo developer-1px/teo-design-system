@@ -6,8 +6,8 @@
  * @see docs/architecture/registry-pattern.md
  */
 
-import type { BaseRoleConfig } from '../../shared/role.base';
-import type { PageProps, PageRole } from './Page.types';
+import type { BaseRoleConfig } from '../shared/role.base';
+import type { PageProps } from './Page.types';
 
 /**
  * Page Role Configuration

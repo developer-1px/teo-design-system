@@ -27,9 +27,7 @@ export function BlockStructureDemo() {
           </div>
         </Block>
 
-        <Block role="Divider" className="h-px w-full">
-          <></>
-        </Block>
+        <Block role="Divider" className="h-px w-full"></Block>
 
         <Block role="Inline" className="p-4 border border-border-default rounded">
           <Text role="Body" content="Left" />

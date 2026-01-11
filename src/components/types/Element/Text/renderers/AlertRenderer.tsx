@@ -21,9 +21,6 @@ const intentToVariant = (
       return 'warning';
     case 'Critical':
       return 'error';
-    case 'Info':
-    case 'Brand':
-    case 'Neutral':
     default:
       return 'info';
   }

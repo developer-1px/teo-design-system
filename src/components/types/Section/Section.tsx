@@ -25,7 +25,6 @@ import { cva } from 'class-variance-authority';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import { Text } from '@/components/types/Element/Text/Text';
 import type {
-  SectionDesignContext,
   SectionProps,
   SectionRole,
   SectionType,
@@ -73,8 +72,7 @@ export function Section({
   ...rest
 }: SectionProps) {
   // Spec Configuration (v5)
-  const specContext =
-    SECTION_DESIGN_CONTEXTS[role as SectionRole] || SECTION_DESIGN_CONTEXTS['Main'];
+  const specContext = SECTION_DESIGN_CONTEXTS[role as SectionRole] || SECTION_DESIGN_CONTEXTS.Main;
 
   const parentCtx = useLayoutContext();
   // v5: Use spec default density if not provided in props or parent

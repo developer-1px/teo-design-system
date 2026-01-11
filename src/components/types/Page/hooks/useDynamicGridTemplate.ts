@@ -293,5 +293,5 @@ export function useDynamicGridTemplate(
     }
 
     return generateGridTemplate(usedAreas, sizes, layout); // Pass layout here
-  }, [layout, sizes]);
+  }, [layout, sizes, children]);
 }

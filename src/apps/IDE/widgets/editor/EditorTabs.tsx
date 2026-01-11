@@ -1,4 +1,4 @@
-import { FileCode, FileJson, FileType, X } from 'lucide-react';
+import { FileCode, FileJson, FileType } from 'lucide-react';
 import { useState } from 'react';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';

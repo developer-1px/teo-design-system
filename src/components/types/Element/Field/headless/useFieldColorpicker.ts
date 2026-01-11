@@ -2,7 +2,7 @@
  * useColorpickerField - Color picker 헤드리스 훅
  *
  * IDDL Field Spec: Control Category - Colorpicker
- * 색상 선택 with format, alpha, presets 지원
+ * 색상 선택 with format, _alpha, presets 지원
  *
  * @see docs/2-areas/spec/4-element/field/field.spec.md#632-colorpicker
  */
@@ -85,9 +85,9 @@ function hexToRgb(hex: string): string {
 function rgbToHex(rgb: string): string {
   const result = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i.exec(rgb);
   if (!result) return rgb;
-  const r = parseInt(result[1]);
-  const g = parseInt(result[2]);
-  const b = parseInt(result[3]);
+  const r = parseInt(result[1], 10);
+  const g = parseInt(result[2], 10);
+  const b = parseInt(result[3], 10);
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
 }
 

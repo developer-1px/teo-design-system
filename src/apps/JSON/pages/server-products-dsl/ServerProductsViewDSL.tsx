@@ -15,7 +15,7 @@
  * - Section[Main]: 데이터 테이블
  */
 
-import type { ColumnDef } from '@tanstack/react-table';
+// ColumnDef import removed - unused
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebarDSL } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL';
 import { Block } from '@/components/types/Block/Block';

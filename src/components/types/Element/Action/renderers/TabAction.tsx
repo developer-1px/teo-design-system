@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ActionRendererProps } from '@/components/types/Element/Action/Action.types';
 import { cn } from '@/shared/lib/utils';
 

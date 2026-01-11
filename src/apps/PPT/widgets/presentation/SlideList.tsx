@@ -53,7 +53,7 @@ export const SlideList = ({
   activeSlideId,
   onSlideSelect,
   onSlideAdd,
-  onSlideDelete,
+  __onSlideDelete,
   onReorder,
   onSlidesDelete,
   onSlidesCopy,

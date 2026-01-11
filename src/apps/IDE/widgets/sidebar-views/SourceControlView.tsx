@@ -1,4 +1,4 @@
-import { Check, ChevronDown, ChevronRight, Minus, MoveRight, Plus } from 'lucide-react';
+import { Check, ChevronDown, Minus, MoveRight, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';

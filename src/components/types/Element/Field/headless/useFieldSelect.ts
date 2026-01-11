@@ -271,7 +271,7 @@ export function useFieldSelect(options: UseSelectFieldOptions): UseSelectFieldRe
    * Handle radio/checkbox change
    */
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement>,
+    _e: ChangeEvent<HTMLInputElement>,
     optionValue: string | number | boolean
   ) => {
     select(optionValue);

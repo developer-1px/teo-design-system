@@ -5,8 +5,8 @@
  * ESC: 패널 닫기
  */
 
-import { cycleFilterLevel, getCurrentFilterLevel } from './filter-state';
-import { clearAllHighlights, clearSelection, highlightAllComponents } from './multi-highlighter';
+import { cycleFilterLevel } from './filter-state';
+import { clearAllHighlights, highlightAllComponents } from './multi-highlighter';
 import { hidePanel, isPanelVisible, showPanel, updatePanelContent } from './persistent-panel';
 
 /**

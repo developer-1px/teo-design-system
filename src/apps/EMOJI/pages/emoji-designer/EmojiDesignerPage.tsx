@@ -107,7 +107,7 @@ export const EmojiDesignerPage = () => {
         const json = event.target?.result as string;
         const design = importDesign(json);
         setState((prev) => ({ ...prev, design }));
-      } catch (error) {
+      } catch (_error) {
         alert('Invalid JSON file');
       }
     };

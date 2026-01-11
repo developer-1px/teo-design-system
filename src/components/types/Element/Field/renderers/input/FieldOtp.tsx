@@ -8,7 +8,7 @@
  */
 
 import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
 import {

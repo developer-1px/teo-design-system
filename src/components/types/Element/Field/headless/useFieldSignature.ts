@@ -230,7 +230,7 @@ export function useFieldSignature({
       ctx.lineJoin = 'round';
       ctx.moveTo(pos.x, pos.y);
     },
-    [disabled, penColor, penWidth]
+    [disabled, penColor, penWidth, getPointerPosition]
   );
 
   /**
@@ -252,7 +252,7 @@ export function useFieldSignature({
       ctx.lineTo(pos.x, pos.y);
       ctx.stroke();
     },
-    [isDrawing]
+    [isDrawing, getPointerPosition]
   );
 
   /**
@@ -273,7 +273,7 @@ export function useFieldSignature({
         onChange(dataUrl);
       }
     }
-  }, [isDrawing, onChange]);
+  }, [isDrawing, onChange, exportSignature]);
 
   /**
    * Clear signature

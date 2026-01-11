@@ -65,7 +65,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                         role="Body"
                         content={
                           typeof value === 'object'
-                            ? JSON.stringify(value).substring(0, 50) + '...'
+                            ? `${JSON.stringify(value).substring(0, 50)}...`
                             : String(value)
                         }
                       />

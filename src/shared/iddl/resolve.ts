@@ -1,14 +1,13 @@
 import { cn } from '@/shared/lib/utils';
 import { INTENT_COLOR_MAP } from './tokens';
-import {
-  type ButtonSpec,
-  type Density,
-  type IDDLProps,
-  type InputSpec,
-  type Intent,
-  type Prominence,
-  Role,
-  type TextSpec,
+import type {
+  ButtonSpec,
+  Density,
+  IDDLProps,
+  InputSpec,
+  Intent,
+  Prominence,
+  TextSpec,
 } from './types';
 
 // Default values to ensure safety
@@ -120,7 +119,7 @@ function resolveContainerClasses(
 }
 
 function resolveLabelClasses(
-  intent: Intent = DEFAULT_INTENT,
+  _intent: Intent = DEFAULT_INTENT,
   prominence: Prominence = DEFAULT_PROMINENCE,
   spec?: TextSpec
 ): string {

@@ -2,7 +2,6 @@
  * React Fiber utilities for extracting component information
  */
 
-import { root } from './state';
 import type { Fiber, Layer, PropValue } from './types';
 
 /**
@@ -153,6 +152,6 @@ export function getMaxZIndex(target: HTMLElement, current: number): number {
   const parent = target.parentElement;
   if (!parent || parent === document.body) return current;
 
-  const zIndex = parseInt(window.getComputedStyle(parent).zIndex);
-  return getMaxZIndex(parent, isNaN(zIndex) ? current : Math.max(zIndex, current));
+  const zIndex = parseInt(window.getComputedStyle(parent).zIndex, 10);
+  return getMaxZIndex(parent, Number.isNaN(zIndex) ? current : Math.max(zIndex, current));
 }

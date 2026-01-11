@@ -8,12 +8,7 @@
  * - renderer: 전용 렌더러 컴포넌트 (optional)
  */
 
-import type { ComponentType } from 'react';
-import type {
-  BlockProps,
-  BlockRendererProps,
-  BlockRole,
-} from '@/components/types/Block/Block.types';
+import type { BlockProps, BlockRole } from '@/components/types/Block/Block.types';
 import type { BaseRoleConfig } from '../shared/role.base';
 import { Accordion } from './role/Accordion'; // Existing
 import * as Data from './role/DataDisplay';
@@ -45,6 +40,9 @@ export interface BlockRoleConfig extends BaseRoleConfig<BlockProps> {
   // Override BaseRoleConfig optional properties to be required for Block
   htmlTag: keyof React.JSX.IntrinsicElements;
   description: string;
+
+  // Override renderer to accept BlockRendererProps instead of BlockProps
+  renderer?: ComponentType<BlockRendererProps>;
 
   /**
    * Section-specific overrides (v5.2)
