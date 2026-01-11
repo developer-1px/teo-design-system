@@ -67,14 +67,13 @@ Reference materials, tools, and external links for IDDL development.
 ## Learning Resources
 
 ### IDDL Curriculum
-- **Internal:** `/apps/docs/` - 34-document learning path
-  - Level 0: Getting Started (3 docs, 30 min)
-  - Level 1: Fundamentals (5 docs, 1 hour)
-  - Level 2: Structure (5 docs, 1 hour)
-  - Level 3: Data Interaction (5 docs, 1.5 hours)
-  - Level 4: Patterns (5 docs, 2 hours)
-  - Level 5: Advanced (5 docs, 2 hours)
-  - Appendix: Reference (6 docs)
+- **Internal:** `/docs/3-learning/` - IDDL 공식 학습 커리큘럼
+  - Level 0: Introduction (3 docs, 45 min) - 왜 IDDL인가, 핵심 개념, Quick Start
+  - Level 1: Fundamentals (5 docs, 1.5 hours) - Prominence, Intent, Density, Role, Type
+  - Level 2: Components (7 docs, 3 hours) - Text, Action, Field, Block, Section, Page, Overlay
+  - Level 3: Patterns (5 docs, 3 hours) - 폼, 리스트, 대시보드, IDE 레이아웃, 설정
+  - Level 4: Advanced (5 docs, 4 hours) - CVA variants, Headless hooks, Accessibility, Keyboard nav, Theming
+  - Level 5: Reference (3 docs) - API 레퍼런스, Design tokens, Best practices
 
 ### Related Concepts
 - [Atomic Design](https://atomicdesign.bradfrost.com/) - Component hierarchy methodology

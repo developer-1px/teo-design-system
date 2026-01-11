@@ -1,8 +1,98 @@
-# IDDL (Intent-Driven UI Description Language)
+# IDE UI Kit - 엔터프라이즈 애플리케이션 플랫폼
 
-> **"의도를 선언하면, 구현은 따라온다"**
+> **"VS Code, Figma처럼 만들고 싶다면?"**
 >
-> LLM과 개발자가 UI의 "왜(Why)"를 공유하는 선언적 언어
+> 상용 애플리케이션에 필요한 모든 것을 Full Package로 제공하는 UI 플랫폼
+
+**Core Innovation**: IDDL (Intent-Driven Design Language) - 의도를 선언하면 패턴대로 화면이 나오는 선언적 UI 시스템
+
+**Current Status**: Phase 1 (선언적 UI 렌더링) 진행 중 (~80% 완성)
+
+---
+
+## 🎯 프로젝트 목표
+
+### 문제: 엔터프라이즈 앱을 만들기 어렵다
+
+VS Code, Figma, Notion 같은 상용 애플리케이션을 만들려고 하면:
+
+1. **세세한 디자인 문제가 끊임없이 발생**
+   - 버튼 색상, 간격, 폰트를 매번 결정
+   - 개발자마다 다른 스타일
+   - 일관성 유지가 어려움
+
+2. **기본 기능을 처음부터 구현해야 함**
+   - Command Palette (Cmd+K)
+   - 키보드 단축키 시스템
+   - 패널 리사이징
+   - Drag & Drop
+   - Multi-select (Cmd+클릭, Shift+클릭)
+   - Context Menu
+   - ...
+
+3. **기존 디자인 시스템은 겉모습만 제공**
+   - Material-UI, shadcn/ui: 예쁜 버튼, 인풋만
+   - 애플리케이션 레벨의 상호작용은 직접 구현
+   - 전체 앱의 조율이 안 됨
+
+### 해결책: 엔터프라이즈급 Full Package
+
+이 프로젝트는 **3단계 전략**으로 문제를 해결합니다:
+
+```
+Phase 1: 선언적 UI 렌더링 (현재, ~80%)
+         "의도를 선언하면 패턴대로 화면이 나온다"
+
+Phase 2: 데이터 바인딩 & 상태 (다음)
+         "입력과 상태가 자동으로 연결된다"
+
+Phase 3: 인터랙션 행동 시스템 (최종 목표)
+         "포커스, 선택, 리사이징이 자연스럽게 동작한다"
+```
+
+**최종 목표**: VS Code, Figma에 **당연히 있는** 기능들을 패키지로 제공
+
+---
+
+## 🚀 핵심 기능
+
+### ✅ 이미 제공되는 것 (Phase 1)
+
+| 기능 | 설명 | 상태 |
+|------|------|------|
+| **IDDL** | 의도 기반 선언적 UI 언어 | ✅ 스펙 완성 |
+| **Design Tokens** | 색상, 간격, 타이포그래피 시스템 | ✅ 완성 |
+| **Layout System** | Depth-based 계층 레이아웃 | ✅ 완성 |
+| **Theme System** | Light/Dark, Color schemes, Density | ✅ 완성 |
+| **Page Component** | Application/Document/Focus/Fullscreen | ✅ 95% |
+| **Resizable Panels** | 드래그 리사이징, 최소/최대 제한 | ✅ 완성 |
+| **Command Palette** | Cmd+K 글로벌 명령 검색 | ✅ 기본 완성 |
+| **IDDL Inspector** | Cmd+D 컴포넌트 트리 디버깅 | ✅ 완성 |
+
+### 🚧 진행 중 (Phase 1)
+
+| 기능 | 설명 | 상태 |
+|------|------|------|
+| **CVA Variants** | prominence × intent 패턴 시스템 | 🚧 70% |
+| **Field Components** | 21가지 dataType (text, number, date...) | 🚧 60% |
+| **Block Components** | Card, Form, Toolbar, List, Grid | 🚧 70% |
+| **Search Modal** | 글로벌 검색 | 🚧 UI 완성 |
+| **Settings Modal** | 설정 패널 | 🚧 UI 완성 |
+
+### 🎯 계획됨 (Phase 2-3)
+
+| 기능 | 설명 | Phase |
+|------|------|-------|
+| **Keyboard Navigation** | 방향키, Tab, 글로벌 단축키 | Phase 3 |
+| **Focus Management** | Focus Trap, Restore, Scope | Phase 3 |
+| **Selection System** | 단일/다중 선택, Cmd+클릭 | Phase 3 |
+| **Drag & Drop** | 항목 순서 변경, 파일 이동 | Phase 3 |
+| **Undo/Redo** | 히스토리 관리 (Cmd+Z) | Phase 2-3 |
+| **Context Menu** | 우클릭 메뉴 | Phase 3 |
+| **Data Binding** | model 기반 자동 바인딩 | Phase 2 |
+| **Validation** | dataType 기반 자동 검증 | Phase 2 |
+
+**→ [엔터프라이즈 기능 전체 체크리스트](./docs/2-areas/core/0-evolution/enterprise-features-checklist.md) (100+ 기능)**
 
 ---
 
@@ -664,12 +754,40 @@ IDDL은 다음에서 영감을 받았습니다:
 
 ---
 
-## 📬 Contact
+## 📚 핵심 문서
 
-- **Specification**: [IDDL Spec v1.0.1](docs/2-areas/spec/iddl-spec-1.0.1.md)
-- **Documentation**: [Full Docs](./apps/docs/)
-- **Issues**: GitHub Issues
+### 프로젝트 비전 & 전략
+
+- **[Application Platform Vision](./docs/2-areas/core/0-evolution/application-platform-vision.md)** - 전체 프로젝트 비전과 3-Phase 전략
+- **[Phase 1: Declarative UI](./docs/2-areas/core/0-evolution/phase-1-declarative-ui.md)** - 현재 Phase 상세 (~80% 완성)
+- **[Enterprise Features Checklist](./docs/2-areas/core/0-evolution/enterprise-features-checklist.md)** - VS Code/Figma 기능 100+ 체크리스트
+- **[IDE Design Philosophy](./docs/2-areas/core/0-evolution/ide-design-philosophy.md)** - IDDL의 디자인 철학
+
+### IDDL 스펙 & 레퍼런스
+
+- **[IDDL 1.0 Spec (한글)](./docs/2-areas/spec/iddl-1.0-spec-ko.md)** - 공식 스펙 문서
+- **[IDDL 1.0 Draft (English)](./docs/2-areas/spec/iddl-1.0-draft.md)** - Official specification
+- **[Standard Roles Registry](./docs/2-areas/core/3-reference/iddl-standard-roles.md)** - 표준 Role 레지스트리
+- **[Developer Guide (한글)](./docs/2-areas/core/3-reference/iddl-developer-guide-ko.md)** - 개발자 치트 시트
+- **[Renderer Guide](./docs/2-areas/core/3-reference/iddl-renderer-guide.md)** - 렌더러 구현 가이드
+
+### 학습 자료
+
+- **[Getting Started](./apps/docs/00-getting-started/)** - IDDL 시작하기 (30분)
+- **[Fundamentals](./apps/docs/01-fundamentals/)** - 핵심 개념 (prominence, intent, role)
+- **[Structure](./apps/docs/02-structure/)** - Page, Section, Block, Element 계층
+- **[Full Documentation](./apps/docs/)** - 34개 문서 완벽 커리큘럼
 
 ---
 
-**Built with ❤️ for Humans and AI**
+## 📬 Contact
+
+- **Issues**: GitHub Issues
+- **Discussions**: GitHub Discussions
+- **Documentation**: [Full Docs](./apps/docs/)
+
+---
+
+**Built with ❤️ for Enterprise Applications**
+
+**Status**: Phase 1 (Declarative UI) ~80% Complete | Phase 2-3 Coming Soon
