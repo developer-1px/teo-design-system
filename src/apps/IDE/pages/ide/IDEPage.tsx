@@ -1,24 +1,14 @@
 /**
- * IDEPage - IDDL 기반 IDE 애플리케이션
- *
- * IDDL Structure (v5.0):
- * - Page role="Application" layout="Studio": 전체 애플리케이션 루트
- *   - Section role="ActivityBar": 좌측 워크스페이스 네비게이션
- *   - Section role="PrimarySidebar": 파일 트리 사이드바
- *   - Section role="Editor": 에디터 영역
- *     - Block role="Container": 에디터 탭 + 코드 에디터
- *     - BottomPanel: 터미널/출력 패널
- *   - Section role="SecondarySidebar": 우측 사이드바 (RightBar)
- *   - Section role="Auxiliary": 우측 네비게이션 (RightNav)
+ * IDEPage - IDDL based IDE Application (IDDL v5.0 compliant)
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { buildFileTree, getFilePaths, loadFileContent } from '@/apps/IDE/lib/file-loader';
 import { BottomPanel } from '@/apps/IDE/widgets/BottomPanel';
 import { CodeEditor } from '@/apps/IDE/widgets/editor/CodeEditor';
 import { ComponentPreview } from '@/apps/IDE/widgets/editor/ComponentPreview';
 import { EditorTabs } from '@/apps/IDE/widgets/editor/EditorTabs';
-import { type FileNode, FileTree } from '@/apps/IDE/widgets/file-tree/FileTree';
+import { type FileNode } from '@/apps/IDE/lib/file-loader';
 import { DebugView } from '@/apps/IDE/widgets/sidebar-views/DebugView';
 import { ExtensionsView } from '@/apps/IDE/widgets/sidebar-views/ExtensionsView';
 import { JsonView } from '@/apps/IDE/widgets/sidebar-views/JsonView';
@@ -38,8 +28,7 @@ import { SettingsModalDSL as SettingsModal } from '@/components/types/Overlay/Se
 import { Page } from '@/components/types/Page/Page.tsx';
 import { RightBar } from '@/components/types/Section/role/RightBar.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
-import { ResizeHandle } from '@/shared/components/ResizeHandle';
-import { useResizable } from '@/shared/hooks/useResizable';
+import { type TreeNode } from '@/shared/lib/keyboard/useTreeNavigation';
 
 interface OpenFile {
   path: string;
@@ -57,52 +46,26 @@ export const IDEPage = () => {
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
 
-  // Layout Resizing
-  const {
-    size: sidebarWidth,
-    separatorProps: sidebarSeparatorProps,
-    isResizing: isSidebarResizing,
-  } = useResizable({
-    initialSize: 250,
-    minSize: 170,
-    maxSize: 600,
-    direction: 'horizontal',
-  });
+  // Layout State (simplified for Splitter)
+  // We don't need useResizable state anymore as Splitter manages it internally.
+  // We just need to manage visibility.
 
-  const {
-    size: panelHeight,
-    separatorProps: panelSeparatorProps,
-    isResizing: isPanelResizing,
-  } = useResizable({
-    initialSize: 200,
-    minSize: 100,
-    maxSize: 600,
-    direction: 'vertical',
-    reverse: true,
-  });
-
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setShowSearchModal(true);
-      }
-      if ((e.metaKey || e.ctrlKey) && e.key === ',') {
-        e.preventDefault();
-        setShowSettingsModal(true);
-      }
+  /* File Tree Conversion Logic remains same */
+  const treeNodes = useMemo(() => {
+    const convert = (nodes: FileNode[]): TreeNode[] => {
+      return nodes.map((node, index) => ({
+        id: node.path || `${node.name}-${index}`,
+        name: node.name,
+        type: node.type,
+        children: node.children ? convert(node.children) : undefined,
+        isOpen: node.defaultOpen,
+        path: node.path,
+        icon: node.icon,
+      })) as TreeNode[];
     };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  useEffect(() => {
-    const paths = getFilePaths();
-    const tree = buildFileTree(paths);
-    setFileTreeData(tree);
-  }, []);
+    const nodes = convert(fileTreeData);
+    return nodes;
+  }, [fileTreeData]);
 
   const handleFileClick = async (path: string) => {
     const existingFile = openFiles.find((f) => f.path === path);
@@ -124,54 +87,105 @@ export const IDEPage = () => {
 
   const activeFile = openFiles.find((f) => f.path === activeFilePath);
 
+  // Helper to render Editor Part
+  const EditorArea = (
+    <Section role="Editor" className="h-full flex flex-col">
+      {/* Editor Tabs */}
+      {openFiles.length > 0 && <EditorTabs />}
+
+      {/* Breadcrumbs */}
+      {activeFile && (
+        <Block
+          role="Breadcrumbs"
+          layout="inline"
+          padding="xs"
+          prominence="Subtle"
+          className="border-b border-border-muted px-4"
+        >
+          <Text role="Caption" content="src" prominence="Subtle" />
+          <Block role="DividerVertical" className="mx-1 h-3" />
+          <Text role="Caption" content="apps" prominence="Subtle" />
+          <Block role="DividerVertical" className="mx-1 h-3" />
+          <Text role="Caption" content="IDE" prominence="Subtle" />
+          <Block role="DividerVertical" className="mx-1 h-3" />
+          <Text role="Caption" content={activeFile.name} prominence="Standard" />
+        </Block>
+      )}
+
+      {/* Editor or Empty State */}
+      <Block role="Container" className="flex-1 min-h-0 relative">
+        {activeFile ? (
+          activeFile.name.endsWith('.tsx') || activeFile.name.endsWith('.jsx') ? (
+            <ComponentPreview path={activeFile.path} filename={activeFile.name} />
+          ) : (
+            <CodeEditor content={activeFile.content} filename={activeFile.name} />
+          )
+        ) : (
+          <Block role="Stack" className="h-full items-center justify-center p-8">
+            <Block role="Card" prominence="Subtle" className="text-center max-w-sm">
+              <Text role="Heading" content="No File Open" className="mb-2" />
+              <Text
+                role="Body"
+                prominence="Subtle"
+                content="Select a file from the explorer or use ⌘P to search for files."
+              />
+            </Block>
+          </Block>
+        )}
+      </Block>
+    </Section>
+  );
+
   return (
     <Page title="IDE" role="Application" layout="Studio" density="Compact">
-      {/* IDDL Section[ActivityBar]: Left Workspace Navigation */}
+      {/* 1. Activity Bar */}
       <Section role="ActivityBar">
-        <Block role="Container">
+        <Block role="Container" flex="1">
           <WorkspaceNav onViewChange={setCurrentView} />
         </Block>
 
-        {/* Terminal Toggle */}
-        <Block role="Toolbar" prominence="Subtle" density="Compact">
+        <Block role="Toolbar">
           <Action
+            role="IconButton"
             icon="Terminal"
+            label="Toggle Panel"
             prominence={showBottomPanel ? 'Standard' : 'Subtle'}
-            intent="Neutral"
-            behavior={{ action: 'toggle', target: 'bottom-panel' }}
             onClick={() => setShowBottomPanel(!showBottomPanel)}
           />
         </Block>
       </Section>
 
-      {/* IDDL Section[PrimarySidebar]: File Tree Sidebar */}
-      {/* IDDL Section[PrimarySidebar]: Sidebar Views */}
+      {/* 2. Primary Sidebar */}
       {currentView !== 'none' && (
         <Section
           role="PrimarySidebar"
-          className="flex flex-col border-r border-border-default overflow-hidden h-full"
         >
           {currentView === 'files' && (
-            <>
-              <Section
-                role="Header"
-                density="Compact"
-                className="h-9 px-3 flex items-center border-b border-border-default bg-surface-elevated"
-              >
+            <Block role="Stack" gap={0} className="h-full">
+              <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default h-9 items-center flex-none">
                 <Text
-                  role="Title"
+                  role="Caption"
                   prominence="Subtle"
                   content="EXPLORER"
-                  className="text-[10px] font-bold text-text-tertiary tracking-widest"
                 />
-              </Section>
-              <Section role="Container" className="flex-1 overflow-y-auto">
-                <FileTree data={fileTreeData} onFileClick={handleFileClick} />
-              </Section>
-            </>
+              </Block>
+              <Block role="ScrollArea" className="flex-1">
+                <Block
+                  role="Tree"
+                  data={treeNodes}
+                  defaultExpandedIds={['/src', '/src/apps', '/src/apps/IDE', '/src/docs']}
+                  onNodeClick={(node) => {
+                    if (node.type === 'file' && node.path) {
+                      handleFileClick(node.path);
+                    }
+                  }}
+                  selectable
+                />
+              </Block>
+            </Block>
           )}
-          {currentView === 'search' && <SearchView />}
-          {currentView === 'git' && <SourceControlView />}
+          {currentView === 'search' && <SearchView onFileClick={handleFileClick} />}
+          {currentView === 'git' && <SourceControlView onFileClick={handleFileClick} />}
           {currentView === 'debug' && <DebugView />}
           {currentView === 'extensions' && <ExtensionsView />}
           {currentView === 'run' && <RunView />}
@@ -182,126 +196,18 @@ export const IDEPage = () => {
         </Section>
       )}
 
-      {/* IDDL Section[Editor]: Editor Area */}
-      <Section role="Editor">
-        {/* Editor Content */}
-        <Block role="Container" className="flex-1 min-h-0 flex flex-col gap-0">
-          {currentView === 'files' && (
-            <>
-              {/* Editor Tabs */}
-              {openFiles.length > 0 && <EditorTabs />}
+      {/* 3. Editor */}
+      {EditorArea}
 
-              {/* Breadcrumbs */}
-              {activeFile && (
-                <Block
-                  role="Breadcrumbs"
-                  layout="inline"
-                  padding="xs"
-                  prominence="Subtle"
-                  className="border-b border-border-muted px-4"
-                >
-                  <Text role="Caption" content="src" prominence="Subtle" />
-                  <Action
-                    role="Button"
-                    icon="ChevronRight"
-                    label=""
-                    prominence="Subtle"
-                    density="Compact"
-                    disabled
-                  />
-                  <Text role="Caption" content="apps" prominence="Subtle" />
-                  <Action
-                    role="Button"
-                    icon="ChevronRight"
-                    label=""
-                    prominence="Subtle"
-                    density="Compact"
-                    disabled
-                  />
-                  <Text role="Caption" content="IDE" prominence="Subtle" />
-                  <Action
-                    role="Button"
-                    icon="ChevronRight"
-                    label=""
-                    prominence="Subtle"
-                    density="Compact"
-                    disabled
-                  />
-                  <Text role="Caption" content={activeFile.name} prominence="Standard" />
-                </Block>
-              )}
-
-              {/* Editor or Empty State */}
-              {activeFile ? (
-                activeFile.name.endsWith('.tsx') || activeFile.name.endsWith('.jsx') ? (
-                  <ComponentPreview path={activeFile.path} filename={activeFile.name} />
-                ) : (
-                  <CodeEditor content={activeFile.content} filename={activeFile.name} />
-                )
-              ) : (
-                <Section role="Container">
-                  <Block role="Card" prominence="Subtle">
-                    <Text role="Body" content="No file open" />
-                    <Text
-                      role="Caption"
-                      prominence="Subtle"
-                      content="Select a file from the explorer to start editing"
-                    />
-                  </Block>
-                </Section>
-              )}
-            </>
-          )}
-        </Block>
-      </Section>
-
-      {/* Resize Handle: Primary Sidebar */}
-      {currentView !== 'none' && (
-        <ResizeHandle
-          direction="horizontal"
-          isResizing={isSidebarResizing}
-          {...sidebarSeparatorProps}
-          style={{
-            ...sidebarSeparatorProps.style,
-            gridArea: 'primarysidebar',
-            justifySelf: 'end',
-            width: '4px',
-            zIndex: 50,
-            transform: 'translateX(50%)',
-          }}
-        />
-      )}
-
-      {/* Resize Handle: Bottom Panel */}
+      {/* 4. Panel */}
       {showBottomPanel && (
-        <ResizeHandle
-          direction="vertical"
-          isResizing={isPanelResizing}
-          {...panelSeparatorProps}
-          style={{
-            ...panelSeparatorProps.style,
-            gridArea: 'panel',
-            alignSelf: 'start',
-            height: '4px',
-            zIndex: 50,
-            transform: 'translateY(-50%)',
-          }}
-        />
-      )}
-
-      {/* IDDL Section[Panel]: Bottom Panel */}
-      {showBottomPanel && (
-        <Section role="Panel">
-          <BottomPanel
-            isOpen={showBottomPanel}
-            onClose={() => setShowBottomPanel(false)}
-            // height is handled by grid row size
-          />
+        <Section role="Panel" className="border-t border-border-default bg-surface">
+          <BottomPanel onClose={() => setShowBottomPanel(false)} />
         </Section>
       )}
 
-      {/* IDDL Section[SecondarySidebar]: Right Sidebar */}
-      <Section role="SecondarySidebar">
+      {/* 5. Secondary Sidebar */}
+      <Section role="SecondarySidebar" className="border-l border-border-default bg-surface">
         <RightBar
           view={rightPanelView}
           projectName="ide-ui-kit"
@@ -310,13 +216,13 @@ export const IDEPage = () => {
         />
       </Section>
 
-      {/* IDDL Section[UtilityBar]: Right Navigation */}
-      <Section role="UtilityBar">
+      {/* 6. Utility Bar */}
+      <Section role="UtilityBar" className="border-l border-border-default bg-surface">
         <RightNav onViewChange={setRightPanelView} onClose={() => setRightPanelView(null)} />
       </Section>
 
-      {/* IDDL Section[Footer]: Status Bar */}
-      <Section role="Footer" prominence="Subtle" density="Compact">
+      {/* 7. Footer */}
+      <Section role="Footer" prominence="Subtle" density="Compact" className="border-t border-border-default">
         <Block role="Toolbar" justify="between" align="center" padding="xs" className="w-full">
           {/* Left: Git Branch & Errors */}
           <Block role="Inline" gap="sm" align="center">

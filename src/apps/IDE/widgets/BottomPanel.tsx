@@ -1,9 +1,3 @@
-import {
-  AlertCircle as AlertCircleIcon,
-  Bug as BugIcon,
-  FileOutput as FileOutputIcon,
-  Terminal as TerminalIcon,
-} from 'lucide-react';
 import { useState } from 'react';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
@@ -12,9 +6,7 @@ import { Section } from '@/components/types/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface BottomPanelProps {
-  isOpen: boolean;
   onClose: () => void;
-  height?: number;
   onHeightChange?: (height: number) => void;
 }
 
@@ -23,65 +15,63 @@ type TabType = 'terminal' | 'problems' | 'output' | 'debug';
 interface Tab {
   id: TabType;
   label: string;
-  icon: typeof TerminalIcon;
+  icon: string;
   count?: number;
 }
 
 const tabs: Tab[] = [
-  { id: 'terminal', label: 'Terminal', icon: TerminalIcon },
-  { id: 'problems', label: 'Problems', icon: AlertCircleIcon, count: 3 },
-  { id: 'output', label: 'Output', icon: FileOutputIcon },
-  { id: 'debug', label: 'Debug Console', icon: BugIcon },
+  { id: 'terminal', label: 'Terminal', icon: 'Terminal' },
+  { id: 'problems', label: 'Problems', icon: 'AlertCircle', count: 3 },
+  { id: 'output', label: 'Output', icon: 'FileText' },
+  { id: 'debug', label: 'Debug Console', icon: 'Bug' },
 ];
 
-export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps) => {
+export const BottomPanel = ({ onClose }: BottomPanelProps) => {
   const [activeTab, setActiveTab] = useState<TabType>('terminal');
 
   return (
-    <Block role="Container" layout="flex" direction="column" className="h-full">
-      <Section role="Container" layout="flex" direction="column" flex="1">
+    <Block role="Stack" gap={0} className="h-full">
+      <Section role="Container" className="flex-1 overflow-hidden">
         {/* Tab Header (Unified Design) */}
-        <Section
-          role="Header"
+        <Block
+          role="Toolbar"
           density="Compact"
-          className="flex items-center justify-between gap-0 p-0 h-9 border-b border-border-default"
+          className="px-0 h-9 border-b border-border-default justify-between"
         >
-          <Block role="Tabs" direction="horizontal" align="center" gap="0" className="h-full">
+          <Block role="Tabs" layout="inline" gap={0} className="h-full">
             {tabs.map((tab) => {
-              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
               return (
-                <button
+                <Action
                   key={tab.id}
-                  className={cn(
-                    'flex items-center gap-2 px-4 h-full text-xs transition-colors border-r border-border-muted whitespace-nowrap',
-                    {
-                      'bg-surface-raised text-text font-medium': activeTab === tab.id,
-                      'text-text-secondary hover:bg-surface-hover': activeTab !== tab.id,
-                    }
-                  )}
+                  role="Button"
+                  prominence={isActive ? 'Standard' : 'Subtle'}
                   onClick={() => setActiveTab(tab.id)}
+                  icon={tab.icon}
+                  label={tab.label}
+                  className={cn(
+                    'h-full px-4 rounded-none border-r border-border-muted flex items-center gap-2',
+                    isActive && 'bg-surface-raised'
+                  )}
                 >
-                  <Icon size={14} className="text-text-tertiary" />
-                  <span>{tab.label}</span>
                   {tab.count !== undefined && (
-                    <span
+                    <Text
+                      role="Badge"
                       className={cn(
-                        'ml-1.5 px-1.5 py-0.5 text-[10px] font-bold rounded-full',
-                        activeTab === tab.id
-                          ? 'bg-accent text-white'
-                          : 'bg-surface-sunken text-text-tertiary'
+                        'ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full',
+                        isActive ? 'bg-accent text-white' : 'bg-surface-sunken text-text-tertiary'
                       )}
                     >
                       {tab.count}
-                    </span>
+                    </Text>
                   )}
-                </button>
+                </Action>
               );
             })}
           </Block>
 
           {/* Actions */}
-          <Block role="Inline" align="center" gap="xs" className="px-2">
+          <Block role="Row" layout="inline" className="gap-1 px-2">
             <Action role="IconButton" icon="ChevronUp" label="Maximize Panel" density="Compact" />
             <Action
               role="IconButton"
@@ -91,10 +81,10 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
               onClick={onClose}
             />
           </Block>
-        </Section>
+        </Block>
 
         {/* Panel Content */}
-        <Block role="Container" layout="scroll" flex="1" padding="sm">
+        <Block role="ScrollArea" flex="1" className="p-4">
           {activeTab === 'terminal' && <TerminalContent />}
           {activeTab === 'problems' && <ProblemsContent />}
           {activeTab === 'output' && <OutputContent />}
@@ -108,21 +98,16 @@ export const BottomPanel = ({ isOpen, onClose, height = 200 }: BottomPanelProps)
 // Terminal Tab Content
 const TerminalContent = () => {
   return (
-    <Block role="List" className="font-mono" gap="sm">
-      <Block role="Inline" gap="xs">
-        <Text role="Code" prominence="Brand" content="user@macbook" />
+    <Block role="Stack" className="font-mono" gap={1}>
+      <Block role="Row" layout="inline" className="gap-1.5">
+        <Text role="Code" intent="Brand" content="user@macbook" />
         <Text role="Code" prominence="Subtle" content="~" />
         <Text role="Code" content="$" />
+        <Text role="Code" content="pnpm dev" />
       </Block>
-      <Block role="List" gap="xs">
-        <Block role="Inline" gap="xs">
-          <Text role="Code" prominence="Brand" content="$" />
-          <Text role="Code" content="pnpm dev" />
-        </Block>
-        <Block role="List" gap="xs">
-          <Text role="Code" prominence="Subtle" content="VITE v5.4.21 ready in 390 ms" />
-          <Text role="Code" prominence="Subtle" content="➜ Local: http://localhost:5175/" />
-        </Block>
+      <Block role="Stack" gap={0}>
+        <Text role="Code" prominence="Subtle" content="VITE v5.4.21 ready in 390 ms" />
+        <Text role="Code" prominence="Subtle" content="➜ Local: http://localhost:5175/" />
       </Block>
     </Block>
   );
@@ -155,28 +140,19 @@ const ProblemsContent = () => {
   ];
 
   return (
-    <Block role="List" gap="xs">
+    <Block role="Stack" gap={1}>
       {problems.map((problem, idx) => (
-        <Block key={idx} role="Inline" align="start" padding="sm" gap="sm" clickable>
-          <AlertCircleIcon
-            size={16}
-            style={{
-              color:
-                problem.type === 'error'
-                  ? 'var(--color-semantic-error)'
-                  : 'var(--color-semantic-warning)',
-              flexShrink: 0,
-              marginTop: '2px',
-            }}
-          />
-          <Block role="Container" flex="1" gap="xs">
-            <Text role="Body" prominence="Standard" content={problem.message} />
-            <Text
-              role="Body"
-              prominence="Subtle"
-              content={`${problem.file}:${problem.line}:${problem.col}`}
-              size="sm"
-            />
+        <Block key={idx} role="Group" className="hover:bg-surface-hover p-2 cursor-pointer rounded-sm">
+          <Block role="Row" layout="inline" align="start" className="gap-3">
+            <Action role="IconButton" icon="AlertCircle" disabled className="shrink-0 mt-[3px]" />
+            <Block role="Stack" gap={0} className="flex-1">
+              <Text role="Body" size="sm" prominence="Standard" content={problem.message} />
+              <Text
+                role="Caption"
+                prominence="Subtle"
+                content={`${problem.file}:${problem.line}:${problem.col}`}
+              />
+            </Block>
           </Block>
         </Block>
       ))}
@@ -202,7 +178,7 @@ const OutputContent = () => {
       />
       <Text
         role="Code"
-        prominence="Positive"
+        intent="Positive"
         content="[12:34:58] Compilation successful"
         size="sm"
       />
@@ -219,7 +195,7 @@ const OutputContent = () => {
 // Debug Console Content
 const DebugContent = () => {
   return (
-    <Block role="Container" className="items-center justify-center h-full font-mono" gap="xs">
+    <Block role="Group" className="items-center justify-center h-full font-mono" gap={1}>
       <Text role="Code" prominence="Subtle" content="Debug console is empty" />
       <Text
         role="Code"

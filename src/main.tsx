@@ -9,6 +9,10 @@ import './index.css';
 // This ensures data-theme attribute is set on first paint
 initializeTheme();
 
+// Initialize IDDL Fields (Register Spec Roles)
+import { registerDefaultFields } from '@/components/types/Element/Field/init-fields';
+registerDefaultFields();
+
 // Note: AppProvider moved inside App.tsx (needs to be inside Router context)
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

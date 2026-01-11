@@ -5,7 +5,7 @@
  * This should be imported and executed at the app entry point.
  */
 
-import { registerField } from './registry';
+import { registerField } from './role-registry';
 
 // 1. Input Category
 import { FieldTextbox } from './renderers/input/FieldTextbox';

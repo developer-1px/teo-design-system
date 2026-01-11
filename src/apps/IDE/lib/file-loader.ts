@@ -1,16 +1,17 @@
-// Load all files from the project (src + docs)
-const srcModules = import.meta.glob('/src/**/*.{ts,tsx,js,jsx,json,css,html,md}', {
+const srcModules = import.meta.glob('../../../**/*.{ts,tsx,js,jsx,json,css,html,md}', {
   query: '?raw',
   import: 'default',
 });
 
-const docsModules = import.meta.glob('/apps/docs/**/*.{md,mdx}', {
+const docsModules = import.meta.glob('../../../apps/DOCS/**/*.{md,mdx}', {
   query: '?raw',
   import: 'default',
 });
 
 // Merge both module collections
 const modules = { ...srcModules, ...docsModules };
+console.log('file-loader: modules count:', Object.keys(modules).length);
+console.log('file-loader: samples:', Object.keys(modules).slice(0, 5));
 
 export interface FileNode {
   name: string;
@@ -129,9 +130,12 @@ export function getFilePaths(): string[] {
 
 // Load file content
 export async function loadFileContent(path: string): Promise<string> {
-  const loader = modules[path];
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const loader = modules[normalizedPath] || modules[path.replace(/^\//, '')];
+
   if (!loader) {
-    throw new Error(`File not found: ${path}`);
+    console.warn('file-loader: modules keys:', Object.keys(modules).slice(0, 10));
+    throw new Error(`File not found: ${path} (tried ${normalizedPath})`);
   }
   const content = await loader();
   return content as string;

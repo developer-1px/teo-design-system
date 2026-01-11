@@ -1,63 +1,31 @@
-import { forwardRef, type HTMLAttributes } from 'react';
+import React from 'react';
 import { cn } from '@/shared/lib/utils';
 
-/**
- * Badge - 상태 표시 배지
- */
-export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  /**
-   * variant - 배지 스타일
-   */
-  variant?: 'default' | 'success' | 'warning' | 'error' | 'info';
-
-  /**
-   * size - 배지 크기
-   */
-  size?: 'sm' | 'md';
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+    variant?: 'default' | 'secondary' | 'outline' | 'destructive' | 'info';
+    size?: 'sm' | 'md';
 }
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ className, variant = 'default', size = 'md', children, ...props }, ref) => {
+export function Badge({
+    className,
+    variant = 'default',
+    size = 'md',
+    ...props
+}: BadgeProps) {
     return (
-      <span
-        ref={ref}
-        className={cn(
-          // Base styles
-          'inline-flex items-center justify-center rounded-full font-medium',
-          'transition-colors',
-
-          // Sizes
-          {
-            'px-2 py-0.5 text-xs': size === 'sm',
-            'px-2.5 py-1 text-xs': size === 'md',
-          },
-
-          // Variants
-          {
-            // Default - accent color
-            'bg-accent/10 text-accent border border-accent/20': variant === 'default',
-
-            // Success - green
-            'bg-green-500/10 text-green-600 border border-green-500/20': variant === 'success',
-
-            // Warning - yellow
-            'bg-yellow-500/10 text-yellow-600 border border-yellow-500/20': variant === 'warning',
-
-            // Error - red
-            'bg-red-500/10 text-red-600 border border-red-500/20': variant === 'error',
-
-            // Info - blue
-            'bg-blue-500/10 text-blue-600 border border-blue-500/20': variant === 'info',
-          },
-
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </span>
+        <span
+            className={cn(
+                'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+                {
+                    'border-transparent bg-primary text-primary-foreground hover:bg-primary/80': variant === 'default',
+                    'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80': variant === 'secondary',
+                    'border-transparent bg-red-500 text-white hover:bg-red-600': variant === 'destructive',
+                    'border-transparent bg-blue-500 text-white hover:bg-blue-600': variant === 'info',
+                    'text-foreground': variant === 'outline',
+                },
+                className
+            )}
+            {...props}
+        />
     );
-  }
-);
-
-Badge.displayName = 'Badge';
+}

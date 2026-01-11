@@ -15,6 +15,7 @@ export interface ButtonActionProps extends Omit<ActionProps, 'role'> {
   computedProminence: ActionProps['prominence'];
   computedIntent: ActionProps['intent'];
   computedDensity: 'Compact' | 'Standard' | 'Comfortable';
+  computedSize: 'xs' | 'sm' | 'md' | 'lg' | 'icon'; // ✨ NEW
   isDisabled: boolean;
   handleClick: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
   Element: any;
@@ -30,6 +31,7 @@ export function ButtonAction({
   computedProminence,
   computedIntent,
   computedDensity,
+  computedSize, // ✨ NEW
   isDisabled,
   handleClick,
   Element,
@@ -42,7 +44,14 @@ export function ButtonAction({
   const IconComponent = icon ? (Icons as any)[icon] : null;
 
   // 아이콘 크기를 density에 따라 조절
-  const iconSize = computedDensity === 'Compact' ? 14 : computedDensity === 'Comfortable' ? 20 : 16;
+  // 아이콘 크기를 size에 따라 조절 (size prop이 있으면 우선순위)
+  const iconSize = {
+    xs: 12,
+    sm: 14,
+    md: 16,
+    lg: 20,
+    icon: 16,
+  }[computedSize];
 
   // Interactive State Token System 적용
   const interactiveClasses = getInteractiveClasses({
@@ -76,7 +85,16 @@ export function ButtonAction({
         // Interactive State (hover, active, selected, disabled, focus)
         interactiveClasses,
         // Spacing (gap, padding based on prominence × density)
+        // Spacing (gap, padding based on prominence × density)
         spacingClasses,
+        // ✨ NEW: Size variants override height/padding if size prop is used
+        computedSize !== 'md' && {
+          xs: 'h-7 px-2 text-xs gap-1',
+          sm: 'h-8 px-3 text-sm gap-1.5',
+          md: 'h-9 px-4 text-base gap-2',
+          lg: 'h-10 px-6 text-lg gap-3',
+          icon: 'h-9 w-9 p-0',
+        }[computedSize],
         // Loading cursor
         loading && 'cursor-wait'
         // Custom className override

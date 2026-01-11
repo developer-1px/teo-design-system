@@ -3,8 +3,10 @@ import { useMemo, useState } from 'react';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
 import { DataTable } from '@/components/types/Block/role/DataTable.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Content } from '@/components/types/Element/Text/role/Content';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/types/Block/Block';
+import { IDDLColumnDef } from '@/components/types/Block/role/DataTable.tsx';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
@@ -27,7 +29,7 @@ export const ServerProductsView = () => {
     return jsonData;
   }, [jsonData]);
 
-  const columns = useMemo<ColumnDef<JsonObject>[]>(() => {
+  const columns = useMemo<IDDLColumnDef<JsonObject>[]>(() => {
     if (data.length === 0) return [];
 
     // JSON key 순서대로 컬럼 생성
@@ -42,63 +44,39 @@ export const ServerProductsView = () => {
 
         // Render raw value
         if (value === null) {
-          return (
-            <Content prominence="tertiary">
-              <span className="italic">null</span>
-            </Content>
-          );
+          return <Text role="Caption" prominence="Subtle" className="italic" content="null" />;
         }
         if (value === undefined) {
-          return (
-            <Content prominence="tertiary">
-              <span className="italic">undefined</span>
-            </Content>
-          );
+          return <Text role="Caption" prominence="Subtle" className="italic" content="undefined" />;
         }
         if (typeof value === 'boolean') {
-          return (
-            <Content prominence="primary">
-              <span className="text-accent">{String(value)}</span>
-            </Content>
-          );
+          return <Text role="Body" className="text-accent" content={String(value)} />;
         }
         if (typeof value === 'number') {
-          return (
-            <Content prominence="primary">
-              <span>{value}</span>
-            </Content>
-          );
+          return <Text role="Body" content={String(value)} />;
         }
         if (typeof value === 'object') {
-          return (
-            <Content prominence="tertiary">
-              <span className="font-mono">{JSON.stringify(value)}</span>
-            </Content>
-          );
+          return <Text role="Caption" prominence="Subtle" className="font-mono" content={JSON.stringify(value)} />;
         }
 
-        return (
-          <Content prominence="primary">
-            <span>{String(value)}</span>
-          </Content>
-        );
+        return <Text role="Body" content={String(value)} />;
       },
     }));
   }, [data]);
 
   return (
-    <div className="flex flex-1 h-full gap-0 overflow-hidden">
+    <Block role="Container" layout="inline" gap="none" className="flex-1 h-full overflow-hidden">
       {/* Left Sidebar - Schema */}
       {showSidebar && <JsonSchemaSidebar data={data} interfaceName="Item" />}
 
       {/* Main Content */}
       <Section
         role="Container"
-        className="flex flex-col flex-1 h-full bg-layer-2-cool boundary-shadow-left"
+        className="flex-1 h-full bg-layer-2-cool border-l border-border-default shadow-sm"
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-3 py-2">
-          <div className="flex items-center gap-2">
+        {/* Header - IDDL Toolbar */}
+        <Block role="Toolbar" layout="inline" justify="between" className="px-3 py-2">
+          <Block role="Inline" layout="inline" className="gap-2">
             <Action
               role="IconButton"
               icon={showSidebar ? 'PanelLeftClose' : 'PanelLeft'}
@@ -107,15 +85,13 @@ export const ServerProductsView = () => {
               selected={showSidebar}
               onClick={() => setShowSidebar(!showSidebar)}
             />
-            <div className="h-4 w-px bg-border-primary" />
-            <Content prominence="tertiary">
-              <span>
-                {data.length} {data.length === 1 ? 'row' : 'rows'} • {columns.length}{' '}
-                {columns.length === 1 ? 'col' : 'cols'}
-              </span>
-            </Content>
-          </div>
-          <div className="flex items-center gap-1">
+            <Block role="Spacer" orientation="vertical" className="w-px h-4 bg-border-primary" />
+            <Text role="Caption" prominence="Subtle">
+              {data.length} {data.length === 1 ? 'row' : 'rows'} • {columns.length}{' '}
+              {columns.length === 1 ? 'col' : 'cols'}
+            </Text>
+          </Block>
+          <Block role="Inline" layout="inline" className="gap-1">
             <Action
               role="IconButton"
               icon={density === 'compact' ? 'Maximize2' : 'Minimize2'}
@@ -123,14 +99,14 @@ export const ServerProductsView = () => {
               density="Compact"
               onClick={() => setDensity(density === 'compact' ? 'normal' : 'compact')}
             />
-          </div>
-        </div>
+          </Block>
+        </Block>
 
         {/* Data Table */}
-        <div className="flex-1 min-h-0">
+        <Block role="Container" className="flex-1 min-h-0">
           <DataTable columns={columns} data={data} density={density} />
-        </div>
+        </Block>
       </Section>
-    </div>
+    </Block>
   );
 };

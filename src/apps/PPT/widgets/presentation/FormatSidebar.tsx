@@ -55,11 +55,11 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
         mode: 'edit',
       }}
     >
-      <Block role="Container" className="h-full overflow-y-auto" density="Comfortable">
-        <Block role="Container" density="Comfortable">
+      <Block role="Container" className="h-full overflow-y-auto p-4" density="Comfortable">
+        <Block role="Stack" density="Comfortable" className="gap-6">
           {/* Text Formatting Section */}
           <Block role="Fieldset" density="Compact">
-            <Text role="Label" prominence="Secondary" content="텍스트" />
+            <Text role="Label" prominence="Strong" content="텍스트" />
 
             <Field
               role="Select"
@@ -97,7 +97,7 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
 
           {/* Background Formatting Section */}
           <Block role="Fieldset" density="Compact">
-            <Text role="Label" prominence="Secondary" content="배경" />
+            <Text role="Label" prominence="Strong" content="배경" />
 
             <Field
               role="Input"

@@ -1,739 +1,604 @@
-# IDE UI Kit - 엔터프라이즈 애플리케이션 플랫폼
+# IDDL: Intent-Driven Design Language
 
-> **"VS Code, Figma처럼 만들고 싶다면?"**
->
-> 상용 애플리케이션에 필요한 모든 것을 Full Package로 제공하는 UI 플랫폼
+> **HTML for Documents. IDDL for Applications.**
 
-**Core Innovation**: IDDL (Intent-Driven Design Language) - 의도를 선언하면 패턴대로 화면이 나오는 선언적 UI 시스템
-
-**Current Status**: Phase 1 (선언적 UI 렌더링) 진행 중 (~80% 완성)
+웹은 30년간 **문서의 언어(HTML)**로 **앱**을 만들어왔습니다.
+이제 앱을 위한 언어가 필요합니다.
 
 ---
 
-## 🎯 프로젝트 목표
+## 🤔 The Problem: 잘못된 도구
 
-### 문제: 엔터프라이즈 앱을 만들기 어렵다
+### HTML은 문서를 위해 만들어졌습니다
 
-VS Code, Figma, Notion 같은 상용 애플리케이션을 만들려고 하면:
+1993년, HTML이 탄생했습니다. **문서를 공유하기 위한 언어**였습니다.
 
-1. **세세한 디자인 문제가 끊임없이 발생**
-   - 버튼 색상, 간격, 폰트를 매번 결정
-   - 개발자마다 다른 스타일
-   - 일관성 유지가 어려움
-
-2. **기본 기능을 처음부터 구현해야 함**
-   - Command Palette (Cmd+K)
-   - 키보드 단축키 시스템
-   - 패널 리사이징
-   - Drag & Drop
-   - Multi-select (Cmd+클릭, Shift+클릭)
-   - Context Menu
-   - ...
-
-3. **기존 디자인 시스템은 겉모습만 제공**
-   - Material-UI, shadcn/ui: 예쁜 버튼, 인풋만
-   - 애플리케이션 레벨의 상호작용은 직접 구현
-   - 전체 앱의 조율이 안 됨
-
-### 해결책: 엔터프라이즈급 Full Package
-
-이 프로젝트는 **3단계 전략**으로 문제를 해결합니다:
-
-```
-Phase 1: 선언적 UI 렌더링 (현재, ~80%)
-         "의도를 선언하면 패턴대로 화면이 나온다"
-
-Phase 2: 데이터 바인딩 & 상태 (다음)
-         "입력과 상태가 자동으로 연결된다"
-
-Phase 3: 인터랙션 행동 시스템 (최종 목표)
-         "포커스, 선택, 리사이징이 자연스럽게 동작한다"
+```html
+<h1>제목</h1>
+<p>문단</p>
+<a href="...">다른 문서로</a>
 ```
 
-**최종 목표**: VS Code, Figma에 **당연히 있는** 기능들을 패키지로 제공
+30년이 지난 지금, 우리는 여전히 이 언어로 Figma를, Notion을, VSCode를 만듭니다.
+
+```html
+<div class="button" onclick="...">
+<div class="list">
+  <div class="item" tabindex="0" role="option" aria-selected="true">
+```
+
+**문서의 언어로 도구를 만들고 있습니다.**
 
 ---
 
-## 🚀 핵심 기능
+### 문서와 앱은 근본적으로 다릅니다
 
-### ✅ 이미 제공되는 것 (Phase 1)
+| | 문서 (Document) | 앱 (Tool/Application) |
+|--|----------------|----------------------|
+| 사용자 행동 | 읽는다, 클릭한다 | 탐색한다, 선택한다, 조작한다, 만든다 |
+| 키보드 | Tab으로 링크 이동 | 모든 조작이 가능해야 함 (↑↓←→, Space, Enter) |
+| 선택 | 텍스트 드래그 | 항목 선택 → 명령 실행 (Shift+클릭, Ctrl+A) |
+| 멘탈 모델 | "페이지를 본다" | "도구를 쓴다" |
 
-| 기능 | 설명 | 상태 |
-|------|------|------|
-| **IDDL** | 의도 기반 선언적 UI 언어 | ✅ 스펙 완성 |
-| **Design Tokens** | 색상, 간격, 타이포그래피 시스템 | ✅ 완성 |
-| **Layout System** | Depth-based 계층 레이아웃 | ✅ 완성 |
-| **Theme System** | Light/Dark, Color schemes, Density | ✅ 완성 |
-| **Page Component** | Application/Document/Focus/Fullscreen | ✅ 95% |
-| **Resizable Panels** | 드래그 리사이징, 최소/최대 제한 | ✅ 완성 |
-| **Command Palette** | Cmd+K 글로벌 명령 검색 | ✅ 기본 완성 |
-| **IDDL Inspector** | Cmd+D 컴포넌트 트리 디버깅 | ✅ 완성 |
+**HTML에는 앱의 개념이 없습니다.**
 
-### 🚧 진행 중 (Phase 1)
+```
+HTML이 아는 것:
+- 제목 (h1), 문단 (p), 링크 (a)
+- 폼 (form, input)
+- 표 (table)
 
-| 기능 | 설명 | 상태 |
-|------|------|------|
-| **CVA Variants** | prominence × intent 패턴 시스템 | 🚧 70% |
-| **Field Components** | 21가지 dataType (text, number, date...) | 🚧 60% |
-| **Block Components** | Card, Form, Toolbar, List, Grid | 🚧 70% |
-| **Search Modal** | 글로벌 검색 | 🚧 UI 완성 |
-| **Settings Modal** | 설정 패널 | 🚧 UI 완성 |
+HTML이 모르는 것:
+- 탐색 (Navigation): ↑↓로 항목 이동
+- 선택 (Selection): Shift+클릭 범위 선택
+- 포커스 관리 (Focus Scope): 모달 안에서 포커스 갇히기
+- 계층 (Hierarchy): 앱의 구조적 의미
+- 의도 (Intent): 왜 이 버튼이 파란색인가?
+- 중요도 (Prominence): 어떤 요소가 중요한가?
+```
 
-### 🎯 계획됨 (Phase 2-3)
+그래서 **모든 웹 개발자는 같은 코드를 반복해서 작성합니다.**
 
-| 기능 | 설명 | Phase |
-|------|------|-------|
-| **Keyboard Navigation** | 방향키, Tab, 글로벌 단축키 | Phase 3 |
-| **Focus Management** | Focus Trap, Restore, Scope | Phase 3 |
-| **Selection System** | 단일/다중 선택, Cmd+클릭 | Phase 3 |
-| **Drag & Drop** | 항목 순서 변경, 파일 이동 | Phase 3 |
-| **Undo/Redo** | 히스토리 관리 (Cmd+Z) | Phase 2-3 |
-| **Context Menu** | 우클릭 메뉴 | Phase 3 |
-| **Data Binding** | model 기반 자동 바인딩 | Phase 2 |
-| **Validation** | dataType 기반 자동 검증 | Phase 2 |
+```javascript
+// 키보드 탐색? 직접 만들어야 합니다
+element.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') { /* 다음 항목으로 */ }
+  if (e.key === 'ArrowUp') { /* 이전 항목으로 */ }
+  if (e.key === 'Home') { /* 맨 처음으로 */ }
+  if (e.key === 'End') { /* 맨 끝으로 */ }
+  if (e.key === ' ') { /* 선택 토글 */ }
+  if (e.shiftKey && e.key === 'ArrowDown') { /* 범위 선택 */ }
+  // ... 수백 줄
+});
 
-**→ [엔터프라이즈 기능 전체 체크리스트](./docs/2-areas/core/0-evolution/enterprise-features-checklist.md) (100+ 기능)**
+// 다중 선택? 직접 만들어야 합니다
+const [selected, setSelected] = useState(new Set());
+const handleClick = (id, e) => {
+  if (e.shiftKey) { /* 범위 선택 로직 */ }
+  else if (e.ctrlKey) { /* 토글 선택 로직 */ }
+  else { /* 단일 선택 로직 */ }
+};
+
+// 포커스 관리? ARIA? 접근성? 모두 직접 만들어야 합니다...
+```
+
+**Figma 팀도, Notion 팀도, Linear 팀도 모두 같은 코드를 작성합니다.**
 
 ---
 
-## 🤔 Why: 왜 IDDL이 필요한가?
+### 반면, 네이티브 앱 개발자는...
 
-### 문제: 의도의 손실
-
-기존 UI 개발 과정에서 **의도(Intent)**가 계속 손실됩니다:
-
-```
-디자이너 의도
-  "이 버튼은 중요하니까 눈에 띄게"
-  "이 텍스트는 부연 설명이니까 덜 중요하게"
-
-     ↓ Figma
-
-개발자가 받는 것
-  "파란색 배경, 16px 패딩, 14px 글꼴"
-  "회색 텍스트, 12px 글꼴, 60% 투명도"
-
-     ↓ 구현
-
-코드
-  <button className="bg-blue-500 px-4 py-2 text-sm">
-  <span className="text-gray-400 text-xs opacity-60">
-```
-
-**결과**: "왜 파란색인가?", "왜 14px인가?"를 아무도 모릅니다. 변경이 두렵습니다.
-
----
-
-### 해결: 의도의 선언
-
-IDDL은 **"왜(Why)"를 코드로 만듭니다**:
-
-```json
-{
-  "type": "Action",
-  "label": "저장",
-  "prominence": "Primary",   // "중요하다"
-  "intent": "Positive"       // "긍정적 결과"
-}
-
-{
-  "type": "Text",
-  "content": "마지막 저장: 2분 전",
-  "prominence": "Tertiary"   // "덜 중요하다"
+```swift
+// iOS - 끝. 선택, 탐색, 접근성 모두 자동.
+List(items, selection: $selected) { item in
+    Text(item.name)
 }
 ```
 
-**의도가 명확하면**:
-- ✅ LLM이 UI를 생성할 수 있습니다 ("중요한 저장 버튼" → Primary + Positive)
-- ✅ 디자인 시스템 변경 시 자동으로 업데이트됩니다
-- ✅ 접근성, 반응형이 자동으로 처리됩니다
-- ✅ 코드 리뷰에서 의도를 논의할 수 있습니다
-
----
-
-## 📖 Background: 배경
-
-### UI 개발의 3가지 관점
-
-1. **디자이너**: "이 요소는 왜 중요한가?" (의도)
-2. **개발자**: "어떻게 구현하는가?" (구현)
-3. **LLM**: "무엇을 만드는가?" (패턴 학습)
-
-**문제**: 세 관점이 연결되지 않습니다.
-
-### IDDL의 접근
-
-```
-의도 (Intent)
-  ↓
-IDDL (선언)
-  ↓
-구현 (Implementation)
-```
-
-- **의도는 불변**: "중요하다", "긍정적이다"
-- **구현은 가변**: 파란색 → 초록색, 16px → 14px
-- **IDDL은 중간 계층**: 의도와 구현을 분리
-
----
-
-## 💡 Core Concepts: 핵심 개념
-
-### 1. 의도 기반 (Intent-Driven)
-
-**"어떻게"가 아닌 "왜"를 선언합니다.**
-
-```json
-// ❌ How: 구현 지시
-{
-  "backgroundColor": "#3b82f6",
-  "padding": "16px 24px",
-  "fontWeight": 600,
-  "borderRadius": "8px"
-}
-
-// ✅ Why: 의도 선언
-{
-  "type": "Action",
-  "prominence": "Primary",  // 가장 중요
-  "intent": "Brand"         // 브랜드 액션
+```kotlin
+// Android - 끝.
+LazyColumn {
+    items(list) { item ->
+        SelectableItem(item)
+    }
 }
 ```
 
+**"그냥 됩니다."**
+웹 개발자만 고통받고 있습니다.
+
 ---
 
-### 2. 4가지 핵심 질문
+## ✨ The Solution: IDDL
 
-모든 UI 요소는 4가지 질문에 답합니다:
+### IDDL은 앱을 위한 선언적 언어입니다
 
-```json
-{
-  "type": "Action",        // 1. 무엇인가? (What)
-  "role": "Button",        // 2. 어떤 역할인가? (Role)
-  "prominence": "Primary", // 3. 얼마나 중요한가? (How Prominent)
-  "intent": "Positive",    // 4. 어떤 의미인가? (What Intent)
-  "density": "Standard"    // 보너스: 얼마나 여유있는가?
-}
+```tsx
+// IDDL로 선언하면
+<Navigable orientation="vertical">
+  <Selectable mode="extended">
+    <Block role="List">
+      <Action role="ListItem" id="1">Item 1</Action>
+      <Action role="ListItem" id="2">Item 2</Action>
+      <Action role="ListItem" id="3">Item 3</Action>
+    </Block>
+  </Selectable>
+</Navigable>
 ```
+
+**자동으로 되는 것:**
+
+- ✅ ↑↓ 키보드 탐색 (Navigable)
+- ✅ Home/End 처음/끝으로
+- ✅ 클릭 선택 (Selectable)
+- ✅ Ctrl+클릭 토글
+- ✅ Shift+클릭 범위 선택
+- ✅ Ctrl+A 전체 선택
+- ✅ Space 토글
+- ✅ Typeahead (글자 입력으로 점프)
+- ✅ `role="listbox"`, `aria-selected` 자동
+- ✅ 스크린리더 완벽 호환
+- ✅ 포커스 링 표시
+
+**개발자가 한 일: 의도를 선언했을 뿐입니다.**
+
+---
+
+## 🎯 Core Concepts: 핵심 개념
+
+### 1. Intent over Implementation
+
+IDDL은 **"어떻게 보이는가"**가 아니라 **"무엇을 의도하는가"**를 선언합니다.
+
+```tsx
+// ❌ 구현 중심 (HTML/CSS)
+<button className="bg-red-500 text-white px-4 py-2 rounded">
+  삭제
+</button>
+
+// ✅ 의도 중심 (IDDL)
+<Action intent="Critical" prominence="Primary">
+  삭제
+</Action>
+```
+
+`intent="Critical"`은 "위험한 행동"이라는 **의미**입니다.
+빨간색일 수도, 경고 아이콘일 수도, 확인 다이얼로그가 뜰 수도 있습니다.
+**렌더러가 결정합니다.** 의도는 보존됩니다.
+
+### 2. Behavior Primitives: 선언적 인터랙션
+
+인터랙션도 선언합니다. 구현하지 않습니다.
+
+| Primitive | 의도 | 자동으로 제공되는 것 |
+|-----------|------|---------------------|
+| `<Navigable>` | "키보드로 탐색할 수 있다" | ↑↓←→, Home/End, Typeahead, 포커스 관리 |
+| `<Selectable>` | "선택할 수 있다" | 클릭, Shift+클릭, Ctrl+A, Space, ARIA |
+| `<FocusScope>` | "포커스가 갇힌다" | Tab 순환, Escape, 포커스 복원 |
+| `<Reorderable>` | "순서를 바꿀 수 있다" | Drag & Drop, 키보드 이동, ARIA |
+| `<Expandable>` | "펼치고 접을 수 있다" | → 펼치기, ← 접기, ARIA |
+| `<Dismissable>` | "닫을 수 있다" | Escape, 외부 클릭, ARIA |
+
+**예시: 파일 탐색기 (실제 작동 코드)**
+
+```tsx
+<Navigable orientation="vertical" typeahead>
+  <Selectable mode="extended">
+    <Block role="List">
+      <Action role="ListItem" id="1">📄 README.md</Action>
+      <Action role="ListItem" id="2">📁 src</Action>
+      <Action role="ListItem" id="3">📄 package.json</Action>
+    </Block>
+  </Selectable>
+</Navigable>
+```
+
+이것만으로:
+- ↑↓로 탐색 (Navigable)
+- 'r' 입력하면 README로 점프 (Typeahead)
+- Shift+↓로 범위 선택 (Selectable)
+- Ctrl+A로 전체 선택
+- Space로 토글
+- **코드 0줄로 완벽한 인터랙션**
+
+### 3. Two-Track Architecture
+
+IDDL은 **두 종류의 개발자**를 위해 설계되었습니다.
+
+#### Track 1: 앱 개발자 (당신)
+
+**Role만 선언합니다.** 복잡한 인터랙션은 신경 쓰지 않습니다.
+
+```tsx
+// 이것만 작성하면 됩니다
+<Block role="List" selection="extended">
+  <Action role="ListItem" id="1">항목 1</Action>
+</Block>
+```
+
+#### Track 2: 렌더러/테마 개발자
+
+**Behavior Primitives와 Hooks**로 렌더러를 구현합니다.
+
+```tsx
+// List 렌더러 구현 (한 번만)
+registerRenderer('List', ({ children, spec }) => (
+  <Navigable orientation="vertical">
+    <Selectable mode={spec?.selection ?? 'none'}>
+      <ul className="my-brand-list">
+        {children}
+      </ul>
+    </Selectable>
+  </Navigable>
+));
+```
+
+**복잡성이 올바르게 분배됩니다:**
+
+| | 앱 개발자 | 렌더러 개발자 |
+|--|----------|--------------|
+| 해야 할 일 | 비즈니스 로직, 의도 선언 | 인터랙션 구현, 스타일링 |
+| 복잡도 | 낮음 | 높음 (하지만 한 번만) |
+| 반복 여부 | 앱마다 작성 | 한 번 만들면 재사용 |
+
+### 4. 렌더러 자율성
+
+같은 IDDL 문서가 **다른 모습**으로 렌더링될 수 있습니다.
+
+```
+[IDDL 문서]
+     │
+     ├──→ [렌더러 A: Material Design] → 구글 스타일 UI
+     │
+     ├──→ [렌더러 B: Apple HIG] → 애플 스타일 UI
+     │
+     └──→ [렌더러 C: 우리 브랜드] → 커스텀 UI
+```
+
+**의도는 보존됩니다.** 표현만 달라집니다.
+
+---
+
+## 🏗️ Architecture: IDDL 계층 구조
+
+### Page → Section → Block → Element
+
+```
+Page (페이지)
+  └─ Section (영역: Header, Sidebar, Main, Modal...)
+       └─ Block (덩어리: Card, List, Form, Toolbar...)
+            └─ Element (요소: Text, Field, Action, Separator...)
+```
+
+### 5축 (The 5 Axes)
+
+모든 노드는 5가지 축으로 정의됩니다:
+
+| 축 | 질문 | 예시 |
+|----|------|------|
+| **Type** | 이것은 무엇인가? | Text, Field, Action, Block |
+| **Role** | 어떤 역할인가? | List, Card, Button, Modal |
+| **Prominence** | 얼마나 중요한가? | Hero, Primary, Secondary, Tertiary |
+| **Intent** | 어떤 의미인가? | Neutral, Brand, Positive, Critical |
+| **Density** | 얼마나 촘촘한가? | Comfortable, Standard, Compact |
 
 이 5가지 속성만으로 **모든 시각적 결정이 자동**으로 이루어집니다.
 
 ---
 
-### 3. 계층 구조 (Hierarchy)
+## 🎨 Example: Real-World Use Cases
 
-IDDL은 **의미적 계층**을 따릅니다:
-
-```
-Page (루트)
- └─ Section (영역: Header, Main, Sidebar)
-     └─ Group (묶음: Form, Table, Card)
-         └─ Primitives (요소: Text, Field, Action)
-```
-
-**장점**:
-- 각 레벨이 명확한 책임을 가집니다
-- `mode`(view/edit)가 Section에서 하위로 전파됩니다
-- 구조만 봐도 UI를 이해할 수 있습니다
-
----
-
-### 4. LLM 친화적
-
-IDDL은 **LLM이 이해하고 생성하기 쉽게** 설계되었습니다:
-
-```
-User: "사용자 목록 페이지 만들어줘. 검색 기능 있고,
-       신규 사용자 버튼은 눈에 띄게."
-
-LLM: "알겠습니다. 구조를 생성합니다..."
-     → prominence: Primary (눈에 띄게)
-     → intent: Brand (신규 생성 액션)
-     → role: Table (목록)
-```
-
-**왜 LLM 친화적인가?**
-- 자연어 개념(중요하다, 긍정적이다)과 매핑됩니다
-- JSON 구조가 명확하고 일관적입니다
-- 예시만 보면 패턴을 학습할 수 있습니다
-
----
-
-## 🎯 Design Philosophy: 설계 철학
-
-### 1. 의도 우선 (Intent First)
-
-**Bad**:
-```json
-{
-  "className": "text-sm text-gray-600"
-}
-```
-→ "왜 회색인가?"를 알 수 없습니다.
-
-**Good**:
-```json
-{
-  "prominence": "Tertiary",
-  "intent": "Neutral"
-}
-```
-→ "덜 중요하고, 중립적이다"가 명확합니다.
-
----
-
-### 2. 선언적 (Declarative)
-
-**Bad** (명령형):
-```typescript
-if (mode === 'edit') {
-  return <input value={value} onChange={...} />
-} else {
-  return <span>{value}</span>
-}
-```
-
-**Good** (선언적):
-```json
-{
-  "type": "Field",
-  "model": "user.email",
-  "mode": "edit"
-}
-```
-→ 렌더러가 알아서 처리합니다.
-
----
-
-### 3. 불변 vs 가변
-
-| 불변 (Invariant) | 가변 (Variant) |
-|------------------|----------------|
-| prominence (중요도) | 색상 |
-| intent (의미) | 크기 |
-| role (역할) | 폰트 |
-| 구조 (hierarchy) | 간격 |
-
-**IDDL은 불변만 선언하고, 가변은 테마가 결정합니다.**
-
----
-
-### 4. 점진적 복잡성
-
-**Level 0** (입문):
-```json
-{
-  "type": "Text",
-  "content": "Hello"
-}
-```
-
-**Level 1** (속성 추가):
-```json
-{
-  "type": "Text",
-  "content": "Hello",
-  "prominence": "Hero",
-  "intent": "Brand"
-}
-```
-
-**Level 2** (조건부):
-```json
-{
-  "type": "Text",
-  "content": "Hello",
-  "condition": {
-    "if": "user.isAdmin",
-    "then": { "intent": "Positive" }
-  }
-}
-```
-
----
-
-## 🏗️ Architecture: 아키텍처
-
-### IDDL 생태계
-
-```
-┌─────────────────────────────────────────┐
-│           Applications                   │
-│  (CMS, Dashboard, Admin Panel)          │
-└─────────────────────────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│         IDDL Specification              │
-│   (JSON Schema, 의도 선언)              │
-└─────────────────────────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│          Renderers                      │
-│  • React Renderer                       │
-│  • Vue Renderer                         │
-│  • Mobile Renderer                      │
-│  • AI-generated Renderer                │
-└─────────────────────────────────────────┘
-                  ↓
-┌─────────────────────────────────────────┐
-│        Design Systems                   │
-│  • Material Design                      │
-│  • Tailwind                             │
-│  • Custom Theme                         │
-└─────────────────────────────────────────┘
-```
-
----
-
-### 역할 분리
-
-| 역할 | 책임 |
-|------|------|
-| **IDDL Spec** | 의도 정의 (prominence, intent, role) |
-| **Renderer** | 의도 → UI 변환 (React, Vue, etc.) |
-| **Design System** | 시각적 토큰 (색상, 크기, 간격) |
-| **Application** | 비즈니스 로직 + IDDL 생성 |
-
----
-
-## 🚀 Quick Start
-
-### 1. 첫 번째 IDDL
-
-```json
-{
-  "type": "Page",
-  "title": "Hello IDDL",
-  "children": [
-    {
-      "type": "Section",
-      "role": "Container",
-      "children": [
-        {
-          "type": "Group",
-          "role": "Card",
-          "children": [
-            {
-              "type": "Text",
-              "role": "Title",
-              "content": "Welcome",
-              "prominence": "Primary"
-            },
-            {
-              "type": "Text",
-              "role": "Body",
-              "content": "This is your first IDDL UI",
-              "prominence": "Secondary"
-            },
-            {
-              "type": "Action",
-              "label": "Get Started",
-              "prominence": "Primary",
-              "intent": "Brand",
-              "behavior": {
-                "action": "navigate",
-                "to": "/dashboard"
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
-
-### 2. 렌더링
-
-```typescript
-import { renderIDDL } from '@iddl/react-renderer';
-
-const ui = renderIDDL(iddlSpec);
-```
-
----
-
-## 📚 Learn More
-
-### 학습 경로
-
-**[📖 Full Documentation](./apps/docs/)**
-
-34개 문서로 구성된 완벽한 학습 커리큘럼:
-
-- **Level 0**: [시작하기](./apps/docs/00-getting-started/) (3개 문서, 30분)
-  - IDDL이 무엇인지, 왜 필요한지, 기본 사용법
-
-- **Level 1**: [핵심 속성](./apps/docs/01-fundamentals/) (5개 문서, 1시간)
-  - prominence, intent, density, role, 속성 조합
-
-- **Level 2**: [구조 이해](./apps/docs/02-structure/) (5개 문서, 1시간)
-  - Primitives, Group, Section, Overlay, Page
-
-- **Level 3**: [데이터 상호작용](./apps/docs/03-data-interaction/) (5개 문서, 1.5시간)
-  - Field 타입, 검증, Action, 조건부 렌더링, 상태 관리
-
-- **Level 4**: [실전 패턴](./apps/docs/04-patterns/) (5개 문서, 2시간)
-  - CRUD, 상세 페이지, 폼, 대시보드, Wizard
-
-- **Level 5**: [고급 주제](./apps/docs/05-advanced/) (5개 문서, 2시간)
-  - 커스텀 확장, 반응형, 성능, 접근성, Best Practices
-
-- **Appendix**: [참조](./apps/docs/06-reference/) (5개 문서)
-  - API 레퍼런스, 속성 매트릭스, 문제 해결
-
-### 빠른 참조
-
-- **[API Reference](./apps/docs/06-reference/api-reference.md)** - 전체 스펙 요약
-- **[Specification v1.0.1](docs/2-areas/spec/iddl-spec-1.0.1.md)** - 공식 스펙 문서
-
----
-
-## 🎨 Example: Before & After
-
-### Before (기존 방식)
+### 파일 탐색기
 
 ```tsx
-// 의도를 알 수 없는 코드
-<div className="bg-white rounded-lg shadow-md p-6">
-  <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-    User Profile
-  </h2>
-  <div className="space-y-3">
-    <div className="flex items-center">
-      <span className="text-sm text-gray-600 w-24">Email:</span>
-      <span className="text-base text-gray-900">user@example.com</span>
-    </div>
-  </div>
-  <div className="flex justify-end gap-2 mt-6">
-    <button className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">
-      Cancel
-    </button>
-    <button className="px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded">
-      Save
-    </button>
-  </div>
-</div>
+<Navigable orientation="vertical">
+  <Selectable mode="extended">
+    <Block role="TreeView">
+      <Block role="TreeItem" id="docs" expanded>
+        <Text role="Label">📁 Documents</Text>
+        <Action role="TreeItem" id="doc-1">📄 report.pdf</Action>
+        <Action role="TreeItem" id="doc-2">📄 notes.txt</Action>
+      </Block>
+    </Block>
+  </Selectable>
+</Navigable>
 ```
 
-**문제**:
-- "왜 파란색인가?" → 모름
-- "왜 text-sm인가?" → 모름
-- LLM이 패턴을 이해하기 어려움
-- 디자인 시스템 변경 시 수동 수정 필요
+**자동으로 제공되는 것:**
+- ↑↓ 탐색
+- → 펼치기, ← 접기
+- Shift+↑↓ 범위 선택
+- Enter 열기
+- Drag & Drop (Reorderable 추가 시)
+- 완벽한 접근성 (ARIA, 스크린리더)
+
+### 모달 다이얼로그
+
+```tsx
+<FocusScope trap restoreFocus>
+  <Dismissable onEscape="close" onClickOutside="close">
+    <Section role="Modal" title="파일 삭제 확인">
+      <Block role="Card">
+        <Text role="Heading">정말 삭제하시겠습니까?</Text>
+        <Text role="Body">이 작업은 되돌릴 수 없습니다.</Text>
+
+        <Block role="Toolbar">
+          <Action prominence="Secondary">취소</Action>
+          <Action intent="Critical">삭제</Action>
+        </Block>
+      </Block>
+    </Section>
+  </Dismissable>
+</FocusScope>
+```
+
+**자동으로 제공되는 것:**
+- 열릴 때 첫 번째 요소에 포커스
+- Tab이 모달 안에서 순환
+- Escape로 닫기
+- 외부 클릭으로 닫기
+- 닫힐 때 원래 위치로 포커스 복원
+- `aria-modal="true"`, `role="dialog"` 자동
+
+### 슬라이드 썸네일 (PPT-style)
+
+```tsx
+<Navigable orientation="both">
+  <Selectable mode="extended">
+    <Block role="Grid" layout="grid-4">
+      <Action role="GridItem" id="slide-1">
+        <ThumbnailPreview slide={slide1} />
+      </Action>
+      <Action role="GridItem" id="slide-2">
+        <ThumbnailPreview slide={slide2} />
+      </Action>
+      {/* ... */}
+    </Block>
+  </Selectable>
+</Navigable>
+```
+
+**자동으로 제공되는 것:**
+- ↑↓←→ 2D 탐색
+- Shift+클릭 범위 선택
+- Delete 키로 삭제
+- Enter로 편집 모드
+- 체크마크 표시
+- 완벽한 키보드 접근성
+
+**→ [Live Demo: /behavior](http://localhost:5175/#/behavior)** - 3가지 실제 작동 예제
 
 ---
 
-### After (IDDL 방식)
+## 🎯 Accessibility is Default
 
-```json
-{
-  "type": "Group",
-  "role": "Card",
-  "children": [
-    {
-      "type": "Text",
-      "role": "Title",
-      "content": "User Profile",
-      "prominence": "Primary"
-    },
-    {
-      "type": "Field",
-      "label": "Email",
-      "model": "user.email",
-      "mode": "view"
-    },
-    {
-      "type": "Group",
-      "role": "Toolbar",
-      "children": [
-        {
-          "type": "Action",
-          "label": "Cancel",
-          "prominence": "Secondary",
-          "intent": "Neutral",
-          "behavior": { "action": "navigate", "to": "/back" }
-        },
-        {
-          "type": "Action",
-          "label": "Save",
-          "prominence": "Primary",
-          "intent": "Positive",
-          "behavior": { "action": "submit" }
-        }
-      ]
-    }
-  ]
-}
+IDDL로 만든 앱은 **자동으로 접근성을 갖습니다.**
+
+```tsx
+// 개발자가 작성
+<Selectable mode="multiple">
+  <Block role="List">
+    <Action role="ListItem" id="1">Apple</Action>
+  </Block>
+</Selectable>
+
+// 렌더링 결과 (자동)
+<ul role="listbox" aria-multiselectable="true">
+  <li role="option" aria-selected="false" tabindex="-1" id="1">
+    Apple
+  </li>
+</ul>
 ```
 
-**장점**:
-- ✅ 의도가 명확: Primary = 중요, Positive = 긍정적 액션
-- ✅ LLM이 패턴을 이해: "저장 버튼은 Primary + Positive"
-- ✅ 디자인 시스템 변경 시 자동 업데이트
-- ✅ 접근성, 반응형 자동 처리
+**자동으로 제공:**
+- ARIA 역할 자동 설정
+- 키보드 탐색 자동 지원
+- 스크린리더 호환
+- 포커스 관리 자동
+
+**접근성을 "추가"하는 게 아닙니다. 접근성이 "기본"입니다.**
 
 ---
 
-## 🤖 LLM Integration
+## 🤖 AI Era: LLM-Friendly
 
-### LLM이 IDDL을 생성하는 방법
+### AI가 UI를 생성하려면 구조화된 언어가 필요합니다
 
 ```
-User: "사용자 등록 폼 만들어줘. 이메일, 비밀번호, 이름 필드가 필요하고,
-       제출 버튼은 눈에 띄게 만들어줘."
+❌ "빨간 버튼 만들어줘"
+   → AI: <button style="background: red">???</button>
+   → 의도 소실, 접근성 없음, 맥락 없음
+
+✅ "위험한 액션 버튼 만들어줘"
+   → AI: <Action intent="Critical">삭제</Action>
+   → 의도 보존, 접근성 자동, 렌더러가 해석
+```
+
+IDDL은 **AI가 이해하고 생성할 수 있는 언어**입니다.
+
+**LLM이 IDDL을 생성하는 방법:**
+
+```
+User: "슬라이드 썸네일 리스트를 만들어줘.
+       방향키로 탐색 가능하고, 여러 개 선택할 수 있어야 해."
 
 LLM 추론:
-1. "등록 폼" → type: Group, role: Form
-2. "이메일, 비밀번호, 이름" → type: Field, dataType 자동 추론
-3. "눈에 띄게" → prominence: Primary
-4. "제출" → intent: Positive (긍정적 결과)
+1. "방향키로 탐색" → <Navigable>
+2. "여러 개 선택" → <Selectable mode="extended">
+3. "썸네일 리스트" → <Block role="Grid">
 
-생성된 IDDL:
-{
-  "type": "Group",
-  "role": "Form",
-  "children": [
-    { "type": "Field", "label": "Email", "dataType": "email", "required": true },
-    { "type": "Field", "label": "Password", "dataType": "password", "required": true },
-    { "type": "Field", "label": "Name", "dataType": "text", "required": true },
-    {
-      "type": "Action",
-      "label": "Sign Up",
-      "prominence": "Primary",
-      "intent": "Positive",
-      "behavior": { "action": "submit" }
-    }
-  ]
-}
+생성된 코드:
+<Navigable orientation="both">
+  <Selectable mode="extended">
+    <Block role="Grid">
+      <Action role="GridItem" id="1">Slide 1</Action>
+      <Action role="GridItem" id="2">Slide 2</Action>
+    </Block>
+  </Selectable>
+</Navigable>
 ```
 
 ---
 
-## 🌍 Use Cases: 사용 사례
+## 🚀 Current Status
 
-### 1. CMS (Content Management System)
+### ✅ Phase 1: Declarative UI (~80% Complete)
 
-```json
-// LLM: "블로그 포스트 편집기"
-{
-  "type": "Page",
-  "layout": "single",
-  "children": [
-    {
-      "type": "Section",
-      "role": "Container",
-      "mode": "edit",
-      "children": [
-        {
-          "type": "Group",
-          "role": "Form",
-          "children": [
-            { "type": "Field", "label": "Title", "dataType": "text" },
-            { "type": "Field", "label": "Content", "dataType": "richtext" },
-            { "type": "Action", "label": "Publish", "prominence": "Primary", "intent": "Positive" }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
+| 기능 | 상태 |
+|------|------|
+| **IDDL Core** | ✅ Spec 완성 |
+| **Behavior Primitives** | ✅ Navigable, Selectable 완성 |
+| **Design Tokens** | ✅ 색상, 간격, 타이포그래피 |
+| **Layout System** | ✅ Depth-based 계층 |
+| **Theme System** | ✅ Light/Dark, Density |
+| **Page Component** | ✅ 4가지 PageRole |
+| **Resizable Panels** | ✅ 드래그 리사이징 |
+| **Command Palette** | ✅ Cmd+K 검색 |
+| **IDDL Inspector** | ✅ Cmd+D 디버깅 |
+
+### 🚧 Phase 2-3: Coming Soon
+
+- **Phase 2**: 데이터 바인딩 & 상태 (model, validation)
+- **Phase 3**: 고급 인터랙션 (Drag & Drop, Undo/Redo, Context Menu)
+
+**→ [Full Roadmap](./docs/2-areas/core/0-evolution/application-platform-vision.md)**
 
 ---
 
-### 2. Admin Dashboard
+## 🎯 Quick Start
 
-```json
-// LLM: "매출 대시보드"
-{
-  "type": "Page",
-  "layout": "dashboard",
-  "children": [
-    {
-      "type": "Group",
-      "role": "Grid",
-      "children": [
-        {
-          "type": "Group",
-          "role": "Card",
-          "intent": "Positive",
-          "children": [
-            { "type": "Field", "model": "stats.revenue", "dataType": "currency", "prominence": "Hero" },
-            { "type": "Text", "content": "Revenue", "prominence": "Tertiary" }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
-
----
-
-### 3. Mobile App
-
-```json
-// 반응형 자동 처리
-{
-  "type": "Overlay",
-  "role": "Dialog",  // Desktop: 중앙 모달
-  "condition": {
-    "if": "$screenSize === 'mobile'",
-    "then": { "role": "Sheet" }  // Mobile: 하단 시트
-  }
-}
-```
-
----
-
-## 🔧 Technical Details: 기술 세부사항
-
-### 이 프로젝트 (React Renderer + Demo)
+### Installation
 
 ```bash
-# 설치
+# Clone repository
+git clone https://github.com/your-org/ide-ui-kit.git
+cd ide-ui-kit
+
+# Install dependencies
 pnpm install
 
-# 개발 서버
+# Start dev server
 pnpm dev
 
-# 빌드
-pnpm build
+# Open browser
+# http://localhost:5175
 ```
 
-**Tech Stack**:
-- React 19 + TypeScript
-- Vite 7
-- TailwindCSS 4.x
-- IDDL Renderer (Custom)
+### Your First IDDL
 
-**Structure**:
+```tsx
+import { Navigable, Selectable } from '@/shared/lib/behavior';
+import { Block, Action } from '@/components/types';
+
+function FileExplorer() {
+  return (
+    <Navigable orientation="vertical" typeahead>
+      <Selectable mode="extended">
+        <Block role="List">
+          <Action role="ListItem" id="1">📄 README.md</Action>
+          <Action role="ListItem" id="2">📁 src</Action>
+          <Action role="ListItem" id="3">📄 package.json</Action>
+        </Block>
+      </Selectable>
+    </Navigable>
+  );
+}
 ```
-ide-ui-kit/
-├── apps/
-│   └── docs/               # 📚 IDDL 학습 문서 (34개)
-├── spec/                   # 📋 IDDL Specification
-│   ├── iddl-spec-1.0.1.md
-│   └── iddl-coverage-analysis.md
-├── src/
-│   ├── components/         # React Components
-│   │   ├── atoms/          # IDDL Primitives (Text, Field, Action)
-│   │   └── ...
-│   └── renderer/           # IDDL → React Renderer
-└── README.md               # 👈 You are here
+
+**That's it.** 키보드 탐색, 선택, 접근성 모두 자동.
+
+---
+
+## 📚 Documentation
+
+### Learning Path
+
+**[📖 Full Documentation](./docs/)**
+
+1. **[Getting Started](./docs/2-areas/core/1-getting-started/)** - IDDL 소개 (30분)
+2. **[Core Concepts](./docs/2-areas/core/behavior/)** - Navigable, Selectable (1시간)
+3. **[Components](./docs/2-areas/spec/)** - Page, Section, Block, Element (2시간)
+4. **[Behavior Showcase](http://localhost:5175/#/behavior)** - 실제 작동 예제
+
+### Key Documents
+
+**Vision & Strategy:**
+- [Application Platform Vision](./docs/2-areas/core/0-evolution/application-platform-vision.md)
+- [Phase 1: Declarative UI](./docs/2-areas/core/0-evolution/phase-1-declarative-ui.md)
+- [Enterprise Features Checklist](./docs/2-areas/core/0-evolution/enterprise-features-checklist.md)
+
+**Behavior Primitives:**
+- [Web vs App: 본질적 차이](./docs/2-areas/core/behavior/01-web-vs-app.md)
+- [Navigable Specification](./docs/2-areas/core/behavior/02-navigable.md)
+- [Selectable Specification](./docs/2-areas/core/behavior/03-selectable.md)
+- [PPT Thumbnail Example](./docs/2-areas/core/behavior/04-ppt-thumbnail-example.md)
+
+**IDDL Specification:**
+- [IDDL 1.0 Spec](./docs/2-areas/spec/iddl-spec-1.0.1.md)
+- [Field Specification](./docs/2-areas/spec/5-field/field.spec.md)
+- [Page Specification](./docs/2-areas/spec/1-page/)
+
+---
+
+## 🌍 Vision
+
+### Timeline
+
 ```
+2026: IDDL 1.0 출시
+      - 코어 스펙 확정
+      - Behavior Primitives (Navigable, Selectable, FocusScope)
+      - 기본 렌더러 (React)
+
+2027: 생태계 성장
+      - 다양한 렌더러 (Vue, Svelte, React Native)
+      - 디자인 도구 연동
+      - AI 생성 지원
+
+2028: 표준화
+      - W3C 제안
+      - 브라우저 네이티브 논의
+
+20XX: 웹의 새로운 기본
+      - HTML + IDDL
+      - 문서와 앱의 공존
+```
+
+### Why Now?
+
+#### 1. 복잡해지는 웹 앱
+
+- Figma, Notion, Linear, VSCode Web
+- 모두 같은 인터랙션 패턴 구현
+- 공통의 언어 필요
+
+#### 2. AI 시대
+
+- AI가 UI를 생성하려면 구조화된 언어 필요
+- IDDL은 AI가 이해하고 생성할 수 있는 언어
+
+#### 3. 접근성 위기
+
+- 웹 앱의 80%가 접근성 부족
+- IDDL은 접근성을 기본으로 제공
 
 ---
 
 ## 🤝 Contributing
 
-IDDL은 **오픈 스펙**입니다. 누구나 기여할 수 있습니다:
+IDDL은 오픈소스 프로젝트입니다.
+
+### How to Contribute
 
 1. **Renderer 구현**: Vue, Svelte, React Native 등
-2. **확장 제안**: 새로운 role, dataType, behavior
+2. **Behavior Primitives**: 새로운 primitive 제안
 3. **문서 개선**: 번역, 예시 추가
 4. **피드백**: Issue에 사용 사례 공유
+
+### Community
+
+- **GitHub**: [Issues](https://github.com/your-org/ide-ui-kit/issues) | [Discussions](https://github.com/your-org/ide-ui-kit/discussions)
+- **Documentation**: [Full Docs](./docs/)
 
 ---
 
@@ -747,47 +612,45 @@ MIT License
 
 IDDL은 다음에서 영감을 받았습니다:
 
-- **Declarative UI**: React, SwiftUI, Flutter
+- **Declarative UI**: SwiftUI, Flutter, React
 - **Design Tokens**: Design System 커뮤니티
 - **Intent-Based Design**: Material Design, Human Interface Guidelines
+- **Accessibility**: WAI-ARIA, WCAG
 - **LLM-Friendly DSL**: OpenAPI, JSON Schema
 
 ---
 
-## 📚 핵심 문서
+## 마무리
 
-### 프로젝트 비전 & 전략
-
-- **[Application Platform Vision](./docs/2-areas/core/0-evolution/application-platform-vision.md)** - 전체 프로젝트 비전과 3-Phase 전략
-- **[Phase 1: Declarative UI](./docs/2-areas/core/0-evolution/phase-1-declarative-ui.md)** - 현재 Phase 상세 (~80% 완성)
-- **[Enterprise Features Checklist](./docs/2-areas/core/0-evolution/enterprise-features-checklist.md)** - VS Code/Figma 기능 100+ 체크리스트
-- **[IDE Design Philosophy](./docs/2-areas/core/0-evolution/ide-design-philosophy.md)** - IDDL의 디자인 철학
-
-### IDDL 스펙 & 레퍼런스
-
-- **[IDDL 1.0 Spec (한글)](./docs/2-areas/spec/iddl-1.0-spec-ko.md)** - 공식 스펙 문서
-- **[IDDL 1.0 Draft (English)](./docs/2-areas/spec/iddl-1.0-draft.md)** - Official specification
-- **[Standard Roles Registry](./docs/2-areas/core/3-reference/iddl-standard-roles.md)** - 표준 Role 레지스트리
-- **[Developer Guide (한글)](./docs/2-areas/core/3-reference/iddl-developer-guide-ko.md)** - 개발자 치트 시트
-- **[Renderer Guide](./docs/2-areas/core/3-reference/iddl-renderer-guide.md)** - 렌더러 구현 가이드
-
-### 학습 자료
-
-- **[Getting Started](./apps/docs/00-getting-started/)** - IDDL 시작하기 (30분)
-- **[Fundamentals](./apps/docs/01-fundamentals/)** - 핵심 개념 (prominence, intent, role)
-- **[Structure](./apps/docs/02-structure/)** - Page, Section, Block, Element 계층
-- **[Full Documentation](./apps/docs/)** - 34개 문서 완벽 커리큘럼
+> 우리는 30년간 문서의 언어로 앱을 만들어왔습니다.
+>
+> `<div>`로 버튼을 만들고,
+> `<span>`으로 뱃지를 만들고,
+> JavaScript로 키보드를 붙이고,
+> CSS로 의미를 표현했습니다.
+>
+> 이제 앱의 언어가 필요합니다.
+>
+> 의도를 선언하면 구현이 따라오는.
+> 키보드가 기본인.
+> 접근성이 당연한.
+> 브랜드가 바뀌어도 의미는 보존되는.
+>
+> **IDDL.**
+> **Intent-Driven Design Language.**
+>
+> *앱의 언어.*
 
 ---
 
-## 📬 Contact
+<p align="center">
+  <strong>HTML for Documents. IDDL for Applications.</strong>
+</p>
 
-- **Issues**: GitHub Issues
-- **Discussions**: GitHub Discussions
-- **Documentation**: [Full Docs](./apps/docs/)
+<p align="center">
+  <strong>Status</strong>: Phase 1 (Declarative UI) ~80% Complete | Phase 2-3 Coming Soon
+</p>
 
----
-
-**Built with ❤️ for Enterprise Applications**
-
-**Status**: Phase 1 (Declarative UI) ~80% Complete | Phase 2-3 Coming Soon
+<p align="center">
+  Built with ❤️ for Enterprise Applications
+</p>

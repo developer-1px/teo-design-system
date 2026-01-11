@@ -1,63 +1,25 @@
 /**
- * Text - 정적 콘텐츠 (IDDL v1.0.1)
+ * Text - 정적 콘텐츠
  *
  * 데이터 바인딩이 없는 순수한 정적 텍스트를 렌더링합니다.
- * role에 따라 제목, 본문, 라벨, 캡션, 코드로 구분됩니다.
+ * Registry pattern으로 확장 가능한 role 시스템 지원
  *
- * v1.0.1: CVA 적용
- * @see spec/iddl-spec-1.0.1.md#411-text-node
+ * @see docs/2-areas/spec/4-element/text/text.spec.md
  */
 
 import { cva } from 'class-variance-authority';
 import type React from 'react';
-import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
-import type { TextProps, TextRole } from '@/components/types/Element/Text/Text.types';
+import { useLayoutContext, useBlockLayoutContext } from '@/components/context/IDDLContext.tsx';
+import type { TextProps } from '@/components/types/Element/Text/Text.types';
+import { getRoleConfig } from './configs/registry';
+import { isComplexConfig } from './configs/types';
 import { cn } from '@/shared/lib/utils';
 
 /**
- * Role에 따른 HTML 태그 매핑
+ * Intent-based color variants
  */
-const getRoleElement = (role: TextRole, prominence?: string): keyof React.JSX.IntrinsicElements => {
-  switch (role) {
-    case 'Title':
-      // Hierarchy based on Prominence
-      if (prominence === 'Hero') return 'h1';
-      if (prominence === 'Strong') return 'h2';
-      if (prominence === 'Standard') return 'h3';
-      return 'h4';
-    case 'Body':
-      return 'p';
-    case 'Label':
-      return 'span';
-    case 'Caption':
-      return 'small';
-    case 'Code':
-      return 'code';
-    default:
-      return 'span';
-  }
-};
-
-/**
- * Text variants (CVA)
- * IDDL semantic properties를 variants로 정의
- */
-const textVariants = cva('', {
+const intentVariants = cva('', {
   variants: {
-    role: {
-      Title: 'font-semibold tracking-tight text-text scroll-m-20',
-      Body: 'leading-7 text-text',
-      Label: 'text-sm font-medium leading-none text-text',
-      Caption: 'text-sm text-subtle',
-      Code: 'relative rounded bg-surface-sunken px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-text',
-    },
-    // Prominence behaves differently based on Role
-    prominence: {
-      Hero: '',
-      Strong: '',
-      Standard: '',
-      Subtle: '',
-    },
     intent: {
       Neutral: '',
       Brand: 'text-accent',
@@ -66,44 +28,55 @@ const textVariants = cva('', {
       Critical: 'text-red-600',
       Info: 'text-blue-600',
     },
+  },
+  defaultVariants: {
+    intent: 'Neutral',
+  },
+});
+
+/**
+ * Alignment variants
+ */
+const alignVariants = cva('', {
+  variants: {
     align: {
       left: 'text-left',
       center: 'text-center',
       right: 'text-right',
+      justify: 'text-justify',
     },
-    density: {
-      Compact: '',
-      Standard: '',
-      Comfortable: '',
-    },
-  },
-  compoundVariants: [
-    // --- Title Hierarchy ---
-    {
-      role: 'Title',
-      prominence: 'Hero',
-      class: 'text-4xl lg:text-5xl font-extrabold tracking-tight',
-    },
-    {
-      role: 'Title',
-      prominence: 'Strong',
-      class: 'text-3xl font-semibold tracking-tight first:mt-0',
-    }, // Section Header
-    { role: 'Title', prominence: 'Standard', class: 'text-2xl font-semibold tracking-tight' }, // Card Header
-    { role: 'Title', prominence: 'Subtle', class: 'text-xl font-semibold tracking-tight' }, // Subsection
-    // --- Body Hierarchy ---
-    { role: 'Body', prominence: 'Hero', class: 'text-xl text-text-muted' }, // Lead text
-    { role: 'Body', prominence: 'Strong', class: 'text-lg font-medium' },
-    { role: 'Body', prominence: 'Standard', class: 'text-base' },
-    { role: 'Body', prominence: 'Subtle', class: 'text-sm text-subtle' }, // Muted body text
-  ],
-  defaultVariants: {
-    prominence: 'Standard',
-    intent: 'Neutral',
-    density: 'Standard',
   },
 });
 
+/**
+ * Get HTML tag based on role and prominence
+ * (특별 처리가 필요한 경우만)
+ */
+function getHtmlTag(
+  role: string,
+  prominence: string,
+  defaultTag: keyof React.JSX.IntrinsicElements,
+  spec?: any
+): keyof React.JSX.IntrinsicElements {
+  // Title: prominence에 따라 h1-h4
+  if (role === 'Title') {
+    if (prominence === 'Hero') return 'h1';
+    if (prominence === 'Strong') return 'h2';
+    if (prominence === 'Standard') return 'h3';
+    return 'h4';
+  }
+
+  // Heading: spec.level로 h1-h6 선택
+  if (role === 'Heading' && spec?.level) {
+    return `h${spec.level}` as any;
+  }
+
+  return defaultTag;
+}
+
+/**
+ * Text Component
+ */
 export function Text({
   as,
   role,
@@ -114,29 +87,68 @@ export function Text({
   className,
   hidden,
   highlight,
+  spec,
   children,
-  size, // Consumed but not used in CVA to prevent unused warning if strictly checked, or passed if supported
   ...rest
 }: TextProps) {
   const ctx = useLayoutContext();
+  const blockCtx = useBlockLayoutContext(); // v5.1: sectionRole 참조
 
+  // Computed values (context 상속)
   const computedProminence = prominence ?? ctx.prominence ?? 'Standard';
   const computedIntent = intent ?? ctx.intent ?? 'Neutral';
-  const computedDensity = ctx.density ?? 'Standard';
 
   if (hidden) return null;
 
-  const defaultElement = getRoleElement(role, computedProminence);
-  const Element: any = as || defaultElement;
+  // 1. Get role configuration
+  const config = getRoleConfig(role);
 
+  // v5.1: Panel/Sidebar 스타일링 (Label role에만 적용)
+  const isPanelContext = blockCtx.sectionRole &&
+    ['PrimarySidebar', 'SecondarySidebar', 'Panel', 'Aside'].includes(blockCtx.sectionRole);
+  const isPanelLabel = role === 'Label' && isPanelContext;
+
+  // 2. Complex role → Use custom renderer
+  if (isComplexConfig(config)) {
+    const Renderer = config.renderer;
+    return (
+      <Renderer
+        role={role}
+        content={content}
+        prominence={computedProminence}
+        intent={computedIntent}
+        align={align}
+        spec={spec}
+        className={className}
+        {...rest}
+      >
+        {children}
+      </Renderer>
+    );
+  }
+
+  // 3. Simple role → Direct rendering
+  const { htmlTag, baseStyles, prominence: prominenceStyles, ariaRole } = config;
+
+  // Determine HTML tag
+  const Element: any = as || getHtmlTag(role, computedProminence, htmlTag, spec);
+
+  // Get prominence-specific styles
+  const prominenceClass = prominenceStyles?.[computedProminence as keyof typeof prominenceStyles] || '';
+
+  // Render content with highlighting
   const renderContent = () => {
     // Prefer children if present
     if (children) return children;
 
+    // Highlight support
     if (!highlight || !content) return content;
+
     const regex = new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     const parts = content.split(regex);
+
     if (parts.length === 1) return content;
+
     return parts.map((part, index) => {
       if (part.toLowerCase() === highlight.toLowerCase()) {
         return (
@@ -151,21 +163,35 @@ export function Text({
 
   return (
     <Element
+      role={ariaRole}
       className={cn(
-        textVariants({
-          role,
-          prominence: computedProminence as any,
-          intent: computedIntent as any,
-          align,
-          density: computedDensity as any,
-        }),
+        baseStyles,
+        prominenceClass,
+        intentVariants({ intent: computedIntent as any }),
+        align && alignVariants({ align }),
+        // v5.1: Panel Label 자동 스타일링
+        isPanelLabel && 'text-xs font-semibold uppercase tracking-wide text-text-subtle mb-3 block',
         className
       )}
       data-dsl-component="text"
       data-role={role}
+      data-prominence={computedProminence}
+      data-intent={computedIntent}
+      // Link role: href from spec
+      href={role === 'Link' ? spec?.href : undefined}
+      target={role === 'Link' ? spec?.target : undefined}
+      rel={role === 'Link' && spec?.external ? 'noopener noreferrer' : spec?.rel}
+      // Label role: for attribute
+      htmlFor={role === 'Label' ? spec?.for : undefined}
       {...rest}
     >
       {renderContent()}
     </Element>
   );
 }
+
+/**
+ * Re-export registry utilities for custom role registration
+ */
+export { registerTextRole, getRoleConfig, getRegisteredRoles } from './configs/registry';
+export type { RoleConfig, SimpleRoleConfig, ComplexRoleConfig } from './configs/types';

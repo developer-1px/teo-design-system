@@ -23,6 +23,7 @@
 - **`me/`** - 개인 메모, 임시 작업 파일
 - **`spec-drafts/`** - 스펙 초안 (정식 버전 존재)
 - **`spec-duplicates/`** - 중복 스펙 문서 (대안 유지)
+- **`2026-01-registry-standardization/`** - Registry Pattern 표준화 프로젝트 (완료)
 
 ---
 
@@ -47,6 +48,41 @@
   - **아카이브 날짜**: 2026-01-11
   - **이유**: 두 AI가 작성한 중복 스펙, GPT 버전이 더 상세함
 
+### Completed Projects (`2026-01-registry-standardization/`)
+
+**프로젝트**: Registry Pattern 표준화
+**기간**: 2026-01-11
+**상태**: ✅ 완료
+
+**완료된 작업**:
+1. **Text Component 통합** (v1/v2 → v2 단일 버전)
+2. **Role Component 연동** (Alert, Avatar, Kbd, Tag 4개 renderer 추가)
+3. **Registry Pattern 표준화** (전체 7개 IDDL 컴포넌트)
+4. **BaseRoleConfig 인터페이스 생성** (`/src/components/types/shared/role.base.ts`)
+5. **파일 네이밍 통일** (`role-config.ts` → `role-registry.ts`)
+6. **종합 문서 작성** (`/docs/architecture/registry-pattern.md`)
+
+**아카이브된 문서**:
+- **`TEXT_COMPONENT_IMPROVEMENT_PROPOSAL.md`** - Text 개선 제안서
+- **`TEXT_IMPLEMENTATION_SUMMARY.md`** - Text v2 구현 요약
+- **`TEXT_TIME_ROLE_UPDATE.md`** - Time role 업데이트
+- **`TEXT_USAGE_EXAMPLES.md`** - Text 사용 예제
+- **`phase-1-action-plan.md`** - Phase 1 액션 플랜
+- **`phase-1-implementation-gap-analysis.md`** - Phase 1 갭 분석
+- **`HISTORY.md`** - 프로젝트 전체 히스토리
+
+**대체 문서**:
+- **Primary**: `/docs/architecture/registry-pattern.md` (900줄, 종합 가이드)
+- **Spec**: `/docs/2-areas/spec/` (IDDL 공식 스펙)
+- **Implementation**: `/src/components/types/*/role-registry.ts` (각 컴포넌트 레지스트리)
+
+**프로젝트 성과**:
+- ✅ 100% 타입 안전성 (BaseRoleConfig 기반)
+- ✅ 7개 컴포넌트 표준화 (Page, Section, Block, Action, Overlay, Text, Field)
+- ✅ Runtime 확장 가능 (custom role registration)
+- ✅ 종합 문서화 (900줄 가이드)
+- ✅ Zero Breaking Changes (기존 코드 수정 불필요)
+
 ---
 
 ## 현재 문서 참조
@@ -70,5 +106,5 @@
 
 ---
 
-**최종 업데이트**: 2026-01-11
+**최종 업데이트**: 2026-01-11 (Registry Pattern 표준화 프로젝트 아카이브)
 **관리자**: IDDL Core Team

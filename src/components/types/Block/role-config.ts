@@ -6,275 +6,192 @@
  * - ariaProps: 접근성 속성
  * - baseStyles: 기본 Tailwind 클래스 (CVA에서 이동)
  * - renderer: 전용 렌더러 컴포넌트 (optional)
- *
- * **책임 분리**:
- * - Block.tsx: role-config 조회 → 설정 적용 → 렌더링
- * - role-config.ts: role → 모든 설정 중앙 관리
- * - role/*.tsx: 복잡한 렌더링 로직 (Toolbar, Accordion, SortableList 등)
- *
- * **Renderer vs Config-only**:
- * - Config-only: 단순 스타일/태그만 다른 role (Container, Form, Card 등)
- * - Renderer: 복잡한 상호작용 로직이 필요한 role (Toolbar, Accordion, Tabs 등)
  */
 
 import type { ComponentType } from 'react';
-import type { BlockProps, BlockRole } from '@/components/types/Block/Block.types';
-import { Accordion } from './role/Accordion';
-import { SortableList } from './role/SortableList';
-// Renderers (현재 사용 중인 것들)
-import { Toolbar } from './role/Toolbar';
+import type { BaseRoleConfig } from '../../shared/role.base';
+import type { BlockProps, BlockRole, BlockRendererProps } from '@/components/types/Block/Block.types';
 
-/**
- * Block Renderer Props
- * 모든 Block renderer가 공통으로 받는 props
- */
-export interface BlockRendererProps extends Omit<BlockProps, 'role'> {
-  role: BlockRole;
-  computedDensity: 'Compact' | 'Standard' | 'Comfortable';
-  computedProminence: BlockProps['prominence'];
-  computedIntent: BlockProps['intent'];
-  Element: any; // HTML 태그 또는 커스텀 컴포넌트
-}
+// Renderers
+import * as Layout from './role/Layout';
+import * as List from './role/List';
+import * as Nav from './role/Navigation';
+import * as Form from './role/Form';
+import * as Overlay from './role/Overlay';
+import * as Data from './role/DataDisplay';
+import * as Feedback from './role/Feedback';
+import * as Interaction from './role/Interaction';
+
+import { Accordion } from './role/Accordion'; // Existing
+import { SortableList } from './role/SortableList'; // Existing
+import { Toolbar as LegacyToolbar } from './role/Toolbar'; // Existing
+import { Tree } from './role/Tree';
 
 /**
  * Role Configuration Interface
+ *
+ * Extends BaseRoleConfig for type consistency across all IDDL components
  */
-export interface BlockRoleConfig {
-  /** HTML 시맨틱 태그 */
-  htmlTag: string;
-  /** ARIA 접근성 속성 */
-  ariaProps?: Record<string, string>;
-  /** 기본 Tailwind 클래스 (CVA에서 이동) */
-  baseStyles: string;
-  /** 전용 렌더러 컴포넌트 (복잡한 로직이 필요한 경우) */
-  renderer?: ComponentType<BlockRendererProps>;
-  /** 설명 (개발자 참고용) */
-  description?: string;
+export interface BlockRoleConfig extends BaseRoleConfig<BlockProps> {
+  /**
+   * Whether to apply automatic padding based on density
+   * true: Container blocks that need internal spacing (Card, Form, Alert, etc.)
+   * false: Layout blocks without visual padding (Stack, Grid, List, etc.)
+   */
+  autoPadding?: boolean;
+
+  // Override BaseRoleConfig optional properties to be required for Block
+  htmlTag: keyof React.JSX.IntrinsicElements;
+  description: string;
+
+  /**
+   * Section-specific overrides (v5.2)
+   * IDDL 5.2: "Section Context Awareness"
+   * Block styles can adapt based on the container Section's role.
+   * e.g. Card in Main vs Card in Panel
+   */
+  sectionOverrides?: Partial<Record<string, { // Using string for looser SectionRole coupling or import it
+    baseStyles?: string;
+  }>>;
 }
 
 /**
  * Block Role Configuration (전역 - 모든 layout에서 동일)
- *
- * **조직 구조** (v4.1):
- * - Layout Containers: 레이아웃 컨테이너
- * - Data Display: 데이터 표시
- * - Forms: 입력 폼
- * - Action Blocks: 액션 그룹
- * - Navigation: 네비게이션
  */
 export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
-  // ==================== Layout Containers ====================
-  Container: {
-    htmlTag: 'div',
-    baseStyles: '',
-    description: '일반 컨테이너 (기본값)',
-  },
-
-  Stack: {
-    htmlTag: 'div',
-    baseStyles: 'flex flex-col gap-2',
-    description: '수직 쌓기 (Stack Layout)',
-  },
-
-  Group: {
-    htmlTag: 'div',
-    baseStyles: 'flex flex-col gap-2',
-    description: '수직 쌓기 (Stack Alias for compatibility)',
-  },
-
-  Row: {
-    htmlTag: 'div',
-    baseStyles: 'flex flex-row items-start gap-2',
-    description: '수평 배치 (Row Layout)',
-  },
-
-  Split: {
-    htmlTag: 'div',
-    baseStyles: 'grid grid-cols-2 gap-4',
-    description: '분할 레이아웃 (Resizable)',
-  },
-
-  Inline: {
-    htmlTag: 'div',
-    baseStyles: 'flex items-center gap-2',
-    description: '인라인 그룹 (가로 정렬)',
-  },
-
-  Spacer: {
-    htmlTag: 'div',
-    baseStyles: 'flex-1',
-    description: '여백 (flex-1)',
-  },
-
-  // ==================== Data Display ====================
-  List: {
-    htmlTag: 'ul',
-    ariaProps: { role: 'list' },
-    baseStyles: 'flex flex-col gap-1 flex-1 overflow-y-auto',
-    description: '항목 리스트',
-  },
-
-  ListItem: {
-    htmlTag: 'li',
-    baseStyles: 'flex items-center gap-2',
-    description: '리스트 아이템',
-  },
-
-  SortableList: {
-    htmlTag: 'div',
-    ariaProps: { role: 'listbox', 'aria-label': 'Sortable list' },
-    baseStyles: '',
-    renderer: SortableList as ComponentType<BlockRendererProps>,
-    description: '정렬 가능한 리스트 (Drag & Drop)',
-  },
-
-  Grid: {
-    htmlTag: 'div',
-    ariaProps: { role: 'grid' },
-    baseStyles: 'grid gap-4',
-    description: '그리드 레이아웃',
-  },
-
-  Table: {
-    htmlTag: 'table',
-    ariaProps: { role: 'table' },
-    baseStyles: 'border border-default rounded-lg overflow-hidden',
-    description: '테이블',
-  },
-
+  // ==================== 1. Layout Containers ====================
   Card: {
     htmlTag: 'article',
     ariaProps: { role: 'article' },
-    baseStyles: 'bg-surface-raised rounded-lg p-4',
-    description: '카드 UI (시각적 요소 있음)',
+    baseStyles: 'bg-surface border border-border-default rounded-lg shadow-sm', // Default style
+    renderer: Layout.Card,
+    autoPadding: true,
+    description: '콘텐츠 그룹 컨테이너',
+    sectionOverrides: {
+      Panel: { baseStyles: 'bg-transparent border-0 shadow-none rounded-none' }, // Flat in Panel
+      Header: { baseStyles: 'bg-surface-elevated border-b border-border-default rounded-none shadow-none' }, // Integrated in Header
+    }
   },
-
-  Divider: {
+  Stack: {
     htmlTag: 'div',
-    baseStyles: 'bg-border-default',
-    description: '구분선 (수직/수평)',
+    baseStyles: '',
+    renderer: Layout.Stack,
+    autoPadding: false,
+    description: '수직 스택',
+    sectionOverrides: {
+      Toolbar: { baseStyles: 'flex-row items-center' }, // Auto-horizontal in Toolbar
+    }
   },
+  Grid: { htmlTag: 'div', ariaProps: { role: 'grid' }, baseStyles: '', renderer: Layout.Grid, autoPadding: false, description: '그리드 레이아웃' },
+  Center: { htmlTag: 'div', baseStyles: 'flex items-center justify-center h-full', autoPadding: false, description: '중앙 정렬 컨테이너' },
+  ScrollArea: { htmlTag: 'div', baseStyles: '', renderer: Layout.ScrollArea, autoPadding: false, description: '스크롤 영역' },
+  Collapsible: { htmlTag: 'div', baseStyles: '', renderer: Layout.Collapsible, autoPadding: false, description: '접을 수 있는 영역' },
+  Splitter: { htmlTag: 'div', baseStyles: '', renderer: Layout.Splitter, autoPadding: false, description: '크기 조절 패널' },
+  AspectRatio: { htmlTag: 'div', baseStyles: '', renderer: Layout.AspectRatio, autoPadding: false, description: '비율 유지 컨테이너' },
+  Tree: { htmlTag: 'div', ariaProps: { role: 'tree' }, baseStyles: '', renderer: Tree, autoPadding: false, description: '계층형 트리 탐색 (v4.1)' },
 
-  ColorIndicator: {
-    htmlTag: 'div',
-    baseStyles: 'w-4 h-4 rounded',
-    description: '색상 표시 박스',
-  },
+  // Legacy Aliases
+  Container: { htmlTag: 'div', baseStyles: '', description: '일반 컨테이너' },
+  Group: { htmlTag: 'div', baseStyles: 'flex flex-col gap-2', description: 'Group (Legacy Stack)' },
+  Row: { htmlTag: 'div', baseStyles: 'flex flex-row items-center gap-2', description: 'Row (Legacy)' },
+  Split: { htmlTag: 'div', baseStyles: '', renderer: Layout.Splitter, description: 'Split (Legacy Splitter)' },
+  Inline: { htmlTag: 'div', baseStyles: 'flex items-center gap-2', description: 'Inline (Legacy)' },
+  Spacer: { htmlTag: 'div', baseStyles: 'flex-1', description: '여백' },
+  Divider: { htmlTag: 'hr', baseStyles: 'border-t border-border-default w-full my-4', description: '구분선' },
+  DividerVertical: { htmlTag: 'div', baseStyles: 'border-l border-border-default h-full mx-4', description: '수직 구분선' },
 
-  PreviewContainer: {
-    htmlTag: 'div',
-    baseStyles:
-      'relative w-full h-full border-2 border-border-default rounded-lg p-4 bg-surface-sunken',
-    description: '미리보기 컨테이너',
-  },
+  // ==================== 2. List / Collections ====================
+  List: { htmlTag: 'ul', ariaProps: { role: 'list' }, baseStyles: '', renderer: List.List, description: '단순 목록' },
+  Menu: { htmlTag: 'div', ariaProps: { role: 'menu' }, baseStyles: '', renderer: List.Menu, description: '메뉴 목록' },
+  ContextMenu: { htmlTag: 'div', baseStyles: '', renderer: List.Menu, description: '우클릭 메뉴 (Mock)' },
+  CommandPalette: { htmlTag: 'div', baseStyles: '', renderer: List.CommandPalette, description: '검색 가능 명령 목록' },
+  Combobox: { htmlTag: 'div', ariaProps: { role: 'combobox' }, baseStyles: '', renderer: List.Combobox, description: '검색 드롭다운' },
+  TreeView: { htmlTag: 'div', ariaProps: { role: 'tree' }, baseStyles: '', renderer: Tree, description: '계층 목록' },
+  DataTable: { htmlTag: 'table', ariaProps: { role: 'grid' }, baseStyles: 'w-full', description: '데이터 테이블' }, // Use List.DataTable if implemented or leave as base
+  VirtualList: { htmlTag: 'div', baseStyles: '', renderer: List.List, description: '대용량 목록 (Mock)' },
+  Carousel: { htmlTag: 'div', baseStyles: 'flex overflow-x-auto gap-4 p-4', description: '슬라이드 목록' },
+  Timeline: { htmlTag: 'div', baseStyles: '', renderer: List.Timeline, description: '시간순 목록' },
 
-  PreviewCard: {
-    htmlTag: 'div',
-    baseStyles: 'rounded-lg border-2 p-3 flex flex-col justify-center items-center',
-    description: '미리보기 카드',
-  },
+  // Legacy/Items
+  ListItem: { htmlTag: 'li', baseStyles: 'flex items-center gap-2', description: '리스트 아이템' },
+  SortableList: { htmlTag: 'div', baseStyles: '', renderer: SortableList as any, description: '정렬 가능한 리스트' },
+  MenuItem: { htmlTag: 'div', baseStyles: 'px-3 py-1 hover:bg-surface-hover cursor-pointer', description: '메뉴 아이템' },
+  MenuSection: { htmlTag: 'div', baseStyles: 'py-1 font-bold text-xs text-text-subtle px-3', description: '메뉴 섹션' },
+  MenuTrigger: { htmlTag: 'button', baseStyles: '', description: '메뉴 트리거' },
+  Dropdown: { htmlTag: 'div', baseStyles: '', renderer: List.Menu, description: '드롭다운 (Legacy)' },
 
-  // ==================== Forms ====================
-  Form: {
-    htmlTag: 'form',
-    ariaProps: { role: 'form' },
-    baseStyles: 'space-y-4',
-    description: '폼 컨테이너',
-  },
+  // ==================== 3. Navigation ====================
+  Tabs: { htmlTag: 'div', ariaProps: { role: 'tablist' }, baseStyles: '', renderer: Nav.NavigationMenu, description: '탭 전환' }, // Using NavMenu for now or keep existing Tabs? existing: renderer: Tabs
+  TabPanel: { htmlTag: 'div', ariaProps: { role: 'tabpanel' }, baseStyles: 'p-4', description: '탭 콘텐츠' },
+  Toolbar: { htmlTag: 'div', ariaProps: { role: 'toolbar' }, baseStyles: '', renderer: LegacyToolbar as any, description: '도구 모음' },
+  Breadcrumbs: { htmlTag: 'nav', ariaProps: { 'aria-label': 'Breadcrumb' }, baseStyles: '', renderer: Nav.Breadcrumbs, description: '경로 표시' },
+  Pagination: { htmlTag: 'nav', ariaProps: { 'aria-label': 'Pagination' }, baseStyles: '', renderer: Nav.Pagination, description: '페이지 전환' },
+  Stepper: { htmlTag: 'div', baseStyles: '', renderer: Nav.Stepper, description: '단계 표시' },
+  NavigationMenu: { htmlTag: 'nav', baseStyles: '', renderer: Nav.NavigationMenu, description: '내비게이션 메뉴' },
+  Sidebar: { htmlTag: 'aside', baseStyles: '', renderer: Nav.Sidebar, description: '사이드 내비게이션' },
+  AppBar: { htmlTag: 'header', baseStyles: '', renderer: Nav.AppBar, description: '상단 앱 바' },
 
-  Fieldset: {
-    htmlTag: 'fieldset',
-    ariaProps: { role: 'group' },
-    baseStyles: 'border border-default rounded-lg p-4 space-y-3',
-    description: '필드 그룹',
-  },
+  Steps: { htmlTag: 'div', baseStyles: '', renderer: Nav.Stepper, description: 'Steps (Legacy Stepper)' },
+  ScrollMenu: { htmlTag: 'nav', baseStyles: '', description: '스크롤 메뉴' },
+  Navigator: { htmlTag: 'nav', baseStyles: '', description: '내비게이션바' },
+  FloatingToolbar: { htmlTag: 'div', baseStyles: 'absolute bottom-4 left-1/2 -translate-x-1/2 shadow-xl rounded-full bg-surface-overlay border border-border-default px-4 py-2 flex items-center gap-2', description: '플로팅 툴바' },
+  ToolbarDivider: { htmlTag: 'div', baseStyles: 'w-px h-4 bg-border-default mx-1', description: '툴바 구분선' },
 
-  // ==================== Action Blocks ====================
-  Toolbar: {
-    htmlTag: 'div',
-    ariaProps: { role: 'toolbar' },
-    baseStyles: 'flex items-center gap-2',
-    renderer: Toolbar as ComponentType<BlockRendererProps>,
-    description: '툴바/액션 모음',
-  },
+  // ==================== 4. Forms ====================
+  Form: { htmlTag: 'form', ariaProps: { role: 'form' }, baseStyles: '', renderer: Form.Form, autoPadding: true, description: '폼 컨테이너' },
+  FieldGroup: { htmlTag: 'fieldset', baseStyles: '', renderer: Form.FieldGroup, autoPadding: true, description: '필드 그룹' },
+  RadioGroup: { htmlTag: 'div', ariaProps: { role: 'radiogroup' }, baseStyles: '', renderer: Form.RadioGroup, autoPadding: false, description: '라디오 그룹' },
+  CheckboxGroup: { htmlTag: 'div', baseStyles: '', renderer: Form.CheckboxGroup, autoPadding: false, description: '체크박스 그룹' },
+  ToggleGroup: { htmlTag: 'div', baseStyles: '', renderer: Form.ToggleGroup, autoPadding: false, description: '토글 버튼 그룹' },
+  InputGroup: { htmlTag: 'div', baseStyles: '', renderer: Form.InputGroup, autoPadding: false, description: '입력 + 애드온' },
+  FormActions: { htmlTag: 'div', baseStyles: '', renderer: Form.FormActions, autoPadding: false, description: '폼 버튼 그룹' },
+  Fieldset: { htmlTag: 'fieldset', baseStyles: '', renderer: Form.FieldGroup, autoPadding: true, description: 'Fieldset (Legacy)' },
 
-  FloatingToolbar: {
-    htmlTag: 'div',
-    ariaProps: { role: 'toolbar', 'aria-label': 'Floating toolbar' },
-    baseStyles: 'flex items-center gap-1 bg-surface-overlay shadow-xl rounded-full px-2 py-1',
-    description: '플로팅 툴바 (화면 위에 떠있는 액션 모음)',
-  },
+  // ==================== 5. Overlay ====================
+  Dialog: { htmlTag: 'div', ariaProps: { role: 'dialog' }, baseStyles: '', renderer: Overlay.Dialog, autoPadding: true, description: '모달 대화상자' },
+  AlertDialog: { htmlTag: 'div', ariaProps: { role: 'alertdialog' }, baseStyles: '', renderer: Overlay.AlertDialog, autoPadding: true, description: '확인 대화상자' },
+  Sheet: { htmlTag: 'div', baseStyles: '', renderer: Overlay.Sheet, autoPadding: true, description: '시트' },
+  Drawer: { htmlTag: 'div', baseStyles: '', renderer: Overlay.Sheet, autoPadding: true, description: '서랍 (Drawer)' },
+  Popover: { htmlTag: 'div', baseStyles: '', renderer: Overlay.Popover, autoPadding: true, description: '팝오버' },
+  Tooltip: { htmlTag: 'div', baseStyles: '', renderer: Overlay.Tooltip, autoPadding: true, description: '툴팁' },
+  HoverCard: { htmlTag: 'div', baseStyles: '', renderer: Overlay.Popover, autoPadding: true, description: '호버 카드' },
+  DropdownMenu: { htmlTag: 'div', baseStyles: '', renderer: List.Menu, autoPadding: false, description: '드롭다운 메뉴' },
+  Toast: { htmlTag: 'div', baseStyles: '', renderer: Overlay.Toast, autoPadding: true, description: '토스트 알림' },
+  Notification: { htmlTag: 'div', baseStyles: '', renderer: Overlay.Toast, autoPadding: true, description: '알림' },
 
-  ToolbarDivider: {
-    htmlTag: 'div',
-    baseStyles: 'w-px h-4 bg-border-muted self-center mx-1',
-    description: '툴바용 수직 구분선',
-  },
+  // ==================== 6. Data Display ====================
+  Accordion: { htmlTag: 'div', baseStyles: '', renderer: Accordion as any, autoPadding: false, description: '아코디언' },
+  DescriptionList: { htmlTag: 'dl', baseStyles: '', renderer: Data.DescriptionList, autoPadding: false, description: '키-값 목록' },
+  Stats: { htmlTag: 'div', baseStyles: '', renderer: Data.Stats, autoPadding: true, description: '통계 카드' },
+  Avatar: { htmlTag: 'div', baseStyles: '', renderer: Data.Avatar, autoPadding: false, description: '아바타' },
+  AvatarGroup: { htmlTag: 'div', baseStyles: '', renderer: Data.AvatarGroup, autoPadding: false, description: '아바타 그룹' },
+  Badge: { htmlTag: 'span', baseStyles: '', renderer: Data.Badge, autoPadding: false, description: '뱃지' },
+  Tag: { htmlTag: 'span', baseStyles: '', renderer: Data.Tag, autoPadding: false, description: '태그' },
+  EmptyState: { htmlTag: 'div', baseStyles: '', renderer: Data.EmptyState, autoPadding: true, description: '빈 상태' },
+  Skeleton: { htmlTag: 'div', baseStyles: 'animate-pulse bg-surface-raised rounded', autoPadding: false, description: '스켈레톤' },
+  Calendar: { htmlTag: 'div', baseStyles: 'p-4 bg-surface border rounded', autoPadding: false, description: '캘린더 (Mock)' },
+  Chart: { htmlTag: 'div', baseStyles: 'w-full h-40 bg-surface-raised flex items-end justify-around pb-2 px-2', autoPadding: false, description: '차트 (Mock)' },
+  ColorIndicator: { htmlTag: 'div', baseStyles: 'w-4 h-4 rounded-full border border-border-default', autoPadding: false, description: '색상 표시' },
+  PreviewContainer: { htmlTag: 'div', baseStyles: 'bg-surface-sunken p-4 rounded-lg', autoPadding: false, description: '미리보기 컨테이너' },
+  PreviewCard: { htmlTag: 'div', baseStyles: 'bg-surface p-4 rounded shadow-sm', autoPadding: false, description: '미리보기 카드' },
+  SectionHighlight: { htmlTag: 'div', baseStyles: 'border-2 border-primary border-dashed rounded', autoPadding: false, description: '영역 하이라이트' },
 
-  // ==================== Navigation ====================
-  Tabs: {
-    htmlTag: 'div',
-    ariaProps: { role: 'tablist' },
-    baseStyles: 'flex flex-col',
-    description: '탭 컨테이너',
-  },
+  // ==================== 7. Feedback ====================
+  Alert: { htmlTag: 'div', ariaProps: { role: 'alert' }, baseStyles: '', renderer: Feedback.Alert, autoPadding: true, description: '인라인 알림' },
+  Progress: { htmlTag: 'div', ariaProps: { role: 'progressbar' }, baseStyles: '', renderer: Feedback.Progress, autoPadding: false, description: '진행률 표시' },
+  Spinner: { htmlTag: 'div', baseStyles: '', renderer: Feedback.Spinner, autoPadding: false, description: '로딩 스피너' },
+  Banner: { htmlTag: 'div', baseStyles: '', renderer: Feedback.Banner, autoPadding: true, description: '배너 알림' },
+  Callout: { htmlTag: 'div', baseStyles: '', renderer: Feedback.Callout, autoPadding: true, description: '강조 블록' },
 
-  Steps: {
-    htmlTag: 'ol',
-    ariaProps: { role: 'list', 'aria-label': 'Progress steps' },
-    baseStyles: 'flex flex-col',
-    description: '단계별 진행',
-  },
-
-  Accordion: {
-    htmlTag: 'div',
-    ariaProps: { role: 'region' },
-    baseStyles: 'flex flex-col gap-2',
-    renderer: Accordion as ComponentType<BlockRendererProps>,
-    description: '아코디언 (펼침/접힘)',
-  },
-
-  Breadcrumbs: {
-    htmlTag: 'nav',
-    ariaProps: { 'aria-label': 'Breadcrumb' },
-    baseStyles: 'flex items-center gap-1 text-sm text-text-subtle',
-    description: '경로 탐색',
-  },
-
-  ScrollMenu: {
-    htmlTag: 'nav',
-    ariaProps: { role: 'navigation', 'aria-label': 'Scroll Menu' },
-    baseStyles:
-      'flex flex-col overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border-default hover:scrollbar-thumb-border-strong',
-    description: '스크롤 메뉴 (ScrollSpy)',
-  },
-
-  Navigator: {
-    htmlTag: 'nav',
-    ariaProps: { role: 'navigation', 'aria-label': 'Navigator' },
-    baseStyles: 'flex flex-col items-center gap-2',
-    description: '네비게이션바',
-  },
+  // ==================== 8. Interaction ====================
+  DragDropZone: { htmlTag: 'div', baseStyles: '', renderer: Interaction.DragDropZone, description: '드래그 앤 드롭 영역' },
+  Sortable: { htmlTag: 'div', baseStyles: '', renderer: Interaction.Sortable, description: '정렬 가능 목록 (Simple)' },
+  Resizable: { htmlTag: 'div', baseStyles: '', renderer: Interaction.Resizable, description: '크기 조절 영역' },
+  SelectionArea: { htmlTag: 'div', baseStyles: '', renderer: Interaction.SelectionArea, description: '범위 선택 영역' },
 
   // ==================== Testing ====================
-  Mock: {
-    htmlTag: 'div',
-    baseStyles: 'bg-black/5 rounded p-2 text-xs font-mono text-center opacity-50',
-    description: '테스트/Showcase용',
-  },
-
-  DeviceFrame: {
-    htmlTag: 'div',
-    baseStyles:
-      'bg-white shadow-xl border border-slate-200 overflow-hidden relative transition-all duration-300 ease-in-out',
-    description: '기기/프레임 시각화 (반응형/모바일/종이 등)',
-  },
-
-  SectionHighlight: {
-    htmlTag: 'div',
-    baseStyles: 'flex flex-col w-full h-full min-h-[40px]',
-    description: '영역 하이라이트 (Showcase 오버레이)',
-  },
+  Mock: { htmlTag: 'div', baseStyles: 'bg-black/5 p-2 dashed border', description: 'Mock' },
+  DeviceFrame: { htmlTag: 'div', baseStyles: 'border-8 border-gray-800 rounded-3xl overflow-hidden shadow-2xl bg-white aspect-[9/16] max-w-sm mx-auto', description: '기기 프레임' },
 };
 
 /**

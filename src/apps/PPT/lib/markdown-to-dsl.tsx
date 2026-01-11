@@ -108,12 +108,12 @@ export function markdownToDSL(markdown: string): ReactNode {
   const flushList = () => {
     if (listItems.length > 0) {
       elements.push(
-        <Block key={`list-${key++}`} role="List" layout="stack">
+        <Block key={`list-${key++}`} role="List" layout="stack" density="Compact">
           {listItems.map((item, i) => (
-            <div key={i} className="flex gap-2">
-              <span className="text-accent">•</span>
-              <div className="flex-1">{item}</div>
-            </div>
+            <Block key={i} role="Inline" layout="inline" density="Compact">
+              <Text role="Body" content="•" intent="Brand" />
+              <Block role="Container">{item}</Block>
+            </Block>
           ))}
         </Block>
       );
@@ -150,13 +150,8 @@ export function markdownToDSL(markdown: string): ReactNode {
       case 'blockquote':
         flushList();
         elements.push(
-          <Block
-            key={`quote-${key++}`}
-            role="Container"
-            intent="Brand"
-            className="border-l-4 border-accent bg-accent/5 pl-4 py-3 my-2"
-          >
-            <Text role="Body" content={parsed.content} className="italic" />
+          <Block key={`quote-${key++}`} role="Container" intent="Brand">
+            <Text role="Body" content={parsed.content} />
           </Block>
         );
         break;
@@ -169,9 +164,7 @@ export function markdownToDSL(markdown: string): ReactNode {
       case 'paragraph': {
         flushList();
         const content = parseInlineMarkdown(parsed.content);
-        elements.push(
-          <Text key={`p-${key++}`} role="Body" content={content} className="leading-relaxed" />
-        );
+        elements.push(<Text key={`p-${key++}`} role="Body" content={content} />);
         break;
       }
     }
@@ -188,7 +181,7 @@ export function markdownToDSL(markdown: string): ReactNode {
  */
 export function slideContentToDSL(content: string): ReactNode {
   return (
-    <Block role="Container" layout="stack" density="Comfortable" className="gap-4">
+    <Block role="Container" layout="stack" density="Comfortable">
       {markdownToDSL(content)}
     </Block>
   );

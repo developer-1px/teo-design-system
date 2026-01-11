@@ -25,48 +25,46 @@ export function SectionShowcasePage() {
       onCategoryChange={handleCategoryChange}
     >
       {/* 1. Universal */}
-      <Block role="Container" layout="stack" density="Comfortable" className="gap-6" id="universal">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="universal">
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="1. Universal Sections" />
           <Text role="Body" prominence="Subtle" content="Available in almost all layouts." />
-        </div>
+        </Block>
 
-        <Block role="Grid" layout="grid" density="Comfortable" className="grid-cols-2 gap-8">
-          <Block role="Card" className="p-4 gap-2 border-b-4 border-b-brand-primary">
+        <Block role="Grid" density="Comfortable" spec={{ columns: 2 }} gap={8}>
+          <Block role="Card" className="p-4 border-b-4 border-b-brand-primary" gap={2}>
             <Text role="Title" content="Header" />
             <Text role="Caption" content="<header> tag. Typically fixed height." />
           </Block>
-          <Block role="Card" className="p-4 gap-2 border-t-4 border-t-brand-primary">
+          <Block role="Card" className="p-4 border-t-4 border-t-brand-primary" gap={2}>
             <Text role="Title" content="Footer" />
             <Text role="Caption" content="<footer> tag. Bottom region." />
           </Block>
-          <Block role="Card" className="p-4 gap-2 border-4 border-brand-primary">
+          <Block role="Card" className="p-4 border-4 border-brand-primary" gap={2}>
             <Text role="Title" content="Container" />
             <Text role="Caption" content="<section> tag. Generic container." />
           </Block>
-          <Block role="Card" className="p-4 gap-2 bg-surface-sunken">
+          <Block role="Card" className="p-4 bg-surface-sunken" gap={2}>
             <Text role="Title" content="Main" />
             <Text role="Caption" content="<main> tag. Primary content area." />
           </Block>
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 2. IDE Context */}
-      <Block role="Container" layout="stack" density="Comfortable" className="gap-6" id="ide">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" mixed density="Comfortable" gap={6} id="ide">
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="2. IDE Context (Studio)" />
           <Text
             role="Body"
             prominence="Subtle"
             content="Specialized sections for development environments."
           />
-        </div>
+        </Block>
 
-        <Block role="Grid" layout="grid" density="Comfortable" className="grid-cols-3 gap-6">
+        <Block role="Grid" density="Comfortable" spec={{ columns: 3 }} gap={6}>
           <Block role="Card" className="p-4 border border-l-4 border-l-accent">
             <Text role="Label" content="ActivityBar" />
             <Text role="Caption" content="Narrow icon sidebar." />
@@ -90,18 +88,16 @@ export function SectionShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 3. Web Context */}
-      <Block role="Container" layout="stack" density="Comfortable" className="gap-6" id="web">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="web">
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="3. Web Context" />
           <Text role="Body" prominence="Subtle" content="Standard web page regions." />
-        </div>
+        </Block>
 
-        <Block role="Grid" layout="grid" density="Comfortable" className="grid-cols-3 gap-6">
+        <Block role="Grid" density="Comfortable" spec={{ columns: 3 }} gap={6}>
           <Block role="Card" className="p-4 border border-l-4 border-l-brand-primary">
             <Text role="Label" content="Navigator" />
             <Text role="Caption" content="Table of Contents / Menu." />
@@ -117,16 +113,14 @@ export function SectionShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 4. Dialog Context */}
-      <Block role="Container" layout="stack" density="Comfortable" className="gap-6" id="dialog">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="dialog">
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="4. Dialog Context" />
           <Text role="Body" prominence="Subtle" content="Regions within a modal dialog." />
-        </div>
+        </Block>
 
         <Block role="Card" className="p-0 border border-border-default max-w-md">
           <Block

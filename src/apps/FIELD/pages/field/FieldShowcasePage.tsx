@@ -25,10 +25,9 @@ export function FieldShowcasePage() {
     >
       {/* ========================================
           1. INPUT CATEGORY
-          Keyboard-driven text entry
           ======================================== */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
-        <div className="flex flex-col gap-3">
+      <Block role="Stack" gap={12}>
+        <Block role="Stack" gap={3}>
           <Text
             role="Title"
             prominence="Hero"
@@ -41,18 +40,18 @@ export function FieldShowcasePage() {
             content="Keyboard-driven text entry. User types value as primary interaction."
             className="text-base"
           />
-        </div>
+        </Block>
 
         {/* 1.1 Textbox */}
-        <Block role="Container" layout="stack" gap={4} className="mt-8">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-8">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="1.1 Textbox" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Single-line or multi-line text input. Supports format variants (email, password, tel, url)."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -87,15 +86,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 1.2 Searchbox */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="1.2 Searchbox" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Text input optimized for search queries with debounce and minChars support."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -109,15 +108,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 1.3 Spinbutton */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="1.3 Spinbutton" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Numeric input with increment/decrement controls. Supports format (integer, decimal, currency, percent)."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -131,15 +130,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 1.4 Otp */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="1.4 Otp" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="One-time password / PIN code input. Auto-advance, paste handling, masked option."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -153,15 +152,13 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      {/* Divider */}
-      <div className="h-px bg-border my-16" />
+      <Block role="Divider" className="my-16" />
 
       {/* ========================================
           2. CHOICE CATEGORY
-          User selects from options (items property REQUIRED)
           ======================================== */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
-        <div className="flex flex-col gap-3">
+      <Block role="Stack" gap={12}>
+        <Block role="Stack" gap={3}>
           <Text
             role="Title"
             prominence="Hero"
@@ -174,18 +171,18 @@ export function FieldShowcasePage() {
             content="User selects from options. `items` property REQUIRED (except single Checkbox/Switch)."
             className="text-base"
           />
-        </div>
+        </Block>
 
         {/* 2.1 Checkbox */}
-        <Block role="Container" layout="stack" gap={4} className="mt-8">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-8">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="2.1 Checkbox" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Boolean or multi-select control. Single checkbox without items, or checkbox group with items."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -199,15 +196,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 2.2 Switch */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="2.2 Switch" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Toggle control for on/off states. Semantically distinct from Checkbox - use for immediate-effect toggles."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -221,15 +218,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 2.3 Radio */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="2.3 Radio" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Single-select from mutually exclusive options. items is REQUIRED. Supports segmented variant."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -250,15 +247,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 2.4 Combobox */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="2.4 Combobox" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Dropdown selection with optional search, creatable, multiple, async loading. items REQUIRED."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -297,15 +294,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 2.5 Listbox */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="2.5 Listbox" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Always-visible selection list (not a dropdown). Supports multiple selection, keyboard navigation, virtualization."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -327,15 +324,13 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      {/* Divider */}
-      <div className="h-px bg-border my-16" />
+      <Block role="Divider" className="my-16" />
 
       {/* ========================================
           3. CONTROL CATEGORY
-          User manipulates continuous value (drag, click)
           ======================================== */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
-        <div className="flex flex-col gap-3">
+      <Block role="Stack" gap={12}>
+        <Block role="Stack" gap={3}>
           <Text
             role="Title"
             prominence="Hero"
@@ -348,18 +343,18 @@ export function FieldShowcasePage() {
             content="User manipulates continuous or discrete value range via pointer interaction (mouse/touch)."
             className="text-base"
           />
-        </div>
+        </Block>
 
         {/* 3.1 Slider */}
-        <Block role="Container" layout="stack" gap={4} className="mt-8">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-8">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="3.1 Slider" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Slider for selecting numeric value(s). Supports dual-handle range, marks, orientation, rating variant."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -380,15 +375,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 3.2 Colorpicker */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="3.2 Colorpicker" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Color selection with format (hex/rgb/hsl/hsv), alpha, presets, and variant options (default/compact/swatch-only)."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -440,15 +435,13 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      {/* Divider */}
-      <div className="h-px bg-border my-16" />
+      <Block role="Divider" className="my-16" />
 
       {/* ========================================
           4. PICKER CATEGORY
-          User invokes specialized UI (popup/system interface)
           ======================================== */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
-        <div className="flex flex-col gap-3">
+      <Block role="Stack" gap={12}>
+        <Block role="Stack" gap={3}>
           <Text
             role="Title"
             prominence="Hero"
@@ -461,18 +454,18 @@ export function FieldShowcasePage() {
             content="User invokes specialized interface for value selection. Returns structured value appropriate to role."
             className="text-base"
           />
-        </div>
+        </Block>
 
         {/* 4.1 Datepicker */}
-        <Block role="Container" layout="stack" gap={4} className="mt-8">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-8">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="4.1 Datepicker" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Date selection with calendar interface. Supports range, variants (date/datetime/month/year/week), min/max, disabled dates."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field role="Datepicker" label="Date Picker" model="demo.date" spec={{ type: 'date' }} />
@@ -481,15 +474,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.2 Timepicker */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="4.2 Timepicker" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Time selection. Supports format (12h/24h), minute/second step, min/max time constraints."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field role="Datepicker" label="Time Picker" model="demo.time" spec={{ type: 'time' }} />
@@ -497,15 +490,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.3 Filepicker */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="4.3 Filepicker" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="File upload. Supports accept (MIME types), multiple, maxSize, drag-drop, preview, avatar variant."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -518,15 +511,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.4 Signature */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="4.4 Signature" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Signature capture with HTML Canvas. Supports penColor, penWidth, backgroundColor, outputFormat, trimWhitespace."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 1 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -545,15 +538,15 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 4.5 Calendar */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="4.5 Calendar" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Visual calendar interface for date selection. Useful for scheduling or dashboard filters."
             />
-          </div>
+          </Block>
 
           <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
             <Field
@@ -567,15 +560,13 @@ export function FieldShowcasePage() {
         </Block>
       </Block>
 
-      {/* Divider */}
-      <div className="h-px bg-border my-16" />
+      <Block role="Divider" className="my-16" />
 
       {/* ========================================
           5. META CATEGORY
-          No direct interaction (Hidden or programmatic)
           ======================================== */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
-        <div className="flex flex-col gap-3">
+      <Block role="Stack" gap={12}>
+        <Block role="Stack" gap={3}>
           <Text
             role="Title"
             prominence="Hero"
@@ -588,20 +579,20 @@ export function FieldShowcasePage() {
             content="No visible UI. Participates in form submission but not rendered to user."
             className="text-base"
           />
-        </div>
+        </Block>
 
         {/* 5.1 Hidden */}
-        <Block role="Container" layout="stack" gap={4} className="mt-8">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-8">
+          <Block role="Stack" gap={1}>
             <Text role="Title" prominence="Strong" content="5.1 Hidden" className="text-xl font-semibold" />
             <Text
               role="Body"
               prominence="Subtle"
               content="Non-visible field for form data. Renders as <input type='hidden'>. No spec options."
             />
-          </div>
+          </Block>
 
-          <div className="flex flex-col gap-4 p-6 bg-layer-2 rounded-lg border border-border mt-4">
+          <Block role="Card" className="p-6 bg-layer-2 mt-4" gap={4}>
             <Text role="Label" prominence="Strong" content="Hidden Field Example" />
             <Text
               role="Body"
@@ -613,19 +604,17 @@ export function FieldShowcasePage() {
               {'<Field role="Hidden" model="demo.userId" value="12345" />'}
             </code>
             <Text role="Body" prominence="Subtle" content="👆 Check browser DevTools to see the hidden input" />
-          </div>
+          </Block>
         </Block>
       </Block>
 
-      {/* Divider */}
-      <div className="h-px bg-border my-16" />
+      <Block role="Divider" className="my-16" />
 
       {/* ========================================
           6. PROMINENCE & INTENT VARIANTS
-          Visual hierarchy and semantic meaning
           ======================================== */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
-        <div className="flex flex-col gap-3">
+      <Block role="Stack" gap={12}>
+        <Block role="Stack" gap={3}>
           <Text
             role="Title"
             prominence="Hero"
@@ -638,11 +627,11 @@ export function FieldShowcasePage() {
             content="All Fields support prominence and intent props for visual hierarchy and semantic meaning."
             className="text-base"
           />
-        </div>
+        </Block>
 
         {/* Prominence variants */}
-        <Block role="Container" layout="stack" gap={4} className="mt-8">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-8">
+          <Block role="Stack" gap={1}>
             <Text
               role="Title"
               prominence="Strong"
@@ -654,9 +643,9 @@ export function FieldShowcasePage() {
               prominence="Subtle"
               content="Hero → Standard → Strong → Subtle"
             />
-          </div>
+          </Block>
 
-          <div className="flex flex-col gap-6 mt-4">
+          <Block role="Stack" gap={6} className="mt-4">
             <Field
               role="Textbox"
               label="Hero Prominence"
@@ -685,12 +674,12 @@ export function FieldShowcasePage() {
               placeholder="Subtle level input"
               prominence="Subtle"
             />
-          </div>
+          </Block>
         </Block>
 
         {/* Intent variants */}
-        <Block role="Container" layout="stack" gap={4} className="mt-12">
-          <div className="flex flex-col gap-1">
+        <Block role="Stack" gap={4} className="mt-12">
+          <Block role="Stack" gap={1}>
             <Text
               role="Title"
               prominence="Strong"
@@ -702,9 +691,9 @@ export function FieldShowcasePage() {
               prominence="Subtle"
               content="Neutral → Brand → Positive → Caution → Critical"
             />
-          </div>
+          </Block>
 
-          <div className="flex flex-col gap-6 mt-4">
+          <Block role="Stack" gap={6} className="mt-4">
             <Field
               role="Textbox"
               label="Neutral Intent (Default)"
@@ -742,19 +731,17 @@ export function FieldShowcasePage() {
               intent="Critical"
               error="This field has an error"
             />
-          </div>
+          </Block>
         </Block>
       </Block>
 
-      {/* Divider */}
-      <div className="h-px bg-border my-16" />
+      <Block role="Divider" className="my-16" />
 
       {/* ========================================
           7. DENSITY VARIANTS
-          Spacing control
           ======================================== */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={12} className="mb-16">
-        <div className="flex flex-col gap-3">
+      <Block role="Stack" gap={12}>
+        <Block role="Stack" gap={3}>
           <Text
             role="Title"
             prominence="Hero"
@@ -767,7 +754,7 @@ export function FieldShowcasePage() {
             content="Control spacing with density prop: Comfortable → Standard → Compact"
             className="text-base"
           />
-        </div>
+        </Block>
 
         <Block role="Grid" spec={{ columns: 3 }} gap={12} density="Comfortable" className="mt-8">
           <Field

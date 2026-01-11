@@ -25,7 +25,7 @@
 import { ChevronDown } from 'lucide-react';
 import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { cn } from '@/shared/lib/utils';
-import type { BlockRendererProps } from '../role-config';
+import type { BlockRendererProps } from '../../Block.types';
 
 // ============================================
 // Accordion Context

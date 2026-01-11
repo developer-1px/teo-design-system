@@ -7,18 +7,14 @@
  * v1.0.1: behavior discriminated union, loading, Info intent 추가, CVA 적용
  * v3.1: Interactive State Token System, Spacing Token System 통합
  * v4.0: Role Renderer 패턴 도입 (ButtonAction, IconButtonAction, LinkAction)
+ * v4.1: Registry 패턴 적용 (role-registry.ts)
  * @see spec/iddl-spec-1.0.1.md#413-action-node
  */
 
 import { useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { ActionProps } from '@/components/types/Element/Action/Action.types';
-
-// Role Renderers (v4.0)
+import { getRoleConfig, hasRenderer } from './role-registry';
 import { ButtonAction } from './renderers/ButtonAction';
-import { IconButtonAction } from './renderers/IconButtonAction';
-import { LinkAction } from './renderers/LinkAction';
-
-// CVA removed - using role renderers instead (v4.0)
 
 /**
  * Action 컴포넌트
@@ -33,6 +29,8 @@ export function Action({
   icon,
   prominence,
   intent,
+  density,
+  size, // ✨ NEW
   behavior,
   disabled,
   confirm,
@@ -48,7 +46,13 @@ export function Action({
   // 부모 컨텍스트에서 상속
   const computedProminence = prominence ?? ctx.prominence ?? 'Standard';
   const computedIntent = intent ?? ctx.intent ?? 'Neutral';
-  const computedDensity = ctx.density ?? 'Standard';
+  const computedDensity = density ?? ctx.density ?? 'Standard';
+
+  // size prop이 있으면 사용, 없으면 density에서 유도 (v4.1)
+  const computedSize = size ?? (
+    computedDensity === 'Compact' ? 'sm' :
+      computedDensity === 'Comfortable' ? 'lg' : 'md'
+  );
 
   if (hidden) return null;
 
@@ -140,6 +144,7 @@ export function Action({
     computedProminence,
     computedIntent,
     computedDensity: computedDensity as 'Compact' | 'Standard' | 'Comfortable',
+    computedSize: computedSize as 'xs' | 'sm' | 'md' | 'lg' | 'icon', // ✨ NEW
     isDisabled,
     handleClick,
     Element,
@@ -150,14 +155,14 @@ export function Action({
     ...rest,
   };
 
-  // Role Renderer 선택
-  switch (role) {
-    case 'IconButton':
-      return <IconButtonAction {...rendererProps} />;
-    case 'Link':
-      return <LinkAction {...rendererProps} />;
-    case 'Button':
-    default:
-      return <ButtonAction {...rendererProps} />;
+  // v4.1: Registry-based role delegation
+  const config = getRoleConfig(role);
+  if (config.renderer) {
+    const Renderer = config.renderer;
+    return <Renderer {...rendererProps} />;
   }
+
+  // Fallback (should not happen if registry is complete)
+  console.warn(`[Action] No renderer found for role "${role}". Using Button fallback.`);
+  return <ButtonAction {...rendererProps} />;
 }

@@ -20,6 +20,7 @@ import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas';
 import type { Slide } from '@/apps/PPT/widgets/presentation/SlideList';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';
+import { Separator } from '@/components/types/Element/Separator/Separator';
 import { Text } from '@/components/types/Element/Text/Text';
 import { Page } from '@/components/types/Page/Page';
 import { Section } from '@/components/types/Section/Section';
@@ -159,6 +160,7 @@ export const PresentationModePage = ({
       </Section>
 
       {/* Bottom Navigation Overlay */}
+      {/* IDDL Exception: absolute positioning + bg-black for overlay - Overlay component로 대체 가능 */}
       <Block
         role="Toolbar"
         layout="inline"
@@ -197,7 +199,7 @@ export const PresentationModePage = ({
         />
 
         {/* Divider */}
-        <div className="w-px h-6 bg-white/20" />
+        <Separator orientation="vertical" prominence="Subtle" className="h-6 opacity-20" />
 
         {/* Exit Button */}
         <Action

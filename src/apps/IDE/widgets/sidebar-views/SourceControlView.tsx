@@ -8,7 +8,11 @@ import { Button } from './components/ui/button';
 import { Input } from './components/ui/input';
 import { SidebarHeader } from './SidebarHeader';
 
-export const SourceControlView = () => {
+interface SourceControlViewProps {
+  onFileClick?: (path: string) => void;
+}
+
+export const SourceControlView = ({ onFileClick }: SourceControlViewProps) => {
   const [message, setMessage] = useState('');
 
   return (
@@ -72,7 +76,10 @@ export const SourceControlView = () => {
             <span className="ml-auto bg-surface-raised px-1.5 py-0.5 rounded-full">1</span>
           </button>
 
-          <div className="flex items-center px-2 py-1 hover:bg-surface-hover rounded-sm group cursor-pointer">
+          <div
+            className="flex items-center px-2 py-1 hover:bg-surface-hover rounded-sm group cursor-pointer"
+            onClick={() => onFileClick?.('src/App.tsx')}
+          >
             <Text role="Body" content="App.tsx" size="sm" className="flex-1" />
             <span className="text-xs text-text-tertiary mr-2 px-1">src</span>
             <span className="text-xs font-bold text-accent">M</span>
@@ -112,7 +119,10 @@ export const SourceControlView = () => {
             </div>
           </div>
 
-          <div className="flex items-center px-2 py-1 hover:bg-surface-hover rounded-sm group cursor-pointer">
+          <div
+            className="flex items-center px-2 py-1 hover:bg-surface-hover rounded-sm group cursor-pointer"
+            onClick={() => onFileClick?.('src/components/ui/Button.tsx')}
+          >
             <Text role="Body" content="Button.tsx" size="sm" className="flex-1" />
             <span className="text-xs text-text-tertiary mr-2 px-1">src/components/ui</span>
             <span className="text-xs font-bold text-accent">M</span>

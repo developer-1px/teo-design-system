@@ -25,16 +25,16 @@ export function OverlayShowcasePage() {
       activeCategoryId="dialogs"
     >
       {/* 1. Dialogs */}
-      <Block role="Container" density="Comfortable" className="gap-6" id="dialogs">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" density="Comfortable" gap={6} id="dialogs">
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="1. Dialogs" />
           <Text
             role="Body"
             prominence="Subtle"
             content="Modal interactions that require user attention."
           />
-        </div>
-        <Block role="Card" className="p-6 flex flex-row gap-4">
+        </Block>
+        <Block role="Card" layout="inline" gap={4} className="p-6">
           <Action
             role="Button"
             label="Standard Dialog"
@@ -49,18 +49,16 @@ export function OverlayShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 2. Drawers */}
-      <Block role="Container" density="Comfortable" className="gap-6" id="drawers">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" density="Comfortable" gap={6} id="drawers">
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="2. Drawers & Sheets" />
           <Text role="Body" prominence="Subtle" content="Slide-out panels from screen edges." />
-        </div>
+        </Block>
 
-        <Block role="Card" className="p-6 flex flex-row gap-4">
+        <Block role="Card" layout="inline" gap={4} className="p-6">
           <Action
             role="Button"
             label="Right Drawer"
@@ -79,18 +77,16 @@ export function OverlayShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 3. Popovers & Toasts */}
-      <Block role="Container" density="Comfortable" className="gap-6" id="floating">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" density="Comfortable" gap={6} id="floating">
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="3. Popovers & Toasts" />
           <Text role="Body" prominence="Subtle" content="Floating content and notifications." />
-        </div>
+        </Block>
 
-        <Block role="Card" className="p-6 flex flex-row gap-4">
+        <Block role="Card" layout="inline" gap={4} className="p-6">
           <Action
             role="Button"
             label="Show Toast"
@@ -108,15 +104,15 @@ export function OverlayShowcasePage() {
         isOpen={activeOverlay === 'dialog-standard'}
         onClose={closeOverlay}
       >
-        <Block role="Container" className="p-6 gap-4">
-          <Block role="Container" className="gap-2">
+        <Block role="Stack" gap={4} className="p-6">
+          <Block role="Stack" gap={2}>
             <Text role="Title" prominence="Strong" content="Confirm Action" />
             <Text
               role="Body"
               content="Are you sure you want to proceed with this action? This can be undone."
             />
           </Block>
-          <Block role="Toolbar" className="justify-end gap-2">
+          <Block role="Toolbar" gap={2} className="justify-end">
             <Action role="Button" label="Cancel" prominence="Subtle" onClick={closeOverlay} />
             <Action role="Button" label="Confirm" intent="Brand" onClick={closeOverlay} />
           </Block>
@@ -130,15 +126,15 @@ export function OverlayShowcasePage() {
         isOpen={activeOverlay === 'dialog-critical'}
         onClose={closeOverlay}
       >
-        <Block role="Container" className="p-6 gap-4 border-l-4 border-critical">
-          <Block role="Container" className="gap-2">
+        <Block role="Stack" gap={4} className="p-6 border-l-4 border-critical">
+          <Block role="Stack" gap={2}>
             <Text role="Title" prominence="Strong" content="Delete Account" intent="Critical" />
             <Text
               role="Body"
               content="This action promotes permanent data loss. Are you absolutely sure?"
             />
           </Block>
-          <Block role="Toolbar" className="justify-end gap-2">
+          <Block role="Toolbar" gap={2} className="justify-end">
             <Action role="Button" label="Cancel" onClick={closeOverlay} />
             <Action role="Button" label="Delete" intent="Critical" onClick={closeOverlay} />
           </Block>
@@ -153,7 +149,7 @@ export function OverlayShowcasePage() {
         placement="right"
         onClose={closeOverlay}
       >
-        <Block role="Container" className="w-[400px] h-full p-6 gap-4">
+        <Block role="Stack" gap={4} className="w-[400px] h-full p-6">
           <Text role="Title" content="Right Drawer" />
           <Text role="Body" content="This is a side panel content." />
           <Action role="Button" label="Close" onClick={closeOverlay} />
@@ -167,7 +163,7 @@ export function OverlayShowcasePage() {
         placement="left"
         onClose={closeOverlay}
       >
-        <Block role="Container" className="w-[300px] h-full p-6 gap-4">
+        <Block role="Stack" gap={4} className="w-[300px] h-full p-6">
           <Text role="Title" content="Left Drawer" />
           <Text role="Body" content="Navigation or filters usually go here." />
         </Block>
@@ -181,7 +177,7 @@ export function OverlayShowcasePage() {
         placement="bottom"
         onClose={closeOverlay}
       >
-        <Block role="Container" className="p-8 gap-4 items-center justify-center">
+        <Block role="Stack" gap={4} className="p-8 items-center justify-center">
           <Text role="Title" content="Bottom Sheet" />
           <Text role="Body" content="Useful for mobile actions or extended details." />
           <Action role="Button" label="Done" onClick={closeOverlay} />
@@ -196,7 +192,7 @@ export function OverlayShowcasePage() {
         placement="bottom-right"
         onClose={closeOverlay}
       >
-        <Block role="Container" className="p-4 flex flex-row items-center gap-3">
+        <Block role="Row" gap={3} className="p-4 items-center">
           <Text role="Title" content="Success!" prominence="Standard" intent="Positive" />
           <Text role="Body" content="Your changes have been saved." />
         </Block>

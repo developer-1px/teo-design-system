@@ -1,4 +1,5 @@
 import {
+  type CellContext, // ✨ NEW
   type ColumnDef,
   type ColumnFiltersState,
   flexRender,
@@ -10,7 +11,7 @@ import {
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { ChevronDown, ChevronsUpDown, ChevronUp, Grid3x3, Rows3 } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react'; // ✨ NEW
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action.tsx';
 import { Search, X } from 'lucide-react';
@@ -24,8 +25,16 @@ interface CellPosition {
   colIndex: number;
 }
 
+/**
+ * IDDL Column Definition (v4.1)
+ * cell renderer must return a ReactElement (IDDL Component preferred)
+ */
+export interface IDDLColumnDef<TData, TValue = unknown> extends Omit<ColumnDef<TData, TValue>, 'cell'> {
+  cell: (props: CellContext<TData, TValue>) => ReactElement;
+}
+
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  columns: IDDLColumnDef<TData, TValue>[]; // ✨ ENFORCED
   data: TData[];
   density?: 'compact' | 'normal';
   searchQuery?: string; // 검색어 (외부에서 주입 가능)

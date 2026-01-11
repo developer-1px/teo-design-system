@@ -14,9 +14,9 @@ import { useHashLocation } from 'wouter/use-hash-location';
 import { AppProvider } from '@/app/contexts/app-context.tsx';
 import { FloatingBar } from '@/app/widgets/FloatingBar.tsx';
 import { AppAction } from '@/apps/ACTION/AppAction.tsx';
+import { AppBehavior } from '@/apps/BEHAVIOR/AppBehavior.tsx';
 import { AppBlock } from '@/apps/BLOCK/AppBlock.tsx';
 import { AppDOCS } from '@/apps/DOCS/AppDOCS.tsx';
-import { AppDSLBuilder } from '@/apps/DSLBuilder/AppDSLBuilder.tsx';
 import { AppEMOJI } from '@/apps/EMOJI/AppEMOJI.tsx';
 import { AppField } from '@/apps/FIELD/AppField.tsx';
 import { AppIDE } from '@/apps/IDE/AppIDE.tsx';
@@ -25,7 +25,6 @@ import { AppOverlay } from '@/apps/OVERLAY/AppOverlay.tsx';
 import { AppPage } from '@/apps/PAGE/AppPage.tsx';
 import { AppPPT } from '@/apps/PPT/AppPPT.tsx';
 import { AppSection } from '@/apps/SECTION/AppSection.tsx';
-import { AppShowcase } from '@/apps/showcase/AppShowcase.tsx';
 import { AppText } from '@/apps/TEXT/AppText.tsx';
 import { CommandPalette } from '@/components/types/Overlay/CommandPalette.tsx';
 
@@ -41,17 +40,16 @@ function App() {
         <Route path="/notion" component={AppJSON} />
         <Route path="/emoji" component={AppEMOJI} />
         <Route path="/design" component={AppDOCS} />
-        <Route path="/builder" component={AppDSLBuilder} />
-        <Route path="/showcase" component={AppShowcase} />
 
         {/* IDDL Component Showcases */}
         <Route path="/page" component={AppPage} />
         <Route path="/section" component={AppSection} />
         <Route path="/overlay" component={AppOverlay} />
-        <Route path="/group" component={AppBlock} />
+        <Route path="/block" component={AppBlock} />
         <Route path="/field" component={AppField} />
         <Route path="/action" component={AppAction} />
         <Route path="/text" component={AppText} />
+        <Route path="/behavior" component={AppBehavior} />
 
         {/* Default redirect to IDE */}
         <Route path="/">

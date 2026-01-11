@@ -1,5 +1,4 @@
 import { Block } from '@/components/types/Block/Block.tsx';
-import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
 import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
@@ -21,91 +20,89 @@ export function TextShowcasePage() {
       activeCategoryId="matrix"
     >
       {/* 1. Typography Matrix (Role x Prominence) */}
-      <Block role="Container" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="1. Typography Matrix" />
           <Text
             role="Body"
             prominence="Subtle"
             content="Combinations of semantic Role and visual Prominence."
           />
-        </div>
+        </Block>
 
         {/* Title Role */}
-        <Block role="Card" density="Standard" className="p-6 gap-6">
+        <Block role="Card" density="Standard" className="p-6" gap={6}>
           <Text role="Label" content="Title Role" prominence="Subtle" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-baseline">
-            <div>
+          <Block role="Grid" spec={{ columns: 2 }} gap={8}>
+            <Block role="Stack" gap={0.5}>
               <Text role="Title" prominence="Hero" content="Hero Title" />
               <Text role="Caption" content="prominence='Hero' (Page Titles)" />
-            </div>
-            <div>
+            </Block>
+            <Block role="Stack" gap={0.5}>
               <Text role="Title" prominence="Strong" content="Strong Title" />
               <Text role="Caption" content="prominence='Strong' (Section Headers)" />
-            </div>
-            <div>
+            </Block>
+            <Block role="Stack" gap={0.5}>
               <Text role="Title" prominence="Standard" content="Standard Title" />
               <Text role="Caption" content="prominence='Standard' (Card Titles)" />
-            </div>
-            <div>
+            </Block>
+            <Block role="Stack" gap={0.5}>
               <Text role="Title" prominence="Subtle" content="Subtle Title" />
               <Text role="Caption" content="prominence='Subtle' (Block Headers)" />
-            </div>
-          </div>
+            </Block>
+          </Block>
         </Block>
 
         {/* Body Role */}
-        <Block role="Card" density="Standard" className="p-6 gap-6">
+        <Block role="Card" density="Standard" className="p-6" gap={6}>
           <Text role="Label" content="Body Role" prominence="Subtle" />
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1">
+          <Block role="Stack" gap={4}>
+            <Block role="Stack" gap={1}>
               <Text
                 role="Body"
                 prominence="Hero"
                 content="Hero Body used for lead paragraphs."
               />
               <Text role="Caption" content="prominence='Hero' (Lead Text)" />
-            </div>
-            <div className="flex flex-col gap-1">
+            </Block>
+            <Block role="Stack" gap={1}>
               <Text
                 role="Body"
                 prominence="Strong"
                 content="Strong body text is used for emphasis within content."
               />
               <Text role="Caption" content="prominence='Strong' (Emphasis)" />
-            </div>
-            <div className="flex flex-col gap-1">
+            </Block>
+            <Block role="Stack" gap={1}>
               <Text
                 role="Body"
                 prominence="Standard"
                 content="Standard body text is the default for most reading content. It has good readability and contrast."
               />
               <Text role="Caption" content="prominence='Standard' (Default)" />
-            </div>
-            <div className="flex flex-col gap-1">
+            </Block>
+            <Block role="Stack" gap={1}>
               <Text
                 role="Body"
                 prominence="Subtle"
                 content="Subtle body text is for secondary information, metadata, or helper text."
               />
               <Text role="Caption" content="prominence='Subtle' (Muted)" />
-            </div>
-          </div>
+            </Block>
+          </Block>
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 2. Intent Colors */}
-      <Block role="Container" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="2. Intent Colors" />
           <Text role="Body" prominence="Subtle" content="Semantic colors applied to text." />
-        </div>
+        </Block>
 
-        <Block role="Grid" density="Standard" className="grid-cols-2 md:grid-cols-3 gap-6">
+        <Block role="Grid" gap={6} spec={{ columns: 3 }}>
           <Block
             role="Card"
             className="p-4 items-center justify-center border-l-4 border-l-current text-text-primary"
@@ -145,18 +142,16 @@ export function TextShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 3. Alignment */}
-      <Block role="Container" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="3. Alignment" />
           <Text role="Body" prominence="Subtle" content="Text alignment utilities." />
-        </div>
+        </Block>
 
-        <Block role="Card" className="p-6 gap-4">
+        <Block role="Card" className="p-6" gap={4}>
           <Text
             role="Body"
             align="left"
@@ -178,20 +173,18 @@ export function TextShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 4. Highlighting */}
-      <Block role="Container" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="4. Search Highlighting" />
           <Text
             role="Body"
             prominence="Subtle"
             content="Built-in highlighting for search results."
           />
-        </div>
+        </Block>
 
         <Block role="Card" className="p-6">
           <Text
@@ -204,23 +197,21 @@ export function TextShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 5. Code & Monospace */}
-      <Block role="Container" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="5. Technical Text" />
           <Text
             role="Body"
             prominence="Subtle"
             content="Monospaced styles for code and keys."
           />
-        </div>
+        </Block>
 
-        <Block role="Grid" density="Standard" className="grid-cols-1 md:grid-cols-2 gap-8">
-          <Block role="Container" className="gap-2">
+        <Block role="Grid" density="Standard" gap={8} spec={{ columns: 2 }}>
+          <Block role="Stack" gap={2}>
             <Text role="Label" content="Inline Code" />
             <div>
               <Text role="Body" content="Run the command " className="inline" />
@@ -229,7 +220,7 @@ export function TextShowcasePage() {
             </div>
           </Block>
 
-          <Block role="Container" className="gap-2">
+          <Block role="Stack" gap={2}>
             <Text role="Label" content="Code Block (Mock)" />
             <Block role="Card" className="bg-surface-sunken p-4 font-mono text-sm">
               <Text role="Code" content="import { Text } from '@/iddl';" />

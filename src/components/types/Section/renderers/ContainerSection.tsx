@@ -4,7 +4,7 @@
  * Roles: Container, Main, SplitContainer
  * General purpose containers with prominence and density support
  *
- * v4.1: baseStyles와 overflowClass를 props로 받음 (role-config에서 주입)
+ * v4.1: baseStyles와 overflowClass를 props로 받음 (role-registry에서 주입)
  */
 
 import type { SectionProps } from '@/components/types/Section/Section.types';
@@ -15,9 +15,9 @@ export interface ContainerSectionProps extends Omit<SectionProps, 'role'> {
   computedProminence: SectionProps['prominence'];
   computedDensity: 'Compact' | 'Standard' | 'Comfortable';
   Element: any;
-  baseStyles: string; // v4.1: role-config에서 주입
-  overflowClass: string; // v4.1: role-config에서 주입
-  ariaProps?: Record<string, string>; // v4.1: role-config에서 주입
+  baseStyles: string; // v4.1: role-registry에서 주입
+  overflowClass: string; // v4.1: role-registry에서 주입
+  ariaProps?: Record<string, string>; // v4.1: role-registry에서 주입
 }
 
 export function ContainerSection({

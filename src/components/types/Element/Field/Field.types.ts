@@ -10,6 +10,7 @@ import type { AsProp, Density, Intent, Prominence } from '../../Shared.types';
  * Ref: docs/2-areas/spec/5-field/field.spec.md
  */
 // 1. Input Category
+export type FieldRole =
   | 'Textbox'     // Text, Email, Password, Url...
   | 'Searchbox'
   | 'Spinbutton'

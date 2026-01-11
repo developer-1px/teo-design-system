@@ -27,7 +27,8 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
 
   return (
     <Block role="Container" prominence="Subtle">
-      {/* Scale wrapper - transform은 presentational 속성 */}
+      {/* Scale wrapper - transform은 presentational 속성이므로 div 유지 */}
+      {/* IDDL Exception: Scale transformation requires native div for proper CSS transform */}
       <div
         className="origin-top-left pointer-events-none"
         style={{

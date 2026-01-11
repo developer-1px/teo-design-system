@@ -16,7 +16,8 @@ export type ActionRole =
   | 'MenuItem' // 메뉴 아이템
   | 'ListItem' // 리스트 아이템 (선택 가능)
   | 'Tab' // 탭 버튼
-  | 'Chip'; // 칩/태그 (토글 가능)
+  | 'Chip' // 칩/태그 (토글 가능)
+  | 'ResizeHandle'; // ✨ NEW: 리사이즈 핸들 (v4.1)
 
 /**
  * Action Behavior - discriminated union
@@ -46,6 +47,7 @@ export interface ActionProps extends AsProp {
   prominence?: Prominence;
   intent?: Intent;
   density?: Density;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'icon'; // ✨ NEW: 사이즈 변형 (v4.1)
   /**
    * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
    * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
@@ -69,4 +71,9 @@ export interface ActionProps extends AsProp {
   onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
   // Children (practical addition for complex content)
   children?: ReactNode; // v1.0.2: children이 있으면 label/icon 대신 렌더링
+
+  // ResizeHandle-specific (v4.1)
+  direction?: 'horizontal' | 'vertical';
+  isResizing?: boolean;
+  gridArea?: string;
 }

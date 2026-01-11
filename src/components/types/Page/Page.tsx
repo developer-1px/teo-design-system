@@ -4,6 +4,7 @@ import { Loader2 } from 'lucide-react';
 import { LayoutProvider } from '@/components/context/IDDLContext.tsx';
 import { useDynamicGridTemplate } from '@/components/types/Page/hooks/useDynamicGridTemplate';
 import type { PageProps, PageRole, PageLayout } from '@/components/types/Page/Page.types';
+import { getRoleConfig } from './role-registry';
 import { cn } from '@/shared/lib/utils';
 
 /**
@@ -77,8 +78,12 @@ export function Page({
   className,
   onClick,
   condition,
+  mixed, // Filter out from rest
   ...rest
 }: PageProps) {
+  // v4.1: Role registry validation
+  const roleConfig = getRoleConfig(role);
+
   // Feature: Dynamic Grid Template Calculation
   const dynamicTemplate = useDynamicGridTemplate(children, layout);
 

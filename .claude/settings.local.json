@@ -38,7 +38,9 @@
       "Bash(gh pr view:*)",
       "Bash(do sed -i '' 's/layout=\"\"full\"\"/layout=\"\"flex\"\" direction=\"\"column\"\"/g' \"$file\")",
       "Bash(pnpm build:*)",
-      "Bash(gh pr list:*)"
+      "Bash(gh pr list:*)",
+      "Read(//private/var/folders/**)",
+      "Bash(sort:*)"
     ],
     "deny": [],
     "ask": []
