@@ -161,7 +161,7 @@ function generateGridTemplate(
         "nav    main"
         "footer footer"
       `,
-      gridTemplateColumns: '240px 1fr',
+      gridTemplateColumns: '288px 1fr',
       gridTemplateRows: 'auto 1fr auto',
     };
   }
@@ -174,7 +174,7 @@ function generateGridTemplate(
         "main   aside"
         "footer footer"
       `,
-      gridTemplateColumns: '1fr 300px',
+      gridTemplateColumns: '1fr 256px',
       gridTemplateRows: 'auto 1fr auto',
     };
   }

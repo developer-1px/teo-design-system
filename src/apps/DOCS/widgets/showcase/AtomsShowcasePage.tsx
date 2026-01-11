@@ -1,18 +1,9 @@
-/**
- * Atoms Showcase Page
- *
- * IDDL 1.0.1 준수 atoms 컴포넌트 전체 데모
- * - Text (5 roles)
- * - Field (21 dataTypes)
- * - Action (7 behaviors)
- */
-
 import { useState } from 'react';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Field, type FieldOption } from '@/components/types/Element/Field/Field';
 import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
 export function AtomsShowcasePage() {
   // Form state for all field types
@@ -56,54 +47,60 @@ export function AtomsShowcasePage() {
     { label: 'Feature 3', value: 'feature3' },
   ];
 
+  const categories = [
+    { id: 'text', label: '1. Text Components' },
+    { id: 'action', label: '2. Action Components' },
+    { id: 'field-view', label: '3. Field (View)' },
+    { id: 'field-edit', label: '4. Field (Edit)' },
+    { id: 'debug', label: '5. State Debug' },
+  ];
+
   const handleChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
-    <Section role="Container" className="min-h-screen p-8">
-      {/* Header */}
-      <Section role="Header" className="mb-8">
-        <Block role="Container">
-          <Text role="Title" content="Atoms Showcase" prominence="Hero" />
-          <Text
-            role="Body"
-            content="IDDL 1.0.1 명세를 준수하는 모든 atoms 컴포넌트 데모"
-            prominence="Standard"
-          />
-        </Block>
-      </Section>
-
-      {/* Text Component Showcase */}
-      <Section role="Container" className="mb-12">
+    <ShowcasePage
+      title="Atoms Showcase"
+      subtitle="IDDL 1.0.1 Specification Reference"
+      description="IDDL 1.0.1 명세를 준수하는 모든 atoms 컴포넌트 데모"
+      categories={categories}
+      activeCategoryId="text"
+    >
+      {/* 1. Text Component Showcase */}
+      <Block role="Container" className="gap-6" id="text">
         <Block role="Card">
           <Text role="Title" content="1. Text Component (5 Roles)" prominence="Standard" />
-          <Section role="Container" className="gap-4 p-4 rounded-lg">
+          <Block role="Container" className="gap-4 p-4 rounded-lg bg-surface-sunken">
             <Text role="Title" content="Title Role" prominence="Standard" />
             <Text role="Body" content="Body role for paragraphs and main content" />
             <Text role="Label" content="Label role for form labels and small text" />
             <Text role="Caption" content="Caption role for metadata and secondary info" />
             <Text role="Code" content="Code role for inline code" />
-          </Section>
+          </Block>
 
           <Text role="Title" content="Intent Colors" prominence="Standard" className="mt-4" />
-          <Section role="Container" className="gap-2 p-4 rounded-lg">
+          <Block role="Container" className="gap-2 p-4 rounded-lg bg-surface-sunken">
             <Text role="Body" content="Neutral (default)" intent="Neutral" />
             <Text role="Body" content="Brand (accent color)" intent="Brand" />
             <Text role="Body" content="Positive (success/green)" intent="Positive" />
             <Text role="Body" content="Caution (warning/yellow)" intent="Caution" />
             <Text role="Body" content="Critical (danger/red)" intent="Critical" />
             <Text role="Body" content="Info (blue)" intent="Info" />
-          </Section>
+          </Block>
         </Block>
-      </Section>
+      </Block>
 
-      {/* Action Component Showcase */}
-      <Section role="Container" className="mb-12">
+      <Block role="Divider" layout="stack">
+        <></>
+      </Block>
+
+      {/* 2. Action Component Showcase */}
+      <Block role="Container" className="gap-6" id="action">
         <Block role="Card">
           <Text role="Title" content="2. Action Component (7 Behaviors)" prominence="Standard" />
 
-          <Section role="Container" className="gap-4 p-4 rounded-lg">
+          <Block role="Container" className="gap-4 p-4 rounded-lg bg-surface-sunken">
             <div>
               <Text role="Label" content="Command Behavior" prominence="Standard" />
               <div className="flex gap-2 mt-2">
@@ -137,7 +134,7 @@ export function AtomsShowcasePage() {
 
             <div>
               <Text role="Label" content="Form Behaviors" prominence="Standard" />
-              <form className="flex gap-2 mt-2">
+              <div className="flex gap-2 mt-2">
                 <Action
                   label="Submit Form"
                   behavior={{ action: 'submit' }}
@@ -145,7 +142,7 @@ export function AtomsShowcasePage() {
                   intent="Brand"
                 />
                 <Action label="Reset Form" behavior={{ action: 'reset' }} prominence="Standard" />
-              </form>
+              </div>
             </div>
 
             <div>
@@ -167,12 +164,16 @@ export function AtomsShowcasePage() {
                 />
               </div>
             </div>
-          </Section>
+          </Block>
         </Block>
-      </Section>
+      </Block>
 
-      {/* Field Component Showcase - View Mode */}
-      <Section role="Container" mode="view" className="mb-12">
+      <Block role="Divider" layout="stack">
+        <></>
+      </Block>
+
+      {/* 3. Field Component Showcase - View Mode */}
+      <Block role="Container" mode="view" className="gap-6" id="field-view">
         <Block role="Card">
           <Text
             role="Title"
@@ -180,7 +181,7 @@ export function AtomsShowcasePage() {
             prominence="Standard"
           />
 
-          <Section role="Container" className="gap-4 p-4 rounded-lg grid-cols-2">
+          <Block role="Container" className="gap-4 p-4 rounded-lg grid grid-cols-2">
             <Field label="Text" model="text" type="text" value={formData.text} />
             <Field label="Number" model="number" type="number" value={formData.number} />
             <Field label="Currency" model="currency" type="currency" value={formData.currency} />
@@ -227,21 +228,25 @@ export function AtomsShowcasePage() {
               value={formData.range}
               constraints={{ min: 0, max: 100 }}
             />
-          </Section>
+          </Block>
 
-          <Section role="Container" className="gap-4 p-4 rounded-lg mt-4">
+          <Block role="Container" className="gap-4 p-4 rounded-lg mt-4">
             <Field label="Textarea" model="textarea" type="textarea" value={formData.textarea} />
             <Field label="Password" model="password" type="password" value="********" />
-          </Section>
+          </Block>
         </Block>
-      </Section>
+      </Block>
 
-      {/* Field Component Showcase - Edit Mode */}
-      <Section role="Container" mode="edit" className="mb-12">
+      <Block role="Divider" layout="stack">
+        <></>
+      </Block>
+
+      {/* 4. Field Component Showcase - Edit Mode */}
+      <Block role="Container" mode="edit" className="gap-6" id="field-edit">
         <Block role="Card">
           <Text role="Title" content="4. Field Component - Edit Mode" prominence="Standard" />
 
-          <Section role="Container" className="gap-4 p-4 rounded-lg grid-cols-2">
+          <Block role="Container" className="gap-4 p-4 rounded-lg grid grid-cols-2">
             <Field
               label="Text"
               model="text"
@@ -332,9 +337,9 @@ export function AtomsShowcasePage() {
               onChange={(v) => handleChange('password', v)}
               constraints={{ minLength: 8 }}
             />
-          </Section>
+          </Block>
 
-          <Section role="Container" className="gap-4 p-4 rounded-lg mt-4">
+          <Block role="Container" className="gap-4 p-4 rounded-lg mt-4">
             <Field
               label="Radio Block"
               model="radio"
@@ -374,19 +379,23 @@ export function AtomsShowcasePage() {
               onChange={(v) => handleChange('range', v)}
               constraints={{ min: 0, max: 100 }}
             />
-          </Section>
+          </Block>
         </Block>
-      </Section>
+      </Block>
+
+      <Block role="Divider" layout="stack">
+        <></>
+      </Block>
 
       {/* Form State Debug */}
-      <Section role="Container" className="mb-8">
+      <Block role="Container" className="gap-6" id="debug">
         <Block role="Card">
           <Text role="Title" content="5. Live Form State (Debug)" prominence="Standard" />
-          <pre className="bg-layer-1 p-4 rounded-lg text-xs overflow-auto max-h-96">
+          <pre className="bg-surface-sunken p-4 rounded-lg text-xs overflow-auto max-h-96">
             {JSON.stringify(formData, null, 2)}
           </pre>
         </Block>
-      </Section>
-    </Section>
+      </Block>
+    </ShowcasePage>
   );
 }

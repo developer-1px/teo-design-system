@@ -45,6 +45,7 @@ export type BlockRole =
   | 'Inline' // 인라인 그룹 (가로 정렬)
   // 데이터 표시 (Data Display)
   | 'List' // 항목 리스트 (<ul>, <ol>)
+  | 'ListItem' // 리스트 아이템 (<li>)
   | 'SortableList' // 정렬 가능한 리스트 (Drag & Drop)
   | 'Grid' // 그리드 레이아웃 (CSS Grid)
   | 'Table' // 테이블 (<table>)
