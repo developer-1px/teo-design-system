@@ -94,9 +94,9 @@ export const SlideList = ({
   const { role: ariaRole, ...containerProps } = selection.getContainerProps();
 
   return (
-    <Block role="Container" role="Container" density="Compact" {...containerProps}>
+    <Block role="Container" density="Comfortable" {...containerProps} className="p-3">
       {/* Toolbar: Add Button */}
-      <Block role="Toolbar" density="Compact">
+      <Block role="Toolbar" density="Comfortable" className="mb-3">
         <Action icon="Plus" onClick={onSlideAdd} />
         {selection.selectedItems.length > 0 && (
           <Text role="Caption" prominence="Subtle">
@@ -106,73 +106,52 @@ export const SlideList = ({
       </Block>
 
       {/* Sortable Slide List (v4.0) with Selection (v4.1 → v1.0.2 simplified) */}
-      {onReorder ? (
-        <Block
-          role="SortableList"
-          density="Compact"
-          className="flex-1 overflow-y-auto"
-          items={slides}
-          value="id"
-          onReorder={onReorder}
-          renderItem={(slide: Slide, index: number) => {
-            return (
+      <Block
+        role="SortableList"
+        density="Comfortable"
+        items={slides}
+        value="id"
+        onReorder={onReorder}
+        className="gap-3"
+        renderItem={(slide: Slide, index: number) => {
+          return (
+            <Block
+              role="Card"
+              density="Compact"
+              prominence="Standard"
+              intent="Neutral"
+              value={slide.id}
+              selectionModel={selectionModel}
+              className="group relative bg-white border-2 border-border rounded-md shadow-sm hover:border-border-emphasis hover:shadow-md data-[selected=true]:border-accent data-[selected=true]:shadow-lg data-[selected=true]:ring-2 data-[selected=true]:ring-accent/20 transition-all duration-200 cursor-move overflow-hidden"
+            >
+              {/* Slide Number Badge - Absolute positioned */}
               <Block
-                role="Card"
-                density="Compact"
-                prominence="Standard"
-                intent="Neutral"
-                value={slide.id}
-                selectionModel={selectionModel}
-                className="cursor-move !bg-white border border-border hover:border-border-emphasis data-[selected=true]:border-accent data-[selected=true]:ring-1 data-[selected=true]:ring-accent/20 transition-all"
+                role="Container"
+                className="absolute top-1.5 left-1.5 z-10 bg-layer-1/90 backdrop-blur-sm rounded px-1.5 py-0.5 shadow-sm"
               >
-                {/* Slide Number + Thumbnail as one group */}
-                <div className="flex flex-col gap-1">
-                  {/* Slide Number */}
-                  <Text role="Caption" prominence="Subtle" className="px-1">
-                    {index + 1}
-                  </Text>
-
-                  {/* Thumbnail */}
-                  <div className="aspect-[16/9] w-full overflow-hidden rounded">
-                    <SlidePreview slide={slide} scale={0.15} />
-                  </div>
-                </div>
+                <Text role="Caption" prominence="Strong" className="font-semibold text-[10px] leading-none">
+                  {index + 1}
+                </Text>
               </Block>
-            );
-          }}
-        />
-      ) : (
-        // Fallback: Non-sortable list (if onReorder is not provided) with Selection (v1.0.2 simplified)
-        <Block role="List" density="Compact" className="flex-1 overflow-y-auto">
-          {slides.map((slide, index) => {
-            return (
+
+              {/* Thumbnail Container */}
+              <Block role="Container" className="aspect-[16/9] overflow-hidden bg-layer-0">
+                <SlidePreview slide={slide} scale={0.15} />
+              </Block>
+
+              {/* Slide Title - Bottom overlay */}
               <Block
-                key={slide.id}
-                role="Card"
-                density="Compact"
-                prominence="Standard"
-                intent="Neutral"
-                value={slide.id}
-                selectionModel={selectionModel}
-                className="!bg-white border border-border hover:border-border-emphasis data-[selected=true]:border-accent data-[selected=true]:ring-1 data-[selected=true]:ring-accent/20 transition-all"
+                role="Container"
+                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               >
-                {/* Slide Number + Thumbnail as one group */}
-                <div className="flex flex-col gap-1">
-                  {/* Slide Number */}
-                  <Text role="Caption" prominence="Subtle" className="px-1">
-                    {index + 1}
-                  </Text>
-
-                  {/* Thumbnail */}
-                  <div className="aspect-[16/9] w-full overflow-hidden rounded">
-                    <SlidePreview slide={slide} scale={0.15} />
-                  </div>
-                </div>
+                <Text role="Caption" className="text-white text-[10px] font-medium truncate leading-tight">
+                  {slide.title || '제목 없음'}
+                </Text>
               </Block>
-            );
-          })}
-        </Block>
-      )}
+            </Block>
+          );
+        }}
+      />
     </Block>
   );
 };

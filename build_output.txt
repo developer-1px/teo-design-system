@@ -1,0 +1,746 @@
+
+> teo-ui-kit@0.0.0 build
+> tsc && vite build
+
+src/apps/BEHAVIOR/pages/BehaviorShowcasePage.tsx(17,1): error TS6133: 'Section' is declared but its value is never read.
+src/apps/BEHAVIOR/pages/BehaviorShowcasePage.tsx(258,9): error TS6133: 'handleActivate' is declared but its value is never read.
+src/apps/BLOCK/pages/block/BlockShowcasePage.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/apps/BLOCK/pages/block/BlockShowcasePage.tsx(37,102): error TS2339: Property 'description' does not exist on type 'BlockRoleConfig'.
+src/apps/BLOCK/pages/block/BlockShowcasePage.tsx(39,137): error TS2339: Property 'htmlTag' does not exist on type 'BlockRoleConfig'.
+src/apps/BLOCK/pages/block/BlockShowcasePage.tsx(46,58): error TS2339: Property 'renderer' does not exist on type 'BlockRoleConfig'.
+src/apps/BLOCK/pages/block/examples/BlockFormsDemo.tsx(16,35): error TS2322: Type '{ label: string; type: string; model: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/BLOCK/pages/block/examples/BlockFormsDemo.tsx(17,32): error TS2322: Type '{ label: string; type: string; model: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/BLOCK/pages/block/examples/BlockNavigationDemo.tsx(59,32): error TS2322: Type '"2"' is not assignable to type 'number | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "4xl" | "none" | "3xl" | undefined'.
+src/apps/BLOCK/pages/block/examples/BlockNavigationDemo.tsx(66,32): error TS2322: Type '"2"' is not assignable to type 'number | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "4xl" | "none" | "3xl" | undefined'.
+src/apps/DOCS/widgets/design-system/ProminenceDemo.tsx(109,14): error TS2304: Cannot find name 'Action'.
+src/apps/DOCS/widgets/design-system/ProminenceDemo.tsx(110,14): error TS2304: Cannot find name 'Action'.
+src/apps/DOCS/widgets/design-system/ProminenceDemo.tsx(111,14): error TS2304: Cannot find name 'Action'.
+src/apps/DOCS/widgets/docs/DocsTree.tsx(9,15): error TS2459: Module '"@/apps/IDE/widgets/file-tree/FileTree.tsx"' declares 'FileNode' locally, but it is not exported.
+src/apps/DOCS/widgets/docs/DocsTree.tsx(36,36): error TS2322: Type '{ data: FileNode[]; onFileClick: ((path: string) => void) | undefined; }' is not assignable to type 'IntrinsicAttributes & FileTreeProps'.
+  Property 'onFileClick' does not exist on type 'IntrinsicAttributes & FileTreeProps'.
+src/apps/DOCS/widgets/docs/DocsViewer.tsx(68,6): error TS2741: Property 'title' is missing in type '{ children: Element[]; role: "Application"; layout: "Sidebar"; }' but required in type 'PageProps'.
+src/apps/DOCS/widgets/docs/DocsViewer.tsx(82,13): error TS2322: Type '{ label: string; type: string; placeholder: string; model: string; onChange: (value: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/docs/MarkdownRenderer.tsx(125,38): error TS6133: 'props' is declared but its value is never read.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(72,37): error TS2322: Type '{ children: Element; role: "Stack"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(98,37): error TS2322: Type '{ children: Element; role: "Stack"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(177,29): error TS2322: Type '"view"' is not assignable to type '"multiple" | "single" | undefined'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(186,48): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(187,52): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(188,56): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(189,48): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(190,56): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(191,54): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(195,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; options: FieldOption[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(202,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; options: FieldOption[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(209,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; options: FieldOption[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(216,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; options: FieldOption[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(220,50): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(221,46): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(222,50): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(223,50): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(224,52): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(228,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; constraints: { min: number; max: number; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(235,56): error TS2322: Type '{ label: string; model: string; type: string; value: any; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(236,56): error TS2322: Type '{ label: string; model: string; type: string; value: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(244,29): error TS2322: Type '"edit"' is not assignable to type '"multiple" | "single" | undefined'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(252,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; placeholder: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(260,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; constraints: { min: number; max: number; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(268,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; required: true; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(276,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(283,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(290,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(297,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; options: FieldOption[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(305,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; placeholder: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(313,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(320,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(327,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(334,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; constraints: { minLength: number; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(345,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; options: FieldOption[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(353,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; options: FieldOption[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(361,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; placeholder: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(369,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(376,17): error TS2322: Type '{ label: string; model: string; type: string; value: any; onChange: (v: any) => void; constraints: { min: number; max: number; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DOCS/widgets/showcase/AtomsShowcasePage.tsx(388,37): error TS2322: Type '{ children: Element; role: "Stack"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/DSLBuilder/lib/dsl-builder/types.ts(10,3): error TS2305: Module '"@/components/types/Block/Block.types"' has no exported member 'Breadcrumb'.
+src/apps/DSLBuilder/lib/dsl-builder/types.ts(12,3): error TS2305: Module '"@/components/types/Block/Block.types"' has no exported member 'FieldConstraints'.
+src/apps/DSLBuilder/lib/dsl-builder/types.ts(13,3): error TS2305: Module '"@/components/types/Block/Block.types"' has no exported member 'FieldOption'.
+src/apps/DSLBuilder/lib/dsl-builder/types.ts(14,3): error TS2305: Module '"@/components/types/Block/Block.types"' has no exported member 'FieldType'.
+src/apps/DSLBuilder/lib/dsl-builder/types.ts(15,3): error TS2305: Module '"@/components/types/Block/Block.types"' has no exported member 'GroupRole'.
+src/apps/DSLBuilder/lib/dsl-builder/types.ts(19,3): error TS2305: Module '"@/components/types/Block/Block.types"' has no exported member 'OverlayRole'.
+src/apps/DSLBuilder/lib/dsl-builder/types.ts(20,3): error TS2305: Module '"@/components/types/Block/Block.types"' has no exported member 'Placement'.
+src/apps/DSLBuilder/lib/dsl-builder/utils.ts(169,9): error TS2353: Object literal may only specify known properties, and 'dataType' does not exist in type 'FieldNode'.
+src/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel.tsx(144,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/apps/DSLBuilder/widgets/dsl-builder/PreviewPanel.tsx(241,15): error TS2322: Type '{ label: string; model: string; type: FieldType; prominence: Prominence | undefined; intent: Intent | undefined; required: boolean | undefined; options: FieldOption[] | undefined; constraints: any; ... 4 more ...; className: string | undefined; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/DSLBuilder/widgets/dsl-builder/PropertyPanel.tsx(24,3): error TS2322: Type '"Table"' is not assignable to type 'BlockRole'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(126,15): error TS2322: Type '{ role: "Spinbutton"; label: string; model: string; defaultValue: number; spec: { min: number; max: number; step: number; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(192,15): error TS2322: Type '{ role: "Checkbox"; label: string; model: string; defaultValue: boolean; spec: { indeterminate: boolean; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(214,15): error TS2322: Type '{ role: "Switch"; label: string; model: string; defaultValue: boolean; spec: {}; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(236,15): error TS2322: Type '{ role: "Radio"; label: string; model: string; defaultValue: string; spec: { legend: string; options: { label: string; value: string; }[]; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(364,15): error TS2322: Type '{ role: "Spinbutton"; label: string; model: string; defaultValue: number; spec: { type: string; min: number; max: number; step: number; range: boolean; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(371,15): error TS2322: Type '{ role: "Rating"; label: string; model: string; defaultValue: number; spec: { max: number; step: number; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(393,15): error TS2322: Type '{ role: "Colorpicker"; label: string; model: string; defaultValue: string; spec: { format: string; alpha: boolean; presets: string[]; variant: string; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(405,15): error TS2322: Type '{ role: "Colorpicker"; label: string; model: string; defaultValue: string; spec: { format: string; alpha: boolean; presets: string[]; variant: string; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(417,15): error TS2322: Type '{ role: "Colorpicker"; label: string; model: string; defaultValue: string; spec: { format: string; alpha: boolean; presets: string[]; variant: string; }; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'defaultValue' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/FIELD/pages/field/FieldShowcasePage.tsx(553,15): error TS2322: Type '"Calendar"' is not assignable to type 'FieldRole'.
+src/apps/IDE/pages/ide/IDEPage.tsx(279,12): error TS2741: Property 'isOpen' is missing in type '{ onClose: () => void; }' but required in type 'BottomPanelProps'.
+src/apps/IDE/widgets/editor/EditorTabs.tsx(1,40): error TS6133: 'X' is declared but its value is never read.
+src/apps/IDE/widgets/editor/MarkdownViewer.tsx(172,42): error TS6133: 'props' is declared but its value is never read.
+src/apps/IDE/widgets/editor/MarkdownViewer.tsx(242,18): error TS2322: Type '{ children: string; jsx: true; global: true; }' is not assignable to type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+  Property 'jsx' does not exist on type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+src/apps/IDE/widgets/sidebar-views/DebugView.tsx(3,3): error TS6133: 'ChevronRight' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/DebugView.tsx(4,3): error TS6133: 'Pause' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/DebugView.tsx(6,3): error TS6133: 'RefreshCw' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/DebugView.tsx(7,3): error TS6133: 'StepBack' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/DebugView.tsx(8,3): error TS6133: 'StepForward' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/DebugView.tsx(9,3): error TS6133: 'StopCircle' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/DebugView.tsx(15,1): error TS6133: 'cn' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/DebugView.tsx(17,1): error TS6133: 'Input' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/ExtensionsView.tsx(1,25): error TS6133: 'Filter' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/JsonView.tsx(1,10): error TS6133: 'Box' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/JsonView.tsx(1,15): error TS6133: 'Braces' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/JsonView.tsx(5,1): error TS6133: 'Text' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/PresentationView.tsx(1,10): error TS6133: 'Image' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/PresentationView.tsx(1,33): error TS6133: 'Play' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/PresentationView.tsx(1,39): error TS6133: 'Square' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/RunView.tsx(1,10): error TS6133: 'ClipboardList' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/RunView.tsx(1,31): error TS6133: 'RefreshCw' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/SearchView.tsx(6,1): error TS6133: 'Section' is declared but its value is never read.
+src/apps/IDE/widgets/sidebar-views/SourceControlView.tsx(1,30): error TS6133: 'ChevronRight' is declared but its value is never read.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(10,49): error TS6133: 'XIcon' is declared but its value is never read.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(65,14): error TS2322: Type '"Header"' is not assignable to type 'BlockRole | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(66,28): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(73,14): error TS2820: Type '"FormSection"' is not assignable to type 'BlockRole | undefined'. Did you mean '"FormActions"'?
+src/apps/IDE/widgets/ThemeSwitcher.tsx(75,28): error TS2322: Type '{ children: Element[]; role: "Grid"; template: string; gridCols: number; gap: "xs"; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'template' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(77,13): error TS2322: Type '"Button"' is not assignable to type 'BlockRole | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(95,13): error TS2322: Type '"Button"' is not assignable to type 'BlockRole | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(116,14): error TS2820: Type '"FormSection"' is not assignable to type 'BlockRole | undefined'. Did you mean '"FormActions"'?
+src/apps/IDE/widgets/ThemeSwitcher.tsx(118,28): error TS2322: Type '{ children: Element[]; role: "Grid"; template: string; gridCols: number; gap: "xs"; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'template' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(122,15): error TS2322: Type '"Button"' is not assignable to type 'BlockRole | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(132,17): error TS2322: Type '"ColorSwatch"' is not assignable to type 'BlockRole | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(145,14): error TS2820: Type '"FormSection"' is not assignable to type 'BlockRole | undefined'. Did you mean '"FormActions"'?
+src/apps/IDE/widgets/ThemeSwitcher.tsx(151,15): error TS2322: Type '"Button"' is not assignable to type 'BlockRole | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(160,22): error TS2322: Type '"Content"' is not assignable to type 'BlockRole | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(161,35): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(165,24): error TS2322: Type '"Indicator"' is not assignable to type 'BlockRole | undefined'.
+src/apps/IDE/widgets/ThemeSwitcher.tsx(165,77): error TS2322: Type '"Brand"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(41,3): error TS6133: 'onOpenSearch' is declared but its value is never read.
+src/apps/IDE/widgets/TopToolbar.tsx(60,30): error TS2322: Type '{ children: (false | Element)[]; role: "Dropdown"; position: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'position' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(87,30): error TS2322: Type '{ children: (false | Element)[]; role: "Dropdown"; position: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'position' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(91,11): error TS2322: Type '{ children: Element[]; variant: "ghost"; size: "sm"; gap: string; onClick: () => void; onBlur: () => number; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'gap' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/apps/IDE/widgets/TopToolbar.tsx(96,29): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(120,30): error TS2322: Type '{ children: (false | Element)[]; role: "Dropdown"; position: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'position' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(124,11): error TS2322: Type '{ children: Element[]; variant: "ghost"; size: "sm"; gap: string; onClick: () => void; onBlur: () => number; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'gap' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/apps/IDE/widgets/TopToolbar.tsx(150,30): error TS2322: Type '{ children: (false | Element)[]; role: "Dropdown"; position: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'position' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(154,11): error TS2322: Type '{ children: Element[]; variant: "ghost"; size: "sm"; gap: string; onClick: () => void; onBlur: () => number; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'gap' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/apps/IDE/widgets/TopToolbar.tsx(197,66): error TS2322: Type '{ role: "Divider"; orientation: "vertical"; height: string; margin: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'margin' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(234,18): error TS2820: Type '"MenuItems"' is not assignable to type 'BlockRole | undefined'. Did you mean '"MenuItem"'?
+src/apps/IDE/widgets/TopToolbar.tsx(236,50): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(250,31): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(251,31): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(255,16): error TS2820: Type '"MenuItems"' is not assignable to type 'BlockRole | undefined'. Did you mean '"MenuItem"'?
+src/apps/IDE/widgets/TopToolbar.tsx(257,51): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(274,9): error TS2322: Type '{ children: Element[]; role: "MenuItem"; direction: "horizontal"; align: string; padding: string; gap: "sm"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(277,27): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(286,9): error TS2322: Type '{ children: Element[]; role: "MenuItem"; direction: "horizontal"; align: string; padding: string; gap: "sm"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(289,27): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(298,9): error TS2322: Type '{ children: Element[]; role: "MenuItem"; direction: "horizontal"; align: string; padding: string; gap: "sm"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(301,27): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(311,9): error TS2322: Type '{ children: Element[]; role: "MenuItem"; direction: "horizontal"; align: string; padding: string; gap: "sm"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(314,27): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(316,31): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(317,31): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(337,9): error TS2322: Type '{ children: Element[]; role: "MenuItem"; direction: "horizontal"; align: string; padding: string; gap: "sm"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(340,27): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(349,9): error TS2322: Type '{ children: Element[]; role: "MenuItem"; direction: "horizontal"; align: string; padding: string; gap: "sm"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(351,27): error TS2322: Type '"Brand"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(352,27): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(358,16): error TS2820: Type '"MenuItems"' is not assignable to type 'BlockRole | undefined'. Did you mean '"MenuItem"'?
+src/apps/IDE/widgets/TopToolbar.tsx(367,15): error TS2322: Type '{ children: Element[]; key: string; role: "MenuItem"; direction: "horizontal"; align: string; padding: string; gap: "xs"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/IDE/widgets/TopToolbar.tsx(370,33): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/IDE/widgets/TopToolbar.tsx(377,31): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/JSON/lib/json-schema.ts(42,42): error TS2554: Expected 1 arguments, but got 2.
+src/apps/JSON/pages/json/JSONPage.tsx(83,30): error TS6133: 'key' is declared but its value is never read.
+src/apps/JSON/pages/json/JSONPage.tsx(83,43): error TS6133: 'value' is declared but its value is never read.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(102,28): error TS18047: 'aVal' is possibly 'null'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(102,35): error TS18047: 'bVal' is possibly 'null'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(156,6): error TS2741: Property 'title' is missing in type '{ children: Element; role: "Application"; }' but required in type 'PageProps'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(185,19): error TS2322: Type '{ model: string; type: string; placeholder: string; clearable: true; value: string; onChange: (e: ChangeEvent<HTMLInputElement>) => void; className: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(198,19): error TS2322: Type '{ label: string; model: string; type: string; options: { label: string; value: string; }[]; value: string; onChange: (e: ChangeEvent<HTMLSelectElement>) => void; className: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(212,19): error TS2322: Type '{ model: string; type: string; options: { label: string; value: string; }[]; value: "tree" | "table" | "json"; onChange: (e: ChangeEvent<HTMLInputElement>) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(235,19): error TS2322: Type '{ label: string; model: string; type: string; options: { label: string; value: string; }[]; value: string; onChange: (e: ChangeEvent<HTMLSelectElement>) => void; className: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(246,19): error TS2322: Type '{ model: string; type: string; options: { label: string; value: string; }[]; value: "desc" | "asc"; onChange: (e: ChangeEvent<HTMLInputElement>) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(287,24): error TS2322: Type 'ColumnDef<JsonObject>[]' is not assignable to type 'IDDLColumnDef<JsonObject, unknown>[]'.
+  Type 'ColumnDef<JsonObject>' is not assignable to type 'IDDLColumnDef<JsonObject, unknown>'.
+    Type 'ColumnDefBase<JsonObject, unknown> & StringHeaderIdentifier' is not assignable to type 'IDDLColumnDef<JsonObject, unknown>'.
+      Types of property 'cell' are incompatible.
+        Type 'ColumnDefTemplate<CellContext<JsonObject, unknown>> | undefined' is not assignable to type '(props: CellContext<JsonObject, unknown>) => ReactElement<unknown, string | JSXElementConstructor<any>>'.
+          Type 'undefined' is not assignable to type '(props: CellContext<JsonObject, unknown>) => ReactElement<unknown, string | JSXElementConstructor<any>>'.
+src/apps/JSON/pages/server-products-dsl/ServerProductsViewDSL.tsx(287,42): error TS2322: Type 'JsonValue[]' is not assignable to type 'JsonObject[]'.
+  Type 'JsonValue' is not assignable to type 'JsonObject'.
+    Type 'null' is not assignable to type 'JsonObject'.
+src/apps/JSON/pages/server-products/ServerProductsView.tsx(1,1): error TS6133: 'ColumnDef' is declared but its value is never read.
+src/apps/JSON/pages/server-products/ServerProductsView.tsx(107,22): error TS2322: Type 'IDDLColumnDef<JsonObject, unknown>[]' is not assignable to type 'IDDLColumnDef<string | number | boolean | JsonObject | JsonArray | null, unknown>[]'.
+  Type 'IDDLColumnDef<JsonObject, unknown>' is not assignable to type 'IDDLColumnDef<string | number | boolean | JsonObject | JsonArray | null, unknown>'.
+    Types of property 'cell' are incompatible.
+      Type '(props: CellContext<JsonObject, unknown>) => ReactElement<unknown, string | JSXElementConstructor<any>>' is not assignable to type '(props: CellContext<string | number | boolean | JsonObject | JsonArray | null, unknown>) => ReactElement<unknown, string | JSXElementConstructor<any>>'.
+        Types of parameters 'props' and 'props' are incompatible.
+          Type 'CellContext<string | number | boolean | JsonObject | JsonArray | null, unknown>' is not assignable to type 'CellContext<JsonObject, unknown>'.
+            The types of 'cell.column.columnDef' are incompatible between these types.
+              Type 'ColumnDef<string | number | boolean | JsonObject | JsonArray | null, unknown>' is not assignable to type 'ColumnDef<JsonObject, unknown>'.
+                Type 'ColumnDefBase<string | number | boolean | JsonObject | JsonArray | null, unknown> & StringHeaderIdentifier' is not assignable to type 'ColumnDef<JsonObject, unknown>'.
+                  Type 'ColumnDefBase<string | number | boolean | JsonObject | JsonArray | null, unknown> & StringHeaderIdentifier' is not assignable to type 'AccessorFnColumnDefBase<JsonObject, unknown> & IdIdentifier<JsonObject, unknown>'.
+                    Property 'accessorFn' is missing in type 'ColumnDefBase<string | number | boolean | JsonObject | JsonArray | null, unknown> & StringHeaderIdentifier' but required in type 'AccessorFnColumnDefBase<JsonObject, unknown>'.
+src/apps/JSON/widgets/database/DatabaseViewer.tsx(72,6): error TS2741: Property 'title' is missing in type '{ children: Element; }' but required in type 'PageProps'.
+src/apps/JSON/widgets/database/DatabaseViewer.tsx(83,20): error TS2820: Type '"navigation"' is not assignable to type 'BlockRole | undefined'. Did you mean '"Navigator"'?
+src/apps/JSON/widgets/database/DatabaseViewer.tsx(93,26): error TS2322: Type '"Info"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(40,14): error TS2322: Type '"Board"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(42,34): error TS2322: Type '"Column"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(42,48): error TS2322: Type '"flex"' is not assignable to type 'Layout | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(42,62): error TS2322: Type '"column"' is not assignable to type '"vertical" | "horizontal" | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(45,15): error TS2322: Type '"Header"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(52,36): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(60,32): error TS2322: Type '"scroll"' is not assignable to type 'Layout | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(65,50): error TS2322: Type '{ children: Element; key: number; padding: "sm"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & CardProps & RefAttributes<HTMLDivElement>'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & CardProps & RefAttributes<HTMLDivElement>'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(72,44): error TS2322: Type '"Field"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/BoardView.tsx(76,31): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/JSON/widgets/database/views/GalleryView.tsx(34,44): error TS2322: Type '{ children: Element; key: number; padding: "md"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & CardProps & RefAttributes<HTMLDivElement>'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & CardProps & RefAttributes<HTMLDivElement>'.
+src/apps/JSON/widgets/database/views/GalleryView.tsx(38,26): error TS2322: Type '"Media"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/GalleryView.tsx(57,52): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/JSON/widgets/database/views/GalleryView.tsx(62,38): error TS2322: Type '"Field"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/ListView.tsx(31,15): error TS2322: Type '{ children: Element[]; key: number; role: "ListItem"; direction: "horizontal"; padding: string; align: string; gap: "md"; interactive: true; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'interactive' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/JSON/widgets/database/views/ListView.tsx(35,35): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/JSON/widgets/database/views/ListView.tsx(45,38): error TS2322: Type '"Field"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/ListView.tsx(64,18): error TS2322: Type '"Empty"' is not assignable to type 'BlockRole | undefined'.
+src/apps/JSON/widgets/database/views/TableView.tsx(122,9): error TS2322: Type 'ColumnDef<JsonObject>[]' is not assignable to type 'IDDLColumnDef<JsonObject, unknown>[]'.
+  Type 'ColumnDef<JsonObject>' is not assignable to type 'IDDLColumnDef<JsonObject, unknown>'.
+    Type 'ColumnDefBase<JsonObject, unknown> & StringHeaderIdentifier' is not assignable to type 'IDDLColumnDef<JsonObject, unknown>'.
+      Types of property 'cell' are incompatible.
+        Type 'ColumnDefTemplate<CellContext<JsonObject, unknown>> | undefined' is not assignable to type '(props: CellContext<JsonObject, unknown>) => ReactElement<unknown, string | JSXElementConstructor<any>>'.
+          Type 'undefined' is not assignable to type '(props: CellContext<JsonObject, unknown>) => ReactElement<unknown, string | JSXElementConstructor<any>>'.
+src/apps/JSON/widgets/database/ViewSwitcher.tsx(28,17): error TS2322: Type '{ children: Element[]; gap: string; }' is not assignable to type 'IntrinsicAttributes & TabsListProps'.
+  Property 'gap' does not exist on type 'IntrinsicAttributes & TabsListProps'.
+src/apps/JSON/widgets/json-viewer/FormView.tsx(11,1): error TS6133: 'Block' is declared but its value is never read.
+src/apps/JSON/widgets/json-viewer/FormView.tsx(151,17): error TS2322: Type '{ key: string; label: string; model: string; dataType: any; value: JsonValue; onChange: (e: any) => void; density: "Compact"; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'dataType' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebar.tsx(110,100): error TS18047: 'schema.analysis' is possibly 'null'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebar.tsx(114,100): error TS18047: 'schema.analysis' is possibly 'null'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebar.tsx(118,104): error TS18047: 'schema.analysis' is possibly 'null'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL.tsx(97,16): error TS2304: Cannot find name 'Item'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL.tsx(109,17): error TS2304: Cannot find name 'Item'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL.tsx(153,14): error TS2304: Cannot find name 'Item'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL.tsx(165,15): error TS2304: Cannot find name 'Item'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL.tsx(171,18): error TS2304: Cannot find name 'Item'.
+src/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL.tsx(177,19): error TS2304: Cannot find name 'Item'.
+src/apps/OVERLAY/pages/overlay/OverlayShowcasePage.tsx(28,61): error TS2322: Type '{ children: Element[]; role: "Container"; density: "Comfortable"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/OVERLAY/pages/overlay/OverlayShowcasePage.tsx(55,61): error TS2322: Type '{ children: Element[]; role: "Container"; density: "Comfortable"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/OVERLAY/pages/overlay/OverlayShowcasePage.tsx(83,61): error TS2322: Type '{ children: Element[]; role: "Container"; density: "Comfortable"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(77,49): error TS2339: Property 'overflow' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(86,15): error TS2339: Property 'description' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(87,64): error TS2339: Property 'description' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(95,23): error TS2339: Property 'gridArea' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(102,23): error TS2339: Property 'overflow' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(112,27): error TS2339: Property 'htmlTag' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(119,23): error TS2339: Property 'baseStyles' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(156,58): error TS2339: Property 'gridArea' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(249,50): error TS2339: Property 'gridArea' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(252,49): error TS2339: Property 'overflow' does not exist on type 'RoleConfig'.
+src/apps/PAGE/pages/page/PageShowcasePage.tsx(372,33): error TS2322: Type '{ children: Element[]; role: "Stack"; Element: string; gap: number; className: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'Element' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/PPT/pages/ppt/PPTPage.tsx(62,11): error TS6133: 'sidebarWidth' is declared but its value is never read.
+src/apps/PPT/pages/ppt/PPTPage.tsx(73,11): error TS6133: 'formatBarWidth' is declared but its value is never read.
+src/apps/PPT/pages/ppt/PresentationModePage.tsx(126,30): error TS2322: Type '"Fullscreen"' is not assignable to type 'PageRole | undefined'.
+src/apps/PPT/pages/ppt/PresentationModePage.tsx(135,21): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/PPT/pages/ppt/PresentationModePage.tsx(145,28): error TS2322: Type '"Fullscreen"' is not assignable to type 'PageRole | undefined'.
+src/apps/PPT/pages/ppt/PresentationModePage.tsx(175,11): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/PPT/pages/ppt/PresentationModePage.tsx(194,11): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/PPT/pages/ppt/PresentationModePage.tsx(202,43): error TS2322: Type '{ orientation: "vertical"; prominence: string; className: string; }' is not assignable to type 'IntrinsicAttributes & SeparatorProps'.
+  Property 'prominence' does not exist on type 'IntrinsicAttributes & SeparatorProps'.
+src/apps/PPT/pages/ppt/PresentationModePage.tsx(207,11): error TS2322: Type '"Tertiary"' is not assignable to type 'Prominence | undefined'.
+src/apps/PPT/widgets/presentation/DSLSlideCanvas.tsx(72,41): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/PPT/widgets/presentation/FormatSidebar.tsx(62,32): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/PPT/widgets/presentation/FormatSidebar.tsx(70,15): error TS2322: Type '{ role: "Select"; label: string; model: string; value: string; onChange: (value: any) => void; options: { label: string; value: string; }[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'options' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/PPT/widgets/presentation/FormatSidebar.tsx(79,15): error TS2322: Type '"Input"' is not assignable to type 'FieldRole'.
+src/apps/PPT/widgets/presentation/FormatSidebar.tsx(89,15): error TS2322: Type '"Input"' is not assignable to type 'FieldRole'.
+src/apps/PPT/widgets/presentation/FormatSidebar.tsx(100,32): error TS2322: Type '"Secondary"' is not assignable to type 'Prominence | undefined'.
+src/apps/PPT/widgets/presentation/FormatSidebar.tsx(103,15): error TS2322: Type '"Input"' is not assignable to type 'FieldRole'.
+src/apps/PPT/widgets/presentation/FormatSidebar.tsx(117,15): error TS2322: Type '{ role: "Radio"; label: string; model: string; value: string; onChange: (value: any) => void; options: { label: string; value: string; }[]; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'options' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/PPT/widgets/presentation/SlideList.tsx(56,3): error TS6133: 'onSlideDelete' is declared but its value is never read.
+src/apps/PPT/widgets/presentation/SlidePreview.tsx(50,39): error TS2322: Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/apps/SECTION/pages/section/SectionShowcasePage.tsx(28,76): error TS2322: Type '{ children: Element[]; role: "Container"; layout: "stack"; density: "Comfortable"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/SECTION/pages/section/SectionShowcasePage.tsx(57,31): error TS2322: Type '{ children: Element[]; role: "Container"; mixed: true; density: "Comfortable"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'mixed' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/SECTION/pages/section/SectionShowcasePage.tsx(94,76): error TS2322: Type '{ children: Element[]; role: "Container"; layout: "stack"; density: "Comfortable"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/SECTION/pages/section/SectionShowcasePage.tsx(119,76): error TS2322: Type '{ children: Element[]; role: "Container"; layout: "stack"; density: "Comfortable"; gap: number; id: string; }' is not assignable to type 'IntrinsicAttributes & BlockProps'.
+  Property 'id' does not exist on type 'IntrinsicAttributes & BlockProps'.
+src/apps/showcase/pages/BlockShowcasePage.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/apps/showcase/pages/BlockShowcasePage.tsx(37,102): error TS2339: Property 'description' does not exist on type 'BlockRoleConfig'.
+src/apps/showcase/pages/BlockShowcasePage.tsx(39,137): error TS2339: Property 'htmlTag' does not exist on type 'BlockRoleConfig'.
+src/apps/showcase/pages/BlockShowcasePage.tsx(46,58): error TS2339: Property 'renderer' does not exist on type 'BlockRoleConfig'.
+src/apps/showcase/widgets/components/AddonsPanel.tsx(12,3): error TS6196: 'ComponentMetadata' is declared but never used.
+src/apps/showcase/widgets/components/AddonsPanel.tsx(98,27): error TS2322: Type '{ metadata: ComponentMetadata; }' is not assignable to type 'IntrinsicAttributes & MarkdownDocsProps'.
+  Property 'metadata' does not exist on type 'IntrinsicAttributes & MarkdownDocsProps'.
+src/apps/showcase/widgets/components/Canvas.tsx(13,3): error TS6196: 'ComponentMetadata' is declared but never used.
+src/apps/showcase/widgets/components/MarkdownDocs.tsx(55,21): error TS6133: 'isInline' is declared but its value is never read.
+src/apps/showcase/widgets/components/Preview.tsx(5,10): error TS6133: 'lazy' is declared but its value is never read.
+src/apps/showcase/widgets/components/Preview.tsx(11,3): error TS6196: 'ComponentMetadata' is declared but never used.
+src/apps/showcase/widgets/components/Preview.tsx(84,16): error TS2820: Type '"navigation"' is not assignable to type 'SectionRole | undefined'. Did you mean '"Navigator"'?
+src/apps/showcase/widgets/components/PropsPanel.tsx(12,15): error TS2305: Module '"@/components/types/Element/Field/Field"' has no exported member 'DataType'.
+src/apps/showcase/widgets/components/PropsPanel.tsx(56,14): error TS2322: Type '"Form"' is not assignable to type 'SectionRole | undefined'.
+src/apps/showcase/widgets/components/PropsPanel.tsx(90,15): error TS2322: Type '{ key: string; dataType: DataType; label: string; value: any; options: { label: string; value: string; }[] | undefined; onChange: (newValue: any) => void; placeholder: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'dataType' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/showcase/widgets/components/PropsPanel.tsx(125,13): error TS2322: Type '{ type: string; label: string; value: string; onChange: (value: any) => void; placeholder: string; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/showcase/widgets/components/Sidebar.tsx(17,1): error TS6133: 'Action' is declared but its value is never read.
+src/apps/showcase/widgets/components/Sidebar.tsx(85,9): error TS6133: 'totalFiles' is declared but its value is never read.
+src/apps/showcase/widgets/components/Sidebar.tsx(96,9): error TS6133: 'filteredFiles' is declared but its value is never read.
+src/apps/showcase/widgets/components/Sidebar.tsx(256,11): error TS2322: Type '{ type: string; placeholder: string; value: string; onChange: (value: any) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/apps/showcase/widgets/components/Toolbar.tsx(26,1): error TS6133: 'Separator' is declared but its value is never read.
+src/components/context/IDDLContext.tsx(10,15): error TS2305: Module '"@/components/types/Shared.types"' has no exported member 'LayoutContextValue'.
+src/components/headless/components/useAccordion.ts(88,30): error TS6133: 'event' is declared but its value is never read.
+src/components/headless/components/useMenu.ts(9,23): error TS6133: 'useRef' is declared but its value is never read.
+src/components/headless/components/useMenu.ts(66,23): error TS6133: 'setActiveIndex' is declared but its value is never read.
+src/components/headless/components/useMenu.ts(81,28): error TS6133: 'event' is declared but its value is never read.
+src/components/headless/components/useMenu.ts(109,30): error TS6133: 'event' is declared but its value is never read.
+src/components/headless/components/usePopover.ts(75,11): error TS6133: 'placement' is declared but its value is never read.
+src/components/headless/components/useTabs.ts(83,30): error TS6133: 'event' is declared but its value is never read.
+src/components/headless/primitives/useFocusTrap.ts(39,11): error TS6133: 'container' is declared but its value is never read.
+src/components/headless/primitives/useListNavigation.ts(12,23): error TS6133: 'useRef' is declared but its value is never read.
+src/components/headless/primitives/useRovingFocus.ts(9,23): error TS6133: 'useEffect' is declared but its value is never read.
+src/components/headless/primitives/useRovingFocus.ts(56,30): error TS6133: 'event' is declared but its value is never read.
+src/components/types/Block/Block.tsx(24,27): error TS6196: 'BlockRole' is declared but never used.
+src/components/types/Block/Block.tsx(28,25): error TS6133: 'hasRenderer' is declared but its value is never read.
+src/components/types/Block/Block.tsx(155,3): error TS2339: Property 'computedSize' does not exist on type 'BlockProps'.
+src/components/types/Block/Block.tsx(156,3): error TS2339: Property 'element' does not exist on type 'BlockProps'.
+src/components/types/Block/Block.tsx(157,3): error TS2339: Property 'mixed' does not exist on type 'BlockProps'.
+src/components/types/Block/Block.tsx(260,36): error TS2345: Argument of type 'BlockRole | undefined' is not assignable to parameter of type 'BlockRole'.
+  Type 'undefined' is not assignable to type 'BlockRole'.
+src/components/types/Block/Block.tsx(269,44): error TS2339: Property 'htmlTag' does not exist on type 'BlockRoleConfig'.
+src/components/types/Block/Block.tsx(270,33): error TS2339: Property 'ariaProps' does not exist on type 'BlockRoleConfig'.
+src/components/types/Block/Block.tsx(295,32): error TS2339: Property 'renderer' does not exist on type 'BlockRoleConfig'.
+src/components/types/Block/Block.tsx(336,25): error TS2339: Property 'baseStyles' does not exist on type 'BlockRoleConfig'.
+src/components/types/Block/role-config.ts(11,1): error TS6133: 'ComponentType' is declared but its value is never read.
+src/components/types/Block/role-config.ts(12,37): error TS2307: Cannot find module '../../shared/role.base' or its corresponding type declarations.
+src/components/types/Block/role-config.ts(13,38): error TS6196: 'BlockRendererProps' is declared but never used.
+src/components/types/Block/role-config.ts(168,30): error TS2339: Property 'renderer' does not exist on type 'BlockRoleConfig'.
+src/components/types/Block/role/Accordion.tsx(28,41): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/Accordion.tsx(84,3): error TS2339: Property 'children' does not exist on type 'AccordionProps'.
+src/components/types/Block/role/Accordion.tsx(85,3): error TS2339: Property 'computedDensity' does not exist on type 'AccordionProps'.
+src/components/types/Block/role/Accordion.tsx(86,3): error TS2339: Property 'computedProminence' does not exist on type 'AccordionProps'.
+src/components/types/Block/role/Accordion.tsx(87,3): error TS2339: Property 'computedIntent' does not exist on type 'AccordionProps'.
+src/components/types/Block/role/Accordion.tsx(92,3): error TS2339: Property 'Element' does not exist on type 'AccordionProps'.
+src/components/types/Block/role/Accordion.tsx(126,26): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Compact: string; Standard: string; Comfortable: string; }'.
+src/components/types/Block/role/Accordion.tsx(262,46): error TS6133: 'className' is declared but its value is never read.
+src/components/types/Block/role/DataDisplay.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/types/Block/role/DataDisplay.tsx(3,36): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/DataTable.tsx(74,5): error TS2322: Type 'IDDLColumnDef<TData, TValue>[]' is not assignable to type 'ColumnDef<TData, any>[]'.
+  Type 'IDDLColumnDef<TData, TValue>' is not assignable to type 'ColumnDef<TData, any>'.
+    Type 'IDDLColumnDef<TData, TValue>' is not assignable to type 'AccessorFnColumnDefBase<TData, any> & IdIdentifier<TData, any>'.
+      Property 'accessorFn' is missing in type 'IDDLColumnDef<TData, TValue>' but required in type 'AccessorFnColumnDefBase<TData, any>'.
+src/components/types/Block/role/DataTable.tsx(115,16): error TS6133: 'row' is declared but its value is never read.
+src/components/types/Block/role/DataTable.tsx(205,41): error TS2339: Property 'accessorKey' does not exist on type 'IDDLColumnDef<TData, TValue>'.
+src/components/types/Block/role/DataTable.tsx(265,13): error TS2322: Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type 'string'.
+src/components/types/Block/role/DataTable.tsx(266,13): error TS2322: Type '"Primary" | "Secondary"' is not assignable to type 'Prominence | undefined'.
+  Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Block/role/DataTable.tsx(272,13): error TS2322: Type 'ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>' is not assignable to type 'string'.
+src/components/types/Block/role/DataTable.tsx(273,13): error TS2322: Type '"Primary" | "Secondary"' is not assignable to type 'Prominence | undefined'.
+  Type '"Primary"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Block/role/DataTable.tsx(292,70): error TS2339: Property 'accessorKey' does not exist on type 'ColumnDef<TData, unknown>'.
+  Property 'accessorKey' does not exist on type 'ColumnDefBase<TData, unknown> & StringHeaderIdentifier'.
+src/components/types/Block/role/DataTable.tsx(395,47): error TS2339: Property 'accessorKey' does not exist on type 'ColumnDef<TData, unknown>'.
+  Property 'accessorKey' does not exist on type 'ColumnDefBase<TData, unknown> & StringHeaderIdentifier'.
+src/components/types/Block/role/Feedback.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/types/Block/role/Feedback.tsx(3,36): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/Form.tsx(3,36): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/Interaction.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/types/Block/role/Interaction.tsx(3,36): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/Layout.tsx(3,36): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/List.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/types/Block/role/List.tsx(3,36): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/List.tsx(83,61): error TS6133: 'props' is declared but its value is never read.
+src/components/types/Block/role/Navigation.tsx(3,36): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/Navigation.tsx(42,25): error TS6133: 'step' is declared but its value is never read.
+src/components/types/Block/role/Overlay.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/types/Block/role/Overlay.tsx(3,36): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/SortableList.tsx(45,41): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/SortableList.tsx(82,3): error TS2339: Property 'children' does not exist on type 'SortableListProps'.
+src/components/types/Block/role/SortableList.tsx(83,3): error TS2339: Property 'computedDensity' does not exist on type 'SortableListProps'.
+src/components/types/Block/role/SortableList.tsx(84,3): error TS2339: Property 'computedProminence' does not exist on type 'SortableListProps'.
+src/components/types/Block/role/SortableList.tsx(85,3): error TS2339: Property 'computedIntent' does not exist on type 'SortableListProps'.
+src/components/types/Block/role/SortableList.tsx(86,3): error TS2339: Property 'Element' does not exist on type 'SortableListProps'.
+src/components/types/Block/role/SortableList.tsx(95,22): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Compact: string; Standard: string; Comfortable: string; }'.
+src/components/types/Block/role/Toolbar.tsx(23,41): error TS2307: Cannot find module '../../Block.types' or its corresponding type declarations.
+src/components/types/Block/role/Toolbar.tsx(50,22): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Compact: string; Standard: string; Comfortable: string; }'.
+src/components/types/Block/role/Toolbar.tsx(57,26): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Compact: string; Standard: string; Comfortable: string; }'.
+src/components/types/Block/role/Toolbar.tsx(106,32): error TS6133: 'className' is declared but its value is never read.
+src/components/types/Block/role/Tree.tsx(8,1): error TS6133: 'React' is declared but its value is never read.
+src/components/types/Block/role/Tree.tsx(48,23): error TS6133: 'isExpanded' is declared but its value is never read.
+src/components/types/Element/Action/Action.tsx(16,25): error TS6133: 'hasRenderer' is declared but its value is never read.
+src/components/types/Element/Action/role-registry.ts(37,5): error TS2322: Type '({ label, icon, loading, selected, computedProminence, computedIntent, computedDensity, computedSize, isDisabled, handleClick, Element, href, target, children, ...rest }: ButtonActionProps) => Element' is not assignable to type 'ComponentType<ActionProps> | undefined'.
+  Type '({ label, icon, loading, selected, computedProminence, computedIntent, computedDensity, computedSize, isDisabled, handleClick, Element, href, target, children, ...rest }: ButtonActionProps) => Element' is not assignable to type 'FunctionComponent<ActionProps>'.
+    Types of parameters '__0' and 'props' are incompatible.
+      Type 'ActionProps' is missing the following properties from type 'ButtonActionProps': computedProminence, computedIntent, computedDensity, computedSize, and 3 more.
+src/components/types/Element/Action/role-registry.ts(51,5): error TS2322: Type '({ label, icon, loading, selected, computedProminence, computedIntent, computedDensity, computedSize, isDisabled, handleClick, Element, href, target, children, ...rest }: IconButtonActionProps) => Element' is not assignable to type 'ComponentType<ActionProps> | undefined'.
+  Type '({ label, icon, loading, selected, computedProminence, computedIntent, computedDensity, computedSize, isDisabled, handleClick, Element, href, target, children, ...rest }: IconButtonActionProps) => Element' is not assignable to type 'FunctionComponent<ActionProps>'.
+    Types of parameters '__0' and 'props' are incompatible.
+      Type 'ActionProps' is missing the following properties from type 'IconButtonActionProps': computedProminence, computedIntent, computedDensity, computedSize, and 3 more.
+src/components/types/Element/Action/role-registry.ts(65,5): error TS2322: Type '({ label, icon, loading, selected, computedProminence, computedIntent, computedDensity, isDisabled, handleClick, Element, href, target, children, ...rest }: LinkActionProps) => Element' is not assignable to type 'ComponentType<ActionProps> | undefined'.
+  Type '({ label, icon, loading, selected, computedProminence, computedIntent, computedDensity, isDisabled, handleClick, Element, href, target, children, ...rest }: LinkActionProps) => Element' is not assignable to type 'FunctionComponent<ActionProps>'.
+    Types of parameters '__0' and 'props' are incompatible.
+      Type 'ActionProps' is missing the following properties from type 'LinkActionProps': computedProminence, computedIntent, computedDensity, isDisabled, and 2 more.
+src/components/types/Element/Field/Field.tsx(14,1): error TS6133: 'getInputStyles' is declared but its value is never read.
+src/components/types/Element/Field/Field.tsx(14,10): error TS2724: '"./styles/field.styles"' has no exported member named 'getInputStyles'. Did you mean 'inputStyles'?
+src/components/types/Element/Field/Field.tsx(17,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldOption'.
+src/components/types/Element/Field/headless/useFieldCheckbox.ts(33,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldOption'.
+src/components/types/Element/Field/headless/useFieldColorpicker.ts(112,5): error TS6133: 'alpha' is declared but its value is never read.
+src/components/types/Element/Field/headless/useFieldColorpicker.ts(113,5): error TS6133: 'presets' is declared but its value is never read.
+src/components/types/Element/Field/headless/useFieldListbox.ts(11,15): error TS2305: Module '"../Field.types"' has no exported member 'FieldOption'.
+src/components/types/Element/Field/headless/useFieldRating.ts(159,5): error TS6133: 'allowHalf' is declared but its value is never read.
+src/components/types/Element/Field/headless/useFieldSelect.ts(30,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldOption'.
+src/components/types/Element/Field/headless/useFieldSelect.ts(274,5): error TS6133: 'e' is declared but its value is never read.
+src/components/types/Element/Field/headless/useFieldSignature.ts(111,3): error TS6133: 'trimWhitespace' is declared but its value is never read.
+src/components/types/Element/Field/headless/useFieldSignature.ts(333,5): error TS2322: Type 'RefObject<HTMLCanvasElement | null>' is not assignable to type 'RefObject<HTMLCanvasElement>'.
+  Type 'HTMLCanvasElement | null' is not assignable to type 'HTMLCanvasElement'.
+    Type 'null' is not assignable to type 'HTMLCanvasElement'.
+src/components/types/Element/Field/headless/useFieldSpinbutton.ts(26,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldConstraints'.
+src/components/types/Element/Field/headless/useFieldTextarea.ts(26,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldConstraints'.
+src/components/types/Element/Field/headless/useFieldTextbox.ts(27,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldConstraints'.
+src/components/types/Element/Field/init-fields.ts(38,30): error TS2345: Argument of type '(props: FieldTextboxProps) => Element' is not assignable to parameter of type 'ComponentType<FieldProps>'.
+  Type '(props: FieldTextboxProps) => Element' is not assignable to type 'FunctionComponent<FieldProps>'.
+    Types of parameters 'props' and 'props' are incompatible.
+      Property 'type' is missing in type 'FieldProps' but required in type 'FieldTextboxProps'.
+src/components/types/Element/Field/renderers/choice/FieldCheckbox.tsx(21,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldOption'.
+src/components/types/Element/Field/renderers/choice/FieldCheckbox.tsx(130,51): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/choice/FieldListbox.tsx(22,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldOption'.
+src/components/types/Element/Field/renderers/choice/FieldListbox.tsx(132,11): error TS2353: Object literal may only specify known properties, and 'prominence' does not exist in type 'FieldWrapperProps'.
+src/components/types/Element/Field/renderers/choice/FieldListbox.tsx(143,11): error TS2322: Type '"Hero" | "Strong" | "Standard" | "Subtle"' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/choice/FieldRadio.tsx(19,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldOption'.
+src/components/types/Element/Field/renderers/choice/FieldRadio.tsx(108,5): error TS2322: Type '((value: string | number | boolean) => void) | undefined' is not assignable to type '((value: string | number | boolean | (string | number | boolean)[]) => void) | undefined'.
+  Type '(value: string | number | boolean) => void' is not assignable to type '(value: string | number | boolean | (string | number | boolean)[]) => void'.
+    Types of parameters 'value' and 'value' are incompatible.
+      Type 'string | number | boolean | (string | number | boolean)[]' is not assignable to type 'string | number | boolean'.
+        Type '(string | number | boolean)[]' is not assignable to type 'string | number | boolean'.
+src/components/types/Element/Field/renderers/choice/FieldRadio.tsx(114,40): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/choice/FieldSelect.tsx(19,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldOption'.
+src/components/types/Element/Field/renderers/choice/FieldSelect.tsx(122,55): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/choice/ListboxRole.tsx(11,34): error TS2307: Cannot find module '../Field.types' or its corresponding type declarations.
+src/components/types/Element/Field/renderers/control/FieldColorpicker.tsx(147,11): error TS2353: Object literal may only specify known properties, and 'prominence' does not exist in type 'FieldWrapperProps'.
+src/components/types/Element/Field/renderers/control/FieldColorpicker.tsx(160,13): error TS2322: Type '"Hero" | "Strong" | "Standard" | "Subtle"' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/control/FieldRating.tsx(17,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldConstraints'.
+src/components/types/Element/Field/renderers/control/FieldRating.tsx(102,39): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldOtp.tsx(10,25): error TS6133: 'useState' is declared but its value is never read.
+src/components/types/Element/Field/renderers/input/FieldOtp.tsx(10,35): error TS6133: 'useEffect' is declared but its value is never read.
+src/components/types/Element/Field/renderers/input/FieldOtp.tsx(169,68): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldOtp.tsx(177,25): error TS2322: Type '(el: HTMLInputElement | null) => HTMLInputElement | null' is not assignable to type 'Ref<HTMLInputElement> | undefined'.
+  Type '(el: HTMLInputElement | null) => HTMLInputElement | null' is not assignable to type '(instance: HTMLInputElement | null) => void | (() => VoidOrUndefinedOnly)'.
+    Type 'HTMLInputElement | null' is not assignable to type 'void | (() => VoidOrUndefinedOnly)'.
+      Type 'null' is not assignable to type 'void | (() => VoidOrUndefinedOnly)'.
+src/components/types/Element/Field/renderers/input/FieldOtp.tsx(188,43): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldSpinbutton.tsx(23,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldConstraints'.
+src/components/types/Element/Field/renderers/input/FieldSpinbutton.tsx(135,57): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldSpinbutton.tsx(170,55): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldSpinbutton.tsx(181,11): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldTextarea.tsx(19,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldConstraints'.
+src/components/types/Element/Field/renderers/input/FieldTextarea.tsx(113,5): error TS6133: 'rows' is declared but its value is never read.
+src/components/types/Element/Field/renderers/input/FieldTextarea.tsx(135,55): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldTextarea.tsx(146,11): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldTextbox.tsx(19,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldConstraints'.
+src/components/types/Element/Field/renderers/input/FieldTextbox.tsx(134,55): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/input/FieldTextbox.tsx(147,13): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/picker/FieldCalendar.tsx(17,8): error TS6133: 'React' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldCalendar.tsx(20,43): error TS6133: 'errorStyles' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldCalendar.tsx(40,9): error TS6133: 'intent' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldCalendar.tsx(110,61): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/picker/FieldDatepicker.tsx(18,15): error TS2305: Module '"@/components/types/Element/Field/Field.types"' has no exported member 'FieldConstraints'.
+src/components/types/Element/Field/renderers/picker/FieldDatepicker.tsx(49,5): error TS6133: 'constraints' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldDatepicker.tsx(75,9): error TS6133: 'popoverRef' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldDatepicker.tsx(83,55): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/picker/FieldDatepicker.tsx(103,15): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/picker/FieldFilepicker.tsx(15,50): error TS6133: 'ImageIcon' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldFilepicker.tsx(15,69): error TS6133: 'X' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldFilepicker.tsx(19,43): error TS6133: 'errorStyles' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldFilepicker.tsx(43,5): error TS6133: 'intent' is declared but its value is never read.
+src/components/types/Element/Field/renderers/picker/FieldFilepicker.tsx(128,55): error TS2322: Type 'Prominence' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/renderers/picker/FieldSignature.tsx(163,11): error TS2353: Object literal may only specify known properties, and 'prominence' does not exist in type 'FieldWrapperProps'.
+src/components/types/Element/Field/renderers/picker/FieldSignature.tsx(174,11): error TS2322: Type '"Hero" | "Strong" | "Standard" | "Subtle"' is not assignable to type 'Prominence | undefined'.
+  Type '"Strong"' is not assignable to type 'Prominence | undefined'.
+src/components/types/Element/Field/role-registry.ts(22,13): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+src/components/types/Element/Separator/Separator.tsx(2,1): error TS6133: 'getRoleConfig' is declared but its value is never read.
+src/components/types/Element/Separator/Separator.tsx(2,31): error TS2307: Cannot find module '@/components/types/Block/role-registry' or its corresponding type declarations.
+src/components/types/Element/Text/renderers/AlertRenderer.tsx(30,71): error TS2339: Property 'spec' does not exist on type 'TextProps'.
+src/components/types/Element/Text/renderers/AvatarRenderer.tsx(28,66): error TS2339: Property 'spec' does not exist on type 'TextProps'.
+src/components/types/Element/Text/renderers/BadgeRenderer.tsx(30,70): error TS2339: Property 'spec' does not exist on type 'TextProps'.
+src/components/types/Element/Text/renderers/BadgeRenderer.tsx(40,11): error TS6133: 'icon' is declared but its value is never read.
+src/components/types/Element/Text/renderers/TagRenderer.tsx(26,73): error TS2339: Property 'spec' does not exist on type 'TextProps'.
+src/components/types/Element/Text/renderers/TimeRenderer.tsx(11,1): error TS6133: 'React' is declared but its value is never read.
+src/components/types/Element/Text/renderers/TimeRenderer.tsx(148,3): error TS2339: Property 'spec' does not exist on type 'TextProps'.
+src/components/types/Element/Text/Text.tsx(90,3): error TS2339: Property 'spec' does not exist on type 'TextProps'.
+src/components/types/Element/Text/Text.tsx(115,9): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextProps, context?: any): string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | ... 4 more ... | undefined', gave the following error.
+    Type '{ children: ReactNode; condition?: string | undefined; size?: string | undefined; role: TextRole; content: string | undefined; prominence: any; intent: any; align: "center" | ... 2 more ... | undefined; spec: any; className: string | undefined; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+      Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+  Overload 2 of 2, '(props: TextProps): string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<...> | Component<...> | null | undefined', gave the following error.
+    Type '{ children: ReactNode; condition?: string | undefined; size?: string | undefined; role: TextRole; content: string | undefined; prominence: any; intent: any; align: "center" | ... 2 more ... | undefined; spec: any; className: string | undefined; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+      Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(24,60): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(39,60): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(40,60): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(41,60): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(58,53): error TS2322: Type '{ role: "Label"; content: string; spec: { for: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(66,65): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(87,15): error TS2322: Type '{ role: "Link"; content: string; spec: { href: string; target: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(96,68): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(113,65): error TS2322: Type '{ role: "Badge"; content: string; intent: "Positive"; spec: { pulse: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(114,62): error TS2322: Type '{ role: "Badge"; content: string; intent: "Critical"; spec: { pulse: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(122,52): error TS2322: Type '{ role: "Badge"; intent: "Positive"; spec: { dot: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(126,51): error TS2322: Type '{ role: "Badge"; intent: "Caution"; spec: { dot: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(130,52): error TS2322: Type '{ role: "Badge"; intent: "Critical"; spec: { dot: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(139,64): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(153,58): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(164,61): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(177,63): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(194,54): error TS2322: Type '{ role: "Label"; content: string; spec: { for: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(209,67): error TS2322: Type '{ role: "Badge"; content: string; intent: "Positive"; spec: { pulse: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(224,65): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(231,15): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; live: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(239,15): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; live: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(247,15): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(260,33): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(264,33): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(268,33): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(272,33): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(276,33): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; }; prominence: "Subtle"; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(291,21): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; live: boolean; }; prominence: "Subtle"; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(308,17): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(320,17): error TS2322: Type '{ role: "Time"; spec: { value: Date; format: string; live: boolean; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(333,68): error TS2322: Type '{ role: "Heading"; content: string; spec: { level: number; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(343,17): error TS2322: Type '{ role: "Alert"; intent: "Info"; spec: { title: string; }; content: string; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(349,17): error TS2322: Type '{ role: "Alert"; intent: "Positive"; spec: { title: string; }; content: string; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(355,17): error TS2322: Type '{ role: "Alert"; intent: "Caution"; spec: { title: string; }; content: string; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(361,17): error TS2322: Type '{ role: "Alert"; intent: "Critical"; spec: { title: string; onClose: () => void; }; content: string; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(371,55): error TS2322: Type '{ role: "Avatar"; prominence: "Subtle"; spec: { fallback: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(372,57): error TS2322: Type '{ role: "Avatar"; prominence: "Standard"; spec: { fallback: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(373,55): error TS2322: Type '{ role: "Avatar"; prominence: "Strong"; spec: { fallback: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(374,53): error TS2322: Type '{ role: "Avatar"; prominence: "Hero"; spec: { fallback: string; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(394,48): error TS2322: Type '{ role: "Tag"; content: string; spec: { onRemove: () => void; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(398,17): error TS2322: Type '{ role: "Tag"; content: string; spec: { onRemove: () => void; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Element/Text/TextShowcase.tsx(400,47): error TS2322: Type '{ role: "Tag"; content: string; spec: { onRemove: () => void; }; }' is not assignable to type 'IntrinsicAttributes & TextProps'.
+  Property 'spec' does not exist on type 'IntrinsicAttributes & TextProps'.
+src/components/types/Overlay/CommandPalette.tsx(219,22): error TS2339: Property 'Block' does not exist on type 'ForwardRefExoticComponent<Children & Pick<Pick<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof HTMLAttributes<...>> & { ...; } & { ...; }, "key" | ... 1 more ... | "asChild"> & { ...; } & RefAttributes<...>> & { ...; }'.
+src/components/types/Overlay/CommandPalette.tsx(237,23): error TS2339: Property 'Block' does not exist on type 'ForwardRefExoticComponent<Children & Pick<Pick<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof HTMLAttributes<...>> & { ...; } & { ...; }, "key" | ... 1 more ... | "asChild"> & { ...; } & RefAttributes<...>> & { ...; }'.
+src/components/types/Overlay/Overlay.tsx(141,9): error TS6133: 'roleConfig' is declared but its value is never read.
+src/components/types/Overlay/role-registry.ts(9,37): error TS2307: Cannot find module '../../shared/role.base' or its corresponding type declarations.
+src/components/types/Overlay/role-registry.ts(52,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'OverlayRoleConfig'.
+src/components/types/Overlay/role-registry.ts(70,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'OverlayRoleConfig'.
+src/components/types/Overlay/role-registry.ts(87,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'OverlayRoleConfig'.
+src/components/types/Overlay/role-registry.ts(104,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'OverlayRoleConfig'.
+src/components/types/Overlay/role-registry.ts(122,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'OverlayRoleConfig'.
+src/components/types/Overlay/role-registry.ts(140,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'OverlayRoleConfig'.
+src/components/types/Overlay/role-registry.ts(158,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'OverlayRoleConfig'.
+src/components/types/Overlay/role-registry.ts(175,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'OverlayRoleConfig'.
+src/components/types/Overlay/role-registry.ts(216,18): error TS2339: Property 'renderer' does not exist on type 'OverlayRoleConfig'.
+src/components/types/Overlay/role/Tooltip.tsx(39,48): error TS2503: Cannot find namespace 'NodeJS'.
+src/components/types/Overlay/SearchModal.tsx(64,16): error TS6133: 'result' is declared but its value is never read.
+src/components/types/Overlay/SearchModalDSL.tsx(84,16): error TS6133: 'result' is declared but its value is never read.
+src/components/types/Overlay/SearchModalDSL.tsx(136,13): error TS2322: Type '{ model: string; type: string; label: string; placeholder: string; clearable: true; value: string; onChange: (e: ChangeEvent<HTMLInputElement>) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/components/types/Overlay/SettingsModal.tsx(4,3): error TS6133: 'Monitor' is declared but its value is never read.
+src/components/types/Overlay/SettingsModal.tsx(5,3): error TS6133: 'Moon' is declared but its value is never read.
+src/components/types/Overlay/SettingsModal.tsx(8,3): error TS6133: 'Sun' is declared but its value is never read.
+src/components/types/Overlay/SettingsModalDSL.tsx(157,18): error TS2322: Type '"SplitContainer"' is not assignable to type 'SectionRole | undefined'.
+src/components/types/Overlay/SettingsModalDSL.tsx(192,23): error TS2322: Type '{ model: string; type: string; label: string; options: { label: string; value: any; }[] | undefined; value: any; onChange: (e: ChangeEvent<HTMLSelectElement>) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/components/types/Overlay/SettingsModalDSL.tsx(204,23): error TS2322: Type '{ model: string; type: string; label: string; value: any; onChange: (e: ChangeEvent<HTMLInputElement>) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/components/types/Overlay/SettingsModalDSL.tsx(216,25): error TS2322: Type '{ model: string; type: string; label: string; value: any; constraints: { min: number | undefined; max: number | undefined; }; onChange: (e: ChangeEvent<HTMLInputElement>) => void; }' is not assignable to type 'IntrinsicAttributes & FieldProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & FieldProps'.
+src/components/types/Page/hooks/useDynamicGridTemplate.ts(92,28): error TS2339: Property 'gridArea' does not exist on type 'RoleConfig'.
+src/components/types/Page/hooks/useDynamicGridTemplate.ts(98,26): error TS2339: Property 'gridArea' does not exist on type 'RoleConfig'.
+src/components/types/Page/hooks/useDynamicGridTemplate.ts(124,9): error TS6133: 'has' is declared but its value is never read.
+src/components/types/Page/hooks/useDynamicGridTemplate.ts(125,9): error TS6133: 'getSize' is declared but its value is never read.
+src/components/types/Page/hooks/useResizable.ts(17,15): error TS2305: Module '"@/components/types/Page/Page.types"' has no exported member 'PresentationGridArea'.
+src/components/types/Page/Page.tsx(1,17): error TS6133: 'useState' is declared but its value is never read.
+src/components/types/Page/Page.tsx(1,27): error TS6133: 'useEffect' is declared but its value is never read.
+src/components/types/Page/Page.tsx(6,26): error TS6196: 'PageRole' is declared but never used.
+src/components/types/Page/Page.tsx(6,36): error TS6196: 'PageLayout' is declared but never used.
+src/components/types/Page/Page.tsx(81,3): error TS2339: Property 'mixed' does not exist on type 'PageProps'.
+src/components/types/Page/Page.tsx(85,9): error TS6133: 'roleConfig' is declared but its value is never read.
+src/components/types/Page/Page.tsx(170,5): error TS2352: Conversion of type '{ '--iddl-sidebar-width': string; display: string; gridTemplateAreas: string; gridTemplateColumns: string; gridTemplateRows: string; } | { '--iddl-sidebar-width': string; display?: undefined; gridTemplateAreas?: undefined; gridTemplateColumns?: undefined; gridTemplateRows?: undefined; }' to type 'CSSProperties' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Object literal may only specify known properties, and ''--iddl-sidebar-width'' does not exist in type 'Properties<string | number, string & {}>'.
+src/components/types/Page/role-registry.ts(9,37): error TS2307: Cannot find module '../../shared/role.base' or its corresponding type declarations.
+src/components/types/Page/role-registry.ts(10,26): error TS6196: 'PageRole' is declared but never used.
+src/components/types/Page/role-registry.ts(66,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'PageRoleConfig'.
+src/components/types/Page/role-registry.ts(89,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'PageRoleConfig'.
+src/components/types/Page/role-registry.ts(112,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'PageRoleConfig'.
+src/components/types/Page/role-registry.ts(136,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'PageRoleConfig'.
+src/components/types/Page/role-registry.ts(159,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'PageRoleConfig'.
+src/components/types/Page/role-registry.ts(182,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'PageRoleConfig'.
+src/components/types/Page/role-registry.ts(205,5): error TS2353: Object literal may only specify known properties, and 'htmlTag' does not exist in type 'PageRoleConfig'.
+src/components/types/Page/role-registry.ts(253,18): error TS2339: Property 'renderer' does not exist on type 'PageRoleConfig'.
+src/components/types/Section/configs/types.ts(1,41): error TS2307: Cannot find module '../../../shared/role.base' or its corresponding type declarations.
+src/components/types/Section/role/RightBar.tsx(1,43): error TS6133: 'Info' is declared but its value is never read.
+src/components/types/Section/role/RightBar.tsx(1,49): error TS6133: 'Sparkles' is declared but its value is never read.
+src/components/types/Section/role/RightBar.tsx(1,59): error TS6133: 'ChevronDown' is declared but its value is never read.
+src/components/types/Section/role/RightBar.tsx(1,72): error TS6133: 'File' is declared but its value is never read.
+src/components/types/Section/Section.tsx(80,11): error TS2339: Property 'gridArea' does not exist on type 'RoleConfig'.
+src/components/types/Section/Section.tsx(80,37): error TS2339: Property 'overflow' does not exist on type 'RoleConfig'.
+src/components/types/Section/Section.tsx(80,47): error TS2339: Property 'htmlTag' does not exist on type 'RoleConfig'.
+src/components/types/Section/Section.tsx(80,56): error TS2339: Property 'ariaProps' does not exist on type 'RoleConfig'.
+src/components/types/Section/Section.tsx(80,67): error TS2339: Property 'baseStyles' does not exist on type 'RoleConfig'.
+src/components/types/Section/Section.types.ts(6,1): error TS6133: 'PageLayout' is declared but its value is never read.
+src/shared/components/SourcePreview.tsx(5,1): error TS6133: 'Section' is declared but its value is never read.
+src/shared/components/SourcePreview.tsx(28,30): error TS2322: Type '"2"' is not assignable to type 'number | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "4xl" | "none" | "3xl" | undefined'.
+src/shared/config/interactive-tokens.ts(417,39): error TS6198: All destructured elements are unused.
+src/shared/hooks/useResizable.ts(1,23): error TS6133: 'useEffect' is declared but its value is never read.
+src/shared/iddl/resolve.ts(4,5): error TS6133: 'Role' is declared but its value is never read.
+src/shared/iddl/resolve.ts(110,5): error TS6133: 'intent' is declared but its value is never read.
+src/shared/iddl/resolve.ts(119,14): error TS2367: This comparison appears to be unintentional because the types '"Standard" | "Subtle"' and '"Strong"' have no overlap.
+src/shared/iddl/resolve.ts(171,33): error TS2367: This comparison appears to be unintentional because the types '"number" | "search" | "time" | "text" | "color" | "email" | "date" | "datetime" | "password" | "phone" | "currency" | undefined' and '"code"' have no overlap.
+src/shared/lib/behavior/Navigable/types.ts(87,21): error TS2503: Cannot find namespace 'NodeJS'.
+src/shared/lib/behavior/Navigable/useNavigable.ts(39,38): error TS2503: Cannot find namespace 'NodeJS'.
+src/shared/lib/behavior/Selectable/SelectableContext.tsx(66,11): error TS6133: 'currentItem' is declared but its value is never read.

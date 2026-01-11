@@ -4,7 +4,7 @@
  * Children에서 role prop을 분석하여 자동으로 grid-template-areas를 생성합니다.
  * Holy Grail + IntelliJ 스타일 하이브리드 레이아웃 지원
  *
- * v4.1: role-config.ts 중앙 설정 사용 (role → gridArea 매핑 제거)
+ * v4.1: role-registry.ts 중앙 설정 사용 (role → gridArea 매핑 제거)
  * v5.0: PageLayout 기반으로 변경 (template → layout)
  *
  * @example
@@ -14,7 +14,7 @@
 
 import { type ReactNode, useMemo } from 'react';
 import type { PageLayout } from '@/components/types/Page/Page.types';
-import { getRoleConfig, ROLE_CONFIGS } from '@/components/types/Section/role-config';
+import { getRoleConfig, ROLE_REGISTRY } from '@/components/types/Section/configs/registry';
 
 export interface GridSizes {
   header?: string;
@@ -74,21 +74,21 @@ function extractUsedAreas(children: ReactNode, layout?: PageLayout): Set<string>
       if (props?.role) {
         if (props.role === 'separator') return;
 
-        // v5.0: layout 이름을 Capitalized로 변환하여 ROLE_CONFIGS 키와 일치시킴
+        // v5.0: layout 이름을 Capitalized로 변환하여 ROLE_REGISTRY 키와 일치시킴
         const layoutName = layout
           ? layout.charAt(0).toUpperCase() + layout.slice(1).toLowerCase()
           : undefined;
 
         // 1. Layout 특정 role인 경우 (가장 중요)
-        if (layoutName && (ROLE_CONFIGS as any)[layoutName]?.[props.role]) {
-          const config = (ROLE_CONFIGS as any)[layoutName][props.role];
+        if (layoutName && (ROLE_REGISTRY as any)[layoutName]?.[props.role]) {
+          const config = (ROLE_REGISTRY as any)[layoutName][props.role];
           areas.add(config.gridArea);
           return; // 핵심: 직접적인 레이아웃 영역을 찾으면 더 이상 자식으로 들어가지 않음 (nested Section 보호)
         }
 
         // 2. Fallback: universal role인 경우
-        if (ROLE_CONFIGS.universal[props.role]) {
-          const config = ROLE_CONFIGS.universal[props.role];
+        if (ROLE_REGISTRY.universal[props.role]) {
+          const config = ROLE_REGISTRY.universal[props.role];
           areas.add(config.gridArea);
           return;
         }
@@ -125,18 +125,72 @@ function generateGridTemplate(
   const getSize = (area: string, fallback: string = 'auto') =>
     sizes[area as keyof GridSizes] || fallback;
 
-  // 1. Studio Layout
+  // 1. Studio Layout (Dynamic - removes unused areas)
   if (layout === 'Studio') {
+    const hasActivityBar = has('act');
+    const hasPrimarySidebar = has('side');
+    const hasSecondarySidebar = has('aux');
+    const hasUtilityBar = has('utility');
+    const hasHeader = has('header');
+    const hasPanel = has('panel');
+    const hasStatusBar = has('stat');
+    const hasFooter = has('footer');
+
+    // Build grid-template-areas dynamically
+    const cols: string[] = [];
+    const colSizes: string[] = [];
+
+    if (hasActivityBar) {
+      cols.push('act');
+      colSizes.push(getSize('activitybar', '48px'));
+    }
+    if (hasPrimarySidebar) {
+      cols.push('side');
+      colSizes.push(getSize('primarysidebar', '180px'));
+    }
+    cols.push('main'); // Editor is always present
+    colSizes.push('1fr');
+    if (hasSecondarySidebar) {
+      cols.push('aux');
+      colSizes.push(getSize('secondarysidebar', '250px'));
+    }
+    if (hasUtilityBar) {
+      cols.push('utility');
+      colSizes.push(getSize('utilitybar', '48px'));
+    }
+
+    // Build rows
+    const rows: string[] = [];
+    const rowSizes: string[] = [];
+
+    if (hasHeader) {
+      rows.push(cols.join(' '));
+      rowSizes.push(getSize('header', 'auto'));
+    }
+
+    // Main editor row (always)
+    rows.push(cols.join(' '));
+    rowSizes.push('1fr');
+
+    if (hasPanel) {
+      rows.push(cols.join(' '));
+      rowSizes.push(getSize('panel', '200px'));
+    }
+
+    if (hasStatusBar) {
+      rows.push(cols.map(() => 'stat').join(' '));
+      rowSizes.push(getSize('statusbar', '24px'));
+    }
+
+    if (hasFooter) {
+      rows.push(cols.map(() => 'footer').join(' '));
+      rowSizes.push(getSize('footer', 'auto'));
+    }
+
     return {
-      gridTemplateAreas: `
-        "header header header header header"
-        "act    side   main   aux    utility"
-        "act    side   panel  aux    utility"
-        "stat   stat   stat   stat   stat"
-        "footer footer footer footer footer"
-      `,
-      gridTemplateColumns: '48px 250px 1fr 250px 48px',
-      gridTemplateRows: 'auto 1fr 200px 24px auto',
+      gridTemplateAreas: rows.map((row) => `"${row}"`).join('\n'),
+      gridTemplateColumns: colSizes.join(' '),
+      gridTemplateRows: rowSizes.join(' '),
     };
   }
 
@@ -239,5 +293,5 @@ export function useDynamicGridTemplate(
     }
 
     return generateGridTemplate(usedAreas, sizes, layout); // Pass layout here
-  }, [children, layout, sizes]);
+  }, [layout, sizes]);
 }

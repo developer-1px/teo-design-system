@@ -7,15 +7,41 @@ import type { AsProp, Intent, Prominence } from '../../Shared.types';
 
 /**
  * Text Role - 정적 텍스트의 역할
- * v1.0.1: Caption 추가
- * v1.1: highlight prop으로 텍스트 매칭 강조 지원
+ *
+ * Registry-based system으로 확장 가능한 role 관리
+ *
+ * Current roles (16):
+ * - Typography (5): Title, Heading, Body, Label, Caption
+ * - Inline (5): Strong, Emphasis, Mark, Link, Code
+ * - Indicator (5): Badge, Alert, Avatar, Kbd, Tag
+ * - Data (1): Time
+ *
+ * Extensible: Use registerTextRole() to add custom roles
  */
-export type TextRole = 'Title' | 'Body' | 'Label' | 'Caption' | 'Code';
+export type TextRole =
+  // Typography (5 roles)
+  | 'Title'
+  | 'Heading'
+  | 'Body'
+  | 'Label'
+  | 'Caption'
+  // Inline (5 roles)
+  | 'Strong'
+  | 'Emphasis'
+  | 'Mark'
+  | 'Link'
+  | 'Code'
+  // Indicator (5 roles)
+  | 'Badge'
+  | 'Alert'
+  | 'Avatar'
+  | 'Kbd'
+  | 'Tag'
+  // Data (1 role)
+  | 'Time';
 
 /**
  * Text Props - 정적 콘텐츠 (Data Binding 없음)
- * v1.0.1: condition 추가
- * v1.1: highlight 추가
  */
 export interface TextProps extends AsProp {
   role: TextRole;
@@ -30,10 +56,12 @@ export interface TextProps extends AsProp {
    */
   className?: string;
   hidden?: boolean;
-  condition?: string; // v1.0.1: 조건부 렌더링
-  highlight?: string; // v1.1: 매칭할 텍스트 (대소문자 구분 안 함)
+  /** 조건부 렌더링 */
+  condition?: string;
+  /** 매칭할 텍스트 하이라이트 (대소문자 구분 안 함) */
+  highlight?: string;
 
   // Content & Styling
-  size?: string; // e.g. "sm", "lg"
-  children?: React.ReactNode; // Alternative to content
+  size?: string;
+  children?: React.ReactNode;
 }

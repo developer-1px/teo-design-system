@@ -31,17 +31,15 @@ export const DSLSlideCanvas = ({
   if (!slide) {
     return (
       <Section role="Container">
-        <Block
-          role="Container"
-          className="items-center justify-center h-full"
-          density="Comfortable"
-        >
-          <Text role="Body" prominence="Subtle" content="슬라이드를 선택하세요" />
-          <Text
-            role="Caption"
-            prominence="Subtle"
-            content="왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요"
-          />
+        <Block role="Center">
+          <Block role="Stack" density="Comfortable" className="text-center">
+            <Text role="Body" prominence="Subtle" content="슬라이드를 선택하세요" />
+            <Text
+              role="Caption"
+              prominence="Subtle"
+              content="왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요"
+            />
+          </Block>
         </Block>
       </Section>
     );
@@ -50,7 +48,7 @@ export const DSLSlideCanvas = ({
   return (
     <Section role="Container">
       {/* Canvas Container - 중앙 정렬 */}
-      <Block role="Container" className="items-center justify-center h-full" density="Comfortable">
+      <Block role="Center" className="p-8">
         {/* Slide Canvas - 16:9 aspect ratio container */}
         <Block
           role="Container"
@@ -75,7 +73,7 @@ export const DSLSlideCanvas = ({
               )}
 
               {/* Content Area - Scrollable */}
-              <Block role="Container" className="overflow-y-auto" density="Standard">
+              <Block role="Container" layout="stack" density="Standard">
                 {slide.content ? (
                   slideContentToDSL(slide.content)
                 ) : (

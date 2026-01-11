@@ -34,19 +34,15 @@ export const PresentationToolbar = ({
   canGoNext = true,
 }: PresentationToolbarProps) => {
   return (
-    <Section role="Header" className="border-b border-border bg-layer-4 shadow-sm">
-      <Block role="Toolbar" density="Compact" className="h-12 items-center justify-between px-4">
+    <Section role="Header" prominence="Elevated">
+      <Block role="Toolbar" density="Compact">
         {/* 좌측: 제목 */}
-        <Block role="Inline" className="flex-1">
-          <Text
-            role="Title"
-            content={title}
-            className="text-text-primary font-medium truncate max-w-md"
-          />
+        <Block role="Inline">
+          <Text role="Title" content={title} />
         </Block>
 
         {/* 중앙: 재생 버튼 + 네비게이션 - IDDL Action 사용 */}
-        <Block role="Toolbar" className="gap-2">
+        <Block role="Toolbar" density="Compact">
           {/* 이전 슬라이드 - IDDL Action[Tertiary] */}
           <Action
             icon="ChevronLeft"
@@ -85,7 +81,7 @@ export const PresentationToolbar = ({
         </Block>
 
         {/* 우측: 여백 (향후 확장 가능) */}
-        <Block role="Toolbar" className="flex-1 justify-end gap-2">
+        <Block role="Toolbar" density="Compact">
           {/* Placeholder for future actions */}
         </Block>
       </Block>

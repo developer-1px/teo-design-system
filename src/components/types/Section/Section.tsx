@@ -12,20 +12,20 @@
  * - Block: 개발자가 선택하는 기능적 컴포넌트 (Form, Card, Toolbar 등)
  *
  * **v4.1 변경사항**: Role Configuration 중앙화
- * - gridArea, overflow, htmlTag, ariaProps, baseStyles 모두 role-config에서 자동 결정
+ * - gridArea, overflow, htmlTag, ariaProps, baseStyles 모두 role-registry에서 자동 결정
  * - Page template context를 통해 적절한 설정 자동 적용
  * - 스크롤 동작은 Page 책임 (template + role 조합으로 결정)
  *
  * v1.0.1: Aside role 추가, condition 지원, CVA 적용
  * v4.0: Role Renderer 패턴 도입, Template-aware validation
- * v4.1: Role Configuration 중앙화 (role-config.ts)
+ * v4.1: Role Configuration 중앙화 (role-registry.ts)
  */
 
 import { cva } from 'class-variance-authority';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import { Text } from '@/components/types/Element/Text/Text';
 import type { SectionProps, SectionRole } from '@/components/types/Section/Section.types';
-import { getRoleConfig } from './role-config';
+import { getRoleConfig } from './configs/registry';
 
 // Styles for Section Variants
 const sectionVariants = cva('flex flex-col relative', {
@@ -61,6 +61,7 @@ export function Section({
   onClick,
   className,
   gridArea,
+  collapsible, // ✨ NEW (v4.1)
   ...rest
 }: SectionProps) {
   const parentCtx = useLayoutContext();
@@ -83,6 +84,35 @@ export function Section({
   const isScrollable = scrollable ?? (overflow === 'auto' || overflow === 'scroll');
   const overflowClass = isScrollable ? 'overflow-auto' : 'overflow-hidden';
 
+  // collapsible logic (v4.1)
+  const isCollapsible = !!collapsible;
+  const collapsibleConfig = typeof collapsible === 'object' ? collapsible : undefined;
+  const isCollapsed = collapsibleConfig?.collapsed ?? false;
+  const useTransition = collapsibleConfig?.transition ?? true;
+
+  // Determine if horizontal or vertical sizing based on role
+  const isHorizontalCollapse =
+    role === 'PrimarySidebar' || role === 'SecondarySidebar' || role === 'Nav' || role === 'Aside';
+
+  const collapsibleStyle: React.CSSProperties = isCollapsible
+    ? {
+      ...(isHorizontalCollapse
+        ? {
+          width: isCollapsed
+            ? collapsibleConfig?.collapsedSize ?? 0
+            : collapsibleConfig?.expandedSize ?? 'auto',
+        }
+        : {
+          height: isCollapsed
+            ? collapsibleConfig?.collapsedSize ?? 0
+            : collapsibleConfig?.expandedSize ?? 'auto',
+        }),
+    }
+    : {};
+
+  const transitionClass =
+    isCollapsible && useTransition ? 'transition-all duration-200 ease-in-out' : '';
+
   return (
     <LayoutProvider
       value={{
@@ -100,10 +130,12 @@ export function Section({
         className={`
           ${baseStyles}
           ${sectionVariants({ variant, mode: computedMode })}
+          ${transitionClass}
           ${className || ''}
         `}
         style={{
           gridArea: computedGridArea,
+          ...collapsibleStyle,
           ...rest.style, // Pass through style if any
         }}
         {...ariaProps}

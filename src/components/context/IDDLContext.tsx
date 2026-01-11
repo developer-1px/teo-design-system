@@ -59,6 +59,7 @@ export const LayoutProvider = IDDLProvider;
 /**
  * BlockLayoutContextValue - Block 전용 Context 타입
  * BlockRole을 그대로 사용하여 타입 안정성 확보
+ * v5.1: sectionRole 추가 - 현재 Section의 role을 Block이 참조할 수 있도록
  */
 export interface BlockLayoutContextValue {
   prominence: LayoutContextValue['prominence'];
@@ -67,6 +68,7 @@ export interface BlockLayoutContextValue {
   intent?: LayoutContextValue['intent'];
   depth: number;
   mode?: 'view' | 'edit';
+  sectionRole?: string; // v5.1: 현재 Section의 role (PrimarySidebar, SecondarySidebar, Panel 등)
 }
 
 /**

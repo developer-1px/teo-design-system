@@ -59,6 +59,17 @@ export type SectionRole =
   | 'DialogContent'
   | 'DialogFooter';
 
+/**
+ * Collapsible Configuration (v4.1)
+ */
+export interface CollapsibleConfig {
+  collapsed: boolean;
+  collapsedSize?: string | number; // e.g. "48px", 48
+  expandedSize?: string | number; // e.g. "250px", 250
+  transition?: boolean; // Enable CSS transition (default: true)
+  transitionDuration?: number; // ms (default: 200)
+}
+
 export interface SectionProps extends AsProp {
   // 1. Zoning & Semantics
   role?: SectionRole;
@@ -87,9 +98,9 @@ export interface SectionProps extends AsProp {
   mode?: 'view' | 'edit';
   condition?: string;
   resizable?:
-    | boolean
-    | { direction?: 'horizontal' | 'vertical' | 'both'; minSize?: number; maxSize?: number };
-  collapsible?: boolean;
+  | boolean
+  | { direction?: 'horizontal' | 'vertical' | 'both'; minSize?: number; maxSize?: number };
+  collapsible?: boolean | CollapsibleConfig;
 
   // Formatting (Compatibility)
   style?: React.CSSProperties;

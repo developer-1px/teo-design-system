@@ -3,8 +3,6 @@
  */
 
 import {
-  Beaker,
-  Blocks,
   BookOpen,
   Boxes,
   Code,
@@ -13,8 +11,6 @@ import {
   FormInput,
   Layers,
   Layout,
-  LayoutGrid,
-  Palette,
   Presentation,
   Smile,
   Type,
@@ -29,17 +25,14 @@ export type AppType =
   | 'notion'
   | 'emoji'
   | 'design'
-  | 'builder'
-  | 'showcase'
-  | 'tokens'
-  | 'layout'
   | 'page'
   | 'section'
   | 'overlay'
-  | 'group'
+  | 'block'
   | 'field'
   | 'action'
-  | 'text';
+  | 'text'
+  | 'behavior';
 
 import type { LucideIcon } from 'lucide-react';
 
@@ -81,8 +74,8 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     accentColor: '#8b5cf6',
     colorScheme: 'purple',
   },
-  group: {
-    type: 'group',
+  block: {
+    type: 'block',
     name: 'Block',
     icon: Boxes,
     iconName: 'Boxes',
@@ -116,6 +109,15 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     description: 'Text Component Showcase (Title, Body, Label, Code)',
     accentColor: '#3b82f6',
     colorScheme: 'blue',
+  },
+  behavior: {
+    type: 'behavior',
+    name: 'Behavior',
+    icon: Zap,
+    iconName: 'Zap',
+    description: 'Behavior & Interaction Showcase',
+    accentColor: '#8b5cf6',
+    colorScheme: 'purple',
   },
 
   ide: {
@@ -162,42 +164,6 @@ export const APP_CONFIGS: Record<AppType, AppConfig> = {
     description: 'Docs, Components, DSL & Builder',
     accentColor: '#059669',
     colorScheme: 'emerald',
-  },
-  showcase: {
-    type: 'showcase',
-    name: 'Showcase',
-    icon: Beaker,
-    iconName: 'Beaker',
-    description: 'Component Showcase & Testing',
-    accentColor: '#ec4899',
-    colorScheme: 'pink',
-  },
-  tokens: {
-    type: 'tokens',
-    name: 'Tokens',
-    icon: Palette,
-    iconName: 'Palette',
-    description: 'Design Tokens & Theme System',
-    accentColor: '#8b5cf6',
-    colorScheme: 'purple',
-  },
-  builder: {
-    type: 'builder',
-    name: 'DSL Builder',
-    icon: Blocks,
-    iconName: 'Blocks',
-    description: 'Visual DSL Layout Builder',
-    accentColor: '#8b5cf6',
-    colorScheme: 'purple',
-  },
-  layout: {
-    type: 'layout',
-    name: 'Layout Demo',
-    icon: LayoutGrid,
-    iconName: 'LayoutGrid',
-    description: 'Page Template & Section Demo',
-    accentColor: '#06b6d4',
-    colorScheme: 'blue',
   },
 };
 

@@ -21,6 +21,8 @@ import { PresentationToolbar } from '@/apps/PPT/widgets/presentation/Presentatio
 import { type Slide, SlideList } from '@/apps/PPT/widgets/presentation/SlideList.tsx';
 import { Page } from '@/components/types/Page/Page.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';
+import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
+import { Text } from '@/components/types/Element/Text/Text.tsx';
 import { PresentationModePage } from './PresentationModePage';
 
 // 초기 샘플 슬라이드 데이터 (fallback)
@@ -45,39 +47,11 @@ const fallbackSlides: Slide[] = [
   },
 ];
 
-import { ResizeHandle } from '@/shared/components/ResizeHandle';
-import { useResizable } from '@/shared/hooks/useResizable';
-
-// ... imports remain the same ...
-
 export const PPTPage = () => {
   const [slides, setSlides] = useState<Slide[]>(fallbackSlides);
   const [activeSlideId, setActiveSlideId] = useState<string>('1');
   const [isPresentationMode, setIsPresentationMode] = useState(false);
-
-  // Layout Resizing (IDE-style)
-  const {
-    size: sidebarWidth,
-    separatorProps: sidebarSeparatorProps,
-    isResizing: isSidebarResizing,
-  } = useResizable({
-    initialSize: 240,
-    minSize: 160,
-    maxSize: 400,
-    direction: 'horizontal',
-  });
-
-  const {
-    size: formatBarWidth,
-    separatorProps: formatBarSeparatorProps,
-    isResizing: isFormatBarResizing,
-  } = useResizable({
-    initialSize: 280,
-    minSize: 200,
-    maxSize: 500,
-    direction: 'horizontal',
-    reverse: true, // Right sidebar grows when dragging left
-  });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // ai-era-slides.md 파일 로드 및 파싱
   useEffect(() => {
@@ -157,7 +131,7 @@ export const PPTPage = () => {
   const handleSlidesDelete = (slidesToDelete: Slide[]) => {
     if (slides.length === slidesToDelete.length) {
       // 모든 슬라이드 삭제는 불가
-      alert('마지막 슬라이드는 삭제할 수 없습니다.');
+      setErrorMessage('마지막 슬라이드는 삭제할 수 없습니다.');
       return;
     }
 
@@ -210,20 +184,16 @@ export const PPTPage = () => {
   // 편집 모드 (기본) - Refactored to Studio Layout (IDDL v5.0)
   return (
     <Page title="Presentation" role="Application" layout="Studio" density="Compact">
-      {/* Header: Presentation Toolbar */}
-      <Section role="Header">
-        <PresentationToolbar
-          title={slides.length > 0 ? slides[0].title : undefined}
-          onPrevSlide={handlePrevSlide}
-          onNextSlide={handleNextSlide}
-          onPlay={handlePlay}
-          canGoPrev={currentIndex > 0}
-          canGoNext={currentIndex < slides.length - 1}
-        />
-      </Section>
 
       {/* Primary Sidebar: Slide List */}
-      <Section role="PrimarySidebar">
+      <Section
+        role="PrimarySidebar"
+        resizable={{
+          direction: 'horizontal',
+          minSize: 150,
+          maxSize: 300,
+        }}
+      >
         <SlideList
           slides={slides}
           activeSlideId={activeSlideId}
@@ -238,21 +208,6 @@ export const PPTPage = () => {
         />
       </Section>
 
-      {/* Resize Handle: Primary Sidebar (Left) */}
-      <ResizeHandle
-        direction="horizontal"
-        isResizing={isSidebarResizing}
-        {...sidebarSeparatorProps}
-        style={{
-          ...sidebarSeparatorProps.style,
-          gridArea: 'primarysidebar',
-          justifySelf: 'end',
-          width: '4px',
-          zIndex: 50,
-          transform: 'translateX(50%)',
-        }}
-      />
-
       {/* Editor: Slide Canvas */}
       <Section role="Editor">
         <DSLSlideCanvas
@@ -262,29 +217,33 @@ export const PPTPage = () => {
         />
       </Section>
 
-      {/* Resize Handle: Secondary Sidebar (Right) */}
-      <ResizeHandle
-        direction="horizontal"
-        isResizing={isFormatBarResizing}
-        {...formatBarSeparatorProps}
-        style={{
-          ...formatBarSeparatorProps.style,
-          gridArea: 'secondarysidebar',
-          justifySelf: 'start',
-          width: '4px',
-          zIndex: 50,
-          transform: 'translateX(-50%)',
-        }}
-      />
-
       {/* Secondary Sidebar: Format Settings */}
-      <Section role="SecondarySidebar">
+      <Section
+        role="SecondarySidebar"
+        resizable={{
+          direction: 'horizontal',
+          minSize: 200,
+          maxSize: 400,
+        }}
+      >
         <FormatSidebar
           isOpen={true}
           activeSlide={activeSlide || undefined}
           onSlideUpdate={handleSlideUpdate}
         />
       </Section>
+
+      {/* Error Toast */}
+      {errorMessage && (
+        <Overlay
+          role="Toast"
+          isOpen={true}
+          intent="Critical"
+          onClose={() => setErrorMessage(null)}
+        >
+          <Text role="Body" content={errorMessage} />
+        </Overlay>
+      )}
     </Page>
   );
 };

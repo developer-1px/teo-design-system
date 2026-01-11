@@ -14,6 +14,7 @@ export interface IconButtonActionProps extends Omit<ActionProps, 'role'> {
   computedProminence: ActionProps['prominence'];
   computedIntent: ActionProps['intent'];
   computedDensity: 'Compact' | 'Standard' | 'Comfortable';
+  computedSize: 'xs' | 'sm' | 'md' | 'lg' | 'icon'; // ✨ NEW
   isDisabled: boolean;
   handleClick: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
   Element: any;
@@ -29,6 +30,7 @@ export function IconButtonAction({
   computedProminence,
   computedIntent,
   computedDensity,
+  computedSize, // ✨ NEW
   isDisabled,
   handleClick,
   Element,
@@ -41,14 +43,24 @@ export function IconButtonAction({
   const IconComponent = icon ? (Icons as any)[icon] : null;
 
   // 아이콘 크기를 density에 따라 조절
-  const iconSize = computedDensity === 'Compact' ? 14 : computedDensity === 'Comfortable' ? 20 : 16;
+  // 아이콘 크기를 size에 따라 조절
+  const iconSize = {
+    xs: 12,
+    sm: 14,
+    md: 16,
+    lg: 20,
+    icon: 16,
+  }[computedSize];
 
   // IconButton은 정사각형 크기
-  const size = {
-    Compact: 'h-7 w-7',
-    Standard: 'h-9 w-9',
-    Comfortable: 'h-11 w-11',
-  }[computedDensity];
+  // IconButton은 정사각형 크기 (size prop이 있으면 우선순위)
+  const sizeClasses = {
+    xs: 'h-6 w-6',
+    sm: 'h-8 w-8',
+    md: 'h-9 w-9',
+    lg: 'h-11 w-11',
+    icon: 'h-9 w-9',
+  }[computedSize];
 
   // Interactive State Token System 적용
   const interactiveClasses = getInteractiveClasses({
@@ -75,13 +87,13 @@ export function IconButtonAction({
       className={cn(
         // Base styles - rounded, flex, cursor, square size
         'inline-flex items-center justify-center rounded cursor-pointer',
-        size,
+        sizeClasses,
         // Interactive State (hover, active, selected, disabled, focus)
         interactiveClasses,
         // Enhanced hover/active states for IconButton (구 IconButton 디자인 통합)
         !selected &&
-          !isDisabled &&
-          'hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10',
+        !isDisabled &&
+        'hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10',
         selected && 'bg-accent/10',
         // Loading cursor
         loading && 'cursor-wait'

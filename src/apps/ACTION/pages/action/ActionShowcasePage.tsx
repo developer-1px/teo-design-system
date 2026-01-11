@@ -21,30 +21,38 @@ export function ActionShowcasePage() {
       activeCategoryId="matrix"
     >
       {/* 1. Button Matrix */}
-      <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="1. Button Matrix" />
           <Text
             role="Body"
             prominence="Subtle"
             content="Combinations of Prominence and Intent."
           />
-        </div>
+        </Block>
 
-        <Block role="Table" density="Standard" className="w-full">
+        <Block role="Card" density="Standard" className="w-full p-0 overflow-hidden">
           {/* Header Row */}
-          <div className="grid grid-cols-7 gap-4 p-4 bg-surface-raised border-b border-border-default font-medium text-sm text-text-secondary">
-            <div>Prominence</div>
+          <Block
+            role="Grid"
+            spec={{ columns: 7 }}
+            gap={4}
+            className="p-4 bg-surface-raised border-b border-border-default"
+          >
+            <Text role="Label" content="Prominence" prominence="Subtle" />
             {intents.map((intent) => (
-              <div key={intent}>{intent}</div>
+              <Text key={intent} role="Label" content={intent} prominence="Subtle" />
             ))}
-          </div>
+          </Block>
 
           {/* Rows */}
           {['Hero', 'Strong', 'Standard', 'Subtle'].map((prominence: any) => (
-            <div
+            <Block
               key={prominence}
-              className="grid grid-cols-7 gap-4 p-4 border-b border-border-subtle items-center"
+              role="Grid"
+              spec={{ columns: 7 }}
+              gap={4}
+              className="p-4 border-b border-border-subtle items-center"
             >
               <Text role="Label" content={prominence} prominence="Subtle" />
               {intents.map((intent) => (
@@ -57,33 +65,31 @@ export function ActionShowcasePage() {
                   onClick={() => { }}
                 />
               ))}
-            </div>
+            </Block>
           ))}
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 2. Button States */}
-      <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="2. Button States" />
           <Text
             role="Body"
             prominence="Subtle"
             content="Interactive states like Loading, Disabled, and Selected."
           />
-        </div>
+        </Block>
 
         <Block
           role="Grid"
-          layout="grid"
+          spec={{ columns: 4 }}
           density="Standard"
-          className="grid-cols-1 md:grid-cols-4 gap-6"
+          gap={6}
         >
-          <Block role="Card" className="p-4 items-center gap-4 flex flex-col">
+          <Block role="Card" className="p-4 items-center" gap={4}>
             <Text role="Label" content="Loading" />
             <Action
               role="Button"
@@ -93,7 +99,7 @@ export function ActionShowcasePage() {
               intent="Brand"
             />
           </Block>
-          <Block role="Card" className="p-4 items-center gap-4 flex flex-col">
+          <Block role="Card" className="p-4 items-center" gap={4}>
             <Text role="Label" content="Disabled" />
             <Action
               role="Button"
@@ -103,7 +109,7 @@ export function ActionShowcasePage() {
               intent="Brand"
             />
           </Block>
-          <Block role="Card" className="p-4 items-center gap-4 flex flex-col">
+          <Block role="Card" className="p-4 items-center" gap={4}>
             <Text role="Label" content="Selected (Toggled)" />
             <Action
               role="Button"
@@ -113,7 +119,7 @@ export function ActionShowcasePage() {
               intent="Brand"
             />
           </Block>
-          <Block role="Card" className="p-4 items-center gap-4 flex flex-col">
+          <Block role="Card" className="p-4 items-center" gap={4}>
             <Text role="Label" content="Focus Ring" />
             <Action
               role="Button"
@@ -126,23 +132,21 @@ export function ActionShowcasePage() {
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 3. Icon Buttons */}
-      <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="3. Icon Buttons" />
           <Text
             role="Body"
             prominence="Subtle"
             content="Buttons with icons only or icons with text."
           />
-        </div>
+        </Block>
 
-        <Block role="Card" className="p-6 gap-8">
-          <div className="flex items-center gap-6">
+        <Block role="Card" className="p-6" gap={8}>
+          <Block role="Stack" layout="inline" gap={6} className="items-center">
             <Text role="Label" content="With Label" className="w-24" />
             <Action role="Button" label="Settings" icon="Settings" prominence="Standard" />
             <Action
@@ -153,9 +157,10 @@ export function ActionShowcasePage() {
               intent="Critical"
             />
             <Action role="Button" label="Save" icon="Save" prominence="Strong" intent="Brand" />
-          </div>
+          </Block>
+          <Block role="Divider" />
 
-          <div className="flex items-center gap-6">
+          <Block role="Stack" layout="inline" gap={6} className="items-center">
             <Text role="Label" content="Icon Only" className="w-24" />
             <Action role="IconButton" icon="Settings" prominence="Standard" label="Settings" />
             <Action
@@ -173,22 +178,20 @@ export function ActionShowcasePage() {
               label="Add"
             />
             <Action role="IconButton" icon="MoreHorizontal" prominence="Subtle" label="More" />
-          </div>
+          </Block>
         </Block>
       </Block>
 
-      <Block role="Divider" layout="stack">
-        <></>
-      </Block>
+      <Block role="Divider" className="my-16" />
 
       {/* 4. Links */}
-      <Block role="Container" layout="stack" density="Comfortable" className="gap-6">
-        <div className="flex flex-col gap-1">
+      <Block role="Container" layout="stack" density="Comfortable" gap={6}>
+        <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="4. Links" />
           <Text role="Body" prominence="Subtle" content="Hyperlinks and text buttons." />
-        </div>
+        </Block>
 
-        <Block role="Card" className="p-6 flex flex-row gap-8 items-baseline">
+        <Block role="Card" className="p-6 items-baseline" layout="inline" gap={8}>
           <Action role="Link" label="Read more" href="#" />
           <Action
             role="Link"

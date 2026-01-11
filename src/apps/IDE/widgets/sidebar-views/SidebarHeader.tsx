@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section';
+import { Block } from '@/components/types/Block/Block';
 
 interface SidebarHeaderProps {
   title: string;
@@ -12,17 +13,23 @@ export const SidebarHeader = ({ title, actions }: SidebarHeaderProps) => {
     <Section
       role="Header"
       density="Compact"
-      className="h-9 px-3 flex items-center border-b border-border-default bg-surface-elevated flex-shrink-0"
+      className="h-9 px-3 border-b border-border-default bg-surface-elevated flex-shrink-0"
     >
-      <div className="flex-1 min-w-0">
-        <Text
-          role="Title"
-          prominence="Subtle"
-          content={title.toUpperCase()}
-          className="text-[10px] font-bold text-text-tertiary tracking-widest truncate"
-        />
-      </div>
-      {actions && <div className="flex items-center gap-1">{actions}</div>}
+      <Block role="Toolbar" flex="1" justify="between" className="px-0">
+        <Block role="Group" flex="1" className="min-w-0">
+          <Text
+            role="Title"
+            prominence="Subtle"
+            content={title.toUpperCase()}
+            className="text-[10px] font-bold text-text-tertiary tracking-widest truncate"
+          />
+        </Block>
+        {actions && (
+          <Block role="Inline" layout="inline" className="gap-1">
+            {actions}
+          </Block>
+        )}
+      </Block>
     </Section>
   );
 };

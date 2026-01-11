@@ -1,9 +1,10 @@
 import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
-import { Button } from '@/components/types/Element/Action/role/Button';
-import { Content, ContentGroup } from '@/components/types/Element/Text/role/Content';
+import { Action } from '@/components/types/Element/Action/Action.tsx';
+import { Text } from '@/components/types/Element/Text/Text';
 import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/types/Block/Block';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };
@@ -49,130 +50,106 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
     return { typescript, analysis };
   }, [data, interfaceName]);
 
-  if (!schema.typescript) {
-    return (
-      <Section
-        role="Container"
-        className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden"
-      >
-        <div className="px-4 py-3">
-          <Content prominence="primary">
-            <h3 className="flex items-center gap-2">
-              <Code size={16} />
-              Schema
-            </h3>
-          </Content>
-        </div>
-        <div className="flex-1 flex items-center justify-center px-4 py-8">
-          <Content prominence="tertiary">
-            <p className="text-center">No data to analyze</p>
-          </Content>
-        </div>
-      </Section>
-    );
-  }
+  return (
+    <Section
+      role="SecondarySidebar"
+      collapsible={{ collapsed: false }}
+      className="w-80 bg-layer-2-cool border-r border-border-default"
+    >
+      <Block role="Toolbar" layout="inline" className="px-4 py-3">
+        <Text role="Title" size="sm" prominence="Standard" className="flex items-center gap-2">
+          <Code size={16} />
+          Schema
+        </Text>
+      </Block>
+      <Block role="Container" className="flex-1 flex items-center justify-center px-4 py-8">
+        <Text role="Body" prominence="Subtle" className="text-center" content="No data to analyze" />
+      </Block>
+    </Section>
+  );
 
   return (
     <Section
-      role="Container"
-      className="flex flex-col w-80 bg-layer-2-cool boundary-shadow-right overflow-hidden"
+      role="SecondarySidebar"
+      collapsible={{ collapsed: false }}
+      className="w-80 bg-layer-2-cool border-r border-border-default"
     >
       {/* Header */}
-      <div className="px-3 py-2">
-        <Content prominence="secondary">
-          <div className="flex items-center gap-2">
-            <Code size={14} />
-            Schema
-          </div>
-        </Content>
-      </div>
+      <Block role="Toolbar" layout="inline" className="px-3 py-2">
+        <Text role="Body" prominence="Standard" className="flex items-center gap-2">
+          <Code size={14} />
+          Schema
+        </Text>
+      </Block>
 
-      <div className="flex-1 overflow-y-auto">
+      <Block role="ScrollArea" className="flex-1">
         {/* Schema Info Section */}
         {schema.analysis && (
-          <div>
-            <Button
-              variant="ghost"
+          <Block role="Group">
+            <Action
+              role="Button"
+              prominence="Subtle"
+              intent="Neutral"
+              className="w-full justify-start px-3 py-2 rounded-none"
               onClick={() => toggleSection('analysis')}
-              className="w-full justify-start px-3 py-2 h-auto rounded-none"
             >
-              <Content prominence="secondary">
-                <div className="flex items-center gap-1.5">
-                  {expandedSections.has('analysis') ? (
-                    <ChevronDown size={12} />
-                  ) : (
-                    <ChevronRight size={12} />
-                  )}
-                  <Info size={12} />
-                  Analysis
-                </div>
-              </Content>
-            </Button>
-            {expandedSections.has('analysis') && (
-              <div className="px-3 pb-2">
-                <ContentGroup gap={4}>
-                  <div className="flex justify-between px-2">
-                    <Content prominence="tertiary">
-                      <span>Properties</span>
-                    </Content>
-                    <Content prominence="primary">
-                      <span className="font-mono">{schema.analysis.totalKeys}</span>
-                    </Content>
-                  </div>
-                  <div className="flex justify-between px-2">
-                    <Content prominence="tertiary">
-                      <span>Depth</span>
-                    </Content>
-                    <Content prominence="primary">
-                      <span className="font-mono">{schema.analysis.depth}</span>
-                    </Content>
-                  </div>
-                  <div className="flex justify-between px-2">
-                    <Content prominence="tertiary">
-                      <span>Types</span>
-                    </Content>
-                    <Content prominence="primary">
-                      <span className="font-mono">
-                        {Array.from(schema.analysis.types).join(', ')}
-                      </span>
-                    </Content>
-                  </div>
-                </ContentGroup>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* TypeScript Interface Section */}
-        <div>
-          <Button
-            variant="ghost"
-            onClick={() => toggleSection('typescript')}
-            className="w-full justify-start px-3 py-2 h-auto rounded-none"
-          >
-            <Content prominence="secondary">
-              <div className="flex items-center gap-1.5">
-                {expandedSections.has('typescript') ? (
+              <Block role="Inline" layout="inline" className="gap-1.5">
+                {expandedSections.has('analysis') ? (
                   <ChevronDown size={12} />
                 ) : (
                   <ChevronRight size={12} />
                 )}
-                <Code size={12} />
-                Interface
-              </div>
-            </Content>
-          </Button>
+                <Info size={12} />
+                <Text role="Body" size="sm">Analysis</Text>
+              </Block>
+            </Action>
+            {expandedSections.has('analysis') && (
+              <Block role="Stack" gap={1} className="px-3 pb-2 mt-1">
+                <Block role="Inline" layout="inline" justify="between" className="px-2">
+                  <Text role="Caption" prominence="Subtle" content="Properties" />
+                  <Text role="Caption" prominence="Standard" className="font-mono" content={String(schema.analysis.totalKeys)} />
+                </Block>
+                <Block role="Inline" layout="inline" justify="between" className="px-2">
+                  <Text role="Caption" prominence="Subtle" content="Depth" />
+                  <Text role="Caption" prominence="Standard" className="font-mono" content={String(schema.analysis.depth)} />
+                </Block>
+                <Block role="Inline" layout="inline" justify="between" className="px-2">
+                  <Text role="Caption" prominence="Subtle" content="Types" />
+                  <Text role="Caption" prominence="Standard" className="font-mono" content={Array.from(schema.analysis.types).join(', ')} />
+                </Block>
+              </Block>
+            )}
+          </Block>
+        )}
+
+        {/* TypeScript Interface Section */}
+        <Block role="Group">
+          <Action
+            role="Button"
+            prominence="Subtle"
+            intent="Neutral"
+            className="w-full justify-start px-3 py-2 rounded-none"
+            onClick={() => toggleSection('typescript')}
+          >
+            <Block role="Inline" layout="inline" className="gap-1.5">
+              {expandedSections.has('typescript') ? (
+                <ChevronDown size={12} />
+              ) : (
+                <ChevronRight size={12} />
+              )}
+              <Code size={12} />
+              <Text role="Body" size="sm">Interface</Text>
+            </Block>
+          </Action>
           {expandedSections.has('typescript') && (
-            <div className="px-3 pb-2">
-              <Content prominence="primary">
-                <pre className="font-mono whitespace-pre overflow-x-auto bg-layer-3 p-2 rounded">
-                  {schema.typescript}
-                </pre>
-              </Content>
-            </div>
+            <Block role="Container" className="px-3 pb-2 mt-1">
+              <pre className="font-mono text-xs whitespace-pre overflow-x-auto bg-layer-3 p-2 rounded border border-border-default shadow-inner">
+                {schema.typescript}
+              </pre>
+            </Block>
           )}
-        </div>
-      </div>
+        </Block>
+      </Block>
     </Section>
   );
 };

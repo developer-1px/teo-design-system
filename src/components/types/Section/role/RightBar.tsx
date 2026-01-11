@@ -1,18 +1,9 @@
-/**
- * RightBar - Right sidebar panel with different views
- */
-
-import {
-  Download,
-  FolderOpen,
-  GitBranch,
-  Play,
-  Settings as SettingsIcon,
-  Upload,
-} from 'lucide-react';
+import { GitBranch, FolderOpen, Settings, Info, Sparkles, ChevronDown, File } from 'lucide-react';
 import { AIAgentChat } from '@/apps/IDE/widgets/chat/AIAgentChat.tsx';
-import { Button } from '@/components/types/Element/Action/role/Button.tsx';
+import { Action } from '@/components/types/Element/Action/Action';
 import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/types/Block/Block';
+import { Text } from '@/components/types/Element/Text/Text';
 
 interface RightBarProps {
   view: string | null;
@@ -45,13 +36,13 @@ export const RightBar = ({
   };
 
   return (
-    <Section
-      role="Aside"
-      prominence="Standard"
-      className="flex w-80 flex-col overflow-hidden bg-surface-cool boundary-shadow-left"
+    <Block
+      role="Stack"
+      gap="none"
+      className="h-full bg-surface-cool"
     >
       {renderContent()}
-    </Section>
+    </Block>
   );
 };
 
@@ -60,59 +51,50 @@ export const RightBar = ({
 // ============================================================================
 
 const AIPanel = () => {
-  return (
-    <div className="flex flex-col h-full overflow-hidden">
-      <AIAgentChat hideHeader={false} className="flex-1" />
-    </div>
-  );
+  return <AIAgentChat hideHeader={false} className="h-full" />;
 };
 
 const GitPanel = ({ currentBranch }: { currentBranch: string }) => {
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <Block role="Stack" gap="none" className="h-full">
       {/* Header */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-default">
-        <GitBranch size={16} className="text-accent" />
-        <h3 className="text-sm font-semibold text-text">Source Control</h3>
-      </div>
+      <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default">
+        <Block role="Inline" layout="inline" className="gap-2">
+          <GitBranch size={16} className="text-accent" />
+          <Text role="Title" size="sm" prominence="Standard" content="Source Control" />
+        </Block>
+      </Block>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-3">
-        {/* Current Branch */}
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-2">Current Branch</div>
-          <div className="flex items-center gap-2 px-3 py-2 rounded bg-surface-sunken">
-            <GitBranch size={14} />
-            <span className="text-sm text-text">{currentBranch}</span>
-          </div>
-        </div>
-
-        {/* Actions */}
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-2">Actions</div>
-          <div className="space-y-1">
-            <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
-              <Download size={14} />
-              <span>Pull</span>
-            </Button>
-            <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
-              <Upload size={14} />
-              <span>Push</span>
-            </Button>
-            <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
+      <Block role="ScrollArea" className="flex-1">
+        <Block role="Stack" gap={4} className="p-3">
+          {/* Current Branch */}
+          <Block role="Group" gap={2}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Current Branch" />
+            <Block role="Card" prominence="Subtle" className="flex items-center gap-2 px-3 py-2">
               <GitBranch size={14} />
-              <span>Branches</span>
-            </Button>
-          </div>
-        </div>
+              <Text role="Body" size="sm" content={currentBranch} />
+            </Block>
+          </Block>
 
-        {/* Changes */}
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-2">Changes</div>
-          <div className="text-xs text-muted px-2 py-4 text-center">No changes detected</div>
-        </div>
-      </div>
-    </div>
+          {/* Actions */}
+          <Block role="Group" gap={2}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Actions" />
+            <Block role="Stack" gap={1}>
+              <Action role="Button" icon="Download" label="Pull" prominence="Subtle" className="w-full justify-start" />
+              <Action role="Button" icon="Upload" label="Push" prominence="Subtle" className="w-full justify-start" />
+              <Action role="Button" icon="GitBranch" label="Branches" prominence="Subtle" className="w-full justify-start" />
+            </Block>
+          </Block>
+
+          {/* Changes */}
+          <Block role="Group" gap={2}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Changes" />
+            <Text role="Body" size="xs" prominence="Subtle" className="px-2 py-4 text-center italic" content="No changes detected" />
+          </Block>
+        </Block>
+      </Block>
+    </Block>
   );
 };
 
@@ -124,125 +106,123 @@ const ProjectInfoPanel = ({
   currentBranch: string;
 }) => {
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <Block role="Stack" gap="none" className="h-full">
       {/* Header */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-default">
-        <FolderOpen size={16} className="text-accent" />
-        <h3 className="text-sm font-semibold text-text">Project Info</h3>
-      </div>
+      <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default">
+        <Block role="Inline" layout="inline" className="gap-2">
+          <FolderOpen size={16} className="text-accent" />
+          <Text role="Title" size="sm" prominence="Standard" content="Project Info" />
+        </Block>
+      </Block>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-4">
-        {/* Project Name */}
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-1">Project</div>
-          <div className="text-sm text-text">{projectName}</div>
-        </div>
+      <Block role="ScrollArea" className="flex-1">
+        <Block role="Stack" gap={4} className="p-3">
+          {/* Project Name */}
+          <Block role="Group" gap={1}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Project" />
+            <Text role="Body" size="sm" content={projectName} />
+          </Block>
 
-        {/* Branch */}
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-1">Branch</div>
-          <div className="flex items-center gap-2">
-            <GitBranch size={14} />
-            <span className="text-sm text-text">{currentBranch}</span>
-          </div>
-        </div>
+          {/* Branch */}
+          <Block role="Group" gap={1}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Branch" />
+            <Block role="Inline" layout="inline" className="gap-2">
+              <GitBranch size={14} />
+              <Text role="Body" size="sm" content={currentBranch} />
+            </Block>
+          </Block>
 
-        {/* Stats */}
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-2">Quick Stats</div>
-          <div className="space-y-2">
-            <div className="flex justify-between px-3 py-2 rounded bg-surface-sunken">
-              <span className="text-xs text-muted">Files</span>
-              <span className="text-xs text-text font-mono">42</span>
-            </div>
-            <div className="flex justify-between px-3 py-2 rounded bg-surface-sunken">
-              <span className="text-xs text-muted">Components</span>
-              <span className="text-xs text-text font-mono">18</span>
-            </div>
-            <div className="flex justify-between px-3 py-2 rounded bg-surface-sunken">
-              <span className="text-xs text-muted">Lines</span>
-              <span className="text-xs text-text font-mono">2,547</span>
-            </div>
-          </div>
-        </div>
+          {/* Stats */}
+          <Block role="Group" gap={2}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Quick Stats" />
+            <Block role="Stack" gap={1}>
+              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
+                <Text role="Caption" prominence="Subtle" content="Files" />
+                <Text role="Caption" className="font-mono" content="42" />
+              </Block>
+              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
+                <Text role="Caption" prominence="Subtle" content="Components" />
+                <Text role="Caption" className="font-mono" content="18" />
+              </Block>
+              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
+                <Text role="Caption" prominence="Subtle" content="Lines" />
+                <Text role="Caption" className="font-mono" content="2,547" />
+              </Block>
+            </Block>
+          </Block>
 
-        {/* Run Configs */}
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-2">Run Configurations</div>
-          <div className="space-y-1">
-            <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
-              <Play size={14} />
-              <span>dev</span>
-            </Button>
-            <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
-              <Play size={14} />
-              <span>build</span>
-            </Button>
-            <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
-              <Play size={14} />
-              <span>test</span>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
+          {/* Run Configs */}
+          <Block role="Group" gap={2}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Run Configurations" />
+            <Block role="Stack" gap={1}>
+              <Action role="Button" icon="Play" label="dev" prominence="Subtle" className="w-full justify-start" />
+              <Action role="Button" icon="Play" label="build" prominence="Subtle" className="w-full justify-start" />
+              <Action role="Button" icon="Play" label="test" prominence="Subtle" className="w-full justify-start" />
+            </Block>
+          </Block>
+        </Block>
+      </Block>
+    </Block>
   );
 };
 
 const SettingsPanel = ({ onOpenSettings }: { onOpenSettings?: () => void }) => {
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <Block role="Stack" gap="none" className="h-full">
       {/* Header */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-default">
-        <SettingsIcon size={16} className="text-accent" />
-        <h3 className="text-sm font-semibold text-text">Quick Settings</h3>
-      </div>
+      <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default">
+        <Block role="Inline" layout="inline" className="gap-2">
+          <Settings size={16} className="text-accent" />
+          <Text role="Title" size="sm" prominence="Standard" content="Quick Settings" />
+        </Block>
+      </Block>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-3">
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-2">Editor</div>
-          <div className="space-y-2">
-            <label className="flex items-center justify-between px-3 py-2 rounded bg-surface-sunken cursor-pointer">
-              <span className="text-sm text-text">Auto Save</span>
-              <input type="checkbox" className="accent-accent" defaultChecked />
-            </label>
-            <label className="flex items-center justify-between px-3 py-2 rounded bg-surface-sunken cursor-pointer">
-              <span className="text-sm text-text">Format on Save</span>
-              <input type="checkbox" className="accent-accent" defaultChecked />
-            </label>
-            <label className="flex items-center justify-between px-3 py-2 rounded bg-surface-sunken cursor-pointer">
-              <span className="text-sm text-text">Line Numbers</span>
-              <input type="checkbox" className="accent-accent" defaultChecked />
-            </label>
-          </div>
-        </div>
+      <Block role="ScrollArea" className="flex-1">
+        <Block role="Stack" gap={4} className="p-3">
+          <Block role="Group" gap={2}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Editor" />
+            <Block role="Stack" gap={1}>
+              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+                <Text role="Body" size="sm" content="Auto Save" />
+                <input type="checkbox" className="accent-accent" defaultChecked />
+              </Block>
+              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+                <Text role="Body" size="sm" content="Format on Save" />
+                <input type="checkbox" className="accent-accent" defaultChecked />
+              </Block>
+              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+                <Text role="Body" size="sm" content="Line Numbers" />
+                <input type="checkbox" className="accent-accent" defaultChecked />
+              </Block>
+            </Block>
+          </Block>
 
-        <div>
-          <div className="text-xs font-semibold text-subtle mb-2">Appearance</div>
-          <div className="space-y-2">
-            <label className="flex items-center justify-between px-3 py-2 rounded bg-surface-sunken cursor-pointer">
-              <span className="text-sm text-text">Minimap</span>
-              <input type="checkbox" className="accent-accent" />
-            </label>
-            <label className="flex items-center justify-between px-3 py-2 rounded bg-surface-sunken cursor-pointer">
-              <span className="text-sm text-text">Breadcrumbs</span>
-              <input type="checkbox" className="accent-accent" defaultChecked />
-            </label>
-          </div>
-        </div>
+          <Block role="Group" gap={2}>
+            <Text role="Caption" prominence="Subtle" className="font-semibold" content="Appearance" />
+            <Block role="Stack" gap={1}>
+              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+                <Text role="Body" size="sm" content="Minimap" />
+                <input type="checkbox" className="accent-accent" />
+              </Block>
+              <Block role="Inline" layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
+                <Text role="Body" size="sm" content="Breadcrumbs" />
+                <input type="checkbox" className="accent-accent" defaultChecked />
+              </Block>
+            </Block>
+          </Block>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full justify-start gap-2"
-          onClick={onOpenSettings}
-        >
-          <SettingsIcon size={14} />
-          <span>Open Settings</span>
-        </Button>
-      </div>
-    </div>
+          <Action
+            role="Button"
+            icon="Settings"
+            label="Open Settings"
+            prominence="Subtle"
+            className="w-full justify-start"
+            onClick={onOpenSettings}
+          />
+        </Block>
+      </Block>
+    </Block>
   );
 };

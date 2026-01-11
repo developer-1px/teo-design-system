@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { getRoleConfig } from '@/components/types/Block/role-config';
+import { getRoleConfig } from '@/components/types/Block/role-registry';
 import { cn } from '@/shared/lib/utils';
 
 const separatorVariants = cva('shrink-0 bg-border-default', {

@@ -17,7 +17,7 @@ import { getInputStyles } from './styles/field.styles'; // Ensure styles are ava
 export type { FieldOption } from '@/components/types/Element/Field/Field.types';
 
 // Registry
-import { getFieldRenderer } from './registry';
+import { getFieldRenderer } from './role-registry';
 import { FieldTextbox } from './renderers/input/FieldTextbox'; // Fallback
 
 /**

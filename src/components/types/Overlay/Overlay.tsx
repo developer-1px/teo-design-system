@@ -21,6 +21,7 @@
  * ```
  *
  * v1.0.1: 신규 추가 (Dialog, Drawer, Popover, Toast, Tooltip, Sheet, Lightbox), CVA 적용
+ * v4.1: Registry 패턴 적용 (role-registry.ts)
  * @see spec/iddl-spec-1.0.1.md#33-overlay-node
  */
 
@@ -29,6 +30,7 @@ import { X } from 'lucide-react';
 import { useEffect } from 'react';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { OverlayProps } from '@/components/types/Overlay/Overlay.types';
+import { getRoleConfig } from './role-registry';
 import { cn } from '@/shared/lib/utils';
 
 /**
@@ -135,6 +137,9 @@ export function Overlay({
   condition,
   ...rest
 }: OverlayProps) {
+  // v4.1: Role registry validation
+  const roleConfig = getRoleConfig(role);
+
   // 조건부 렌더링 (v1.0.1)
   // TODO: condition 표현식 평가 구현
   if (condition) {
