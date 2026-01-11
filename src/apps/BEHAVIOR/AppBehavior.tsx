@@ -8,4 +8,7 @@
  * @see docs/2-areas/core/behavior/
  */
 
-export { BehaviorShowcasePage, BehaviorShowcasePage as AppBehavior } from './pages/BehaviorShowcasePage';
+export {
+  BehaviorShowcasePage,
+  BehaviorShowcasePage as AppBehavior,
+} from './pages/BehaviorShowcasePage';

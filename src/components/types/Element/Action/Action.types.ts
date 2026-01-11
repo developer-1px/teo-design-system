@@ -10,14 +10,43 @@ import type { AsProp, Density, Intent, Prominence } from '../../Shared.types';
  * Action Role - 액션의 렌더링 유형 (v4.0)
  */
 export type ActionRole =
-  | 'Button' // 기본 버튼
-  | 'IconButton' // 아이콘 전용 버튼
-  | 'Link' // 링크 스타일
-  | 'MenuItem' // 메뉴 아이템
-  | 'ListItem' // 리스트 아이템 (선택 가능)
-  | 'Tab' // 탭 버튼
-  | 'Chip' // 칩/태그 (토글 가능)
-  | 'ResizeHandle'; // ✨ NEW: 리사이즈 핸들 (v4.1)
+  // Basic Triggers
+  | 'Button'
+  | 'IconButton'
+  | 'Link'
+  | 'ToggleButton'
+
+  // Selection & Items
+  | 'Tab' // Single Tab Item
+  | 'MenuItem' // Single Menu Item
+  | 'ListItem' // Clickable List Item
+  | 'Chip' // Interactive Chip
+  | 'Option' // Select/Combobox Option
+  | 'Radio' // Input-like but often stylized as Action
+
+  // Navigation Items
+  | 'BreadcrumbItem'
+  | 'StepItem'
+  | 'PageButton' // Pagination Item
+  | 'NavItem'
+  | 'CommandItem'
+
+  // Data/Table Items
+  | 'TreeItem'
+  | 'TableRow'
+  | 'CalendarDay'
+
+  // Complex/Media
+  | 'Avatar' // Clickable Avatar
+  | 'Notification' // Notification Item
+
+  // Triggers (Explicit)
+  | 'DropdownTrigger'
+  | 'AccordionTrigger'
+  | 'TooltipTrigger'
+
+  // Utilities
+  | 'ResizeHandle';
 
 /**
  * Action Behavior - discriminated union
@@ -42,12 +71,11 @@ export interface ActionProps extends AsProp {
   // Renderer (v4.0)
   role?: ActionRole; // Button (default) | IconButton | Link | MenuItem | ListItem | Tab | Chip
   label?: string;
-  icon?: string;
+  icon?: ReactNode | string;
   // Styling
   prominence?: Prominence;
   intent?: Intent;
   density?: Density;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'icon'; // ✨ NEW: 사이즈 변형 (v4.1)
   /**
    * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
    * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색

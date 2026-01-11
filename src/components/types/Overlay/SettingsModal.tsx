@@ -1,14 +1,4 @@
-import {
-  Keyboard,
-  Layers,
-  Monitor,
-  Moon,
-  Palette,
-  Settings as SettingsIcon,
-  Sun,
-  Type,
-  X,
-} from 'lucide-react';
+import { Keyboard, Layers, Palette, Settings as SettingsIcon, Type, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/types/Element/Action/role/Button.tsx';
 import { Section } from '@/components/types/Section/Section.tsx';

@@ -189,7 +189,7 @@ export function useFieldTextbox(options: UseTextFieldOptions): UseTextFieldRetur
         if (!regex.test(val)) {
           return constraints.patternMessage ?? 'Invalid format';
         }
-      } catch (e) {
+      } catch (_e) {
         console.error('Invalid regex pattern:', constraints.pattern);
       }
     }

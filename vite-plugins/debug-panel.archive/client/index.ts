@@ -10,7 +10,6 @@
 import { KeyboardManager } from './keyboard';
 import { OverlayManager } from './overlay';
 import { PanelManager } from './panel';
-import { getDebugMode } from './state';
 import { injectStyles } from './styles';
 
 /**

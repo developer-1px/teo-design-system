@@ -29,14 +29,14 @@ export interface UseFocusTrapOptions {
 export function useFocusTrap<T extends HTMLElement>(
   options: UseFocusTrapOptions = {}
 ): React.RefObject<T | null> {
-  const { enabled = true, initialFocus, restoreFocus = true } = options;
+  const { enabled = true, _initialFocus, restoreFocus = true } = options;
   const ref = useRef<T>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!enabled || !ref.current) return;
 
-    const container = ref.current;
+    const __container = ref.current;
     previousActiveElement.current = document.activeElement as HTMLElement;
 
     // TODO: 구현 필요
@@ -51,7 +51,7 @@ export function useFocusTrap<T extends HTMLElement>(
         previousActiveElement.current.focus();
       }
     };
-  }, [enabled, initialFocus, restoreFocus]);
+  }, [enabled, restoreFocus]);
 
   return ref;
 }

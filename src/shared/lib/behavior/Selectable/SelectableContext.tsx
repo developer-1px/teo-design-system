@@ -4,7 +4,7 @@
  * Selectable behavior를 하위 컴포넌트에서 사용할 수 있도록 Context 제공
  */
 
-import { createContext, useContext, useEffect, type ReactNode } from 'react';
+import { createContext, type ReactNode, useContext, useEffect } from 'react';
 import type { SelectableContext as SelectableContextType, SelectableItem } from './types';
 
 /**
@@ -63,8 +63,8 @@ export function useSelectableItem(id: string, disabled = false) {
   useEffect(() => {
     // For Selectable, we only need to update disabled state
     // (unlike Navigable which also tracks textValue for typeahead)
-    const currentItem = context.selectedIds; // Just to trigger re-render
-  }, [disabled, context]);
+    const _currentItem = context.selectedIds; // Just to trigger re-render
+  }, [context]);
 
   return {
     isSelected: context.isSelected(id),

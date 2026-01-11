@@ -14,11 +14,11 @@ export function BlockStructureDemo() {
         />
       </div>
 
-      {/* Split & Divider */}
+      {/* Grid & Divider */}
       <Block role="Card" className="p-4 gap-4">
-        <Text role="Label" content="Split Layout & Divider" />
+        <Text role="Label" content="Grid Layout & Divider" />
 
-        <Block role="Split" className="h-32">
+        <Block role="Grid" spec={{ columns: 2 }} className="h-32">
           <div className="bg-surface-sunken flex items-center justify-center rounded">
             Left Pane
           </div>
@@ -27,9 +27,7 @@ export function BlockStructureDemo() {
           </div>
         </Block>
 
-        <Block role="Divider" className="h-px w-full">
-          <></>
-        </Block>
+        <Block role="Divider" className="h-px w-full"></Block>
 
         <Block role="Inline" className="p-4 border border-border-default rounded">
           <Text role="Body" content="Left" />
@@ -38,10 +36,10 @@ export function BlockStructureDemo() {
         </Block>
       </Block>
 
-      {/* ScrollMenu */}
+      {/* ScrollArea */}
       <Block role="Card" className="p-4 gap-4">
-        <Text role="Label" content="ScrollMenu (role='ScrollMenu')" />
-        <Block role="ScrollMenu" className="h-32 border border-border-default rounded p-2">
+        <Text role="Label" content="ScrollArea (role='ScrollArea')" />
+        <Block role="ScrollArea" className="h-32 border border-border-default rounded p-2">
           {Array.from({ length: 10 }).map((_, i) => (
             <Block
               key={i}

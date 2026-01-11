@@ -39,7 +39,7 @@ function inferType(value: JsonValue): TypeInfo {
     const properties = new Map<string, TypeInfo>();
 
     for (const [key, val] of Object.entries(value)) {
-      properties.set(key, inferType(val, key));
+      properties.set(key, inferType(val));
     }
 
     return {

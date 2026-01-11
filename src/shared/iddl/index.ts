@@ -1,3 +1,3 @@
-export * from './types';
-export * from './tokens';
 export { iddl } from './resolve';
+export * from './tokens';
+export * from './types';

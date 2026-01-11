@@ -99,7 +99,6 @@ export function SignatureCanvasRole({
       ref={canvasRef}
       width={width}
       height={height}
-      role="application"
       aria-label="Signature canvas"
       className={cn(
         'border-2 border-border rounded-lg cursor-crosshair',

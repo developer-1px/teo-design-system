@@ -23,8 +23,8 @@ import type { FieldOption } from '@/components/types/Element/Field/Field.types';
 import type { Intent, Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
 import { useFieldListbox } from '../../headless/useFieldListbox';
-import { ListboxRole } from './ListboxRole';
 import { errorStyles, fieldWrapperStyles, labelStyles } from '../../styles/field.styles';
+import { ListboxRole } from './ListboxRole';
 
 export interface FieldListboxProps {
   /**

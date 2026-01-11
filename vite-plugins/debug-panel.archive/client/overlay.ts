@@ -9,7 +9,6 @@ import {
   createOverlayLayer,
   findInteractiveElements,
   getBoxConfig,
-  getIDDLComponentType,
   getSelectorsForMode,
   pulseBoxes,
   removeHoverFromBoxes,
@@ -197,7 +196,7 @@ export class OverlayManager {
 
     // Remove legacy data-debug-target
     const current = document.querySelector('[data-debug-target]');
-    if (current) delete (current as any).dataset['debugTarget'];
+    if (current) delete (current as any).dataset.debugTarget;
 
     // Remove all hover classes using pure function
     removeHoverFromBoxes(Array.from(this.boxes.values()));

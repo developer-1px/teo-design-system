@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { getRoleConfig } from '@/components/types/Block/role-registry';
+import type { Prominence } from '@/components/types/Shared.types';
 import { cn } from '@/shared/lib/utils';
 
 const separatorVariants = cva('shrink-0 bg-border-default', {
@@ -24,6 +24,7 @@ export interface SeparatorProps
   role?: 'Divider' | 'ToolbarDivider';
   orientation?: 'horizontal' | 'vertical';
   decorative?: boolean;
+  prominence?: Prominence;
 }
 
 export function Separator({
@@ -31,10 +32,9 @@ export function Separator({
   orientation = 'horizontal',
   role = 'Divider',
   decorative = true,
+  prominence,
   ...props
 }: SeparatorProps) {
-  // ToolbarDivider implies vertical orientation usually, but let's stick to defaults or overrides
-  // Actually ToolbarDivider is specific.
   return (
     <div
       role={decorative ? 'none' : 'separator'}

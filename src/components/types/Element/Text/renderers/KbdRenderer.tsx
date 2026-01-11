@@ -4,9 +4,9 @@
  * Maps TextProps to Kbd component props
  */
 
-import type { TextProps } from '../Text.types';
-import { Kbd } from '../role/Kbd';
 import { cn } from '@/shared/lib/utils';
+import { Kbd } from '../role/Kbd';
+import type { TextProps } from '../Text.types';
 
 /**
  * Prominence to Kbd size mapping
@@ -18,7 +18,6 @@ const prominenceToSize = (prominence?: TextProps['prominence']): 'sm' | 'md' | '
       return 'lg';
     case 'Subtle':
       return 'sm';
-    case 'Standard':
     default:
       return 'md';
   }

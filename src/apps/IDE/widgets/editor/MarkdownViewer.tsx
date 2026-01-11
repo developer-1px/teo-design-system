@@ -169,12 +169,12 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
               },
 
               // pre (코드 블록용, 위에서 이미 처리)
-              pre: ({ node, children, ...props }) => {
+              pre: ({ children }) => {
                 return <>{children}</>;
               },
 
               // 인용구
-              blockquote: ({ node, children, ...props }) => (
+              blockquote: ({ node: _, children, ...props }) => (
                 <blockquote
                   className="my-6 pl-6 pr-4 py-4 border-l-4 border-accent bg-accent/5 rounded-r-lg"
                   {...props}
@@ -239,7 +239,9 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
             {content}
           </ReactMarkdown>
 
-          <style jsx global>{`
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
             .markdown-body {
               font-size: 16px;
               line-height: 1.6;
@@ -265,7 +267,9 @@ export const MarkdownViewer = ({ content, filename }: MarkdownViewerProps) => {
               margin-top: 0.5rem;
               margin-bottom: 0.5rem;
             }
-          `}</style>
+          `,
+            }}
+          />
         </div>
       </div>
     </Section>

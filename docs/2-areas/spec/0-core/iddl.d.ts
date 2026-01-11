@@ -121,7 +121,7 @@ export namespace IDDL {
 
   export interface BlockProps extends BaseProps {
     role?: BlockRole;
-    gap?: 'none' | 'small' | 'medium' | 'large';
+    // gap is calculated automatically from density
   }
 
   // =========================================================================
@@ -134,16 +134,16 @@ export namespace IDDL {
   export interface TextProps extends BaseProps {
     role: TextRole;
     content?: string;
-    align?: 'left' | 'center' | 'right';
     icon?: string;
+    // align is determined by role, not a direct prop
   }
 
   // --- Image ---
   export interface ImageProps extends BaseProps {
     src: string;
     alt: string;
-    aspectRatio?: 'auto' | '1:1' | '16:9' | '4:3';
-    fit?: 'cover' | 'contain';
+    // aspectRatio and fit should be in spec object
+    // spec?: { aspectRatio?: 'auto' | '1:1' | '16:9' | '4:3'; fit?: 'cover' | 'contain' }
   }
 
   // --- Field ---

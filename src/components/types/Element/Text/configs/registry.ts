@@ -6,13 +6,12 @@
  * - Complex roles: Custom renderer component
  */
 
-import type { RoleConfig } from './types';
-
+import * as Data from './complex/data';
+import * as Indicator from './complex/indicator';
+import * as Inline from './simple/inline';
 // Import configurations
 import * as Typography from './simple/typography';
-import * as Inline from './simple/inline';
-import * as Indicator from './complex/indicator';
-import * as Data from './complex/data';
+import type { RoleConfig } from './types';
 
 /**
  * Role Registry
@@ -39,6 +38,10 @@ export const ROLE_REGISTRY: Record<string, RoleConfig> = {
   Avatar: Indicator.Avatar,
   Kbd: Indicator.Kbd,
   Tag: Indicator.Tag,
+  // Migrated from Block
+  Progress: Indicator.Progress, // To be implemented
+  Spinner: Indicator.Spinner, // To be implemented
+  Skeleton: Indicator.Skeleton, // To be implemented
 
   // === Data (데이터 표시) ===
   Time: Data.Time,
@@ -56,7 +59,10 @@ export function getRoleConfig(role: string): RoleConfig {
   if (!config) {
     // Dev mode warning
     if (import.meta.env.DEV) {
-      console.warn(`[Text] Unknown role "${role}". Using fallback config. Available roles:`, Object.keys(ROLE_REGISTRY));
+      console.warn(
+        `[Text] Unknown role "${role}". Using fallback config. Available roles:`,
+        Object.keys(ROLE_REGISTRY)
+      );
     }
 
     // Fallback: simple span

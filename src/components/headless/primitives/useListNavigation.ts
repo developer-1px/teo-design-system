@@ -9,7 +9,7 @@
  * @see docs/1-project/4-headless-hook.md
  */
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export interface UseListNavigationOptions {
   /** 아이템 개수 */

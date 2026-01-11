@@ -32,7 +32,7 @@ export const ListView = ({ data }: ListViewProps) => {
             >
               {/* 첫 번째 필드 (제목) */}
               <Block role="Container" flex="1">
-                <Text role="Body" prominence="Primary" content={String(obj[keys[0]])} />
+                <Text role="Body" prominence="Strong" content={String(obj[keys[0]])} />
               </Block>
 
               {/* 나머지 필드들 */}

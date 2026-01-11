@@ -63,6 +63,7 @@ export const Link: SimpleRoleConfig = {
 export const Code: SimpleRoleConfig = {
   type: 'simple',
   htmlTag: 'code',
-  baseStyles: 'relative rounded bg-surface-sunken px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-text',
+  baseStyles:
+    'relative rounded bg-surface-sunken px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-text',
   description: 'Inline code snippet',
 };

@@ -92,8 +92,8 @@ export function IconButtonAction({
         interactiveClasses,
         // Enhanced hover/active states for IconButton (구 IconButton 디자인 통합)
         !selected &&
-        !isDisabled &&
-        'hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10',
+          !isDisabled &&
+          'hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10',
         selected && 'bg-accent/10',
         // Loading cursor
         loading && 'cursor-wait'

@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Action } from '@/components/types/Element/Action/Action';
 import { Field, type FieldOption } from '@/components/types/Element/Field/Field';
 import { Text } from '@/components/types/Element/Text/Text';
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
 export function AtomsShowcasePage() {
   // Form state for all field types
@@ -140,11 +140,7 @@ export function AtomsShowcasePage() {
                     prominence="Standard"
                     intent="Brand"
                   />
-                  <Action
-                    label="Reset Form"
-                    behavior={{ action: 'reset' }}
-                    prominence="Standard"
-                  />
+                  <Action label="Reset Form" behavior={{ action: 'reset' }} prominence="Standard" />
                 </Block>
               </Block>
 
@@ -182,7 +178,12 @@ export function AtomsShowcasePage() {
               prominence="Standard"
             />
 
-            <Block role="Grid" spec={{ columns: 2 }} gap={4} className="p-4 rounded-lg bg-surface-sunken">
+            <Block
+              role="Grid"
+              spec={{ columns: 2 }}
+              gap={4}
+              className="p-4 rounded-lg bg-surface-sunken"
+            >
               <Field label="Text" model="text" type="text" value={formData.text} />
               <Field label="Number" model="number" type="number" value={formData.number} />
               <Field label="Currency" model="currency" type="currency" value={formData.currency} />
@@ -245,7 +246,12 @@ export function AtomsShowcasePage() {
           <Block role="Card" gap={4}>
             <Text role="Title" content="4. Field Component - Edit Mode" prominence="Standard" />
 
-            <Block role="Grid" spec={{ columns: 2 }} gap={4} className="p-4 rounded-lg bg-surface-sunken">
+            <Block
+              role="Grid"
+              spec={{ columns: 2 }}
+              gap={4}
+              className="p-4 rounded-lg bg-surface-sunken"
+            >
               <Field
                 label="Text"
                 model="text"

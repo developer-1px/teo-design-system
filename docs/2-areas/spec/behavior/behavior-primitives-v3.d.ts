@@ -811,9 +811,7 @@ export interface BehaviorContextValue {
   hasBehavior: (type: BehaviorDeclaration['type']) => boolean;
 
   // Get specific context (type-safe)
-  getContext<T extends BehaviorDeclaration['type']>(
-    type: T
-  ): BehaviorContextMap[T] | null;
+  getContext<T extends BehaviorDeclaration['type']>(type: T): BehaviorContextMap[T] | null;
 
   // Scope
   scope?: string;

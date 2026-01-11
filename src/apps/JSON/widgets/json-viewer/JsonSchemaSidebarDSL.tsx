@@ -94,7 +94,7 @@ export const JsonSchemaSidebarDSL = ({
         {schema.analysis && (
           <Section>
             <Block role="Toolbar">
-              <Item
+              <Block
                 as="button"
                 onClick={() => toggleSection('analysis')}
                 className="w-full justify-start px-3 py-2 flex items-center gap-1.5"
@@ -106,7 +106,7 @@ export const JsonSchemaSidebarDSL = ({
                 )}
                 <Info size={12} />
                 <span>Analysis</span>
-              </Item>
+              </Block>
             </Block>
 
             {expandedSections.has('analysis') && (
@@ -150,7 +150,7 @@ export const JsonSchemaSidebarDSL = ({
         {/* TypeScript Interface Section */}
         <Section>
           <Block role="Toolbar">
-            <Item
+            <Block
               as="button"
               onClick={() => toggleSection('typescript')}
               className="w-full justify-start px-3 py-2 flex items-center gap-1.5"
@@ -162,19 +162,19 @@ export const JsonSchemaSidebarDSL = ({
               )}
               <Code size={12} />
               <span>Interface</span>
-            </Item>
+            </Block>
           </Block>
 
           {expandedSections.has('typescript') && (
             <div className="px-3 pb-2">
               <Block role="Container">
-                <Item
+                <Block
                   as="pre"
                   prominence="Hero"
                   className="font-mono whitespace-pre overflow-x-auto bg-layer-3 p-2 rounded text-xs"
                 >
                   {schema.typescript}
-                </Item>
+                </Block>
               </Block>
             </div>
           )}

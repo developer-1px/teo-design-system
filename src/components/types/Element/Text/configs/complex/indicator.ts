@@ -9,12 +9,12 @@
  * - Tag: 제거 가능한 태그
  */
 
-import type { ComplexRoleConfig } from '../types';
-import { BadgeRenderer } from '../../renderers/BadgeRenderer';
 import { AlertRenderer } from '../../renderers/AlertRenderer';
 import { AvatarRenderer } from '../../renderers/AvatarRenderer';
+import { BadgeRenderer } from '../../renderers/BadgeRenderer';
 import { KbdRenderer } from '../../renderers/KbdRenderer';
 import { TagRenderer } from '../../renderers/TagRenderer';
+import type { ComplexRoleConfig } from '../types';
 
 /**
  * Badge - 상태 표시 배지
@@ -36,7 +36,8 @@ export const Badge: ComplexRoleConfig = {
   fallback: {
     type: 'simple',
     htmlTag: 'span',
-    baseStyles: 'inline-flex items-center rounded-full px-2 py-1 text-xs font-medium bg-accent/10 text-accent border border-accent/20',
+    baseStyles:
+      'inline-flex items-center rounded-full px-2 py-1 text-xs font-medium bg-accent/10 text-accent border border-accent/20',
   },
   description: 'Status indicator or tag',
 };
@@ -108,4 +109,35 @@ export const Tag: ComplexRoleConfig = {
   type: 'complex',
   renderer: TagRenderer,
   description: 'Removable tag with optional close button',
+};
+
+import { ProgressRenderer } from '../../renderers/ProgressRenderer';
+import { SkeletonRenderer } from '../../renderers/SkeletonRenderer';
+import { SpinnerRenderer } from '../../renderers/SpinnerRenderer';
+
+/**
+ * Progress - 진행률 표시
+ */
+export const Progress: ComplexRoleConfig = {
+  type: 'complex',
+  renderer: ProgressRenderer,
+  description: 'Progress bar',
+};
+
+/**
+ * Spinner - 로딩 스피너
+ */
+export const Spinner: ComplexRoleConfig = {
+  type: 'complex',
+  renderer: SpinnerRenderer,
+  description: 'Loading spinner',
+};
+
+/**
+ * Skeleton - 스켈레톤 로딩
+ */
+export const Skeleton: ComplexRoleConfig = {
+  type: 'complex',
+  renderer: SkeletonRenderer,
+  description: 'Skeleton loading state',
 };

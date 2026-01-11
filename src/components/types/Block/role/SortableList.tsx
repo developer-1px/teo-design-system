@@ -42,7 +42,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { type ReactNode, useCallback } from 'react';
 import { cn } from '@/shared/lib/utils';
-import type { BlockRendererProps } from '../../Block.types';
+import type { BlockRendererProps } from '../Block.types';
 
 export interface SortableListProps extends BlockRendererProps {
   role: 'SortableList';

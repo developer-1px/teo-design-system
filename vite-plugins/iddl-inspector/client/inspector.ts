@@ -92,7 +92,7 @@ function serializeValue(value: any, maxLength: number = 80): string {
     }
 
     return serialized;
-  } catch (error) {
+  } catch (_error) {
     // 순환 참조 등의 에러 처리
     if (Array.isArray(value)) {
       return '[...]';
@@ -177,7 +177,7 @@ function propsToString(props: any): string {
     }
   }
 
-  return relevantProps.length > 0 ? ' ' + relevantProps.join(' ') : '';
+  return relevantProps.length > 0 ? ` ${relevantProps.join(' ')}` : '';
 }
 
 /**
@@ -384,15 +384,15 @@ export function inspectReactTree(): string {
     if (!jsx || jsx.trim() === '') {
       // 디버깅 정보 출력
       let debugInfo = '// Error: Empty tree\n';
-      debugInfo += '// Root fiber type: ' + typeof fiber?.type + '\n';
-      debugInfo += '// Root component name: ' + getComponentName(fiber) + '\n';
-      debugInfo += '// Should render: ' + shouldRenderFiber(fiber) + '\n';
-      debugInfo += '// Has child: ' + !!fiber?.child + '\n';
+      debugInfo += `// Root fiber type: ${typeof fiber?.type}\n`;
+      debugInfo += `// Root component name: ${getComponentName(fiber)}\n`;
+      debugInfo += `// Should render: ${shouldRenderFiber(fiber)}\n`;
+      debugInfo += `// Has child: ${!!fiber?.child}\n`;
 
       if (fiber?.child) {
-        debugInfo += '// Child type: ' + typeof fiber.child.type + '\n';
-        debugInfo += '// Child name: ' + getComponentName(fiber.child) + '\n';
-        debugInfo += '// Child should render: ' + shouldRenderFiber(fiber.child) + '\n';
+        debugInfo += `// Child type: ${typeof fiber.child.type}\n`;
+        debugInfo += `// Child name: ${getComponentName(fiber.child)}\n`;
+        debugInfo += `// Child should render: ${shouldRenderFiber(fiber.child)}\n`;
       }
 
       return debugInfo;

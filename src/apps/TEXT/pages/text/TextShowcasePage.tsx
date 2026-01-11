@@ -1,6 +1,6 @@
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/types/Block/Block.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
 export function TextShowcasePage() {
   const categories = [
@@ -58,11 +58,7 @@ export function TextShowcasePage() {
           <Text role="Label" content="Body Role" prominence="Subtle" />
           <Block role="Stack" gap={4}>
             <Block role="Stack" gap={1}>
-              <Text
-                role="Body"
-                prominence="Hero"
-                content="Hero Body used for lead paragraphs."
-              />
+              <Text role="Body" prominence="Hero" content="Hero Body used for lead paragraphs." />
               <Text role="Caption" content="prominence='Hero' (Lead Text)" />
             </Block>
             <Block role="Stack" gap={1}>
@@ -203,11 +199,7 @@ export function TextShowcasePage() {
       <Block role="Container" layout="stack" density="Comfortable" gap={6}>
         <Block role="Stack" gap={1}>
           <Text role="Title" prominence="Strong" content="5. Technical Text" />
-          <Text
-            role="Body"
-            prominence="Subtle"
-            content="Monospaced styles for code and keys."
-          />
+          <Text role="Body" prominence="Subtle" content="Monospaced styles for code and keys." />
         </Block>
 
         <Block role="Grid" density="Standard" gap={8} spec={{ columns: 2 }}>

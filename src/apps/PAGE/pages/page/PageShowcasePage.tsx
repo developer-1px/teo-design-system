@@ -7,17 +7,20 @@
  * - 하드코딩 없음, 100% config 기반
  */
 
-import { useState } from 'react';
 import { ChevronDown, ChevronRight, Info } from 'lucide-react';
+import { useState } from 'react';
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/types/Block/Block';
 import { Text } from '@/components/types/Element/Text/Text';
 import { Page } from '@/components/types/Page/Page';
 import type { PageLayout, PageRole } from '@/components/types/Page/Page.types';
-import { Section } from '@/components/types/Section/Section';
 import { LAYOUT_SECTION_ROLES } from '@/components/types/Section/configs/constants';
-import { getRoleConfig, getOverflowClass } from '@/components/types/Section/configs/registry';
+import {
+  getOverflowClass,
+  getSectionRoleConfig,
+} from '@/components/types/Section/configs/registry';
+import { Section } from '@/components/types/Section/Section';
 import type { SectionRole } from '@/components/types/Section/Section.types';
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { cn } from '@/shared/lib/utils';
 
 /**
@@ -31,6 +34,7 @@ const ROLE_LAYOUT_MAP: Record<PageRole, PageLayout[]> = {
   Immersive: ['Single', 'Mobile'],
   Overlay: ['Single'],
   Paper: ['Single'],
+  Fullscreen: ['Single', 'Split'],
 };
 
 /**
@@ -49,6 +53,7 @@ const ROLE_DESCRIPTIONS: Record<PageRole, string> = {
     'Modal-style page with dimmed background. Floating above main content. Best for quick views, dialogs.',
   Paper:
     'Fixed aspect ratio for print/PDF. A4 or Letter size. Best for invoices, resumes, printable documents.',
+  Fullscreen: 'Legacy fullscreen application mode.',
 };
 
 /**
@@ -61,19 +66,14 @@ const ROLE_PHYSICS: Record<PageRole, string> = {
   Immersive: 'h-screen overflow-y-scroll snap-y snap-mandatory',
   Overlay: 'fixed inset-0 z-50 bg-black/50',
   Paper: 'w-[210mm] h-[297mm] bg-white shadow-lg',
+  Fullscreen: 'h-screen w-screen overflow-hidden',
 };
 
 /**
  * SectionDetail - 각 Section의 실제 config 표시
  */
-function SectionDetail({
-  name,
-  layout,
-}: {
-  name: SectionRole;
-  layout: PageLayout;
-}) {
-  const config = getRoleConfig(name, layout);
+function SectionDetail({ name, layout }: { name: SectionRole; layout: PageLayout }) {
+  const config = getSectionRoleConfig(name, layout);
   const overflowClass = getOverflowClass(config.overflow);
 
   return (
@@ -128,13 +128,7 @@ function SectionDetail({
 /**
  * LayoutCard - 각 Layout의 Section 목록 및 config 표시
  */
-function LayoutCard({
-  layout,
-  role,
-}: {
-  layout: PageLayout;
-  role: PageRole;
-}) {
+function LayoutCard({ layout, role }: { layout: PageLayout; role: PageRole }) {
   const [expanded, setExpanded] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const sections = LAYOUT_SECTION_ROLES[layout];
@@ -153,7 +147,7 @@ function LayoutCard({
 
   // Grid Template Areas 생성
   const gridTemplateAreas = sections
-    .map((section) => `"${getRoleConfig(section, layout).gridArea}"`)
+    .map((section) => `"${getSectionRoleConfig(section, layout).gridArea}"`)
     .join(' ');
 
   return (
@@ -229,13 +223,9 @@ function LayoutCard({
                     className="w-full h-full"
                   >
                     {sections.map((sectionRole) => {
-                      const config = getRoleConfig(sectionRole, layout);
+                      const config = getSectionRoleConfig(sectionRole, layout);
                       return (
-                        <Section
-                          key={sectionRole}
-                          role={sectionRole}
-                          className="relative"
-                        >
+                        <Section key={sectionRole} role={sectionRole} className="relative">
                           <div
                             className={cn(
                               'h-full p-4 border border-dashed border-border flex flex-col items-center justify-center gap-2',
@@ -338,14 +328,7 @@ function RoleSection({ role, index }: { role: PageRole; index: number }) {
  * PageShowcasePage - Main Component
  */
 export function PageShowcasePage() {
-  const roles: PageRole[] = [
-    'Document',
-    'Application',
-    'Focus',
-    'Immersive',
-    'Overlay',
-    'Paper',
-  ];
+  const roles: PageRole[] = ['Document', 'Application', 'Focus', 'Immersive', 'Overlay', 'Paper'];
 
   return (
     <ShowcasePage
@@ -369,7 +352,7 @@ export function PageShowcasePage() {
               prominence="Subtle"
               className="text-xs"
             />
-            <Block role="Stack" Element="ul" gap={1} className="text-xs text-subtle ml-4 list-disc">
+            <Block role="Stack" as="ul" gap={1} className="text-xs text-subtle ml-4 list-disc">
               <li>
                 <code className="bg-layer-1 px-1 rounded">LAYOUT_SECTION_ROLES</code> - Valid
                 sections per layout

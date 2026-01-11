@@ -64,7 +64,9 @@ export const TopToolbar = ({
           label="Main Menu (Alt+\)"
           density="Compact"
           onClick={() => setShowMainMenu(!showMainMenu)}
-          onBlur={() => setTimeout(() => setShowMainMenu(false), 200)}
+          onBlur={() => {
+            setTimeout(() => setShowMainMenu(false), 200);
+          }}
         />
 
         {showMainMenu && (
@@ -90,10 +92,12 @@ export const TopToolbar = ({
           size="sm"
           gap="xs"
           onClick={() => setShowProjectMenu(!showProjectMenu)}
-          onBlur={() => setTimeout(() => setShowProjectMenu(false), 200)}
+          onBlur={() => {
+            setTimeout(() => setShowProjectMenu(false), 200);
+          }}
         >
           <FolderOpenIcon size={16} />
-          <Text role="Body" prominence="Primary" content={projectName} />
+          <Text role="Body" prominence="Strong" content={projectName} />
           <ChevronDownIcon size={16} />
         </Button>
 
@@ -123,7 +127,9 @@ export const TopToolbar = ({
           size="sm"
           gap="xs"
           onClick={() => setShowVcsMenu(!showVcsMenu)}
-          onBlur={() => setTimeout(() => setShowVcsMenu(false), 200)}
+          onBlur={() => {
+            setTimeout(() => setShowVcsMenu(false), 200);
+          }}
         >
           <GitBranchIcon size={16} />
           <span>{currentBranch}</span>
@@ -153,7 +159,9 @@ export const TopToolbar = ({
           size="sm"
           gap="xs"
           onClick={() => setShowRunMenu(!showRunMenu)}
-          onBlur={() => setTimeout(() => setShowRunMenu(false), 200)}
+          onBlur={() => {
+            setTimeout(() => setShowRunMenu(false), 200);
+          }}
         >
           <PlayIcon size={16} />
           <span>Run</span>
@@ -199,6 +207,15 @@ export const TopToolbar = ({
         {/* Theme Toggle */}
         <ThemeToggleButton />
 
+        {/* Search */}
+        <Action
+          role="IconButton"
+          icon="Search"
+          label="Search (⌘P)"
+          density="Compact"
+          onClick={onOpenSearch}
+        />
+
         {/* Settings */}
         <Action
           role="IconButton"
@@ -229,11 +246,11 @@ const MainMenuContent = () => {
   return (
     <Block role="Menu" padding="xs">
       {menuItems.map((menu) => (
-        <Block key={menu.label} role="MenuSection" padding="xs">
+        <Block key={menu.label} role="Group" padding="xs">
           <Text role="Label" prominence="Subtle" content={menu.label} />
-          <Block role="MenuItems" gap="xs">
+          <Block role="Stack" gap="xs">
             {menu.items.map((item) => (
-              <Action key={item} role="MenuItem" prominence="Secondary" label={item} />
+              <Action key={item} role="MenuItem" prominence="Standard" label={item} />
             ))}
           </Block>
         </Block>
@@ -247,14 +264,14 @@ const ProjectMenuContent = () => {
 
   return (
     <Block role="Menu" padding="xs">
-      <Action role="MenuItem" prominence="Primary" label="New Project..." />
-      <Action role="MenuItem" prominence="Secondary" label="Open..." />
+      <Action role="MenuItem" prominence="Strong" label="New Project..." />
+      <Action role="MenuItem" prominence="Standard" label="Open..." />
       <Block role="Divider" orientation="horizontal" />
-      <Block role="MenuSection" padding="xs">
+      <Block role="Group" padding="xs">
         <Text role="Label" prominence="Subtle" content="Recent Projects" />
-        <Block role="MenuItems" gap="xs">
+        <Block role="Stack" gap="xs">
           {recentProjects.map((project) => (
-            <Action key={project} role="MenuItem" prominence="Secondary" label={project} />
+            <Action key={project} role="MenuItem" prominence="Standard" label={project} />
           ))}
         </Block>
       </Block>
@@ -265,56 +282,36 @@ const ProjectMenuContent = () => {
 const VcsMenuContent = () => {
   return (
     <Block role="Menu" padding="xs">
-      <Block
-        role="MenuItem"
-        direction="horizontal"
-        align="center"
-        padding="sm"
-        gap="sm"
-        interactive
-      >
-        <DownloadIcon size={16} />
-        <Text role="Body" prominence="Primary" content="Update Project" />
-        <Text role="Label" prominence="Subtle" content="⌘T" />
-      </Block>
-      <Block
-        role="MenuItem"
-        direction="horizontal"
-        align="center"
-        padding="sm"
-        gap="sm"
-        interactive
-      >
-        <UploadIcon size={16} />
-        <Text role="Body" prominence="Primary" content="Commit..." />
-        <Text role="Label" prominence="Subtle" content="⌘K" />
-      </Block>
-      <Block
-        role="MenuItem"
-        direction="horizontal"
-        align="center"
-        padding="sm"
-        gap="sm"
-        interactive
-      >
-        <UploadIcon size={16} />
-        <Text role="Body" prominence="Primary" content="Push..." />
-        <Text role="Label" prominence="Subtle" content="⇧⌘K" />
-      </Block>
+      <Action role="MenuItem" className="w-full">
+        <Block layout="inline" align="center" padding="sm" gap="sm">
+          <DownloadIcon size={16} />
+          <Text role="Body" prominence="Strong" content="Update Project" />
+          <Text role="Label" prominence="Subtle" content="⌘T" />
+        </Block>
+      </Action>
+      <Action role="MenuItem" className="w-full">
+        <Block layout="inline" align="center" padding="sm" gap="sm">
+          <UploadIcon size={16} />
+          <Text role="Body" prominence="Strong" content="Commit..." />
+          <Text role="Label" prominence="Subtle" content="⌘K" />
+        </Block>
+      </Action>
+      <Action role="MenuItem" className="w-full">
+        <Block layout="inline" align="center" padding="sm" gap="sm">
+          <UploadIcon size={16} />
+          <Text role="Body" prominence="Strong" content="Push..." />
+          <Text role="Label" prominence="Subtle" content="⇧⌘K" />
+        </Block>
+      </Action>
       <Block role="Divider" orientation="horizontal" />
-      <Block
-        role="MenuItem"
-        direction="horizontal"
-        align="center"
-        padding="sm"
-        gap="sm"
-        interactive
-      >
-        <GitBranchIcon size={16} />
-        <Text role="Body" prominence="Primary" content="Branches..." />
-      </Block>
-      <Action role="MenuItem" prominence="Secondary" label="Fetch" />
-      <Action role="MenuItem" prominence="Secondary" label="Pull..." />
+      <Action role="MenuItem" className="w-full">
+        <Block layout="inline" align="center" padding="sm" gap="sm">
+          <GitBranchIcon size={16} />
+          <Text role="Body" prominence="Strong" content="Branches..." />
+        </Block>
+      </Action>
+      <Action role="MenuItem" prominence="Standard" label="Fetch" />
+      <Action role="MenuItem" prominence="Standard" label="Pull..." />
     </Block>
   );
 };
@@ -328,53 +325,37 @@ const RunMenuContent = () => {
 
   return (
     <Block role="Menu" padding="xs">
-      <Block
-        role="MenuItem"
-        direction="horizontal"
-        align="center"
-        padding="sm"
-        gap="sm"
-        interactive
-      >
-        <PlayIcon size={16} />
-        <Text role="Body" prominence="Primary" content="Run 'dev'" weight="medium" />
-        <Text role="Label" prominence="Subtle" content="⌃R" />
-      </Block>
-      <Block
-        role="MenuItem"
-        direction="horizontal"
-        align="center"
-        padding="sm"
-        gap="sm"
-        interactive
-      >
-        <Text role="Body" prominence="Brand" content="▶" />
-        <Text role="Body" prominence="Primary" content="Debug 'dev'" />
-        <Text role="Label" prominence="Subtle" content="⌃D" />
-      </Block>
+      <Action role="MenuItem" className="w-full">
+        <Block layout="inline" align="center" padding="sm" gap="sm">
+          <PlayIcon size={16} />
+          <Text role="Body" prominence="Strong" content="Run 'dev'" weight="medium" />
+          <Text role="Label" prominence="Subtle" content="⌃R" />
+        </Block>
+      </Action>
+      <Action role="MenuItem" className="w-full">
+        <Block layout="inline" align="center" padding="sm" gap="sm">
+          <Text role="Body" intent="Brand" prominence="Strong" content="▶" />
+          <Text role="Body" prominence="Strong" content="Debug 'dev'" />
+          <Text role="Label" prominence="Subtle" content="⌃D" />
+        </Block>
+      </Action>
       <Block role="Divider" orientation="horizontal" />
-      <Block role="MenuSection" padding="xs">
+      <Block role="Group" padding="xs">
         <Text role="Label" prominence="Subtle" content="Configurations" />
-        <Block role="MenuItems" gap="xs">
+        <Block role="Stack" gap="xs">
           {configurations.map((config) => (
-            <Block
-              key={config.name}
-              role="MenuItem"
-              direction="horizontal"
-              align="center"
-              padding="sm"
-              gap="xs"
-              interactive
-            >
-              <PlayIcon size={14} />
-              <Text role="Body" prominence="Primary" content={config.name} />
-              <Text role="Label" prominence="Subtle" content={config.type} />
-            </Block>
+            <Action key={config.name} role="MenuItem" className="w-full">
+              <Block layout="inline" align="center" padding="sm" gap="xs">
+                <PlayIcon size={14} />
+                <Text role="Body" prominence="Strong" content={config.name} />
+                <Text role="Label" prominence="Subtle" content={config.type} />
+              </Block>
+            </Action>
           ))}
         </Block>
       </Block>
       <Block role="Divider" orientation="horizontal" />
-      <Action role="MenuItem" prominence="Secondary" label="Edit Configurations..." />
+      <Action role="MenuItem" prominence="Standard" label="Edit Configurations..." />
     </Block>
   );
 };

@@ -247,7 +247,7 @@ export function useFieldSpinbutton(options: UseNumberFieldOptions): UseNumberFie
    */
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(e.target.value);
-    if (!isNaN(newValue)) {
+    if (!Number.isNaN(newValue)) {
       setValue(newValue);
     }
   };

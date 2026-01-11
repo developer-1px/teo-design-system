@@ -1,8 +1,8 @@
-import { Box, Braces, ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { Block } from '@/components/types/Block/Block';
 import { Action } from '@/components/types/Element/Action/Action';
-import { Text } from '@/components/types/Element/Text/Text';
+// Text import removed - unused
 import { Section } from '@/components/types/Section/Section';
 import { SidebarHeader } from './SidebarHeader';
 

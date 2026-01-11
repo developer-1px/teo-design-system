@@ -15,12 +15,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigableContextOptional } from '../Navigable/NavigableContext';
-import type {
-  SelectableContext,
-  SelectableItem,
-  SelectableProps,
-  SelectableState,
-} from './types';
+import type { SelectableContext, SelectableItem, SelectableProps, SelectableState } from './types';
 
 export function useSelectable(props: Omit<SelectableProps, 'children'>): SelectableContext {
   const {
@@ -44,9 +39,8 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
   });
 
   // Controlled vs Uncontrolled
-  const selectedIds = controlledSelected !== undefined
-    ? new Set(controlledSelected)
-    : state.selectedIds;
+  const selectedIds =
+    controlledSelected !== undefined ? new Set(controlledSelected) : state.selectedIds;
   const isControlled = controlledSelected !== undefined;
 
   /**
@@ -55,7 +49,7 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
   const setSelectedIds = useCallback(
     (newSelectedIds: Set<string>) => {
       if (!isControlled) {
-        setState(prev => ({ ...prev, selectedIds: newSelectedIds }));
+        setState((prev) => ({ ...prev, selectedIds: newSelectedIds }));
       }
       onSelectionChange?.(Array.from(newSelectedIds));
     },
@@ -72,26 +66,17 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
   /**
    * Check if item is selected
    */
-  const isSelected = useCallback(
-    (id: string) => selectedIds.has(id),
-    [selectedIds]
-  );
+  const isSelected = useCallback((id: string) => selectedIds.has(id), [selectedIds]);
 
   /**
    * Get selected count
    */
-  const getSelectedCount = useCallback(
-    () => selectedIds.size,
-    [selectedIds]
-  );
+  const getSelectedCount = useCallback(() => selectedIds.size, [selectedIds]);
 
   /**
    * Get selected IDs as array
    */
-  const getSelectedIds = useCallback(
-    () => Array.from(selectedIds),
-    [selectedIds]
-  );
+  const getSelectedIds = useCallback(() => Array.from(selectedIds), [selectedIds]);
 
   /**
    * Select single item (clear others)
@@ -105,7 +90,7 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
 
       const newSelected = new Set([id]);
       setSelectedIds(newSelected);
-      setState(prev => ({ ...prev, anchorId: id, lastActionId: id }));
+      setState((prev) => ({ ...prev, anchorId: id, lastActionId: id }));
     },
     [mode, state.items, setSelectedIds]
   );
@@ -135,7 +120,7 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
       }
 
       setSelectedIds(newSelected);
-      setState(prev => ({ ...prev, anchorId: id, lastActionId: id }));
+      setState((prev) => ({ ...prev, anchorId: id, lastActionId: id }));
     },
     [mode, required, selectedIds, state.items, setSelectedIds, select]
   );
@@ -149,9 +134,9 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
 
       const items = getSortedItems();
       const anchorIndex = state.anchorId
-        ? items.findIndex(item => item.id === state.anchorId)
+        ? items.findIndex((item) => item.id === state.anchorId)
         : 0;
-      const toIndex = items.findIndex(item => item.id === toId);
+      const toIndex = items.findIndex((item) => item.id === toId);
 
       if (anchorIndex === -1 || toIndex === -1) return;
 
@@ -166,7 +151,7 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
       }
 
       setSelectedIds(newSelected);
-      setState(prev => ({ ...prev, lastActionId: toId }));
+      setState((prev) => ({ ...prev, lastActionId: toId }));
     },
     [mode, state.anchorId, getSortedItems, setSelectedIds]
   );
@@ -178,9 +163,7 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
     if (mode !== 'extended') return;
 
     const items = getSortedItems();
-    const newSelected = new Set(
-      items.filter(item => !item.disabled).map(item => item.id)
-    );
+    const newSelected = new Set(items.filter((item) => !item.disabled).map((item) => item.id));
 
     setSelectedIds(newSelected);
   }, [mode, getSortedItems, setSelectedIds]);
@@ -192,21 +175,21 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
     if (required && selectedIds.size > 0) return;
 
     setSelectedIds(new Set());
-    setState(prev => ({ ...prev, anchorId: null, lastActionId: null }));
+    setState((prev) => ({ ...prev, anchorId: null, lastActionId: null }));
   }, [required, selectedIds.size, setSelectedIds]);
 
   /**
    * Set anchor
    */
   const setAnchor = useCallback((id: string) => {
-    setState(prev => ({ ...prev, anchorId: id }));
+    setState((prev) => ({ ...prev, anchorId: id }));
   }, []);
 
   /**
    * Register item
    */
   const registerItem = useCallback((item: SelectableItem) => {
-    setState(prev => {
+    setState((prev) => {
       const newItems = new Map(prev.items);
       newItems.set(item.id, item);
       return { ...prev, items: newItems };
@@ -216,21 +199,24 @@ export function useSelectable(props: Omit<SelectableProps, 'children'>): Selecta
   /**
    * Unregister item
    */
-  const unregisterItem = useCallback((id: string) => {
-    setState(prev => {
-      const newItems = new Map(prev.items);
-      newItems.delete(id);
+  const unregisterItem = useCallback(
+    (id: string) => {
+      setState((prev) => {
+        const newItems = new Map(prev.items);
+        newItems.delete(id);
 
-      // Remove from selected if exists
-      const newSelected = new Set(selectedIds);
-      newSelected.delete(id);
-      if (newSelected.size !== selectedIds.size) {
-        setSelectedIds(newSelected);
-      }
+        // Remove from selected if exists
+        const newSelected = new Set(selectedIds);
+        newSelected.delete(id);
+        if (newSelected.size !== selectedIds.size) {
+          setSelectedIds(newSelected);
+        }
 
-      return { ...prev, items: newItems };
-    });
-  }, [selectedIds, setSelectedIds]);
+        return { ...prev, items: newItems };
+      });
+    },
+    [selectedIds, setSelectedIds]
+  );
 
   /**
    * Handle keyboard events

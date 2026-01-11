@@ -7,8 +7,8 @@
  * - Json: JSON 트리 뷰어 - TODO
  */
 
-import type { ComplexRoleConfig } from '../types';
 import { TimeRenderer } from '../../renderers/TimeRenderer';
+import type { ComplexRoleConfig } from '../types';
 
 /**
  * Time - 시간 표시

@@ -266,7 +266,7 @@ export function useFieldRating(options: UseRatingFieldOptions): UseRatingFieldRe
       case '8':
       case '9': {
         e.preventDefault();
-        const numValue = parseInt(e.key);
+        const numValue = parseInt(e.key, 10);
         if (numValue >= min && numValue <= max) {
           setValue(numValue);
         }

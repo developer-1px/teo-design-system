@@ -3,9 +3,9 @@
  * 기존 DataTable 재사용
  */
 
-import type { ColumnDef } from '@tanstack/react-table';
+// ColumnDef import removed - unused
 import { useMemo, useState } from 'react';
-import { DataTable } from '@/components/types/Block/role/DataTable.tsx';
+import { DataTable, type IDDLColumnDef } from '@/components/types/Block/role/DataTable.tsx';
 import { Text } from '@/components/types/Element/Text/Text.tsx';
 import type { JsonArray, JsonObject, JsonValue, ViewConfig } from '../types';
 
@@ -27,7 +27,7 @@ export const TableView = ({
   // 검색어 상태
   const [searchQuery, setSearchQuery] = useState('');
 
-  const columns = useMemo<ColumnDef<JsonObject>[]>(() => {
+  const columns = useMemo<IDDLColumnDef<JsonObject>[]>(() => {
     if (data.length === 0) {
       return [];
     }

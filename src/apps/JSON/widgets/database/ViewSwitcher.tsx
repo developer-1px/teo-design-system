@@ -25,7 +25,7 @@ const VIEW_ICONS: Record<ViewType, React.ComponentType<{ size?: number }>> = {
 export const ViewSwitcher = ({ views, activeView, onViewChange }: ViewSwitcherProps) => {
   return (
     <Tabs value={activeView} onValueChange={onViewChange}>
-      <TabsList gap="xs">
+      <TabsList density="Compact">
         {views.map((view) => {
           const Icon = VIEW_ICONS[view.type];
           return (

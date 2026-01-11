@@ -36,114 +36,92 @@ export interface SelectionModel {
  * - 재사용 가능한 UI 조합
  */
 export type BlockRole =
-  // 1. 레이아웃/컨테이너 (Layout/Container)
-  | 'Card' // 콘텐츠 그룹 컨테이너
-  | 'Stack' // 수직/수평 스택
-  | 'Grid' // 그리드 레이아웃
-  | 'Center' // 중앙 정렬 컨테이너
-  | 'ScrollArea' // 스크롤 영역
-  | 'Collapsible' // 접을 수 있는 영역
-  | 'Splitter' // 크기 조절 패널
-  | 'AspectRatio' // 비율 유지 컨테이너
-  | 'Tree' // 계층형 트리 탐색 (v4.1)
-  | 'Container' // Legacy: 일반 컨테이너
-  | 'Group' // Legacy: Stack Alias
-  | 'Row' // Legacy: Stack horizontal
-  | 'Split' // Legacy: Splitter Alias
-  | 'Inline' // Legacy: Inline Stack
-  | 'Spacer' // Legacy: 여백
-  | 'Divider' // 구분선
-  | 'DividerVertical' // 수직 구분선
+  // 1. Layout & Structure
+  | 'Container'
+  | 'Stack'
+  | 'Grid'
+  | 'Center'
+  | 'Splitter'
+  | 'AspectRatio'
+  | 'ScrollArea'
+  | 'Collapsible'
+  | 'Header'
+  | 'Footer'
+  | 'Sidebar'
+  | 'AppBar'
 
-  // 2. 리스트/컬렉션 (List/Collection)
-  | 'List' // 단순 목록
-  | 'Menu' // 메뉴 목록
-  | 'ContextMenu' // 우클릭 메뉴
-  | 'CommandPalette' // 검색 가능 명령 목록
-  | 'Combobox' // 검색 드롭다운
-  | 'TreeView' // 계층 목록
-  | 'DataTable' // 데이터 테이블
-  | 'VirtualList' // 대용량 목록
-  | 'Carousel' // 슬라이드 목록
-  | 'Timeline' // 시간순 목록
-  | 'ListItem' // Legacy: 리스트 아이템
-  | 'SortableList' // Legacy: 정렬 가능한 리스트
-  | 'MenuItem' // Legacy: 메뉴 아이템
-  | 'MenuSection' // Legacy: 메뉴 섹션
-  | 'MenuTrigger' // Legacy: 메뉴 트리거
-  | 'Dropdown' // Legacy: 드롭다운
+  // 2. Collections (List/Menu/Table)
+  | 'List'
+  | 'Menu'
+  | 'SubMenu'
+  | 'ContextMenu'
+  | 'TreeView'
+  | 'Table'
+  | 'DataTable'
+  | 'DataGrid'
+  | 'VirtualList'
+  | 'Accordion'
+  | 'Carousel'
+  | 'Timeline'
+  | 'SortableList'
+  | 'Tree'
 
-  // 3. 내비게이션 (Navigation)
-  | 'Tabs' // 탭 전환
-  | 'TabPanel' // 탭 콘텐츠
-  | 'Toolbar' // 도구 모음
-  | 'Breadcrumbs' // 경로 표시
-  | 'Pagination' // 페이지 전환
-  | 'Stepper' // 단계 표시
-  | 'NavigationMenu' // 내비게이션 메뉴
-  | 'Sidebar' // 사이드 내비게이션
-  | 'AppBar' // 상단 앱 바
-  | 'Steps' // Legacy: Stepper Alias
-  | 'ScrollMenu' // Legacy: 스크롤 메뉴
-  | 'Navigator' // Legacy: 네비게이션바
-  | 'FloatingToolbar' // Legacy: 플로팅 툴바
-  | 'ToolbarDivider' // Legacy: 툴바 구분선
+  // 3. Navigation & Grouping
+  | 'Tabs' // Container for Tab items
+  | 'Breadcrumbs'
+  | 'Pagination'
+  | 'Stepper'
+  | 'NavGroup'
+  | 'ButtonGroup'
+  | 'ChipGroup'
+  | 'RadioGroup'
+  | 'CheckboxGroup'
+  | 'FieldGroup'
+  | 'Form'
+  | 'FormActions'
 
-  // 4. 폼/입력 그룹 (Form/Input Group)
-  | 'Form' // 폼 컨테이너
-  | 'FieldGroup' // 필드 그룹
-  | 'RadioGroup' // 라디오 그룹
-  | 'CheckboxGroup' // 체크박스 그룹
-  | 'ToggleGroup' // 토글 버튼 그룹
-  | 'InputGroup' // 입력 + 애드온
-  | 'FormActions' // 폼 버튼 그룹
-  | 'Fieldset' // Legacy: FieldGroup Alias
+  // 4. Composites
+  | 'Card'
+  | 'SearchBar'
+  | 'CommandPalette'
+  | 'Calendar'
+  | 'Dropdown'
+  | 'Toolbar'
+  | 'FloatingToolbar'
 
-  // 5. 오버레이/모달 (Overlay/Modal)
-  | 'Dialog' // 모달 대화상자
-  | 'AlertDialog' // 확인 대화상자
-  | 'Sheet' // 시트 (바텀/사이드)
-  | 'Drawer' // 서랍 패널
-  | 'Popover' // 팝오버
-  | 'Tooltip' // 툴팁
-  | 'HoverCard' // 호버 카드
-  | 'DropdownMenu' // 드롭다운 메뉴
-  | 'Toast' // 토스트 알림
-  | 'Notification' // 알림
+  // 5. Overlay & Feedback Containers
+  | 'Dialog'
+  | 'AlertDialog'
+  | 'Drawer'
+  | 'Sheet'
+  | 'Popover'
+  | 'Tooltip'
+  | 'HoverCard'
+  | 'Alert'
+  | 'Toast'
+  | 'Banner'
+  | 'EmptyState'
 
-  // 6. 데이터 표시 (Data Display)
-  | 'Accordion' // 아코디언
-  | 'DescriptionList' // 키-값 목록
-  | 'Stats' // 통계 카드
-  | 'Avatar' // 아바타
-  | 'AvatarGroup' // 아바타 그룹
-  | 'Badge' // 뱃지
-  | 'Tag' // 태그
-  | 'EmptyState' // 빈 상태
-  | 'Skeleton' // 스켈레톤
-  | 'Calendar' // 캘린더
-  | 'Chart' // 차트
-  | 'ColorIndicator' // Legacy: 색상 표시
-  | 'PreviewContainer' // Legacy: 미리보기 컨테이너
-  | 'PreviewCard' // Legacy: 미리보기 카드
-  | 'SectionHighlight' // Legacy: 영역 하이라이트
-
-  // 7. 피드백/상태 (Feedback/Status)
-  | 'Alert' // 인라인 알림
-  | 'Progress' // 진행률 표시
-  | 'Spinner' // 로딩 스피너
-  | 'Banner' // 배너 알림
-  | 'Callout' // 강조 블록
-
-  // 8. 상호작용 컨트롤 (Interaction)
-  | 'DragDropZone' // 드래그 앤 드롭 영역
-  | 'Sortable' // 정렬 가능 목록
-  | 'Resizable' // 크기 조절 영역
-  | 'SelectionArea' // 범위 선택 영역
-
-  // Testing
-  | 'Mock' // 테스트용
-  | 'DeviceFrame'; // 기기 프레임
+  // 6. Legacy / Utilities
+  | 'Group'
+  | 'Split'
+  | 'Row'
+  | 'Inline'
+  | 'Spacer'
+  | 'Divider'
+  | 'DividerVertical' // Restored
+  | 'Mock'
+  | 'DeviceFrame'
+  | 'Navigator'
+  | 'navigation'
+  | 'Board'
+  | 'Column'
+  | 'Field'
+  | 'Media'
+  | 'Info'
+  | 'ListItem'
+  | 'Empty'
+  | 'Fieldset';
 
 /**
  * Layout - 레이아웃 방향
@@ -153,7 +131,16 @@ export type BlockRole =
  * - Section: 시각적 영역 (배경, 보더, 패딩 있음) - Figma Section과 동일
  * - Block: 투명 레이아웃 컨테이너 (시각적 요소 없음) - Figma Block과 동일
  */
-export type Layout = 'stack' | 'inline' | 'grid' | 'table' | 'split' | 'tabs' | 'steps';
+export type Layout =
+  | 'stack'
+  | 'inline'
+  | 'grid'
+  | 'table'
+  | 'split'
+  | 'tabs'
+  | 'steps'
+  | 'flex'
+  | 'scroll';
 
 /**
  * Load State - 데이터 로딩 상태
@@ -168,10 +155,17 @@ export type LoadState = 'idle' | 'loading' | 'error' | 'empty';
  * v1.0.2: value, selectionModel 추가 (Selection 통합)
  */
 export interface BlockProps extends AsProp {
-  role?: BlockRole; // v1.0.1: Role → BlockRole
+  role?: BlockRole;
+  aspectRatio?: string | number;
   prominence?: Prominence;
   density?: Density;
   intent?: Intent;
+  layout?: Layout;
+  gap?: number | string;
+  mode?: string; // v1.2: Control mode (e.g. "edit" | "view" for child fields)
+  as?: any; // Allow polymorphic component
+  Element?: any; // Legacy compatibility
+  id?: string; // For scroll anchors
   children?: ReactNode;
   /**
    * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
@@ -186,11 +180,6 @@ export interface BlockProps extends AsProp {
    */
   style?: React.CSSProperties;
   /**
-   * Layout - 자식 요소 배치 방식
-   * Role이 layout을 자동으로 결정하지만, 필요시 override 가능
-   */
-  layout?: Layout; // v1.0.1
-  /**
    * Role-specific parameters (v1.0 Core)
    * e.g. Grid: { columns: 3 }, Stack: { align: 'center' }
    */
@@ -202,7 +191,6 @@ export interface BlockProps extends AsProp {
   selected?: boolean; // v3.1: 선택 상태 (리스트 아이템 등)
   clickable?: boolean; // v3.1: 클릭 가능 여부 (Interactive State Token System)
   condition?: string; // v1.0.1: 조건부 렌더링
-  gap?: number | 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'; // v3.1: gap 오버라이드
 
   /**
    * v1.0.2: 선택 가능한 아이템의 고유 식별자
@@ -217,45 +205,50 @@ export interface BlockProps extends AsProp {
    */
   selectionModel?: SelectionModel;
 
-  // Toolbar-specific props (v4.1)
-  sticky?: boolean; // Toolbar: Sticky positioning
-  border?: 'top' | 'bottom' | 'both' | 'none'; // Toolbar: Border options
+  // ===================================================================
+  // ⚠️ DEPRECATED: Role-specific Props (IDDL Spec Violation)
+  // These props should be moved to `spec` object for type safety and clarity.
+  // ===================================================================
+  sticky?: boolean;
+  border?: 'top' | 'bottom' | 'both' | 'none';
+  defaultValue?: string | string[] | any;
+  accordionValue?: string | string[];
+  onValueChange?: (value: string | string[] | any) => void;
+  items?: any[];
+  onReorder?: (items: any[]) => void;
+  renderItem?: (item: any, index: number) => ReactNode;
 
-  // Accordion-specific props (v4.0)
-  mode?: 'single' | 'multiple'; // Accordion: 단일/다중 선택
-  defaultValue?: string | string[]; // Accordion: 초기 열린 아이템
-  /** Accordion controlled value (NOT for selection) */
-  accordionValue?: string | string[]; // Accordion: Controlled value
-  onValueChange?: (value: string | string[]) => void; // Accordion: Controlled callback
-
-  // SortableList-specific props (v4.0)
-  items?: any[]; // SortableList: 정렬 가능한 아이템 배열
-  onReorder?: (items: any[]) => void; // SortableList: 재정렬 콜백
-  renderItem?: (item: any, index: number) => ReactNode; // SortableList: 아이템 렌더 함수
-
-  // Layout Helpers (Practical)
-  padding?: string; // e.g. "md", "4"
-  justify?: string; // e.g. "between", "center"
-  align?: string; // e.g. "center"
-  flex?: string | number; // e.g. "1"
-  divider?: string; // e.g. "y"
+  // ===================================================================
+  // ⚠️ DEPRECATED: Layout & Tree Helpers
+  // ===================================================================
+  padding?: string;
+  margin?: string; // Restored
+  justify?: string;
+  align?: string;
+  flex?: string | number;
+  divider?: string;
   width?: string | number;
   height?: string | number;
-  orientation?: 'horizontal' | 'vertical'; // for Divider/Spacer
-
-  // Tree-specific props (v4.1)
-  data?: any[]; // Tree nodes
-  icons?: Record<string, string>; // Tree icon mapping
+  orientation?: 'horizontal' | 'vertical' | string;
+  data?: any[];
+  icons?: Record<string, any>;
   onNodeClick?: (node: any) => void;
   expandable?: boolean;
   selectable?: boolean;
   defaultExpandedIds?: string[];
+  direction?: 'horizontal' | 'vertical' | string;
+  template?: string;
+  gridCols?: number;
+  interactive?: boolean;
+  rounded?: string;
+  position?: string;
 }
 
-export * from '../Element/Action/Action.types'; // For ActionBehavior etc if needed
-export * from '../Element/Field/Field.types'; // For Field types if needed
-export * from '../Element/Text/Text.types'; // For TextRole if needed
-export * from '../Section/Section.types'; // For SectionRole if needed
+// Re-export shared types for convenience
+export * from '../Element/Action/Action.types';
+export * from '../Element/Field/Field.types';
+export * from '../Element/Text/Text.types';
+export * from '../Section/Section.types';
 export * from '../Shared.types';
 
 /**

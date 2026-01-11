@@ -6,7 +6,7 @@
  * @see docs/architecture/registry-pattern.md
  */
 
-import type { BaseRoleConfig } from '../../shared/role.base';
+import type { BaseRoleConfig } from '../shared/role.base';
 import type { OverlayProps } from './Overlay.types';
 
 /**
@@ -103,8 +103,7 @@ export const ROLE_REGISTRY: Record<string, OverlayRoleConfig> = {
   Popover: {
     htmlTag: 'div',
     ariaProps: { role: 'dialog' },
-    baseStyles:
-      'absolute z-40 bg-surface-floating rounded-md shadow-lg border border-default',
+    baseStyles: 'absolute z-40 bg-surface-floating rounded-md shadow-lg border border-default',
     hasBackdrop: false,
     supportsDismiss: true,
     zIndex: 40,

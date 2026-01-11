@@ -7,7 +7,7 @@
  * @see docs/2-areas/spec/4-element/field/field.spec.md#625-listbox
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FieldOption } from '../Field.types';
 
 export interface UseListboxFieldOptions {
@@ -82,7 +82,10 @@ export interface UseListboxFieldReturn {
   /**
    * Props for each option
    */
-  optionProps: (option: FieldOption, index: number) => {
+  optionProps: (
+    option: FieldOption,
+    index: number
+  ) => {
     role: 'option';
     'aria-selected': boolean;
     id: string;

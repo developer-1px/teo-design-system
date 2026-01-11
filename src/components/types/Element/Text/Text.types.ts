@@ -31,12 +31,15 @@ export type TextRole =
   | 'Mark'
   | 'Link'
   | 'Code'
-  // Indicator (5 roles)
+  // Status & Indicators (Moved from Block)
   | 'Badge'
-  | 'Alert'
-  | 'Avatar'
-  | 'Kbd'
   | 'Tag'
+  | 'Progress'
+  | 'Spinner'
+  | 'Skeleton'
+  | 'Avatar' // Non-clickable display
+  | 'Kbd'
+  | 'Alert' // Text-only alert or status text
   // Data (1 role)
   | 'Time';
 
@@ -44,24 +47,24 @@ export type TextRole =
  * Text Props - 정적 콘텐츠 (Data Binding 없음)
  */
 export interface TextProps extends AsProp {
-  role: TextRole;
-  content?: string;
+  role?: TextRole;
+  content?: React.ReactNode;
   prominence?: Prominence;
+  density?: any; // Added for Block/Section inheritance
   intent?: Intent;
   align?: 'left' | 'center' | 'right';
-  /**
-   * EXCEPTION: className은 데이터 시각화를 위한 동적 스타일링에만 허용
-   * 예: 색상 인디케이터, 차트 색상, 데이터 기반 배경색
-   * 정적 스타일은 반드시 role을 통해 정의해야 함
-   */
   className?: string;
+  style?: React.CSSProperties;
   hidden?: boolean;
-  /** 조건부 렌더링 */
   condition?: string;
-  /** 매칭할 텍스트 하이라이트 (대소문자 구분 안 함) */
   highlight?: string;
 
   // Content & Styling
   size?: string;
   children?: React.ReactNode;
+  /** Role-specific configuration (e.g. level for Heading, pulse for Badge) */
+  spec?: Record<string, unknown>;
+
+  // @deprecated Legacy props
+  weight?: string;
 }

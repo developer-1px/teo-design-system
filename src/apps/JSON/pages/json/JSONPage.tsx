@@ -80,7 +80,7 @@ export const JSONPage = () => {
   };
 
   // Handle field change in FormView
-  const handleFieldChange = (key: string, value: unknown) => {
+  const handleFieldChange = (_key: string, _value: unknown) => {
     // TODO: Implement actual data update logic
   };
 

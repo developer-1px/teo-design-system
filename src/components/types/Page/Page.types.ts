@@ -15,7 +15,8 @@ export type PageRole =
   | 'Focus' // 단일 행동 집중. Center 정렬. No Scroll/Nav. (Login, Payment)
   | 'Immersive' // 몰입형 경험. Scroll Snap. (Landing, Presentation)
   | 'Overlay' // 모달형 페이지. Dimmed Background. (Quick View)
-  | 'Paper'; // 인쇄/고정 규격. Fixed Aspect Ratio. (Invoice, Resume)
+  | 'Paper' // 인쇄/고정 규격. Fixed Aspect Ratio. (Invoice, Resume)
+  | 'Fullscreen'; // Legacy alias for Application or Immersive
 
 /**
  * Page Layout (Zoning)
@@ -44,7 +45,7 @@ export interface PageProps extends AsProp {
    * [Identity] 페이지의 유일한 식별자 (Browser Title, H1)
    * @required
    */
-  title: string;
+  title?: string;
 
   /**
    * [Meta] 페이지 설명 (Optional)
