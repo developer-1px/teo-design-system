@@ -33,19 +33,12 @@ export function Toolbar({
   computedDensity,
   computedProminence,
   computedIntent,
-  sticky = false,
-  border = 'none',
+  spec,
   Element,
-  // Ignore props not relevant to Toolbar but passed by Block generic renderer
-  mode,
-  defaultValue,
-  accordionValue,
-  onValueChange,
-  items,
-  onReorder,
-  renderItem,
   ...rest
-}: ToolbarProps & Record<string, any>) {
+}: BlockRendererProps) {
+  const sticky = spec?.sticky as boolean;
+  const border = (spec?.border as 'top' | 'bottom' | 'both' | 'none') || 'none';
   // Density에 따른 gap 조절
   const densityGap = {
     Compact: 'gap-1',

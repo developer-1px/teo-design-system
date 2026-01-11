@@ -24,18 +24,18 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
   };
 
   return (
-    <Section role="Container" padding="md">
-      <Block role="Grid" spec={{ columns: gridCols[cardSize] }} gap="md">
+    <Section role="Container">
+      <Block role="Grid" spec={{ columns: gridCols[cardSize] }}>
         {data.map((item, index) => {
           const obj = item as JsonObject;
           const keys = Object.keys(obj).slice(0, 6); // 최대 6개 필드
 
           return (
-            <Card key={index} padding="md" interactive>
-              <Block role="Container" gap="sm">
+            <Card key={index}>
+              <Block role="Container">
                 {/* 이미지 (있으면) */}
                 {viewConfig.showImage && viewConfig.imageKey && obj[viewConfig.imageKey] && (
-                  <Block role="Media" aspectRatio="video">
+                  <Block role="Container">
                     <img
                       src={String(obj[viewConfig.imageKey])}
                       alt=""
@@ -59,7 +59,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                   }
 
                   return (
-                    <Block key={key} role="Field" gap="xs">
+                    <Block key={key} role="Inline">
                       <Text role="Label" prominence="Subtle" content={key} />
                       <Text
                         role="Body"

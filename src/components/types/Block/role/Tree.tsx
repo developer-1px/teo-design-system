@@ -13,14 +13,15 @@ import { cn } from '@/shared/lib/utils';
 import type { BlockRendererProps } from '../Block.types';
 
 export function Tree({
-  data = [],
-  onNodeClick,
-  defaultExpandedIds = [],
-  icons = {},
-  density,
+  spec,
+  computedDensity,
   className,
   ...rest
 }: BlockRendererProps) {
+  const data = (spec?.data as any[]) || [];
+  const onNodeClick = spec?.onNodeClick as (node: any) => void;
+  const defaultExpandedIds = (spec?.defaultExpandedIds as string[]) || [];
+  const icons = (spec?.icons as Record<string, any>) || {};
   const { flatNodes, cursorIndex, toggleFolder, getNodeProps } = useTreeNavigation({
     data,
     defaultOpenIds: defaultExpandedIds,

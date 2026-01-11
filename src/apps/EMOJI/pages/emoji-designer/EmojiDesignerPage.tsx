@@ -140,10 +140,10 @@ export const EmojiDesignerPage = () => {
   };
 
   return (
-    <Page title="Showcase" role="Application" layout="HolyGrail" density="Compact">
+    <Page title="Emoji Designer" role="Application" density="Compact">
       {/* Header */}
-      <Section role="Header" className="px-6 py-4">
-        <Block role="Container" direction="horizontal" className="justify-between">
+      <Section role="Header">
+        <Block role="Toolbar">
           <div>
             <div className="flex items-center gap-2">
               <Paintbrush size={24} />
@@ -152,7 +152,7 @@ export const EmojiDesignerPage = () => {
             <Text role="Body" content="JSON 기반 픽셀 아트 이모지 디자이너" />
           </div>
 
-          <Block role="Toolbar" direction="horizontal">
+          <Block role="Toolbar">
             <label htmlFor="import-file" className="cursor-pointer">
               <div className="inline-flex items-center justify-center gap-2 rounded-md font-medium text-sm h-9 px-4 bg-transparent text-text hover:bg-black/5 active:bg-black/10 transition-colors">
                 <Upload size={16} />
@@ -167,7 +167,7 @@ export const EmojiDesignerPage = () => {
               className="hidden"
             />
 
-            <Button variant="ghost" size="sm" onClick={handleExport}>
+            <Button prominence="Subtle" onClick={handleExport}>
               <Download size={16} />
               Export JSON
             </Button>
@@ -176,12 +176,12 @@ export const EmojiDesignerPage = () => {
       </Section>
 
       {/* Left Sidebar - Tools & Settings */}
-      <Section role="Navigator" className="overflow-y-auto">
-        <Section className="p-4">
+      <Section role="Navigator">
+        <Section>
           {/* Design Info */}
           <Block role="Form">
             <div>
-              <Text role="Label" className="block mb-1.5" content="Emoji Name" />
+              <Text role="Label" content="Emoji Name" />
               <input
                 className="w-full h-8 px-2 bg-layer-2 border border-border rounded text-xs focus:outline-none focus:border-accent"
                 value={state.design.name}
@@ -195,7 +195,7 @@ export const EmojiDesignerPage = () => {
             </div>
 
             <div>
-              <Text role="Label" className="block mb-1.5" content="Grid Size" />
+              <Text role="Label" content="Grid Size" />
               <select
                 className="w-full h-8 px-2 bg-layer-2 border border-border rounded text-xs focus:outline-none focus:border-accent"
                 value={state.design.size}
@@ -209,7 +209,7 @@ export const EmojiDesignerPage = () => {
             </div>
 
             <div>
-              <Text role="Label" className="block mb-1.5" content="Preset Palette" />
+              <Text role="Label" content="Preset Palette" />
               <select
                 className="w-full h-8 px-2 bg-layer-2 border border-border rounded text-xs focus:outline-none focus:border-accent"
                 onChange={(e) => handleLoadPreset(e.target.value)}
@@ -223,41 +223,37 @@ export const EmojiDesignerPage = () => {
           </Block>
         </Section>
 
-        <Section className="p-4 border-t border-border">
-          <Text role="Title" prominence="Hero" className="mb-3" content="Tools" />
+        <Section>
+          <Text role="Title" prominence="Hero" content="Tools" />
 
           <Block role="Toolbar">
             <Button
-              variant={state.tool === 'pen' ? 'accent' : 'ghost'}
+              prominence={state.tool === 'pen' ? 'Hero' : 'Subtle'}
               onClick={() => setState((prev) => ({ ...prev, tool: 'pen' }))}
-              className="w-full justify-start"
             >
               <Paintbrush size={16} />
               Pen
             </Button>
 
             <Button
-              variant={state.tool === 'eraser' ? 'accent' : 'ghost'}
+              prominence={state.tool === 'eraser' ? 'Hero' : 'Subtle'}
               onClick={() => setState((prev) => ({ ...prev, tool: 'eraser' }))}
-              className="w-full justify-start"
             >
               <Eraser size={16} />
               Eraser
             </Button>
 
             <Button
-              variant={state.tool === 'fill' ? 'accent' : 'ghost'}
+              prominence={state.tool === 'fill' ? 'Hero' : 'Subtle'}
               onClick={() => setState((prev) => ({ ...prev, tool: 'fill' }))}
-              className="w-full justify-start"
             >
               <Droplet size={16} />
               Fill
             </Button>
 
             <Button
-              variant="outline"
+              prominence="Standard"
               onClick={handleClear}
-              className="w-full justify-start text-red-600"
             >
               <Trash2 size={16} />
               Clear Canvas
@@ -277,8 +273,8 @@ export const EmojiDesignerPage = () => {
           </div>
         </Section>
 
-        <Section className="p-4 border-t border-border">
-          <Text role="Title" prominence="Hero" className="mb-3" content="Color Palette" />
+        <Section>
+          <Text role="Title" prominence="Hero" content="Color Palette" />
 
           <ColorPalette
             palette={state.design.palette}
@@ -291,10 +287,10 @@ export const EmojiDesignerPage = () => {
       </Section>
 
       {/* Center - Canvas */}
-      <Section role="Main" className="flex flex-col overflow-hidden">
+      <Section role="Main">
         {/* Toolbar */}
         <div className="h-12 bg-layer-2 border-b border-border flex items-center justify-between px-4">
-          <Block role="Card" direction="horizontal">
+          <Block role="Toolbar">
             <Text role="Body" content={`${state.design.size}x${state.design.size} pixels`} />
             <Text role="Body" content="•" />
             <Text role="Body" content={`${state.design.palette.length} colors`} />
@@ -323,17 +319,16 @@ export const EmojiDesignerPage = () => {
             </TabsContent>
 
             <TabsContent value="json">
-              <Section className="max-w-2xl">
+              <Section>
                 <Block role="Container">
                   <Text role="Title" prominence="Hero" content="Emoji JSON Data" />
                   <pre className="bg-layer-1 p-4 rounded-lg overflow-x-auto text-xs font-mono">
                     {exportDesign(state.design)}
                   </pre>
 
-                  <Block role="Toolbar" direction="horizontal">
+                  <Block role="Toolbar">
                     <Button
-                      variant="ghost"
-                      size="sm"
+                      prominence="Subtle"
                       onClick={() => {
                         navigator.clipboard.writeText(exportDesign(state.design));
                       }}
@@ -350,9 +345,9 @@ export const EmojiDesignerPage = () => {
       </Section>
 
       {/* Right Sidebar - Preview */}
-      <Section role="Aside" className="overflow-y-auto">
-        <Section className="p-4">
-          <Text role="Title" prominence="Hero" className="mb-3" content="Preview" />
+      <Section role="Aside">
+        <Section>
+          <Text role="Title" prominence="Hero" content="Preview" />
 
           <Block role="Container">
             {/* Small preview */}
@@ -429,8 +424,8 @@ export const EmojiDesignerPage = () => {
           </Block>
         </Section>
 
-        <Section className="p-4 border-t border-border">
-          <Text role="Title" prominence="Hero" className="mb-3" content="Design Info" />
+        <Section>
+          <Text role="Title" prominence="Hero" content="Design Info" />
 
           <Block role="Card">
             <div className="flex justify-between">
@@ -438,7 +433,6 @@ export const EmojiDesignerPage = () => {
               <Text
                 role="Body"
                 prominence="Hero"
-                className="font-mono text-xs"
                 content={state.design.id}
               />
             </div>
@@ -448,7 +442,6 @@ export const EmojiDesignerPage = () => {
               <Text
                 role="Body"
                 prominence="Hero"
-                className="text-xs"
                 content={new Date(state.design.createdAt).toLocaleString()}
               />
             </div>
@@ -458,7 +451,6 @@ export const EmojiDesignerPage = () => {
               <Text
                 role="Body"
                 prominence="Hero"
-                className="text-xs"
                 content={new Date(state.design.updatedAt).toLocaleString()}
               />
             </div>

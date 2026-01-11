@@ -36,40 +36,36 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
   }, [data, viewConfig.group]);
 
   return (
-    <Section role="Container" layout="scroll-horizontal" padding="md">
-      <Block role="Board" direction="horizontal" gap="md">
+    <Section role="Container">
+      <Block role="Grid">
         {groupedData.map(([groupName, items]) => (
-          <Block key={groupName} role="Column" layout="flex" direction="column" width="320">
+          <Block key={groupName} role="Container">
             {/* 컬럼 헤더 */}
             <Block
               role="Header"
-              direction="horizontal"
-              align="center"
-              justify="between"
-              padding="sm"
             >
-              <Block role="Container" direction="horizontal" align="center" gap="xs">
+              <Block role="Container">
                 <Text role="Title" prominence="Strong" content={groupName} />
-                <Badge variant="default" size="sm">
+                <Badge>
                   {items.length}
                 </Badge>
               </Block>
             </Block>
 
             {/* 카드 리스트 */}
-            <Block role="List" layout="scroll" flex="1" gap="sm">
+            <Block role="List">
               {items.map((item, index) => {
                 const keys = Object.keys(item).slice(0, 5); // 처음 5개 필드만
 
                 return (
-                  <Card key={index} padding="sm" interactive>
-                    <Block role="Container" gap="xs">
+                  <Card key={index}>
+                    <Block role="Container">
                       {keys.map((key) => {
                         const value = item[key];
                         if (value === null || value === undefined) return null;
 
                         return (
-                          <Block key={key} role="Field" gap="xs">
+                          <Block key={key} role="Inline">
                             <Text role="Label" prominence="Subtle" content={key} />
                             <Text
                               role="Body"

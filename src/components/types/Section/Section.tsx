@@ -23,12 +23,12 @@
 
 import { cva } from 'class-variance-authority';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
-import { Text } from '@/components/types/Element/Text/Text';
 import type {
   SectionProps,
   SectionRole,
   SectionType,
 } from '@/components/types/Section/Section.types';
+import { cn } from '@/shared/lib/utils';
 import { getSectionRoleConfig } from './configs/registry';
 import { SECTION_DESIGN_CONTEXTS, SECTION_RULES } from './configs/section-spec';
 import { TYPE_SCALES } from './configs/section-tokens';
@@ -38,8 +38,8 @@ const sectionVariants = cva('flex flex-col relative', {
   variants: {
     variant: {
       Plain: 'bg-transparent',
-      Card: 'bg-surface border border-border-default rounded-lg shadow-sm',
-      Hero: 'bg-surface-elevated border-b border-border-default p-6',
+      Card: '',
+      Hero: '',
     },
     mode: {
       view: '',
@@ -51,11 +51,13 @@ const sectionVariants = cva('flex flex-col relative', {
   },
 });
 
+import { useIDDLToken } from '@/shared/iddl/token-engine';
+import { createPortal } from 'react-dom';
+import { useLayoutPortal } from '@/components/types/Page/context/LayoutPortalContext';
+
 export function Section({
   as,
   role = 'Main',
-  title,
-  actions,
   scrollable,
   variant = 'Plain',
   prominence,
@@ -83,6 +85,21 @@ export function Section({
   // v5.2: Type Resolution
   const computedType: SectionType = type || specContext.type || 'Stage';
   const scale = TYPE_SCALES[computedType];
+
+  // ============================================
+  // ⚡️ IDDL Token Engine Integration (v6.0)
+  // ============================================
+  const tokens = useIDDLToken({
+    role: role as string,
+    sectionRole: role as string,
+    sectionType: computedType,
+    prominence: prominence || (variant === 'Card' ? 'Strong' : variant === 'Hero' ? 'Hero' : 'Standard'),
+    intent: computedIntent,
+    density: computedDensity,
+    state: { hover: false } // Basic state for now
+  });
+
+  const portalContext = useLayoutPortal();
 
   // Validation
   if (import.meta.env.DEV) {
@@ -125,24 +142,24 @@ export function Section({
 
   const collapsibleStyle: React.CSSProperties = isCollapsible
     ? {
-        ...(isHorizontalCollapse
-          ? {
-              width: isCollapsed
-                ? (collapsibleConfig?.collapsedSize ?? 0)
-                : (collapsibleConfig?.expandedSize ?? 'auto'),
-            }
-          : {
-              height: isCollapsed
-                ? (collapsibleConfig?.collapsedSize ?? 0)
-                : (collapsibleConfig?.expandedSize ?? 'auto'),
-            }),
-      }
+      ...(isHorizontalCollapse
+        ? {
+          width: isCollapsed
+            ? (collapsibleConfig?.collapsedSize ?? 0)
+            : (collapsibleConfig?.expandedSize ?? 'auto'),
+        }
+        : {
+          height: isCollapsed
+            ? (collapsibleConfig?.collapsedSize ?? 0)
+            : (collapsibleConfig?.expandedSize ?? 'auto'),
+        }),
+    }
     : {};
 
   const transitionClass =
     isCollapsible && useTransition ? 'transition-all duration-200 ease-in-out' : '';
 
-  return (
+  const content = (
     <LayoutProvider
       value={{
         role: role as SectionRole,
@@ -164,34 +181,48 @@ export function Section({
       <Element
         id={id}
         onClick={onClick}
-        className={`
-          ${baseStyles}
-          ${sectionVariants({ variant, mode: computedMode })}
-          ${transitionClass}
-          ${className || ''}
-        `}
+        className={cn(
+          baseStyles,
+          sectionVariants({ variant, mode: computedMode }),
+          transitionClass,
+          // Token Engine Classes
+          tokens.surface.background,
+          tokens.surface.blur,
+          tokens.geometry.radius,
+          tokens.geometry.color,
+          tokens.geometry.width,
+          tokens.geometry.outline,
+          tokens.geometry.outlineOffset,
+          tokens.shadow.boxShadow,
+          className
+        )}
         style={{
           gridArea: computedGridArea,
           ...dimensionStyles, // Apply Physical Constraints
           ...collapsibleStyle,
+          // Token Engine Styles (Values)
+          gap: tokens.spacing.gap,
           ...rest.style, // Pass through style if any
         }}
         {...ariaProps}
         {...rest}
       >
-        {/* Section Header (Optional) */}
-        {(title || actions) && (
-          <header className="flex items-center justify-between px-4 py-2 border-b border-border-muted bg-surface-elevated flex-shrink-0 min-h-[40px]">
-            {title && <Text role="Label" content={title} prominence="Strong" />}
-            {actions && <div className="flex items-center gap-2">{actions}</div>}
-          </header>
-        )}
-
         {/* Section Body */}
-        <div className={`flex-1 ${overflowClass} ${variant === 'Card' ? 'p-4' : ''} relative`}>
+        <div className={cn('flex-1 relative flex flex-col', overflowClass)} style={{ padding: tokens.spacing.padding }}>
           {children}
         </div>
       </Element>
     </LayoutProvider>
   );
+
+  // Portal Logic
+  if (portalContext) {
+    const slot = portalContext.register(role as string);
+    // If we have a slot, and it's NOT center (default child location), and the DOM node exists
+    if (slot && slot !== 'center' && portalContext.slots[slot]?.current) {
+      return createPortal(content, portalContext.slots[slot].current!);
+    }
+  }
+
+  return content;
 }

@@ -35,8 +35,8 @@ export function BlockShowcasePage() {
       onCategoryChange={handleCategoryChange}
     >
       {/* 1. Context Awareness Demo (Hero) */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="context">
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable" id="context">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="1. Context Awareness (v5)" />
           <Text
             role="Body"
@@ -49,7 +49,7 @@ export function BlockShowcasePage() {
         <SectionSpecDemo />
       </Block>
 
-      <Block role="Divider" className="my-12" />
+      <Block role="Divider" />
 
       {/* Render Categories */}
       {Object.entries(CATEGORIES).map(([category, roles]) => (
@@ -59,7 +59,7 @@ export function BlockShowcasePage() {
               {category} Blocks
             </h2>
 
-            <Block role="Stack" density="Comfortable" gap={6}>
+            <Block role="Stack" density="Comfortable">
               {roles.map((role) => {
                 const config = ROLE_CONFIGS[role as BlockRole];
                 if (!config) return null;
@@ -69,7 +69,6 @@ export function BlockShowcasePage() {
                   <Block
                     key={role}
                     role="Group"
-                    className="border-b border-border-muted pb-6 last:border-0"
                   >
                     {/* Header */}
                     <div className="mb-2 flex items-center gap-2">
@@ -88,7 +87,6 @@ export function BlockShowcasePage() {
                           role={role as BlockRole}
                           prominence="Standard"
                           density="Standard"
-                          className="p-4 border border-dashed border-border-muted bg-surface-base"
                         >
                           <Text role="Caption" content={`Preview of ${role}`} />
                         </Block>
@@ -99,7 +97,7 @@ export function BlockShowcasePage() {
               })}
             </Block>
           </Block>
-          <Block role="Divider" className="my-12" />
+          <Block role="Divider" />
         </div>
       ))}
     </ShowcasePage>

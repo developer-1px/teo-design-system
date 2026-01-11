@@ -10,16 +10,8 @@ import type { ActionProps } from '@/components/types/Element/Action/Action.types
 import { getInteractiveClasses } from '@/shared/config/interactive-tokens';
 import { cn } from '@/shared/lib/utils';
 
-export interface IconButtonActionProps extends Omit<ActionProps, 'role'> {
-  computedProminence: ActionProps['prominence'];
-  computedIntent: ActionProps['intent'];
-  computedDensity: 'Compact' | 'Standard' | 'Comfortable';
-  computedSize: 'xs' | 'sm' | 'md' | 'lg' | 'icon'; // ✨ NEW
-  isDisabled: boolean;
-  handleClick: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
-  Element: any;
-  href?: string;
-  target?: string;
+export interface IconButtonActionProps extends ActionRendererProps {
+  computedSize?: 'xs' | 'sm' | 'md' | 'lg' | 'icon';
 }
 
 export function IconButtonAction({
@@ -30,52 +22,47 @@ export function IconButtonAction({
   computedProminence,
   computedIntent,
   computedDensity,
-  computedSize, // ✨ NEW
+  computedSize,
   isDisabled,
   handleClick,
   Element,
   href,
   target,
   children,
+  tokens, // v6.0: IDDL Tokens
+  className, // Avoid override
   ...rest
 }: IconButtonActionProps) {
   // 아이콘 컴포넌트 가져오기
   const IconComponent = icon ? (Icons as any)[icon] : null;
 
-  // 아이콘 크기를 density에 따라 조절
-  // 아이콘 크기를 size에 따라 조절
-  const iconSize = {
-    xs: 12,
-    sm: 14,
-    md: 16,
-    lg: 20,
-    icon: 16,
-  }[computedSize];
+  const iconSize = computedSize ? {
+    xs: 12, sm: 14, md: 16, lg: 20, icon: 16,
+  }[computedSize] : (computedDensity === 'Compact' ? 14 : 18);
 
-  // IconButton은 정사각형 크기
-  // IconButton은 정사각형 크기 (size prop이 있으면 우선순위)
   const sizeClasses = {
     xs: 'h-6 w-6',
     sm: 'h-8 w-8',
-    md: 'h-9 w-9',
-    lg: 'h-11 w-11',
-    icon: 'h-9 w-9',
-  }[computedSize];
+    md: 'h-10 w-10', // 40px
+    lg: 'h-12 w-12',
+    icon: 'h-10 w-10',
+  }[computedSize || 'md'];
 
-  // Interactive State Token System 적용
   const interactiveClasses = getInteractiveClasses({
-    prominence: computedProminence || 'Standard',
-    intent: computedIntent || 'Neutral',
-    config: {
-      selected,
-      disabled: isDisabled || loading,
-      focusable: true,
-      clickable: true,
-    },
+    prominence: computedProminence,
+    intent: computedIntent,
+    config: { selected, disabled: isDisabled || loading },
+    skipIdle: true,
   });
+
+  const isHero = computedProminence === 'Hero';
+  const premiumEffects = isHero
+    ? 'hover:scale-110 active:scale-95 transition-all duration-200'
+    : 'hover:bg-surface-hover active:bg-surface-pressed transition-all duration-200 hover:scale-105';
 
   return (
     <Element
+      {...rest}
       href={href}
       target={target}
       type={Element === 'button' ? 'button' : undefined}
@@ -85,27 +72,33 @@ export function IconButtonAction({
       aria-pressed={selected !== undefined ? selected : undefined}
       title={label}
       className={cn(
-        // Base styles - rounded, flex, cursor, square size
-        'inline-flex items-center justify-center rounded cursor-pointer',
+        // 1. Structure
+        'inline-flex items-center justify-center cursor-pointer select-none ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
         sizeClasses,
-        // Interactive State (hover, active, selected, disabled, focus)
+
+        // 2. Interactive Tokens (Early priority to be overridden)
         interactiveClasses,
-        // Enhanced hover/active states for IconButton (구 IconButton 디자인 통합)
-        !selected &&
-          !isDisabled &&
-          'hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10',
-        selected && 'bg-accent/10',
-        // Loading cursor
-        loading && 'cursor-wait'
-        // Custom className override
+
+        // 3. Token Engine Base
+        tokens.surface.background,
+        tokens.geometry.width,
+        tokens.geometry.color,
+        tokens.geometry.radius,
+        tokens.geometry.outline,
+        tokens.geometry.outlineOffset,
+        tokens.shadow.boxShadow,
+        tokens.typography.color, // Icon color follows text color token
+
+        // 4. Premium Effects
+        !isDisabled && !loading && premiumEffects,
+
+        loading && 'opacity-70 cursor-wait',
+        className
       )}
-      data-dsl-component="action"
-      data-role="icon-button"
-      data-prominence={computedProminence}
-      data-intent={computedIntent}
-      data-density={computedDensity}
-      data-selected={selected}
-      {...rest}
+      style={{
+        opacity: tokens.surface.opacity,
+        ...((rest as any).style || {})
+      }}
     >
       {children ? (
         children

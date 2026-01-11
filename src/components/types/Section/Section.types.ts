@@ -270,10 +270,6 @@ export interface SectionProps extends AsProp {
   role?: SectionRole;
   type?: SectionType; // Override default type mapping
 
-  // 2. Identity
-  title?: string;
-  actions?: ReactNode;
-
   // 3. Behavior
   scrollable?: boolean;
 
@@ -294,8 +290,8 @@ export interface SectionProps extends AsProp {
   mode?: 'view' | 'edit';
   condition?: string;
   resizable?:
-    | boolean
-    | { direction?: 'horizontal' | 'vertical' | 'both'; minSize?: number; maxSize?: number };
+  | boolean
+  | { direction?: 'horizontal' | 'vertical' | 'both'; minSize?: number; maxSize?: number };
   collapsible?: boolean | CollapsibleConfig;
 
   // Formatting (Compatibility)

@@ -3,7 +3,7 @@ import { Text } from '@/components/types/Element/Text/Text';
 
 export function BlockCardsDemo() {
   return (
-    <Block role="Container" density="Comfortable" className="gap-6">
+    <Block role="Container" density="Comfortable">
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="1. Cards & Containers" />
         <Text
@@ -13,8 +13,8 @@ export function BlockCardsDemo() {
         />
       </div>
 
-      <Block role="Grid" density="Comfortable" className="grid-cols-1 md:grid-cols-2 gap-8">
-        <Block role="Card" prominence="Standard" className="p-6 gap-4">
+      <Block role="Grid" density="Comfortable">
+        <Block role="Card" prominence="Standard">
           <Text role="Title" prominence="Standard" content="Standard Card" />
           <Text
             role="Body"
@@ -22,7 +22,7 @@ export function BlockCardsDemo() {
           />
         </Block>
 
-        <Block role="Card" prominence="Subtle" className="p-6 gap-4">
+        <Block role="Card" prominence="Subtle">
           <Text role="Title" prominence="Standard" content="Subtle Card" />
           <Text
             role="Body"
@@ -30,7 +30,7 @@ export function BlockCardsDemo() {
           />
         </Block>
       </Block>
-      <Block role="Card" className="h-32 flex items-center justify-center">
+      <Block role="Card">
         <Text role="Caption" content="Card (Sunken Background)" />
       </Block>
     </Block>

@@ -2,7 +2,19 @@ import { cn } from '@/shared/lib/utils';
 import type { BlockRendererProps } from '../Block.types';
 
 // 1. List
-export function List({ Element, children, className, ...props }: BlockRendererProps) {
+export function List({
+  Element,
+  children,
+  className,
+  computedProminence,
+  computedIntent,
+  computedDensity,
+  role,
+  prominence,
+  intent,
+  density,
+  ...props
+}: BlockRendererProps) {
   return (
     <Element
       className={cn(
@@ -25,7 +37,19 @@ export function List({ Element, children, className, ...props }: BlockRendererPr
 }
 
 // 2. Menu
-export function Menu({ Element, children, className, ...props }: BlockRendererProps) {
+export function Menu({
+  Element,
+  children,
+  className,
+  computedProminence,
+  computedIntent,
+  computedDensity,
+  role,
+  prominence,
+  intent,
+  density,
+  ...props
+}: BlockRendererProps) {
   return (
     <Element
       className={cn(
@@ -51,7 +75,19 @@ export function Menu({ Element, children, className, ...props }: BlockRendererPr
 }
 
 // 3. CommandPalette
-export function CommandPalette({ Element, children, className, ...props }: BlockRendererProps) {
+export function CommandPalette({
+  Element,
+  children,
+  className,
+  computedProminence,
+  computedIntent,
+  computedDensity,
+  role,
+  prominence,
+  intent,
+  density,
+  ...props
+}: BlockRendererProps) {
   return (
     <Element
       className={cn(
@@ -79,7 +115,19 @@ export function CommandPalette({ Element, children, className, ...props }: Block
 }
 
 // 4. TreeView
-export function TreeView({ Element, children, className, ...props }: BlockRendererProps) {
+export function TreeView({
+  Element,
+  children,
+  className,
+  computedProminence,
+  computedIntent,
+  computedDensity,
+  role,
+  prominence,
+  intent,
+  density,
+  ...props
+}: BlockRendererProps) {
   return (
     <Element className={cn('flex flex-col text-sm', className)} {...props}>
       <div className="pl-4 border-l border-border-default ml-2">
@@ -103,7 +151,19 @@ export function TreeView({ Element, children, className, ...props }: BlockRender
 }
 
 // 5. Timeline
-export function Timeline({ Element, children, className, ...props }: BlockRendererProps) {
+export function Timeline({
+  Element,
+  children,
+  className,
+  computedProminence,
+  computedIntent,
+  computedDensity,
+  role,
+  prominence,
+  intent,
+  density,
+  ...props
+}: BlockRendererProps) {
   return (
     <Element className={cn('flex flex-col ml-4', className)} {...props}>
       {[1, 2, 3].map((i) => (

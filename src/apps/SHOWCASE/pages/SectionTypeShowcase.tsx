@@ -25,7 +25,6 @@ export function SectionTypeShowcase() {
             <Section
               role="Header"
               type="Bar"
-              className="bg-surface-elevated border-b border-border-muted"
             >
               <div className="flex items-center gap-4 px-4 h-full">
                 <Text role="Heading" prominence="Hero" content="Hero Text" />
@@ -48,7 +47,6 @@ export function SectionTypeShowcase() {
             <Section
               role="Panel"
               type="Panel"
-              className="w-full bg-surface border-r border-border-muted p-4 space-y-4"
             >
               <div>
                 <Text role="Label" content="Section Title" />
@@ -73,7 +71,7 @@ export function SectionTypeShowcase() {
           <p className="text-sm text-text-muted">Free form, large scale. Reference: Main, Canvas</p>
 
           <div className="border border-border-default rounded overflow-hidden h-64">
-            <Section role="Main" type="Stage" className="w-full h-full bg-surface p-8 space-y-6">
+            <Section role="Main" type="Stage">
               <Text role="Heading" prominence="Hero" content="Hero Text" />
               <Text role="Heading" prominence="Standard" content="Standard Text" />
               <Text
@@ -99,7 +97,6 @@ export function SectionTypeShowcase() {
             <Section
               role="Modal"
               type="Layer"
-              className="bg-surface-elevated shadow-lg rounded-lg p-6 w-full max-w-sm space-y-4"
             >
               <Text role="Heading" prominence="Hero" content="Modal Title" />
               <Text
@@ -108,11 +105,10 @@ export function SectionTypeShowcase() {
                 content="This is a modal dialog. The text size is comfortable but authoritative."
               />
               <div className="flex justify-end gap-2">
-                <Text role="Label" content="Cancel" className="px-3 py-2 cursor-pointer" />
+                <Text role="Label" content="Cancel" />
                 <Text
                   role="Label"
                   content="Confirm"
-                  className="px-3 py-2 bg-primary text-white rounded"
                 />
               </div>
             </Section>
@@ -131,7 +127,6 @@ export function SectionTypeShowcase() {
               <Section
                 role="Popover"
                 type="Float"
-                className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-surface-inverse text-text-inverse p-2 rounded shadow-xl whitespace-nowrap"
               >
                 <Text role="Body" prominence="Standard" content="Floating Tooltip" />
               </Section>

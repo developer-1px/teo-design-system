@@ -72,15 +72,15 @@ export const DatabaseViewer = ({
     <Page>
       <Section role="Container">
         {/* Header */}
-        <Section role="Header" border="bottom">
-          <Block role="Container" padding="lg" gap="sm">
+        <Section role="Header">
+          <Block role="Container">
             {title && <Text role="Title" prominence="Hero" content={title} />}
             {description && <Text role="Body" prominence="Subtle" content={description} />}
           </Block>
 
           {/* Controls */}
-          <Block role="Toolbar" padding="md" border="top" justify="between">
-            <Block role="navigation" className="flex flex-row items-center gap-2">
+          <Block role="Toolbar">
+            <Block role="Container">
               <ViewSwitcher
                 views={views}
                 activeView={activeViewId}
@@ -89,12 +89,12 @@ export const DatabaseViewer = ({
 
               {showStats && (
                 <>
-                  <Divider orientation="vertical" spacing="none" />
-                  <Block role="Info" className="flex flex-row items-center gap-1">
-                    <Badge variant="default" size="sm">
+                  <Divider />
+                  <Block role="Container">
+                    <Badge>
                       {stats.rows} rows
                     </Badge>
-                    <Badge variant="info" size="sm">
+                    <Badge>
                       {stats.cols} cols
                     </Badge>
                   </Block>

@@ -147,6 +147,44 @@ export function useFieldSignature({
   }, [backgroundColor, controlledValue]);
 
   /**
+   * Get pointer position
+   */
+  const getPointerPosition = useCallback((
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ): { x: number; y: number } | null => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+
+    const rect = canvas.getBoundingClientRect();
+
+    if ('touches' in e) {
+      // Touch event
+      if (e.touches.length === 0) return null;
+      return {
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top,
+      };
+    } else {
+      // Mouse event
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+    }
+  }, []);
+
+  /**
+   * Export signature
+   */
+  const exportSignature = useCallback((): string => {
+    const canvas = canvasRef.current;
+    if (!canvas) return '';
+
+    const mimeType = outputFormat === 'jpeg' ? 'image/jpeg' : 'image/png';
+    return canvas.toDataURL(mimeType);
+  }, [outputFormat]);
+
+  /**
    * Redraw all strokes
    */
   const redrawStrokes = useCallback(() => {
@@ -177,33 +215,6 @@ export function useFieldSignature({
       ctx.stroke();
     });
   }, [strokes, penColor, penWidth, backgroundColor]);
-
-  /**
-   * Get pointer position
-   */
-  const getPointerPosition = (
-    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
-  ): { x: number; y: number } | null => {
-    const canvas = canvasRef.current;
-    if (!canvas) return null;
-
-    const rect = canvas.getBoundingClientRect();
-
-    if ('touches' in e) {
-      // Touch event
-      if (e.touches.length === 0) return null;
-      return {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top,
-      };
-    } else {
-      // Mouse event
-      return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-    }
-  };
 
   /**
    * Start drawing
@@ -314,17 +325,6 @@ export function useFieldSignature({
       redrawStrokes();
     }, 0);
   }, [strokes, redrawStrokes]);
-
-  /**
-   * Export signature
-   */
-  const exportSignature = useCallback((): string => {
-    const canvas = canvasRef.current;
-    if (!canvas) return '';
-
-    const mimeType = outputFormat === 'jpeg' ? 'image/jpeg' : 'image/png';
-    return canvas.toDataURL(mimeType);
-  }, [outputFormat]);
 
   // Redraw when strokes change
   useEffect(() => {

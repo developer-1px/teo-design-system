@@ -4,15 +4,15 @@ import { Text } from '@/components/types/Element/Text/Text';
 
 export function BlockFormsDemo() {
   return (
-    <Block role="Container" density="Comfortable" className="gap-6">
+    <Block role="Container" density="Comfortable">
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="3. Forms & Fieldsets" />
         <Text role="Body" prominence="Subtle" content="Semantic grouping for input controls." />
       </div>
 
-      <Block role="Form" className="max-w-md">
+      <Block role="Form">
         <Block role="Fieldset" density="Comfortable">
-          <Text role="Label" content="User Information" className="text-lg font-medium mb-2" />
+          <Text role="Label" content="User Information" />
           <Field label="Username" type="text" model="demo.username" />
           <Field label="Email" type="email" model="demo.email" />
         </Block>

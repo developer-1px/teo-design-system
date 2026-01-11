@@ -16,7 +16,8 @@ import {
   Undo,
 } from 'lucide-react';
 import { Action } from '@/components/types/Element/Action/Action';
-import { Block, ToolbarBlock, ToolbarDivider } from '../Block';
+import { Block } from '../Block';
+import { ToolbarBlock, ToolbarDivider } from './Toolbar';
 
 /**
  * 예시 1: 기본 Toolbar

@@ -14,8 +14,8 @@ interface ListViewProps {
 
 export const ListView = ({ data }: ListViewProps) => {
   return (
-    <Section role="Container" layout="scroll">
-      <Block role="List" divider="horizontal">
+    <Section role="Container">
+      <Block role="List">
         {data.map((item, index) => {
           const obj = item as JsonObject;
           const keys = Object.keys(obj).slice(0, 4); // 최대 4개 필드
@@ -24,25 +24,20 @@ export const ListView = ({ data }: ListViewProps) => {
             <Block
               key={index}
               role="ListItem"
-              direction="horizontal"
-              padding="md"
-              align="center"
-              gap="md"
-              interactive
             >
               {/* 첫 번째 필드 (제목) */}
-              <Block role="Container" flex="1">
+              <Block role="Container">
                 <Text role="Body" prominence="Strong" content={String(obj[keys[0]])} />
               </Block>
 
               {/* 나머지 필드들 */}
-              <Block role="Container" direction="horizontal" gap="lg">
+              <Block role="Container">
                 {keys.slice(1).map((key) => {
                   const value = obj[key];
                   if (value === null || value === undefined) return null;
 
                   return (
-                    <Block key={key} role="Field" direction="horizontal" align="center" gap="xs">
+                    <Block key={key} role="Inline">
                       <Text role="Label" prominence="Subtle" content={`${key}:`} />
                       <Text
                         role="Body"
@@ -61,7 +56,7 @@ export const ListView = ({ data }: ListViewProps) => {
         })}
 
         {data.length === 0 && (
-          <Block role="Empty" align="center" justify="center" padding="xl">
+          <Block role="EmptyState">
             <Text role="Body" prominence="Subtle" content="데이터가 없습니다" />
           </Block>
         )}

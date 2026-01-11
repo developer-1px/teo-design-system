@@ -4,13 +4,20 @@ import { cn } from '@/shared/lib/utils';
 import type { BlockRendererProps } from '../Block.types';
 
 // 1. Card
-export function Card({ Element, children, className, ...props }: BlockRendererProps) {
+export function Card({
+  Element,
+  children,
+  className,
+  tokens,
+  ...props
+}: BlockRendererProps) {
   return (
     <Element
-      className={cn(
-        'bg-surface-raised rounded-lg border border-border-subtle p-4 shadow-sm',
-        className
-      )}
+      className={cn(className)}
+      style={{
+        padding: tokens?.spacing.padding,
+        ...((props as any).style || {})
+      }}
       {...props}
     >
       {children}
@@ -23,25 +30,44 @@ export function Stack({
   Element,
   children,
   className,
-  computedDensity,
+  tokens,
   ...props
 }: BlockRendererProps) {
-  const gap =
-    computedDensity === 'Compact' ? 'gap-2' : computedDensity === 'Comfortable' ? 'gap-6' : 'gap-4';
   return (
-    <Element className={cn('flex flex-col', gap, className)} {...props}>
+    <Element
+      className={cn('flex flex-col', className)}
+      style={{
+        gap: tokens?.spacing.gap,
+        padding: tokens?.spacing.padding,
+        ...((props as any).style || {})
+      }}
+      {...props}
+    >
       {children}
     </Element>
   );
 }
 
 // 3. Grid
-export function Grid({ Element, children, className, spec, style, ...props }: BlockRendererProps) {
+export function Grid({
+  Element,
+  children,
+  className,
+  spec,
+  tokens,
+  style,
+  ...props
+}: BlockRendererProps) {
   const columns = (spec?.columns as number) || 2;
   return (
     <Element
-      className={cn('grid gap-4', className)}
-      style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, ...style }}
+      className={cn('grid', className)}
+      style={{
+        gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+        gap: tokens?.spacing.gap,
+        padding: tokens?.spacing.padding,
+        ...style
+      }}
       {...props}
     >
       {children}
@@ -50,17 +76,28 @@ export function Grid({ Element, children, className, spec, style, ...props }: Bl
 }
 
 // 4. ScrollArea
-export function ScrollArea({ Element, children, className, spec, ...props }: BlockRendererProps) {
+export function ScrollArea({
+  Element,
+  children,
+  className,
+  spec,
+  tokens,
+  ...props
+}: BlockRendererProps) {
   const orientation = (spec?.orientation as 'horizontal' | 'vertical') || 'vertical';
   return (
     <Element
       className={cn(
-        'overflow-auto border border-border-default rounded-md bg-surface',
+        'overflow-auto',
         orientation === 'horizontal'
           ? 'overflow-x-auto whitespace-nowrap'
-          : 'overflow-y-auto max-h-[300px]',
+          : 'overflow-y-auto max-h-[500px]',
         className
       )}
+      style={{
+        padding: tokens?.spacing.padding,
+        ...((props as any).style || {})
+      }}
       {...props}
     >
       {children}
@@ -69,27 +106,50 @@ export function ScrollArea({ Element, children, className, spec, ...props }: Blo
 }
 
 // 5. Collapsible (Simple version)
-export function Collapsible({ Element, children, className, ...props }: BlockRendererProps) {
+export function Collapsible({
+  Element,
+  children,
+  className,
+  tokens,
+  ...props
+}: BlockRendererProps) {
   const [open, setOpen] = React.useState(false);
   return (
     <Element
-      className={cn('border border-border-default rounded-md overflow-hidden', className)}
+      className={cn('overflow-hidden', className)}
+      style={{
+        padding: tokens?.spacing.padding,
+        ...((props as any).style || {})
+      }}
       {...props}
     >
       <div
-        className="px-4 py-2 bg-surface-subtle cursor-pointer flex justify-between items-center select-none"
+        className="px-4 py-2 bg-slate-50/50 cursor-pointer flex justify-between items-center select-none"
         onClick={() => setOpen(!open)}
       >
-        <span className="font-medium text-sm">Collapsible Header</span>
-        <span className="text-xs text-text-subtle">{open ? '▲' : '▼'}</span>
+        <span className="font-medium text-sm text-slate-700">Collapsible Header</span>
+        <span className="text-xs text-slate-400">{open ? '▲' : '▼'}</span>
       </div>
-      {open && <div className="p-4 bg-surface">{children}</div>}
+      {open && <div className="p-4">{children}</div>}
     </Element>
   );
 }
 
 // 6. Splitter (Functional)
-export function Splitter({ Element, children, className, spec, ...props }: BlockRendererProps) {
+export function Splitter({
+  Element,
+  children,
+  className,
+  spec,
+  computedProminence,
+  computedIntent,
+  computedDensity,
+  role,
+  prominence,
+  intent,
+  density,
+  ...props
+}: BlockRendererProps) {
   const direction = (spec?.direction as 'horizontal' | 'vertical') || 'horizontal';
   const initialSize = (spec?.initialSize as number) || 250;
   const minSize = (spec?.minSize as number) || 0;

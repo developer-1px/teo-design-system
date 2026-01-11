@@ -28,8 +28,8 @@ export function SectionShowcasePage() {
       onCategoryChange={handleCategoryChange}
     >
       {/* 1. Bar Category */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="bar">
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable" id="bar">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="1. Bar Category" />
           <Text
             role="Body"
@@ -38,8 +38,8 @@ export function SectionShowcasePage() {
           />
         </Block>
 
-        <Block role="Stack" gap={4}>
-          <Section role="Header" className="border border-border-default p-4">
+        <Block role="Stack">
+          <Section role="Header">
             <Text role="Label" content="Header Section" prominence="Strong" />
             <Block role="Toolbar">
               <Text role="Caption" content="Toolbar inside Header (Flat by default)" />
@@ -48,28 +48,28 @@ export function SectionShowcasePage() {
             </Block>
           </Section>
 
-          <Section role="Footer" className="border border-border-default p-4">
+          <Section role="Footer">
             <Text role="Label" content="Footer Section" prominence="Strong" />
-            <Block role="Group" className="flex justify-between w-full">
+            <Block role="Toolbar">
               <Text role="Caption" content="Footer Status" />
               <Action role="Button" label="Close" />
             </Block>
           </Section>
 
-          <Section role="Toolbar" className="border border-border-default p-2">
+          <Section role="Toolbar">
             <Text role="Label" content="Toolbar Section" prominence="Strong" />
-            <Block role="Stack" gap={2}>
+            <Block role="Stack">
               <Text role="Caption" content="Dedicated Toolbar Section" />
             </Block>
           </Section>
         </Block>
       </Block>
 
-      <Block role="Divider" className="my-12" />
+      <Block role="Divider" />
 
       {/* 2. Panel Category */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="panel">
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable" id="panel">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="2. Panel Category" />
           <Text
             role="Body"
@@ -81,7 +81,6 @@ export function SectionShowcasePage() {
         <div className="flex gap-4 h-[300px] border border-border-default bg-surface-base">
           <Section
             role="ActivityBar"
-            className="border-r border-border-default p-2 w-[50px] items-center"
           >
             <Action role="Button" label="A" />
             <Action role="Button" label="B" />
@@ -89,10 +88,9 @@ export function SectionShowcasePage() {
 
           <Section
             role="Sidebar"
-            className="border-r border-border-default p-4 w-[200px] bg-surface-sunken"
           >
             <Text role="Label" content="Sidebar" prominence="Strong" />
-            <Block role="List" className="mt-4">
+            <Block role="List">
               <Action role="ListItem">
                 <Text content="Explorer" />
               </Action>
@@ -102,18 +100,18 @@ export function SectionShowcasePage() {
             </Block>
           </Section>
 
-          <Section role="Panel" className="flex-1 p-4">
+          <Section role="Panel">
             <Text role="Label" content="Panel / Content" prominence="Strong" />
             <Text role="Body" content="Flexible content area within the layout." />
           </Section>
         </div>
       </Block>
 
-      <Block role="Divider" className="my-12" />
+      <Block role="Divider" />
 
       {/* 3. Main Category */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="main">
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable" id="main">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="3. Main Category" />
           <Text
             role="Body"
@@ -124,24 +122,23 @@ export function SectionShowcasePage() {
 
         <Section
           role="Main"
-          className="border border-border-default p-8 bg-surface-base min-h-[200px]"
         >
           <Text role="Title" prominence="Hero" content="Main Region" />
           <Text
             role="Body"
             content="The primary focus of the user's task. Supports rich content and deep nesting."
           />
-          <Block role="Card" className="mt-4 p-4">
+          <Block role="Card">
             <Text role="Heading" content="Content Card" />
           </Block>
         </Section>
       </Block>
 
-      <Block role="Divider" className="my-12" />
+      <Block role="Divider" />
 
       {/* 4. Overlay Category */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="overlay">
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable" id="overlay">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="4. Overlay Category" />
           <Text
             role="Body"
@@ -154,17 +151,15 @@ export function SectionShowcasePage() {
           {/* Simulation of a Modal */}
           <Section
             role="Modal"
-            className="bg-surface p-0 shadow-xl rounded-lg w-[400px] border border-border-muted"
           >
-            <Section role="DialogHeader" className="p-4 border-b border-border-muted">
+            <Section role="DialogHeader">
               <Text role="Label" content="Modal Title" prominence="Strong" />
             </Section>
-            <Section role="DialogContent" className="p-6">
+            <Section role="DialogContent">
               <Text role="Body" content="This is a simulated modal content area." />
             </Section>
             <Section
               role="DialogFooter"
-              className="p-4 border-t border-border-muted bg-surface-raised flex justify-end gap-2"
             >
               <Action role="Button" label="Cancel" />
               <Action role="Button" label="Confirm" prominence="Strong" />
@@ -173,11 +168,11 @@ export function SectionShowcasePage() {
         </div>
       </Block>
 
-      <Block role="Divider" className="my-12" />
+      <Block role="Divider" />
 
       {/* 5. Validation */}
-      <Block role="Container" layout="stack" density="Comfortable" gap={6} id="validation">
-        <Block role="Stack" gap={1}>
+      <Block role="Container" density="Comfortable" id="validation">
+        <Block role="Stack">
           <Text role="Title" prominence="Strong" content="5. Rules & Validation" />
           <Text
             role="Body"
@@ -186,7 +181,7 @@ export function SectionShowcasePage() {
           />
         </Block>
 
-        <Section role="Header" className="border border-yellow-200 bg-yellow-50 p-4">
+        <Section role="Header">
           <Text role="Label" content="Header (Restricted)" />
           <Text
             role="Caption"

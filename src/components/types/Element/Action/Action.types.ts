@@ -3,7 +3,7 @@
  */
 
 import type React from 'react';
-import type { ReactNode } from 'react';
+import type { ReactNode, HTMLAttributes } from 'react';
 import type { AsProp, Density, Intent, Prominence } from '../../Shared.types';
 
 /**
@@ -39,6 +39,8 @@ export type ActionRole =
   // Complex/Media
   | 'Avatar' // Clickable Avatar
   | 'Notification' // Notification Item
+  | 'Card' // Interactive Card
+  | 'Row' // Interactive Row/ListItem (General)
 
   // Triggers (Explicit)
   | 'DropdownTrigger'
@@ -67,7 +69,7 @@ export type ActionBehavior =
  * v3.1: selected, interactive config 추가 (Interactive State Token System)
  * v4.0: role 추가 (renderer 패턴)
  */
-export interface ActionProps extends AsProp {
+export interface ActionProps extends AsProp, HTMLAttributes<HTMLElement> {
   // Renderer (v4.0)
   role?: ActionRole; // Button (default) | IconButton | Link | MenuItem | ListItem | Tab | Chip
   label?: string;
@@ -104,4 +106,27 @@ export interface ActionProps extends AsProp {
   direction?: 'horizontal' | 'vertical';
   isResizing?: boolean;
   gridArea?: string;
+}
+
+import type { TokenOutput } from '@/shared/iddl/token-engine';
+
+/**
+ * Action Renderer Props
+ * 모든 Action renderer가 공통으로 받는 props
+ */
+export interface ActionRendererProps extends Omit<ActionProps, 'role' | 'prominence' | 'intent' | 'density'> {
+  role: ActionRole;
+  computedProminence: Prominence;
+  computedIntent: Intent;
+  computedDensity: Density;
+  isDisabled: boolean;
+  handleClick: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  Element: any;
+  href?: string;
+  target?: string;
+  /**
+   * Pre-calculated Design Tokens (v6.0)
+   * Renderers should use this for styling instead of manual CVA/logic where possible.
+   */
+  tokens: TokenOutput;
 }
