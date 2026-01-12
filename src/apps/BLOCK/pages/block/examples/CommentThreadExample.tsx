@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * CommentThreadExample
  *
@@ -11,27 +12,27 @@ import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function CommentThreadExample() {
   return (
-    <Block role="Container" density="Comfortable">
-      <Block role="Stack">
+    <Frame.Column gap={6}>
+      <Frame.Stack>
         <Text role="Title" prominence="Strong" content="Comment Thread" />
         <Text
           role="Body"
           prominence="Subtle"
           content="Nested discussion using CommentThread + Quote blocks"
         />
-      </Block>
+      </Frame.Stack>
 
       {/* Main Thread */}
-      <Block role="CommentThread" prominence="Standard" density="Comfortable">
+      <Block role="Card" prominence="Standard" density="Comfortable">
         {/* Parent Comment */}
-        <Block role="Stack" density="Standard">
-          <Block role="Stack" density="Compact">
+        <Frame.Stack gap={4}>
+          <Frame.Stack gap={2} align="center">
             <Text role="Body" content="👤" />
-            <Block role="Stack" density="Compact">
-              <Text role="Username" content="Alex Kim" prominence="Strong" />
-              <Text role="Timestamp" content="5 hours ago" />
-            </Block>
-          </Block>
+            <Frame.Stack gap={1}>
+              <Text role="Label" content="Alex Kim" prominence="Strong" />
+              <Text role="Caption" content="5 hours ago" />
+            </Frame.Stack>
+          </Frame.Stack>
 
           <Text
             role="Body"
@@ -39,26 +40,26 @@ export function CommentThreadExample() {
             content="I think the new IDDL system is a game changer. No more className hell!"
           />
 
-          <Block role="Stack" density="Compact">
+          <Frame.Stack gap={2}>
             <Action role="Button" prominence="Subtle" label="Reply" />
             <Action role="Button" prominence="Subtle" label="Like" />
             <Text role="Caption" prominence="Subtle" content="12 likes" />
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Stack>
 
         {/* Nested Reply 1 */}
-        <Block role="CommentThread" prominence="Subtle" density="Comfortable">
-          <Block role="Stack" density="Standard">
-            <Block role="Stack" density="Compact">
+        <Block role="Card" prominence="Subtle" density="Comfortable">
+          <Frame.Stack gap={4}>
+            <Frame.Stack gap={2} align="center">
               <Text role="Body" content="👩‍💻" />
-              <Block role="Stack" density="Compact">
-                <Text role="Username" content="Sarah Chen" prominence="Strong" />
-                <Text role="Timestamp" content="3 hours ago" />
-              </Block>
-            </Block>
+              <Frame.Stack gap={1}>
+                <Text role="Label" content="Sarah Chen" prominence="Strong" />
+                <Text role="Caption" content="3 hours ago" />
+              </Frame.Stack>
+            </Frame.Stack>
 
-            <Block role="Quote" prominence="Subtle" density="Standard">
-              <Text role="Blockquote" content="No more className hell!" prominence="Subtle" />
+            <Block role="Card" prominence="Subtle" density="Standard">
+              <Text role="Body" content="No more className hell!" prominence="Subtle" />
             </Block>
 
             <Text
@@ -67,23 +68,23 @@ export function CommentThreadExample() {
               content="Totally agree! The declarative approach is so much cleaner."
             />
 
-            <Block role="Stack" density="Compact">
+            <Frame.Stack gap={2}>
               <Action role="Button" prominence="Subtle" label="Reply" />
               <Action role="Button" prominence="Subtle" label="Like" />
               <Text role="Caption" prominence="Subtle" content="8 likes" />
-            </Block>
-          </Block>
+            </Frame.Stack>
+          </Frame.Stack>
 
           {/* Nested Reply 2 */}
-          <Block role="CommentThread" prominence="Subtle" density="Standard">
-            <Block role="Stack" density="Standard">
-              <Block role="Stack" density="Compact">
+          <Block role="Card" prominence="Subtle" density="Standard">
+            <Frame.Stack gap={4}>
+              <Frame.Stack gap={2} align="center">
                 <Text role="Body" content="🧑" />
-                <Block role="Stack" density="Compact">
-                  <Text role="Username" content="Mike Johnson" prominence="Strong" />
-                  <Text role="Timestamp" content="1 hour ago" />
-                </Block>
-              </Block>
+                <Frame.Stack gap={1}>
+                  <Text role="Label" content="Mike Johnson" prominence="Strong" />
+                  <Text role="Caption" content="1 hour ago" />
+                </Frame.Stack>
+              </Frame.Stack>
 
               <Text
                 role="Body"
@@ -91,26 +92,26 @@ export function CommentThreadExample() {
                 content="Plus the token engine handles all the responsive scaling automatically!"
               />
 
-              <Block role="Stack" density="Compact">
+              <Frame.Stack gap={2}>
                 <Action role="Button" prominence="Subtle" label="Reply" />
                 <Action role="Button" prominence="Subtle" label="Like" />
                 <Text role="Caption" prominence="Subtle" content="5 likes" />
-              </Block>
-            </Block>
+              </Frame.Stack>
+            </Frame.Stack>
           </Block>
         </Block>
       </Block>
 
       {/* Add Comment Form */}
       <Block role="Card" prominence="Subtle" density="Standard">
-        <Block role="Stack" density="Standard">
+        <Frame.Stack gap={4}>
           <Text role="Label" prominence="Strong" content="Add a comment" />
-          <Block role="Stack" density="Compact">
+          <Frame.Stack gap={2}>
             <Text role="Body" content="Type your thoughts..." prominence="Subtle" />
             <Action role="Button" prominence="Hero" intent="Brand" label="Post Comment" />
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Stack>
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

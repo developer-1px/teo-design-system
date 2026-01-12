@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Download, FolderOpen, GitBranch, Play, Settings, Upload } from 'lucide-react';
 import { AIAgentChat } from '@/apps/IDE/widgets/chat/AIAgentChat.tsx';
 import { Block } from '@/components/dsl/Block/Block';
@@ -35,9 +36,9 @@ export const RightBar = ({
   };
 
   return (
-    <Block role="Stack" gap="none" className="h-full bg-surface-cool">
+    <Frame.Stack gap="none" className="h-full bg-surface-cool">
       {renderContent()}
-    </Block>
+    </Frame.Stack>
   );
 };
 
@@ -51,20 +52,20 @@ const AIPanel = () => {
 
 const GitPanel = ({ currentBranch }: { currentBranch: string }) => {
   return (
-    <Block role="Stack" gap="none" className="h-full">
+    <Frame.Stack gap="none" className="h-full">
       {/* Header */}
       <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default">
-        <Block role="Inline" layout="inline" className="gap-2">
+        <Frame.Inline layout="inline" className="gap-2">
           <GitBranch size={16} className="text-accent" />
           <Text role="Title" size="sm" prominence="Standard" content="Source Control" />
-        </Block>
+        </Frame.Inline>
       </Block>
 
       {/* Content */}
       <Block role="ScrollArea" className="flex-1">
-        <Block role="Stack" gap={4} className="p-3">
+        <Frame.Stack gap={4} className="p-3">
           {/* Current Branch */}
-          <Block role="Group" gap={2}>
+          <Frame.Stack gap={2}>
             <Text
               role="Caption"
               prominence="Subtle"
@@ -75,12 +76,12 @@ const GitPanel = ({ currentBranch }: { currentBranch: string }) => {
               <GitBranch size={14} />
               <Text role="Body" size="sm" content={currentBranch} />
             </Block>
-          </Block>
+          </Frame.Stack>
 
           {/* Actions */}
-          <Block role="Group" gap={2}>
+          <Frame.Stack gap={2}>
             <Text role="Caption" prominence="Subtle" className="font-semibold" content="Actions" />
-            <Block role="Stack" gap={1}>
+            <Frame.Stack gap={1}>
               <Action
                 role="Button"
                 icon={<Download size={14} />}
@@ -102,11 +103,11 @@ const GitPanel = ({ currentBranch }: { currentBranch: string }) => {
                 prominence="Subtle"
                 className="w-full justify-start"
               />
-            </Block>
-          </Block>
+            </Frame.Stack>
+          </Frame.Stack>
 
           {/* Changes */}
-          <Block role="Group" gap={2}>
+          <Frame.Stack gap={2}>
             <Text role="Caption" prominence="Subtle" className="font-semibold" content="Changes" />
             <Text
               role="Body"
@@ -115,10 +116,10 @@ const GitPanel = ({ currentBranch }: { currentBranch: string }) => {
               className="px-2 py-4 text-center italic"
               content="No changes detected"
             />
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Stack>
       </Block>
-    </Block>
+    </Frame.Stack>
   );
 };
 
@@ -130,81 +131,66 @@ const ProjectInfoPanel = ({
   currentBranch: string;
 }) => {
   return (
-    <Block role="Stack" gap="none" className="h-full">
+    <Frame.Stack gap="none" className="h-full">
       {/* Header */}
       <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default">
-        <Block role="Inline" layout="inline" className="gap-2">
+        <Frame.Inline layout="inline" className="gap-2">
           <FolderOpen size={16} className="text-accent" />
           <Text role="Title" size="sm" prominence="Standard" content="Project Info" />
-        </Block>
+        </Frame.Inline>
       </Block>
 
       {/* Content */}
       <Block role="ScrollArea" className="flex-1">
-        <Block role="Stack" gap={4} className="p-3">
+        <Frame.Stack gap={4} className="p-3">
           {/* Project Name */}
-          <Block role="Group" gap={1}>
+          <Frame.Stack gap={1}>
             <Text role="Caption" prominence="Subtle" className="font-semibold" content="Project" />
             <Text role="Body" size="sm" content={projectName} />
-          </Block>
+          </Frame.Stack>
 
           {/* Branch */}
-          <Block role="Group" gap={1}>
+          <Frame.Stack gap={1}>
             <Text role="Caption" prominence="Subtle" className="font-semibold" content="Branch" />
-            <Block role="Inline" layout="inline" className="gap-2">
+            <Frame.Inline layout="inline" className="gap-2">
               <GitBranch size={14} />
               <Text role="Body" size="sm" content={currentBranch} />
-            </Block>
-          </Block>
+            </Frame.Inline>
+          </Frame.Stack>
 
           {/* Stats */}
-          <Block role="Group" gap={2}>
+          <Frame.Stack gap={2}>
             <Text
               role="Caption"
               prominence="Subtle"
               className="font-semibold"
               content="Quick Stats"
             />
-            <Block role="Stack" gap={1}>
-              <Block
-                role="Inline"
-                layout="inline"
-                justify="between"
-                className="px-3 py-2 rounded bg-surface-sunken"
-              >
+            <Frame.Stack gap={1}>
+              <Frame.Inline layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
                 <Text role="Caption" prominence="Subtle" content="Files" />
                 <Text role="Caption" className="font-mono" content="42" />
-              </Block>
-              <Block
-                role="Inline"
-                layout="inline"
-                justify="between"
-                className="px-3 py-2 rounded bg-surface-sunken"
-              >
+              </Frame.Inline>
+              <Frame.Inline layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
                 <Text role="Caption" prominence="Subtle" content="Components" />
                 <Text role="Caption" className="font-mono" content="18" />
-              </Block>
-              <Block
-                role="Inline"
-                layout="inline"
-                justify="between"
-                className="px-3 py-2 rounded bg-surface-sunken"
-              >
+              </Frame.Inline>
+              <Frame.Inline layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken">
                 <Text role="Caption" prominence="Subtle" content="Lines" />
                 <Text role="Caption" className="font-mono" content="2,547" />
-              </Block>
-            </Block>
-          </Block>
+              </Frame.Inline>
+            </Frame.Stack>
+          </Frame.Stack>
 
           {/* Run Configs */}
-          <Block role="Group" gap={2}>
+          <Frame.Stack gap={2}>
             <Text
               role="Caption"
               prominence="Subtle"
               className="font-semibold"
               content="Run Configurations"
             />
-            <Block role="Stack" gap={1}>
+            <Frame.Stack gap={1}>
               <Action
                 role="Button"
                 icon={<Play size={14} />}
@@ -226,89 +212,64 @@ const ProjectInfoPanel = ({
                 prominence="Subtle"
                 className="w-full justify-start"
               />
-            </Block>
-          </Block>
-        </Block>
+            </Frame.Stack>
+          </Frame.Stack>
+        </Frame.Stack>
       </Block>
-    </Block>
+    </Frame.Stack>
   );
 };
 
 const SettingsPanel = ({ onOpenSettings }: { onOpenSettings?: () => void }) => {
   return (
-    <Block role="Stack" gap="none" className="h-full">
+    <Frame.Stack gap="none" className="h-full">
       {/* Header */}
       <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default">
-        <Block role="Inline" layout="inline" className="gap-2">
+        <Frame.Inline layout="inline" className="gap-2">
           <Settings size={16} className="text-accent" />
           <Text role="Title" size="sm" prominence="Standard" content="Quick Settings" />
-        </Block>
+        </Frame.Inline>
       </Block>
 
       {/* Content */}
       <Block role="ScrollArea" className="flex-1">
-        <Block role="Stack" gap={4} className="p-3">
-          <Block role="Group" gap={2}>
+        <Frame.Stack gap={4} className="p-3">
+          <Frame.Stack gap={2}>
             <Text role="Caption" prominence="Subtle" className="font-semibold" content="Editor" />
-            <Block role="Stack" gap={1}>
-              <Block
-                role="Inline"
-                layout="inline"
-                justify="between"
-                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
-              >
+            <Frame.Stack gap={1}>
+              <Frame.Inline layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
                 <Text role="Body" size="sm" content="Auto Save" />
                 <input type="checkbox" className="accent-accent" defaultChecked />
-              </Block>
-              <Block
-                role="Inline"
-                layout="inline"
-                justify="between"
-                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
-              >
+              </Frame.Inline>
+              <Frame.Inline layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
                 <Text role="Body" size="sm" content="Format on Save" />
                 <input type="checkbox" className="accent-accent" defaultChecked />
-              </Block>
-              <Block
-                role="Inline"
-                layout="inline"
-                justify="between"
-                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
-              >
+              </Frame.Inline>
+              <Frame.Inline layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
                 <Text role="Body" size="sm" content="Line Numbers" />
                 <input type="checkbox" className="accent-accent" defaultChecked />
-              </Block>
-            </Block>
-          </Block>
+              </Frame.Inline>
+            </Frame.Stack>
+          </Frame.Stack>
 
-          <Block role="Group" gap={2}>
+          <Frame.Stack gap={2}>
             <Text
               role="Caption"
               prominence="Subtle"
               className="font-semibold"
               content="Appearance"
             />
-            <Block role="Stack" gap={1}>
-              <Block
-                role="Inline"
-                layout="inline"
-                justify="between"
-                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
-              >
+            <Frame.Stack gap={1}>
+              <Frame.Inline layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
                 <Text role="Body" size="sm" content="Minimap" />
                 <input type="checkbox" className="accent-accent" />
-              </Block>
-              <Block
-                role="Inline"
-                layout="inline"
-                justify="between"
-                className="px-3 py-2 rounded bg-surface-sunken cursor-pointer"
-              >
+              </Frame.Inline>
+              <Frame.Inline layout="inline" justify="between" className="px-3 py-2 rounded bg-surface-sunken cursor-pointer">
                 <Text role="Body" size="sm" content="Breadcrumbs" />
                 <input type="checkbox" className="accent-accent" defaultChecked />
-              </Block>
-            </Block>
-          </Block>
+              </Frame.Inline>
+            </Frame.Stack>
+          </Frame.Stack>
 
           <Action
             role="Button"
@@ -318,8 +279,8 @@ const SettingsPanel = ({ onOpenSettings }: { onOpenSettings?: () => void }) => {
             className="w-full justify-start"
             onClick={onOpenSettings}
           />
-        </Block>
+        </Frame.Stack>
       </Block>
-    </Block>
+    </Frame.Stack>
   );
 };

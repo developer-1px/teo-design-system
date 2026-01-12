@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
+import { Frame } from '@/components/dsl/shared/Frame';
+import { useState } from 'react';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { ShowcasePage } from '@/components/showcase/ShowcasePage';
+import {
+  Grid3X3,
+  MousePointer2,
+  Layers,
+  Zap,
+  Activity,
+  Maximize2,
+  Link as LinkIcon
+} from 'lucide-react';
+import { cn } from '@/shared/lib/utils';
 
 export function ActionShowcasePage() {
   const [activeCategoryId, setActiveCategoryId] = useState('matrix');
   const intents = ['Neutral', 'Brand', 'Positive', 'Caution', 'Critical', 'Info'] as const;
+
   const categories = [
-    { id: 'matrix', label: 'Button Matrix' },
-    { id: 'density', label: 'Density & Spacing' },
-    { id: 'combinations', label: 'UI Combinations' },
-    { id: 'states', label: 'Button States' },
-    { id: 'icons', label: 'Icon Buttons' },
-    { id: 'components', label: 'Specialized Actions' },
-    { id: 'links', label: 'Links' },
+    { id: 'matrix', label: 'Button Matrix', icon: Grid3X3 },
+    { id: 'density', label: 'Density & Spacing', icon: Maximize2 },
+    { id: 'combinations', label: 'UI Combinations', icon: Layers },
+    { id: 'states', label: 'Button States', icon: Activity },
+    { id: 'icons', label: 'Icon Buttons', icon: MousePointer2 },
+    { id: 'components', label: 'Specialized Actions', icon: Zap },
+    { id: 'links', label: 'Links', icon: LinkIcon },
   ];
 
   const handleCategoryChange = (id: string) => {
@@ -24,6 +36,22 @@ export function ActionShowcasePage() {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  const PreviewCard = ({ title, children }: { title: string, children: React.ReactNode }) => (
+    <div className="relative overflow-hidden rounded-2xl border border-border-muted bg-surface-sunken flex flex-col p-1 mb-8 group">
+      <div className="h-10 border-b border-border-muted flex items-center px-4 justify-between bg-surface-elevated/20">
+        <div className="flex gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-text opacity-10" />
+          <div className="w-2 h-2 rounded-full bg-text opacity-10" />
+          <div className="w-2 h-2 rounded-full bg-text opacity-10" />
+        </div>
+        <span className="text-[10px] font-bold text-subtle uppercase tracking-widest">{title}</span>
+      </div>
+      <div className="p-10 flex items-center justify-center overflow-x-auto">
+        {children}
+      </div>
+    </div>
+  );
 
   return (
     <ShowcasePage
@@ -35,327 +63,245 @@ export function ActionShowcasePage() {
       onCategoryChange={handleCategoryChange}
     >
       {/* 1. Button Matrix */}
-      <Block role="Container" id="matrix">
-        <Block role="Stack">
-          <Text role="Title" prominence="Strong" content="1. Button Matrix" />
-          <Text
-            role="Body"
-            prominence="Subtle"
-            content="The core combinations of Prominence and Intent axes."
-          />
-        </Block>
+      <Frame.Stack id="matrix" gap={8}>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold text-text tracking-tight">1. Button Matrix</h2>
+          <p className="text-muted text-[15px]">The core combinations of Prominence and Intent axes.</p>
+        </div>
 
-        <Block role="Card" density="Standard">
-          {/* Header Row */}
-          <Block role="Grid" spec={{ columns: 7 }}>
-            <Text role="Label" content="Prominence" />
-            {intents.map((intent) => (
-              <Text key={intent} role="Label" content={intent} />
-            ))}
-          </Block>
-
-          {/* Rows */}
-          {['Hero', 'Strong', 'Standard', 'Subtle'].map((prominence: any) => (
-            <Block key={prominence} role="Grid" spec={{ columns: 7 }}>
-              <Text role="Label" content={prominence} />
+        <PreviewCard title="Interaction Matrix">
+          <div className="flex flex-col gap-8 w-full">
+            {/* Header Row */}
+            <div className="grid grid-cols-7 gap-4 items-center">
+              <div className="text-[11px] font-bold text-subtle uppercase tracking-widest">Axis</div>
               {intents.map((intent) => (
-                <Action
-                  key={intent}
-                  role="Button"
-                  label="Action"
-                  prominence={prominence}
-                  intent={intent}
-                  onClick={() => {}}
-                />
+                <div key={intent} className="text-[11px] font-bold text-subtle uppercase tracking-widest text-center">{intent}</div>
               ))}
-            </Block>
-          ))}
-        </Block>
-      </Block>
+            </div>
 
-      <Block role="Divider" />
+            {/* Rows */}
+            {['Hero', 'Strong', 'Standard', 'Subtle'].map((prominence: any) => (
+              <div key={prominence} className="grid grid-cols-7 gap-4 items-center">
+                <div className="text-[13px] font-semibold text-muted">{prominence}</div>
+                {intents.map((intent) => (
+                  <div key={intent} className="flex justify-center">
+                    <Action
+                      role="Button"
+                      label="Action"
+                      prominence={prominence}
+                      intent={intent}
+                      className="min-w-[80px]"
+                      onClick={() => { }}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </PreviewCard>
+      </Frame.Stack>
 
       {/* 2. Density Test */}
-      <Block role="Container" id="density">
-        <Block role="Stack">
-          <Text role="Title" prominence="Strong" content="2. Density & Spacing" />
-          <Text
-            role="Body"
-            prominence="Subtle"
-            content="Adaptive layouts based on the Density axis (Compact, Standard, Comfortable)."
-          />
-        </Block>
+      <Frame.Stack id="density" gap={8}>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold text-text tracking-tight">2. Density & Spacing</h2>
+          <p className="text-muted text-[15px]">Adaptive layouts based on the Density axis (Compact, Standard, Comfortable).</p>
+        </div>
 
-        <Block role="Grid" spec={{ columns: 3 }}>
+        <div className="grid grid-cols-3 gap-6 mb-8">
           {(['Compact', 'Standard', 'Comfortable'] as any[]).map((d) => (
-            <Block key={d} role="Card" density={d} prominence="Subtle">
-              <Block role="Stack">
-                <Text role="Heading" content={d} prominence="Strong" />
-                <Text role="Caption" content={`${d} density scale`} prominence="Subtle" />
-              </Block>
+            <div key={d} className="bg-surface-sunken border border-border-muted rounded-2xl p-6 flex flex-col gap-6 hover:border-border-strong transition-colors">
+              <div className="flex flex-col gap-1">
+                <span className="text-primary text-[12px] font-bold uppercase tracking-widest">{d}</span>
+                <span className="text-muted text-[13px]">Density scale</span>
+              </div>
 
-              <Block role="Stack">
-                <Action role="Button" label={`${d} Action`} prominence="Hero" intent="Brand" />
+              <div className={cn(
+                "flex flex-col gap-4",
+                d === 'Compact' ? 'gap-2' : d === 'Comfortable' ? 'gap-6' : 'gap-4'
+              )}>
+                <Action role="Button" label="Primary Action" prominence="Hero" intent="Brand" />
                 <Action role="Button" label="Secondary" prominence="Strong" />
-              </Block>
-
-              <Block role="Toolbar">
-                <Action role="IconButton" icon="Plus" prominence="Standard" label="Add" />
-                <Action role="IconButton" icon="Settings" prominence="Standard" label="Config" />
-                <Action role="IconButton" icon="Trash" prominence="Subtle" label="Delete" />
-              </Block>
-            </Block>
+                <div className="flex items-center gap-2">
+                  <Action role="IconButton" icon="Plus" prominence="Standard" label="Add" />
+                  <Action role="IconButton" icon="Settings" prominence="Standard" label="Config" />
+                </div>
+              </div>
+            </div>
           ))}
-        </Block>
-      </Block>
-
-      <Block role="Divider" />
+        </div>
+      </Frame.Stack>
 
       {/* 3. Real-world Combinations */}
-      <Block role="Container" id="combinations">
-        <Block role="Stack">
-          <Text role="Title" prominence="Strong" content="3. UI Combinations" />
-          <Text
-            role="Body"
-            prominence="Subtle"
-            content="Realistic implementation of interactive patterns using Action & Block."
-          />
-        </Block>
+      <Frame.Stack id="combinations" gap={8}>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold text-text tracking-tight">3. UI Combinations</h2>
+          <p className="text-muted text-[15px]">Realistic implementation of interactive patterns using Action & Block.</p>
+        </div>
 
-        <Block role="Grid" spec={{ columns: 2 }}>
-          {/* Example A: File Header / Toolbar */}
-          <Block role="Card">
-            <Block role="Toolbar">
-              <Block role="Toolbar">
-                <Action role="IconButton" icon="ChevronLeft" prominence="Subtle" label="Back" />
-                <Text role="Label" content="src / components / Action.tsx" />
-              </Block>
-              <Block role="Toolbar">
-                <Action role="Button" label="Share" icon="Share2" prominence="Standard" />
-                <Action role="IconButton" icon="MoreVertical" prominence="Standard" label="More" />
-              </Block>
-            </Block>
-            <Block role="Container">
-              <Block role="Stack">
-                <Text role="Title" content="Interactive Design Language" />
-                <Block role="Toolbar">
+        <div className="grid grid-cols-2 gap-8 mb-8">
+          <PreviewCard title="Studio Editor Header">
+            <div className="flex flex-col gap-6 w-full">
+              <div className="h-10 bg-surface-raised rounded-lg border border-border-muted flex items-center px-4 justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-[13px] text-subtle">src / components /</span>
+                  <span className="text-[13px] text-text font-medium">Action.tsx</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Action role="IconButton" icon="MoreHorizontal" prominence="Subtle" label="More" />
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <h3 className="text-xl font-bold text-text">Interactive Design Language</h3>
+                <div className="flex gap-2">
                   <Action role="Chip" label="v6.0-stable" intent="Positive" selected />
-                  <Action role="Chip" label="TypeScript" icon="Code" />
-                  <Action role="Chip" label="React" icon="Atom" />
-                </Block>
-              </Block>
-            </Block>
-          </Block>
+                  <Action role="Chip" label="TypeScript" selected={false} />
+                </div>
+              </div>
+            </div>
+          </PreviewCard>
 
-          {/* Example B: Comment / Activity UI */}
-          <Block role="Card">
-            <Block role="Toolbar">
-              <Block>JD</Block>
-              <Block role="Stack">
-                <Block role="Toolbar">
-                  <Text role="Label" content="Jane Doe" prominence="Strong" />
-                  <Text role="Caption" content="2 hours ago" prominence="Subtle" />
-                </Block>
-                <Text
-                  role="Body"
-                  content="I've updated the button tokens to support the new shadow-xl variant. Please review the Hero prominence."
+          <PreviewCard title="Communication Card">
+            <div className="flex flex-col gap-4 w-full">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">JD</div>
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[14px] font-bold text-text">Jane Doe</span>
+                    <span className="text-[12px] text-subtle">2h ago</span>
+                  </div>
+                  <p className="text-[14px] text-muted leading-relaxed">I've updated the button tokens to support the new shadow-xl variant.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 pt-4 border-t border-border-muted">
+                <Action role="Button" label="Reply" prominence="Subtle" className="text-[12px]" />
+                <Action role="Button" label="Like" prominence="Subtle" className="text-[12px]" />
+                <div className="flex-1" />
+                <Action
+                  role="Button"
+                  label="Resolve"
+                  prominence="Strong"
+                  intent="Positive"
+                  size="sm"
                 />
-              </Block>
-            </Block>
-            <Block role="Toolbar">
-              <Action role="Button" label="Reply" prominence="Subtle" icon="MessageSquare" />
-              <Action role="Button" label="Like" prominence="Subtle" icon="Heart" />
-              <Action role="IconButton" icon="Smile" prominence="Subtle" label="Emoji" />
-            </Block>
-            <Block>
-              <Action
-                role="Button"
-                label="Resolve Conversation"
-                prominence="Strong"
-                intent="Positive"
-              />
-            </Block>
-          </Block>
-        </Block>
-      </Block>
-
-      <Block role="Divider" />
+              </div>
+            </div>
+          </PreviewCard>
+        </div>
+      </Frame.Stack>
 
       {/* 4. Button States */}
-      <Block role="Container" id="states">
-        <Block role="Stack">
-          <Text role="Title" prominence="Strong" content="4. Button States" />
-          <Text
-            role="Body"
-            prominence="Subtle"
-            content="Dynamic states managed by the engine (Loading, Disabled, Selected)."
-          />
-        </Block>
+      <Frame.Stack id="states" gap={8}>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold text-text tracking-tight">4. Button States</h2>
+          <p className="text-muted text-[15px]">Dynamic states managed by the engine (Loading, Disabled, Selected).</p>
+        </div>
 
-        <Block role="Grid" spec={{ columns: 4 }}>
-          <Block role="Card">
-            <Text role="Label" content="Loading" prominence="Subtle" />
-            <Action role="Button" label="Saving Changes" loading prominence="Hero" intent="Brand" />
-          </Block>
-          <Block role="Card">
-            <Text role="Label" content="Disabled" prominence="Subtle" />
-            <Action role="Button" label="Submit" disabled prominence="Hero" intent="Critical" />
-          </Block>
-          <Block role="Card">
-            <Text role="Label" content="Selected" prominence="Subtle" />
-            <Action
-              role="Button"
-              label="Active State"
-              selected
-              prominence="Strong"
-              intent="Positive"
-            />
-          </Block>
-          <Block role="Card">
-            <Text role="Label" content="Default" prominence="Subtle" />
-            <Action role="Button" label="Idle Action" prominence="Standard" />
-          </Block>
-        </Block>
-      </Block>
-
-      <Block role="Divider" />
+        <PreviewCard title="Live State Demo">
+          <div className="grid grid-cols-4 gap-8 w-full">
+            <div className="flex flex-col gap-4 items-center">
+              <span className="text-[11px] font-bold text-subtle uppercase tracking-widest">Loading</span>
+              <Action role="Button" label="Saving Changes" loading prominence="Hero" intent="Brand" />
+            </div>
+            <div className="flex flex-col gap-4 items-center">
+              <span className="text-[11px] font-bold text-subtle uppercase tracking-widest">Disabled</span>
+              <Action role="Button" label="Submit" disabled prominence="Hero" intent="Critical" />
+            </div>
+            <div className="flex flex-col gap-4 items-center">
+              <span className="text-[11px] font-bold text-subtle uppercase tracking-widest">Selected</span>
+              <Action role="Button" label="Active State" selected prominence="Strong" intent="Positive" />
+            </div>
+            <div className="flex flex-col gap-4 items-center">
+              <span className="text-[11px] font-bold text-subtle uppercase tracking-widest">Default</span>
+              <Action role="Button" label="Idle Action" prominence="Standard" />
+            </div>
+          </div>
+        </PreviewCard>
+      </Frame.Stack>
 
       {/* 5. Icon Buttons */}
-      <Block role="Container" id="icons">
-        <Block role="Stack">
-          <Text role="Title" prominence="Strong" content="5. Icon Buttons" />
-          <Text
-            role="Body"
-            prominence="Subtle"
-            content="Role-specific glyph actions with precise geometry."
-          />
-        </Block>
+      <Frame.Stack id="icons" gap={8}>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold text-text tracking-tight">5. Icon Buttons</h2>
+          <p className="text-muted text-[15px]">Role-specific glyph actions with precise geometry.</p>
+        </div>
 
-        <Block role="Card">
-          <Block role="Toolbar">
-            <Text role="Label" content="Text + Icon" />
-            <Action role="Button" label="Configure Systems" icon="Settings" prominence="Standard" />
-            <Action
-              role="Button"
-              label="Delete Resource"
-              icon="Trash"
-              prominence="Hero"
-              intent="Critical"
-            />
-            <Action
-              role="Button"
-              label="Commit Changes"
-              icon="Save"
-              prominence="Strong"
-              intent="Brand"
-            />
-          </Block>
-          <Block role="Divider" />
-
-          <Block role="Toolbar">
-            <Text role="Label" content="Icon Only" />
-            <Action role="IconButton" icon="Settings" prominence="Standard" label="Settings" />
-            <Action
-              role="IconButton"
-              icon="Trash"
-              prominence="Hero"
-              intent="Critical"
-              label="Delete"
-            />
-            <Action role="IconButton" icon="Plus" prominence="Strong" intent="Brand" label="Add" />
-            <Action role="IconButton" icon="MoreHorizontal" prominence="Subtle" label="More" />
-            <Action
-              role="IconButton"
-              icon="Search"
-              prominence="Standard"
-              intent="Info"
-              label="Search"
-            />
-          </Block>
-        </Block>
-      </Block>
-
-      <Block role="Divider" />
+        <PreviewCard title="Glyph Controls">
+          <div className="flex flex-col gap-10 w-full">
+            <div className="flex items-center gap-4 flex-wrap">
+              <Action role="Button" label="Configure Systems" icon="Settings" prominence="Standard" />
+              <Action role="Button" label="Delete Resource" icon="Trash" prominence="Hero" intent="Critical" />
+              <Action role="Button" label="Commit Changes" icon="Save" prominence="Strong" intent="Brand" />
+            </div>
+            <div className="h-[1px] bg-border-muted" />
+            <div className="flex items-center gap-6">
+              <Action role="IconButton" icon="Settings" prominence="Standard" label="Settings" />
+              <Action role="IconButton" icon="Trash" prominence="Hero" intent="Critical" label="Delete" />
+              <Action role="IconButton" icon="Plus" prominence="Strong" intent="Brand" label="Add" />
+              <Action role="IconButton" icon="MoreHorizontal" prominence="Subtle" label="More" />
+              <Action role="IconButton" icon="Search" prominence="Standard" intent="Info" label="Search" />
+            </div>
+          </div>
+        </PreviewCard>
+      </Frame.Stack>
 
       {/* 6. Specialized Actions */}
-      <Block role="Container" id="components">
-        <Block role="Stack">
-          <Text role="Title" prominence="Strong" content="6. Specialized Actions" />
-          <Text
-            role="Body"
-            prominence="Subtle"
-            content="Semantic components for complex contextual interactions."
-          />
-        </Block>
+      <Frame.Stack id="components" gap={8}>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold text-text tracking-tight">6. Specialized Actions</h2>
+          <p className="text-muted text-[15px]">Semantic components for complex contextual interactions.</p>
+        </div>
 
-        <Block role="Grid" spec={{ columns: 2 }}>
-          <Block role="Stack">
-            <Block role="Card">
-              <Text role="Heading" content="Tabs & Segments" prominence="Strong" />
-              <Block role="Toolbar">
-                <Action role="Tab" label="Overview" selected />
-                <Action role="Tab" label="Settings" />
-                <Action role="Tab" label="Analytics" />
-              </Block>
-            </Block>
+        <div className="grid grid-cols-2 gap-8 mb-8">
+          <PreviewCard title="Navigation & Tags">
+            <div className="flex flex-col gap-8 w-full">
+              <div className="flex flex-col gap-3">
+                <span className="text-[11px] font-bold text-subtle uppercase tracking-widest">Tabs</span>
+                <div className="flex gap-1 bg-surface-sunken p-1 rounded-lg">
+                  <Action role="Tab" label="Overview" selected />
+                  <Action role="Tab" label="Settings" />
+                  <Action role="Tab" label="Analytics" />
+                </div>
+              </div>
+              <div className="flex flex-col gap-3">
+                <span className="text-[11px] font-bold text-subtle uppercase tracking-widest">Interactive Chips</span>
+                <div className="flex flex-wrap gap-2">
+                  <Action role="Chip" label="JavaScript" icon="Code" selected intent="Brand" />
+                  <Action role="Chip" label="React" selected={false} />
+                  <Action role="Chip" label="Performance" intent="Positive" selected={false} />
+                </div>
+              </div>
+            </div>
+          </PreviewCard>
 
-            <Block role="Card">
-              <Text role="Heading" content="Interactive Chips" prominence="Strong" />
-              <Block role="Toolbar">
-                <Action role="Chip" label="JavaScript" icon="Code" selected intent="Brand" />
-                <Action role="Chip" label="React" icon="Atom" />
-                <Action role="Chip" label="Performance" icon="Zap" intent="Positive" />
-                <Action role="Chip" label="Warning" icon="AlertTriangle" intent="Caution" />
-              </Block>
-            </Block>
-          </Block>
-
-          <Block role="Stack">
-            <Block role="Card">
-              <Block>
-                <Text role="Heading" content="Menu Items" prominence="Strong" />
-              </Block>
-              <Block role="Stack">
+          <PreviewCard title="Menus & Overlays">
+            <div className="flex flex-col gap-6 w-full">
+              <div className="bg-surface rounded-xl border border-border-default overflow-hidden shadow-2xl">
                 <Action role="MenuItem" label="Profile Settings" icon="User" />
                 <Action role="MenuItem" label="Share Workspace" icon="Share2" />
+                <div className="h-[1px] bg-border-muted" />
                 <Action role="MenuItem" label="Logout" icon="LogOut" intent="Critical" />
-              </Block>
-            </Block>
-
-            <Block role="Card">
-              <Block>
-                <Text role="Heading" content="List Items" prominence="Strong" />
-              </Block>
-              <Block role="Stack">
-                <Action role="ListItem" label="General Documentation" icon="FileText" selected />
-                <Action role="ListItem" label="Team Collaboration" icon="Users" />
-                <Action role="ListItem" label="Danger Zone" icon="Shield" intent="Critical" />
-              </Block>
-            </Block>
-          </Block>
-        </Block>
-      </Block>
-
-      <Block role="Divider" />
+              </div>
+            </div>
+          </PreviewCard>
+        </div>
+      </Frame.Stack>
 
       {/* 7. Links */}
-      <Block role="Container" id="links">
-        <Block role="Stack">
-          <Text role="Title" prominence="Strong" content="7. Navigation Links" />
-          <Text
-            role="Body"
-            prominence="Subtle"
-            content="Semantic hyperlinks with standard typography."
-          />
-        </Block>
+      <Frame.Stack id="links" gap={8}>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold text-text tracking-tight">7. Navigation Links</h2>
+          <p className="text-muted text-[15px]">Semantic hyperlinks with standard typography.</p>
+        </div>
 
-        <Block role="Card">
-          <Action role="Link" label="Documentation" href="#" />
-          <Action role="Link" label="View Repository" icon="Github" href="#" intent="Brand" />
-          <Action role="Link" label="System Status" icon="Activity" href="#" intent="Positive" />
-          <Action role="Link" label="Admin Portal" icon="Shield" href="#" prominence="Subtle" />
-        </Block>
-      </Block>
+        <PreviewCard title="External Connectivity">
+          <div className="flex items-center gap-8">
+            <Action role="Link" label="Documentation" href="#" />
+            <Action role="Link" label="View Repository" icon="Github" href="#" intent="Brand" />
+            <Action role="Link" label="System Status" icon="Activity" href="#" intent="Positive" />
+          </div>
+        </PreviewCard>
+      </Frame.Stack>
     </ShowcasePage>
   );
 }

@@ -154,6 +154,7 @@ export function Text({
         tokens.typography.color,
         tokens.typography.fontFamily,
         tokens.typography.lineHeight,
+        tokens.typography.tracking,
 
         align && alignVariants({ align }),
         className

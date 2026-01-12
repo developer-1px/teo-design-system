@@ -6,7 +6,7 @@ import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import type { PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types';
 import { Block } from '@/components/dsl/Block/Block';
-import { Button } from '@/components/dsl/Element/Action/role/Button';
+import { Action } from '@/components/dsl/Element/Action/Action';
 // Input removed
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { cn } from '@/shared/lib/utils';
@@ -77,14 +77,15 @@ export function ColorPalette({
           className="flex-1 h-9 px-3 bg-layer-2 border border-border rounded text-sm focus:outline-none focus:border-accent"
           placeholder="#000000"
         />
-        <Button
+        <Action
+          role="Button"
           prominence="Subtle"
           onClick={() => {
             onAddColor(newColor);
           }}
         >
           <Plus size={16} />
-        </Button>
+        </Action>
       </Block>
 
       {/* Selected Color Info */}

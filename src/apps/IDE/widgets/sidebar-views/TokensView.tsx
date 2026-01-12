@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Palette, Type } from 'lucide-react';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
@@ -25,38 +26,38 @@ export const TokensView = () => {
 
       <Section role="Container">
         {/* Colors */}
-        <Block role="Container">
+        <Frame.Column>
           <Block role="Toolbar">
             <Palette size={14} />
             <Text role="Label" content="Colors (Surfaces)" prominence="Secondary" />
           </Block>
 
-          <Block role="Grid">
+          <Frame.Grid>
             <ColorSwatch name="Surface" color="bg-surface" text="text-text" />
             <ColorSwatch name="Elevated" color="bg-surface-elevated" text="text-text" />
             <ColorSwatch name="Raised" color="bg-surface-raised" text="text-text" />
             <ColorSwatch name="Sunken" color="bg-surface-sunken" text="text-text" />
             <ColorSwatch name="Overlay" color="bg-surface-overlay" text="text-white" />
             <ColorSwatch name="Hover" color="bg-surface-hover" text="text-text" />
-          </Block>
-        </Block>
+          </Frame.Grid>
+        </Frame.Column>
 
-        <Block role="Container">
+        <Frame.Column>
           <Block role="Toolbar">
             <Palette size={14} />
             <Text role="Label" content="Colors (Semantic)" prominence="Secondary" />
           </Block>
-          <Block role="Grid">
+          <Frame.Grid>
             <ColorSwatch name="Accent" color="bg-accent" text="text-white" />
             <ColorSwatch name="Error" color="bg-semantic-error" text="text-white" />
             <ColorSwatch name="Success" color="bg-semantic-success" text="text-white" />
             <ColorSwatch name="Warning" color="bg-semantic-warning" text="text-black" />
             <ColorSwatch name="Info" color="bg-semantic-info" text="text-white" />
-          </Block>
-        </Block>
+          </Frame.Grid>
+        </Frame.Column>
 
         {/* Typography */}
-        <Block role="Container">
+        <Frame.Column>
           <Block role="Toolbar">
             <Type size={14} />
             <Text role="Label" content="Typography" prominence="Secondary" />
@@ -88,7 +89,7 @@ export const TokensView = () => {
               <Text role="Code" content="Inter / 12px / Medium" size="xs" />
             </Block>
           </Block>
-        </Block>
+        </Frame.Column>
       </Section>
     </>
   );

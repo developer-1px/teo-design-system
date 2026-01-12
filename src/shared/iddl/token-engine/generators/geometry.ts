@@ -53,14 +53,16 @@ export function generateGeometry(input: TokenInput): GeometryTokens {
   const hasContainment =
     separation === 'surface' || separation === 'border' || isInput || state.hover;
 
+  const tier = getSeparationTier(role, prominence, isInput);
+
   // 1. Border Logic
   let widthNum = 0;
   let color = 'border-transparent';
 
   if (separation === 'border' || isInput) {
     widthNum = 1;
-    color = 'border-border-default/60';
-    if (isInput) color = 'border-border-muted/30';
+    color = 'border-border-default/80';
+    if (isInput) color = 'border-border-muted/20';
   }
 
   // Intent Overrides
@@ -91,10 +93,19 @@ export function generateGeometry(input: TokenInput): GeometryTokens {
     outlineOffset = 'outline-offset-2';
   }
 
-  // 4. Page Context (Immersive borders)
+  // 4. Page/Section Specialty Logic
+  let customBorders = '';
+  if (separation === 'border') {
+    if (role === 'Header' || role === 'Bar') customBorders = 'border-b';
+    else if (role === 'Footer') customBorders = 'border-t';
+    else if (role === 'PrimarySidebar') customBorders = 'border-r';
+    else if (role === 'SecondarySidebar' || role === 'Aside') customBorders = 'border-l';
+    else if (role === 'Panel') customBorders = 'border-t';
+  }
+
   if (input.pageRole === 'Immersive') {
     const isContainer = role === 'Card' || role === 'Panel' || role === 'Modal';
-    if (isContainer && (tier === 'Level2' || tier === 'Level3')) {
+    if (isContainer && (tier === 'Level2' || tier === 'Level3' || separation === 'surface')) {
       widthNum = 1;
       color = 'border-white/10';
     }
@@ -107,7 +118,9 @@ export function generateGeometry(input: TokenInput): GeometryTokens {
     overflow = 'overflow-hidden';
   }
 
-  const width = widthNum === 0 ? 'border-0' : widthNum === 1 ? 'border' : `border-${widthNum}`;
+  const width =
+    customBorders ||
+    (widthNum === 0 ? 'border-0' : widthNum === 1 ? 'border' : `border-${widthNum}`);
 
   return {
     width,

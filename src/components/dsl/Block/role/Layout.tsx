@@ -4,35 +4,55 @@ import { cn } from '@/shared/lib/utils';
 import type { BlockRendererProps } from '../Block.types';
 
 // 1. Card
-export function Card({ Element, children, className, tokens, ...props }: BlockRendererProps) {
+export function Card({
+  Element,
+  children,
+  className,
+  tokens,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
+  spec,
+  ...props
+}: BlockRendererProps) {
   return (
-    <Element
-      className={cn(className)}
-      style={{
-        padding: tokens?.spacing.padding,
-        ...((props as any).style || {}),
-      }}
+    <Frame.Column
+      as={Element}
+      className={className}
+      padding={tokens?.spacing.padding}
       {...props}
     >
       {children}
-    </Element>
+    </Frame.Column>
   );
 }
 
 // 2. Stack (Vertical)
-export function Stack({ Element, children, className, tokens, ...props }: BlockRendererProps) {
+import { Frame } from '@/components/dsl/shared/Frame';
+
+export function Stack({
+  Element,
+  children,
+  className,
+  tokens,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
+  spec,
+  ...props
+}: BlockRendererProps) {
   return (
-    <Element
-      className={cn('flex flex-col', className)}
-      style={{
-        gap: tokens?.spacing.gap,
-        padding: tokens?.spacing.padding,
-        ...((props as any).style || {}),
-      }}
+    <Frame.Stack
+      as={Element}
+      className={className}
+      gap={tokens?.spacing.gap}
+      padding={tokens?.spacing.padding}
       {...props}
     >
       {children}
-    </Element>
+    </Frame.Stack>
   );
 }
 
@@ -44,6 +64,10 @@ export function Grid({
   spec,
   tokens,
   style,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
   ...props
 }: BlockRendererProps) {
   const columns = (spec?.columns as number) || 2;
@@ -63,6 +87,32 @@ export function Grid({
   );
 }
 
+// 3.1 Row (Generic Horizontal)
+export function Row({
+  Element,
+  children,
+  className,
+  tokens,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
+  spec,
+  ...props
+}: BlockRendererProps) {
+  return (
+    <Frame.Row
+      as={Element}
+      className={className}
+      gap={tokens?.spacing.gap}
+      padding={tokens?.spacing.padding}
+      {...props}
+    >
+      {children}
+    </Frame.Row>
+  );
+}
+
 // 4. ScrollArea
 export function ScrollArea({
   Element,
@@ -70,26 +120,54 @@ export function ScrollArea({
   className,
   spec,
   tokens,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
   ...props
 }: BlockRendererProps) {
   const orientation = (spec?.orientation as 'horizontal' | 'vertical') || 'vertical';
   return (
-    <Element
+    <Frame
+      as={Element}
+      direction={orientation === 'vertical' ? 'column' : 'row'}
       className={cn(
         'overflow-auto',
-        orientation === 'horizontal'
-          ? 'overflow-x-auto whitespace-nowrap'
-          : 'overflow-y-auto max-h-[500px]',
+        orientation === 'horizontal' ? 'overflow-x-auto' : 'overflow-y-auto max-h-[500px]',
         className
       )}
-      style={{
-        padding: tokens?.spacing.padding,
-        ...((props as any).style || {}),
-      }}
+      padding={tokens?.spacing.padding}
+      gap={tokens?.spacing.gap}
       {...props}
     >
       {children}
-    </Element>
+    </Frame>
+  );
+}
+
+// 4.1 Well (Sunken Container)
+export function Well({
+  Element,
+  children,
+  className,
+  tokens,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
+  spec,
+  ...props
+}: BlockRendererProps) {
+  return (
+    <Frame.Column
+      as={Element}
+      className={cn('bg-surface-sunken/50', className)}
+      padding={tokens?.spacing.padding}
+      gap={tokens?.spacing.gap}
+      {...props}
+    >
+      {children}
+    </Frame.Column>
   );
 }
 
@@ -99,6 +177,11 @@ export function Collapsible({
   children,
   className,
   tokens,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
+  spec,
   ...props
 }: BlockRendererProps) {
   const [open, setOpen] = React.useState(false);
@@ -149,7 +232,7 @@ export function Splitter({
   const kids = React.Children.toArray(children);
   const hasSecondPane = kids.length > 1;
 
-  const { size, isResizing, separatorProps } = useResizable({
+  const { size, isResizing, separatorProps = {} as any } = useResizable({
     initialSize,
     minSize,
     maxSize,
@@ -187,7 +270,7 @@ export function Splitter({
 
   // Handle Style
   const handleStyle: React.CSSProperties = {
-    ...separatorProps.style,
+    ...(separatorProps?.style || {}),
     flexBasis: isHorizontal ? '4px' : '4px',
     flexShrink: 0, // Prevent handle from collapsing
     backgroundColor: isResizing ? 'var(--color-primary-default)' : 'transparent',
@@ -236,6 +319,11 @@ export function AspectRatio({
   className,
   spec,
   style,
+  tokens, // Destructure but unused by Frame directly here (Frame doesn't exist here yet, it uses Element)
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
   ...props
 }: BlockRendererProps) {
   const ratio = (spec?.ratio as number) || 16 / 9;
@@ -251,5 +339,62 @@ export function AspectRatio({
         </div>
       )}
     </Element>
+  );
+}
+
+// 8. Toolbar
+// Default: Bordered, Rounded, Surface
+export function Toolbar({
+  Element,
+  children,
+  className,
+  tokens,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
+  spec,
+  ...props
+}: BlockRendererProps) {
+  return (
+    <Frame.Row
+      as={Element}
+      className={cn(
+        // Default Toolbar Aesthetics if not overridden
+        'border border-border-default/50 bg-surface-elevated/50 backdrop-blur-sm rounded-md shadow-sm',
+        className
+      )}
+      gap={tokens?.spacing.gap ?? 2}
+      padding={tokens?.spacing.padding ?? 2}
+      {...props}
+    >
+      {children}
+    </Frame.Row>
+  );
+}
+
+// 9. ControlPanel
+export function ControlPanel({
+  Element,
+  children,
+  className,
+  tokens,
+  role,
+  computedProminence,
+  computedDensity,
+  computedIntent,
+  spec,
+  ...props
+}: BlockRendererProps) {
+  return (
+    <Frame.Stack
+      as={Element}
+      className={cn('bg-surface-elevated/10', className)}
+      gap={tokens?.spacing.gap ?? 4}
+      padding={tokens?.spacing.padding ?? 4}
+      {...props}
+    >
+      {children}
+    </Frame.Stack>
   );
 }

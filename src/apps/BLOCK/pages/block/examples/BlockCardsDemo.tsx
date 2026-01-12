@@ -1,9 +1,10 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Block } from '@/components/dsl/Block/Block';
 import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function BlockCardsDemo() {
   return (
-    <Block role="Container" density="Comfortable">
+    <Frame.Column gap={6}>
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="1. Cards & Containers" />
         <Text
@@ -13,7 +14,7 @@ export function BlockCardsDemo() {
         />
       </div>
 
-      <Block role="Grid" density="Comfortable">
+      <Frame.Grid columns={2} gap={6}>
         <Block role="Card" prominence="Standard">
           <Text role="Title" prominence="Standard" content="Standard Card" />
           <Text
@@ -29,10 +30,10 @@ export function BlockCardsDemo() {
             content="A card with reduced visual weight, often used for secondary content regions or flat layouts."
           />
         </Block>
-      </Block>
+      </Frame.Grid>
       <Block role="Card">
         <Text role="Caption" content="Card (Sunken Background)" />
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

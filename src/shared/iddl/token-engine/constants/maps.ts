@@ -25,8 +25,22 @@ export const BASE_PADDING_MAP: Record<string, { x: number; y: number }> = {
   // Input
   Input: { x: 0.75, y: 0.625 }, // 12px 10px
 
+  // Layout Roles
+  Main: { x: 2.5, y: 2.5 }, // 40px (Heroic)
+  Canvas: { x: 2.5, y: 2.5 },
+  Header: { x: 1.5, y: 1.0 }, // 24px 16px
+  Footer: { x: 1.5, y: 1.0 },
+  Sidebar: { x: 1.25, y: 1.25 }, // 20px
+  PrimarySidebar: { x: 1.25, y: 1.25 },
+  SecondarySidebar: { x: 1.25, y: 1.25 },
+  Aside: { x: 1.25, y: 1.25 },
+  Panel: { x: 1.0, y: 1.0 }, // 16px
+  Toolbar: { x: 1.5, y: 0.75 }, // 24px 12px
+  Statusbar: { x: 1.0, y: 0.5 }, // 16px 8px
+
   // Container
   Card: { x: 1.25, y: 1.25 }, // 20px
+  Block: { x: 1.25, y: 1.25 },
   Container: { x: 1.25, y: 1.25 },
 
   // Overlay

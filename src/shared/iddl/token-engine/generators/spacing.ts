@@ -39,13 +39,25 @@ export function generateSpacing(input: TokenInput): SpacingTokens {
 
   // 4. Padding Calculation
   const basePadding = BASE_PADDING_MAP[role] || BASE_PADDING_MAP['Default'];
-  // Padding also constrained by Space?
-  // Bars usually have tight padding.
-  const paddingX = basePadding.x * densityMult * (space === 'bar' ? 0.75 : 1.0);
-  const paddingY = basePadding.y * densityMult * (space === 'bar' ? 0.75 : 1.0);
+
+  let paddingX = basePadding.x;
+  let paddingY = basePadding.y;
+
+  // Space-based adjustments
+  if (space === 'bar' || space === 'rail') {
+    paddingX *= 0.75;
+    paddingY *= 0.75;
+  } else if (space === 'canvas') {
+    paddingX *= 1.25;
+    paddingY *= 1.25;
+  }
+
+  // Final density application
+  paddingX *= densityMult;
+  paddingY *= densityMult;
 
   return {
     gap: `${gapVal.toFixed(3)}rem`,
-    padding: `${paddingY}rem ${paddingX}rem`,
+    padding: `${paddingY.toFixed(3)}rem ${paddingX.toFixed(3)}rem`,
   };
 }

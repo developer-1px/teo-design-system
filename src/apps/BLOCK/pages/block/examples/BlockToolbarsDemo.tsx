@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Separator } from '@/components/dsl/Element/Separator/Separator.tsx';
@@ -5,14 +6,14 @@ import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function BlockToolbarsDemo() {
   return (
-    <Block role="Container" density="Comfortable">
+    <Frame.Column density="Comfortable">
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="4. Toolbars" />
         <Text role="Body" prominence="Subtle" content="Horizontal grouping for actions." />
       </div>
 
       <Block role="Card">
-        <Block role="Container">
+        <Frame.Column>
           <Text role="Label" content="Standard Toolbar" />
           <Block role="Toolbar">
             <Action role="IconButton" icon="Bold" prominence="Subtle" label="Bold" />
@@ -23,9 +24,9 @@ export function BlockToolbarsDemo() {
             <Action role="IconButton" icon="AlignCenter" prominence="Subtle" label="Align Center" />
             <Action role="IconButton" icon="AlignRight" prominence="Subtle" label="Align Right" />
           </Block>
-        </Block>
+        </Frame.Column>
 
-        <Block role="Container">
+        <Frame.Column>
           <Text role="Label" content="Floating Toolbar" />
           <div className="h-20 relative bg-surface-sunken rounded-md flex items-center justify-center border border-border-dashed">
             <Block role="FloatingToolbar">
@@ -40,8 +41,8 @@ export function BlockToolbarsDemo() {
               />
             </Block>
           </div>
-        </Block>
+        </Frame.Column>
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

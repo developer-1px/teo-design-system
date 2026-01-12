@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * BlogPostExample2
  *
@@ -16,23 +17,23 @@ export function BlogPostExample2() {
     <Page role="Document" layout="Aside" title="Blog Post">
       {/* Main Content */}
       <Section role="Main">
-        <Block role="Container" density="Comfortable">
-          <Block role="Stack" density="Comfortable">
+        <Frame.Column density="Comfortable">
+          <Frame.Stack density="Comfortable">
             {/* Article Header */}
-            <Block role="Stack" density="Standard">
-              <Text role="Overline" prominence="Subtle" content="Technology" />
+            <Frame.Stack density="Standard">
+              <Text role="Label" prominence="Subtle" content="Technology" />
               <Text role="Title" prominence="Hero" content="Building Design Systems with IDDL" />
-              <Block role="Stack" density="Compact">
-                <Block role="Stack" density="Compact">
+              <Frame.Stack density="Compact">
+                <Frame.Stack density="Compact">
                   <Text role="Body" content="👤" />
-                  <Text role="Username" content="Sarah Chen" prominence="Strong" />
-                </Block>
-                <Text role="Timestamp" content="Published 3 days ago" />
-              </Block>
-            </Block>
+                  <Text role="Label" content="Sarah Chen" prominence="Strong" />
+                </Frame.Stack>
+                <Text role="Caption" content="Published 3 days ago" />
+              </Frame.Stack>
+            </Frame.Stack>
 
             {/* Article Content */}
-            <Block role="Stack" density="Comfortable">
+            <Frame.Stack density="Comfortable">
               <Text
                 role="Body"
                 prominence="Hero"
@@ -45,9 +46,9 @@ export function BlogPostExample2() {
                 content="Traditional design systems require developers to remember countless className combinations. IDDL changes this by making developers declare intent instead of implementation."
               />
 
-              <Block role="Quote" prominence="Subtle" density="Comfortable">
+              <Block role="Card" prominence="Subtle" density="Comfortable">
                 <Text
-                  role="Blockquote"
+                  role="Body"
                   prominence="Standard"
                   content="Declare why, not how. The system handles the rest."
                 />
@@ -73,46 +74,46 @@ export function BlogPostExample2() {
                 content="Start by understanding the three core axes: prominence, intent, and density. Every component uses these to generate appropriate tokens."
               />
 
-              <Block role="Code" prominence="Subtle" density="Standard">
+              <Block role="Card" prominence="Subtle" density="Standard">
                 <Text
                   role="Code"
                   content='<Action role="Button" prominence="Hero" intent="Brand">Submit</Action>'
                 />
               </Block>
-            </Block>
+            </Frame.Stack>
 
             {/* Article Footer */}
             <Block role="Divider" />
-            <Block role="Stack" density="Compact">
+            <Frame.Stack density="Compact">
               <Action role="Button" prominence="Hero" intent="Brand" label="Share Article" />
               <Action role="Button" prominence="Standard" label="Bookmark" />
-            </Block>
-          </Block>
-        </Block>
+            </Frame.Stack>
+          </Frame.Stack>
+        </Frame.Column>
       </Section>
 
       {/* Sidebar (Table of Contents) */}
       <Section role="Aside">
-        <Block role="Container" density="Standard">
-          <Block role="Stack" density="Standard">
+        <Frame.Column density="Standard">
+          <Frame.Stack density="Standard">
             <Text role="Heading" prominence="Strong" content="On this page" />
             <Block role="List" density="Compact">
               <Action role="Link" label="Key Benefits" prominence="Subtle" />
               <Action role="Link" label="Getting Started" prominence="Subtle" />
               <Action role="Link" label="Examples" prominence="Subtle" />
             </Block>
-          </Block>
+          </Frame.Stack>
 
           <Block role="Divider" />
 
-          <Block role="Stack" density="Standard">
+          <Frame.Stack density="Standard">
             <Text role="Heading" prominence="Strong" content="Related Articles" />
             <Block role="List" density="Compact">
               <Action role="Link" label="Token Engine Architecture" prominence="Subtle" />
               <Action role="Link" label="Designing with Purpose" prominence="Subtle" />
             </Block>
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Column>
       </Section>
     </Page>
   );

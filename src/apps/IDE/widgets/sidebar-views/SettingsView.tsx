@@ -1,7 +1,6 @@
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Field } from '@/components/dsl/Element/Field/Field';
-import { Text } from '@/components/dsl/Element/Text/Text';
 import { Section } from '@/components/dsl/Section/Section';
 import { SidebarHeader } from './SidebarHeader';
 
@@ -25,7 +24,7 @@ export const SettingsView = () => {
 
       <Section role="Container">
         {/* Search */}
-        <Field role="SearchInput" placeholder="Search Settings" prominence="Standard" />
+        <Field role="Searchbox" placeholder="Search Settings" prominence="Standard" />
 
         {/* Categories */}
         <Block role="List">
@@ -54,7 +53,7 @@ export const SettingsView = () => {
                 role="Switch"
                 label="Mini Map"
                 description="Controls whether the minimap is shown."
-                checked
+                value={true}
                 prominence="Standard"
               />
 
@@ -76,7 +75,11 @@ export const SettingsView = () => {
                 role="Select"
                 label="Color Theme"
                 description="Specifies the color theme used in the workbench."
-                options={['IDDL Dark', 'GitHub Dark', 'Monokai']}
+                options={[
+                  { label: 'IDDL Dark', value: 'IDDL Dark' },
+                  { label: 'GitHub Dark', value: 'GitHub Dark' },
+                  { label: 'Monokai', value: 'Monokai' },
+                ]}
                 defaultValue="IDDL Dark"
                 prominence="Standard"
               />
@@ -85,7 +88,11 @@ export const SettingsView = () => {
                 role="Select"
                 label="Icon Theme"
                 description="Specifies the file icon theme used in the workbench."
-                options={['Lucide Icons', 'Material Items', 'None']}
+                options={[
+                  { label: 'Lucide Icons', value: 'Lucide Icons' },
+                  { label: 'Material Items', value: 'Material Items' },
+                  { label: 'None', value: 'None' },
+                ]}
                 defaultValue="Lucide Icons"
                 prominence="Standard"
               />

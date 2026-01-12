@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * BehaviorShowcasePage - Navigable + Selectable Showcase
  *
@@ -52,24 +53,24 @@ function NavigableFileItem({ file }: { file: (typeof FILES)[0] }) {
 function Example1_NavigableOnly() {
   return (
     <Block role="Card">
-      <Block role="Stack">
+      <Frame.Stack>
         <Text role="Title" prominence="Standard">
           1. Navigable Only - File Explorer
         </Text>
         <Text role="Caption" prominence="Subtle">
           Use ↑↓ keys to navigate. Try typing first letter to jump.
         </Text>
-      </Block>
+      </Frame.Stack>
 
-      <Block role="Container" className="p-4 bg-surface-sunken rounded-lg">
+      <Frame.Column className="p-4 bg-surface-sunken rounded-lg">
         <Navigable orientation="vertical" typeahead loop>
-          <Block role="Stack">
+          <Frame.Stack>
             {FILES.map((file) => (
               <NavigableFileItem key={file.id} file={file} />
             ))}
-          </Block>
+          </Frame.Stack>
         </Navigable>
-      </Block>
+      </Frame.Column>
 
       <Block role="Card" className="p-3 bg-info-muted border-info text-xs">
         <Text role="Caption" prominence="Subtle">
@@ -129,35 +130,35 @@ function Example2_SelectableOnly() {
 
   return (
     <Block role="Card">
-      <Block role="Stack">
+      <Frame.Stack>
         <Text role="Title" prominence="Standard">
           2. Selectable Only - Task List
         </Text>
         <Text role="Caption" prominence="Subtle">
           Click to select. Use Ctrl+click for multi-select, Shift+click for range.
         </Text>
-      </Block>
+      </Frame.Stack>
 
-      <Block role="Container" className="p-4 bg-surface-sunken rounded-lg">
+      <Frame.Column className="p-4 bg-surface-sunken rounded-lg">
         <Selectable mode="extended" selected={selected} onSelectionChange={setSelected}>
-          <Block role="Stack">
+          <Frame.Stack>
             {TASKS.map((task) => (
               <SelectableTaskItem key={task.id} task={task} />
             ))}
-          </Block>
+          </Frame.Stack>
         </Selectable>
-      </Block>
+      </Frame.Column>
 
       <Block role="Card" className="p-3 bg-surface-raised">
         <Text role="Caption" prominence="Subtle">
           Selected: {selected.length} / {TASKS.length}
         </Text>
         {selected.length > 0 && (
-          <Block role="Stack" className="mt-2">
+          <Frame.Stack className="mt-2">
             <Text role="Caption" prominence="Subtle" className="text-xs">
               IDs: {selected.join(', ')}
             </Text>
-          </Block>
+          </Frame.Stack>
         )}
       </Block>
 
@@ -245,7 +246,6 @@ function SlideThumbItem({ slide, index }: { slide: (typeof SLIDES)[0]; index: nu
 
 function Example3_NavigableSelectable() {
   const [selected, setSelected] = useState<string[]>([]);
-  const [activeSlide, setActiveSlide] = useState<string | null>(null);
 
   const handleDelete = () => {
     if (selected.length > 0) {
@@ -254,46 +254,37 @@ function Example3_NavigableSelectable() {
     }
   };
 
-  const __handleActivate = (slideId: string) => {
-    setActiveSlide(slideId);
-    setTimeout(() => setActiveSlide(null), 1000); // Reset after 1s
-  };
 
   return (
     <Block role="Card">
-      <Block role="Stack">
+      <Frame.Stack>
         <Text role="Title" prominence="Standard">
           3. Navigable + Selectable - Slide Thumbnails (PPT-style)
         </Text>
         <Text role="Caption" prominence="Subtle">
           Combine navigation and selection. Try ↑↓ + Space, Shift+↓, Ctrl+A, Delete, Enter.
         </Text>
-      </Block>
+      </Frame.Stack>
 
-      <Block role="Container" className="p-4 bg-surface-sunken rounded-lg">
+      <Frame.Column className="p-4 bg-surface-sunken rounded-lg">
         <Navigable orientation="both" typeahead loop>
           <Selectable mode="extended" selected={selected} onSelectionChange={setSelected}>
-            <Block role="Grid" spec={{ columns: 4 }}>
+            <Frame.Grid columns={4}>
               {SLIDES.map((slide, index) => (
                 <SlideThumbItem key={slide.id} slide={slide} index={index} />
               ))}
-            </Block>
+            </Frame.Grid>
           </Selectable>
         </Navigable>
-      </Block>
+      </Frame.Column>
 
-      <Block role="Row" className="p-3 bg-surface-raised rounded items-center justify-between">
-        <Block role="Stack">
+      <Frame.Row className="p-3 bg-surface-raised rounded items-center justify-between">
+        <Frame.Stack>
           <Text role="Caption" prominence="Subtle">
             Selected: {selected.length} / {SLIDES.length}
           </Text>
-          {activeSlide && (
-            <Text role="Caption" prominence="Standard" className="text-accent">
-              ✓ Activated: {activeSlide}
-            </Text>
-          )}
-        </Block>
-        <Block role="Row">
+        </Frame.Stack>
+        <Frame.Row>
           <button
             onClick={handleDelete}
             disabled={selected.length === 0}
@@ -301,8 +292,8 @@ function Example3_NavigableSelectable() {
           >
             Delete ({selected.length})
           </button>
-        </Block>
-      </Block>
+        </Frame.Row>
+      </Frame.Row>
 
       <Block role="Card" className="p-3 bg-info-muted border-info text-xs">
         <Text role="Caption" prominence="Subtle">
@@ -329,9 +320,9 @@ export function BehaviorShowcasePage() {
       subtitle="Navigable & Selectable v1.0"
       description="Low-level building blocks for complex list interactions."
     >
-      <Block role="Stack">
+      <Frame.Stack>
         {/* Header */}
-        <Block role="Stack">
+        <Frame.Stack>
           <Text role="Title" prominence="Hero">
             Behavior Primitives Showcase
           </Text>
@@ -340,7 +331,7 @@ export function BehaviorShowcasePage() {
             blocks that can be combined to create complex interactions like file explorers, task
             lists, and slide thumbnails.
           </Text>
-        </Block>
+        </Frame.Stack>
 
         {/* Examples */}
         <Example1_NavigableOnly />
@@ -352,7 +343,7 @@ export function BehaviorShowcasePage() {
           <Text role="Title" prominence="Standard">
             📚 Documentation
           </Text>
-          <Block role="Stack">
+          <Frame.Stack>
             {[
               'docs/2-areas/core/behavior/01-web-vs-app.md',
               'docs/2-areas/core/behavior/02-navigable.md',
@@ -364,9 +355,9 @@ export function BehaviorShowcasePage() {
                 • <code className="bg-surface-raised px-1 rounded">{path}</code>
               </Text>
             ))}
-          </Block>
+          </Frame.Stack>
         </Block>
-      </Block>
+      </Frame.Stack>
     </ShowcasePage>
   );
 }

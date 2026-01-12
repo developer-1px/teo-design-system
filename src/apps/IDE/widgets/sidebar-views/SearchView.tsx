@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
+import { Frame } from '@/components/dsl/shared/Frame';
 
 import { Input } from './components/ui/input';
 import { SidebarHeader } from './SidebarHeader';
@@ -63,144 +64,86 @@ export const SearchView = ({ onFileClick }: SearchViewProps) => {
         }
       />
 
-      <Block role="ScrollArea" className="flex-1">
-        <Block role="Stack" className="p-4">
-          {/* Search Inputs */}
-          <Block role="Group">
-            <Block role="Row" layout="inline" className="relative">
-              <Action
-                role="IconButton"
-                icon={isReplaceExpanded ? 'ChevronDown' : 'ChevronRight'}
-                label="Toggle Replace"
-                prominence="Subtle"
-                density="Compact"
-                className="absolute left-0 top-1.5 z-10"
+      <div className="flex-1 overflow-y-auto px-5 py-2">
+        <div className="flex flex-col gap-2">
+          {/* Search Input Box */}
+          <div className="flex flex-col gap-1.5">
+            <div className="relative flex items-center group">
+              <div
+                className="absolute left-1 z-10 p-0.5 hover:bg-hover rounded cursor-pointer"
                 onClick={() => setIsReplaceExpanded(!isReplaceExpanded)}
-              />
-              <Input
+              >
+                {isReplaceExpanded ? <ChevronDown size={14} /> : <ChevronDown size={14} className="-rotate-90" />}
+              </div>
+              <input
                 placeholder="Search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-8 h-8 text-sm w-full"
+                className="w-full bg-surface-sunken border border-transparent focus:border-focus outline-none text-[13px] pl-7 pr-16 h-[26px] rounded-sm text-text placeholder:opacity-40"
               />
-              <Block role="Row" layout="inline" className="absolute right-1 top-1 gap-0.5">
-                <Action
-                  role="IconButton"
-                  icon="CaseSensitive"
-                  label="Match Case"
-                  prominence="Subtle"
-                  density="Compact"
-                  className="h-6 w-6"
-                />
-                <Action
-                  role="IconButton"
-                  icon="WholeWord"
-                  label="Match Whole Word"
-                  prominence="Subtle"
-                  density="Compact"
-                  className="h-6 w-6"
-                />
-                <Action
-                  role="IconButton"
-                  icon="Regex"
-                  label="Use Regular Expression"
-                  prominence="Subtle"
-                  density="Compact"
-                  className="h-6 w-6"
-                />
-              </Block>
-            </Block>
+              <div className="absolute right-1.5 flex items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+                <Action icon="CaseSensitive" size="xs" className="hover:bg-hover p-0.5 rounded" />
+                <Action icon="WholeWord" size="xs" className="hover:bg-hover p-0.5 rounded" />
+                <Action icon="Regex" size="xs" className="hover:bg-hover p-0.5 rounded" />
+              </div>
+            </div>
 
             {isReplaceExpanded && (
-              <Block role="Row" layout="inline" className="relative pl-8">
-                <Input
+              <div className="relative flex items-center pl-7">
+                <input
                   placeholder="Replace"
                   value={replaceQuery}
                   onChange={(e) => setReplaceQuery(e.target.value)}
-                  className="h-8 text-sm w-full"
+                  className="w-full bg-surface-sunken border border-transparent focus:border-focus outline-none text-[13px] px-2 h-[26px] rounded-sm text-text placeholder:opacity-40"
                 />
-                <Block role="Row" layout="inline" className="absolute right-1 top-1 gap-0.5">
-                  <Action
-                    role="IconButton"
-                    icon="Replace"
-                    label="Replace All"
-                    prominence="Subtle"
-                    density="Compact"
-                    className="h-6 w-6"
-                  />
-                </Block>
-              </Block>
+                <div className="absolute right-1.5 flex items-center gap-1 opacity-40 hover:opacity-100 transition-opacity">
+                  <Action icon="Replace" size="xs" className="hover:bg-hover p-0.5 rounded" />
+                  <Action icon="ReplaceAll" size="xs" className="hover:bg-hover p-0.5 rounded" />
+                </div>
+              </div>
             )}
-          </Block>
+          </div>
 
           {/* Results */}
           {searchQuery && (
-            <Block role="List" className="flex flex-col gap-0 mt-2">
-              <Text
-                role="Caption"
-                prominence="Subtle"
-                className="px-2 py-1 italic mb-2"
-                content={`${mockResults.reduce((acc, curr) => acc + curr.matches.length, 0)} results in ${mockResults.length} files`}
-              />
+            <div className="flex flex-col mt-4">
+              <div className="px-1 text-[11px] opacity-40 mb-2">
+                {mockResults.reduce((acc, curr) => acc + curr.matches.length, 0)} results in {mockResults.length} files
+              </div>
 
               {mockResults.map((result, idx) => (
-                <Block key={idx} role="Group" className="flex flex-col">
+                <div key={idx} className="flex flex-col">
                   {/* File Header */}
-                  <Action
-                    role="Button"
-                    prominence="Subtle"
-                    className="flex items-center gap-1 px-2 py-1 hover:bg-surface-hover rounded-sm text-left w-full justify-start"
+                  <div
+                    className="flex items-center gap-1.5 py-1 hover:bg-hover cursor-pointer group select-none"
                     onClick={() => onFileClick?.(result.path)}
                   >
-                    <ChevronDown size={14} className="text-text-tertiary" />
-                    <File size={14} className="text-text-tertiary" />
-                    <Text
-                      role="Body"
-                      size="sm"
-                      prominence="Standard"
-                      content={result.file}
-                      className="font-medium truncate flex-1 ml-1"
-                    />
-                    <Text
-                      role="Badge"
-                      className="text-[10px] text-text-tertiary bg-surface-raised px-1.5 rounded-full"
-                    >
+                    <ChevronDown size={14} className="opacity-40" />
+                    <File size={14} className="text-info" />
+                    <span className="text-[13px] text-muted font-medium truncate flex-1">{result.file}</span>
+                    <span className="text-[11px] bg-surface-hover px-1.5 rounded-full mr-1 opacity-60 group-hover:opacity-100">
                       {result.matches.length}
-                    </Text>
-                  </Action>
+                    </span>
+                  </div>
 
                   {/* Matches */}
-                  <Block role="Stack" className="ml-6 border-l border-border-muted">
+                  <div className="flex flex-col border-l border-border-muted ml-[18px]">
                     {result.matches.map((match, mIdx) => (
-                      <Action
+                      <div
                         key={mIdx}
-                        role="Button"
-                        prominence="Subtle"
-                        className="flex items-start gap-3 px-2 py-1 hover:bg-surface-hover text-left overflow-hidden w-full justify-start h-auto"
+                        className="flex items-center gap-3 pl-4 pr-2 py-0.5 hover:bg-hover cursor-pointer group whitespace-nowrap overflow-hidden"
                       >
-                        <Text
-                          role="Code"
-                          size="xs"
-                          prominence="Subtle"
-                          className="w-6 text-right flex-shrink-0"
-                          content={String(match.line)}
-                        />
-                        <Text
-                          role="Code"
-                          size="sm"
-                          prominence="Standard"
-                          content={match.content}
-                          className="truncate opacity-80"
-                        />
-                      </Action>
+                        <span className="text-[11px] opacity-30 w-6 text-right shrink-0">{match.line}</span>
+                        <span className="text-[12px] opacity-70 group-hover:opacity-100 truncate">{match.content}</span>
+                      </div>
                     ))}
-                  </Block>
-                </Block>
+                  </div>
+                </div>
               ))}
-            </Block>
+            </div>
           )}
-        </Block>
-      </Block>
+        </div>
+      </div>
     </>
   );
 };

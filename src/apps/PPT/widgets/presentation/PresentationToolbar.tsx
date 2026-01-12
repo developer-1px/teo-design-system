@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * PresentationToolbar - 순수 IDDL 기반 상단 툴바 (v2.0)
  *
@@ -47,9 +48,9 @@ export const PresentationToolbar = ({
     <Section role="Header" prominence="Elevated">
       <Block role="Toolbar" density="Compact">
         {/* 좌측: 제목 */}
-        <Block role="Inline">
+        <Frame.Inline>
           <Text role="Title" content={title} />
-        </Block>
+        </Frame.Inline>
 
         {/* 중앙: 재생 버튼 + 네비게이션 - IDDL Action 사용 */}
         <Block role="Toolbar" density="Compact">

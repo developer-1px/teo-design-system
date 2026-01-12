@@ -1,9 +1,21 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { useState } from 'react';
 import { Block } from '@/components/dsl/Block/Block.tsx';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Field, type FieldOption } from '@/components/dsl/Element/Field/Field';
 import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section';
 import { ShowcasePage } from '@/components/showcase/ShowcasePage';
+import {
+  Type,
+  MousePointer2,
+  Eye,
+  Edit3,
+  Terminal,
+  Zap,
+  Box
+} from 'lucide-react';
+import { cn } from '@/shared/lib/utils';
 
 export function AtomsShowcasePage() {
   // Form state for all field types
@@ -11,20 +23,17 @@ export function AtomsShowcasePage() {
     text: 'Sample text',
     number: 42,
     currency: 50000,
-    date: '2025-01-09',
-    datetime: '2025-01-09T14:30',
+    date: '2026-01-11',
+    datetime: '2026-01-11T14:30',
     boolean: true,
     select: 'option2',
     multiselect: ['option1', 'option3'],
     radio: 'medium',
     checkbox: ['feature1', 'feature2'],
-    textarea: 'Multiple\nlines\nof text',
-    richtext: '**Bold** text with *formatting*',
+    textarea: 'Integrated Design\nLanguage\nStandard v6.0',
     password: 'secret123',
-    email: 'user@example.com',
-    url: 'https://example.com',
-    phone: '010-1234-5678',
-    color: '#3b82f6',
+    email: 'user@studio.io',
+    color: 'var(--color-primary)',
     rating: 4,
     range: 75,
   });
@@ -35,358 +44,158 @@ export function AtomsShowcasePage() {
     { label: 'Option 3', value: 'option3' },
   ];
 
-  const radioOptions: FieldOption[] = [
-    { label: 'Small', value: 'small' },
-    { label: 'Medium', value: 'medium' },
-    { label: 'Large', value: 'large' },
-  ];
-
-  const checkboxOptions: FieldOption[] = [
-    { label: 'Feature 1', value: 'feature1' },
-    { label: 'Feature 2', value: 'feature2' },
-    { label: 'Feature 3', value: 'feature3' },
-  ];
-
   const categories = [
-    { id: 'text', label: '1. Text Components' },
-    { id: 'action', label: '2. Action Components' },
-    { id: 'field-view', label: '3. Field (View)' },
-    { id: 'field-edit', label: '4. Field (Edit)' },
-    { id: 'debug', label: '5. State Debug' },
+    { id: 'text', label: '1. Text Components', icon: Type },
+    { id: 'action', label: '2. Action Components', icon: MousePointer2 },
+    { id: 'field-view', label: '3. Field (View)', icon: Eye },
+    { id: 'field-edit', label: '4. Field (Edit)', icon: Edit3 },
+    { id: 'debug', label: '5. State Debug', icon: Terminal },
   ];
 
   const handleChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const PreviewCard = ({ title, children, description }: { title: string, children: React.ReactNode, description?: string }) => (
+    <div className="relative overflow-hidden rounded-2xl border border-border-muted bg-surface-sunken flex flex-col p-1 mb-16 group">
+      <div className="h-12 border-b border-border-muted flex items-center px-6 justify-between bg-surface-elevated/20">
+        <div className="flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full bg-primary opacity-40 shadow-[0_0_8px_rgba(var(--color-primary-rgb),0.4)]" />
+          <span className="text-[12px] font-bold text-subtle uppercase tracking-widest">{title}</span>
+        </div>
+        {description && <span className="text-[11px] text-muted italic">{description}</span>}
+      </div>
+      <div className="p-10 flex flex-col gap-8">
+        {children}
+      </div>
+    </div>
+  );
+
   return (
     <ShowcasePage
-      title="Atoms Showcase"
-      subtitle="IDDL 1.0.1 Specification Reference"
-      description="IDDL 1.0.1 명세를 준수하는 모든 atoms 컴포넌트 데모"
+      title="Atoms"
+      subtitle="Standard v6.0 Spec"
+      description="The foundational building blocks of the IDDL ecosystem. Atoms are context-agnostic elements that provide the base visual and functional primitives."
       categories={categories}
       activeCategoryId="text"
+      onCategoryChange={(id) => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }}
     >
-      <Block role="Stack" id="text">
-        <Block role="Card">
-          <Text role="Title" content="1. Text Component (5 Roles)" prominence="Standard" />
-          <Block role="Stack">
-            <Text role="Title" content="Title Role" prominence="Standard" />
-            <Text role="Body" content="Body role for paragraphs and main content" />
-            <Text role="Label" content="Label role for form labels and small text" />
-            <Text role="Caption" content="Caption role for metadata and secondary info" />
-            <Text role="Code" content="Code role for inline code" />
-          </Block>
+      <Frame.Stack id="text" gap={8}>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-3xl font-bold text-text tracking-tight">Text Primitives</h2>
+          <p className="text-muted text-[16px] max-w-2xl">Semantic typography roles for structured content delivery.</p>
+        </div>
 
-          <Text role="Title" content="Intent Colors" prominence="Standard" />
-          <Block role="Stack">
-            <Text role="Body" content="Neutral (default)" intent="Neutral" />
-            <Text role="Body" content="Brand (accent color)" intent="Brand" />
-            <Text role="Body" content="Positive (success/green)" intent="Positive" />
-            <Text role="Body" content="Caution (warning/yellow)" intent="Caution" />
-            <Text role="Body" content="Critical (danger/red)" intent="Critical" />
-            <Text role="Body" content="Info (blue)" intent="Info" />
-          </Block>
-        </Block>
-      </Block>
+        <PreviewCard title="Typography Roles">
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
+              <Text role="Title" content="Role: Title (Hero)" prominence="Standard" className="text-4xl font-bold text-text" />
+              <Text role="Body" content="Role: Body - For primary readable content and descriptive paragraphs." className="text-muted text-lg" />
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="p-6 rounded-xl bg-surface-sunken border border-border-muted">
+                <Text role="Label" content="Role: Label" className="text-[14px] font-bold text-text opacity-80 uppercase tracking-wide mb-2 block" />
+                <Text role="Caption" content="Role: Caption - For metadata, dates, and secondary instructions." className="text-[13px] text-subtle" />
+              </div>
+              <div className="p-6 rounded-xl bg-surface-sunken border border-border-muted flex items-center justify-center">
+                <Text role="Code" content="<Block role='Studio' />" className="font-mono text-primary bg-primary/10 px-3 py-1 rounded border border-primary/20" />
+              </div>
+            </div>
+          </div>
+        </PreviewCard>
 
-      <Block role="Divider" />
+        <PreviewCard title="Intent Axis">
+          <div className="grid grid-cols-2 gap-6">
+            {[
+              { label: 'Neutral', intent: 'Neutral' },
+              { label: 'Brand', intent: 'Brand' },
+              { label: 'Positive', intent: 'Positive' },
+              { label: 'Caution', intent: 'Caution' },
+              { label: 'Critical', intent: 'Critical' },
+              { label: 'Info', intent: 'Info' },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center gap-4 p-4 rounded-lg bg-surface-sunken/50 border border-border-muted">
+                <div className={cn(
+                  "w-3 h-3 rounded-full",
+                  item.intent === 'Neutral' && "bg-text/20",
+                  item.intent === 'Brand' && "bg-primary shadow-[0_0_10px_rgba(var(--color-primary-rgb),0.5)]",
+                  item.intent === 'Positive' && "bg-success shadow-[0_0_10px_rgba(var(--color-success-rgb),0.5)]",
+                  item.intent === 'Caution' && "bg-warning shadow-[0_0_10px_rgba(var(--color-warning-rgb),0.5)]",
+                  item.intent === 'Critical' && "bg-error shadow-[0_0_10px_rgba(var(--color-error-rgb),0.5)]",
+                  item.intent === 'Info' && "bg-info shadow-[0_0_10px_rgba(var(--color-info-rgb),0.5)]",
+                )} />
+                <Text role="Body" content={item.label} intent={item.intent as any} className="font-medium" />
+              </div>
+            ))}
+          </div>
+        </PreviewCard>
+      </Frame.Stack>
 
       {/* 2. Action Component Showcase */}
-      <Block role="Stack" id="action">
-        <Block role="Card">
-          <Text role="Title" content="2. Action Component (7 Behaviors)" prominence="Standard" />
+      <Frame.Stack id="action" gap={8} className="mt-20">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-3xl font-bold text-text tracking-tight">Interactive Behaviors</h2>
+          <p className="text-muted text-[16px] max-w-2xl">Standardized execution patterns for user interactions.</p>
+        </div>
 
-          <Block role="Stack">
-            <Block role="Stack">
-              <Text role="Label" content="Command Behavior" prominence="Standard" />
-              <Block role="Toolbar">
+        <PreviewCard title="System Commands">
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-3">
+              <span className="text-[11px] font-bold text-subtle uppercase tracking-widest">Execute & Confirm</span>
+              <div className="flex gap-4">
                 <Action
-                  label="Execute Command"
-                  behavior={{ action: 'command', command: 'test.command', args: { id: 1 } }}
+                  label="Run Diagnostic"
+                  behavior={{ action: 'command', command: 'test.command' }}
                   prominence="Standard"
                   intent="Brand"
                 />
                 <Action
-                  label="With Confirm"
+                  label="Purge Cache"
                   behavior={{ action: 'command', command: 'delete.item' }}
                   prominence="Standard"
                   intent="Critical"
-                  confirm="Are you sure?"
+                  confirm="This will permanently delete local cache. Continue?"
                 />
-              </Block>
-            </Block>
+              </div>
+            </div>
+          </div>
+        </PreviewCard>
+      </Frame.Stack>
 
-            <Block role="Stack">
-              <Text role="Label" content="Navigate Behavior" prominence="Standard" />
-              <Block role="Toolbar">
-                <Action label="Internal Link" behavior={{ action: 'navigate', to: '#section' }} />
-                <Action
-                  label="External Link"
-                  behavior={{ action: 'navigate', to: 'https://example.com', target: '_blank' }}
-                  intent="Info"
-                />
-              </Block>
-            </Block>
+      {/* 3. Field Component Showcase */}
+      <Frame.Stack id="field-view" gap={8} className="mt-20">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-3xl font-bold text-text tracking-tight">Visual States</h2>
+          <p className="text-muted text-[16px] max-w-2xl">Fields in viewing mode optimized for information density and readability.</p>
+        </div>
 
-            <Block role="Stack">
-              <Text role="Label" content="Form Behaviors" prominence="Standard" />
-              <Block role="Toolbar">
-                <Action
-                  label="Submit Form"
-                  behavior={{ action: 'submit' }}
-                  prominence="Standard"
-                  intent="Brand"
-                />
-                <Action label="Reset Form" behavior={{ action: 'reset' }} prominence="Standard" />
-              </Block>
-            </Block>
+        <PreviewCard title="ReadOnly Primitives">
+          <div className="grid grid-cols-2 gap-10">
+            <Field label="Identity" model="text" type="text" value={formData.text} />
+            <Field label="System Velocity" model="number" type="number" value={formData.number} />
+            <Field label="Date Created" model="date" type="date" value={formData.date} />
+            <Field label="Access Status" model="boolean" type="boolean" value={formData.boolean} />
+          </div>
+        </PreviewCard>
+      </Frame.Stack>
 
-            <Block role="Stack">
-              <Text role="Label" content="Overlay Behaviors" prominence="Standard" />
-              <Block role="Toolbar">
-                <Action
-                  label="Open Modal"
-                  behavior={{ action: 'open', overlay: 'my-modal' }}
-                  prominence="Standard"
-                />
-                <Action
-                  label="Close Modal"
-                  behavior={{ action: 'close', overlay: 'my-modal' }}
-                  prominence="Standard"
-                />
-                <Action
-                  label="Toggle Panel"
-                  behavior={{ action: 'toggle', target: 'side-panel' }}
-                />
-              </Block>
-            </Block>
-          </Block>
-        </Block>
-      </Block>
+      {/* 5. Live Form State */}
+      <Frame.Stack id="debug" gap={8} className="mt-20">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-3xl font-bold text-text tracking-tight">Runtime Debugger</h2>
+          <p className="text-muted text-[16px] max-w-2xl">Real-time synchronization log for the atom state registry.</p>
+        </div>
 
-      <Block role="Divider" />
-
-      {/* 3. Field Component Showcase - View Mode */}
-      <Block role="Stack" mode="view" id="field-view">
-        <Block role="Card">
-          <Text
-            role="Title"
-            content="3. Field Component - View Mode (21 DataTypes)"
-            prominence="Standard"
-          />
-
-          <Block role="Grid" spec={{ columns: 2 }}>
-            <Field label="Text" model="text" type="text" value={formData.text} />
-            <Field label="Number" model="number" type="number" value={formData.number} />
-            <Field label="Currency" model="currency" type="currency" value={formData.currency} />
-            <Field label="Date" model="date" type="date" value={formData.date} />
-            <Field label="DateTime" model="datetime" type="datetime" value={formData.datetime} />
-            <Field label="Boolean" model="boolean" type="boolean" value={formData.boolean} />
-            <Field
-              label="Select"
-              model="select"
-              type="select"
-              value={formData.select}
-              options={selectOptions}
-            />
-            <Field
-              label="Multiselect"
-              model="multiselect"
-              type="multiselect"
-              value={formData.multiselect}
-              options={selectOptions}
-            />
-            <Field
-              label="Radio"
-              model="radio"
-              type="radio"
-              value={formData.radio}
-              options={radioOptions}
-            />
-            <Field
-              label="Checkbox"
-              model="checkbox"
-              type="checkbox"
-              value={formData.checkbox}
-              options={checkboxOptions}
-            />
-            <Field label="Email" model="email" type="email" value={formData.email} />
-            <Field label="URL" model="url" type="url" value={formData.url} />
-            <Field label="Phone" model="phone" type="phone" value={formData.phone} />
-            <Field label="Color" model="color" type="color" value={formData.color} />
-            <Field label="Rating" model="rating" type="rating" value={formData.rating} />
-            <Field
-              label="Range"
-              model="range"
-              type="range"
-              value={formData.range}
-              constraints={{ min: 0, max: 100 }}
-            />
-          </Block>
-
-          <Block role="Stack">
-            <Field label="Textarea" model="textarea" type="textarea" value={formData.textarea} />
-            <Field label="Password" model="password" type="password" value="********" />
-          </Block>
-        </Block>
-      </Block>
-
-      <Block role="Divider" />
-
-      {/* 4. Field Component Showcase - Edit Mode */}
-      <Block role="Stack" mode="edit" id="field-edit">
-        <Block role="Card">
-          <Text role="Title" content="4. Field Component - Edit Mode" prominence="Standard" />
-
-          <Block role="Grid" spec={{ columns: 2 }}>
-            <Field
-              label="Text"
-              model="text"
-              type="text"
-              value={formData.text}
-              onChange={(v) => handleChange('text', v)}
-              placeholder="Enter text"
-            />
-            <Field
-              label="Number"
-              model="number"
-              type="number"
-              value={formData.number}
-              onChange={(v) => handleChange('number', v)}
-              constraints={{ min: 0, max: 100 }}
-            />
-            <Field
-              label="Currency"
-              model="currency"
-              type="currency"
-              value={formData.currency}
-              onChange={(v) => handleChange('currency', v)}
-              required
-            />
-            <Field
-              label="Date"
-              model="date"
-              type="date"
-              value={formData.date}
-              onChange={(v) => handleChange('date', v)}
-            />
-            <Field
-              label="DateTime"
-              model="datetime"
-              type="datetime"
-              value={formData.datetime}
-              onChange={(v) => handleChange('datetime', v)}
-            />
-            <Field
-              label="Boolean"
-              model="boolean"
-              type="boolean"
-              value={formData.boolean}
-              onChange={(v) => handleChange('boolean', v)}
-            />
-            <Field
-              label="Select"
-              model="select"
-              type="select"
-              value={formData.select}
-              onChange={(v) => handleChange('select', v)}
-              options={selectOptions}
-            />
-            <Field
-              label="Email"
-              model="email"
-              type="email"
-              value={formData.email}
-              onChange={(v) => handleChange('email', v)}
-              placeholder="user@example.com"
-            />
-            <Field
-              label="URL"
-              model="url"
-              type="url"
-              value={formData.url}
-              onChange={(v) => handleChange('url', v)}
-            />
-            <Field
-              label="Phone"
-              model="phone"
-              type="phone"
-              value={formData.phone}
-              onChange={(v) => handleChange('phone', v)}
-            />
-            <Field
-              label="Color"
-              model="color"
-              type="color"
-              value={formData.color}
-              onChange={(v) => handleChange('color', v)}
-            />
-            <Field
-              label="Password"
-              model="password"
-              type="password"
-              value={formData.password}
-              onChange={(v) => handleChange('password', v)}
-              constraints={{ minLength: 8 }}
-            />
-          </Block>
-
-          <Block role="Stack">
-            <Field
-              label="Radio Block"
-              model="radio"
-              type="radio"
-              value={formData.radio}
-              onChange={(v) => handleChange('radio', v)}
-              options={radioOptions}
-            />
-            <Field
-              label="Checkbox Block"
-              model="checkbox"
-              type="checkbox"
-              value={formData.checkbox}
-              onChange={(v) => handleChange('checkbox', v)}
-              options={checkboxOptions}
-            />
-            <Field
-              label="Textarea"
-              model="textarea"
-              type="textarea"
-              value={formData.textarea}
-              onChange={(v) => handleChange('textarea', v)}
-              placeholder="Enter multiple lines..."
-            />
-            <Field
-              label="Rating"
-              model="rating"
-              type="rating"
-              value={formData.rating}
-              onChange={(v) => handleChange('rating', v)}
-            />
-            <Field
-              label="Range Slider"
-              model="range"
-              type="range"
-              value={formData.range}
-              onChange={(v) => handleChange('range', v)}
-              constraints={{ min: 0, max: 100 }}
-            />
-          </Block>
-        </Block>
-      </Block>
-
-      <Block role="Divider" />
-
-      {/* Form State Debug */}
-      <Block role="Stack" id="debug">
-        <Block role="Card">
-          <Text role="Title" content="5. Live Form State (Debug)" prominence="Standard" />
-          <pre className="bg-surface-sunken p-4 rounded-lg text-xs overflow-auto max-h-96">
-            {JSON.stringify(formData, null, 2)}
+        <div className="bg-surface-base rounded-2xl border border-border-muted p-8 shadow-inner overflow-hidden relative group">
+          <div className="absolute top-4 right-4 text-[10px] font-bold text-primary opacity-40 uppercase tracking-widest animate-pulse">Live Sync</div>
+          <pre className="text-[13px] font-mono text-subtle leading-relaxed overflow-auto scrollbar-hide max-h-[400px]">
+            {JSON.stringify(formData, null, 3)}
           </pre>
-        </Block>
-      </Block>
+        </div>
+      </Frame.Stack>
+
     </ShowcasePage>
   );
 }

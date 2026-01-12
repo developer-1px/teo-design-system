@@ -28,8 +28,9 @@ export const BarScale: TypeScaleTokens = {
 
 export const RailScale: TypeScaleTokens = {
   dimensions: {
+    fixedWidth: 64, // Standard Activity Bar width
     minWidth: 48,
-    maxWidth: 200,
+    maxWidth: 80,
   },
   text: {
     Hero: 16,
@@ -37,12 +38,13 @@ export const RailScale: TypeScaleTokens = {
     Subtle: 12,
   },
   space: {
-    base: 8,
-    tight: 4,
-    loose: 12,
+    base: 12,
+    tight: 8,
+    loose: 16,
   },
   action: {
-    height: 40,
+    height: 48, // Larger target for rail
+    iconOnly: true,
     variant: 'menuItem',
   },
   defaultDensity: 'Compact',

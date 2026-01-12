@@ -1,5 +1,6 @@
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
+import { Field } from '@/components/dsl/Element/Field/Field';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { Section } from '@/components/dsl/Section/Section';
 import { SidebarHeader } from './SidebarHeader';
@@ -29,7 +30,7 @@ export const DebugView = () => {
             role="Button"
             icon="Play"
             label="Run: Development"
-            prominence="Primary"
+            prominence="Strong"
             intent="Positive"
             density="Compact"
           />
@@ -49,21 +50,21 @@ export const DebugView = () => {
           <Action role="Button" icon="ChevronDown" label="Variables" prominence="Subtle" />
 
           <Block role="List">
-            <Block role="ListItem">
-              <Text role="Code" content="local" prominence="Primary" intent="Brand" />
-              <Text role="Body" content=":" prominence="Tertiary" />
+            <Action role="ListItem">
+              <Text role="Code" content="local" prominence="Strong" intent="Brand" />
+              <Text role="Body" content=":" prominence="Subtle" />
               <Text role="Code" content="Object" prominence="Standard" intent="Info" />
-            </Block>
-            <Block role="ListItem">
+            </Action>
+            <Action role="ListItem">
               <Text role="Code" content="this" prominence="Secondary" />
-              <Text role="Body" content=":" prominence="Tertiary" />
+              <Text role="Body" content=":" prominence="Subtle" />
               <Text role="Code" content="undefined" prominence="Standard" intent="Info" />
-            </Block>
-            <Block role="ListItem">
+            </Action>
+            <Action role="ListItem">
               <Text role="Code" content="args" prominence="Secondary" />
-              <Text role="Body" content=":" prominence="Tertiary" />
-              <Text role="Code" content="[]" prominence="Tertiary" />
-            </Block>
+              <Text role="Body" content=":" prominence="Subtle" />
+              <Text role="Code" content="[]" prominence="Subtle" />
+            </Action>
           </Block>
         </Block>
 
@@ -80,25 +81,25 @@ export const DebugView = () => {
             />
           </Block>
 
-          <Text role="Caption" content="No expressions to watch." prominence="Tertiary" />
+          <Text role="Caption" content="No expressions to watch." prominence="Subtle" />
         </Block>
 
         {/* Call Stack */}
         <Block role="Accordion">
           <Action role="Button" icon="ChevronDown" label="Call Stack" prominence="Subtle" />
           <Block role="List">
-            <Block role="ListItem" selected>
-              <Text role="Code" content="handleLogin" prominence="Primary" />
-              <Text role="Caption" content="login.ts:42" prominence="Tertiary" />
-            </Block>
-            <Block role="ListItem">
+            <Action role="ListItem" selected>
+              <Text role="Code" content="handleLogin" prominence="Strong" />
+              <Text role="Caption" content="login.ts:42" prominence="Subtle" />
+            </Action>
+            <Action role="ListItem">
               <Text role="Code" content="onSubmit" prominence="Secondary" />
-              <Text role="Caption" content="Form.tsx:128" prominence="Tertiary" />
-            </Block>
-            <Block role="ListItem">
-              <Text role="Code" content="HTMLFormElement.callCallback" prominence="Tertiary" />
-              <Text role="Caption" content="react-dom.js:123" prominence="Tertiary" />
-            </Block>
+              <Text role="Caption" content="Form.tsx:128" prominence="Subtle" />
+            </Action>
+            <Action role="ListItem">
+              <Text role="Code" content="HTMLFormElement.callCallback" prominence="Subtle" />
+              <Text role="Caption" content="react-dom.js:123" prominence="Subtle" />
+            </Action>
           </Block>
         </Block>
 
@@ -122,12 +123,12 @@ export const DebugView = () => {
             />
           </Block>
           <Block role="List">
-            <Block role="ListItem">
-              <Action role="Checkbox" label="Uncaught Exceptions" checked prominence="Standard" />
-            </Block>
-            <Block role="ListItem">
-              <Action role="Checkbox" label="Caught Exceptions" prominence="Standard" />
-            </Block>
+            <Action role="ListItem">
+              <Field role="Checkbox" label="Uncaught Exceptions" value={true} prominence="Standard" />
+            </Action>
+            <Action role="ListItem">
+              <Field role="Checkbox" label="Caught Exceptions" value={false} prominence="Standard" />
+            </Action>
           </Block>
         </Block>
       </Section>

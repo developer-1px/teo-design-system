@@ -10,11 +10,7 @@ import type { AsProp, Density, Intent, Prominence } from '../Shared.types';
  * v1.0: IDDL Part 1 Spec 기준으로 분류
  */
 export type BlockRole =
-  // 1. Layout & Structure
-  | 'Container'
-  | 'Stack'
-  | 'Grid'
-  | 'Center'
+  // 1. Structure
   | 'ScrollArea'
   | 'Collapsible'
   | 'Splitter'
@@ -22,7 +18,6 @@ export type BlockRole =
   | 'Tree'
   | 'Divider'
   | 'DividerVertical'
-  | 'Spacer'
 
   // 2. Collections (List/Menu/Table)
   | 'List'
@@ -64,6 +59,8 @@ export type BlockRole =
   | 'Dropdown'
   | 'Toolbar'
   | 'FloatingToolbar'
+  | 'FeatureGrid' // ✨ New (v5.0): Asymmetrical grid for feature highlights
+  | 'CodeSnippet' // ✨ New (v5.0): Framed code display
 
   // 5. Feedback Containers
   | 'Dialog'

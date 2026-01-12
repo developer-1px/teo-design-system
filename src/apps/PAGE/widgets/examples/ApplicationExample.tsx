@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * ApplicationExample - Full-screen application layout examples
  *
@@ -37,33 +38,30 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
   return (
     <>
       <Section role="Toolbar">
-        <Block role="Toolbar" className="px-6 py-3 border-b border-slate-200/50 bg-white">
-          <Block role="Stack" className="flex-row items-center gap-4">
+        <Block role="Toolbar">
+          <Frame.Stack className="flex-row items-center gap-4">
             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
               <Code size={18} className="text-primary" />
             </div>
-            <Block role="Stack" density="Compact">
+            <Frame.Stack density="Compact">
               <Text
                 role="Label"
                 content="STRATA STUDIO"
                 prominence="Strong"
-                className="text-xs font-black tracking-widest"
               />
               <Text
                 role="Caption"
                 content="iddl-core-v6 • main"
                 prominence="Subtle"
-                className="text-[10px] opacity-40"
               />
-            </Block>
-          </Block>
-          <Block role="Stack" className="flex-row gap-3">
+            </Frame.Stack>
+          </Frame.Stack>
+          <Frame.Stack className="flex-row gap-3">
             <Action
               role="Button"
               label="Compile"
               prominence="Strong"
               intent="Positive"
-              className="h-9 px-4 rounded-lg shadow-sm"
             >
               <Play size={14} className="fill-current" />
             </Action>
@@ -71,14 +69,13 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
               role="Button"
               label="Commit"
               prominence="Standard"
-              className="h-9 px-4 rounded-lg"
             >
               <Save size={14} />
             </Action>
-            <Action role="IconButton" prominence="Subtle" className="h-9 w-9 rounded-lg">
+            <Action role="IconButton" prominence="Subtle">
               <Settings size={18} />
             </Action>
-          </Block>
+          </Frame.Stack>
         </Block>
       </Section>
 
@@ -87,62 +84,58 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
           {/* Section: Activity Bar (Leftmost) */}
           <Section
             role="ActivityBar"
-            variant="Plain"
-            className="w-16 border-r border-slate-200 bg-slate-50 flex flex-col items-center py-6 gap-6"
+            prominence="Subtle"
           >
-            {['Files', 'Search', 'Git', 'Extensions', 'Monitor'].map((item, i) => (
-              <Action
-                key={i}
-                role="IconButton"
-                permanence={i === 0 ? 'Strong' : 'Subtle'}
-                intent={i === 0 ? 'Brand' : 'Neutral'}
-                className="h-10 w-10 rounded-xl transition-all hover:scale-110"
-              >
-                {i === 0 && <FolderTree size={22} />}
-                {i === 1 && <Search size={22} />}
-                {i === 2 && <Code size={22} />}
-                {i === 3 && <Play size={22} />}
-                {i === 4 && <BarChart3 size={22} />}
-              </Action>
-            ))}
-            <div className="mt-auto flex flex-col items-center gap-6">
-              <Action role="IconButton" prominence="Subtle" className="h-10 w-10 rounded-xl">
+            <Frame.Stack align="center" gap={6} className="py-6">
+              {['Files', 'Search', 'Git', 'Extensions', 'Monitor'].map((_, i) => (
+                <Action
+                  key={i}
+                  role="IconButton"
+                  prominence={i === 0 ? 'Strong' : 'Subtle'}
+                  intent={i === 0 ? 'Brand' : 'Neutral'}
+                >
+                  {i === 0 && <FolderTree size={24} />}
+                  {i === 1 && <Search size={22} />}
+                  {i === 2 && <Code size={22} />}
+                  {i === 3 && <Play size={22} />}
+                  {i === 4 && <BarChart3 size={22} />}
+                </Action>
+              ))}
+              <Frame.Spacer />
+              <Action role="IconButton" prominence="Subtle">
                 <Settings size={22} />
               </Action>
-            </div>
+            </Frame.Stack>
           </Section>
 
           {/* Section: Primary Sidebar (File Explorer) */}
           <Section
             role="PrimarySidebar"
-            variant="Plain"
             scrollable
-            className="w-72 border-r border-slate-200 bg-slate-50/50"
+            prominence="Subtle"
           >
-            <Block role="Stack" density="Comfortable" className="p-6">
-              <Block role="Toolbar" className="items-center mb-6">
+            <Frame.Stack density="Comfortable">
+              <Block role="Toolbar">
                 <Text
                   role="Label"
                   content="EXPLORER"
                   prominence="Strong"
-                  className="text-[11px] font-black tracking-[0.2em] opacity-30"
                 />
-                <Action role="IconButton" prominence="Subtle" className="h-7 w-7 rounded-lg">
-                  <RefreshCw size={14} className="opacity-40" />
+                <Action role="IconButton" prominence="Subtle">
+                  <RefreshCw size={14} />
                 </Action>
               </Block>
 
-              <Block role="Tree" density="Compact" className="space-y-1.5">
+              <Block role="Tree" density="Compact">
                 {[
-                  { name: 'node_modules', type: 'folder', color: 'text-slate-400' },
+                  { name: 'node_modules', type: 'folder' },
                   {
                     name: 'src',
                     type: 'folder',
-                    color: 'text-primary',
                     open: true,
                     children: [
-                      { name: 'components', type: 'folder', color: 'text-primary' },
-                      { name: 'hooks', type: 'folder', color: 'text-primary' },
+                      { name: 'components', type: 'folder' },
+                      { name: 'hooks', type: 'folder' },
                       { name: 'App.tsx', type: 'file', active: true },
                       { name: 'index.ts', type: 'file' },
                     ],
@@ -153,41 +146,33 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
                   <div key={i} className="group">
                     <Action
                       role="TreeItem"
-                      prominence={node.active ? 'Strong' : 'Subtle'}
-                      className={`gap-3 h-9 px-3 rounded-xl transition-all ${node.active ? 'bg-primary/10 text-primary font-black shadow-soft-sm' : 'hover:bg-white hover:shadow-soft-sm'}`}
+                      prominence={(node as any).active ? 'Strong' : 'Subtle'}
+                      intent={(node as any).active ? 'Brand' : 'Neutral'}
                     >
                       {node.type === 'folder' ? (
-                        <Folder size={16} className={node.color} />
+                        <Folder size={16} />
                       ) : (
-                        <File size={16} className="opacity-30 group-hover:opacity-60" />
+                        <File size={16} />
                       )}
-                      <Text role="Label" content={node.name} className="text-xs font-semibold" />
+                      <Text role="Label" content={node.name} />
                     </Action>
                     {node.children && (
-                      <div className="ml-6 border-l-2 border-slate-200/50 pl-3 mt-1.5 space-y-1">
+                      <div className="ml-6 space-y-1">
                         {node.children.map((child, j) => (
                           <Action
                             key={j}
                             role="TreeItem"
-                            prominence={child.active ? 'Strong' : 'Subtle'}
-                            className={`gap-3 h-9 px-3 rounded-xl w-full transition-all ${child.active ? 'bg-primary/10 text-primary font-black shadow-soft-sm' : 'hover:bg-white hover:shadow-soft-sm group'}`}
+                            prominence={(child as any).active ? 'Strong' : 'Subtle'}
+                            intent={(child as any).active ? 'Brand' : 'Neutral'}
                           >
                             {child.type === 'folder' ? (
-                              <Folder size={16} className={child.color} />
+                              <Folder size={16} />
                             ) : (
-                              <File
-                                size={16}
-                                className={
-                                  child.active
-                                    ? 'text-primary'
-                                    : 'opacity-30 group-hover:opacity-60'
-                                }
-                              />
+                              <File size={16} />
                             )}
                             <Text
                               role="Label"
                               content={child.name}
-                              className="text-xs font-semibold"
                             />
                           </Action>
                         ))}
@@ -196,36 +181,34 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
                   </div>
                 ))}
               </Block>
-            </Block>
+            </Frame.Stack>
           </Section>
 
           {/* Main Editor Slot */}
           <Section role="Editor" className="flex-1 bg-white">
-            <Block role="Stack" className="h-full">
+            <Frame.Stack className="h-full">
               {/* Tab Bar */}
               <Block
                 role="Tabs"
-                className="bg-slate-50 border-b border-slate-200 h-11 px-2 items-center gap-1.5"
               >
-                <Action
-                  role="Tab"
-                  label="App.tsx"
-                  prominence="Strong"
-                  intent="Brand"
-                  className="h-9 bg-white border border-slate-200 border-b-white rounded-t-xl px-4 shadow-[0_-2px_4px_rgba(0,0,0,0.02)] text-xs font-bold"
-                />
-                <Action
-                  role="Tab"
-                  label="index.ts"
-                  prominence="Subtle"
-                  className="h-9 px-4 opacity-40 hover:opacity-100 text-xs font-bold transition-all"
-                />
-                <Action
-                  role="Tab"
-                  label="globals.css"
-                  prominence="Subtle"
-                  className="h-9 px-4 opacity-40 hover:opacity-100 text-xs font-bold transition-all"
-                />
+                <div className="flex flex-row items-end h-full px-2 gap-0.5">
+                  <Action
+                    role="Tab"
+                    label="App.tsx"
+                    prominence="Strong"
+                    intent="Brand"
+                  />
+                  <Action
+                    role="Tab"
+                    label="index.ts"
+                    prominence="Subtle"
+                  />
+                  <Action
+                    role="Tab"
+                    label="globals.css"
+                    prominence="Subtle"
+                  />
+                </div>
               </Block>
 
               {/* Code Editor Area */}
@@ -242,9 +225,8 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
                 <Block
                   role="Card"
                   prominence="Subtle"
-                  className="flex-1 p-8 border-none bg-transparent font-mono text-[14px] leading-7 overflow-auto"
                 >
-                  <pre className="text-slate-800">
+                  <pre>
                     <span className="text-purple-600 font-bold">import</span> {'{'} Page {'}'}{' '}
                     <span className="text-purple-600 font-bold">from</span>{' '}
                     <span className="text-green-600">'@/dsl/Page'</span>;{'\n\n'}
@@ -276,93 +258,91 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
                   </pre>
                 </Block>
               </div>
-            </Block>
+            </Frame.Stack>
           </Section>
 
           {/* Section: Panel (Bottom) */}
-          <Section role="Panel" className="h-64 border-t border-slate-200 bg-white">
-            <Block role="Stack" density="Compact" className="h-full">
-              <div className="flex items-center justify-between px-6 py-3 border-b border-slate-100">
-                <Block role="Stack" className="flex-row items-center gap-8">
+          <Section role="Panel" prominence="Subtle">
+            <Frame.Stack density="Compact">
+              <Block role="Toolbar">
+                <Frame.Stack className="flex-row items-center gap-8">
                   <Text
                     role="Label"
                     content="TERMINAL"
                     prominence="Strong"
-                    className="text-[11px] font-black tracking-widest text-primary border-b-2 border-primary py-2"
+                    intent="Brand"
                   />
                   <Text
                     role="Label"
                     content="DEBUG CONSOLE"
                     prominence="Subtle"
-                    className="text-[11px] font-black tracking-widest opacity-20"
                   />
                   <Text
                     role="Label"
                     content="PROBLEMS"
                     prominence="Subtle"
-                    className="text-[11px] font-black tracking-widest opacity-20"
                   />
-                </Block>
+                </Frame.Stack>
                 <div className="flex items-center gap-4">
                   <Action
                     role="IconButton"
                     prominence="Subtle"
-                    className="h-8 w-8 rounded-lg hover:bg-slate-100"
                   >
-                    <Terminal size={16} className="opacity-40" />
+                    <Terminal size={16} />
                   </Action>
                   <Action
                     role="IconButton"
                     prominence="Subtle"
-                    className="h-8 w-8 rounded-lg hover:bg-slate-100"
                   >
-                    <X size={16} className="opacity-40" />
+                    <X size={16} />
                   </Action>
                 </div>
-              </div>
+              </Block>
               <Block
                 role="Card"
                 prominence="Subtle"
-                className="flex-1 p-6 font-mono text-[13px] overflow-auto bg-slate-50/30 border-none"
               >
                 <div className="flex gap-3 mb-2">
-                  <span className="text-green-500 font-bold">✓</span>
-                  <span className="text-slate-600 font-medium">Bundled successfully in 124ms</span>
+                  <span className="text-success font-bold">✓</span>
+                  <span>Bundled successfully in 124ms</span>
                 </div>
                 <div className="flex gap-3 mb-2">
                   <span className="text-primary font-black">$</span>
-                  <span className="text-slate-900 font-bold">npm run build</span>
+                  <span className="font-bold">npm run build</span>
                 </div>
-                <div className="text-slate-400 mt-4 opacity-50 italic">
-                  Compiling IDDL components into optimized static tokens...
-                </div>
+                <Text role="Caption" content="Compiling IDDL components into optimized static tokens..." prominence="Subtle" />
               </Block>
-            </Block>
+            </Frame.Stack>
           </Section>
 
           {/* Status Bar */}
           <Section
             role="Statusbar"
-            className="h-8 bg-primary text-white flex items-center px-4 justify-between text-[11px] font-bold tracking-tight"
+            intent="Brand"
+            prominence="Hero"
           >
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2 hover:bg-white/10 px-3 h-full cursor-pointer transition-colors">
-                <GitBranch size={12} />
-                <span>main*</span>
+            <Block role="Toolbar">
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 px-3 h-full cursor-pointer hover:bg-white/10 transition-colors">
+                  <GitBranch size={12} />
+                  <span>main*</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 h-full cursor-pointer hover:bg-white/10 transition-colors">
+                  <RefreshCw size={12} className="animate-spin-slow" />
+                  <span>Syncing Engine...</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 hover:bg-white/10 px-3 h-full cursor-pointer transition-colors">
-                <RefreshCw size={12} className="animate-spin-slow" />
-                <span>Syncing Engine...</span>
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 px-3 h-full cursor-pointer hover:bg-white/10 transition-colors">
+                  <Bell size={12} />
+                  <span>2 INFOS</span>
+                </div>
+                <div className="flex items-center gap-4 mr-4">
+                  <span className="opacity-60 font-black">UTF-8</span>
+                  <span className="opacity-60 font-black uppercase">TypeScript JSX</span>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2 hover:bg-white/10 px-3 h-full cursor-pointer transition-colors">
-                <Bell size={12} />
-                <span>2 INFOS</span>
-              </div>
-              <span className="opacity-60 font-black">UTF-8</span>
-              <span className="opacity-60 font-black uppercase">TypeScript JSX</span>
-            </div>
+            </Block>
           </Section>
         </>
       )}
@@ -371,7 +351,7 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
         <>
           {/* Master - List */}
           <Section role="Sidebar" variant="Plain" scrollable>
-            <Block role="Stack" density="Compact" className="p-4">
+            <Frame.Stack density="Compact" className="p-4">
               <Block role="Toolbar">
                 <Text role="Heading" content="Files" prominence="Strong" />
                 <Action role="IconButton" prominence="Subtle">
@@ -385,12 +365,12 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
                 <Action role="ListItem" label="Profile.tsx" prominence="Standard" />
                 <Action role="ListItem" label="Analytics.tsx" prominence="Standard" />
               </Block>
-            </Block>
+            </Frame.Stack>
           </Section>
 
           {/* Detail - Content */}
           <Section role="Main" scrollable>
-            <Block role="Stack" density="Comfortable" className="p-6">
+            <Frame.Stack density="Comfortable" className="p-6">
               <Text role="Title" content="Dashboard.tsx" prominence="Hero" />
               <Text
                 role="Body"
@@ -398,7 +378,7 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
                 prominence="Standard"
               />
 
-              <Block role="Grid" className="grid-cols-2 gap-4 mt-6">
+              <Frame.Grid className="grid-cols-2 gap-4 mt-6">
                 <Block role="Card" prominence="Subtle" className="p-4">
                   <BarChart3 size={32} className="text-accent mb-2" />
                   <Text role="Label" content="Total Users" prominence="Strong" />
@@ -410,8 +390,8 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
                   <Text role="Label" content="Active Projects" prominence="Strong" />
                   <Text role="Title" content="89" prominence="Hero" />
                 </Block>
-              </Block>
-            </Block>
+              </Frame.Grid>
+            </Frame.Stack>
           </Section>
         </>
       )}
@@ -420,26 +400,26 @@ export function ApplicationExample({ layout }: ApplicationExampleProps) {
         <>
           {/* Sidebar */}
           <Section role="Sidebar" variant="Plain" scrollable>
-            <Block role="Stack" density="Compact" className="p-4">
+            <Frame.Stack density="Compact" className="p-4">
               <Text role="Label" content="Navigation" prominence="Strong" />
               <Block role="List" density="Compact">
                 <Action role="ListItem" label="Dashboard" prominence="Strong" intent="Brand" />
                 <Action role="ListItem" label="Analytics" prominence="Standard" />
                 <Action role="ListItem" label="Settings" prominence="Standard" />
               </Block>
-            </Block>
+            </Frame.Stack>
           </Section>
 
           {/* Main */}
           <Section role="Main" scrollable>
-            <Block role="Stack" density="Comfortable" className="p-6">
+            <Frame.Stack density="Comfortable" className="p-6">
               <Text role="Title" content="Application Dashboard" prominence="Hero" />
               <Text
                 role="Body"
                 content="Full-screen application with dedicated sidebar navigation"
                 prominence="Standard"
               />
-            </Block>
+            </Frame.Stack>
           </Section>
         </>
       )}

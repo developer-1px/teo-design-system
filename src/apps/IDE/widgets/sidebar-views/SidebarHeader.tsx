@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import type { ReactNode } from 'react';
 import { Block } from '@/components/dsl/Block/Block';
 import { Text } from '@/components/dsl/Element/Text/Text';
@@ -12,13 +13,13 @@ export const SidebarHeader = ({ title, actions }: SidebarHeaderProps) => {
   return (
     <Section role="Header" density="Compact">
       <Block role="Toolbar">
-        <Block role="Group">
+        <Frame.Stack>
           <Text role="Title" prominence="Subtle" content={title.toUpperCase()} />
-        </Block>
+        </Frame.Stack>
         {actions && (
-          <Block role="Inline" layout="inline">
+          <Frame.Inline>
             {actions}
-          </Block>
+          </Frame.Inline>
         )}
       </Block>
     </Section>

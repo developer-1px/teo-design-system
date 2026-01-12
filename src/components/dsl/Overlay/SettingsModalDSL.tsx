@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * SettingsModalDSL - IDDL 기반 설정 모달 (v1.0.1)
  *
@@ -184,7 +185,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
 
             <Block role="Form" density="Compact">
               {getSettingsForCategory(activeCategory).map((setting) => (
-                <Block key={setting.id} role="Inline" layout="inline" density="Compact">
+                <Frame.Inline key={setting.id} layout="inline" density="Compact">
                   <Text role="Label" prominence="Standard" content={setting.label} />
                   {setting.type === 'select' && (
                     <Field
@@ -210,7 +211,7 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                     />
                   )}
                   {setting.type === 'range' && (
-                    <Block role="Inline" layout="inline" density="Compact">
+                    <Frame.Inline layout="inline" density="Compact">
                       <Field
                         model={setting.id}
                         type="range"
@@ -230,9 +231,9 @@ export const SettingsModalDSL = ({ isOpen, onClose }: SettingsModalProps) => {
                         align="right"
                         content={`${setting.value}${setting.id === 'fontSize' ? 'px' : ''}`}
                       />
-                    </Block>
+                    </Frame.Inline>
                   )}
-                </Block>
+                </Frame.Inline>
               ))}
 
               {getSettingsForCategory(activeCategory).length === 0 && (

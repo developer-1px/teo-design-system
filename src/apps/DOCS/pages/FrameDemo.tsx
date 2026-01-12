@@ -11,7 +11,7 @@ import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function FrameDemo() {
   return (
-    <Page role="Document" title="Frame Component Demo" maxWidth="4xl" centered>
+    <Page role="Document" title="Frame Component Demo">
       <Section role="Container">
         <Frame.Stack gap={12}>
           {/* Header */}
@@ -263,7 +263,7 @@ export function FrameDemo() {
                 <Frame
                   direction="row"
                   gap={4}
-                  fullWidth
+                  width="fill"
                   justify="between"
                   className="p-4 border border-border-default rounded"
                 >

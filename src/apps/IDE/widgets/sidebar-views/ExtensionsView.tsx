@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { DownloadCloud, Star } from 'lucide-react';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
@@ -77,13 +78,13 @@ export const ExtensionsView = () => {
 
       <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
         {/* Search */}
-        <Block role="Container" className="flex flex-col gap-2">
+        <Frame.Column className="flex flex-col gap-2">
           <Input placeholder="Search Extensions in Marketplace" className="text-sm font-sans" />
-        </Block>
+        </Frame.Column>
 
         {/* Installed */}
         <Block role="List" className="flex flex-col gap-4">
-          <div className="px-1 py-1 text-xs font-bold text-text-tertiary uppercase tracking-wider">
+          <div className="px-1 py-1 text-xs font-bold text-subtle uppercase tracking-wider">
             Installed
           </div>
 
@@ -96,7 +97,7 @@ export const ExtensionsView = () => {
 
         {/* Recommended */}
         <Block role="List" className="flex flex-col gap-4 pt-4 border-t border-border-muted">
-          <div className="px-1 py-1 text-xs font-bold text-text-tertiary uppercase tracking-wider">
+          <div className="px-1 py-1 text-xs font-bold text-subtle uppercase tracking-wider">
             Recommended
           </div>
 
@@ -118,7 +119,7 @@ const ExtensionCard = ({ name, publisher, description, installs, rating, install
       className="flex gap-3 hover:bg-surface-hover p-2 rounded-lg cursor-pointer group bg-transparent border-0 shadow-none"
     >
       {/* Icon */}
-      <div className="w-10 h-10 bg-accent/10 rounded overflow-hidden flex-shrink-0 flex items-center justify-center text-accent font-bold text-lg uppercase">
+      <div className="w-10 h-10 bg-primary/10 rounded overflow-hidden flex-shrink-0 flex items-center justify-center text-primary font-bold text-lg uppercase">
         {name.substring(0, 2)}
       </div>
 
@@ -129,9 +130,9 @@ const ExtensionCard = ({ name, publisher, description, installs, rating, install
         <Text
           role="Body"
           content={description}
-          className="text-xs text-text-secondary line-clamp-2"
+          className="text-xs text-muted line-clamp-2"
         />
-        <div className="flex items-center gap-3 mt-1 text-[10px] text-text-tertiary">
+        <div className="flex items-center gap-3 mt-1 text-[10px] text-subtle">
           <span className="flex items-center gap-0.5">
             <DownloadCloud size={10} /> {installs}
           </span>
@@ -156,7 +157,7 @@ const ExtensionCard = ({ name, publisher, description, installs, rating, install
           <Button
             size="sm"
             variant="secondary"
-            className="h-6 text-[10px] px-2 bg-surface-raised hover:bg-accent hover:text-white transition-colors"
+            className="h-6 text-[10px] px-2 bg-surface-elevated hover:bg-primary hover:text-on-primary transition-colors"
           >
             Install
           </Button>

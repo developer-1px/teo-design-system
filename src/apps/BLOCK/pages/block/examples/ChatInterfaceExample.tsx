@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * ChatInterfaceExample
  *
@@ -47,68 +48,68 @@ export function ChatInterfaceExample() {
   ];
 
   return (
-    <Block role="Container" density="Comfortable">
-      <Block role="Stack">
+    <Frame.Column gap={6}>
+      <Frame.Stack>
         <Text role="Title" prominence="Strong" content="Chat Interface" />
         <Text
           role="Body"
           prominence="Subtle"
           content="Messaging UI using MessageBubble + ScrollArea"
         />
-      </Block>
+      </Frame.Stack>
 
       {/* Chat Container */}
       <Block role="Card" prominence="Standard" density="Comfortable">
         {/* Chat Header */}
-        <Block role="Stack" density="Compact">
-          <Block role="Stack" density="Compact">
+        <Frame.Stack gap={1}>
+          <Frame.Stack gap={1}>
             <Text role="Heading" prominence="Strong" content="Team Chat" />
             <Text role="Caption" prominence="Subtle" content="3 members online" />
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Stack>
 
         <Block role="Divider" />
 
         {/* Messages Area */}
         <Block role="ScrollArea" spec={{ height: '400px' }}>
-          <Block role="Stack" density="Standard">
+          <Frame.Stack gap={4}>
             {messages.map((msg) => (
               <Block
                 key={msg.id}
-                role="MessageBubble"
+                role="Card"
                 prominence={msg.isOwn ? 'Standard' : 'Subtle'}
                 intent={msg.isOwn ? 'Brand' : 'Neutral'}
               >
-                <Block role="Stack" density="Compact">
+                <Frame.Stack gap={2}>
                   {/* Sender Info */}
-                  <Block role="Stack" density="Compact">
-                    <Text role="Body" prominence="Subtle" content={msg.avatar} />
-                    <Block role="Stack" density="Compact">
-                      <Text role="Username" content={msg.sender} prominence="Strong" />
-                      <Text role="Timestamp" content={msg.timestamp} />
-                    </Block>
-                  </Block>
+                  <Frame.Stack gap={2} align="center">
+                    <Text role="Body" content={msg.avatar} />
+                    <Frame.Stack gap={1}>
+                      <Text role="Label" content={msg.sender} prominence="Strong" />
+                      <Text role="Caption" content={msg.timestamp} />
+                    </Frame.Stack>
+                  </Frame.Stack>
 
                   {/* Message Content */}
                   <Text role="Body" prominence="Standard" content={msg.content} />
-                </Block>
+                </Frame.Stack>
               </Block>
             ))}
-          </Block>
+          </Frame.Stack>
         </Block>
 
         <Block role="Divider" />
 
         {/* Input Area */}
-        <Block role="Stack" density="Compact">
+        <Frame.Stack gap={2}>
           <Field role="Textarea" label="" placeholder="Type a message..." density="Compact" />
-          <Block role="Stack" density="Compact">
+          <Frame.Stack gap={2}>
             <Action role="IconButton" icon="📎" title="Attach file" prominence="Subtle" />
             <Action role="IconButton" icon="😊" title="Add emoji" prominence="Subtle" />
             <Action role="Button" label="Send" prominence="Hero" intent="Brand" />
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Stack>
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

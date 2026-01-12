@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * OverlayExample - Modal-style overlay layout
  *
@@ -22,11 +23,11 @@ export function OverlayExample() {
         {/* Dialog Header */}
         <Section role="DialogHeader" variant="Plain" className="border-b border-border/50">
           <Block role="Toolbar" className="px-10 py-8 bg-transparent">
-            <Block role="Stack" className="flex-row items-center gap-6">
+            <Frame.Stack className="flex-row items-center gap-6">
               <div className="w-14 h-14 rounded-2xl bg-primary shadow-soft-lg flex items-center justify-center">
                 <Plus size={32} className="text-white" />
               </div>
-              <Block role="Stack" density="Compact">
+              <Frame.Stack density="Compact">
                 <Text
                   role="Heading"
                   content="Create Workspace"
@@ -39,8 +40,8 @@ export function OverlayExample() {
                   prominence="Subtle"
                   className="text-[10px] tracking-[0.2em] font-black text-primary"
                 />
-              </Block>
-            </Block>
+              </Frame.Stack>
+            </Frame.Stack>
             <Action role="IconButton" prominence="Subtle" className="h-10 w-10">
               <X size={20} />
             </Action>
@@ -49,8 +50,8 @@ export function OverlayExample() {
 
         {/* Dialog Content */}
         <Section role="DialogContent" variant="Plain" scrollable className="bg-transparent">
-          <Block role="Stack" density="Comfortable" className="px-10 py-10">
-            <Block role="Grid" className="grid-cols-2 gap-8">
+          <Frame.Stack density="Comfortable" className="px-10 py-10">
+            <Frame.Grid className="grid-cols-2 gap-8">
               <Field
                 role="Textbox"
                 label="PROJECT NAME"
@@ -66,7 +67,7 @@ export function OverlayExample() {
                 className="col-span-1"
                 spec={{ options: ['React + IDDL', 'Next.js Studio', 'Vite Workbench'] }}
               />
-            </Block>
+            </Frame.Grid>
 
             <Field
               role="Textarea"
@@ -75,14 +76,14 @@ export function OverlayExample() {
               prominence="Standard"
             />
 
-            <Block role="Stack" density="Standard">
+            <Frame.Stack density="Standard">
               <Text
                 role="Label"
                 content="AVAILABILITY MODALITY"
                 prominence="Strong"
                 className="text-[10px] tracking-widest font-black opacity-30"
               />
-              <Block role="Grid" className="grid-cols-2 gap-4">
+              <Frame.Grid className="grid-cols-2 gap-4">
                 <Block
                   role="Card"
                   prominence="Strong"
@@ -121,8 +122,8 @@ export function OverlayExample() {
                     className="text-[11px] opacity-60 leading-tight mt-1"
                   />
                 </Block>
-              </Block>
-            </Block>
+              </Frame.Grid>
+            </Frame.Stack>
 
             <Block
               role="Alert"
@@ -131,7 +132,7 @@ export function OverlayExample() {
               className="p-5 rounded-2xl flex gap-4 items-center"
             >
               <AlertTriangle size={24} className="shrink-0" />
-              <Block role="Stack" density="Compact">
+              <Frame.Stack density="Compact">
                 <Text
                   role="Label"
                   content="Storage Capacity Warning"
@@ -144,9 +145,9 @@ export function OverlayExample() {
                   prominence="Standard"
                   className="text-[11px] opacity-70"
                 />
-              </Block>
+              </Frame.Stack>
             </Block>
-          </Block>
+          </Frame.Stack>
         </Section>
 
         {/* Dialog Footer */}

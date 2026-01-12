@@ -33,6 +33,16 @@ export function useIDDLToken(localInput: Partial<TokenInput>): TokenOutput {
 
       // Local-only state
       state: localInput.state || {},
+
+      // Premium Context (Axiom v2.0)
+      context: {
+        ancestry: {
+          space: localInput.context?.ancestry?.space || context.space || 'surface',
+        },
+      },
+
+      // Spec Metadata (v7.0)
+      roleMeta: localInput.roleMeta,
     }),
     [localInput, context, blockContext]
   );

@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * Markdown to DSL Converter
  *
@@ -108,12 +109,12 @@ export function markdownToDSL(markdown: string): ReactNode {
   const flushList = () => {
     if (listItems.length > 0) {
       elements.push(
-        <Block key={`list-${key++}`} role="List" layout="stack" density="Compact">
+        <Block key={`list-${key++}`} role="List" density="Compact">
           {listItems.map((item, i) => (
-            <Block key={i} role="Inline" layout="inline" density="Compact">
+            <Frame.Inline key={i} density="Compact">
               <Text role="Body" content="•" intent="Brand" />
-              <Block role="Container">{item}</Block>
-            </Block>
+              <Frame.Column>{item}</Frame.Column>
+            </Frame.Inline>
           ))}
         </Block>
       );
@@ -150,9 +151,9 @@ export function markdownToDSL(markdown: string): ReactNode {
       case 'blockquote':
         flushList();
         elements.push(
-          <Block key={`quote-${key++}`} role="Container" intent="Brand">
+          <Frame.Column key={`quote-${key++}`}>
             <Text role="Body" content={parsed.content} />
-          </Block>
+          </Frame.Column>
         );
         break;
 
@@ -181,8 +182,8 @@ export function markdownToDSL(markdown: string): ReactNode {
  */
 export function slideContentToDSL(content: string): ReactNode {
   return (
-    <Block role="Container" layout="stack" density="Comfortable">
+    <Frame.Column density="Comfortable">
       {markdownToDSL(content)}
-    </Block>
+    </Frame.Column>
   );
 }

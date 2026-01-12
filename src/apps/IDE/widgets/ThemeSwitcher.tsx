@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * ThemeSwitcher - Theme Configuration UI
  *
@@ -9,7 +10,6 @@
 
 import { Moon as MoonIcon, Sun as SunIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Block } from '@/components/dsl/Block/Block.tsx';
 import { Action } from '@/components/dsl/Element/Action/Action.tsx';
 import { Text } from '@/components/dsl/Element/Text/Text.tsx';
 import { Section } from '@/components/dsl/Section/Section.tsx';
@@ -62,111 +62,107 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
   return (
     <Section role="Container" prominence="Hero" width="320" elevation="overlay">
       {/* Header */}
-      <Block role="Header" direction="horizontal" align="center" justify="between">
+      <Frame.Row align="center" justify="between">
         <Text role="Title" prominence="Strong" content="Theme Settings" />
         {onClose && (
           <Action role="IconButton" icon="X" label="Close" density="Compact" onClick={onClose} />
         )}
-      </Block>
+      </Frame.Row>
 
       {/* Light/Dark Toggle */}
-      <Block role="Stack">
+      <Frame.Stack gap={2}>
         <Text role="Label" prominence="Subtle" content="Appearance" />
-        <Block role="Grid" template="custom" gridCols={2}>
-          <Block
-            clickable
-            layout="inline"
+        <Frame.Grid columns={2} gap={2}>
+          <Frame.Row
             align="center"
             justify="center"
-           
-           
-            interactive
-            selected={config.theme === 'light'}
+            padding={2}
+            className={`cursor-pointer rounded-lg border transition-all ${config.theme === 'light'
+              ? 'bg-surface-raised border-primary-default text-primary-default'
+              : 'bg-surface-sunken border-transparent hover:bg-surface-raised'
+              }`}
             onClick={() => {
               const newConfig: typeof config = { ...config, theme: 'light' };
               applyThemeConfig(newConfig);
               setConfig(newConfig);
             }}
           >
-            <SunIcon size={16} />
+            <SunIcon size={16} className="mr-2" />
             <Text role="Body" content="Light" />
-          </Block>
-          <Block
-            clickable
-            layout="inline"
+          </Frame.Row>
+          <Frame.Row
             align="center"
             justify="center"
-           
-           
-            interactive
-            selected={config.theme === 'dark'}
+            padding={2}
+            className={`cursor-pointer rounded-lg border transition-all ${config.theme === 'dark'
+              ? 'bg-surface-raised border-primary-default text-primary-default'
+              : 'bg-surface-sunken border-transparent hover:bg-surface-raised'
+              }`}
             onClick={() => {
               const newConfig: typeof config = { ...config, theme: 'dark' };
               applyThemeConfig(newConfig);
               setConfig(newConfig);
             }}
           >
-            <MoonIcon size={16} />
+            <MoonIcon size={16} className="mr-2" />
             <Text role="Body" content="Dark" />
-          </Block>
-        </Block>
-      </Block>
+          </Frame.Row>
+        </Frame.Grid>
+      </Frame.Stack>
 
       {/* Color Scheme */}
-      <Block role="Stack">
+      <Frame.Stack gap={2}>
         <Text role="Label" prominence="Subtle" content="Color Scheme" />
-        <Block role="Grid" template="custom" gridCols={2}>
+        <Frame.Grid columns={2} gap={2}>
           {colorSchemes.map((scheme) => (
-            <Block
+            <Frame.Row
               key={scheme.value}
-              clickable
-              layout="inline"
               align="center"
-             
-             
-              interactive
-              selected={config.colorScheme === scheme.value}
+              gap={2}
+              padding={2}
+              className={`cursor-pointer rounded-lg border transition-all ${config.colorScheme === scheme.value
+                ? 'bg-surface-raised border-primary-default shadow-sm'
+                : 'bg-surface-sunken border-transparent hover:bg-surface-raised'
+                }`}
               onClick={() => handleColorSchemeChange(scheme.value)}
             >
-              <Block
-                width="16"
-                height="16"
-                rounded="full"
+              <div
+                className="w-4 h-4 rounded-full"
                 style={{ backgroundColor: scheme.color }}
               />
               <Text role="Body" content={scheme.label} />
-            </Block>
+            </Frame.Row>
           ))}
-        </Block>
-      </Block>
+        </Frame.Grid>
+      </Frame.Stack>
 
       {/* Density */}
-      <Block role="Stack">
+      <Frame.Stack gap={2}>
         <Text role="Label" prominence="Subtle" content="Density" />
-        <Block role="List">
+        <Frame.Stack gap={1}>
           {densities.map((density) => (
-            <Block
+            <Frame.Row
               key={density.value}
-              clickable
-              layout="inline"
               align="center"
               justify="between"
-             
-              interactive
-              selected={config.density === density.value}
+              padding={3}
+              className={`cursor-pointer rounded-xl border transition-all ${config.density === density.value
+                ? 'bg-surface-raised border-primary-default shadow-md'
+                : 'bg-surface-sunken border-transparent hover:bg-surface-raised'
+                }`}
               onClick={() => handleDensityChange(density.value)}
             >
-              <Block>
-                <Text role="Body" prominence="Strong" content={density.label} weight="medium" />
-                <Text role="Body" prominence="Subtle" content={density.description} size="sm" />
-              </Block>
+              <Frame.Stack gap={0}>
+                <Text role="Body" prominence="Strong" content={density.label} className="font-bold text-sm" />
+                <Text role="Body" prominence="Subtle" content={density.description} className="text-xs opacity-60" />
+              </Frame.Stack>
               {config.density === density.value && (
-                <Block width="8" height="8" rounded="full" intent="Brand" prominence="Strong" />
+                <div className="w-2 h-2 rounded-full bg-primary-default shadow-[0_0_8px_rgba(var(--primary-default),0.5)]" />
               )}
-            </Block>
+            </Frame.Row>
           ))}
-        </Block>
-      </Block>
+        </Frame.Stack>
+      </Frame.Stack>
     </Section>
   );
 };

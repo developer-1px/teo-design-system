@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * BoardView - Notion 스타일 Board (칸반) 뷰
  * 기본 버전: 드래그앤드롭 없이 그룹핑만 지원
@@ -37,15 +38,15 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
 
   return (
     <Section role="Container">
-      <Block role="Grid">
+      <Frame.Grid>
         {groupedData.map(([groupName, items]) => (
-          <Block key={groupName} role="Container">
+          <Frame.Column key={groupName}>
             {/* 컬럼 헤더 */}
             <Block role="Header">
-              <Block role="Container">
+              <Frame.Column>
                 <Text role="Title" prominence="Strong" content={groupName} />
                 <Badge>{items.length}</Badge>
-              </Block>
+              </Frame.Column>
             </Block>
 
             {/* 카드 리스트 */}
@@ -55,13 +56,13 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
 
                 return (
                   <Card key={index}>
-                    <Block role="Container">
+                    <Frame.Column>
                       {keys.map((key) => {
                         const value = item[key];
                         if (value === null || value === undefined) return null;
 
                         return (
-                          <Block key={key} role="Inline">
+                          <Frame.Inline key={key}>
                             <Text role="Label" prominence="Subtle" content={key} />
                             <Text
                               role="Body"
@@ -72,17 +73,17 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
                                   : String(value)
                               }
                             />
-                          </Block>
+                          </Frame.Inline>
                         );
                       })}
-                    </Block>
+                    </Frame.Column>
                   </Card>
                 );
               })}
             </Block>
-          </Block>
+          </Frame.Column>
         ))}
-      </Block>
+      </Frame.Grid>
     </Section>
   );
 };

@@ -1,9 +1,11 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * ListView - Notion 스타일 List 뷰
  * 간단하고 컴팩트한 리스트
  */
 
 import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action.tsx';
 import { Text } from '@/components/dsl/Element/Text/Text.tsx';
 import { Section } from '@/components/dsl/Section/Section.tsx';
 import type { JsonArray, JsonObject } from '../types';
@@ -21,20 +23,20 @@ export const ListView = ({ data }: ListViewProps) => {
           const keys = Object.keys(obj).slice(0, 4); // 최대 4개 필드
 
           return (
-            <Block key={index} role="ListItem">
+            <Action key={index} role="ListItem">
               {/* 첫 번째 필드 (제목) */}
-              <Block role="Container">
+              <Frame.Column>
                 <Text role="Body" prominence="Strong" content={String(obj[keys[0]])} />
-              </Block>
+              </Frame.Column>
 
               {/* 나머지 필드들 */}
-              <Block role="Container">
+              <Frame.Column>
                 {keys.slice(1).map((key) => {
                   const value = obj[key];
                   if (value === null || value === undefined) return null;
 
                   return (
-                    <Block key={key} role="Inline">
+                    <Frame.Inline key={key}>
                       <Text role="Label" prominence="Subtle" content={`${key}:`} />
                       <Text
                         role="Body"
@@ -44,11 +46,11 @@ export const ListView = ({ data }: ListViewProps) => {
                             : String(value)
                         }
                       />
-                    </Block>
+                    </Frame.Inline>
                   );
                 })}
-              </Block>
-            </Block>
+              </Frame.Column>
+            </Action>
           );
         })}
 

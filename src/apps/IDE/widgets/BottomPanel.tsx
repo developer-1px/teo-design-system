@@ -1,9 +1,9 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { useState } from 'react';
 import { Block } from '@/components/dsl/Block/Block.tsx';
 import { Action } from '@/components/dsl/Element/Action/Action.tsx';
 import { Text } from '@/components/dsl/Element/Text/Text.tsx';
 import { Section } from '@/components/dsl/Section/Section.tsx';
-import { cn } from '@/shared/lib/utils';
 
 interface BottomPanelProps {
   onClose: () => void;
@@ -30,68 +30,74 @@ export const BottomPanel = ({ onClose }: BottomPanelProps) => {
   const [activeTab, setActiveTab] = useState<TabType>('terminal');
 
   return (
-    <Block role="Stack">
-      <Section role="Container">
-        {/* Tab Header (Unified Design) */}
-        <Block role="Toolbar" density="Compact">
-          <Block role="Tabs" layout="inline">
-            {tabs.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <Action
-                  key={tab.id}
-                  role="Button"
-                  prominence={isActive ? 'Standard' : 'Subtle'}
-                  onClick={() => setActiveTab(tab.id)}
-                  icon={tab.icon}
-                  label={tab.label}
-                >
-                  {tab.count !== undefined && <Text role="Badge" content={tab.count} />}
-                </Action>
-              );
-            })}
-          </Block>
+    <div className="flex flex-col h-full bg-surface-sunken text-muted overflow-hidden">
+      {/* Tab Header */}
+      <div className="flex items-center justify-between px-4 h-[35px] border-b border-border-muted shrink-0 select-none">
+        <div className="flex h-full items-center gap-6">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <div
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={cn(
+                  "relative h-full flex items-center cursor-pointer transition-all text-[11px] font-medium tracking-wide uppercase",
+                  isActive ? "text-text opacity-100" : "text-subtle hover:text-muted"
+                )}
+              >
+                {tab.label}
+                {tab.count !== undefined && (
+                  <span className="ml-1.5 px-1.5 py-0.5 bg-surface-hover rounded-full text-[10px] items-center justify-center flex min-w-[18px]">
+                    {tab.count}
+                  </span>
+                )}
+                {isActive && (
+                  <div className="absolute bottom-[-1px] left-[-4px] right-[-4px] h-[1px] bg-primary opacity-100" />
+                )}
+              </div>
+            );
+          })}
+        </div>
 
-          {/* Actions */}
-          <Block role="Row" layout="inline">
-            <Action role="IconButton" icon="ChevronUp" label="Maximize Panel" density="Compact" />
-            <Action
-              role="IconButton"
-              icon="X"
-              label="Close Panel"
-              density="Compact"
-              onClick={onClose}
-            />
-          </Block>
-        </Block>
+        {/* Actions */}
+        <div className="flex items-center gap-1 opacity-60">
+          <Action role="IconButton" icon="ChevronUp" size="xs" className="hover:bg-hover rounded" />
+          <Action
+            role="IconButton"
+            icon="X"
+            size="xs"
+            className="hover:bg-hover rounded"
+            onClick={onClose}
+          />
+        </div>
+      </div>
 
-        {/* Panel Content */}
-        <Block role="ScrollArea">
-          {activeTab === 'terminal' && <TerminalContent />}
-          {activeTab === 'problems' && <ProblemsContent />}
-          {activeTab === 'output' && <OutputContent />}
-          {activeTab === 'debug' && <DebugContent />}
-        </Block>
-      </Section>
-    </Block>
+      {/* Panel Content */}
+      <div className="flex-1 overflow-auto p-4 scrollbar-hide font-mono text-[13px]">
+        {activeTab === 'terminal' && <TerminalContent />}
+        {activeTab === 'problems' && <ProblemsContent />}
+        {activeTab === 'output' && <OutputContent />}
+        {activeTab === 'debug' && <DebugContent />}
+      </div>
+    </div>
   );
 };
 
 // Terminal Tab Content
 const TerminalContent = () => {
   return (
-    <Block role="Stack">
-      <Block role="Row" layout="inline">
+    <Frame.Stack>
+      <Frame.Row>
         <Text role="Code" intent="Brand" content="user@macbook" />
         <Text role="Code" prominence="Subtle" content="~" />
         <Text role="Code" content="$" />
         <Text role="Code" content="pnpm dev" />
-      </Block>
-      <Block role="Stack">
+      </Frame.Row>
+      <Frame.Stack>
         <Text role="Code" prominence="Subtle" content="VITE v5.4.21 ready in 390 ms" />
         <Text role="Code" prominence="Subtle" content="➜ Local: http://localhost:5175/" />
-      </Block>
-    </Block>
+      </Frame.Stack>
+    </Frame.Stack>
   );
 };
 
@@ -122,23 +128,23 @@ const ProblemsContent = () => {
   ];
 
   return (
-    <Block role="Stack">
+    <Frame.Stack>
       {problems.map((problem, idx) => (
-        <Block key={idx} role="Group">
-          <Block role="Row" layout="inline">
+        <Frame.Stack key={idx}>
+          <Frame.Row>
             <Action role="IconButton" icon="AlertCircle" disabled />
-            <Block role="Stack">
+            <Frame.Stack>
               <Text role="Body" size="sm" prominence="Standard" content={problem.message} />
               <Text
                 role="Caption"
                 prominence="Subtle"
                 content={`${problem.file}:${problem.line}:${problem.col}`}
               />
-            </Block>
-          </Block>
-        </Block>
+            </Frame.Stack>
+          </Frame.Row>
+        </Frame.Stack>
       ))}
-    </Block>
+    </Frame.Stack>
   );
 };
 
@@ -172,7 +178,7 @@ const OutputContent = () => {
 // Debug Console Content
 const DebugContent = () => {
   return (
-    <Block role="Group">
+    <Frame.Stack>
       <Text role="Code" prominence="Subtle" content="Debug console is empty" />
       <Text
         role="Code"
@@ -180,6 +186,6 @@ const DebugContent = () => {
         content="Start debugging to see output here"
         size="sm"
       />
-    </Block>
+    </Frame.Stack>
   );
 };

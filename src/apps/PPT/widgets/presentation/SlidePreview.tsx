@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * SlidePreview - 순수 IDDL 기반 슬라이드 썸네일 (v2.0)
  *
@@ -9,7 +10,6 @@
  */
 
 import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
-import { Block } from '@/components/dsl/Block/Block.tsx';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { Section } from '@/components/dsl/Section/Section.tsx';
 import type { Slide } from './SlideList';
@@ -26,7 +26,7 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
   const baseHeight = 1080;
 
   return (
-    <Block role="Container" prominence="Subtle">
+    <Frame.Column>
       {/* Scale wrapper - transform은 presentational 속성이므로 div 유지 */}
       {/* IDDL Exception: Scale transformation requires native div for proper CSS transform */}
       <div
@@ -44,25 +44,25 @@ export const SlidePreview = ({ slide, scale = 0.15 }: SlidePreviewProps) => {
           style={{ backgroundColor: slide.backgroundColor }}
         >
           {/* Slide Content Stack */}
-          <Block role="Container" density="Comfortable">
+          <Frame.Column density="Comfortable">
             {/* Title Area */}
             {slide.title && (
-              <Block role="Container" prominence="Strong" density="Compact">
+              <Frame.Column density="Compact">
                 <Text role="Title" prominence="Hero" content={slide.title} />
-              </Block>
+              </Frame.Column>
             )}
 
             {/* Content Area - overflow hidden for thumbnail */}
-            <Block role="Container" prominence="Standard" density="Standard">
+            <Frame.Column density="Standard">
               {slide.content ? (
                 slideContentToDSL(slide.content)
               ) : (
                 <Text role="Body" prominence="Subtle" content="내용을 입력하세요" />
               )}
-            </Block>
-          </Block>
+            </Frame.Column>
+          </Frame.Column>
         </Section>
       </div>
-    </Block>
+    </Frame.Column>
   );
 };

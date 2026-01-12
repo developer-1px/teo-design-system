@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * DocsViewer - 문서 뷰어 (IDDL v1.0.1 전용)
  *
@@ -121,28 +122,28 @@ export const DocsViewer = () => {
         {selectedPath ? (
           <>
             {/* 문서 제목 */}
-            <Block role="Container">
+            <Frame.Column>
               <Text
                 role="Title"
                 content={getAllDocs().find((d) => d.path === selectedPath)?.title || '문서'}
                 prominence="Hero"
               />
-            </Block>
+            </Frame.Column>
 
             {/* 문서 내용 */}
-            <Block role="Container">
+            <Frame.Column>
               {isLoading ? (
                 <Text role="Body" content="로딩 중..." />
               ) : (
                 <MarkdownRenderer content={docContent} />
               )}
-            </Block>
+            </Frame.Column>
           </>
         ) : (
-          <Block role="Container">
+          <Frame.Column>
             <Text role="Title" content="문서를 선택하세요" />
             <Text role="Body" content="왼쪽 사이드바에서 문서를 선택하면 내용이 표시됩니다" />
-          </Block>
+          </Frame.Column>
         )}
       </Section>
     </Page>

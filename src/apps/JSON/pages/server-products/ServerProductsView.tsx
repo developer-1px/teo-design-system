@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 // ColumnDef import removed - unused
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
@@ -64,7 +65,7 @@ export const ServerProductsView = () => {
   }, [data]);
 
   return (
-    <Block role="Container">
+    <Frame.Column>
       {/* Left Sidebar - Schema */}
       {showSidebar && <JsonSchemaSidebar data={data} interfaceName="Item" />}
 
@@ -99,10 +100,10 @@ export const ServerProductsView = () => {
         </Block>
 
         {/* Data Table */}
-        <Block role="Container">
+        <Frame.Column>
           <DataTable columns={columns} data={data} density={density} />
-        </Block>
+        </Frame.Column>
       </Section>
-    </Block>
+    </Frame.Column>
   );
 };

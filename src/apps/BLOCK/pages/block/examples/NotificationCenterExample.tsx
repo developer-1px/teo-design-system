@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * NotificationCenterExample
  *
@@ -63,26 +64,26 @@ export function NotificationCenterExample() {
   };
 
   return (
-    <Block role="Container" density="Comfortable">
-      <Block role="Stack">
+    <Frame.Column gap={6}>
+      <Frame.Stack>
         <Text role="Title" prominence="Strong" content="Notification Center" />
         <Text
           role="Body"
           prominence="Subtle"
           content="System notifications using List + Alert patterns"
         />
-      </Block>
+      </Frame.Stack>
 
       {/* Notification Panel */}
       <Block role="Card" prominence="Standard" density="Comfortable">
         {/* Header */}
-        <Block role="Stack" density="Compact">
-          <Block role="Stack" density="Compact">
+        <Frame.Stack gap={4}>
+          <Frame.Stack gap={2}>
             <Text role="Heading" prominence="Strong" content="Notifications" />
             <Text role="Badge" prominence="Subtle" intent="Brand" content="2 unread" />
-          </Block>
+          </Frame.Stack>
           <Action role="Button" prominence="Subtle" label="Mark all as read" />
-        </Block>
+        </Frame.Stack>
 
         <Block role="Divider" />
 
@@ -94,20 +95,20 @@ export function NotificationCenterExample() {
               role="ListItem"
               prominence={notif.unread ? 'Standard' : 'Subtle'}
             >
-              <Block role="Stack" density="Compact">
+              <Frame.Stack gap={2}>
                 {/* Notification Header */}
-                <Block role="Stack" density="Compact">
+                <Frame.Stack gap={3} align="center">
                   <Text role="Body" content={notif.icon} />
-                  <Block role="Stack" density="Compact">
-                    <Block role="Stack" density="Compact">
+                  <Frame.Stack gap={1}>
+                    <Frame.Stack gap={2} align="center">
                       <Text role="Heading" prominence="Strong" content={notif.title} />
                       {notif.unread && (
                         <Text role="Badge" prominence="Strong" intent="Brand" content="New" />
                       )}
-                    </Block>
-                    <Text role="Timestamp" content={notif.timestamp} />
-                  </Block>
-                </Block>
+                    </Frame.Stack>
+                    <Text role="Caption" content={notif.timestamp} />
+                  </Frame.Stack>
+                </Frame.Stack>
 
                 {/* Notification Message */}
                 <Block role="Alert" prominence="Subtle" intent={getIntent(notif.type) as any}>
@@ -115,11 +116,11 @@ export function NotificationCenterExample() {
                 </Block>
 
                 {/* Actions */}
-                <Block role="Stack" density="Compact">
+                <Frame.Stack gap={2}>
                   <Action role="Button" prominence="Subtle" label="Dismiss" />
                   <Action role="Button" prominence="Subtle" label="View Details" />
-                </Block>
-              </Block>
+                </Frame.Stack>
+              </Frame.Stack>
             </Action>
           ))}
         </Block>
@@ -127,10 +128,10 @@ export function NotificationCenterExample() {
         <Block role="Divider" />
 
         {/* Footer */}
-        <Block role="Stack" density="Compact">
+        <Frame.Stack gap={2}>
           <Action role="Link" label="View all notifications" prominence="Subtle" />
-        </Block>
+        </Frame.Stack>
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

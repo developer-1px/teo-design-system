@@ -1,6 +1,6 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Check, ChevronDown, Minus, MoveRight, Plus } from 'lucide-react';
 import { useState } from 'react';
-import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { Section } from '@/components/dsl/Section/Section';
@@ -55,7 +55,7 @@ export const SourceControlView = ({ onFileClick }: SourceControlViewProps) => {
 
       <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
         {/* Commit Input */}
-        <Block role="Container" className="flex flex-col gap-2">
+        <Frame.Column className="flex flex-col gap-2">
           <Input
             placeholder="Message (⌘Enter to commit)"
             value={message}
@@ -66,10 +66,10 @@ export const SourceControlView = ({ onFileClick }: SourceControlViewProps) => {
             <Check size={14} className="mr-2" />
             Commit
           </Button>
-        </Block>
+        </Frame.Column>
 
         {/* Staged Changes */}
-        <Block role="Container" className="flex flex-col gap-1">
+        <Frame.Column className="flex flex-col gap-1">
           <button className="flex items-center gap-1 text-xs text-text-tertiary font-bold hover:text-text uppercase tracking-wider mb-1">
             <ChevronDown size={14} />
             <span>Staged Changes</span>
@@ -89,10 +89,10 @@ export const SourceControlView = ({ onFileClick }: SourceControlViewProps) => {
               </Button>
             </div>
           </div>
-        </Block>
+        </Frame.Column>
 
         {/* Changes */}
-        <Block role="Container" className="flex flex-col gap-1">
+        <Frame.Column className="flex flex-col gap-1">
           <div className="flex items-center justify-between group/header">
             <button className="flex items-center gap-1 text-xs text-text-tertiary font-bold hover:text-text uppercase tracking-wider mb-1">
               <ChevronDown size={14} />
@@ -154,7 +154,7 @@ export const SourceControlView = ({ onFileClick }: SourceControlViewProps) => {
               </Button>
             </div>
           </div>
-        </Block>
+        </Frame.Column>
       </Section>
     </>
   );

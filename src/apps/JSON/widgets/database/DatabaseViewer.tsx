@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * DatabaseViewer - Notion Database 스타일 메인 컨테이너
  *
@@ -73,14 +74,14 @@ export const DatabaseViewer = ({
       <Section role="Container">
         {/* Header */}
         <Section role="Header">
-          <Block role="Container">
+          <Frame.Column>
             {title && <Text role="Title" prominence="Hero" content={title} />}
             {description && <Text role="Body" prominence="Subtle" content={description} />}
-          </Block>
+          </Frame.Column>
 
           {/* Controls */}
           <Block role="Toolbar">
-            <Block role="Container">
+            <Frame.Column>
               <ViewSwitcher
                 views={views}
                 activeView={activeViewId}
@@ -90,13 +91,13 @@ export const DatabaseViewer = ({
               {showStats && (
                 <>
                   <Divider />
-                  <Block role="Container">
+                  <Frame.Column>
                     <Badge>{stats.rows} rows</Badge>
                     <Badge>{stats.cols} cols</Badge>
-                  </Block>
+                  </Frame.Column>
                 </>
               )}
-            </Block>
+            </Frame.Column>
 
             {/* Density toggle (Table 뷰에서만) */}
             {activeView.type === 'table' && (

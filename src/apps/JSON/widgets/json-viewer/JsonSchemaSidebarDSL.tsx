@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * JsonSchemaSidebarDSL - DSL로 재구성된 JSON 스키마 사이드바
  *
@@ -64,10 +65,10 @@ export const JsonSchemaSidebarDSL = ({
     return (
       <Section>
         <div className="px-4 py-3">
-          <Block role="Container">
+          <Frame.Column>
             <Code size={16} />
             <Text role="Title" prominence="Hero" content="Schema" />
-          </Block>
+          </Frame.Column>
         </div>
 
         <div className="flex-1 flex items-center justify-center px-4 py-8">
@@ -83,10 +84,10 @@ export const JsonSchemaSidebarDSL = ({
     <Section>
       {/* Header */}
       <div className="px-3 py-2">
-        <Block role="Container">
+        <Frame.Column>
           <Code size={14} />
           <Text role="Title" content="Schema" />
-        </Block>
+        </Frame.Column>
       </div>
 
       <div className="flex-1 overflow-y-auto">
@@ -160,11 +161,11 @@ export const JsonSchemaSidebarDSL = ({
 
           {expandedSections.has('typescript') && (
             <div className="px-3 pb-2">
-              <Block role="Container">
+              <Frame.Column>
                 <Block as="pre" prominence="Hero">
                   {schema.typescript}
                 </Block>
-              </Block>
+              </Frame.Column>
             </div>
           )}
         </Section>

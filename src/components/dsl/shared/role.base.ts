@@ -44,6 +44,21 @@ export interface BaseRoleConfig<Props = any> {
    * 개발자를 위한 role 설명
    */
   description?: string;
+
+  /**
+   * Role Metadata (v7.0)
+   * Defines axiomatic properties for the Token Engine.
+   */
+  meta?: {
+    /**
+     * Separation Strategy
+     * - none: No separation (transparent)
+     * - gap: Separation via whitespace (default for layout)
+     * - surface: Separation via background color (containment)
+     * - border: Separation via hairline (rare, "borderless" principle)
+     */
+    separation?: 'none' | 'gap' | 'surface' | 'border';
+  };
 }
 
 /**

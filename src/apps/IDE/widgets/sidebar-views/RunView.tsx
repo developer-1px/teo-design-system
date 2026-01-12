@@ -1,5 +1,5 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Play } from 'lucide-react';
-import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Section } from '@/components/dsl/Section/Section';
 import { Button } from './components/ui/button';
@@ -25,7 +25,7 @@ export const RunView = () => {
 
       <Section role="Container" className="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
         {/* Run Target */}
-        <Block role="Container" className="flex flex-col gap-2">
+        <Frame.Column className="flex flex-col gap-2">
           <div className="text-xs font-bold text-text-secondary uppercase tracking-wider">
             Run Target
           </div>
@@ -48,10 +48,10 @@ export const RunView = () => {
           <Button variant="default" size="sm" className="w-full h-8 mt-1">
             Start Debugging
           </Button>
-        </Block>
+        </Frame.Column>
 
         {/* Deployments */}
-        <Block role="Container" className="flex flex-col gap-2">
+        <Frame.Column className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <div className="text-xs font-bold text-text-secondary uppercase tracking-wider">
               Active Deployments
@@ -96,10 +96,10 @@ export const RunView = () => {
               />
             </div>
           </div>
-        </Block>
+        </Frame.Column>
 
         {/* Logs */}
-        <Block role="Container" className="flex flex-col gap-2 flex-1 min-h-0">
+        <Frame.Column className="flex flex-col gap-2 flex-1 min-h-0">
           <div className="flex items-center justify-between">
             <div className="text-xs font-bold text-text-secondary uppercase tracking-wider">
               Recent Logs
@@ -122,7 +122,7 @@ export const RunView = () => {
             <div className="text-semantic-info">[INFO] Build completed in 2.4s</div>
             <div>Server ready at http://localhost:3000</div>
           </div>
-        </Block>
+        </Frame.Column>
       </Section>
     </>
   );

@@ -7,4 +7,7 @@ export const Panel: RoleConfig = {
   ariaProps: { 'aria-label': 'Panel' },
   baseStyles: 'flex flex-col h-full',
   description: 'Panel (Core: Panel)',
+  meta: {
+    separation: 'surface',
+  },
 };

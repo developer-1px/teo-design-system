@@ -71,6 +71,7 @@ export function Page({
       case 'Footer':
       case 'Dock':
       case 'Statusbar':
+      case 'Status':
       case 'Panel':
         return 'bottom';
       case 'Sidebar':
@@ -128,14 +129,23 @@ export function Page({
     // Construct the middle area
     let middleContent: React.ReactNode;
 
-    if (isHorizontalLayout) {
+    if (layout === 'ThreeColumn') {
+      // ThreeColumn: Left - Center - Right
       middleContent = (
         <>
-          {leftNodes.length > 0 && <div className="flex-none flex flex-col gap-6">{leftNodes}</div>}
+          {leftNodes.length > 0 && <div className="flex-none flex flex-col gap-6 w-64">{leftNodes}</div>}
           <div className="flex-1 flex flex-col gap-6 min-w-0">{centerNodes}</div>
-          {rightNodes.length > 0 && (
-            <div className="flex-none flex flex-col gap-6">{rightNodes}</div>
-          )}
+          {rightNodes.length > 0 && <div className="flex-none flex flex-col gap-6 w-64">{rightNodes}</div>}
+          {middle}
+        </>
+      );
+    } else if (isHorizontalLayout) {
+      // Sidebar (Left-Center) or Aside (Center-Right)
+      middleContent = (
+        <>
+          {leftNodes.length > 0 && <div className="flex-none flex flex-col gap-6 w-64">{leftNodes}</div>}
+          <div className="flex-1 flex flex-col gap-6 min-w-0">{centerNodes}</div>
+          {rightNodes.length > 0 && <div className="flex-none flex flex-col gap-6 w-64">{rightNodes}</div>}
           {middle}
         </>
       );
@@ -145,18 +155,16 @@ export function Page({
 
     return (
       <div
-        className={cn(
-          'flex flex-col min-h-screen w-full',
-          density === 'Comfortable' ? 'gap-12' : density === 'Compact' ? 'gap-4' : 'gap-8'
-        )}
+        className={cn('flex flex-col min-h-screen w-full')}
+        style={{ gap: tokens.spacing.gap }}
       >
         {top.length > 0 && <div className="flex-shrink-0 z-20">{top}</div>}
         <div
           className={cn(
             'flex-1 flex w-full max-w-screen-2xl mx-auto px-6',
-            isHorizontalLayout ? 'flex-row gap-6' : 'flex-col',
-            density === 'Comfortable' ? 'gap-10' : density === 'Compact' ? 'gap-4' : 'gap-8'
+            isHorizontalLayout ? 'flex-row' : 'flex-col'
           )}
+          style={{ gap: tokens.spacing.gap }}
         >
           {middleContent}
         </div>
@@ -167,15 +175,15 @@ export function Page({
 
   const portalSlots = isApplication
     ? {
-        slots: {
-          top: { current: topNode },
-          left: { current: leftNode },
-          center: { current: centerNode },
-          right: { current: rightNode },
-          bottom: { current: bottomNode },
-        } as any,
-        register: registerSlot,
-      }
+      slots: {
+        top: { current: topNode },
+        left: { current: leftNode },
+        center: { current: centerNode },
+        right: { current: rightNode },
+        bottom: { current: bottomNode },
+      } as any,
+      register: registerSlot,
+    }
     : null;
 
   return (

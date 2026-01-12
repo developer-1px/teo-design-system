@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * TopToolbar - IntelliJ New UI Style (2024.2+)
  *
@@ -137,7 +138,7 @@ export const TopToolbar = ({
       </Block>
 
       {/* Spacer */}
-      <Block role="Spacer" />
+      <Frame.Spacer />
 
       {/* Right Side Actions */}
       <Block role="Toolbar">
@@ -198,14 +199,14 @@ const MainMenuContent = () => {
   return (
     <Block role="Menu">
       {menuItems.map((menu) => (
-        <Block key={menu.label} role="Group">
+        <Frame.Stack key={menu.label}>
           <Text role="Label" prominence="Subtle" content={menu.label} />
-          <Block role="Stack">
+          <Frame.Stack>
             {menu.items.map((item) => (
               <Action key={item} role="MenuItem" prominence="Standard" label={item} />
             ))}
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Stack>
       ))}
     </Block>
   );
@@ -219,14 +220,14 @@ const ProjectMenuContent = () => {
       <Action role="MenuItem" prominence="Strong" label="New Project..." />
       <Action role="MenuItem" prominence="Standard" label="Open..." />
       <Block role="Divider" />
-      <Block role="Group">
+      <Frame.Stack>
         <Text role="Label" prominence="Subtle" content="Recent Projects" />
-        <Block role="Stack">
+        <Frame.Stack>
           {recentProjects.map((project) => (
             <Action key={project} role="MenuItem" prominence="Standard" label={project} />
           ))}
-        </Block>
-      </Block>
+        </Frame.Stack>
+      </Frame.Stack>
     </Block>
   );
 };
@@ -235,32 +236,32 @@ const VcsMenuContent = () => {
   return (
     <Block role="Menu">
       <Action role="MenuItem">
-        <Block role="Inline">
+        <Frame.Inline>
           <DownloadIcon size={16} />
           <Text role="Body" prominence="Strong" content="Update Project" />
           <Text role="Label" prominence="Subtle" content="⌘T" />
-        </Block>
+        </Frame.Inline>
       </Action>
       <Action role="MenuItem">
-        <Block layout="inline" align="center">
+        <Frame.Row align="center" gap={2}>
           <UploadIcon size={16} />
           <Text role="Body" prominence="Strong" content="Commit..." />
           <Text role="Label" prominence="Subtle" content="⌘K" />
-        </Block>
+        </Frame.Row>
       </Action>
       <Action role="MenuItem">
-        <Block role="Inline">
+        <Frame.Inline>
           <UploadIcon size={16} />
           <Text role="Body" prominence="Strong" content="Push..." />
           <Text role="Label" prominence="Subtle" content="⇧⌘K" />
-        </Block>
+        </Frame.Inline>
       </Action>
       <Block role="Divider" />
       <Action role="MenuItem">
-        <Block layout="inline" align="center">
+        <Frame.Row align="center" gap={2}>
           <GitBranchIcon size={16} />
           <Text role="Body" prominence="Strong" content="Branches..." />
-        </Block>
+        </Frame.Row>
       </Action>
       <Action role="MenuItem" prominence="Standard" label="Fetch" />
       <Action role="MenuItem" prominence="Standard" label="Pull..." />
@@ -278,34 +279,34 @@ const RunMenuContent = () => {
   return (
     <Block role="Menu">
       <Action role="MenuItem">
-        <Block role="Inline">
+        <Frame.Inline>
           <PlayIcon size={16} />
           <Text role="Body" prominence="Strong" content="Run 'dev'" />
           <Text role="Label" prominence="Subtle" content="⌃R" />
-        </Block>
+        </Frame.Inline>
       </Action>
       <Action role="MenuItem">
-        <Block role="Inline">
+        <Frame.Inline>
           <Text role="Body" intent="Brand" prominence="Strong" content="▶" />
           <Text role="Body" prominence="Strong" content="Debug 'dev'" />
           <Text role="Label" prominence="Subtle" content="⌃D" />
-        </Block>
+        </Frame.Inline>
       </Action>
       <Block role="Divider" />
-      <Block role="Group">
+      <Frame.Stack>
         <Text role="Label" prominence="Subtle" content="Configurations" />
-        <Block role="Stack">
+        <Frame.Stack>
           {configurations.map((config) => (
             <Action key={config.name} role="MenuItem">
-              <Block role="Inline">
+              <Frame.Inline>
                 <PlayIcon size={14} />
                 <Text role="Body" prominence="Strong" content={config.name} />
                 <Text role="Label" prominence="Subtle" content={config.type} />
-              </Block>
+              </Frame.Inline>
             </Action>
           ))}
-        </Block>
-      </Block>
+        </Frame.Stack>
+      </Frame.Stack>
       <Block role="Divider" />
       <Action role="MenuItem" prominence="Standard" label="Edit Configurations..." />
     </Block>

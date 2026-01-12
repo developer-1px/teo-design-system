@@ -23,6 +23,7 @@
 
 import { cva } from 'class-variance-authority';
 import { LayoutProvider, useLayoutContext } from '@/components/context/IDDLContext.tsx';
+import type { PageLayout } from '@/components/dsl/Page/Page.types';
 import type {
   SectionProps,
   SectionRole,
@@ -30,7 +31,8 @@ import type {
   SpaceCategory, // Imported
 } from '@/components/dsl/Section/Section.types';
 import { cn } from '@/shared/lib/utils';
-import { getSectionRoleConfig } from './configs/registry';
+import { Frame } from '@/components/dsl/shared/Frame';
+import { getRoleConfig, getSectionRoleConfig } from './configs/registry';
 import { SECTION_DESIGN_CONTEXTS, SECTION_RULES } from './configs/section-spec';
 import { TYPE_SCALES } from './configs/section-tokens';
 
@@ -95,11 +97,11 @@ export function Section({
   // Spec Configuration (v5)
   const specContext = SECTION_DESIGN_CONTEXTS[role as SectionRole] || SECTION_DESIGN_CONTEXTS.Main;
 
-  const parentCtx = useLayoutContext();
+  const ctx = useLayoutContext();
   // v5: Use spec default density if not provided in props or parent
-  const computedDensity = density ?? parentCtx.density ?? specContext.defaultDensity;
-  const computedIntent = intent ?? parentCtx.intent ?? 'Neutral';
-  const computedMode = mode ?? parentCtx.mode ?? 'view';
+  const computedDensity = density ?? ctx.density ?? specContext.defaultDensity;
+  const computedIntent = intent ?? ctx.intent ?? 'Neutral';
+  const computedMode = mode ?? ctx.mode ?? 'view';
 
   // v5.2: Type Resolution
   const computedType: SectionType = type || specContext.type || 'Stage';
@@ -108,6 +110,19 @@ export function Section({
   // ============================================
   // ⚡️ IDDL Token Engine Integration (v6.0)
   // ============================================
+  const registryConfig = getRoleConfig(role as string, ctx.layout as PageLayout);
+
+  // Axiom v7.0: Infer separation if missing in registry
+  const roleMeta = registryConfig.meta || {
+    separation: ['Header', 'Footer', 'PrimarySidebar', 'SecondarySidebar', 'Panel', 'Bar', 'Status', 'Nav'].includes(role as string)
+      ? 'border'
+      : 'gap'
+  };
+
+  // 1. Resolve Space Context (Axiom v2.0)
+  // Use mapping or fallback to 'surface'
+  const space = SECTION_SPACE_MAP[role as string] || 'surface';
+
   const tokens = useIDDLToken({
     role: role as string,
     sectionRole: role as string,
@@ -117,6 +132,13 @@ export function Section({
     intent: computedIntent,
     density: computedDensity,
     state: { hover: false }, // Basic state for now
+    pageRole: ctx.pageRole,
+    roleMeta,
+    context: {
+      ancestry: {
+        space,
+      },
+    },
   });
 
   const portalContext = useLayoutPortal();
@@ -131,7 +153,7 @@ export function Section({
   }
 
   // Configuration
-  const config = getSectionRoleConfig(role as string, parentCtx.layout as any);
+  const config = getSectionRoleConfig(role as string, ctx.layout as any);
   const { gridArea: configGridArea, overflow, htmlTag, ariaProps, baseStyles } = config;
 
   const Element: any = as || htmlTag || 'section';
@@ -200,26 +222,22 @@ export function Section({
 
   const collapsibleStyle: React.CSSProperties = isCollapsible
     ? {
-        ...(isHorizontalCollapse
-          ? {
-              width: isCollapsed
-                ? (collapsibleConfig?.collapsedSize ?? 0)
-                : (collapsibleConfig?.expandedSize ?? 'auto'),
-            }
-          : {
-              height: isCollapsed
-                ? (collapsibleConfig?.collapsedSize ?? 0)
-                : (collapsibleConfig?.expandedSize ?? 'auto'),
-            }),
-      }
+      ...(isHorizontalCollapse
+        ? {
+          width: isCollapsed
+            ? (collapsibleConfig?.collapsedSize ?? 0)
+            : (collapsibleConfig?.expandedSize ?? 'auto'),
+        }
+        : {
+          height: isCollapsed
+            ? (collapsibleConfig?.collapsedSize ?? 0)
+            : (collapsibleConfig?.expandedSize ?? 'auto'),
+        }),
+    }
     : {};
 
   const transitionClass =
     isCollapsible && useTransition ? 'transition-all duration-200 ease-in-out' : '';
-
-  // 1. Resolve Space Context (Axiom v2.0)
-  // Use mapping or fallback to 'surface'
-  const space = SECTION_SPACE_MAP[role as string] || 'surface';
 
   const content = (
     <LayoutProvider
@@ -230,9 +248,9 @@ export function Section({
         prominence,
         density: computedDensity,
         intent: computedIntent,
-        depth: parentCtx.depth + 1,
+        depth: ctx.depth + 1,
         mode: computedMode,
-        pageRole: parentCtx.pageRole,
+        pageRole: ctx.pageRole,
         space: space, // Inject Space
         // v5.1 Design Context Propagation
         preferIconOnly: specContext.preferIconOnly,
@@ -285,12 +303,14 @@ export function Section({
         )}
 
         {/* Section Body */}
-        <div
-          className={cn('flex-1 relative flex flex-col', overflowClass)}
-          style={{ padding: tokens.spacing.padding }}
+        <Frame.Column
+          className={overflowClass}
+          width="fill"
+          height="fill"
+          padding={tokens.spacing.padding}
         >
           {children}
-        </div>
+        </Frame.Column>
       </Element>
     </LayoutProvider>
   );

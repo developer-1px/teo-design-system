@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * ServerProductsViewDSL - Notion 스타일 Database Table (v3.0)
  *
@@ -251,13 +252,13 @@ export const ServerProductsViewDSL = () => {
           </Section>
 
           {/* Stats Bar */}
-          <Block role="Container" density="Compact">
-            <Badge intent="Neutral">{data.length} rows</Badge>
-            <Badge intent="Info">{columns.length} cols</Badge>
-            <Badge intent="Neutral">
+          <Frame.Column density="Compact">
+            <Badge variant="secondary">{data.length} rows</Badge>
+            <Badge variant="info">{columns.length} cols</Badge>
+            <Badge variant="secondary">
               {visibleColumns.length}/{allColumnKeys.length} visible
             </Badge>
-          </Block>
+          </Frame.Column>
 
           {/* Data Table */}
           <div className="flex-1 min-h-0">

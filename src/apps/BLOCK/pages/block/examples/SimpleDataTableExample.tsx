@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * SimpleDataTableExample
  *
@@ -17,37 +18,37 @@ export function SimpleDataTableExample() {
   ];
 
   return (
-    <Block role="Container" density="Comfortable">
-      <Block role="Stack">
+    <Frame.Column density="Comfortable">
+      <Frame.Stack>
         <Text role="Title" prominence="Strong" content="Data Table" />
         <Text
           role="Body"
           prominence="Subtle"
           content="User management table using DataTable + Pagination"
         />
-      </Block>
+      </Frame.Stack>
 
       <Block role="Card" prominence="Standard" density="Standard">
         {/* Table Header */}
-        <Block role="Stack" density="Compact">
+        <Frame.Stack density="Compact">
           <Text role="Heading" prominence="Strong" content="Users" />
           <Action role="Button" prominence="Hero" intent="Brand" label="Add User" />
-        </Block>
+        </Frame.Stack>
 
         <Block role="Divider" />
 
         {/* Table */}
         <Block role="DataTable" density="Compact">
           {/* Header Row */}
-          <Block role="Stack" density="Compact">
+          <Frame.Stack density="Compact">
             {['Name', 'Email', 'Role', 'Status', 'Actions'].map((header) => (
               <Text key={header} role="Label" prominence="Strong" content={header} />
             ))}
-          </Block>
+          </Frame.Stack>
 
           {/* Data Rows */}
           {users.map((user) => (
-            <Block key={user.id} role="Stack" density="Compact">
+            <Frame.Stack key={user.id} density="Compact">
               <Text role="Body" prominence="Standard" content={user.name} />
               <Text role="Body" prominence="Subtle" content={user.email} />
               <Text role="Badge" prominence="Subtle" content={user.role} />
@@ -57,11 +58,11 @@ export function SimpleDataTableExample() {
                 intent={user.status === 'Active' ? 'Positive' : 'Neutral'}
                 content={user.status}
               />
-              <Block role="Stack" density="Compact">
+              <Frame.Stack density="Compact">
                 <Action role="Button" prominence="Subtle" label="Edit" />
                 <Action role="Button" prominence="Subtle" intent="Critical" label="Delete" />
-              </Block>
-            </Block>
+              </Frame.Stack>
+            </Frame.Stack>
           ))}
         </Block>
 
@@ -75,6 +76,6 @@ export function SimpleDataTableExample() {
           <Action role="PageButton" prominence="Subtle" label="Next" />
         </Block>
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

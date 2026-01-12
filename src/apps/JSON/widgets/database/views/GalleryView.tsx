@@ -1,8 +1,8 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * GalleryView - Notion 스타일 Gallery (카드 그리드) 뷰
  */
 
-import { Block } from '@/components/dsl/Block/Block.tsx';
 import { Card } from '@/components/dsl/Block/role/Card.tsx';
 import { Text } from '@/components/dsl/Element/Text/Text.tsx';
 import { Section } from '@/components/dsl/Section/Section.tsx';
@@ -25,17 +25,17 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
 
   return (
     <Section role="Container">
-      <Block role="Grid" spec={{ columns: gridCols[cardSize] }}>
+      <Frame.Grid columns={gridCols[cardSize]}>
         {data.map((item, index) => {
           const obj = item as JsonObject;
           const keys = Object.keys(obj).slice(0, 6); // 최대 6개 필드
 
           return (
             <Card key={index}>
-              <Block role="Container">
+              <Frame.Column>
                 {/* 이미지 (있으면) */}
                 {viewConfig.showImage && viewConfig.imageKey && obj[viewConfig.imageKey] && (
-                  <Block role="Container">
+                  <Frame.Column>
                     <img
                       src={String(obj[viewConfig.imageKey])}
                       alt=""
@@ -43,7 +43,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                         e.currentTarget.style.display = 'none';
                       }}
                     />
-                  </Block>
+                  </Frame.Column>
                 )}
 
                 {/* 필드들 */}
@@ -59,7 +59,7 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                   }
 
                   return (
-                    <Block key={key} role="Inline">
+                    <Frame.Inline key={key}>
                       <Text role="Label" prominence="Subtle" content={key} />
                       <Text
                         role="Body"
@@ -69,14 +69,14 @@ export const GalleryView = ({ data, viewConfig }: GalleryViewProps) => {
                             : String(value)
                         }
                       />
-                    </Block>
+                    </Frame.Inline>
                   );
                 })}
-              </Block>
+              </Frame.Column>
             </Card>
           );
         })}
-      </Block>
+      </Frame.Grid>
     </Section>
   );
 };

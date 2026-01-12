@@ -40,6 +40,8 @@ export function generateSurface(input: TokenInput): SurfaceTokens {
     if (prominence === 'Subtle') background = 'bg-surface-sunken';
     else if (prominence === 'Hero' || prominence === 'Strong') background = 'bg-surface-elevated';
     else background = 'bg-surface'; // Standard
+  } else if (roleMeta?.separation === 'border' && prominence === 'Strong') {
+    background = 'bg-surface-elevated/40 backdrop-blur-md';
   } else if (isInput) {
     background = 'bg-surface-input';
   }
@@ -102,7 +104,9 @@ export function generateSurface(input: TokenInput): SurfaceTokens {
   if (input.pageRole === 'Immersive') {
     if (role === 'Page') {
       background =
-        'bg-slate-950 relative overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_50%_0%,rgba(56,189,248,0.15),transparent_50%)] before:pointer-events-none after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_100%_100%,rgba(168,85,247,0.1),transparent_50%)] after:pointer-events-none';
+        'bg-[#02040a] relative overflow-hidden ' +
+        'before:absolute before:top-[-10%] before:left-[-10%] before:w-[40%] before:h-[40%] before:bg-primary/10 before:blur-[120px] before:rounded-full before:pointer-events-none ' +
+        'after:absolute after:bottom-[-10%] after:right-[-10%] after:w-[30%] after:h-[30%] after:bg-purple-500/5 after:blur-[100px] after:rounded-full after:pointer-events-none';
     }
   }
 

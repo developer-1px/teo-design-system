@@ -30,7 +30,7 @@ export function Sidebar({ currentView, width, fileTreeData, onFileSelect }: Side
       }}
       className="border-r border-border-default h-full"
     >
-      {currentView === 'files' && <FileTree data={fileTreeData} onFileSelect={onFileSelect} />}
+      {currentView === 'files' && <FileTree data={fileTreeData} onFileClick={onFileSelect} />}
       {currentView === 'search' && <SearchView />}
       {currentView === 'git' && <SourceControlView />}
       {currentView === 'debug' && <DebugView />}

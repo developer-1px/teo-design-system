@@ -66,6 +66,7 @@ export interface TypographyTokens {
   size: string;
   weight: string;
   lineHeight: string;
+  tracking: string;
   color: string;
   fontFamily: string; // v6.4: Custom font families
 }

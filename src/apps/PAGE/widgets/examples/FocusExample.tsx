@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * FocusExample - Centered single-task layout examples
  *
@@ -40,7 +41,7 @@ export function FocusExample() {
           className="w-full max-w-md p-10 relative z-10 shadow-soft-xl rounded-[3rem] border border-white/20"
         >
           {/* Logo/Brand */}
-          <Block role="Stack" className="items-center mb-10">
+          <Frame.Stack className="items-center mb-10">
             <div className="w-20 h-20 rounded-[2rem] bg-primary text-white flex items-center justify-center mb-8 shadow-soft-lg rotate-3 hover:rotate-0 transition-all duration-500 ease-out cursor-pointer group">
               <Lock size={36} className="group-hover:scale-110 transition-transform" />
             </div>
@@ -56,11 +57,11 @@ export function FocusExample() {
               prominence="Subtle"
               className="text-center mt-3 opacity-60 text-sm max-w-[280px]"
             />
-          </Block>
+          </Frame.Stack>
 
           {/* Login Form */}
           <Block role="Form" density="Standard">
-            <Block role="Stack" density="Standard" className="gap-6">
+            <Frame.Stack density="Standard" className="gap-6">
               <Field
                 role="Textbox"
                 label="Email"
@@ -97,11 +98,11 @@ export function FocusExample() {
               >
                 <ArrowRight size={18} />
               </Action>
-            </Block>
+            </Frame.Stack>
           </Block>
 
           {/* Divider */}
-          <Block role="Stack" className="flex-row items-center gap-4 my-10">
+          <Frame.Stack className="flex-row items-center gap-4 my-10">
             <div className="flex-1 h-px bg-border/30" />
             <Text
               role="Caption"
@@ -110,7 +111,7 @@ export function FocusExample() {
               className="text-[10px] uppercase font-black tracking-widest opacity-30"
             />
             <div className="flex-1 h-px bg-border/30" />
-          </Block>
+          </Frame.Stack>
 
           {/* Footer */}
           <Block role="Toolbar" className="justify-center mt-8">
@@ -123,11 +124,11 @@ export function FocusExample() {
       {/* Footer - Minimal Links */}
       <Section role="Footer" variant="Plain">
         <Block role="Toolbar" className="px-6 py-4 justify-center">
-          <Block role="Stack" className="flex-row gap-8">
+          <Frame.Stack className="flex-row gap-8">
             <Action role="Link" label="Privacy" prominence="Subtle" />
             <Action role="Link" label="Terms" prominence="Subtle" />
             <Action role="Link" label="Support" prominence="Subtle" />
-          </Block>
+          </Frame.Stack>
         </Block>
       </Section>
     </>

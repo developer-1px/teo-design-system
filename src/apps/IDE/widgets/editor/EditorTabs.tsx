@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { FileCode, FileJson, FileType } from 'lucide-react';
 import { useState } from 'react';
 import { Block } from '@/components/dsl/Block/Block';
@@ -55,50 +56,51 @@ export const EditorTabs = ({ onTabChange }: EditorTabsProps) => {
   return (
     <Section
       role="Header"
-      density="Compact"
-      className="h-9 border-b border-border-default overflow-hidden"
+      className="h-[35px] border-b border-border-muted bg-surface-sunken overflow-hidden shrink-0 flex items-center"
     >
-      <Block role="ScrollArea" orientation="horizontal" className="h-full">
-        <Block role="Tabs" layout="inline" className="h-full">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
+      <div className="flex h-full items-center">
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
+            <div
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              className={cn(
+                "relative h-full px-4 border-r border-border-muted flex items-center gap-2 group cursor-pointer transition-colors select-none",
+                isActive ? "bg-surface text-text" : "bg-transparent text-muted hover:bg-hover"
+              )}
+            >
+              {/* Active Tab Top Indicator */}
+              {isActive && (
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-primary" />
+              )}
+
+              <span className={cn("opacity-70", isActive ? "text-primary" : "text-subtle")}>
+                {getIcon(tab.type)}
+              </span>
+
+              <span className={cn("text-[13px] truncate max-w-[120px]", isActive ? "opacity-100" : "opacity-60")}>
+                {tab.name}
+              </span>
+
+              {tab.isDirty && !isActive && (
+                <div className="w-2 h-2 rounded-full border border-border-muted ml-1" />
+              )}
+
               <Action
-                key={tab.id}
-                role="Button"
-                prominence={isActive ? 'Standard' : 'Subtle'}
-                onClick={() => handleTabClick(tab.id)}
+                role="IconButton"
+                icon="X"
+                size="xs"
+                onClick={(e) => handleCloseTab(tab.id, e)}
                 className={cn(
-                  'h-full px-4 rounded-none border-r border-border-muted flex items-center gap-2 group',
-                  isActive && 'bg-surface-raised'
+                  "ml-2 rounded p-0.5 hover:bg-hover transition-all",
+                  isActive ? "opacity-80" : "opacity-0 group-hover:opacity-60"
                 )}
-              >
-                <Block role="Inline" layout="inline" className="gap-2">
-                  <span className="text-text-tertiary">{getIcon(tab.type)}</span>
-                  <Text
-                    role="Body"
-                    size="xs"
-                    prominence={isActive ? 'Standard' : 'Subtle'}
-                    className="truncate max-w-[120px]"
-                    content={tab.name}
-                  />
-                  {tab.isDirty && (
-                    <Text role="Badge" className="w-1.5 h-1.5 rounded-full bg-accent" content="" />
-                  )}
-                </Block>
-                <Action
-                  role="IconButton"
-                  icon="X"
-                  label="Close"
-                  density="Compact"
-                  className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                  onClick={(e) => handleCloseTab(tab.id, e)}
-                />
-              </Action>
-            );
-          })}
-        </Block>
-      </Block>
+              />
+            </div>
+          );
+        })}
+      </div>
     </Section>
   );
 };

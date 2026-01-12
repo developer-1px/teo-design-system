@@ -122,7 +122,7 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
           },
 
           // 코드 블록 pre (highlight.js용)
-          pre: ({ node, children, ...props }: any) => {
+          pre: ({ children }: any) => {
             return <>{children}</>;
           },
 

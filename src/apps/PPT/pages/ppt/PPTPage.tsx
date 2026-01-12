@@ -21,6 +21,7 @@ import { PresentationToolbar } from '@/apps/PPT/widgets/presentation/Presentatio
 import { type Slide, SlideList } from '@/apps/PPT/widgets/presentation/SlideList.tsx';
 import { Text } from '@/components/dsl/Element/Text/Text.tsx';
 import { Overlay } from '@/components/dsl/Overlay/Overlay.tsx';
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Page } from '@/components/dsl/Page/Page.tsx';
 import { Section } from '@/components/dsl/Section/Section.tsx';
 import { PresentationModePage } from './PresentationModePage';
@@ -239,11 +240,13 @@ export const PPTPage = () => {
       {/* Primary Sidebar: Slide List */}
       <Section
         role="PrimarySidebar"
+        prominence="Subtle"
         resizable={{
           direction: 'horizontal',
-          minSize: 150,
+          minSize: 200,
           maxSize: 300,
         }}
+        className="border-r border-border h-full overflow-y-auto"
       >
         <SlideList
           slides={slides}
@@ -260,24 +263,32 @@ export const PPTPage = () => {
       </Section>
 
       {/* Editor: Slide Canvas */}
-      <Section role="Editor">
-        <DSLSlideCanvas
-          slide={activeSlide}
-          currentIndex={currentIndex}
-          totalSlides={slides.length}
-          editable={true}
-          onSlideUpdate={handleSlideUpdate}
-        />
+      <Section role="Editor" prominence="Standard" className="bg-surface-sunken/10 relative flex-1 overflow-hidden">
+        {/* Background Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+        <Frame.Column align="center" justify="center" width="fill" height="fill" padding={12} className="relative z-10">
+          <DSLSlideCanvas
+            slide={activeSlide}
+            currentIndex={currentIndex}
+            totalSlides={slides.length}
+            editable={true}
+            onSlideUpdate={handleSlideUpdate}
+          />
+        </Frame.Column>
       </Section>
 
       {/* Secondary Sidebar: Format Settings */}
       <Section
         role="SecondarySidebar"
+        prominence="Subtle"
         resizable={{
           direction: 'horizontal',
-          minSize: 200,
+          minSize: 250,
           maxSize: 400,
         }}
+        className="border-l border-border h-full overflow-y-auto"
       >
         <FormatSidebar
           isOpen={true}

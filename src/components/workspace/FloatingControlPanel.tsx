@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * FloatingControlPanel - Draggable control panel for Page property manipulation
  *
@@ -126,7 +127,7 @@ export function FloatingControlPanel({
 
         {/* Body */}
         {!isCollapsed && (
-          <Block role="Stack" density="Comfortable" className="p-2">
+          <Frame.Stack density="Comfortable" className="p-2">
             {/* Role Selection */}
             <PropertySelector
               label="PageRole"
@@ -204,7 +205,7 @@ export function FloatingControlPanel({
                 </div>
               </div>
             </Block>
-          </Block>
+          </Frame.Stack>
         )}
       </Block>
     </div>

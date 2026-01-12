@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * PresentationModePage - 전체화면 프레젠테이션 모드 (v1.0)
  *
@@ -20,7 +21,6 @@ import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas';
 import type { Slide } from '@/apps/PPT/widgets/presentation/SlideList';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
-import { Separator } from '@/components/dsl/Element/Separator/Separator';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { Page } from '@/components/dsl/Page/Page';
 import { Section } from '@/components/dsl/Section/Section';
@@ -50,7 +50,7 @@ export const PresentationModePage = ({
     return 0;
   });
 
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  // const [isTransitioning, setIsTransitioning] = useState(false);
 
   const currentSlide = slides[currentIndex] || null;
 
@@ -58,11 +58,11 @@ export const PresentationModePage = ({
   const goToSlide = (index: number) => {
     if (index < 0 || index >= slides.length || index === currentIndex) return;
 
-    setIsTransitioning(true);
+    // setIsTransitioning(true);
     setTimeout(() => {
       setCurrentIndex(index);
       onSlideChange?.(slides[index].id);
-      setIsTransitioning(false);
+      // setIsTransitioning(false);
     }, 150); // Half of transition duration
   };
 
@@ -123,21 +123,21 @@ export const PresentationModePage = ({
   // Empty state
   if (slides.length === 0) {
     return (
-      <Page title="Showcase" role="Fullscreen">
+      <Page title="Showcase" role="Immersive">
         <Section role="Container">
-          <Block role="Container" density="Comfortable">
+          <Frame.Column density="Comfortable">
             <Text role="Body" prominence="Subtle" content="슬라이드가 없습니다" />
             <Action role="Button" onClick={onExit}>
               나가기 (Esc)
             </Action>
-          </Block>
+          </Frame.Column>
         </Section>
       </Page>
     );
   }
 
   return (
-    <Page title="Showcase" role="Fullscreen">
+    <Page title="Showcase" role="Immersive">
       {/* Slide Container with Transition */}
       <Section role="Container">
         <DSLSlideCanvas
@@ -188,13 +188,13 @@ export const PresentationModePage = ({
       </Block>
 
       {/* Keyboard Hints - Top Right */}
-      <Block role="Container" prominence="Subtle" density="Compact">
+      <Frame.Column density="Compact">
         <Block role="Toolbar" density="Compact">
           <Text role="Code" content="←" />
           <Text role="Code" content="→" />
           <Text role="Caption" prominence="Subtle" content="탐색" />
         </Block>
-      </Block>
+      </Frame.Column>
     </Page>
   );
 };

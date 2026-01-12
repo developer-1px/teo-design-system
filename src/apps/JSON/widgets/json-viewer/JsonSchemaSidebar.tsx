@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
@@ -63,7 +64,7 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
       <Block role="ScrollArea">
         {/* Schema Info Section */}
         {schema.analysis && (
-          <Block role="Group">
+          <Frame.Stack>
             <Action
               role="Button"
               prominence="Subtle"
@@ -81,7 +82,7 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
               </Block>
             </Action>
             {expandedSections.has('analysis') && (
-              <Block role="Stack">
+              <Frame.Stack>
                 <Block role="Toolbar">
                   <Text role="Caption" prominence="Subtle" content="Properties" />
                   <Text
@@ -106,13 +107,13 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
                     content={Array.from(schema.analysis?.types || []).join(', ')}
                   />
                 </Block>
-              </Block>
+              </Frame.Stack>
             )}
-          </Block>
+          </Frame.Stack>
         )}
 
         {/* TypeScript Interface Section */}
-        <Block role="Group">
+        <Frame.Stack>
           <Action
             role="Button"
             prominence="Subtle"
@@ -130,13 +131,13 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
             </Block>
           </Action>
           {expandedSections.has('typescript') && (
-            <Block role="Container">
+            <Frame.Column>
               <pre className="font-mono text-xs whitespace-pre overflow-x-auto bg-layer-3 p-2 rounded border border-border-default shadow-inner">
                 {schema.typescript}
               </pre>
-            </Block>
+            </Frame.Column>
           )}
-        </Block>
+        </Frame.Stack>
       </Block>
     </Section>
   );

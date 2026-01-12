@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * SlideList - IDDL 기반 슬라이드 리스트 (Pure IDDL v4.0 with Selection)
  *
@@ -53,7 +54,6 @@ export const SlideList = ({
   activeSlideId,
   onSlideSelect,
   onSlideAdd,
-  __onSlideDelete,
   onReorder,
   onSlidesDelete,
   onSlidesCopy,
@@ -94,7 +94,7 @@ export const SlideList = ({
   const { role: ariaRole, ...containerProps } = selection.getContainerProps();
 
   return (
-    <Block role="Container" density="Comfortable" {...containerProps}>
+    <Frame.Column density="Comfortable" {...containerProps}>
       {/* Toolbar: Add Button */}
       <Block role="Toolbar" density="Comfortable">
         <Action icon="Plus" onClick={onSlideAdd} />
@@ -109,37 +109,39 @@ export const SlideList = ({
       <Block
         role="SortableList"
         density="Comfortable"
-        items={slides}
-        value="id"
-        onReorder={onReorder}
-        renderItem={(slide: Slide, index: number) => {
-          return (
-            <Block
-              role="Card"
-              density="Compact"
-              prominence="Standard"
-              intent="Neutral"
-              value={slide.id}
-              selectionModel={selectionModel}
-            >
-              {/* Slide Number Badge - Absolute positioned */}
-              <Block role="Container">
-                <Text role="Caption" prominence="Strong" content={index + 1} />
-              </Block>
+        spec={{
+          items: slides,
+          value: 'id',
+          onReorder: onReorder,
+          renderItem: (slide: Slide, index: number) => {
+            return (
+              <Block
+                role="Card"
+                density="Compact"
+                prominence="Standard"
+                intent="Neutral"
+                value={slide.id}
+                selectionModel={selectionModel}
+              >
+                {/* Slide Number Badge - Absolute positioned */}
+                <Frame.Column>
+                  <Text role="Caption" prominence="Strong" content={index + 1} />
+                </Frame.Column>
 
-              {/* Thumbnail Container */}
-              <Block role="Container">
-                <SlidePreview slide={slide} scale={0.15} />
-              </Block>
+                {/* Thumbnail Container */}
+                <Frame.Column>
+                  <SlidePreview slide={slide} scale={0.15} />
+                </Frame.Column>
 
-              {/* Slide Title - Bottom overlay */}
-              <Block role="Container">
-                <Text role="Caption" content={slide.title || '제목 없음'} />
+                {/* Slide Title - Bottom overlay */}
+                <Frame.Column>
+                  <Text role="Caption" content={slide.title || '제목 없음'} />
+                </Frame.Column>
               </Block>
-            </Block>
-          );
+            );
+          },
         }}
       />
-    </Block>
+    </Frame.Column>
   );
 };

@@ -1,10 +1,11 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Block } from '@/components/dsl/Block/Block';
 import { Separator } from '@/components/dsl/Element/Separator/Separator.tsx';
 import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function BlockStructureDemo() {
   return (
-    <Block role="Container" density="Comfortable">
+    <Frame.Column density="Comfortable">
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="6. Structure & LayoutHelpers" />
         <Text
@@ -18,22 +19,22 @@ export function BlockStructureDemo() {
       <Block role="Card">
         <Text role="Label" content="Grid Layout & Divider" />
 
-        <Block role="Grid" spec={{ columns: 2 }}>
+        <Frame.Grid columns={2}>
           <div className="bg-surface-sunken flex items-center justify-center rounded">
             Left Pane
           </div>
           <div className="bg-surface-sunken flex items-center justify-center rounded">
             Right Pane
           </div>
-        </Block>
+        </Frame.Grid>
 
         <Block role="Divider"></Block>
 
-        <Block role="Inline">
+        <Frame.Inline>
           <Text role="Body" content="Left" />
           <Separator role="ToolbarDivider" />
           <Text role="Body" content="Right" />
-        </Block>
+        </Frame.Inline>
       </Block>
 
       {/* ScrollArea */}
@@ -41,12 +42,12 @@ export function BlockStructureDemo() {
         <Text role="Label" content="ScrollArea (role='ScrollArea')" />
         <Block role="ScrollArea">
           {Array.from({ length: 10 }).map((_, i) => (
-            <Block key={i} role="Inline" clickable>
+            <Frame.Inline key={i} clickable>
               <Text role="Body" content={`Scrollable Item ${i + 1}`} />
-            </Block>
+            </Frame.Inline>
           ))}
         </Block>
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

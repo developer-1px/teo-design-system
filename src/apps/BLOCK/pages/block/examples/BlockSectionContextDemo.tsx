@@ -1,10 +1,11 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Block } from '@/components/dsl/Block/Block';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { Section } from '@/components/dsl/Section/Section';
 
 export function BlockSectionContextDemo() {
   return (
-    <Block role="Container" density="Comfortable">
+    <Frame.Column density="Comfortable">
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="Section Context Awareness (v5.2)" />
         <Text
@@ -43,6 +44,6 @@ export function BlockSectionContextDemo() {
           <Text role="Body" content="I am a Card in Header. I integrate with the header style." />
         </Block>
       </Section>
-    </Block>
+    </Frame.Column>
   );
 }

@@ -7,7 +7,7 @@
 
 import { createContext, useContext } from 'react';
 import type { BlockRole } from '@/components/dsl/Block/Block.types';
-import type { LayoutContextValue } from '@/components/dsl/Shared.types';
+import type { LayoutContextValue, SpaceCategory } from '@/components/dsl/Shared.types';
 
 /**
  * IDDL Context

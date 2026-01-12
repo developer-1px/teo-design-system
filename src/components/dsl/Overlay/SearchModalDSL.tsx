@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * SearchModalDSL - IDDL 기반 검색 모달 (v1.0.1)
  *
@@ -184,7 +185,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
       {/* Footer - Keyboard Hints */}
       <Section role="DialogFooter" density="Compact">
         <Block role="Toolbar" layout="inline" density="Compact">
-          <Block role="Inline" layout="inline" density="Compact">
+          <Frame.Inline layout="inline" density="Compact">
             <span className="flex items-center gap-1 text-xs text-subtle">
               <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↑</kbd>
               <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↓</kbd>
@@ -194,7 +195,7 @@ export const SearchModalDSL = ({ isOpen, onClose }: SearchModalProps) => {
               <kbd className="px-1.5 py-0.5 bg-surface-base rounded">↵</kbd>
               select
             </span>
-          </Block>
+          </Frame.Inline>
           <Text role="Caption" prominence="Subtle" content={`${results.length} results`} />
         </Block>
       </Section>

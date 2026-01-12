@@ -1,124 +1,196 @@
 import { TEXT_ROLE_MAP } from '../constants/maps';
 import type { SpaceCategory, TokenInput, TypographyTokens } from '../types';
 
-// Strategy: Context-Aware Scaling
-// We define 3 distinct scale sets: Expressive (Canvas), Standard (Surface), Compact (Bar/Rail/Input)
+// ====================================================================================
+// AXIOM V8.0: 4-TABLE TYPOGRAPHY SYSTEM
+// Declarative Scale Mapping: Expressive | Editorial | Product | Dense
+// ====================================================================================
 
-const TYPE_SCALE_Expressive = {
-  Title: { Hero: 'text-6xl md:text-8xl', Strong: 'text-5xl', Standard: 'text-4xl' },
-  Heading: { Hero: 'text-3xl', Strong: 'text-2xl', Standard: 'text-xl' },
-  Body: { Hero: 'text-xl', Strong: 'text-lg', Standard: 'text-base' },
-  Label: { Hero: 'text-lg', Strong: 'text-base', Standard: 'text-sm' },
+// 1. EXPRESSIVE (Marketing / Canvas)
+// Context: Landing Pages, Hero Sections, 'Main' region in Document Layout
+// Traits: Massive display sizes, tight tracking, high contrast
+// 1. EXPRESSIVE (Marketing / Canvas)
+const TABLE_Expressive = {
+  Title: {
+    Hero: 'text-8xl tracking-tighter font-black text-text',
+    Strong: 'text-6xl tracking-tight font-extrabold text-text',
+    Standard: 'text-4xl tracking-tight font-bold text-text'
+  },
+  Heading: {
+    Hero: 'text-4xl font-bold text-text',
+    Strong: 'text-3xl font-bold text-text',
+    Standard: 'text-2xl font-semibold text-text'
+  },
+  Body: {
+    Hero: 'text-2xl leading-normal text-text-muted',
+    Strong: 'text-xl leading-normal text-text-muted',
+    Standard: 'text-lg leading-relaxed text-text-muted'
+  },
+  Label: {
+    Hero: 'text-xl font-medium text-text',
+    Strong: 'text-lg font-medium text-text',
+    Standard: 'text-base font-medium text-text'
+  },
 };
 
-const TYPE_SCALE_Standard = {
-  Title: { Hero: 'text-4xl', Strong: 'text-3xl', Standard: 'text-2xl' },
-  Heading: { Hero: 'text-2xl', Strong: 'text-xl', Standard: 'text-lg' },
-  Body: { Hero: 'text-lg', Strong: 'text-base', Standard: 'text-sm' },
-  Label: { Hero: 'text-base', Strong: 'text-sm', Standard: 'text-xs' },
+// 2. EDITORIAL (Document / Reading)
+const TABLE_Editorial = {
+  Title: {
+    Hero: 'text-5xl font-bold tracking-tight text-text',
+    Strong: 'text-4xl font-bold tracking-tight text-text',
+    Standard: 'text-3xl font-bold text-text'
+  },
+  Heading: {
+    Hero: 'text-3xl font-semibold text-text',
+    Strong: 'text-2xl font-semibold text-text',
+    Standard: 'text-xl font-semibold text-text'
+  },
+  Body: {
+    Hero: 'text-xl leading-relaxed text-text',
+    Strong: 'text-lg leading-relaxed text-text',
+    Standard: 'text-base leading-relaxed text-text' // Document body is primary text
+  },
+  Label: {
+    Hero: 'text-base font-medium text-text-muted',
+    Strong: 'text-sm font-medium text-text-muted',
+    Standard: 'text-xs font-medium text-text-subtle'
+  },
 };
 
-const TYPE_SCALE_TOOL = {
-  Title: { Hero: 'text-lg', Strong: 'text-base', Standard: 'text-sm' },
-  Heading: { Hero: 'text-base', Strong: 'text-sm', Standard: 'text-xs' },
-  Body: { Hero: 'text-sm', Strong: 'text-xs', Standard: 'text-2xs' },
-  Label: { Hero: 'text-xs', Strong: 'text-2xs', Standard: 'text-3xs' }, // 3xs is hypothetical
+// 3. PRODUCT (Application / UI)
+const TABLE_Product = {
+  Title: {
+    Hero: 'text-lg font-bold text-text',
+    Strong: 'text-base font-bold text-text',
+    Standard: 'text-sm font-semibold text-text'
+  },
+  Heading: {
+    Hero: 'text-base font-semibold text-text',
+    Strong: 'text-sm font-semibold text-text',
+    Standard: 'text-xs font-semibold text-text-muted'
+  },
+  Body: {
+    Hero: 'text-sm text-text',
+    Strong: 'text-xs text-text',
+    Standard: 'text-[11px] text-text-muted'
+  },
+  Label: {
+    Hero: 'text-xs font-medium text-text-muted',
+    Strong: 'text-[11px] font-medium text-text-subtle',
+    Standard: 'text-[10px] font-medium text-text-subtle'
+  },
+};
+
+// 4. DENSE (Code / Data)
+const TABLE_Dense = {
+  Title: {
+    Hero: 'text-base font-mono font-bold text-text',
+    Strong: 'text-sm font-mono font-bold text-text-muted',
+    Standard: 'text-xs font-mono font-bold text-text-subtle'
+  },
+  Heading: {
+    Hero: 'text-sm font-mono font-bold text-text',
+    Strong: 'text-xs font-mono font-bold text-text-muted',
+    Standard: 'text-[10px] font-mono font-bold text-text-subtle'
+  },
+  Body: {
+    Hero: 'text-xs font-mono leading-tight text-text-muted',
+    Strong: 'text-[11px] font-mono leading-tight text-text-muted',
+    Standard: 'text-[10px] font-mono leading-none text-text-subtle'
+  },
+  Label: {
+    Hero: 'text-[11px] font-mono text-text-muted',
+    Strong: 'text-[10px] font-mono text-text-subtle',
+    Standard: 'text-[9px] font-mono text-text-subtle'
+  },
 };
 
 export function generateTypography(input: TokenInput): TypographyTokens {
   const { role, prominence = 'Standard', intent = 'Neutral', state = {}, context } = input;
-
-  // 1. Determine Space Context
   const space: SpaceCategory = context?.ancestry?.space || 'surface';
+  const roleType = (input.roleMeta?.separation === 'gap') ? 'Product' : 'Editorial'; // Fallback heuristic
 
-  // 2. Select Scale Set
-  let scaleSet = TYPE_SCALE_Standard;
-  if (space === 'canvas') scaleSet = TYPE_SCALE_Expressive;
-  else if (space === 'bar' || space === 'rail' || space === 'well' || space === 'float')
-    scaleSet = TYPE_SCALE_TOOL;
+  // 1. Determine Table Logic
+  let Table = TABLE_Product; // Default to Product (Safest)
 
-  // 3. Resolve Size
-  // Map simplified roles: Title | Heading | Body | Label
-  let typeCategory: 'Title' | 'Heading' | 'Body' | 'Label' = 'Body';
-  if (role === 'Title') typeCategory = 'Title';
-  else if (role === 'Heading' || role === 'SectionHeader') typeCategory = 'Heading';
-  else if (role === 'Label' || role === 'Caption' || role === 'Overline') typeCategory = 'Label';
+  const isApplication = input.pageRole === 'Application';
+  const isDenseContext = space === 'well' || role === 'Terminal' || role === 'Code';
 
-  // Resolve Prominence (clamp to keys)
-  const promKey =
-    prominence === 'Hero' || prominence === 'Display'
-      ? 'Hero'
-      : prominence === 'Strong'
-        ? 'Strong'
-        : 'Standard';
-
-  const size = scaleSet[typeCategory][promKey] || scaleSet[typeCategory]['Standard'];
-
-  // 4. Resolve Weight
-  let weight = 'font-normal';
-  if (prominence === 'Hero' || prominence === 'Display' || prominence === 'Strong') {
-    weight = 'font-semibold';
-    if (role === 'Title' && space === 'canvas') weight = 'font-bold';
-  }
-  if (role === 'Button' || role === 'Action') weight = 'font-medium';
-
-  // 5. Color Logic
-  let color = 'text-text';
-  const isImmersive = input.pageRole === 'Immersive';
-
-  if (isImmersive) {
-    color = 'text-white';
-    if (prominence === 'Subtle') color = 'text-white/60';
+  if (isApplication) {
+    // Application Mode: STRICTLY Product or Dense
+    if (isDenseContext) {
+      Table = TABLE_Dense;
+    } else {
+      Table = TABLE_Product;
+    }
   } else {
-    if (prominence === 'Subtle') color = 'text-text-subtle';
-    else if (prominence === 'Strong' || prominence === 'Hero') color = 'text-text';
-
-    // Intent Overrides
-    if (intent !== 'Neutral') {
-      // If it's a Solid Action (Hero/Strong), text is inverse (handled in component usually, but here we specify)
-      const isSolidAction =
-        (role === 'Button' || role === 'Action' || role === 'IconButton') &&
-        (prominence === 'Hero' || prominence === 'Strong');
-
-      if (isSolidAction) {
-        color = 'text-white'; // Assuming default inverse
-      } else {
-        switch (intent) {
-          case 'Brand':
-            color = 'text-primary';
-            break;
-          case 'Positive':
-            color = 'text-success';
-            break;
-          case 'Caution':
-            color = 'text-warning';
-            break;
-          case 'Critical':
-            color = 'text-error';
-            break;
-          case 'Info':
-            color = 'text-info';
-            break;
-        }
-      }
+    // Document / Website Mode: Context-Aware
+    if (space === 'canvas') {
+      // Canvas -> Expressive (if Hero) or Editorial (if Standard)
+      Table = (prominence === 'Hero' || role === 'Title') ? TABLE_Expressive : TABLE_Editorial;
+    } else if (space === 'rail' || space === 'bar' || roleType === 'Product') {
+      Table = TABLE_Product;
+    } else if (isDenseContext) {
+      Table = TABLE_Dense;
     }
   }
 
-  if (state.disabled) {
-    color = 'text-text-disabled'; // Define this or use opacity
-  }
+  // 2. Map Role to Category
+  let typeCategory: 'Title' | 'Heading' | 'Body' | 'Label' = 'Body';
+  if (role === 'Title') typeCategory = 'Title';
+  else if (role === 'Heading' || role === 'SectionHeader') typeCategory = 'Heading';
+  else if (role === 'Label' || role === 'Caption' || role === 'Overline' || role === 'Button' || role === 'Action') typeCategory = 'Label';
 
-  // 6. Font Family
-  let fontFamily = 'font-sans';
-  if ((role === 'Title' || role === 'Heading') && space === 'canvas') {
-    fontFamily = 'font-display';
+  // 3. Resolve Prominence
+  const promKey = (prominence === 'Hero' || prominence === 'Display') ? 'Hero'
+    : (prominence === 'Strong') ? 'Strong'
+      : 'Standard';
+
+  // 4. Lookup Composite Token (Size + Weight + Leading + Tracking)
+  // We split this string for the Token Engine to consume separate properties if needed,
+  // but for now, we can just return the composite class for 'size' and set defaults for others.
+  // HOWEVER, the Token Engine expects separate atomic properties.
+  // Let's PARSE the composite string. It's a bit hacky but keeps the config clean.
+  const composite = Table[typeCategory][promKey] || Table[typeCategory]['Standard'];
+
+  // 5. Atomic Extraction
+  // Extract known atomic classes. Anything else goes into size or extra classes.
+  // This is a simplified parser.
+  const classes = composite.split(' ');
+  const sizeClass = classes.find(c => c.startsWith('text-') && !c.startsWith('text-text')) || 'text-base';
+  const weightClass = classes.find(c => c.startsWith('font-') && !c.includes('mono')) || 'font-normal';
+  const leadingClass = classes.find(c => c.startsWith('leading-')) || 'leading-normal';
+  const trackingClass = classes.find(c => c.startsWith('tracking-')) || 'tracking-normal';
+  const familyClass = classes.find(c => c.includes('mono')) ? 'font-mono' :
+    (space === 'canvas' && (role === 'Title' || role === 'Heading')) ? 'font-display' : 'font-sans';
+
+
+  // Extract Base Color from Table
+  const tableColorClass = classes.find(c => c.startsWith('text-text'));
+
+  // 6. Color Logic
+  let color = tableColorClass || 'text-text'; // Use table default or fallback
+
+
+  if (intent !== 'Neutral') {
+    const isSolidAction = (role === 'Button' || role === 'Action' || role === 'IconButton') && (prominence === 'Hero' || prominence === 'Strong');
+    if (isSolidAction) color = 'text-white';
+    else {
+      if (intent === 'Brand') color = 'text-primary';
+      else if (intent === 'Positive') color = 'text-success';
+      else if (intent === 'Caution') color = 'text-warning';
+      else if (intent === 'Critical') color = 'text-error';
+      else if (intent === 'Info') color = 'text-info';
+    }
   }
+  if (state.disabled) color = 'text-text-disabled';
 
   return {
-    size,
-    weight,
-    lineHeight: role === 'Title' && space === 'canvas' ? 'leading-tight' : 'leading-normal',
+    size: sizeClass,
+    weight: weightClass,
+    lineHeight: leadingClass,
+    tracking: trackingClass,
     color,
-    fontFamily,
+    fontFamily: familyClass,
   };
 }

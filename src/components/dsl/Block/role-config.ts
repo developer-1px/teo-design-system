@@ -8,11 +8,14 @@
  * - renderer: 전용 렌더러 컴포넌트 (optional)
  */
 
-import type { BlockProps, BlockRole } from '@/components/dsl/Block/Block.types';
+import React, { ComponentType } from 'react';
+import type { BlockProps, BlockRole, BlockRendererProps } from '@/components/dsl/Block/Block.types';
 import type { BaseRoleConfig } from '../shared/role.base';
 import { Accordion } from './role/Accordion'; // Existing
+import { CodeSnippet } from './role/CodeSnippet'; // ✨ New
 import { ControlPanelRenderer } from './role/ControlPanel'; // ✨ New
 import * as Data from './role/DataDisplay';
+import { FeatureGrid } from './role/FeatureGrid'; // ✨ New
 import * as Feedback from './role/Feedback';
 import * as Form from './role/Form';
 import * as Interaction from './role/Interaction';
@@ -39,20 +42,6 @@ export interface BlockRoleConfig extends BaseRoleConfig<BlockProps> {
    */
   autoPadding?: boolean;
 
-  /**
-   * Role Metadata (v7.0)
-   * Defines axiomatic properties for the Token Engine.
-   */
-  meta?: {
-    /**
-     * Separation Strategy
-     * - none: No separation (transparent)
-     * - gap: Separation via whitespace (default for layout)
-     * - surface: Separation via background color (containment)
-     * - border: Separation via hairline (rare, "borderless" principle)
-     */
-    separation?: 'none' | 'gap' | 'surface' | 'border';
-  };
 
   // Override BaseRoleConfig optional properties to be required for Block
   htmlTag: keyof React.JSX.IntrinsicElements;
@@ -100,6 +89,14 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
       },
     },
   },
+  Well: {
+    htmlTag: 'div',
+    baseStyles: 'relative',
+    renderer: Layout.Well,
+    autoPadding: true,
+    description: '침전된 콘텐츠 영역 (Sunken)',
+    meta: { separation: 'surface' },
+  },
   Header: {
     htmlTag: 'header',
     baseStyles: 'flex items-center justify-between px-3 py-2 select-none border-b border-border',
@@ -110,7 +107,7 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
   ControlPanel: {
     htmlTag: 'div',
     baseStyles: 'relative',
-    renderer: ControlPanelRenderer,
+    renderer: Layout.ControlPanel,
     autoPadding: false,
     description: 'Control Panel Container (v4.2)',
     meta: { separation: 'surface' },
@@ -128,35 +125,6 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
     baseStyles: 'relative',
     description: '검색 바',
     meta: { separation: 'surface' },
-  },
-  Stack: {
-    htmlTag: 'div',
-    baseStyles: '',
-    renderer: Layout.Stack,
-    autoPadding: false,
-    description: '수직 스택',
-    meta: { separation: 'gap' },
-    sectionOverrides: {
-      Toolbar: { baseStyles: 'flex-row items-center gap-1' }, // Dense horizontal in Toolbar
-      Header: { baseStyles: 'flex-row items-center gap-4' }, // Spaced horizontal in Header
-      Footer: { baseStyles: 'flex-row items-center gap-4 justify-between' }, // Spread in Footer
-    },
-  },
-  Grid: {
-    htmlTag: 'div',
-    ariaProps: { role: 'grid' },
-    baseStyles: '',
-    renderer: Layout.Grid,
-    autoPadding: false,
-    description: '그리드 레이아웃',
-    meta: { separation: 'gap' },
-  },
-  Center: {
-    htmlTag: 'div',
-    baseStyles: 'flex items-center justify-center h-full',
-    autoPadding: false,
-    description: '중앙 정렬 컨테이너',
-    meta: { separation: 'none' },
   },
   ScrollArea: {
     htmlTag: 'div',
@@ -201,38 +169,6 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
   },
 
   // Legacy Aliases
-  Container: {
-    htmlTag: 'div',
-    baseStyles: '',
-    description: '일반 컨테이너',
-    meta: { separation: 'none' },
-  },
-  // Group removed (Legacy Stack)
-  Row: {
-    htmlTag: 'div',
-    baseStyles: 'flex flex-row items-center gap-2',
-    description: 'Row (Legacy)',
-    meta: { separation: 'gap' },
-  },
-  Split: {
-    htmlTag: 'div',
-    baseStyles: '',
-    renderer: Layout.Splitter,
-    description: 'Split (Legacy Splitter)',
-    meta: { separation: 'none' },
-  },
-  Inline: {
-    htmlTag: 'div',
-    baseStyles: 'flex items-center gap-2',
-    description: 'Inline (Legacy)',
-    meta: { separation: 'gap' },
-  },
-  Spacer: {
-    htmlTag: 'div',
-    baseStyles: 'flex-1',
-    description: '여백',
-    meta: { separation: 'none' },
-  },
   Divider: {
     htmlTag: 'hr',
     baseStyles: 'border-t border-border-default w-full my-4',
@@ -392,9 +328,8 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
   Toolbar: {
     htmlTag: 'div',
     ariaProps: { role: 'toolbar' },
-    baseStyles:
-      'flex items-center gap-2 p-1 border border-border-default rounded-md bg-surface shadow-sm', // Detached default
-    renderer: LegacyToolbar as any,
+    baseStyles: '', // Handled by renderer and tokens
+    renderer: Layout.Toolbar,
     description: '도구 모음',
     meta: { separation: 'surface' }, // Often detached
     sectionOverrides: {
@@ -796,6 +731,24 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
       'border-8 border-gray-800 rounded-3xl overflow-hidden shadow-2xl bg-white aspect-[9/16] max-w-sm mx-auto',
     description: '기기 프레임',
     meta: { separation: 'surface' },
+  },
+
+  // ==================== 9. Content Highlights ====================
+  CodeSnippet: {
+    htmlTag: 'div',
+    baseStyles: '',
+    renderer: CodeSnippet,
+    autoPadding: false,
+    description: 'Code Snippet Block (v5.0)',
+    meta: { separation: 'surface' },
+  },
+  FeatureGrid: {
+    htmlTag: 'div',
+    baseStyles: '',
+    renderer: FeatureGrid,
+    autoPadding: false,
+    description: 'Feature Grid Layout (v5.0)',
+    meta: { separation: 'none' }, // Grid handles its own gaps
   },
 };
 

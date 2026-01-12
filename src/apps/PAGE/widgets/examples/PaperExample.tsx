@@ -1,10 +1,11 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * PaperExample - Fixed-dimension printable layout
  *
  * Use cases: Invoices, Receipts, Resumes, Certificates, Reports
  */
 
-import { Download, FileText, Mail, MapPin, Phone, Printer } from 'lucide-react';
+import { Download, FileText, Printer } from 'lucide-react';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
@@ -17,7 +18,7 @@ export function PaperExample() {
       <Section role="Header" variant="Plain" className="print:hidden">
         <Block role="Toolbar" className="px-6 py-3">
           <Text role="Label" content="Invoice Preview" prominence="Strong" />
-          <Block role="Stack" className="flex-row gap-2">
+          <Frame.Stack className="flex-row gap-2">
             <Action role="Button" prominence="Standard" className="gap-2">
               <Download size={16} />
               Download PDF
@@ -26,7 +27,7 @@ export function PaperExample() {
               <Printer size={16} />
               Print
             </Action>
-          </Block>
+          </Frame.Stack>
         </Block>
       </Section>
 
@@ -47,9 +48,9 @@ export function PaperExample() {
           style={{ aspectRatio: '1 / 1.414' }}
         >
           {/* Invoice Header */}
-          <Block role="Stack" className="space-y-20">
+          <Frame.Stack className="space-y-20">
             <Block role="Toolbar" className="items-start">
-              <Block role="Stack" density="Compact">
+              <Frame.Stack density="Compact">
                 <div className="flex items-center gap-4 mb-3">
                   <div className="w-14 h-14 bg-primary text-white flex items-center justify-center rounded-2xl shadow-lg shadow-primary/20">
                     <FileText size={32} />
@@ -69,9 +70,9 @@ export function PaperExample() {
                     />
                   </div>
                 </div>
-              </Block>
+              </Frame.Stack>
 
-              <Block role="Stack" density="Compact" className="text-right">
+              <Frame.Stack density="Compact" className="text-right">
                 <Text
                   role="Heading"
                   content="INVOICE"
@@ -92,19 +93,19 @@ export function PaperExample() {
                     className="text-[9px] font-bold opacity-30"
                   />
                 </div>
-              </Block>
+              </Frame.Stack>
             </Block>
 
             {/* Bill To / From */}
             <div className="grid grid-cols-2 gap-24">
-              <Block role="Stack" density="Compact" className="space-y-6">
+              <Frame.Stack density="Compact" className="space-y-6">
                 <Text
                   role="Label"
                   content="RECIPIENT"
                   prominence="Strong"
                   className="text-[10px] uppercase tracking-widest font-black opacity-20"
                 />
-                <Block role="Stack" density="Compact">
+                <Frame.Stack density="Compact">
                   <Text
                     role="Body"
                     content="Sarah Jenkins"
@@ -131,17 +132,17 @@ export function PaperExample() {
                       className="text-[11px] font-bold opacity-30 leading-relaxed"
                     />
                   </div>
-                </Block>
-              </Block>
+                </Frame.Stack>
+              </Frame.Stack>
 
-              <Block role="Stack" density="Compact" className="space-y-6">
+              <Frame.Stack density="Compact" className="space-y-6">
                 <Text
                   role="Label"
                   content="ISSUER"
                   prominence="Strong"
                   className="text-[10px] uppercase tracking-widest font-black opacity-20"
                 />
-                <Block role="Stack" density="Compact">
+                <Frame.Stack density="Compact">
                   <Text
                     role="Body"
                     content="Strata Core Team"
@@ -160,8 +161,8 @@ export function PaperExample() {
                     prominence="Standard"
                     className="text-sm font-bold opacity-40"
                   />
-                </Block>
-              </Block>
+                </Frame.Stack>
+              </Frame.Stack>
             </div>
 
             {/* Line Items Table */}
@@ -226,7 +227,7 @@ export function PaperExample() {
 
             {/* Totals */}
             <div className="flex justify-end pt-16 border-t-4 border-slate-900/5">
-              <Block role="Stack" density="Compact" className="w-72 space-y-4">
+              <Frame.Stack density="Compact" className="w-72 space-y-4">
                 <div className="flex justify-between items-center opacity-40">
                   <Text
                     role="Body"
@@ -270,7 +271,7 @@ export function PaperExample() {
                     className="text-4xl font-black font-mono tracking-tighter"
                   />
                 </div>
-              </Block>
+              </Frame.Stack>
             </div>
 
             {/* Terms Footer */}
@@ -281,24 +282,24 @@ export function PaperExample() {
                 prominence="Standard"
               />
             </div>
-          </Block>
+          </Frame.Stack>
         </Block>
       </Section>
 
       {/* Footer - Company Info */}
       <Section role="Footer" variant="Plain" className="print:hidden">
-        <Block role="Stack" density="Comfortable" className="px-6 py-8 bg-surface-base">
+        <Frame.Stack density="Comfortable" className="px-6 py-8 bg-surface-base">
           <div className="max-w-3xl mx-auto w-full">
             <Block role="Toolbar">
-              <Block role="Stack" density="Compact">
+              <Frame.Stack density="Compact">
                 <Text role="Label" content="ACME Corp" prominence="Strong" />
                 <Text role="Caption" content="Professional Services" prominence="Subtle" />
-              </Block>
-              <Block role="Stack" className="flex-row gap-4">
+              </Frame.Stack>
+              <Frame.Stack className="flex-row gap-4">
                 <Action role="Link" label="Contact" prominence="Subtle" />
                 <Action role="Link" label="Privacy" prominence="Subtle" />
                 <Action role="Link" label="Terms" prominence="Subtle" />
-              </Block>
+              </Frame.Stack>
             </Block>
 
             <div className="h-px bg-border my-4" />
@@ -309,7 +310,7 @@ export function PaperExample() {
               prominence="Subtle"
             />
           </div>
-        </Block>
+        </Frame.Stack>
       </Section>
     </>
   );

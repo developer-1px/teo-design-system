@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * EmojiDesignerPage - 이모지 디자인 IDE
  *
@@ -20,7 +21,7 @@ import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
 import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
 import { Block } from '@/components/dsl/Block/Block';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/dsl/Block/role/Tabs';
-import { Button } from '@/components/dsl/Element/Action/role/Button';
+import { Action } from '@/components/dsl/Element/Action/Action';
 import { Field } from '@/components/dsl/Element/Field/Field';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { Page } from '@/components/dsl/Page/Page';
@@ -144,20 +145,20 @@ export const EmojiDesignerPage = () => {
       {/* Header */}
       <Section role="Header">
         <Block role="Toolbar">
-          <Block role="Container">
+          <Frame.Column>
             <Block role="Toolbar">
               <Paintbrush size={24} />
               <Text role="Title" prominence="Hero" content="Emoji Designer IDE" />
             </Block>
             <Text role="Body" content="JSON 기반 픽셀 아트 이모지 디자이너" />
-          </Block>
+          </Frame.Column>
 
           <Block role="Toolbar">
             <label htmlFor="import-file">
-              <Button prominence="Subtle">
+              <Action role="Button" prominence="Subtle">
                 <Upload size={16} />
                 Import
-              </Button>
+              </Action>
             </label>
             <input
               id="import-file"
@@ -167,10 +168,10 @@ export const EmojiDesignerPage = () => {
               style={{ display: 'none' }}
             />
 
-            <Button prominence="Subtle" onClick={handleExport}>
+            <Action role="Button" prominence="Subtle" onClick={handleExport}>
               <Download size={16} />
               Export JSON
-            </Button>
+            </Action>
           </Block>
         </Block>
       </Section>
@@ -226,40 +227,43 @@ export const EmojiDesignerPage = () => {
           <Text role="Title" prominence="Hero" content="Tools" />
 
           <Block role="Toolbar">
-            <Button
+            <Action
+              role="Button"
               prominence={state.tool === 'pen' ? 'Hero' : 'Subtle'}
               onClick={() => setState((prev) => ({ ...prev, tool: 'pen' }))}
             >
               <Paintbrush size={16} />
               Pen
-            </Button>
+            </Action>
 
-            <Button
+            <Action
+              role="Button"
               prominence={state.tool === 'eraser' ? 'Hero' : 'Subtle'}
               onClick={() => setState((prev) => ({ ...prev, tool: 'eraser' }))}
             >
               <Eraser size={16} />
               Eraser
-            </Button>
+            </Action>
 
-            <Button
+            <Action
+              role="Button"
               prominence={state.tool === 'fill' ? 'Hero' : 'Subtle'}
               onClick={() => setState((prev) => ({ ...prev, tool: 'fill' }))}
             >
               <Droplet size={16} />
               Fill
-            </Button>
+            </Action>
 
-            <Button prominence="Standard" onClick={handleClear}>
+            <Action role="Button" prominence="Standard" onClick={handleClear}>
               <Trash2 size={16} />
               Clear Canvas
-            </Button>
+            </Action>
           </Block>
 
           <Field
             role="Checkbox"
             label="Show Grid"
-            checked={state.showGrid}
+            value={state.showGrid}
             onChange={(checked) => setState((prev) => ({ ...prev, showGrid: checked }))}
             prominence="Standard"
           />
@@ -312,12 +316,13 @@ export const EmojiDesignerPage = () => {
 
             <TabsContent value="json">
               <Section>
-                <Block role="Container">
+                <Frame.Column>
                   <Text role="Title" prominence="Hero" content="Emoji JSON Data" />
                   <Text role="Code" content={exportDesign(state.design)} />
 
                   <Block role="Toolbar">
-                    <Button
+                    <Action
+                      role="Button"
                       prominence="Subtle"
                       onClick={() => {
                         navigator.clipboard.writeText(exportDesign(state.design));
@@ -325,9 +330,9 @@ export const EmojiDesignerPage = () => {
                     >
                       <Copy size={16} />
                       Copy JSON
-                    </Button>
+                    </Action>
                   </Block>
-                </Block>
+                </Frame.Column>
               </Section>
             </TabsContent>
           </Tabs>
@@ -339,7 +344,7 @@ export const EmojiDesignerPage = () => {
         <Section>
           <Text role="Title" prominence="Hero" content="Preview" />
 
-          <Block role="Container">
+          <Frame.Column>
             {/* Small preview */}
             <Block role="Card">
               <div
@@ -414,35 +419,33 @@ export const EmojiDesignerPage = () => {
                 )}
               </div>
             </Block>
-          </Block>
+          </Frame.Column>
         </Section>
 
         <Section>
           <Text role="Title" prominence="Hero" content="Design Info" />
 
           <Block role="Card">
-            <Block role="ListItem">
+            <Action role="ListItem">
               <Text role="Label" content="ID" />
-              <Text role="Body" prominence="Hero" content={state.design.id} />
-            </Block>
+              <Text role="Body" content={state.design.id} />
+            </Action>
 
-            <Block role="ListItem">
+            <Action role="ListItem">
               <Text role="Label" content="Created" />
               <Text
                 role="Body"
-                prominence="Hero"
                 content={new Date(state.design.createdAt).toLocaleString()}
               />
-            </Block>
+            </Action>
 
-            <Block role="ListItem">
+            <Action role="ListItem">
               <Text role="Label" content="Updated" />
               <Text
                 role="Body"
-                prominence="Hero"
                 content={new Date(state.design.updatedAt).toLocaleString()}
               />
-            </Block>
+            </Action>
           </Block>
         </Section>
       </Section>

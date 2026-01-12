@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * DSLSlideCanvas - 순수 IDDL 기반 슬라이드 캔버스 (v2.0)
  *
@@ -33,126 +34,98 @@ export const DSLSlideCanvas = ({
   totalSlides,
   fullscreen = false,
   editable = true,
-  onSlideUpdate,
 }: DSLSlideCanvasProps) => {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingContent, setIsEditingContent] = useState(false);
-  const [showEditTools, setShowEditTools] = useState(false);
   // Empty state
   if (!slide) {
     return (
       <Section role="Container">
-        <Block role="Container">
-          <Block role="Stack" density="Comfortable">
+        <Frame.Column>
+          <Frame.Stack density="Comfortable">
             <Text role="Body" prominence="Subtle" content="슬라이드를 선택하세요" />
             <Text
               role="Caption"
               prominence="Subtle"
               content="왼쪽 목록에서 슬라이드를 선택하거나 새로 만드세요"
             />
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Column>
       </Section>
     );
   }
 
   return (
-    <Section role="Container">
-      {/* Canvas Container - 중앙 정렬 */}
-      <Block role="Container">
-        {/* Slide Canvas - 16:9 aspect ratio container */}
-        <Block role="Container" prominence="Standard" density="Comfortable">
-          {/* Slide Content Container */}
-          <Section
-            role="Container"
-            prominence="Standard"
-            density="Comfortable"
-            style={{ backgroundColor: slide.backgroundColor }}
-          >
-            {/* Slide Content Stack */}
-            <Block role="Container" density="Comfortable">
-              {/* Title Area */}
-              {slide.title && (
-                <Block role="Container" prominence="Strong" density="Compact">
-                  <Text role="Title" prominence="Hero" content={slide.title} />
-                </Block>
+    <Section role="Container" className="flex flex-col items-center justify-center w-full h-full p-4 group">
+      {/* 16:9 Slide Wrapper */}
+      <div
+        className="relative bg-surface-base shadow-[0_20px_50px_rgba(0,0,0,0.1),0_0_1px_rgba(0,0,0,0.1)] rounded-lg overflow-hidden border border-border"
+        style={{
+          aspectRatio: '16/9',
+          width: '100%',
+          maxWidth: fullscreen ? '100%' : '1100px',
+          backgroundColor: slide.backgroundColor
+        }}
+      >
+        {/* Slide Interior */}
+        <Section
+          role="Main"
+          prominence="Standard"
+          density="Comfortable"
+          className="w-full h-full flex flex-col p-[8%]" // Percentage padding for responsive feel
+        >
+          <Frame.Column gap={12} className="h-full">
+            {/* Title Area */}
+            {slide.title && (
+              <Frame.Stack gap={4}>
+                <Text role="Title" prominence="Hero" content={slide.title} className="leading-tight tracking-tight" />
+                <Block role="Divider" className="w-20 border-primary" />
+              </Frame.Stack>
+            )}
+
+            {/* Content Area */}
+            <Frame.Column className="flex-1 overflow-auto pr-4 scrollbar-hide">
+              {slide.content ? (
+                <div className="text-xl leading-relaxed opacity-80">
+                  {slideContentToDSL(slide.content)}
+                </div>
+              ) : (
+                <Text role="Body" prominence="Subtle" content="Click to add content..." />
               )}
+            </Frame.Column>
+          </Frame.Column>
+        </Section>
 
-              {/* Content Area - Scrollable */}
-              <Block role="Container" density="Standard">
-                {slide.content ? (
-                  slideContentToDSL(slide.content)
-                ) : (
-                  <Text role="Body" prominence="Subtle" content="내용을 입력하세요" />
-                )}
-              </Block>
+        {/* Floating Tool Overlay (Slide specific) */}
+        {!fullscreen && editable && (
+          <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <Block role="Toolbar" prominence="Elevated" density="Compact" className="shadow-lg backdrop-blur-md">
+              <Action icon="Type" intent="Neutral" size="sm" />
+              <Action icon="Image" intent="Neutral" size="sm" />
+              <Action icon="Shapes" intent="Neutral" size="sm" />
             </Block>
-          </Section>
+          </div>
+        )}
+      </div>
 
-          {/* Edit Tools - Top right overlay */}
-          {!fullscreen && editable && (
-            <Block
-              role="Toolbar"
-              prominence="Standard"
-              density="Compact"
-              onMouseEnter={() => setShowEditTools(true)}
-              onMouseLeave={() => setShowEditTools(false)}
-            >
-              <Action
-                icon="Type"
-                intent="Neutral"
-                onClick={() => setIsEditingTitle(!isEditingTitle)}
-                prominence={isEditingTitle ? 'Hero' : 'Standard'}
-              />
-              <Action
-                icon="FileText"
-                intent="Neutral"
-                onClick={() => setIsEditingContent(!isEditingContent)}
-                prominence={isEditingContent ? 'Hero' : 'Standard'}
-              />
-              <Action icon="Image" intent="Neutral" onClick={() => console.log('Add image')} />
-              <Action icon="Shapes" intent="Neutral" onClick={() => console.log('Add shape')} />
-            </Block>
-          )}
+      {/* Navigation & Info Bar (Below Canvas) */}
+      {!fullscreen && (
+        <Frame.Row align="center" justify="between" width="fill" className="mt-8 max-w-[1100px] opacity-60 px-2 text-text-subtle">
+          <Frame.Row gap={4} align="center">
+            <Text role="Caption" prominence="Strong" content={`SLIDE ${currentIndex !== undefined ? currentIndex + 1 : '-'}`} />
+            <Block role="DividerVertical" className="h-4" />
+            <Text role="Caption" content={`${totalSlides || '-'} TOTAL`} />
+          </Frame.Row>
 
-          {/* Slide Number - Top left overlay */}
-          {!fullscreen && currentIndex !== undefined && totalSlides !== undefined && (
-            <Block role="Toolbar" prominence="Subtle" density="Compact">
-              <Text role="Caption" content={`${currentIndex + 1} / ${totalSlides}`} />
-            </Block>
-          )}
-
-          {/* Keyboard Shortcuts Hint - Bottom center overlay */}
-          {!fullscreen && (
-            <Block role="Toolbar" density="Compact" prominence="Subtle">
-              <Block role="Toolbar" density="Compact">
-                <Text role="Code" content="←" />
-                <Text role="Code" content="→" />
-                <Text role="Caption" prominence="Subtle" content="이전/다음" />
-              </Block>
-              <Block role="Container" />
-              <Block role="Toolbar" density="Compact">
-                <Text role="Code" content="Space" />
-                <Text role="Caption" prominence="Subtle" content="다음" />
-              </Block>
-              <Block role="Container" />
-              <Block role="Toolbar" density="Compact">
-                <Text role="Code" content="Home" />
-                <Text role="Code" content="End" />
-                <Text role="Caption" prominence="Subtle" content="처음/끝" />
-              </Block>
-              {editable && (
-                <>
-                  <Block role="Container" />
-                  <Block role="Toolbar" density="Compact">
-                    <Text role="Caption" prominence="Subtle" content="우측 상단에서 편집" />
-                  </Block>
-                </>
-              )}
-            </Block>
-          )}
-        </Block>
-      </Block>
+          <Frame.Row gap={3} align="center">
+            <div className="flex items-center gap-1 px-2 py-1 rounded bg-surface-sunken border border-border">
+              <Text role="Code" content="←" className="text-[10px]" />
+              <Text role="Code" content="→" className="text-[10px]" />
+              <Text role="Caption" content="Navigate" className="ml-1 text-[10px]" />
+            </div>
+          </Frame.Row>
+        </Frame.Row>
+      )}
     </Section>
   );
 };

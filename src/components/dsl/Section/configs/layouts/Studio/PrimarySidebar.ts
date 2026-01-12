@@ -7,4 +7,7 @@ export const PrimarySidebar: RoleConfig = {
   ariaProps: { 'aria-label': 'Primary Sidebar' },
   baseStyles: 'flex flex-col h-full',
   description: 'Primary Sidebar (Core: Nav)',
+  meta: {
+    separation: 'surface',
+  },
 };

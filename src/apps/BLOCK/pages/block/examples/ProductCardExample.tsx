@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * ProductCardExample
  *
@@ -42,65 +43,65 @@ export function ProductCardExample() {
   ];
 
   return (
-    <Block role="Container" density="Comfortable">
-      <Block role="Stack">
+    <Frame.Column gap={6}>
+      <Frame.Stack>
         <Text role="Title" prominence="Strong" content="Product Cards" />
         <Text
           role="Body"
           prominence="Subtle"
           content="E-commerce product display using MediaCard + StatCard patterns"
         />
-      </Block>
+      </Frame.Stack>
 
       {/* Product Grid */}
-      <Block role="Grid" spec={{ columns: 3 }} density="Standard">
+      <Frame.Grid columns={3} gap={6}>
         {products.map((product) => (
-          <Block key={product.id} role="MediaCard" prominence="Standard" density="Standard">
+          <Block key={product.id} role="Card" prominence="Standard" density="Standard">
             {/* Product Image Area */}
-            <Block role="Stack" density="Compact">
+            <Frame.Stack gap={2}>
               {/* Badge if exists */}
               {product.badge && (
-                <Block role="Stack" density="Compact">
+                <Frame.Stack gap={2}>
                   <Text role="Badge" prominence="Strong" intent="Brand" content={product.badge} />
-                </Block>
+                </Frame.Stack>
               )}
 
               {/* Product Image */}
-              <Block role="Center">
+              <Frame.Center>
                 <Text role="Title" prominence="Hero" content={product.image} />
-              </Block>
-            </Block>
+              </Frame.Center>
+            </Frame.Stack>
 
             {/* Product Info */}
-            <Block role="Stack" density="Standard">
+            <Frame.Stack gap={4}>
               <Text role="Heading" prominence="Strong" content={product.name} />
 
               {/* Rating */}
-              <Block role="Stack" density="Compact">
+              <Frame.Stack gap={2}>
                 <Text
                   role="Body"
                   prominence="Subtle"
                   content={`⭐ ${product.rating} (${product.reviews} reviews)`}
                 />
-              </Block>
+              </Frame.Stack>
 
               {/* Price */}
-              <Block role="Stack" density="Compact">
+              <Frame.Stack gap={2}>
                 <Text role="Title" prominence="Strong" intent="Brand" content={product.price} />
                 {product.originalPrice && (
                   <Text role="Caption" prominence="Subtle" content={product.originalPrice} />
                 )}
-              </Block>
+              </Frame.Stack>
 
               {/* Actions */}
-              <Block role="Stack" density="Compact">
+              <Frame.Stack gap={2}>
                 <Action role="Button" prominence="Hero" intent="Brand" label="Add to Cart" />
                 <Action role="Button" prominence="Standard" label="View Details" />
-              </Block>
-            </Block>
+              </Frame.Stack>
+            </Frame.Stack>
           </Block>
         ))}
-      </Block>
-    </Block>
+      </Frame.Grid>
+    </Frame.Column>
   );
 }

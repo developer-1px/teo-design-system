@@ -8,7 +8,8 @@
  * - All IDDL axes: role × prominence × density × intent
  */
 
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useLocation, useSearch } from 'wouter';
 import { ROLE_LAYOUT_MAP } from '@/apps/PAGE/lib/page-constants';
 import { ApplicationExample } from '@/apps/PAGE/widgets/examples/ApplicationExample';
 import { DocumentExample } from '@/apps/PAGE/widgets/examples/DocumentExample';
@@ -24,7 +25,7 @@ import { FloatingControlPanel } from '@/components/workspace/FloatingControlPane
 /**
  * Component map for each PageRole
  */
-const EXAMPLE_COMPONENTS: Record<PageRole, React.ComponentType<{ layout?: PageLayout }>> = {
+const EXAMPLE_COMPONENTS: Record<PageRole, React.ComponentType<{ layout: PageLayout }>> = {
   Document: DocumentExample,
   Application: ApplicationExample,
   Focus: FocusExample,
@@ -34,20 +35,34 @@ const EXAMPLE_COMPONENTS: Record<PageRole, React.ComponentType<{ layout?: PageLa
 };
 
 export function PageShowcasePage() {
-  // Page properties state
-  const [role, setRole] = useState<PageRole>('Document');
-  const [layout, setLayout] = useState<PageLayout>('Single');
-  const [prominence, setProminence] = useState<Prominence>('Standard');
-  const [density, setDensity] = useState<Density>('Standard');
-  const [intent, setIntent] = useState<Intent>('Neutral');
+  // Page properties state (URL Synced via wouter)
+  const [location, setLocation] = useLocation();
+  const queryString = useSearch(); // Returns string like "role=Document&layout=Single"
+  const searchParams = new URLSearchParams(queryString);
+
+  const role = (searchParams.get('role') as PageRole) || 'Document';
+  const layout = (searchParams.get('layout') as PageLayout) || 'Single';
+  const prominence = (searchParams.get('prominence') as Prominence) || 'Standard';
+  const density = (searchParams.get('density') as Density) || 'Standard';
+  const intent = (searchParams.get('intent') as Intent) || 'Neutral';
 
   // Get available layouts for current role
   const availableLayouts = [...(ROLE_LAYOUT_MAP[role] || ['Single'])];
 
+  // Helper to update URL params
+  const updateParam = (key: string, value: string) => {
+    const newParams = new URLSearchParams(queryString);
+    newParams.set(key, value);
+    // wouter setLocation takes a path, so we append the search string
+    setLocation(location + '?' + newParams.toString(), { replace: true });
+  };
+
   // Handle role change (reset layout to first available)
   const handleRoleChange = (newRole: PageRole) => {
-    setRole(newRole);
-    setLayout(ROLE_LAYOUT_MAP[newRole][0]);
+    const newParams = new URLSearchParams(queryString);
+    newParams.set('role', newRole);
+    newParams.set('layout', ROLE_LAYOUT_MAP[newRole][0]);
+    setLocation(location + '?' + newParams.toString(), { replace: true });
   };
 
   // Get the appropriate example component
@@ -64,10 +79,10 @@ export function PageShowcasePage() {
         intent={intent}
         availableLayouts={availableLayouts}
         onRoleChange={handleRoleChange}
-        onLayoutChange={setLayout}
-        onProminenceChange={setProminence}
-        onDensityChange={setDensity}
-        onIntentChange={setIntent}
+        onLayoutChange={(val) => updateParam('layout', val)}
+        onProminenceChange={(val) => updateParam('prominence', val)}
+        onDensityChange={(val) => updateParam('density', val)}
+        onIntentChange={(val) => updateParam('intent', val)}
       />
 
       {/* Live Preview */}

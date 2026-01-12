@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import {
   type CellContext, // ✨ NEW
   type ColumnDef,
@@ -260,7 +261,7 @@ export function DataTable<TData, TValue>({
         </div>
 
         {/* Selection Mode Toggle */}
-        <Block role="Inline" layout="inline" density="Compact" className="gap-1">
+        <Frame.Inline layout="inline" density="Compact" className="gap-1">
           <Action
             icon={Rows3}
             prominence={selectionMode === 'row' ? 'Strong' : 'Standard'}
@@ -275,7 +276,7 @@ export function DataTable<TData, TValue>({
             onClick={() => setSelectionMode('cell')}
             title="Cell selection mode"
           />
-        </Block>
+        </Frame.Inline>
       </Block>
 
       {/* Table Container with Virtual Scrolling */}

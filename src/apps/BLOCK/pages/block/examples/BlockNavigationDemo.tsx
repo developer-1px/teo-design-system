@@ -1,10 +1,11 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function BlockNavigationDemo() {
   return (
-    <Block role="Container" density="Comfortable">
+    <Frame.Column gap={6}>
       <div className="flex flex-col gap-1">
         <Text role="Title" prominence="Strong" content="5. Navigation" />
         <Text role="Body" prominence="Subtle" content="Components for wayfinding and structure." />
@@ -56,21 +57,21 @@ export function BlockNavigationDemo() {
       <Block role="Card">
         <Text role="Label" content="Stepper (role='Stepper')" />
         <Block role="Stepper">
-          <Block role="Inline" density="Compact">
+          <Frame.Inline gap={2}>
             <div className="w-6 h-6 rounded-full bg-surface-accent-default text-text-inverse flex items-center justify-center text-xs">
               1
             </div>
             <Text role="Body" content="Step 1" />
-          </Block>
+          </Frame.Inline>
           <div className="w-8 h-px bg-border-default" />
-          <Block role="Inline" density="Compact">
+          <Frame.Inline gap={2}>
             <div className="w-6 h-6 rounded-full bg-surface-raised border border-border-default flex items-center justify-center text-xs">
               2
             </div>
             <Text role="Body" content="Step 2" prominence="Subtle" />
-          </Block>
+          </Frame.Inline>
         </Block>
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

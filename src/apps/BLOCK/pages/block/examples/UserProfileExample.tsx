@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * UserProfileExample
  *
@@ -27,32 +28,32 @@ export function UserProfileExample() {
   };
 
   return (
-    <Block role="Container" density="Comfortable">
-      <Block role="Stack">
+    <Frame.Column gap={6}>
+      <Frame.Stack>
         <Text role="Title" prominence="Strong" content="User Profile" />
         <Text
           role="Body"
           prominence="Subtle"
           content="Social media profile layout using Card + StatCard + Tabs"
         />
-      </Block>
+      </Frame.Stack>
 
       {/* Profile Card */}
       <Block role="Card" prominence="Standard" density="Comfortable">
         {/* Cover Header */}
-        <Block role="Stack" density="Standard">
+        <Frame.Stack gap={4}>
           {/* Avatar + Name */}
-          <Block role="Stack" density="Standard">
-            <Block role="Center">
+          <Frame.Stack gap={4} align="center">
+            <Frame.Center>
               <Text role="Title" prominence="Hero" content={user.avatar} />
-            </Block>
+            </Frame.Center>
 
-            <Block role="Stack" density="Compact">
+            <Frame.Stack gap={1}>
               <Text role="Title" prominence="Strong" content={user.name} />
-              <Text role="Username" content={user.username} prominence="Subtle" />
+              <Text role="Label" content={user.username} prominence="Subtle" />
 
               {/* Badges */}
-              <Block role="Stack" density="Compact">
+              <Frame.Stack gap={2}>
                 {user.badges.map((badge) => (
                   <Text
                     key={badge}
@@ -62,51 +63,51 @@ export function UserProfileExample() {
                     content={badge}
                   />
                 ))}
-              </Block>
-            </Block>
-          </Block>
+              </Frame.Stack>
+            </Frame.Stack>
+          </Frame.Stack>
 
           {/* Bio */}
           <Text role="Body" prominence="Standard" content={user.bio} />
 
           {/* Metadata */}
-          <Block role="Stack" density="Compact">
+          <Frame.Stack gap={2}>
             <Text role="Caption" prominence="Subtle" content={`📍 ${user.location}`} />
             <Text role="Caption" prominence="Subtle" content={`🔗 ${user.website}`} />
-            <Text role="Timestamp" content={user.joinedDate} />
-          </Block>
+            <Text role="Caption" content={user.joinedDate} prominence="Subtle" />
+          </Frame.Stack>
 
           {/* Stats Cards */}
-          <Block role="Grid" spec={{ columns: 3 }} density="Compact">
-            <Block role="StatCard" prominence="Subtle" density="Standard">
-              <Block role="Stack" density="Compact">
+          <Frame.Grid columns={3} gap={4}>
+            <Block role="Card" prominence="Subtle" density="Standard">
+              <Frame.Stack gap={1} align="center">
                 <Text role="Title" prominence="Strong" content={user.stats.posts.toString()} />
                 <Text role="Caption" prominence="Subtle" content="Posts" />
-              </Block>
+              </Frame.Stack>
             </Block>
 
-            <Block role="StatCard" prominence="Subtle" density="Standard">
-              <Block role="Stack" density="Compact">
+            <Block role="Card" prominence="Subtle" density="Standard">
+              <Frame.Stack gap={1} align="center">
                 <Text role="Title" prominence="Strong" content={user.stats.followers.toString()} />
                 <Text role="Caption" prominence="Subtle" content="Followers" />
-              </Block>
+              </Frame.Stack>
             </Block>
 
-            <Block role="StatCard" prominence="Subtle" density="Standard">
-              <Block role="Stack" density="Compact">
+            <Block role="Card" prominence="Subtle" density="Standard">
+              <Frame.Stack gap={1} align="center">
                 <Text role="Title" prominence="Strong" content={user.stats.following.toString()} />
                 <Text role="Caption" prominence="Subtle" content="Following" />
-              </Block>
+              </Frame.Stack>
             </Block>
-          </Block>
+          </Frame.Grid>
 
           {/* Actions */}
-          <Block role="Stack" density="Compact">
+          <Frame.Stack gap={2}>
             <Action role="Button" prominence="Hero" intent="Brand" label="Follow" />
             <Action role="Button" prominence="Standard" label="Message" />
             <Action role="IconButton" title="More Options" icon="⋯" />
-          </Block>
-        </Block>
+          </Frame.Stack>
+        </Frame.Stack>
 
         {/* Content Tabs */}
         <Block role="Divider" />
@@ -116,6 +117,6 @@ export function UserProfileExample() {
           <Action role="Tab" label="Likes" prominence="Subtle" />
         </Block>
       </Block>
-    </Block>
+    </Frame.Column>
   );
 }

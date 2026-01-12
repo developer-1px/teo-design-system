@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 import { useState } from 'react';
 import { Block } from '@/components/dsl/Block/Block.tsx';
 import { Action } from '@/components/dsl/Element/Action/Action.tsx';
@@ -17,7 +18,7 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
   };
 
   return (
-    <Block role="Navigator">
+    <Block role="Toolbar">
       <Action
         role="IconButton"
         icon="Sparkles"
@@ -42,7 +43,7 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
         onClick={() => handleViewChange('info')}
       />
 
-      <Block role="Spacer" flex="1" />
+      <Frame.Spacer />
 
       <Action
         role="IconButton"

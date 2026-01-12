@@ -1,3 +1,4 @@
+import { Frame } from '@/components/dsl/shared/Frame';
 /**
  * FormatSidebar - 순수 IDDL 기반 포맷 설정 사이드바 (v4.0)
  *
@@ -59,10 +60,10 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
         mode: 'edit',
       }}
     >
-      <Block role="Container" density="Comfortable">
-        <Block role="Stack" density="Comfortable">
+      <Frame.Column density="Comfortable">
+        <Frame.Stack density="Comfortable">
           {/* Text Formatting Section */}
-          <Block role="Fieldset" density="Compact">
+          <Block role="FieldGroup" density="Compact">
             <Text role="Label" prominence="Strong" content="텍스트" />
 
             <Field
@@ -112,7 +113,7 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
           </Block>
 
           {/* Background Formatting Section */}
-          <Block role="Fieldset" density="Compact">
+          <Block role="FieldGroup" density="Compact">
             <Text role="Label" prominence="Strong" content="배경" />
 
             <Field
@@ -142,7 +143,7 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
           </Block>
 
           {/* Layout Section */}
-          <Block role="Fieldset" density="Compact">
+          <Block role="FieldGroup" density="Compact">
             <Text role="Label" prominence="Strong" content="레이아웃" />
 
             <Field
@@ -173,7 +174,7 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
           </Block>
 
           {/* Animation Section */}
-          <Block role="Fieldset" density="Compact">
+          <Block role="FieldGroup" density="Compact">
             <Text role="Label" prominence="Strong" content="애니메이션" />
 
             <Field
@@ -193,11 +194,11 @@ export const FormatSidebar = ({ isOpen, activeSlide, onSlideUpdate }: FormatSide
           </Block>
 
           {/* Divider + Helper Text */}
-          <Block role="Container" prominence="Subtle" density="Comfortable">
+          <Frame.Column density="Comfortable">
             <Text role="Caption" prominence="Subtle" content="현재 선택된 슬라이드에 적용됩니다" />
-          </Block>
-        </Block>
-      </Block>
+          </Frame.Column>
+        </Frame.Stack>
+      </Frame.Column>
     </IDDLProvider>
   );
 };

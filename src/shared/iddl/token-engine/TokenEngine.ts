@@ -80,6 +80,7 @@ export class TokenEngine {
       intent: input.intent,
       density: input.density,
       state: input.state,
+      context: input.context,
     };
     return JSON.stringify(key);
   }
