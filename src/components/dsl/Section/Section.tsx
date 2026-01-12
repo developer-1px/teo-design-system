@@ -137,7 +137,7 @@ export function Section({
   const Element: any = as || htmlTag || 'section';
   const computedGridArea = gridArea || configGridArea;
   const isScrollable = scrollable ?? (overflow === 'auto' || overflow === 'scroll');
-  const overflowClass = isScrollable ? 'overflow-auto' : 'overflow-hidden';
+  const overflowClass = isScrollable ? 'overflow-auto' : '';
 
   // collapsible logic (v4.1)
   const isCollapsible = !!collapsible;

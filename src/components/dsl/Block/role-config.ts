@@ -86,7 +86,7 @@ export const ROLE_CONFIGS: Record<BlockRole, BlockRoleConfig> = {
   Card: {
     htmlTag: 'article',
     ariaProps: { role: 'article' },
-    baseStyles: 'relative overflow-hidden', // Minimal layout focus, tokens handle visuals
+    baseStyles: 'relative', // Minimal layout focus, tokens handle visuals
     renderer: Layout.Card,
     autoPadding: true,
     description: '콘텐츠 그룹 컨테이너',
