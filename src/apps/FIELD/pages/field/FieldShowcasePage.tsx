@@ -81,7 +81,7 @@ export function FieldShowcasePage() {
 
         {/* 1.2 Searchbox */}
         <Block role="Stack">
-          <Block role="Stack" gap={1}>
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
@@ -95,7 +95,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable" className="mt-4">
             <Field
               role="Textbox"
               label="Search Input"
@@ -189,8 +189,8 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 2.2 Switch */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack" className="mt-12">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
@@ -204,7 +204,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable" className="mt-4">
             <Field
               role="Switch"
               label="Switch Toggle"
@@ -216,8 +216,8 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 2.3 Radio */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack" className="mt-12">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
@@ -231,7 +231,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable" className="mt-4">
             <Field
               role="Radio"
               label="Radio Group"
@@ -250,8 +250,8 @@ export function FieldShowcasePage() {
         </Block>
 
         {/* 2.4 Combobox */}
-        <Block role="Stack" gap={4} className="mt-12">
-          <Block role="Stack" gap={1}>
+        <Block role="Stack" className="mt-12">
+          <Block role="Stack">
             <Text
               role="Title"
               prominence="Strong"
@@ -265,7 +265,7 @@ export function FieldShowcasePage() {
             />
           </Block>
 
-          <Block role="Grid" spec={{ columns: 2 }} gap={8} density="Comfortable" className="mt-4">
+          <Block role="Grid" spec={{ columns: 2 }} density="Comfortable" className="mt-4">
             <Field
               role="Combobox"
               label="Combobox (Searchable)"
@@ -442,8 +442,8 @@ export function FieldShowcasePage() {
       {/* ========================================
           4. PICKER CATEGORY
           ======================================== */}
-      <Block role="Stack" gap={12}>
-        <Block role="Stack" gap={3}>
+      <Block role="Stack">
+        <Block role="Stack">
           <Text
             role="Title"
             prominence="Hero"

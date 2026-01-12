@@ -17,7 +17,7 @@ export const RightNav = ({ onViewChange, onClose }: RightNavProps) => {
   };
 
   return (
-    <Block role="Navigator" padding="xs" gap="xs">
+    <Block role="Navigator">
       <Action
         role="IconButton"
         icon="Sparkles"

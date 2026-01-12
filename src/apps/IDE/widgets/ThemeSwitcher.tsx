@@ -60,9 +60,9 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
   };
 
   return (
-    <Section role="Container" prominence="Hero" width="320" padding="md" elevation="overlay">
+    <Section role="Container" prominence="Hero" width="320" elevation="overlay">
       {/* Header */}
-      <Block role="Header" direction="horizontal" align="center" justify="between" padding="sm">
+      <Block role="Header" direction="horizontal" align="center" justify="between">
         <Text role="Title" prominence="Strong" content="Theme Settings" />
         {onClose && (
           <Action role="IconButton" icon="X" label="Close" density="Compact" onClick={onClose} />
@@ -70,16 +70,16 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
       </Block>
 
       {/* Light/Dark Toggle */}
-      <Block role="Stack" gap="sm" padding="sm">
+      <Block role="Stack">
         <Text role="Label" prominence="Subtle" content="Appearance" />
-        <Block role="Grid" template="custom" gridCols={2} gap="xs">
+        <Block role="Grid" template="custom" gridCols={2}>
           <Block
             clickable
             layout="inline"
             align="center"
             justify="center"
-            padding="sm"
-            gap="xs"
+           
+           
             interactive
             selected={config.theme === 'light'}
             onClick={() => {
@@ -96,8 +96,8 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
             layout="inline"
             align="center"
             justify="center"
-            padding="sm"
-            gap="xs"
+           
+           
             interactive
             selected={config.theme === 'dark'}
             onClick={() => {
@@ -113,17 +113,17 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
       </Block>
 
       {/* Color Scheme */}
-      <Block role="Stack" gap="sm" padding="sm">
+      <Block role="Stack">
         <Text role="Label" prominence="Subtle" content="Color Scheme" />
-        <Block role="Grid" template="custom" gridCols={2} gap="xs">
+        <Block role="Grid" template="custom" gridCols={2}>
           {colorSchemes.map((scheme) => (
             <Block
               key={scheme.value}
               clickable
               layout="inline"
               align="center"
-              padding="sm"
-              gap="xs"
+             
+             
               interactive
               selected={config.colorScheme === scheme.value}
               onClick={() => handleColorSchemeChange(scheme.value)}
@@ -141,9 +141,9 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
       </Block>
 
       {/* Density */}
-      <Block role="Stack" gap="sm" padding="sm">
+      <Block role="Stack">
         <Text role="Label" prominence="Subtle" content="Density" />
-        <Block role="List" gap="xs">
+        <Block role="List">
           {densities.map((density) => (
             <Block
               key={density.value}
@@ -151,12 +151,12 @@ export const ThemeSwitcher = ({ onClose }: ThemeSwitcherProps) => {
               layout="inline"
               align="center"
               justify="between"
-              padding="sm"
+             
               interactive
               selected={config.density === density.value}
               onClick={() => handleDensityChange(density.value)}
             >
-              <Block gap="xs">
+              <Block>
                 <Text role="Body" prominence="Strong" content={density.label} weight="medium" />
                 <Text role="Body" prominence="Subtle" content={density.description} size="sm" />
               </Block>

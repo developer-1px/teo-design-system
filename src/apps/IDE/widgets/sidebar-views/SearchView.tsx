@@ -64,9 +64,9 @@ export const SearchView = ({ onFileClick }: SearchViewProps) => {
       />
 
       <Block role="ScrollArea" className="flex-1">
-        <Block role="Stack" gap={4} className="p-4">
+        <Block role="Stack" className="p-4">
           {/* Search Inputs */}
-          <Block role="Group" gap={2}>
+          <Block role="Group">
             <Block role="Row" layout="inline" className="relative">
               <Action
                 role="IconButton"
@@ -170,7 +170,7 @@ export const SearchView = ({ onFileClick }: SearchViewProps) => {
                   </Action>
 
                   {/* Matches */}
-                  <Block role="Stack" gap={0} className="ml-6 border-l border-border-muted">
+                  <Block role="Stack" className="ml-6 border-l border-border-muted">
                     {result.matches.map((match, mIdx) => (
                       <Action
                         key={mIdx}

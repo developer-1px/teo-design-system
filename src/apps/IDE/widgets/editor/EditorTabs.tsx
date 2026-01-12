@@ -59,7 +59,7 @@ export const EditorTabs = ({ onTabChange }: EditorTabsProps) => {
       className="h-9 border-b border-border-default overflow-hidden"
     >
       <Block role="ScrollArea" orientation="horizontal" className="h-full">
-        <Block role="Tabs" layout="inline" gap="none" className="h-full">
+        <Block role="Tabs" layout="inline" className="h-full">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
             return (

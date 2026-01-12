@@ -15,7 +15,7 @@ export const WorkspaceNav = ({ onViewChange }: WorkspaceNavProps) => {
   };
 
   return (
-    <Block role="Navigator" padding="xs" gap="xs">
+    <Block role="Navigator">
       <Action
         role="IconButton"
         icon="Files"

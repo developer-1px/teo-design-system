@@ -27,7 +27,7 @@ export function FileTree({ data, onFileClick }: FileTreeProps) {
   }, [data]);
 
   return (
-    <Block role="Stack" gap={0} className="h-full">
+    <Block role="Stack" className="h-full">
       <Block role="Toolbar" density="Compact" className="px-3 border-b border-border-default">
         <Text
           role="Caption"

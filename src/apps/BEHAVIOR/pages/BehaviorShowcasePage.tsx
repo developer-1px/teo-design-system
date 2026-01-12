@@ -51,8 +51,8 @@ function NavigableFileItem({ file }: { file: (typeof FILES)[0] }) {
 
 function Example1_NavigableOnly() {
   return (
-    <Block role="Card" gap={4}>
-      <Block role="Stack" gap={1}>
+    <Block role="Card">
+      <Block role="Stack">
         <Text role="Title" prominence="Standard">
           1. Navigable Only - File Explorer
         </Text>
@@ -63,7 +63,7 @@ function Example1_NavigableOnly() {
 
       <Block role="Container" className="p-4 bg-surface-sunken rounded-lg">
         <Navigable orientation="vertical" typeahead loop>
-          <Block role="Stack" gap={1}>
+          <Block role="Stack">
             {FILES.map((file) => (
               <NavigableFileItem key={file.id} file={file} />
             ))}
@@ -128,8 +128,8 @@ function Example2_SelectableOnly() {
   const [selected, setSelected] = useState<string[]>([]);
 
   return (
-    <Block role="Card" gap={4}>
-      <Block role="Stack" gap={1}>
+    <Block role="Card">
+      <Block role="Stack">
         <Text role="Title" prominence="Standard">
           2. Selectable Only - Task List
         </Text>
@@ -140,7 +140,7 @@ function Example2_SelectableOnly() {
 
       <Block role="Container" className="p-4 bg-surface-sunken rounded-lg">
         <Selectable mode="extended" selected={selected} onSelectionChange={setSelected}>
-          <Block role="Stack" gap={1}>
+          <Block role="Stack">
             {TASKS.map((task) => (
               <SelectableTaskItem key={task.id} task={task} />
             ))}
@@ -260,8 +260,8 @@ function Example3_NavigableSelectable() {
   };
 
   return (
-    <Block role="Card" gap={4}>
-      <Block role="Stack" gap={1}>
+    <Block role="Card">
+      <Block role="Stack">
         <Text role="Title" prominence="Standard">
           3. Navigable + Selectable - Slide Thumbnails (PPT-style)
         </Text>
@@ -273,7 +273,7 @@ function Example3_NavigableSelectable() {
       <Block role="Container" className="p-4 bg-surface-sunken rounded-lg">
         <Navigable orientation="both" typeahead loop>
           <Selectable mode="extended" selected={selected} onSelectionChange={setSelected}>
-            <Block role="Grid" spec={{ columns: 4 }} gap={3}>
+            <Block role="Grid" spec={{ columns: 4 }}>
               {SLIDES.map((slide, index) => (
                 <SlideThumbItem key={slide.id} slide={slide} index={index} />
               ))}
@@ -283,7 +283,7 @@ function Example3_NavigableSelectable() {
       </Block>
 
       <Block role="Row" className="p-3 bg-surface-raised rounded items-center justify-between">
-        <Block role="Stack" gap={1}>
+        <Block role="Stack">
           <Text role="Caption" prominence="Subtle">
             Selected: {selected.length} / {SLIDES.length}
           </Text>
@@ -293,7 +293,7 @@ function Example3_NavigableSelectable() {
             </Text>
           )}
         </Block>
-        <Block role="Row" gap={2}>
+        <Block role="Row">
           <button
             onClick={handleDelete}
             disabled={selected.length === 0}
@@ -329,9 +329,9 @@ export function BehaviorShowcasePage() {
       subtitle="Navigable & Selectable v1.0"
       description="Low-level building blocks for complex list interactions."
     >
-      <Block role="Stack" gap={8}>
+      <Block role="Stack">
         {/* Header */}
-        <Block role="Stack" gap={2}>
+        <Block role="Stack">
           <Text role="Title" prominence="Hero">
             Behavior Primitives Showcase
           </Text>
@@ -348,11 +348,11 @@ export function BehaviorShowcasePage() {
         <Example3_NavigableSelectable />
 
         {/* Documentation Links */}
-        <Block role="Card" gap={3} className="bg-accent-muted border-2 border-accent p-6">
+        <Block role="Card" className="bg-accent-muted border-2 border-accent p-6">
           <Text role="Title" prominence="Standard">
             📚 Documentation
           </Text>
-          <Block role="Stack" gap={2}>
+          <Block role="Stack">
             {[
               'docs/2-areas/core/behavior/01-web-vs-app.md',
               'docs/2-areas/core/behavior/02-navigable.md',

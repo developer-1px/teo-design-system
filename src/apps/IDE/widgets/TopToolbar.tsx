@@ -72,7 +72,6 @@ export const TopToolbar = ({
         <Button
           variant="ghost"
           size="sm"
-          gap="xs"
           onClick={() => setShowProjectMenu(!showProjectMenu)}
           onBlur={() => {
             setTimeout(() => setShowProjectMenu(false), 200);
@@ -98,7 +97,6 @@ export const TopToolbar = ({
         <Button
           variant="ghost"
           size="sm"
-          gap="xs"
           onClick={() => setShowVcsMenu(!showVcsMenu)}
           onBlur={() => {
             setTimeout(() => setShowVcsMenu(false), 200);
@@ -121,7 +119,6 @@ export const TopToolbar = ({
         <Button
           variant="ghost"
           size="sm"
-          gap="xs"
           onClick={() => setShowRunMenu(!showRunMenu)}
           onBlur={() => {
             setTimeout(() => setShowRunMenu(false), 200);
@@ -245,7 +242,7 @@ const VcsMenuContent = () => {
         </Block>
       </Action>
       <Action role="MenuItem">
-        <Block layout="inline" align="center" padding="sm" gap="sm">
+        <Block layout="inline" align="center">
           <UploadIcon size={16} />
           <Text role="Body" prominence="Strong" content="Commit..." />
           <Text role="Label" prominence="Subtle" content="⌘K" />
@@ -260,7 +257,7 @@ const VcsMenuContent = () => {
       </Action>
       <Block role="Divider" />
       <Action role="MenuItem">
-        <Block layout="inline" align="center" padding="sm" gap="sm">
+        <Block layout="inline" align="center">
           <GitBranchIcon size={16} />
           <Text role="Body" prominence="Strong" content="Branches..." />
         </Block>
