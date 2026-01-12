@@ -1,0 +1,191 @@
+* {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: var(--text-primary);
+  background-color: var(--surface-1);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reset for Full Screen App */
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--surface-1);
+}
+
+body {
+  margin: 0;
+  display: block;
+  min-width: 320px;
+}
+
+[data-theme='dark'] body {
+  background-color: var(--surface-1);
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Action Component Styles (Token Driven) */
+.action-base {
+  transition: all 0.1s ease;
+  user-select: none;
+  border-radius: inherit;
+}
+
+.action-ghost {
+  color: var(--text-body);
+}
+
+.action-ghost:hover {
+  background-color: var(--surface-3);
+  color: var(--text-primary);
+}
+
+.action-ghost:active {
+  background-color: var(--surface-4);
+}
+
+.action-surface {
+  background-color: var(--surface-1);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.action-surface:hover {
+  background-color: var(--surface-3);
+}
+
+.action-surface:active {
+  background-color: var(--surface-4);
+}
+
+.action-primary {
+  background-color: var(--primary-bg);
+  color: var(--primary-fg);
+}
+
+.action-primary:hover {
+  opacity: 0.9;
+}
+
+.action-primary:active {
+  opacity: 0.8;
+}
+
+/* Input / Field base resets */
+.field-base {
+  height: var(--field-height);
+  border-radius: var(--field-radius);
+  /* Smoother transition for 'don't do it suddenly' */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--field-bg);
+  border: 1px solid transparent;
+}
+
+.field-base:hover {
+  background-color: var(--field-bg);
+  /* Step 1: Subtle surface tone outline */
+  border-color: var(--surface-4);
+}
+
+.field-input {
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 500;
+  border: none;
+  background: none;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Field Child Elements specific handling */
+/* Icon styling based on parent state */
+.field-base .field-icon {
+  opacity: 0.7;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.field-base:focus-within .field-icon {
+  opacity: 1;
+}
+
+/* Label styling based on parent state */
+.field-base .field-label {
+  opacity: 0.6;
+  color: var(--text-subtle);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.field-base:focus-within .field-label {
+  opacity: 0.9;
+}
+
+.field-base:active .field-label,
+.field-base.is-scrubbing .field-label {
+  color: var(--primary-bg);
+  opacity: 1;
+}
+
+.field-base:active,
+.field-base:focus-within,
+.field-base.is-scrubbing {
+  background-color: var(--field-bg);
+  /* Step 2: Slightly darker tone, maintaining surface feel */
+  border-color: var(--surface-4);
+}
+
+.field-base.is-scrubbing .field-input {
+  color: var(--text-secondary);
+  opacity: 0.5;
+}

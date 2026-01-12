@@ -1,0 +1,97 @@
+:root {
+  /* 
+     Premium Zinc Palette (Tailwind-like Zinc) 
+  */
+
+  /* Light Theme */
+  --surface-1: #FFFFFF;
+  --surface-2: #F4F4F5;
+  --surface-3: #E4E4E7;
+  --surface-4: #D4D4D8;
+
+  --text-primary: #18181B;
+  --text-body: #3F3F46;
+  --text-subtle: #71717A;
+  --text-muted: #A1A1AA;
+  --text-dim: #D4D4D8;
+
+  --border-color: #E4E4E7;
+
+  /* Accents */
+  --primary-bg: #18181B;
+  --primary-fg: #FFFFFF;
+  --focus-ring: 0 0 0 1px rgba(24, 24, 27, 0.4);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-size-1: 32px;
+  --font-size-2: 20px;
+  --font-size-3: 14px;
+  --font-size-4: 12px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  /* Adjusted to 12px for standard gaps */
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 9999px;
+  --radius-round: 50%;
+  --radius-round-md: 8px;
+
+  /* Component Tokens */
+  --field-height: 24px;
+  --field-radius: 6px;
+
+  --field-bg: var(--surface-2);
+  --field-bg-hover: var(--surface-3);
+  --field-bg-focus: var(--surface-1);
+
+  --tab-bg-active: var(--surface-1);
+}
+
+/* Dark Theme - Premium Graphite/Obsidian */
+[data-theme='dark'] {
+  --surface-1: #18181B;
+  --surface-2: #09090B;
+  --surface-3: #27272A;
+  --surface-4: #3F3F46;
+
+  --text-primary: #FAFAFA;
+  --text-body: #E4E4E7;
+  --text-subtle: #A1A1AA;
+  --text-muted: #71717A;
+  --text-dim: #3F3F46;
+
+  --border-color: #27272A;
+
+  --primary-bg: #FAFAFA;
+  --primary-fg: #18181B;
+  --focus-ring: 0 0 0 1px rgba(255, 255, 255, 0.4);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+
+  --tab-bg-active: var(--surface-3);
+
+  --field-bg: var(--surface-2);
+  --field-bg-hover: var(--surface-3);
+}
