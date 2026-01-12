@@ -35,7 +35,7 @@ export interface FrameProps {
   /** Flex direction */
   direction?: 'row' | 'column';
 
-  /** Gap between children (in 4px units: 0, 1, 2, 3, 4, 6, 8, 12, 16, 24) */
+  /** Gap between children (4px unit scale: 0, 1, 2, 3, 4, 6, 8, 12, 16, 24) */
   gap?: GapScale;
 
   /** Justify content (main axis) */
@@ -103,7 +103,7 @@ const GAP_MAP: Record<GapScale, string> = {
 export function Frame({
   as: Element = 'div',
   direction = 'row',
-  gap = 0,
+  gap,
   justify,
   align,
   wrap = false,
@@ -123,8 +123,8 @@ export function Frame({
         // Direction
         direction === 'column' ? 'flex-col' : 'flex-row',
 
-        // Gap
-        GAP_MAP[gap],
+        // Gap (only if provided)
+        gap && GAP_MAP[gap],
 
         // Justify
         justify && JUSTIFY_MAP[justify],
