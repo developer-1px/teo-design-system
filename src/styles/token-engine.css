@@ -1,0 +1,171 @@
+@theme {
+    /* ========================================= */
+    /* 1. LAYOUT PHYSICS (Density & Spacing)     */
+    /* ========================================= */
+
+    /* Base Unit: 0.25rem (4px) */
+    --id-unit: 0.25rem;
+
+    /* Density Scales */
+    --id-density-compact: 0.75;
+    --id-density-standard: 1.0;
+    --id-density-comfortable: 1.5;
+
+    /* ========================================= */
+    /* 2. PHYSICALITY (Line vs Surface)          */
+    /* ========================================= */
+
+    /* Base Colors (Mapped to Tailwind Theme via CSS Variables) */
+    --id-bg-base: var(--color-surface-base);
+    --id-bg-subtle: var(--color-surface-sunken);
+    --id-border-base: var(--color-border-default);
+    --id-text-main: var(--color-text);
+    --id-text-subtle: var(--color-text-muted);
+
+    /* Physics Primitives */
+    /* 1. Solid: Opaque Background, No Border */
+    --phys-solid-bg: var(--id-bg-base);
+    --phys-solid-border: transparent;
+    --phys-solid-shadow: var(--shadow-sm);
+    /* Using var from themes.css */
+
+    /* 2. Outlined: Transparent BG, Visible Border */
+    --phys-outlined-bg: transparent;
+    --phys-outlined-border: var(--id-border-base);
+    --phys-outlined-shadow: none;
+
+    /* 3. Ghost: Transparent BG, Transparent Border */
+    --phys-ghost-bg: transparent;
+    --phys-ghost-border: transparent;
+    --phys-ghost-shadow: none;
+}
+
+/* ========================================= */
+/* 3. CONTEXTS & SCOPES                      */
+/* ========================================= */
+
+@layer base {
+    :root {
+        /* Current Density (Defaults to Standard) */
+        --id-density-scale: var(--id-density-standard);
+
+        /* Computed Spacing */
+        --id-gap: calc(2 * var(--id-unit) * var(--id-density-scale));
+        /* 8px base */
+        --id-padding: calc(3 * var(--id-unit) * var(--id-density-scale));
+        /* 12px base */
+        --id-radius: calc(1.5 * var(--id-unit) * var(--id-density-scale));
+        /* 6px base */
+
+        /* Current Physics (Defaults to Ghost/Borderless as per philosophy) */
+        --id-physics-bg: var(--phys-ghost-bg);
+        --id-physics-border: var(--phys-ghost-border);
+        --id-physics-shadow: var(--phys-ghost-shadow);
+    }
+
+    /* Density Logic via Data Attribute */
+    [data-density="Compact"] {
+        --id-density-scale: var(--id-density-compact);
+    }
+
+    [data-density="Standard"] {
+        --id-density-scale: var(--id-density-standard);
+    }
+
+    [data-density="Comfortable"] {
+        --id-density-scale: var(--id-density-comfortable);
+    }
+
+    /* Page Role Contexts */
+    [data-page-role="Immersive"] {
+        --id-bg-base: transparent;
+        --id-text-main: white;
+        --id-text-subtle: rgba(255, 255, 255, 0.7);
+        --id-border-base: rgba(255, 255, 255, 0.1);
+
+        /* Immersive Physics Overrides */
+        --phys-solid-bg: rgba(255, 255, 255, 0.08);
+        /* Glass */
+        --phys-solid-border: rgba(255, 255, 255, 0.1);
+        /* Subtle inset */
+        --phys-solid-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Role Defaults (The Physics Map) */
+
+    /* Card: Solid by default if Standard+ */
+    [data-role="Card"] {
+        /* Local Role Variables */
+        --local-bg: var(--card-bg, var(--color-surface-elevated));
+        --local-border: var(--card-border, var(--color-border-default));
+        --local-shadow: var(--card-shadow, var(--shadow-md));
+    }
+
+    [data-role="Card"][data-prominence="Standard"],
+    [data-role="Card"][data-prominence="Strong"],
+    [data-role="Card"][data-prominence="Hero"] {
+        --id-physics-bg: var(--local-bg);
+        --id-physics-border: var(--local-border);
+        --id-physics-shadow: var(--local-shadow);
+    }
+
+    /* Panel: Outlined by default if Standard */
+    [data-role="Panel"][data-prominence="Standard"] {
+        --id-physics-bg: var(--phys-outlined-bg);
+        --id-physics-border: var(--phys-outlined-border);
+        --id-physics-shadow: var(--phys-outlined-shadow);
+    }
+
+    /* Button: Solid if Strong, Outlined if Standard, Ghost if Subtle */
+    [data-role="Button"][data-prominence="Hero"],
+    [data-role="Button"][data-prominence="Strong"] {
+        --id-physics-bg: var(--phys-solid-bg);
+        /* Need explicit Intent Color mapping here later */
+        --id-physics-border: var(--phys-solid-border);
+        --id-physics-shadow: var(--phys-solid-shadow);
+    }
+
+    [data-role="Button"][data-prominence="Standard"] {
+        --id-physics-bg: var(--phys-outlined-bg);
+        --id-physics-border: var(--phys-outlined-border);
+        --id-physics-shadow: var(--phys-outlined-shadow);
+    }
+
+    /* Menu: Floating white surface */
+    [data-role="Menu"] {
+        --local-bg: var(--color-surface-floating);
+        --local-border: var(--color-border-muted);
+        --local-shadow: var(--shadow-lg);
+    }
+
+    /* Apply local variables to physics primitives */
+    [data-role="Menu"][data-prominence="Standard"] {
+        --id-physics-bg: var(--local-bg);
+        --id-physics-border: var(--local-border);
+        --id-physics-shadow: var(--local-shadow);
+    }
+}
+
+/* ========================================= */
+/* 4. UTILITIES (The Export)                 */
+/* ========================================= */
+
+@layer utilities {
+
+    /* Usage: className="iddl-layout" */
+    .iddl-layout {
+        padding: var(--id-padding);
+        gap: var(--id-gap);
+        border-radius: var(--id-radius);
+    }
+
+    /* Usage: className="iddl-structure" */
+    .iddl-structure {
+        background-color: var(--id-physics-bg);
+        border-width: 1px;
+        /* Always 1px, but color determines visibility */
+        border-color: var(--id-physics-border);
+        box-shadow: var(--id-physics-shadow);
+        color: var(--id-text-main);
+    }
+}

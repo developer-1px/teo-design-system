@@ -9,10 +9,10 @@
 
 import { Moon as MoonIcon, Sun as SunIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import {
   applyThemeConfig,
   type ColorScheme,

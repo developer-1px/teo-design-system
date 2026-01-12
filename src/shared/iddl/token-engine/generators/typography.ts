@@ -25,9 +25,16 @@ export function generateTypography(input: TokenInput): TypographyTokens {
 
     // 3. Color Logic
     let color = 'text-text'; // default semantic color
+    const isImmersive = input.pageRole === 'Immersive';
+
+    if (isImmersive) {
+        color = 'text-white';
+    }
 
     if (prominence === 'Subtle') {
-        color = 'text-text-muted';
+        color = isImmersive ? 'text-white/40' : 'text-text-subtle';
+    } else if (prominence === 'Strong') {
+        color = isImmersive ? 'text-white' : 'text-text';
     } else if (prominence === 'Hero' && (role === 'Button' || role === 'Action' || role === 'IconButton')) {
         // Hero Actions have solid backgrounds, so they need inverse text
         color = 'text-white';
@@ -45,10 +52,21 @@ export function generateTypography(input: TokenInput): TypographyTokens {
         color = 'text-text-subtle opacity-50';
     }
 
+    if (role === 'Title' && prominence === 'Hero') {
+        size = 'text-6xl md:text-8xl'; // Premium scale
+    }
+
+    // 4. Font Family Logic
+    let fontFamily = 'font-sans';
+    if (role === 'Title' || role === 'Heading') {
+        fontFamily = 'font-display';
+    }
+
     return {
         size,
         weight,
-        lineHeight: 'leading-normal',
-        color
+        lineHeight: (role === 'Title' || role === 'Heading') ? 'leading-tight' : 'leading-normal',
+        color,
+        fontFamily
     };
 }

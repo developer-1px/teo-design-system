@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ShowcasePage } from '@/components/showcase/ShowcasePage';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Field, type FieldOption } from '@/components/types/Element/Field/Field';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Field, type FieldOption } from '@/components/dsl/Element/Field/Field';
+import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function AtomsShowcasePage() {
   // Form state for all field types

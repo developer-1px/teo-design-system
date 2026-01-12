@@ -12,9 +12,9 @@ import { jsonToTypeScript } from '@/apps/JSON/lib/json-to-typescript';
 import type { JsonArray, JsonObject } from '@/apps/JSON/widgets/database/types';
 import { TableView } from '@/apps/JSON/widgets/database/views/TableView';
 import { FormView } from '@/apps/JSON/widgets/json-viewer/FormView';
-import { Overlay } from '@/components/types/Overlay/Overlay';
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
+import { Overlay } from '@/components/dsl/Overlay/Overlay';
+import { Page } from '@/components/dsl/Page/Page';
+import { Section } from '@/components/dsl/Section/Section';
 
 export const JSONPage = () => {
   const [copied, setCopied] = useState(false);

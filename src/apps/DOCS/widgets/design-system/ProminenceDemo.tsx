@@ -4,10 +4,10 @@
  * 주목도 시스템이 어떻게 작동하는지 시각적으로 보여줍니다.
  */
 
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 
 export const ProminenceDemo = () => {
   return (

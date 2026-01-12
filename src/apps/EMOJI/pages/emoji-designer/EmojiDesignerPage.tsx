@@ -18,13 +18,13 @@ import {
 } from '@/apps/EMOJI/lib/emoji-designer/utils';
 import { ColorPalette } from '@/apps/EMOJI/widgets/emoji-designer/ColorPalette';
 import { EmojiCanvas } from '@/apps/EMOJI/widgets/emoji-designer/EmojiCanvas';
-import { Block } from '@/components/types/Block/Block';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/types/Block/role/Tabs';
-import { Button } from '@/components/types/Element/Action/role/Button';
+import { Block } from '@/components/dsl/Block/Block';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/dsl/Block/role/Tabs';
+import { Button } from '@/components/dsl/Element/Action/role/Button';
 // Imports removed
-import { Text } from '@/components/types/Element/Text/Text';
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Page } from '@/components/dsl/Page/Page';
+import { Section } from '@/components/dsl/Section/Section';
 
 export const EmojiDesignerPage = () => {
   const [state, setState] = useState<DesignerState>(() => ({

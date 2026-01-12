@@ -1,5 +1,5 @@
-import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block';
+import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function BlockListsDemo() {
   return (

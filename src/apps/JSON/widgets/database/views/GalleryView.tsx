@@ -2,10 +2,10 @@
  * GalleryView - Notion 스타일 Gallery (카드 그리드) 뷰
  */
 
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Card } from '@/components/types/Block/role/Card.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Card } from '@/components/dsl/Block/role/Card.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import type { JsonArray, JsonObject, ViewConfig } from '../types';
 
 interface GalleryViewProps {

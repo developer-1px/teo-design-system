@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { FileNode } from '@/apps/IDE/lib/file-loader';
-import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block';
+import { Text } from '@/components/dsl/Element/Text/Text';
 import type { TreeNode } from '@/shared/lib/keyboard/useTreeNavigation';
 
 interface FileTreeProps {

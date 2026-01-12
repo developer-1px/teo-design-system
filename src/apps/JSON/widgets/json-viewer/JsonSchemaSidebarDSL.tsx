@@ -10,9 +10,9 @@
 import { ChevronDown, ChevronRight, Code, Info } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { analyzeJsonSchema, generateTypeScriptInterface } from '@/apps/JSON/lib/json-schema';
-import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section';
+import { Block } from '@/components/dsl/Block/Block';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };

@@ -4,11 +4,11 @@
  */
 
 import { useMemo } from 'react';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Card } from '@/components/types/Block/role/Card.tsx';
-import { Badge } from '@/components/types/Element/Text/role/Badge.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Card } from '@/components/dsl/Block/role/Card.tsx';
+import { Badge } from '@/components/dsl/Element/Text/role/Badge.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import type { JsonArray, JsonObject, ViewConfig } from '../types';
 
 interface BoardViewProps {

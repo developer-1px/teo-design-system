@@ -6,20 +6,20 @@ Field는 사용자로부터 데이터를 입력받는 Element입니다.
 
 | Role | 설명 |
 |------|------|
-| `TextInput` | 단일 행 텍스트 |
-| `TextArea` | 다중 행 텍스트 |
-| `NumberInput` | 숫자 입력 |
-| `PasswordInput` | 비밀번호 |
-| `Select` | 드롭다운 선택 |
-| `Combobox` | 검색 가능 선택 |
-| `Checkbox` | 체크박스 |
-| `Switch` | 토글 스위치 |
-| `RadioGroup` | 라디오 그룹 |
-| `DateInput` | 날짜 선택 |
-| `TimeInput` | 시간 선택 |
-| `FileInput` | 파일 업로드 |
-| `Slider` | 슬라이더 조절 |
-| `OTPInput` | 인증번호 입력 |
+| Role | ARIA / 설명 |
+|------|------|
+| `Textbox` | `textbox`: 단일/다중 행 텍스트 |
+| `Spinbutton` | `spinbutton`: 숫자 입력 |
+| `Slider` | `slider`: 범위 선택 |
+| `Checkbox` | `checkbox`: 예/아니오 선택 |
+| `Switch` | `switch`: 온/오프 토글 |
+| `Radio` | `radio`: 단일 선택 (Radio Group) |
+| `Combobox` | `combobox`: 검색 + 선택 |
+| `Listbox` | `listbox`: 단순 선택 (Select) |
+| `Datepicker` | 날짜 선택 (Composite) |
+| `Filepicker` | 파일 업로드 (Composite) |
+| `Colorpicker` | 색상 선택 (Composite) |
+| `Rating` | 평점 (Custom) |
 
 ## Props
 

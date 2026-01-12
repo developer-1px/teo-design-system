@@ -6,8 +6,8 @@
  */
 
 import { createContext, useContext } from 'react';
-import type { BlockRole } from '@/components/types/Block/Block.types';
-import type { LayoutContextValue } from '@/components/types/Shared.types';
+import type { BlockRole } from '@/components/dsl/Block/Block.types';
+import type { LayoutContextValue } from '@/components/dsl/Shared.types';
 
 /**
  * IDDL Context
@@ -71,7 +71,8 @@ export interface BlockLayoutContextValue {
   intent?: LayoutContextValue['intent'];
   depth: number;
   mode?: 'view' | 'edit';
-  sectionRole?: string; // v5.1: 현재 Section의 role (PrimarySidebar, SecondarySidebar, Panel 등)
+  sectionRole?: string;
+  pageRole?: string;
 }
 
 /**

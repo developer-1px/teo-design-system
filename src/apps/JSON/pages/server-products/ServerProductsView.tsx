@@ -1,11 +1,11 @@
 // ColumnDef import removed - unused
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebar } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebar';
-import { Block } from '@/components/types/Block/Block';
-import { DataTable, type IDDLColumnDef } from '@/components/types/Block/role/DataTable.tsx';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block';
+import { DataTable, type IDDLColumnDef } from '@/components/dsl/Block/role/DataTable.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;

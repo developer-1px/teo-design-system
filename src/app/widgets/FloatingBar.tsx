@@ -16,10 +16,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { APP_CONFIGS, type AppType } from '@/app/contexts/app-context.tsx';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
-import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action.tsx';
+import { Separator } from '@/components/dsl/Element/Separator/Separator.tsx';
+import { Overlay } from '@/components/dsl/Overlay/Overlay.tsx';
 import { getThemeConfig, type Theme, toggleTheme as toggleThemeUtil } from '@/shared/lib/theme';
 
 export const FloatingBar = () => {

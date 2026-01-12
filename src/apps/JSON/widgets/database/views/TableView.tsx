@@ -5,8 +5,8 @@
 
 // ColumnDef import removed - unused
 import { useMemo, useState } from 'react';
-import { DataTable, type IDDLColumnDef } from '@/components/types/Block/role/DataTable.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
+import { DataTable, type IDDLColumnDef } from '@/components/dsl/Block/role/DataTable.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text.tsx';
 import type { JsonArray, JsonObject, JsonValue, ViewConfig } from '../types';
 
 interface TableViewProps {

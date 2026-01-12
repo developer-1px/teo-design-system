@@ -29,7 +29,7 @@ import { AppSection } from '@/apps/SECTION/AppSection.tsx';
 import { SectionTypeShowcase } from '@/apps/SHOWCASE/pages/SectionTypeShowcase';
 import { TokenEngineShowcase } from '@/apps/SHOWCASE/pages/TokenEngineShowcase';
 import { AppText } from '@/apps/TEXT/AppText.tsx';
-import { CommandPalette } from '@/components/types/Overlay/CommandPalette.tsx';
+import { CommandPalette } from '@/components/dsl/Overlay/CommandPalette.tsx';
 
 function App() {
   // Note: Theme initialization moved to main.tsx (before React renders)

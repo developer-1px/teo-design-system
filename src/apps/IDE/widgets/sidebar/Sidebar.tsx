@@ -9,7 +9,7 @@ import { SearchView } from '@/apps/IDE/widgets/sidebar-views/SearchView';
 import { SettingsView } from '@/apps/IDE/widgets/sidebar-views/SettingsView';
 import { SourceControlView } from '@/apps/IDE/widgets/sidebar-views/SourceControlView';
 import { TokensView } from '@/apps/IDE/widgets/sidebar-views/TokensView';
-import { Section } from '@/components/types/Section/Section';
+import { Section } from '@/components/dsl/Section/Section';
 
 interface SidebarProps {
   currentView: string;

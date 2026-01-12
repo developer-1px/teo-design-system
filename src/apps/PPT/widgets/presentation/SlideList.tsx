@@ -17,9 +17,9 @@
  * v1.0.4: Focus management 통합 (브라우저 포커스 자동 이동)
  */
 
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Text } from '@/components/dsl/Element/Text/Text';
 import { useSelection } from '@/shared/lib/selection/useSelection';
 import { SlidePreview } from './SlidePreview';
 

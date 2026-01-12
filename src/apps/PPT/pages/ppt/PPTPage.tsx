@@ -19,10 +19,10 @@ import { DSLSlideCanvas } from '@/apps/PPT/widgets/presentation/DSLSlideCanvas.t
 import { FormatSidebar } from '@/apps/PPT/widgets/presentation/FormatSidebar.tsx';
 import { PresentationToolbar } from '@/apps/PPT/widgets/presentation/PresentationToolbar.tsx';
 import { type Slide, SlideList } from '@/apps/PPT/widgets/presentation/SlideList.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
-import { Overlay } from '@/components/types/Overlay/Overlay.tsx';
-import { Page } from '@/components/types/Page/Page.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text.tsx';
+import { Overlay } from '@/components/dsl/Overlay/Overlay.tsx';
+import { Page } from '@/components/dsl/Page/Page.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import { PresentationModePage } from './PresentationModePage';
 
 // 초기 샘플 슬라이드 데이터 (fallback)

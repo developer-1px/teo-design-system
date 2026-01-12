@@ -9,7 +9,7 @@ Block은 Element들을 논리적으로 그룹화하거나 레이아웃을 구성
 - `GridLayout`: 규칙적인 그리드 배치
 - `Card`: 독립적인 콘텐츠 묶음
 - `ScrollArea`: 스크롤 가능 영역
-- `Group`: 의미 없는 단순 그룹핑
+- `Divider`: 구분선 (separator)
 
 ### Navigation (탐색)
 - `Tabs`: 탭 네비게이션

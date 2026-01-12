@@ -1,5 +1,16 @@
-import { TokenInput, SpacingTokens } from '../types';
+import { TokenInput, SpacingTokens, Prominence } from '../types';
 import { BASE_GAP_MAP, BASE_PADDING_MAP, DENSITY_MULTIPLIER } from '../constants/maps';
+
+// Prominence scale factors (높을수록 더 큰 spacing)
+const PROMINENCE_MULTIPLIER: Record<Prominence, number> = {
+    Hero: 1.5,      // Largest spacing (maximum visual weight)
+    Elevated: 1.29, // Elevated above standard
+    Strong: 1.125,  // Slightly larger than standard
+    Standard: 1.0,  // Baseline
+    Subtle: 0.875,  // Reduced spacing
+    None: 0.75,     // Minimal spacing
+    Hidden: 0       // No spacing (collapsed)
+};
 
 export function generateSpacing(input: TokenInput): SpacingTokens {
     const {
@@ -11,7 +22,7 @@ export function generateSpacing(input: TokenInput): SpacingTokens {
 
     // 1. Resolve Multipliers
     const densityMult = DENSITY_MULTIPLIER[density];
-    const prominenceMult = prominence === 'Hero' ? 1.5 : 1.0;
+    const prominenceMult = PROMINENCE_MULTIPLIER[prominence];
 
     // 2. Gap Calculation
     // Priority: sectionType -> Default

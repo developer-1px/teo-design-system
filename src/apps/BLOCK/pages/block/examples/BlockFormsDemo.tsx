@@ -1,6 +1,6 @@
-import { Block } from '@/components/types/Block/Block';
-import { Field } from '@/components/types/Element/Field/Field';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block';
+import { Field } from '@/components/dsl/Element/Field/Field';
+import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function BlockFormsDemo() {
   return (

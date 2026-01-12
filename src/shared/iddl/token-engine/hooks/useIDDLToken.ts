@@ -23,6 +23,7 @@ export function useIDDLToken(localInput: Partial<TokenInput>): TokenOutput {
         // Contextual derivations
         sectionRole: localInput.sectionRole || blockContext.sectionRole,
         sectionType: localInput.sectionType || context.type,
+        pageRole: localInput.pageRole || context.pageRole, // v6.3: Consume Page Context
 
         // Inheritable props (Local overrides Context)
         prominence: localInput.prominence ?? context.prominence ?? 'Standard',

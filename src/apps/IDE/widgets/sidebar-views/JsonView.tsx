@@ -1,9 +1,9 @@
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
 // Text import removed - unused
-import { Section } from '@/components/types/Section/Section';
+import { Section } from '@/components/dsl/Section/Section';
 import { SidebarHeader } from './SidebarHeader';
 
 export const JsonView = () => {

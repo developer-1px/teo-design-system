@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ShowcasePage } from '@/components/showcase/ShowcasePage';
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Overlay } from '@/components/types/Overlay/Overlay';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Overlay } from '@/components/dsl/Overlay/Overlay';
 
 export function OverlayShowcasePage() {
   const [activeOverlay, setActiveOverlay] = useState<string | null>(null);

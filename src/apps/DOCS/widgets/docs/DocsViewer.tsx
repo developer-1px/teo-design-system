@@ -10,12 +10,12 @@
 
 import { useEffect, useState } from 'react';
 import { getAllDocs } from '@/apps/DOCS/lib/docs-scanner';
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Field } from '@/components/types/Element/Field/Field';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Field } from '@/components/dsl/Element/Field/Field';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Page } from '@/components/dsl/Page/Page';
+import { Section } from '@/components/dsl/Section/Section';
 import { DocsTree } from './DocsTree.tsx';
 import { MarkdownRenderer } from './MarkdownRenderer.tsx';
 

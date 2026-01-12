@@ -4,7 +4,7 @@
 
 import { Check, Copy } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface ColorSwatchProps {

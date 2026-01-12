@@ -10,7 +10,7 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkGfm from 'remark-gfm';
 import { AtomsShowcase } from '@/apps/DOCS/widgets/docs/interactive/AtomsShowcase';
 import { ComponentsShowcase } from '@/apps/DOCS/widgets/docs/interactive/ComponentsShowcase';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface MarkdownRendererProps {

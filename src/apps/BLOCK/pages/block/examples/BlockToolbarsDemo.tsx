@@ -1,7 +1,7 @@
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Separator } from '@/components/dsl/Element/Separator/Separator.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function BlockToolbarsDemo() {
   return (

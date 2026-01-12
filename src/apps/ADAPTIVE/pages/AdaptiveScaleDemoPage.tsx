@@ -5,7 +5,7 @@
  */
 
 import { useState } from 'react';
-import type { Density, Prominence } from '@/components/types/Shared.types';
+import type { Density, Prominence } from '@/components/dsl/Shared.types';
 import {
   calculateAdaptiveSpacing,
   getTypeScaleToken,

@@ -19,14 +19,14 @@ import { SourceControlView } from '@/apps/IDE/widgets/sidebar-views/SourceContro
 import { TokensView } from '@/apps/IDE/widgets/sidebar-views/TokensView';
 import { RightNav } from '@/apps/IDE/widgets/workspace/RightNav';
 import { WorkspaceNav } from '@/apps/IDE/widgets/workspace/WorkspaceNav';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
-import { SearchModalDSL as SearchModal } from '@/components/types/Overlay/SearchModalDSL';
-import { SettingsModalDSL as SettingsModal } from '@/components/types/Overlay/SettingsModalDSL';
-import { Page } from '@/components/types/Page/Page.tsx';
-import { RightBar } from '@/components/types/Section/role/RightBar.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text.tsx';
+import { SearchModalDSL as SearchModal } from '@/components/dsl/Overlay/SearchModalDSL';
+import { SettingsModalDSL as SettingsModal } from '@/components/dsl/Overlay/SettingsModalDSL';
+import { Page } from '@/components/dsl/Page/Page.tsx';
+import { RightBar } from '@/components/dsl/Section/role/RightBar.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import type { TreeNode } from '@/shared/lib/keyboard/useTreeNavigation';
 
 interface OpenFile {
@@ -215,10 +215,9 @@ export const IDEPage = () => {
         <RightNav onViewChange={setRightPanelView} onClose={() => setRightPanelView(null)} />
       </Section>
 
-      {/* 7. Footer */}
       <Section
-        role="Footer"
-        prominence="Subtle"
+        role="Status"
+        prominence="Standard"
         density="Compact"
       >
         <Block role="Toolbar">

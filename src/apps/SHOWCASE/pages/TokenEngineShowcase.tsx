@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Page } from '@/components/dsl/Page/Page';
+import { Section } from '@/components/dsl/Section/Section';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Text } from '@/components/dsl/Element/Text/Text';
 import { useSelection } from '@/shared/lib/selection/useSelection';
 import { cn } from '@/shared/lib/utils';
 

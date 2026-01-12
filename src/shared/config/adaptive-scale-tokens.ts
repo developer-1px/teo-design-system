@@ -6,7 +6,7 @@
  * @see docs/1-project/adaptive-scale-system.md
  */
 
-import type { Density, Prominence } from '@/components/types/Shared.types';
+import type { Density, Prominence } from '@/components/dsl/Shared.types';
 import { type SectionType, TYPE_SCALE_TOKENS, type TypeScaleTokens } from './type-scale-tokens';
 
 // Re-export SectionType for external use

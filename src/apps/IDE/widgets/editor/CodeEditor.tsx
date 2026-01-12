@@ -5,7 +5,7 @@ import { json } from '@codemirror/lang-json';
 import { markdown } from '@codemirror/lang-markdown';
 import { EditorView } from '@codemirror/view';
 import CodeMirror from '@uiw/react-codemirror';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import { MarkdownViewer } from './MarkdownViewer.tsx';
 
 interface CodeEditorProps {

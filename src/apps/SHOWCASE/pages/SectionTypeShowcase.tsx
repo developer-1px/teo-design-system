@@ -1,5 +1,5 @@
-import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section';
 
 export function SectionTypeShowcase() {
   return (

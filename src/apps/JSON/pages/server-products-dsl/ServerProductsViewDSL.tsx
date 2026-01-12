@@ -18,14 +18,14 @@
 // ColumnDef import removed - unused
 import { useMemo, useState } from 'react';
 import { JsonSchemaSidebarDSL } from '@/apps/JSON/widgets/json-viewer/JsonSchemaSidebarDSL';
-import { Block } from '@/components/types/Block/Block';
-import { DataTable, type IDDLColumnDef } from '@/components/types/Block/role/DataTable.tsx';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Field } from '@/components/types/Element/Field/Field';
-import { Badge } from '@/components/types/Element/Text/role/Badge';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Page } from '@/components/types/Page/Page';
-import { Section } from '@/components/types/Section/Section';
+import { Block } from '@/components/dsl/Block/Block';
+import { DataTable, type IDDLColumnDef } from '@/components/dsl/Block/role/DataTable.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Field } from '@/components/dsl/Element/Field/Field';
+import { Badge } from '@/components/dsl/Element/Text/role/Badge';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Page } from '@/components/dsl/Page/Page';
+import { Section } from '@/components/dsl/Section/Section';
 import testData from '@/test.json';
 
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;

@@ -1,7 +1,7 @@
 import { Play } from 'lucide-react';
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Section } from '@/components/types/Section/Section';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Section } from '@/components/dsl/Section/Section';
 import { Button } from './components/ui/button';
 import { SidebarHeader } from './SidebarHeader';
 

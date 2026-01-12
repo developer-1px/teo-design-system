@@ -1,8 +1,8 @@
 import { ShowcasePage } from '@/components/showcase/ShowcasePage';
-import { Block } from '@/components/types/Block/Block';
-import type { BlockRole } from '@/components/types/Block/Block.types';
-import { ROLE_CONFIGS } from '@/components/types/Block/role-config';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block';
+import type { BlockRole } from '@/components/dsl/Block/Block.types';
+import { ROLE_CONFIGS } from '@/components/dsl/Block/role-config';
+import { Text } from '@/components/dsl/Element/Text/Text';
 import { SectionSpecDemo } from './examples/SectionSpecDemo';
 
 // Categorize roles for display

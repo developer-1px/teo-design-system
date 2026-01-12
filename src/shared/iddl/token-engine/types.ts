@@ -6,13 +6,14 @@ export type SectionType =
 
 export type Role = string; // Broad string to allow extensibility, but practically 'Button', 'Card', etc.
 
-export type Prominence = 'Hero' | 'Standard' | 'Subtle' | 'Hidden';
+export type Prominence = 'Hero' | 'Standard' | 'Strong' | 'Subtle' | 'Elevated' | 'None' | 'Hidden';
 export type Intent = 'Neutral' | 'Brand' | 'Positive' | 'Caution' | 'Critical' | 'Info';
 export type Density = 'Comfortable' | 'Standard' | 'Compact';
 
 export interface TokenInput {
     role: Role;
     sectionRole?: string; // Optional because sometimes we just want element tokens
+    pageRole?: string; // v6.3: Page Context Awareness
     sectionType?: SectionType;
     prominence?: Prominence;
     intent?: Intent;
@@ -43,6 +44,7 @@ export interface GeometryTokens {
     radius: string; // e.g. "rounded-lg"
     outline: string; // e.g. "outline-1 outline-primary"
     outlineOffset: string; // e.g. "outline-offset-2"
+    overflow: string; // e.g. "overflow-visible" (default), "overflow-hidden" (explicit only)
 }
 
 export interface TypographyTokens {
@@ -50,6 +52,7 @@ export interface TypographyTokens {
     weight: string;
     lineHeight: string;
     color: string;
+    fontFamily: string; // v6.4: Custom font families
 }
 
 export interface ShadowTokens {
@@ -62,4 +65,5 @@ export interface TokenOutput {
     geometry: GeometryTokens;
     typography: TypographyTokens;
     shadow: ShadowTokens;
+    extraClasses?: string; // v6.5: For arbitrary premium styling (rings, insets, etc.)
 }

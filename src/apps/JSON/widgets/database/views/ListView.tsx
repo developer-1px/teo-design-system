@@ -3,9 +3,9 @@
  * 간단하고 컴팩트한 리스트
  */
 
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import type { JsonArray, JsonObject } from '../types';
 
 interface ListViewProps {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action.tsx';
 
 interface RightNavProps {
   onViewChange?: (view: string | null) => void;

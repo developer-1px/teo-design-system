@@ -1,9 +1,9 @@
 import { FileCode, FileJson, FileType } from 'lucide-react';
 import { useState } from 'react';
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface Tab {

@@ -3,7 +3,7 @@
  */
 
 import { Check, X } from 'lucide-react';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 
 interface ComparisonCardProps {
   title: string;

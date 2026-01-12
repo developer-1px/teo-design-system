@@ -1,6 +1,6 @@
-import { Block } from '@/components/types/Block/Block';
-import { Separator } from '@/components/types/Element/Separator/Separator.tsx';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block';
+import { Separator } from '@/components/dsl/Element/Separator/Separator.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text';
 
 export function BlockStructureDemo() {
   return (

@@ -1,100 +1,100 @@
-import { useCallback, useState } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+
+type Direction = 'top' | 'right' | 'bottom' | 'left';
 
 interface UseResizableProps {
-  initialSize: number;
+  initialSize?: number;
   minSize?: number;
   maxSize?: number;
-  direction?: 'horizontal' | 'vertical';
-  reverse?: boolean; // If true, resizing grows to the left/top
+  direction?: Direction;
   onResize?: (size: number) => void;
   onResizeEnd?: (size: number) => void;
 }
 
-export const useResizable = ({
-  initialSize,
-  minSize = 0,
-  maxSize = Infinity,
-  direction = 'horizontal',
-  reverse = false,
+export function useResizable({
+  initialSize = 250,
+  minSize = 100,
+  maxSize = 800,
+  direction = 'right',
   onResize,
   onResizeEnd,
-}: UseResizableProps) => {
+}: UseResizableProps) {
   const [size, setSize] = useState(initialSize);
   const [isResizing, setIsResizing] = useState(false);
+  const isResizingRef = useRef(false);
+  const startSizeRef = useRef(initialSize);
+  const startPosRef = useRef(0);
 
-  const startResizing = useCallback(
-    (mouseDownEvent: React.MouseEvent) => {
-      mouseDownEvent.preventDefault();
-      setIsResizing(true);
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      const startX = mouseDownEvent.clientX;
-      const startY = mouseDownEvent.clientY;
-      const startSize = size;
+    setIsResizing(true);
+    isResizingRef.current = true;
+    startSizeRef.current = size;
 
-      const doDrag = (mouseMoveEvent: MouseEvent) => {
-        let delta = 0;
-        if (direction === 'horizontal') {
-          delta = mouseMoveEvent.clientX - startX;
-        } else {
-          delta = mouseMoveEvent.clientY - startY;
-        }
+    // Determine start position based on direction
+    if (direction === 'left' || direction === 'right') {
+      startPosRef.current = e.clientX;
+    } else {
+      startPosRef.current = e.clientY;
+    }
 
-        if (reverse) {
-          delta = -delta;
-        }
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = (direction === 'left' || direction === 'right') ? 'col-resize' : 'row-resize';
+    document.body.style.userSelect = 'none';
+  }, [direction, size]);
 
-        let newSize = startSize + delta;
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isResizingRef.current) return;
 
-        // Apply constraints
-        newSize = Math.max(minSize, Math.min(maxSize, newSize));
+    let delta = 0;
+    if (direction === 'right') {
+      delta = e.clientX - startPosRef.current;
+    } else if (direction === 'left') {
+      delta = startPosRef.current - e.clientX;
+    } else if (direction === 'bottom') {
+      delta = e.clientY - startPosRef.current;
+    } else if (direction === 'top') {
+      delta = startPosRef.current - e.clientY;
+    }
 
-        setSize(newSize);
-        if (onResize) {
-          onResize(newSize);
-        }
-      };
+    const newSize = Math.min(Math.max(startSizeRef.current + delta, minSize), maxSize);
 
-      const stopDrag = () => {
-        setIsResizing(false);
-        document.removeEventListener('mousemove', doDrag);
-        document.removeEventListener('mouseup', stopDrag);
-        if (onResizeEnd) {
-          onResizeEnd(size); // Note: this uses the closure 'size' which is stale? No, 'size' is state.
-          // Actually, inside the closure 'size' refers to the state at bind time.
-          // We should calculate the final size again or rely on the last setSize?
-          // Let's just pass nothing or rely on the last update.
-          // Actually, 'doDrag' updates the state. 'onResizeEnd' is usually for cleanup.
-          // Passing the *current* calculated size from doDrag to a variable would be safer,
-          // but 'doDrag' and 'stopDrag' are defined inside 'startResizing'.
-          // 'startResizing' is dependent on 'size'.
-          // So 'startSize' is captured. 'delta' is calculated relative to 'startX/Y'.
-          // So we can recalculate final size in stopDrag if needed, but usually onResize covers it.
-          // Let's assume onResizeEnd is simpler.
-        }
-      };
+    setSize(newSize);
+    onResize?.(newSize);
+  }, [direction, minSize, maxSize, onResize]);
 
-      document.addEventListener('mousemove', doDrag);
-      document.addEventListener('mouseup', stopDrag);
-    },
-    [size, minSize, maxSize, direction, reverse, onResize, onResizeEnd]
-  );
+  const handleMouseUp = useCallback(() => {
+    setIsResizing(false);
+    isResizingRef.current = false;
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    onResizeEnd?.(size);
+  }, [size, onResizeEnd]);
+
+  useEffect(() => {
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [handleMouseMove, handleMouseUp]);
 
   return {
     size,
     isResizing,
-    separatorProps: {
-      onMouseDown: startResizing,
-      'data-resizing': isResizing,
-      style: {
-        cursor: direction === 'horizontal' ? 'col-resize' : 'row-resize',
-        userSelect: 'none' as const,
-      },
-      role: 'separator',
-      'aria-valuenow': size,
-      'aria-valuemin': minSize,
-      'aria-valuemax': maxSize,
-      'aria-orientation': direction,
-    },
-    setSize, // Manually set size if needed
+    handleProps: {
+      onMouseDown: handleMouseDown,
+      // Touch support could be added here
+      className: `absolute z-50 transition-colors hover:bg-primary/50 ${isResizing ? 'bg-primary' : 'bg-transparent'
+        } ${direction === 'right' ? 'top-0 right-0 w-1 h-full cursor-col-resize hover:w-1.5' :
+          direction === 'left' ? 'top-0 left-0 w-1 h-full cursor-col-resize hover:w-1.5' :
+            direction === 'bottom' ? 'bottom-0 left-0 w-full h-1 cursor-row-resize hover:h-1.5' :
+              'top-0 left-0 w-full h-1 cursor-row-resize hover:h-1.5'
+        }`
+    }
   };
-};
+}

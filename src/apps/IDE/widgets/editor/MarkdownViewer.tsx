@@ -2,7 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import { cn } from '@/shared/lib/utils';
 
 interface MarkdownViewerProps {

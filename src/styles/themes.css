@@ -98,30 +98,45 @@
      ============================================================================ */
 
   /* Surface (Background layers - 7-Layer System mapping) */
-  --color-surface-base: var(--color-gray-50);      /* Layer 0: App background */
-  --color-surface-sunken: var(--color-gray-100);   /* Layer 1: Inputs, terminals */
-  --color-surface: white;                          /* Layer 2: Sidebar, panels */
-  --color-surface-raised: white;                   /* Layer 3: Editor, main content */
-  --color-surface-elevated: white;                 /* Layer 4: Toolbars, active tabs */
-  --color-surface-floating: white;                 /* Layer 5: Dropdowns, popovers */
-  --color-surface-overlay: white;                  /* Layer 6: Modals, dialogs */
+  --color-surface-base: var(--color-gray-50);
+  /* Layer 0: App background */
+  --color-surface-sunken: var(--color-gray-100);
+  /* Layer 1: Inputs, terminals */
+  --color-surface: white;
+  /* Layer 2: Sidebar, panels */
+  --color-surface-raised: white;
+  /* Layer 3: Editor, main content */
+  --color-surface-elevated: white;
+  /* Layer 4: Toolbars, active tabs */
+  --color-surface-floating: white;
+  /* Layer 5: Dropdowns, popovers */
+  --color-surface-overlay: white;
+  /* Layer 6: Modals, dialogs */
 
   /* Text (IDDL Text prominence) */
-  --color-text: var(--color-gray-900);             /* Primary text */
-  --color-text-muted: var(--color-gray-600);       /* Secondary text */
-  --color-text-subtle: var(--color-gray-400);      /* Tertiary text */
-  --color-text-inverse: white;                     /* On dark backgrounds */
+  --color-text: var(--color-gray-900);
+  /* Primary text */
+  --color-text-muted: var(--color-gray-600);
+  /* Secondary text */
+  --color-text-subtle: var(--color-gray-400);
+  /* Tertiary text */
+  --color-text-inverse: white;
+  /* On dark backgrounds */
 
   /* Border */
-  --color-border-default: var(--color-gray-200);   /* Standard borders */
-  --color-border-muted: var(--color-gray-100);     /* Subtle borders */
-  --color-border-strong: var(--color-gray-300);    /* Emphasized borders */
+  --color-border-default: var(--color-gray-200);
+  /* Standard borders */
+  --color-border-muted: var(--color-gray-100);
+  /* Subtle borders */
+  --color-border-strong: var(--color-gray-300);
+  /* Emphasized borders */
 
   /* Primary (Brand - IDDL Intent: Brand) */
   --color-primary: var(--color-emerald-600);
   --color-primary-hover: var(--color-emerald-700);
   --color-primary-subtle: var(--color-emerald-100);
-  --color-on-primary: white;                       /* Text on primary background */
+  --color-on-primary: white;
+  /* Text on primary background */
 
   /* Accent (Alias for Primary - backward compatibility) */
   --color-accent: var(--color-primary);
@@ -130,14 +145,22 @@
   --color-on-accent: var(--color-on-primary);
 
   /* Semantic States (IDDL Intent mapping) */
-  --color-success: var(--color-green-600);         /* Positive */
-  --color-success-hover: #16a34a;                  /* green-700 */
-  --color-warning: var(--color-orange-600);        /* Caution */
-  --color-warning-hover: #d97706;                  /* orange-700 */
-  --color-error: var(--color-rose-600);            /* Critical */
-  --color-error-hover: #be123c;                    /* rose-700 */
-  --color-info: var(--color-sky-600);              /* Info */
-  --color-info-hover: #0369a1;                     /* sky-700 */
+  --color-success: var(--color-green-600);
+  /* Positive */
+  --color-success-hover: #16a34a;
+  /* green-700 */
+  --color-warning: var(--color-orange-600);
+  /* Caution */
+  --color-warning-hover: #d97706;
+  /* orange-700 */
+  --color-error: var(--color-rose-600);
+  /* Critical */
+  --color-error-hover: #be123c;
+  /* rose-700 */
+  --color-info: var(--color-sky-600);
+  /* Info */
+  --color-info-hover: #0369a1;
+  /* sky-700 */
 
   /* Interactive States */
   --color-hover: var(--color-gray-100);
@@ -220,6 +243,12 @@
     /* Primary subtle - Dark mode */
     --color-primary-subtle: var(--color-emerald-900);
 
+    /* Intent Colors - Dark mode (Lighter/Vibrant for contrast) */
+    --color-success: var(--color-green-500);
+    --color-warning: var(--color-orange-500);
+    --color-error: var(--color-rose-500);
+    --color-info: var(--color-sky-500);
+
     /* Interactive States - Dark mode */
     --color-hover: var(--color-gray-800);
     --color-active: var(--color-gray-700);
@@ -247,6 +276,11 @@
   --color-border-muted: var(--color-gray-100);
   --color-border-strong: var(--color-gray-300);
 
+  --color-success: var(--color-green-600);
+  --color-warning: var(--color-orange-600);
+  --color-error: var(--color-rose-600);
+  --color-info: var(--color-sky-600);
+
   --color-primary-subtle: var(--color-emerald-100);
 
   --color-hover: var(--color-gray-100);
@@ -271,6 +305,11 @@
   --color-border-default: var(--color-gray-700);
   --color-border-muted: var(--color-gray-800);
   --color-border-strong: var(--color-gray-600);
+
+  --color-success: var(--color-green-500);
+  --color-warning: var(--color-orange-500);
+  --color-error: var(--color-rose-500);
+  --color-info: var(--color-sky-500);
 
   --color-primary-subtle: var(--color-emerald-900);
 

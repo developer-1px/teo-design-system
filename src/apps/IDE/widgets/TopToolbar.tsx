@@ -17,11 +17,11 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { ThemeToggleButton } from '@/apps/IDE/widgets/ThemeSwitcher.tsx';
-import { Block } from '@/components/types/Block/Block';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Button } from '@/components/types/Element/Action/role/Button.tsx';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action.tsx';
+import { Button } from '@/components/dsl/Element/Action/role/Button.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section';
 
 interface TopToolbarProps {
   projectName?: string;

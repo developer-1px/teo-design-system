@@ -5,10 +5,10 @@
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import type { PixelColor } from '@/apps/EMOJI/lib/emoji-designer/types';
-import { Block } from '@/components/types/Block/Block';
-import { Button } from '@/components/types/Element/Action/role/Button';
+import { Block } from '@/components/dsl/Block/Block';
+import { Button } from '@/components/dsl/Element/Action/role/Button';
 // Input removed
-import { Text } from '@/components/types/Element/Text/Text';
+import { Text } from '@/components/dsl/Element/Text/Text';
 import { cn } from '@/shared/lib/utils';
 
 export interface ColorPaletteProps {

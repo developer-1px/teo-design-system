@@ -1,6 +1,6 @@
 import { AlertCircle } from 'lucide-react';
 import { type ComponentType, useEffect, useState } from 'react';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 
 interface ComponentPreviewProps {
   path: string;

@@ -10,8 +10,8 @@
 import { Check } from 'lucide-react';
 import { useState } from 'react';
 import { ShowcasePage } from '@/components/showcase/ShowcasePage';
-import { Block } from '@/components/types/Block/Block';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block';
+import { Text } from '@/components/dsl/Element/Text/Text';
 import { Navigable } from '@/shared/lib/behavior/Navigable/Navigable';
 import { useNavigableContext } from '@/shared/lib/behavior/Navigable/NavigableContext';
 import { Selectable } from '@/shared/lib/behavior/Selectable/Selectable';

@@ -8,7 +8,7 @@
  * @see docs/1-project/adaptive-scale-system.md
  */
 
-import type { SectionType, TypeScaleTokens } from '@/components/types/Section/Section.types';
+import type { SectionType, TypeScaleTokens } from '@/components/dsl/Section/Section.types';
 export type { SectionType, TypeScaleTokens };
 
 /**

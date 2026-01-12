@@ -6,13 +6,13 @@
 
 import { useMemo, useState } from 'react';
 import type { DatabaseConfig, JsonArray } from '@/apps/JSON/widgets/database/types';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Divider } from '@/components/types/Block/role/Divider.tsx';
-import { Action } from '@/components/types/Element/Action/Action.tsx';
-import { Badge } from '@/components/types/Element/Text/role/Badge.tsx';
-import { Text } from '@/components/types/Element/Text/Text.tsx';
-import { Page } from '@/components/types/Page/Page.tsx';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Divider } from '@/components/dsl/Block/role/Divider.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action.tsx';
+import { Badge } from '@/components/dsl/Element/Text/role/Badge.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text.tsx';
+import { Page } from '@/components/dsl/Page/Page.tsx';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import { ViewSwitcher } from './ViewSwitcher.tsx';
 import { BoardView } from './views/BoardView.tsx';
 import { GalleryView } from './views/GalleryView.tsx';

@@ -9,8 +9,8 @@
  */
 
 import type { ReactNode } from 'react';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Text } from '@/components/types/Element/Text/Text';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Text } from '@/components/dsl/Element/Text/Text';
 
 /**
  * 마크다운 라인 타입

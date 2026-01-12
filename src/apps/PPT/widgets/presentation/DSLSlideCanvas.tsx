@@ -9,10 +9,10 @@
 
 import { useState } from 'react';
 import { slideContentToDSL } from '@/apps/PPT/lib/markdown-to-dsl';
-import { Block } from '@/components/types/Block/Block.tsx';
-import { Action } from '@/components/types/Element/Action/Action';
-import { Text } from '@/components/types/Element/Text/Text';
-import { Section } from '@/components/types/Section/Section.tsx';
+import { Block } from '@/components/dsl/Block/Block.tsx';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section.tsx';
 import type { Slide } from './SlideList';
 
 interface DSLSlideCanvasProps {

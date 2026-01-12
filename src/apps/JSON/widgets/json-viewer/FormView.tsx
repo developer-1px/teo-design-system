@@ -8,7 +8,7 @@ import { X } from 'lucide-react';
 import { useMemo } from 'react';
 import type { JsonObject } from '@/apps/JSON/widgets/database/types';
 import { IDDLProvider } from '@/components/context/IDDLContext';
-import { Field } from '@/components/types/Element/Field/Field';
+import { Field } from '@/components/dsl/Element/Field/Field';
 
 export interface FormViewProps {
   /**
