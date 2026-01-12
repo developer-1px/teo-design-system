@@ -46,10 +46,7 @@ export const TopToolbar = ({
   const [showRunMenu, setShowRunMenu] = useState(false);
 
   return (
-    <Section
-      role="Header"
-      prominence="Hero"
-    >
+    <Section role="Header" prominence="Hero">
       {/* 1. Main Menu (Hamburger) */}
       <Block role="Dropdown">
         <Action
@@ -64,10 +61,7 @@ export const TopToolbar = ({
         />
 
         {showMainMenu && (
-          <Section
-            role="Container"
-            prominence="Hero"
-          >
+          <Section role="Container" prominence="Hero">
             <MainMenuContent />
           </Section>
         )}
@@ -90,10 +84,7 @@ export const TopToolbar = ({
         </Button>
 
         {showProjectMenu && (
-          <Section
-            role="Container"
-            prominence="Hero"
-          >
+          <Section role="Container" prominence="Hero">
             <ProjectMenuContent />
           </Section>
         )}
@@ -119,10 +110,7 @@ export const TopToolbar = ({
         </Button>
 
         {showVcsMenu && (
-          <Section
-            role="Container"
-            prominence="Hero"
-          >
+          <Section role="Container" prominence="Hero">
             <VcsMenuContent />
           </Section>
         )}
@@ -145,10 +133,7 @@ export const TopToolbar = ({
         </Button>
 
         {showRunMenu && (
-          <Section
-            role="Container"
-            prominence="Hero"
-          >
+          <Section role="Container" prominence="Hero">
             <RunMenuContent />
           </Section>
         )}

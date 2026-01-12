@@ -1,112 +1,114 @@
-import { TokenInput, SurfaceTokens } from '../types';
-import { SURFACE_BASE_MAP } from '../constants/maps';
 import { getSeparationTier } from '../constants/strategies';
+import type { SurfaceTokens, TokenInput } from '../types';
+
+// Strategy: Borderless & Gap-First
+// - Default is transparent (separation via whitespace/gap).
+// - Surface is applied only when containment is explicitly needed (Card, Panel) or for Inputs/Actions.
+
+// Strategy: Borderless & Gap-First
+// - Default is transparent (separation via whitespace/gap).
+// - Surface is applied explicitly via Role Metadata (v7.0) or for Inputs/Actions.
 
 export function generateSurface(input: TokenInput): SurfaceTokens {
-    const {
-        role,
-        prominence = 'Standard',
-        intent = 'Neutral',
-        state = {}
-    } = input;
+  const {
+    role,
+    prominence = 'Standard',
+    intent = 'Neutral',
+    state = {},
+    context,
+    roleMeta, // v7.0 Meta
+  } = input;
 
-    const isInput = role === 'Input' || role === 'TextField' || role === 'Select' || role === 'TextArea';
-    const tier = getSeparationTier(role, prominence, isInput);
+  // 1. Determine if this component *should* have a surface
+  // Axiom v7.0: Use explicit metadata instead of hardcoded list
+  const isSurfaceCreator = roleMeta?.separation === 'surface';
+  const isInput =
+    role === 'Input' || role === 'TextField' || role === 'Select' || role === 'TextArea';
+  const isAction =
+    role === 'Button' ||
+    role === 'Action' ||
+    role === 'IconButton' ||
+    role === 'Tab' ||
+    role === 'Chip';
 
-    // 1. Determine Background based on Tier
-    let background = 'bg-transparent';
-    let opacity = 1.0;
+  // 2. Base Background
+  let background = 'bg-transparent';
+  let opacity = 1.0;
 
-    switch (tier) {
-        case 'Level0': // Ghost
-            background = 'bg-transparent';
-            break;
+  if (isSurfaceCreator) {
+    // Surface Levels
+    if (prominence === 'Subtle') background = 'bg-surface-sunken';
+    else if (prominence === 'Hero' || prominence === 'Strong') background = 'bg-surface-elevated';
+    else background = 'bg-surface'; // Standard
+  } else if (isInput) {
+    background = 'bg-surface-input';
+  }
 
-        case 'Level1': // Surface (Standard)
-        case 'Level2': // Outlined (Strong) - Hybrid: Can have bg or be transparent
-        case 'Level3': // Elevated (Hero)
-            // Resolve base background
-            if (SURFACE_BASE_MAP[role]) {
-                background = SURFACE_BASE_MAP[role];
-            } else {
-                // Default fallback
-                background = 'bg-surface';
-            }
-            break;
+  // 3. Action Logic (Context-Aware)
+  if (isAction) {
+    // Hero Actions (Brand/Solid)
+    if (prominence === 'Hero' || prominence === 'Strong') {
+      if (intent === 'Brand') background = 'bg-primary text-text-inverse';
+      else if (intent === 'Critical') background = 'bg-error text-text-inverse';
+      else if (intent === 'Positive') background = 'bg-success text-text-inverse';
+      else if (intent === 'Caution') background = 'bg-warning text-text-inverse';
+      else if (intent === 'Info') background = 'bg-info text-text-inverse';
+      else background = 'bg-primary-emphasis text-text-inverse';
     }
-
-    // 2. Role/Intent Specific Overrides (Logic retained from original but simplified via Tier)
-    const isAction = role === 'Button' || role === 'Action' || role === 'IconButton' || role === 'Tab' || role === 'Chip';
-
-    if (isAction) {
-        if (tier === 'Level3' || (prominence === 'Hero')) { // Hero Action
-            switch (intent) {
-                case 'Brand': background = 'bg-primary text-text-inverse'; break;
-                case 'Positive': background = 'bg-success text-text-inverse'; break;
-                case 'Caution': background = 'bg-warning text-text-inverse'; break;
-                case 'Critical': background = 'bg-error text-text-inverse'; break;
-                case 'Info': background = 'bg-info text-text-inverse'; break;
-                default: background = 'bg-primary-emphasis text-text-inverse';
-            }
-        } else if (tier === 'Level2') { // Outlined Action
-            // Usually transparent with border, but can have subtle fill
-            background = 'bg-transparent'; // Strict Outline
-            // Optional: if designer wants "filled outline", change here.
-        } else if (tier === 'Level1') { // Standard Action (Secondary)
-            background = 'bg-secondary/50 hover:bg-secondary';
-        } else { // Level 0 (Ghost)
-            background = 'bg-transparent hover:bg-hover';
-        }
+    // Standard/Subtle Actions (Ghost/Tinted)
+    else if (prominence === 'Standard') {
+      // Secondary action style
+      background = 'bg-secondary/10 hover:bg-secondary/20 text-text';
+    } else {
+      // Subtle (Ghost)
+      background = 'bg-transparent hover:bg-surface-hover text-text';
     }
+  }
 
-    // 3. State Overrides
-    if (state.hover && !state.disabled) {
-        if (tier === 'Level0') {
-            background = 'bg-hover';
-        } else if (tier === 'Level1' || tier === 'Level2') {
-            // Darken slightly
-            // Note: Tailwind doesn't strictly support "bg-surface + darken", usually controlled via component hover classes
-            // We'll rely on component-level `hover:bg-surface-raised` or similar if needed, 
-            // but for Token Engine we might return a static hover token? 
-            // Current engine returns static classes.
-        }
+  // 4. State Overrides
+  if (state.hover && !state.disabled) {
+    // Note: For solid actions, the hover effect is often handled by CSS class modifiers (e.g. hover:bg-primary-dark).
+    // Here we handle the *token* level.
+    if (background === 'bg-transparent') {
+      background = 'bg-surface-hover';
     }
+  }
 
-    if (state.selected) {
-        background = 'bg-active text-text';
+  if (state.selected) {
+    background = 'bg-active text-text'; // Active/Selected state
+  }
+
+  if (state.disabled) {
+    opacity = 0.5;
+  }
+
+  // 5. Contextual Overrides
+  let blur = '';
+  const sectionType = context?.ancestry?.space; // e.g. 'bar', 'float'
+
+  // Float Space (Menu, Popover) -> Glassmorphism
+  if (sectionType === 'float' || role === 'Modal' || role === 'Popover') {
+    blur = 'backdrop-blur-md';
+    if (background === 'bg-surface') background = 'bg-surface/90'; // Translucency
+  }
+
+  // Bar Space -> Sometimes bars themselves need a background
+  // But usually the *Section* has the background, not the Block.
+  // However, if this Block IS a Toolbar, does it have a background?
+  // "Borderless" principle says: Toolbar should be transparent, separation via Gap.
+  // Unless prominence is elevated.
+
+  // Immersive Mode Override
+  if (input.pageRole === 'Immersive') {
+    if (role === 'Page') {
+      background =
+        'bg-slate-950 relative overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_50%_0%,rgba(56,189,248,0.15),transparent_50%)] before:pointer-events-none after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_100%_100%,rgba(168,85,247,0.1),transparent_50%)] after:pointer-events-none';
     }
+  }
 
-    // 4. Blur & Context Overrides (Retained)
-    let blur = '';
-    const isFloating = role === 'Modal' || role === 'Popover' || role === 'Toast' || role === 'Drawer';
-    const isSpecialSection = input.sectionType === 'Bar' || input.sectionType === 'Float';
-
-    if (isFloating || isSpecialSection) {
-        blur = 'backdrop-blur-md';
-    }
-
-    // Immersive Mode
-    if (input.pageRole === 'Immersive') {
-        if (role === 'Page' || role === 'Immersive') {
-            background = 'bg-slate-950 relative overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_50%_0%,rgba(56,189,248,0.15),transparent_50%)] before:pointer-events-none after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_100%_100%,rgba(168,85,247,0.1),transparent_50%)] after:pointer-events-none';
-        }
-        // Transparent sections
-        else if (role === 'Main' || role === 'Header' || role === 'Footer' || role === 'Section') {
-            background = 'bg-transparent';
-        }
-        else if (isAction && prominence === 'Standard') {
-            background = 'bg-white/5 hover:bg-white/10 text-white transition-colors duration-200';
-        }
-    }
-
-    // Paper Mode
-    if (input.pageRole === 'Paper' && role === 'Page') {
-        background = 'bg-[#fcfaf7]';
-    }
-
-    return {
-        background,
-        opacity,
-        blur
-    };
+  return {
+    background,
+    opacity,
+    blur,
+  };
 }

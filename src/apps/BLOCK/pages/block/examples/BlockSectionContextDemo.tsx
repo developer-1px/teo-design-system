@@ -26,9 +26,7 @@ export function BlockSectionContextDemo() {
       </Section>
 
       {/* 2. Panel Section (Restricted Context) */}
-      <Section
-        role="Panel"
-      >
+      <Section role="Panel">
         <Text role="Label" content="Section: Panel (Sidebar/Split)" prominence="Strong" />
         <Block role="Card">
           <Text

@@ -1,6 +1,6 @@
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/dsl/Block/Block.tsx';
 import { Text } from '@/components/dsl/Element/Text/Text.tsx';
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
 export function TextShowcasePage() {
   const categories = [

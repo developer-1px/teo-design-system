@@ -1,46 +1,51 @@
-import { TokenInput, SpacingTokens, Prominence } from '../types';
-import { BASE_GAP_MAP, BASE_PADDING_MAP, DENSITY_MULTIPLIER } from '../constants/maps';
+import { BASE_GAP_MAP, BASE_PADDING_MAP } from '../constants/maps';
+import type { Prominence, SpaceCategory, SpacingTokens, TokenInput } from '../types';
 
-// Prominence scale factors (높을수록 더 큰 spacing)
+// Space-Based Gap Multipliers
+const SPACE_GAP_MULTIPLIER: Record<SpaceCategory, number> = {
+  canvas: 1.5, // Very loose
+  surface: 1.0, // Standard
+  bar: 0.5, // Tight (Toolbar)
+  rail: 0.75, // Compact (Sidebar)
+  float: 0.75, // Compact (Menu)
+  well: 0.5, // Tight (Input grouping)
+};
+
 const PROMINENCE_MULTIPLIER: Record<Prominence, number> = {
-    Hero: 1.5,      // Largest spacing (maximum visual weight)
-    Elevated: 1.29, // Elevated above standard
-    Strong: 1.125,  // Slightly larger than standard
-    Standard: 1.0,  // Baseline
-    Subtle: 0.875,  // Reduced spacing
-    None: 0.75,     // Minimal spacing
-    Hidden: 0       // No spacing (collapsed)
+  Hero: 1.25,
+  Strong: 1.125,
+  Elevated: 1.125,
+  Standard: 1.0,
+  Subtle: 0.875,
+  None: 0,
+  Hidden: 0,
 };
 
 export function generateSpacing(input: TokenInput): SpacingTokens {
-    const {
-        role,
-        sectionType,
-        density = 'Standard',
-        prominence = 'Standard'
-    } = input;
+  const { role, density = 'Standard', prominence = 'Standard', context } = input;
 
-    // 1. Resolve Multipliers
-    const densityMult = DENSITY_MULTIPLIER[density];
-    const prominenceMult = PROMINENCE_MULTIPLIER[prominence];
+  // 1. Context Resolution
+  const space = context?.ancestry?.space || 'surface';
+  const spaceMult = SPACE_GAP_MULTIPLIER[space];
 
-    // 2. Gap Calculation
-    // Priority: sectionType -> Default
-    const baseGap = BASE_GAP_MAP[sectionType || 'Default'] || BASE_GAP_MAP['Default'];
-    const gapVal = baseGap * densityMult;
+  // 2. Multipliers
+  const densityMult = { Compact: 0.75, Standard: 1.0, Comfortable: 1.5 }[density];
+  const prominenceMult = PROMINENCE_MULTIPLIER[prominence];
 
-    // 3. Padding Calculation
-    // Priority: Role Base -> Fallback to Default
-    const basePadding = BASE_PADDING_MAP[role] || BASE_PADDING_MAP['Default'];
+  // 3. Gap Calculation
+  // Base gap is usually 1rem (16px) for standard flow
+  const baseGap = 1.0;
+  const gapVal = baseGap * spaceMult * densityMult * prominenceMult;
 
-    // Apply Multipliers
-    const paddingX = basePadding.x * densityMult * prominenceMult;
-    const paddingY = basePadding.y * densityMult * prominenceMult;
+  // 4. Padding Calculation
+  const basePadding = BASE_PADDING_MAP[role] || BASE_PADDING_MAP['Default'];
+  // Padding also constrained by Space?
+  // Bars usually have tight padding.
+  const paddingX = basePadding.x * densityMult * (space === 'bar' ? 0.75 : 1.0);
+  const paddingY = basePadding.y * densityMult * (space === 'bar' ? 0.75 : 1.0);
 
-    // 4. Return as rem strings (or px if converted, but rem is safer for scaling)
-    // IDDL favors rem.
-    return {
-        gap: `${gapVal}rem`,
-        padding: `${paddingY}rem ${paddingX}rem`
-    };
+  return {
+    gap: `${gapVal.toFixed(3)}rem`,
+    padding: `${paddingY}rem ${paddingX}rem`,
+  };
 }

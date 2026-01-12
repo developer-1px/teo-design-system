@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { Page } from '@/components/dsl/Page/Page';
-import { Action } from '@/components/dsl/Element/Action/Action';
 import { Section } from '@/components/dsl/Section/Section';
 
 export interface ShowcaseCategory {
@@ -49,7 +49,9 @@ export const ShowcasePage = ({
             {/* Sidebar Header */}
             <Block role="Stack" className="p-6 border-b border-border-default">
               <Text role="Heading" prominence="Strong" content={title} />
-              {subtitle && <Text role="Caption" prominence="Subtle" content={subtitle} className="mt-1" />}
+              {subtitle && (
+                <Text role="Caption" prominence="Subtle" content={subtitle} className="mt-1" />
+              )}
             </Block>
 
             {/* Category List */}
@@ -96,7 +98,10 @@ export const ShowcasePage = ({
         {/* Content */}
         <Block role="Stack" className="p-10 w-full space-y-20 pb-40">
           {description && (
-            <Block role="Stack" className="px-8 py-5 bg-surface-sunken/30 border border-border-muted rounded-2xl max-w-4xl">
+            <Block
+              role="Stack"
+              className="px-8 py-5 bg-surface-sunken/30 border border-border-muted rounded-2xl max-w-4xl"
+            >
               <Text role="Body" prominence="Standard" content={description} />
             </Block>
           )}

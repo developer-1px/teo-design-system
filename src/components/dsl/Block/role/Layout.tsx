@@ -4,19 +4,13 @@ import { cn } from '@/shared/lib/utils';
 import type { BlockRendererProps } from '../Block.types';
 
 // 1. Card
-export function Card({
-  Element,
-  children,
-  className,
-  tokens,
-  ...props
-}: BlockRendererProps) {
+export function Card({ Element, children, className, tokens, ...props }: BlockRendererProps) {
   return (
     <Element
       className={cn(className)}
       style={{
         padding: tokens?.spacing.padding,
-        ...((props as any).style || {})
+        ...((props as any).style || {}),
       }}
       {...props}
     >
@@ -26,20 +20,14 @@ export function Card({
 }
 
 // 2. Stack (Vertical)
-export function Stack({
-  Element,
-  children,
-  className,
-  tokens,
-  ...props
-}: BlockRendererProps) {
+export function Stack({ Element, children, className, tokens, ...props }: BlockRendererProps) {
   return (
     <Element
       className={cn('flex flex-col', className)}
       style={{
         gap: tokens?.spacing.gap,
         padding: tokens?.spacing.padding,
-        ...((props as any).style || {})
+        ...((props as any).style || {}),
       }}
       {...props}
     >
@@ -66,7 +54,7 @@ export function Grid({
         gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
         gap: tokens?.spacing.gap,
         padding: tokens?.spacing.padding,
-        ...style
+        ...style,
       }}
       {...props}
     >
@@ -96,7 +84,7 @@ export function ScrollArea({
       )}
       style={{
         padding: tokens?.spacing.padding,
-        ...((props as any).style || {})
+        ...((props as any).style || {}),
       }}
       {...props}
     >
@@ -119,7 +107,7 @@ export function Collapsible({
       className={cn('overflow-hidden', className)}
       style={{
         padding: tokens?.spacing.padding,
-        ...((props as any).style || {})
+        ...((props as any).style || {}),
       }}
       {...props}
     >

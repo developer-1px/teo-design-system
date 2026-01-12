@@ -123,11 +123,7 @@ export const JsonSchemaSidebarDSL = ({
 
                   <div className="flex justify-between px-2">
                     <Text role="Label" content="Depth" />
-                    <Text
-                      role="Body"
-                      prominence="Hero"
-                      content={String(schema.analysis.depth)}
-                    />
+                    <Text role="Body" prominence="Hero" content={String(schema.analysis.depth)} />
                   </div>
 
                   <div className="flex justify-between px-2">
@@ -165,10 +161,7 @@ export const JsonSchemaSidebarDSL = ({
           {expandedSections.has('typescript') && (
             <div className="px-3 pb-2">
               <Block role="Container">
-                <Block
-                  as="pre"
-                  prominence="Hero"
-                >
+                <Block as="pre" prominence="Hero">
                   {schema.typescript}
                 </Block>
               </Block>

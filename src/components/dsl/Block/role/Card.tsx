@@ -31,12 +31,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
           // Base styles
           'rounded-lg', // Radius should eventually come from tokens too, but keep for structure
           interactive &&
-          'cursor-pointer transition-all hover:ring-2 hover:ring-primary active:scale-[0.98]',
+            'cursor-pointer transition-all hover:ring-2 hover:ring-primary active:scale-[0.98]',
 
           // Variants - Removed hardcoded borders/shadows (Handled by IDDL Token Engine)
           {
             // Default - legacy fallback if needed, but intended to be handled by `iddl-structure` passed via className
-            // 'shadow-3': variant === 'default', 
+            // 'shadow-3': variant === 'default',
             // 'border border-default': variant === 'bordered',
           },
 

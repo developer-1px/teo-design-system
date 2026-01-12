@@ -125,10 +125,7 @@ export const PresentationModePage = ({
     return (
       <Page title="Showcase" role="Fullscreen">
         <Section role="Container">
-          <Block
-            role="Container"
-            density="Comfortable"
-          >
+          <Block role="Container" density="Comfortable">
             <Text role="Body" prominence="Subtle" content="슬라이드가 없습니다" />
             <Action role="Button" onClick={onExit}>
               나가기 (Esc)
@@ -142,9 +139,7 @@ export const PresentationModePage = ({
   return (
     <Page title="Showcase" role="Fullscreen">
       {/* Slide Container with Transition */}
-      <Section
-        role="Container"
-      >
+      <Section role="Container">
         <DSLSlideCanvas
           slide={currentSlide}
           currentIndex={currentIndex}
@@ -155,11 +150,7 @@ export const PresentationModePage = ({
 
       {/* Bottom Navigation Overlay */}
       {/* IDDL Exception: absolute positioning + bg-black for overlay - Overlay component로 대체 가능 */}
-      <Block
-        role="Toolbar"
-        density="Compact"
-        prominence="Subtle"
-      >
+      <Block role="Toolbar" density="Compact" prominence="Subtle">
         {/* Previous Button */}
         <Action
           role="IconButton"
@@ -191,22 +182,13 @@ export const PresentationModePage = ({
         <Block role="DividerVertical" />
 
         {/* Exit Button */}
-        <Action
-          role="Button"
-          prominence="Tertiary"
-          intent="Neutral"
-          onClick={onExit}
-        >
+        <Action role="Button" prominence="Tertiary" intent="Neutral" onClick={onExit}>
           나가기 (Esc)
         </Action>
       </Block>
 
       {/* Keyboard Hints - Top Right */}
-      <Block
-        role="Container"
-        prominence="Subtle"
-        density="Compact"
-      >
+      <Block role="Container" prominence="Subtle" density="Compact">
         <Block role="Toolbar" density="Compact">
           <Text role="Code" content="←" />
           <Text role="Code" content="→" />

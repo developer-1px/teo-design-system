@@ -1,6 +1,6 @@
 import type { ActionRendererProps } from '@/components/dsl/Element/Action/Action.types';
-import { cn } from '@/shared/lib/utils';
 import { getInteractiveClasses } from '@/shared/config/interactive-tokens';
+import { cn } from '@/shared/lib/utils';
 
 export function ListItemAction({
   className,

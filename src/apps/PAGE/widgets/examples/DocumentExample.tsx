@@ -4,12 +4,12 @@
  * Use cases: Blogs, Documentation, Articles, News, Settings
  */
 
-import { Section } from '@/components/dsl/Section/Section';
+import { FileText, Home, Settings } from 'lucide-react';
 import { Block } from '@/components/dsl/Block/Block';
-import { Text } from '@/components/dsl/Element/Text/Text';
 import { Action } from '@/components/dsl/Element/Action/Action';
+import { Text } from '@/components/dsl/Element/Text/Text';
 import type { PageLayout } from '@/components/dsl/Page/Page.types';
-import { FileText, Settings, Home } from 'lucide-react';
+import { Section } from '@/components/dsl/Section/Section';
 
 interface DocumentExampleProps {
   layout: PageLayout;
@@ -62,9 +62,19 @@ export function DocumentExample({ layout }: DocumentExampleProps) {
           <div className="mb-20 max-w-3xl">
             <div className="inline-flex items-center gap-2 mb-6 text-primary">
               <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <Text role="Caption" content="V6.5 ENGINE SYSTEM" prominence="Strong" className="tracking-[0.3em] uppercase text-[10px] font-black" />
+              <Text
+                role="Caption"
+                content="V6.5 ENGINE SYSTEM"
+                prominence="Strong"
+                className="tracking-[0.3em] uppercase text-[10px] font-black"
+              />
             </div>
-            <Text role="Title" content="Design Systems with Higher Intelligence" prominence="Hero" className="text-7xl font-black leading-[0.95] tracking-[-0.04em] mb-10" />
+            <Text
+              role="Title"
+              content="Design Systems with Higher Intelligence"
+              prominence="Hero"
+              className="text-7xl font-black leading-[0.95] tracking-[-0.04em] mb-10"
+            />
             <Text
               role="Body"
               content="IDDL 6.5 introduces a paradigm shift in how digital products are architected. By moving from static tokens to dynamic intent-based logic, we empower designers and engineers to build at the speed of thought."
@@ -74,60 +84,121 @@ export function DocumentExample({ layout }: DocumentExampleProps) {
           </div>
 
           <Block role="Grid" className="grid-cols-2 gap-10 mb-20">
-            <Block role="Card" prominence="Strong" className="p-10 border border-slate-100 bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] rounded-[2.5rem] group hover:-translate-y-2 transition-all duration-500">
+            <Block
+              role="Card"
+              prominence="Strong"
+              className="p-10 border border-slate-100 bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] rounded-[2.5rem] group hover:-translate-y-2 transition-all duration-500"
+            >
               <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 group-hover:bg-primary/10 transition-colors">
-                <FileText className="text-slate-400 group-hover:text-primary transition-colors" size={32} />
+                <FileText
+                  className="text-slate-400 group-hover:text-primary transition-colors"
+                  size={32}
+                />
               </div>
-              <Text role="Heading" content="Core Specification" prominence="Strong" className="mb-4 text-3xl font-black tracking-tight" />
+              <Text
+                role="Heading"
+                content="Core Specification"
+                prominence="Strong"
+                className="mb-4 text-3xl font-black tracking-tight"
+              />
               <Text
                 role="Body"
                 content="Deep dive into the mathematical models of intent-driven logic and multi-tier token propagation."
                 prominence="Standard"
                 className="mb-8 text-lg opacity-50 font-medium leading-relaxed"
               />
-              <Action role="Button" label="Read Technical Spec" prominence="Strong" intent="Brand" className="rounded-xl px-8 h-12" />
+              <Action
+                role="Button"
+                label="Read Technical Spec"
+                prominence="Strong"
+                intent="Brand"
+                className="rounded-xl px-8 h-12"
+              />
             </Block>
 
-            <Block role="Card" prominence="Strong" className="p-10 border border-slate-100 bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] rounded-[2.5rem] group hover:-translate-y-2 transition-all duration-500">
+            <Block
+              role="Card"
+              prominence="Strong"
+              className="p-10 border border-slate-100 bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] rounded-[2.5rem] group hover:-translate-y-2 transition-all duration-500"
+            >
               <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 group-hover:bg-primary/10 transition-colors">
-                <Settings className="text-slate-400 group-hover:text-primary transition-colors" size={32} />
+                <Settings
+                  className="text-slate-400 group-hover:text-primary transition-colors"
+                  size={32}
+                />
               </div>
-              <Text role="Heading" content="Atomic Orchestration" prominence="Strong" className="mb-4 text-3xl font-black tracking-tight" />
+              <Text
+                role="Heading"
+                content="Atomic Orchestration"
+                prominence="Strong"
+                className="mb-4 text-3xl font-black tracking-tight"
+              />
               <Text
                 role="Body"
                 content="Learn how to orchestrate thousands of design variables across any device, dialect, or modality instantly."
                 prominence="Standard"
                 className="mb-8 text-lg opacity-50 font-medium leading-relaxed"
               />
-              <Action role="Button" label="Explore the Registry" prominence="Strong" intent="Brand" className="rounded-xl px-8 h-12" />
+              <Action
+                role="Button"
+                label="Explore the Registry"
+                prominence="Strong"
+                intent="Brand"
+                className="rounded-xl px-8 h-12"
+              />
             </Block>
           </Block>
 
           <Block role="Stack" className="space-y-20">
             <div className="space-y-8 max-w-3xl">
-              <Text role="Heading" content="The Philosophy of Intent" prominence="Strong" className="text-4xl font-black tracking-tight" />
+              <Text
+                role="Heading"
+                content="The Philosophy of Intent"
+                prominence="Strong"
+                className="text-4xl font-black tracking-tight"
+              />
               <Text
                 role="Body"
                 content="Traditional design systems are brittle. They break when the context changes. IDDL is a purely logic-based approach that derives its visuals from the declared intent. This means a component can transform from a high-impact marketing hero to a dense data workstation without changing a single line of component code."
                 prominence="Standard"
                 className="text-xl text-slate-500 leading-relaxed"
               />
-              <Block role="Alert" prominence="Subtle" intent="Info" className="p-8 rounded-[2rem] bg-primary/5 border border-primary/10 relative overflow-hidden">
+              <Block
+                role="Alert"
+                prominence="Subtle"
+                intent="Info"
+                className="p-8 rounded-[2rem] bg-primary/5 border border-primary/10 relative overflow-hidden"
+              >
                 <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
-                <Text role="Body" content="&ldquo;Intent is the soul of the interface. Architecture is the body. The Token Engine is the heart.&rdquo;" prominence="Strong" className="italic text-primary text-2xl font-black leading-tight" />
+                <Text
+                  role="Body"
+                  content="&ldquo;Intent is the soul of the interface. Architecture is the body. The Token Engine is the heart.&rdquo;"
+                  prominence="Strong"
+                  className="italic text-primary text-2xl font-black leading-tight"
+                />
               </Block>
             </div>
 
             <div className="space-y-6">
-              <Text role="Heading" content="Implementation Workflow" prominence="Strong" className="text-2xl" />
+              <Text
+                role="Heading"
+                content="Implementation Workflow"
+                prominence="Strong"
+                className="text-2xl"
+              />
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { title: "Declare", desc: "Define your component's role and purpose." },
-                  { title: "Derive", desc: "Token Engine resolves styles automatically." },
-                  { title: "Drive", desc: "Propagate context to children instantly." }
+                  { title: 'Declare', desc: "Define your component's role and purpose." },
+                  { title: 'Derive', desc: 'Token Engine resolves styles automatically.' },
+                  { title: 'Drive', desc: 'Propagate context to children instantly.' },
                 ].map((step, i) => (
                   <Block key={i} role="Card" prominence="Subtle" className="p-5 bg-slate-100/30">
-                    <Text role="Label" content={`${i + 1}. ${step.title}`} prominence="Strong" className="mb-2" />
+                    <Text
+                      role="Label"
+                      content={`${i + 1}. ${step.title}`}
+                      prominence="Strong"
+                      className="mb-2"
+                    />
                     <Text role="Caption" content={step.desc} prominence="Standard" />
                   </Block>
                 ))}

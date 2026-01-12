@@ -9,17 +9,17 @@
  */
 
 import { useState } from 'react';
-import { Page } from '@/components/dsl/Page/Page';
-import type { PageRole, PageLayout } from '@/components/dsl/Page/Page.types';
-import type { Prominence, Density, Intent } from '@/components/dsl/Shared.types';
-import { FloatingControlPanel } from '@/components/workspace/FloatingControlPanel';
-import { DocumentExample } from '@/apps/PAGE/widgets/examples/DocumentExample';
+import { ROLE_LAYOUT_MAP } from '@/apps/PAGE/lib/page-constants';
 import { ApplicationExample } from '@/apps/PAGE/widgets/examples/ApplicationExample';
+import { DocumentExample } from '@/apps/PAGE/widgets/examples/DocumentExample';
 import { FocusExample } from '@/apps/PAGE/widgets/examples/FocusExample';
 import { ImmersiveExample } from '@/apps/PAGE/widgets/examples/ImmersiveExample';
 import { OverlayExample } from '@/apps/PAGE/widgets/examples/OverlayExample';
 import { PaperExample } from '@/apps/PAGE/widgets/examples/PaperExample';
-import { ROLE_LAYOUT_MAP } from '@/apps/PAGE/lib/page-constants';
+import { Page } from '@/components/dsl/Page/Page';
+import type { PageLayout, PageRole } from '@/components/dsl/Page/Page.types';
+import type { Density, Intent, Prominence } from '@/components/dsl/Shared.types';
+import { FloatingControlPanel } from '@/components/workspace/FloatingControlPanel';
 
 /**
  * Component map for each PageRole

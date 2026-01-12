@@ -14,9 +14,7 @@ export function BlockToolbarsDemo() {
       <Block role="Card">
         <Block role="Container">
           <Text role="Label" content="Standard Toolbar" />
-          <Block
-            role="Toolbar"
-          >
+          <Block role="Toolbar">
             <Action role="IconButton" icon="Bold" prominence="Subtle" label="Bold" />
             <Action role="IconButton" icon="Italic" prominence="Subtle" label="Italic" />
             <Action role="IconButton" icon="Underline" prominence="Subtle" label="Underline" />

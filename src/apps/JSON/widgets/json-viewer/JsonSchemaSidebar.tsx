@@ -51,10 +51,7 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
   }, [data, interfaceName]);
 
   return (
-    <Section
-      role="SecondarySidebar"
-      collapsible={{ collapsed: false }}
-    >
+    <Section role="SecondarySidebar" collapsible={{ collapsed: false }}>
       {/* Header */}
       <Block role="Toolbar">
         <Text role="Body" prominence="Standard">
@@ -80,9 +77,7 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
                   <ChevronRight size={12} />
                 )}
                 <Info size={12} />
-                <Text role="Body">
-                  Analysis
-                </Text>
+                <Text role="Body">Analysis</Text>
               </Block>
             </Action>
             {expandedSections.has('analysis') && (
@@ -131,9 +126,7 @@ export const JsonSchemaSidebar = ({ data, interfaceName = 'Item' }: JsonSchemaSi
                 <ChevronRight size={12} />
               )}
               <Code size={12} />
-              <Text role="Body">
-                Interface
-              </Text>
+              <Text role="Body">Interface</Text>
             </Block>
           </Action>
           {expandedSections.has('typescript') && (

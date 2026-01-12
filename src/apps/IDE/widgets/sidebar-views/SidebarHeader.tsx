@@ -10,17 +10,10 @@ interface SidebarHeaderProps {
 
 export const SidebarHeader = ({ title, actions }: SidebarHeaderProps) => {
   return (
-    <Section
-      role="Header"
-      density="Compact"
-    >
+    <Section role="Header" density="Compact">
       <Block role="Toolbar">
         <Block role="Group">
-          <Text
-            role="Title"
-            prominence="Subtle"
-            content={title.toUpperCase()}
-          />
+          <Text role="Title" prominence="Subtle" content={title.toUpperCase()} />
         </Block>
         {actions && (
           <Block role="Inline" layout="inline">

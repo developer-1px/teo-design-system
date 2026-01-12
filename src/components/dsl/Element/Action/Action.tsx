@@ -11,12 +11,12 @@
  * @see spec/iddl-spec-1.0.1.md#413-action-node
  */
 
-import { useLayoutContext, useBlockLayoutContext } from '@/components/context/IDDLContext.tsx';
+import { useBlockLayoutContext, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { ActionProps } from '@/components/dsl/Element/Action/Action.types';
+import { useIDDLToken } from '@/shared/iddl/token-engine';
 import { cn } from '@/shared/lib/utils';
 import { ButtonAction } from './renderers/ButtonAction';
 import { getRoleConfig } from './role-registry';
-import { useIDDLToken } from '@/shared/iddl/token-engine';
 
 /**
  * Action 컴포넌트
@@ -60,9 +60,9 @@ export function Action({
     density: computedDensity,
     state: {
       selected,
-      disabled: loading || (typeof disabled === 'boolean' ? disabled : false)
+      disabled: loading || (typeof disabled === 'boolean' ? disabled : false),
       // Note: disabled expression string not fully parsed here yet, falling back to boolean check
-    }
+    },
   });
 
   if (hidden) return null;
@@ -144,7 +144,7 @@ export function Action({
   const config = getRoleConfig(role);
 
   // behavior에 따라 element 결정 (as prop이 있으면 우선 사용)
-  const defaultElement = behavior?.action === 'navigate' ? 'a' : (config.htmlTag || 'button');
+  const defaultElement = behavior?.action === 'navigate' ? 'a' : config.htmlTag || 'button';
   const Element: any = as || defaultElement;
   const href = behavior?.action === 'navigate' ? behavior.to : undefined;
   const target = behavior?.action === 'navigate' ? behavior.target : undefined;

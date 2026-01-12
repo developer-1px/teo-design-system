@@ -36,9 +36,17 @@ export function IconButtonAction({
   // 아이콘 컴포넌트 가져오기
   const IconComponent = icon ? (Icons as any)[icon] : null;
 
-  const iconSize = computedSize ? {
-    xs: 12, sm: 14, md: 16, lg: 20, icon: 16,
-  }[computedSize] : (computedDensity === 'Compact' ? 14 : 18);
+  const iconSize = computedSize
+    ? {
+        xs: 12,
+        sm: 14,
+        md: 16,
+        lg: 20,
+        icon: 16,
+      }[computedSize]
+    : computedDensity === 'Compact'
+      ? 14
+      : 18;
 
   const sizeClasses = {
     xs: 'h-6 w-6',
@@ -97,7 +105,7 @@ export function IconButtonAction({
       )}
       style={{
         opacity: tokens.surface.opacity,
-        ...((rest as any).style || {})
+        ...((rest as any).style || {}),
       }}
     >
       {children ? (

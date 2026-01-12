@@ -33,10 +33,7 @@ export const BottomPanel = ({ onClose }: BottomPanelProps) => {
     <Block role="Stack">
       <Section role="Container">
         {/* Tab Header (Unified Design) */}
-        <Block
-          role="Toolbar"
-          density="Compact"
-        >
+        <Block role="Toolbar" density="Compact">
           <Block role="Tabs" layout="inline">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
@@ -49,12 +46,7 @@ export const BottomPanel = ({ onClose }: BottomPanelProps) => {
                   icon={tab.icon}
                   label={tab.label}
                 >
-                  {tab.count !== undefined && (
-                    <Text
-                      role="Badge"
-                      content={tab.count}
-                    />
-                  )}
+                  {tab.count !== undefined && <Text role="Badge" content={tab.count} />}
                 </Action>
               );
             })}
@@ -132,10 +124,7 @@ const ProblemsContent = () => {
   return (
     <Block role="Stack">
       {problems.map((problem, idx) => (
-        <Block
-          key={idx}
-          role="Group"
-        >
+        <Block key={idx} role="Group">
           <Block role="Row" layout="inline">
             <Action role="IconButton" icon="AlertCircle" disabled />
             <Block role="Stack">

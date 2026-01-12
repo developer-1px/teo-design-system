@@ -41,11 +41,7 @@ export function BlockStructureDemo() {
         <Text role="Label" content="ScrollArea (role='ScrollArea')" />
         <Block role="ScrollArea">
           {Array.from({ length: 10 }).map((_, i) => (
-            <Block
-              key={i}
-              role="Inline"
-              clickable
-            >
+            <Block key={i} role="Inline" clickable>
               <Text role="Body" content={`Scrollable Item ${i + 1}`} />
             </Block>
           ))}

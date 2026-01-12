@@ -161,15 +161,10 @@ export const ServerProductsViewDSL = () => {
         {showSidebar && <JsonSchemaSidebarDSL data={data} interfaceName="Item" />}
 
         {/* Main Content Area */}
-        <Section
-          role="Main"
-        >
+        <Section role="Main">
           {/* Notion-style Control Bar */}
           <Section role="Header">
-            <Block
-              role="Toolbar"
-              density="Compact"
-            >
+            <Block role="Toolbar" density="Compact">
               {/* Left: Sidebar Toggle + Search + Filter */}
               <Block role="Toolbar" density="Compact">
                 <Action
@@ -220,10 +215,7 @@ export const ServerProductsViewDSL = () => {
               </Block>
 
               {/* Right: Sort + Density */}
-              <Block
-                role="Toolbar"
-                density="Compact"
-              >
+              <Block role="Toolbar" density="Compact">
                 <Field
                   label="Sort by"
                   model="sortColumn"
@@ -259,16 +251,9 @@ export const ServerProductsViewDSL = () => {
           </Section>
 
           {/* Stats Bar */}
-          <Block
-            role="Container"
-            density="Compact"
-          >
-            <Badge intent="Neutral">
-              {data.length} rows
-            </Badge>
-            <Badge intent="Info">
-              {columns.length} cols
-            </Badge>
+          <Block role="Container" density="Compact">
+            <Badge intent="Neutral">{data.length} rows</Badge>
+            <Badge intent="Info">{columns.length} cols</Badge>
             <Badge intent="Neutral">
               {visibleColumns.length}/{allColumnKeys.length} visible
             </Badge>

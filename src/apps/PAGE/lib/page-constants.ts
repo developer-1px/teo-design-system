@@ -4,8 +4,8 @@
  * Centralized constants for Page showcase functionality
  */
 
-import type { PageRole, PageLayout } from '@/components/dsl/Page/Page.types';
-import type { Prominence, Density, Intent } from '@/components/dsl/Shared.types';
+import type { PageLayout, PageRole } from '@/components/dsl/Page/Page.types';
+import type { Density, Intent, Prominence } from '@/components/dsl/Shared.types';
 
 /**
  * Available PageRoles

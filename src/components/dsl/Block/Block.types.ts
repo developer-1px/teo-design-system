@@ -2,7 +2,7 @@
  * Block Type Definitions (IDDL v1.0 Spec Compliant)
  */
 
-import type { ReactNode, ComponentType } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import type { AsProp, Density, Intent, Prominence } from '../Shared.types';
 
 /**
@@ -80,7 +80,7 @@ export type BlockRole =
 
 /**
  * Block Props (IDDL v1.0 Spec Strict)
- * 
+ *
  * 5 Axes: Role, Intent, Prominence, Density, Spec
  * Plus React essentials: as, children, className
  */

@@ -41,14 +41,10 @@ export const BoardView = ({ data, viewConfig }: BoardViewProps) => {
         {groupedData.map(([groupName, items]) => (
           <Block key={groupName} role="Container">
             {/* 컬럼 헤더 */}
-            <Block
-              role="Header"
-            >
+            <Block role="Header">
               <Block role="Container">
                 <Text role="Title" prominence="Strong" content={groupName} />
-                <Badge>
-                  {items.length}
-                </Badge>
+                <Badge>{items.length}</Badge>
               </Block>
             </Block>
 

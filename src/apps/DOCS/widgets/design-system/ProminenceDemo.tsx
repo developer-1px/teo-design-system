@@ -21,9 +21,7 @@ export const ProminenceDemo = () => {
 
       {/* Depth 0 */}
       <Block role="Group">
-        <Text role="Title">
-          Depth 0 (App Base)
-        </Text>
+        <Text role="Title">Depth 0 (App Base)</Text>
         <Section role="Container">
           <Block role="Stack">
             <Text role="Body" prominence="Standard" content="Primary - 가장 중요한 내용" />
@@ -35,9 +33,7 @@ export const ProminenceDemo = () => {
 
       {/* Depth 2 */}
       <Block role="Group">
-        <Text role="Title">
-          Depth 2 (Base Surface)
-        </Text>
+        <Text role="Title">Depth 2 (Base Surface)</Text>
         <Section role="Container" prominence="Standard">
           <Block role="Stack">
             <Text role="Body" prominence="Standard" content="Primary - 가장 중요한 내용" />
@@ -49,9 +45,7 @@ export const ProminenceDemo = () => {
 
       {/* Depth 4 */}
       <Block role="Group">
-        <Text role="Title">
-          Depth 4 (Elevated)
-        </Text>
+        <Text role="Title">Depth 4 (Elevated)</Text>
         <Section role="Container" prominence="Hero">
           <Block role="Stack">
             <Text role="Body" prominence="Standard" content="Primary - 가장 중요한 내용" />
@@ -63,9 +57,7 @@ export const ProminenceDemo = () => {
 
       {/* 실제 사용 예시 */}
       <Block role="Group">
-        <Text role="Title">
-          실제 사용 예시 - 파일 목록
-        </Text>
+        <Text role="Title">실제 사용 예시 - 파일 목록</Text>
         <Section role="Container" prominence="Standard">
           <Block role="Stack">
             {/* 파일 1 */}
@@ -94,9 +86,7 @@ export const ProminenceDemo = () => {
 
       {/* 중첩 예시 */}
       <Block role="Group">
-        <Text role="Title">
-          중첩 예시 - 카드 안의 카드
-        </Text>
+        <Text role="Title">중첩 예시 - 카드 안의 카드</Text>
         <Section role="Container" prominence="Standard">
           <Block role="Stack">
             <Text role="Title" content="외부 카드 제목" />
@@ -106,10 +96,7 @@ export const ProminenceDemo = () => {
           <Section role="Container" prominence="Standard">
             <Block role="Stack">
               <Text role="Title" content="내부 카드 제목" />
-              <Text
-                role="Body"
-                content="내부 카드 설명 (depth가 증가하여 배경이 더 진함)"
-              />
+              <Text role="Body" content="내부 카드 설명 (depth가 증가하여 배경이 더 진함)" />
               <Text role="Caption" prominence="Subtle" content="내부 카드 메타 정보" />
             </Block>
           </Section>

@@ -7,22 +7,22 @@
  * - Real-time property controls (role, prominence, density, intent, layout)
  */
 
-import { useState, useRef, useEffect } from 'react';
-import { Block } from '@/components/dsl/Block/Block';
-import { Text } from '@/components/dsl/Element/Text/Text';
-import { Action } from '@/components/dsl/Element/Action/Action';
-import type { PageRole, PageLayout } from '@/components/dsl/Page/Page.types';
-import type { Prominence, Density, Intent } from '@/components/dsl/Shared.types';
 import { ChevronDown, ChevronUp, GripVertical } from 'lucide-react';
-import { PropertySelector } from '@/apps/PAGE/widgets/PropertySelector';
+import { useEffect, useRef, useState } from 'react';
 import {
-  PAGE_ROLES,
-  PROMINENCES,
   DENSITIES,
-  INTENTS,
   FLOATING_PANEL,
   getIntentForButton,
+  INTENTS,
+  PAGE_ROLES,
+  PROMINENCES,
 } from '@/apps/PAGE/lib/page-constants';
+import { PropertySelector } from '@/apps/PAGE/widgets/PropertySelector';
+import { Block } from '@/components/dsl/Block/Block';
+import { Action } from '@/components/dsl/Element/Action/Action';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import type { PageLayout, PageRole } from '@/components/dsl/Page/Page.types';
+import type { Density, Intent, Prominence } from '@/components/dsl/Shared.types';
 
 interface FloatingControlPanelProps {
   // Current values
@@ -114,7 +114,12 @@ export function FloatingControlPanel({
             <GripVertical size={14} className="text-text-tertiary" />
             <Text role="Label" content="Page Interface" prominence="Strong" />
           </div>
-          <Action role="IconButton" onClick={() => setIsCollapsed(!isCollapsed)} prominence="Subtle" className="h-6 w-6">
+          <Action
+            role="IconButton"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            prominence="Subtle"
+            className="h-6 w-6"
+          >
             {isCollapsed ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
           </Action>
         </Block>
@@ -170,7 +175,12 @@ export function FloatingControlPanel({
 
             {/* Current Configuration Summary */}
             <Block role="Card" prominence="Subtle" density="Compact" className="mt-2">
-              <Text role="Caption" content="Current Config" prominence="Subtle" className="mb-2 opacity-70" />
+              <Text
+                role="Caption"
+                content="Current Config"
+                prominence="Subtle"
+                className="mb-2 opacity-70"
+              />
               <div className="space-y-1 opacity-80">
                 <div className="flex justify-between">
                   <Text role="Micro" content="role" className="text-text-tertiary" />

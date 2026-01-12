@@ -12,12 +12,7 @@ import { useTreeNavigation } from '@/shared/lib/keyboard/useTreeNavigation';
 import { cn } from '@/shared/lib/utils';
 import type { BlockRendererProps } from '../Block.types';
 
-export function Tree({
-  spec,
-  computedDensity,
-  className,
-  ...rest
-}: BlockRendererProps) {
+export function Tree({ spec, computedDensity, className, ...rest }: BlockRendererProps) {
   const data = (spec?.data as any[]) || [];
   const onNodeClick = spec?.onNodeClick as (node: any) => void;
   const defaultExpandedIds = (spec?.defaultExpandedIds as string[]) || [];

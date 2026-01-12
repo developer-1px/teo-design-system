@@ -91,12 +91,8 @@ export const DatabaseViewer = ({
                 <>
                   <Divider />
                   <Block role="Container">
-                    <Badge>
-                      {stats.rows} rows
-                    </Badge>
-                    <Badge>
-                      {stats.cols} cols
-                    </Badge>
+                    <Badge>{stats.rows} rows</Badge>
+                    <Badge>{stats.cols} cols</Badge>
                   </Block>
                 </>
               )}

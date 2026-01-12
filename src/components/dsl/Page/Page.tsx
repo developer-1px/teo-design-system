@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { LayoutPortalContext, type LayoutSlot } from './context/LayoutPortalContext';
-import { useIDDLToken } from '@/shared/iddl/token-engine';
+import React, { useState } from 'react';
 import { LayoutProvider } from '@/components/context/IDDLContext';
+import { useIDDLToken } from '@/shared/iddl/token-engine';
 import { cn } from '@/shared/lib/utils';
+import { LayoutPortalContext, type LayoutSlot } from './context/LayoutPortalContext';
 import type { PageProps } from './Page.types';
 
 /**
@@ -23,7 +23,7 @@ export const pageVariants = cva('iddl-page w-full transition-colors duration-200
       Standard: '',
       Comfortable: 'gap-8',
       Compact: 'gap-2',
-    }
+    },
   },
   defaultVariants: {
     role: 'Document',
@@ -44,7 +44,6 @@ export function Page({
   children,
   className,
 }: PageProps) {
-
   // Token Engine Integration
   const tokens = useIDDLToken({
     role: role as string,
@@ -66,12 +65,28 @@ export function Page({
   // Slot Registry Logic
   const registerSlot = (sectionRole: string): LayoutSlot | null => {
     switch (sectionRole) {
-      case 'Header': case 'Toolbar': return 'top';
-      case 'Footer': case 'Dock': case 'Statusbar': case 'Panel': return 'bottom';
-      case 'Sidebar': case 'Nav': case 'ActivityBar': case 'PrimarySidebar': return 'left';
-      case 'Aside': case 'UtilityBar': case 'SecondarySidebar': return 'right';
-      case 'Main': case 'Editor': return 'center';
-      default: return 'center';
+      case 'Header':
+      case 'Toolbar':
+        return 'top';
+      case 'Footer':
+      case 'Dock':
+      case 'Statusbar':
+      case 'Panel':
+        return 'bottom';
+      case 'Sidebar':
+      case 'Nav':
+      case 'ActivityBar':
+      case 'PrimarySidebar':
+        return 'left';
+      case 'Aside':
+      case 'UtilityBar':
+      case 'SecondarySidebar':
+        return 'right';
+      case 'Main':
+      case 'Editor':
+        return 'center';
+      default:
+        return 'center';
     }
   };
 
@@ -107,7 +122,8 @@ export function Page({
       }
     });
 
-    const isHorizontalLayout = layout === 'Sidebar' || layout === 'Aside' || layout === 'ThreeColumn';
+    const isHorizontalLayout =
+      layout === 'Sidebar' || layout === 'Aside' || layout === 'ThreeColumn';
 
     // Construct the middle area
     let middleContent: React.ReactNode;
@@ -117,7 +133,9 @@ export function Page({
         <>
           {leftNodes.length > 0 && <div className="flex-none flex flex-col gap-6">{leftNodes}</div>}
           <div className="flex-1 flex flex-col gap-6 min-w-0">{centerNodes}</div>
-          {rightNodes.length > 0 && <div className="flex-none flex flex-col gap-6">{rightNodes}</div>}
+          {rightNodes.length > 0 && (
+            <div className="flex-none flex flex-col gap-6">{rightNodes}</div>
+          )}
           {middle}
         </>
       );
@@ -126,16 +144,20 @@ export function Page({
     }
 
     return (
-      <div className={cn(
-        "flex flex-col min-h-screen w-full",
-        density === 'Comfortable' ? "gap-12" : density === 'Compact' ? "gap-4" : "gap-8"
-      )}>
+      <div
+        className={cn(
+          'flex flex-col min-h-screen w-full',
+          density === 'Comfortable' ? 'gap-12' : density === 'Compact' ? 'gap-4' : 'gap-8'
+        )}
+      >
         {top.length > 0 && <div className="flex-shrink-0 z-20">{top}</div>}
-        <div className={cn(
-          "flex-1 flex w-full max-w-screen-2xl mx-auto px-6",
-          isHorizontalLayout ? "flex-row gap-6" : "flex-col",
-          density === 'Comfortable' ? "gap-10" : density === 'Compact' ? "gap-4" : "gap-8"
-        )}>
+        <div
+          className={cn(
+            'flex-1 flex w-full max-w-screen-2xl mx-auto px-6',
+            isHorizontalLayout ? 'flex-row gap-6' : 'flex-col',
+            density === 'Comfortable' ? 'gap-10' : density === 'Compact' ? 'gap-4' : 'gap-8'
+          )}
+        >
           {middleContent}
         </div>
         {bottom.length > 0 && <div className="flex-shrink-0 z-10">{bottom}</div>}
@@ -143,16 +165,18 @@ export function Page({
     );
   };
 
-  const portalSlots = isApplication ? {
-    slots: {
-      top: { current: topNode },
-      left: { current: leftNode },
-      center: { current: centerNode },
-      right: { current: rightNode },
-      bottom: { current: bottomNode },
-    } as any,
-    register: registerSlot
-  } : null;
+  const portalSlots = isApplication
+    ? {
+        slots: {
+          top: { current: topNode },
+          left: { current: leftNode },
+          center: { current: centerNode },
+          right: { current: rightNode },
+          bottom: { current: bottomNode },
+        } as any,
+        register: registerSlot,
+      }
+    : null;
 
   return (
     <LayoutProvider
@@ -190,7 +214,10 @@ export function Page({
                 <div ref={setLeftNode} className="flex-shrink-0 h-full z-10 flex flex-row" />
 
                 {/* Center - Main/Editor (min-w-0 prevents flex blowout) */}
-                <div ref={setCenterNode} className="flex-1 h-full relative z-0 flex flex-col overflow-hidden min-w-0">
+                <div
+                  ref={setCenterNode}
+                  className="flex-1 h-full relative z-0 flex flex-col overflow-hidden min-w-0"
+                >
                   {children}
                 </div>
 
@@ -201,7 +228,11 @@ export function Page({
               {/* Bottom - Panel/Statusbar */}
               <div ref={setBottomNode} className="flex-shrink-0 z-20 flex flex-col" />
             </div>
-          ) : (role === 'Document' ? renderDocumentContent() : children)}
+          ) : role === 'Document' ? (
+            renderDocumentContent()
+          ) : (
+            children
+          )}
         </div>
       </LayoutPortalContext.Provider>
     </LayoutProvider>

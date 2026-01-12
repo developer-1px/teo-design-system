@@ -1,8 +1,8 @@
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
 import { Section } from '@/components/dsl/Section/Section';
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
 export function SectionShowcasePage() {
   const categories = [
@@ -79,16 +79,12 @@ export function SectionShowcasePage() {
         </Block>
 
         <div className="flex gap-4 h-[300px] border border-border-default bg-surface-base">
-          <Section
-            role="ActivityBar"
-          >
+          <Section role="ActivityBar">
             <Action role="Button" label="A" />
             <Action role="Button" label="B" />
           </Section>
 
-          <Section
-            role="Sidebar"
-          >
+          <Section role="Sidebar">
             <Text role="Label" content="Sidebar" prominence="Strong" />
             <Block role="List">
               <Action role="ListItem">
@@ -120,9 +116,7 @@ export function SectionShowcasePage() {
           />
         </Block>
 
-        <Section
-          role="Main"
-        >
+        <Section role="Main">
           <Text role="Title" prominence="Hero" content="Main Region" />
           <Text
             role="Body"
@@ -149,18 +143,14 @@ export function SectionShowcasePage() {
 
         <div className="relative h-[300px] border border-border-default bg-surface-subtle p-8 flex items-center justify-center">
           {/* Simulation of a Modal */}
-          <Section
-            role="Modal"
-          >
+          <Section role="Modal">
             <Section role="DialogHeader">
               <Text role="Label" content="Modal Title" prominence="Strong" />
             </Section>
             <Section role="DialogContent">
               <Text role="Body" content="This is a simulated modal content area." />
             </Section>
-            <Section
-              role="DialogFooter"
-            >
+            <Section role="DialogFooter">
               <Action role="Button" label="Cancel" />
               <Action role="Button" label="Confirm" prominence="Strong" />
             </Section>

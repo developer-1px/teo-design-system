@@ -55,13 +55,7 @@ export const ServerProductsView = () => {
           return <Text role="Body" content={String(value)} />;
         }
         if (typeof value === 'object') {
-          return (
-            <Text
-              role="Caption"
-              prominence="Subtle"
-              content={JSON.stringify(value)}
-            />
-          );
+          return <Text role="Caption" prominence="Subtle" content={JSON.stringify(value)} />;
         }
 
         return <Text role="Body" content={String(value)} />;
@@ -75,9 +69,7 @@ export const ServerProductsView = () => {
       {showSidebar && <JsonSchemaSidebar data={data} interfaceName="Item" />}
 
       {/* Main Content */}
-      <Section
-        role="Container"
-      >
+      <Section role="Container">
         {/* Header - IDDL Toolbar */}
         <Block role="Toolbar">
           <Block role="Toolbar">

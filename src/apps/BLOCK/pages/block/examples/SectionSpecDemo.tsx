@@ -7,9 +7,7 @@ import { Section } from '@/components/dsl/Section/Section';
 function ContextReader() {
   const ctx = useIDDLContext();
   return (
-    <Block
-      role="Card"
-    >
+    <Block role="Card">
       <div>Role: {ctx.role}</div>
       <div>Density: {ctx.density}</div>
       <div>Prompt: {ctx.prominence}</div>
@@ -50,9 +48,7 @@ export function SectionSpecDemo() {
 
       <div className="grid grid-cols-2 gap-8">
         {/* 2. Panel Category (Side/Rail) */}
-        <Section
-          role="Sidebar"
-        >
+        <Section role="Sidebar">
           <div className="flex flex-col gap-2 mb-4">
             <Text role="Label" content="Section: Sidebar (Panel)" prominence="Strong" />
             <ContextReader />
@@ -61,22 +57,13 @@ export function SectionSpecDemo() {
           {/* Block: List in Sidebar (Tight) */}
           <Block role="List">
             <Text role="Label" content="FILES" prominence="Subtle" />
-            <Block
-              role="ListItem"
-              clickable
-            >
+            <Block role="ListItem" clickable>
               <Text role="Body" content="index.tsx" />
             </Block>
-            <Block
-              role="ListItem"
-              clickable
-            >
+            <Block role="ListItem" clickable>
               <Text role="Body" content="App.tsx" />
             </Block>
-            <Block
-              role="ListItem"
-              clickable
-            >
+            <Block role="ListItem" clickable>
               <Text role="Body" content="utils.ts" />
             </Block>
           </Block>
@@ -128,4 +115,3 @@ export function SectionSpecDemo() {
     </Block>
   );
 }
-

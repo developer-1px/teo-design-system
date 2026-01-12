@@ -4,12 +4,12 @@
  * Use cases: Login, Sign Up, Payment, Checkout, Single-action flows
  */
 
-import { Section } from '@/components/dsl/Section/Section';
+import { ArrowLeft, ArrowRight, Lock } from 'lucide-react';
 import { Block } from '@/components/dsl/Block/Block';
-import { Text } from '@/components/dsl/Element/Text/Text';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Field } from '@/components/dsl/Element/Field/Field';
-import { Lock, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Text } from '@/components/dsl/Element/Text/Text';
+import { Section } from '@/components/dsl/Section/Section';
 
 export function FocusExample() {
   return (
@@ -26,18 +26,30 @@ export function FocusExample() {
       </Section>
 
       {/* Main - Centered Content */}
-      <Section role="Main" className="relative h-screen overflow-hidden flex items-center justify-center">
+      <Section
+        role="Main"
+        className="relative h-screen overflow-hidden flex items-center justify-center"
+      >
         {/* Modern Abstract Background Orbs */}
         <div className="absolute top-[-20%] left-[-15%] w-[60%] aspect-square rounded-full bg-[radial-gradient(circle,var(--color-primary),transparent_70%)] opacity-[0.2] blur-[100px] animate-pulse-slow" />
         <div className="absolute bottom-[-20%] right-[-15%] w-[60%] aspect-square rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-[0.15] blur-[100px] animate-pulse-slow delay-700" />
 
-        <Block role="Card" prominence="Hero" className="w-full max-w-md p-10 relative z-10 shadow-soft-xl rounded-[3rem] border border-white/20">
+        <Block
+          role="Card"
+          prominence="Hero"
+          className="w-full max-w-md p-10 relative z-10 shadow-soft-xl rounded-[3rem] border border-white/20"
+        >
           {/* Logo/Brand */}
           <Block role="Stack" className="items-center mb-10">
             <div className="w-20 h-20 rounded-[2rem] bg-primary text-white flex items-center justify-center mb-8 shadow-soft-lg rotate-3 hover:rotate-0 transition-all duration-500 ease-out cursor-pointer group">
               <Lock size={36} className="group-hover:scale-110 transition-transform" />
             </div>
-            <Text role="Title" content="STRATA OS" prominence="Hero" className="text-center font-black tracking-tighter uppercase" />
+            <Text
+              role="Title"
+              content="STRATA OS"
+              prominence="Hero"
+              className="text-center font-black tracking-tighter uppercase"
+            />
             <Text
               role="Body"
               content="Secure gateway to your high-intent design workspace"
@@ -68,10 +80,21 @@ export function FocusExample() {
 
               <Block role="Toolbar" className="items-center justify-between">
                 <Field role="Checkbox" label="Remember me" prominence="Subtle" />
-                <Action role="Link" label="Forgot password?" prominence="Standard" className="text-sm opacity-60" />
+                <Action
+                  role="Link"
+                  label="Forgot password?"
+                  prominence="Standard"
+                  className="text-sm opacity-60"
+                />
               </Block>
 
-              <Action role="Button" label="Sign In" prominence="Strong" intent="Brand" className="w-full h-14 rounded-2xl font-bold shadow-soft-lg">
+              <Action
+                role="Button"
+                label="Sign In"
+                prominence="Strong"
+                intent="Brand"
+                className="w-full h-14 rounded-2xl font-bold shadow-soft-lg"
+              >
                 <ArrowRight size={18} />
               </Action>
             </Block>
@@ -80,7 +103,12 @@ export function FocusExample() {
           {/* Divider */}
           <Block role="Stack" className="flex-row items-center gap-4 my-10">
             <div className="flex-1 h-px bg-border/30" />
-            <Text role="Caption" content="VERIFY VIA" prominence="Subtle" className="text-[10px] uppercase font-black tracking-widest opacity-30" />
+            <Text
+              role="Caption"
+              content="VERIFY VIA"
+              prominence="Subtle"
+              className="text-[10px] uppercase font-black tracking-widest opacity-30"
+            />
             <div className="flex-1 h-px bg-border/30" />
           </Block>
 

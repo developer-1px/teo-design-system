@@ -22,7 +22,12 @@ export function PropertySelector<T extends string>({
 }: PropertySelectorProps<T>) {
   return (
     <Block role="PropertyGrid" spec={{ columns: 1 }}>
-      <Text role="Micro" content={label} prominence="Strong" className="uppercase tracking-wider opacity-60" />
+      <Text
+        role="Micro"
+        content={label}
+        prominence="Strong"
+        className="uppercase tracking-wider opacity-60"
+      />
       <Block role="PropertyGrid" spec={{ columns }}>
         {options.map((option) => (
           <Action

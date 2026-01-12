@@ -188,11 +188,11 @@ export namespace IDDL {
 
   export type FieldSpec =
     | {
-      role: 'TextInput';
-      inputMode?: 'text' | 'numeric' | 'email' | 'tel' | 'url';
-      maxLength?: number;
-      pattern?: string;
-    }
+        role: 'TextInput';
+        inputMode?: 'text' | 'numeric' | 'email' | 'tel' | 'url';
+        maxLength?: number;
+        pattern?: string;
+      }
     | { role: 'TextArea'; rows?: number; maxLength?: number }
     | { role: 'NumberInput'; min?: number; max?: number; step?: number }
     | { role: 'PasswordInput'; revealable?: boolean }
@@ -200,11 +200,11 @@ export namespace IDDL {
     | { role: 'SearchInput'; clearable?: boolean }
     | { role: 'Select'; options: FieldOption[]; multiple?: boolean }
     | {
-      role: 'Combobox';
-      options: FieldOption[];
-      freeSolo?: boolean;
-      filter?: 'contains' | 'startsWith' | 'none';
-    }
+        role: 'Combobox';
+        options: FieldOption[];
+        freeSolo?: boolean;
+        filter?: 'contains' | 'startsWith' | 'none';
+      }
     | { role: 'Checkbox'; indeterminate?: boolean }
     | { role: 'Switch' }
     | { role: 'RadioGroup'; options: FieldOption[]; legend?: string }

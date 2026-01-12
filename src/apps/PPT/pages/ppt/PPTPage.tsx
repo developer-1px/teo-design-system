@@ -52,7 +52,10 @@ export const PPTPage = () => {
   const [slides, setSlides] = useState<Slide[]>(fallbackSlides);
   const [activeSlideId, setActiveSlideId] = useState<string>('1');
   const [isPresentationMode, setIsPresentationMode] = useState(false);
-  const [toastMessage, setToastMessage] = useState<{ text: string; intent: 'Critical' | 'Positive' | 'Info' } | null>(null);
+  const [toastMessage, setToastMessage] = useState<{
+    text: string;
+    intent: 'Critical' | 'Positive' | 'Info';
+  } | null>(null);
 
   // ai-era-slides.md 파일 로드 및 파싱
   useEffect(() => {
@@ -285,7 +288,12 @@ export const PPTPage = () => {
 
       {/* Toast Messages */}
       {toastMessage && (
-        <Overlay role="Toast" isOpen={true} intent={toastMessage.intent} onClose={() => setToastMessage(null)}>
+        <Overlay
+          role="Toast"
+          isOpen={true}
+          intent={toastMessage.intent}
+          onClose={() => setToastMessage(null)}
+        >
           <Text role="Body" content={toastMessage.text} />
         </Overlay>
       )}

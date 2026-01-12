@@ -73,6 +73,7 @@ export interface BlockLayoutContextValue {
   mode?: 'view' | 'edit';
   sectionRole?: string;
   pageRole?: string;
+  space?: SpaceCategory; // v7.0
 }
 
 /**
@@ -83,6 +84,7 @@ export const BlockLayoutContext = createContext<BlockLayoutContextValue>({
   density: 'Standard',
   intent: 'Neutral',
   depth: 0,
+  space: undefined,
 });
 
 /**

@@ -176,13 +176,15 @@ export const ROLE_REGISTRY: Record<string, ActionRoleConfig> = {
   },
   Card: {
     htmlTag: 'div',
-    baseStyles: 'bg-surface border border-border-default rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer p-6 flex flex-col gap-4',
+    baseStyles:
+      'bg-surface border border-border-default rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer p-6 flex flex-col gap-4',
     renderer: SurfaceAction,
     description: 'Interactive Card',
   },
   Row: {
     htmlTag: 'div',
-    baseStyles: 'flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-surface-hover transition-colors w-full',
+    baseStyles:
+      'flex items-center gap-3 p-3 rounded cursor-pointer hover:bg-surface-hover transition-colors w-full',
     renderer: SurfaceAction,
     description: 'Interactive Row',
   },

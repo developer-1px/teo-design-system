@@ -1,8 +1,8 @@
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/dsl/Block/Block';
 import type { BlockRole } from '@/components/dsl/Block/Block.types';
 import { ROLE_CONFIGS } from '@/components/dsl/Block/role-config';
 import { Text } from '@/components/dsl/Element/Text/Text';
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { SectionSpecDemo } from './examples/SectionSpecDemo';
 
 // Categorize roles for display
@@ -66,10 +66,7 @@ export function BlockShowcasePage() {
                 const { description } = config;
 
                 return (
-                  <Block
-                    key={role}
-                    role="Group"
-                  >
+                  <Block key={role} role="Group">
                     {/* Header */}
                     <div className="mb-2 flex items-center gap-2">
                       <span className="font-bold text-sm bg-surface-raised px-2 py-0.5 rounded border border-border-default">
@@ -83,11 +80,7 @@ export function BlockShowcasePage() {
                       {role === 'Divider' ? (
                         <Block role="Divider" />
                       ) : (
-                        <Block
-                          role={role as BlockRole}
-                          prominence="Standard"
-                          density="Standard"
-                        >
+                        <Block role={role as BlockRole} prominence="Standard" density="Standard">
                           <Text role="Caption" content={`Preview of ${role}`} />
                         </Block>
                       )}

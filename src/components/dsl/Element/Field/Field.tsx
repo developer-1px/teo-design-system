@@ -15,9 +15,9 @@ import { cn } from '@/shared/lib/utils';
 // Types
 export type { FieldOption } from '@/components/dsl/Element/Field/Field.types';
 
-import { FieldTextbox } from './renderers/input/FieldTextbox'; // Fallback
 // Registry
 import { FIELD_REGISTRY } from './field-registry';
+import { FieldTextbox } from './renderers/input/FieldTextbox'; // Fallback
 
 /**
  * Field view text variants (CVA)
@@ -56,14 +56,22 @@ function FieldView({
 
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
-      {label && <span className="text-[10px] text-text-subtle font-black uppercase tracking-widest">{label}</span>}
+      {label && (
+        <span className="text-[10px] text-text-subtle font-black uppercase tracking-widest">
+          {label}
+        </span>
+      )}
       <span
         className={fieldViewVariants({
           prominence: prominence as 'Hero' | 'Standard' | 'Strong' | 'Subtle',
         })}
         data-model={model}
       >
-        {displayValue !== undefined && displayValue !== null ? String(displayValue) : <span className="opacity-20">—</span>}
+        {displayValue !== undefined && displayValue !== null ? (
+          String(displayValue)
+        ) : (
+          <span className="opacity-20">—</span>
+        )}
       </span>
     </div>
   );

@@ -407,13 +407,14 @@ export function getInteractiveClasses({
   }
 
   // Interactive variants 적용
-  const interactiveClass = (skipIdle && state === 'idle')
-    ? ''
-    : interactiveVariants({
-      prominence,
-      intent,
-      state,
-    });
+  const interactiveClass =
+    skipIdle && state === 'idle'
+      ? ''
+      : interactiveVariants({
+          prominence,
+          intent,
+          state,
+        });
 
   // Focus variants 적용 (disabled가 아니고 focusable일 때만)
   const focusClass = !disabled && focusable ? focusVariants({ intent }) : '';

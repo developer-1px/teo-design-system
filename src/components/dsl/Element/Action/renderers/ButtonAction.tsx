@@ -37,9 +37,17 @@ export function ButtonAction({
   const IconComponent = icon ? (Icons as any)[icon] : null;
 
   // 아이콘 크기를 density에 따라 조절 (Density based or Size based)
-  const iconSize = computedSize ? {
-    xs: 12, sm: 14, md: 16, lg: 20, icon: 16,
-  }[computedSize] : (computedDensity === 'Compact' ? 14 : 16);
+  const iconSize = computedSize
+    ? {
+        xs: 12,
+        sm: 14,
+        md: 16,
+        lg: 20,
+        icon: 16,
+      }[computedSize]
+    : computedDensity === 'Compact'
+      ? 14
+      : 16;
 
   // ⚡️ Refined Interactive State (Hover/Focus/Active ONLY)
   // We don't want 'idle' state from here because Token Engine handles it
@@ -94,14 +102,15 @@ export function ButtonAction({
         !isDisabled && !loading && premiumEffects,
 
         // 5. Size (Legacy support)
-        computedSize && computedSize !== 'md' &&
-        {
-          xs: 'h-7 px-2 text-xs gap-1',
-          sm: 'h-8 px-3 text-sm gap-1.5',
-          md: 'h-9 px-4 text-base gap-2',
-          lg: 'h-10 px-6 text-lg gap-3',
-          icon: 'h-9 w-9 p-0',
-        }[computedSize],
+        computedSize &&
+          computedSize !== 'md' &&
+          {
+            xs: 'h-7 px-2 text-xs gap-1',
+            sm: 'h-8 px-3 text-sm gap-1.5',
+            md: 'h-9 px-4 text-base gap-2',
+            lg: 'h-10 px-6 text-lg gap-3',
+            icon: 'h-9 w-9 p-0',
+          }[computedSize],
 
         loading && 'opacity-70 cursor-wait',
         className // Merge passed className at the end
@@ -117,7 +126,7 @@ export function ButtonAction({
         gap: tokens.spacing.gap,
         padding: !computedSize ? tokens.spacing.padding : undefined,
         opacity: tokens.surface.opacity,
-        ...((rest as any).style || {})
+        ...((rest as any).style || {}),
       }}
     >
       {children ? (
@@ -125,7 +134,11 @@ export function ButtonAction({
       ) : (
         <>
           {loading && <Icons.Loader2 size={iconSize} className="animate-spin mr-2" />}
-          {!loading && IconComponent && <span className="inline-flex mr-2 text-current"><IconComponent size={iconSize} /></span>}
+          {!loading && IconComponent && (
+            <span className="inline-flex mr-2 text-current">
+              <IconComponent size={iconSize} />
+            </span>
+          )}
           <span className="truncate">{label}</span>
         </>
       )}

@@ -1,135 +1,212 @@
 import React, { useState } from 'react';
-import { Page } from '@/components/dsl/Page/Page';
-import { Section } from '@/components/dsl/Section/Section';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
+import { Page } from '@/components/dsl/Page/Page';
+import { Section } from '@/components/dsl/Section/Section';
 import { useSelection } from '@/shared/lib/selection/useSelection';
 import { cn } from '@/shared/lib/utils';
 
 /**
- * TokenEngineShowcase 
- * 
+ * TokenEngineShowcase
+ *
  * v7.0 Ready: Verification of Token Engine, Selection System, and Role Registry.
  */
 export const TokenEngineShowcase = () => {
-    const [selectedId, setSelectedId] = useState<string | number>('1');
+  const [selectedId, setSelectedId] = useState<string | number>('1');
 
-    // Sample data for selection test
-    const items = [
-        { id: '1', title: 'Concept Architecture' },
-        { id: '2', title: 'Token Engine v6.0' },
-        { id: '3', title: 'Selection System' },
-        { id: '4', title: 'Adaptive Layout' },
-    ];
+  // Sample data for selection test
+  const items = [
+    { id: '1', title: 'Concept Architecture' },
+    { id: '2', title: 'Token Engine v6.0' },
+    { id: '3', title: 'Selection System' },
+    { id: '4', title: 'Adaptive Layout' },
+  ];
 
-    const selection = useSelection({
-        items,
-        getId: (item) => item.id,
-        initialSelectedIds: [selectedId as string],
-        onSelectionChange: (selected) => {
-            if (selected.length > 0) setSelectedId(selected[0].id);
-        }
-    });
+  const selection = useSelection({
+    items,
+    getId: (item) => item.id,
+    initialSelectedIds: [selectedId as string],
+    onSelectionChange: (selected) => {
+      if (selected.length > 0) setSelectedId(selected[0].id);
+    },
+  });
 
-    const selectionModel = {
-        selectedValues: selection.selectedIds,
-        isSelected: selection.isSelected,
-        handleItemClick: selection.handleItemClick,
-        registerItemRef: selection.registerItemRef,
-    };
+  const selectionModel = {
+    selectedValues: selection.selectedIds,
+    isSelected: selection.isSelected,
+    handleItemClick: selection.handleItemClick,
+    registerItemRef: selection.registerItemRef,
+  };
 
-    return (
-        <Page role="Document">
-            {/* 1. Sidebar for Navigation & Info */}
-            <Section role="Sidebar" prominence="Subtle">
-                <Block role="Stack">
-                    <Block role="Stack">
-                        <Text role="Heading" prominence="Strong" content="IDDL Surface" />
-                        <Text role="Caption" prominence="Subtle" content="Minimal & Airy (v6.2)" />
-                    </Block>
+  return (
+    <Page role="Document">
+      {/* 1. Sidebar for Navigation & Info */}
+      <Section role="Sidebar" prominence="Subtle">
+        <Block role="Stack">
+          <Block role="Stack">
+            <Text role="Heading" prominence="Strong" content="IDDL Surface" />
+            <Text role="Caption" prominence="Subtle" content="Minimal & Airy (v6.2)" />
+          </Block>
 
-                    <Block role="Stack">
-                        <Text role="Label" content="Status" />
-                        <Block role="List">
-                            {items.map((item) => (
-                                <Block
-                                    key={item.id}
-                                    role="ListItem"
-                                    value={item.id}
-                                    selectionModel={selectionModel}
-                                >
-                                    <Block role="Stack">
-                                        <div className={`w-1 h-1 rounded-full transition-all ${selection.isSelected(item.id) ? 'bg-primary scale-150' : 'bg-transparent'}`} />
-                                        <Text role="Label" content={item.title} prominence={selection.isSelected(item.id) ? 'Strong' : 'Standard'} />
-                                    </Block>
-                                </Block>
-                            ))}
-                        </Block>
-                    </Block>
+          <Block role="Stack">
+            <Text role="Label" content="Status" />
+            <Block role="List">
+              {items.map((item) => (
+                <Block
+                  key={item.id}
+                  role="ListItem"
+                  value={item.id}
+                  selectionModel={selectionModel}
+                >
+                  <Block role="Stack">
+                    <div
+                      className={`w-1 h-1 rounded-full transition-all ${selection.isSelected(item.id) ? 'bg-primary scale-150' : 'bg-transparent'}`}
+                    />
+                    <Text
+                      role="Label"
+                      content={item.title}
+                      prominence={selection.isSelected(item.id) ? 'Strong' : 'Standard'}
+                    />
+                  </Block>
                 </Block>
-            </Section>
+              ))}
+            </Block>
+          </Block>
+        </Block>
+      </Section>
 
-            {/* 2. Main Content */}
-            <Section role="Main" prominence="Standard">
-                <Block role="Stack">
+      {/* 2. Main Content */}
+      <Section role="Main" prominence="Standard">
+        <Block role="Stack">
+          {/* Header */}
+          <Block role="Stack">
+            <Text role="Title" prominence="Strong" content="Surface Over Boundaries" />
+            <Text
+              role="Body"
+              prominence="Standard"
+              content="Borders are minimized. Boundaries are defined by subtle background shifts and soft, airy shadows that spread naturally across the canvas."
+            />
+          </Block>
 
-                    {/* Header */}
-                    <Block role="Stack">
-                        <Text role="Title" prominence="Strong" content="Surface Over Boundaries" />
-                        <Text role="Body" prominence="Standard" content="Borders are minimized. Boundaries are defined by subtle background shifts and soft, airy shadows that spread naturally across the canvas." />
-                    </Block>
-
-                    {/* Matrix Section */}
-                    <Block role="Stack">
-                        <Text role="Heading" prominence="Strong" content="1. Refined Intent Matrix" />
-                        <Block role="Grid" spec={{ columns: 6 }}>
-                            {['Neutral', 'Brand', 'Positive', 'Caution', 'Critical', 'Info'].map(intent => (
-                                <Block key={intent} role="Stack">
-                                    <Text role="Caption" prominence="Subtle" content={intent} />
-                                    <Action role="Button" prominence="Hero" intent={intent as any} label="Hero" />
-                                    <Action role="Button" prominence="Strong" intent={intent as any} label="Strong" />
-                                    <Action role="Button" prominence="Standard" intent={intent as any} label="Std" />
-                                    <Action role="Button" prominence="Subtle" intent={intent as any} label="Subtle" />
-                                </Block>
-                            ))}
-                        </Block>
-                    </Block>
-
-                    {/* Interactive Selection Section */}
-                    <Block role="Stack">
-                        <Block role="Stack">
-                            <Text role="Heading" prominence="Strong" content="2. Surface & Outline Selection" />
-                            <Text role="Caption" prominence="Subtle" content="Selection uses 'outline' (CSS) to preserve layout geometry. Inner blocks remain transparent to emphasize the parent surface." />
-                        </Block>
-                        <Block role="Grid" spec={{ columns: 2 }}>
-                            {items.map(item => (
-                                <Block
-                                    key={item.id}
-                                    role="Card"
-                                    prominence={selection.isSelected(item.id) ? 'Strong' : 'Standard'}
-                                    intent="Neutral"
-                                    value={item.id}
-                                    selectionModel={selectionModel}
-                                    className="cursor-pointer group transition-all"
-                                    style={{ padding: '4rem' }}
-                                >
-                                    <Block role="Stack">
-                                        <div className="flex items-center justify-between h-8">
-                                            <Text role="Heading" content={item.title} prominence="Strong" />
-                                            <div className={cn(
-                                                "w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300",
-                                                selection.isSelected(item.id) ? "opacity-100 scale-100" : "opacity-0 scale-0"
-                                            )} />
-                                        </div>
-                                        <Text role="Body" content="This component uses depth and outlines for state. Notice how nested stacks stay transparent during selection." />
-                                    </Block>
-                                </Block>
-                            ))}
-                        </Block>
-                    </Block>
+          {/* Matrix Section */}
+          <Block role="Stack">
+            <Text role="Heading" prominence="Strong" content="1. Refined Intent Matrix" />
+            <Block role="Grid" spec={{ columns: 6 }}>
+              {['Neutral', 'Brand', 'Positive', 'Caution', 'Critical', 'Info'].map((intent) => (
+                <Block key={intent} role="Stack">
+                  <Text role="Caption" prominence="Subtle" content={intent} />
+                  <Action role="Button" prominence="Hero" intent={intent as any} label="Hero" />
+                  <Action role="Button" prominence="Strong" intent={intent as any} label="Strong" />
+                  <Action role="Button" prominence="Standard" intent={intent as any} label="Std" />
+                  <Action role="Button" prominence="Subtle" intent={intent as any} label="Subtle" />
                 </Block>
-            </Section>
-        </Page>
-    );
+              ))}
+            </Block>
+          </Block>
+
+          {/* Interactive Selection Section */}
+          <Block role="Stack">
+            <Block role="Stack">
+              <Text role="Heading" prominence="Strong" content="2. Surface & Outline Selection" />
+              <Text
+                role="Caption"
+                prominence="Subtle"
+                content="Selection uses 'outline' (CSS) to preserve layout geometry. Inner blocks remain transparent to emphasize the parent surface."
+              />
+            </Block>
+            <Block role="Grid" spec={{ columns: 2 }}>
+              {items.map((item) => (
+                <Block
+                  key={item.id}
+                  role="Card"
+                  prominence={selection.isSelected(item.id) ? 'Strong' : 'Standard'}
+                  intent="Neutral"
+                  value={item.id}
+                  selectionModel={selectionModel}
+                  className="cursor-pointer group transition-all"
+                  style={{ padding: '4rem' }}
+                >
+                  <Block role="Stack">
+                    <div className="flex items-center justify-between h-8">
+                      <Text role="Heading" content={item.title} prominence="Strong" />
+                      <div
+                        className={cn(
+                          'w-1.5 h-1.5 rounded-full bg-primary transition-all duration-300',
+                          selection.isSelected(item.id)
+                            ? 'opacity-100 scale-100'
+                            : 'opacity-0 scale-0'
+                        )}
+                      />
+                    </div>
+                    <Text
+                      role="Body"
+                      content="This component uses depth and outlines for state. Notice how nested stacks stay transparent during selection."
+                    />
+                  </Block>
+                </Block>
+              ))}
+            </Block>
+          </Block>
+
+          {/* 5. Axiom Verification (Space & Geometry) */}
+          <Block role="Stack">
+            <Text role="Heading" prominence="Strong" content="5. Axiom Verification" />
+
+            <Block role="Stack">
+              <Text role="Heading" prominence="Standard" content="A. Text Scaling by Space" />
+              <Block role="Grid" spec={{ columns: 2 }}>
+                {/* Canvas Space (Inherited from Main) */}
+                <Block role="Card" prominence="Subtle">
+                  <Block role="Stack">
+                    <Text role="Label" content="Space: Canvas (Expressive)" />
+                    <div className="border-b border-border-default/20 my-2" />
+                    <Text role="Title" prominence="Hero" content="Hero Title (6xl/8xl)" />
+                    <Text role="Heading" prominence="Hero" content="Hero Heading (3xl)" />
+                    <Text role="Body" prominence="Hero" content="Hero Body (xl)" />
+                  </Block>
+                </Block>
+
+                {/* Bar Space (Explicit Toolbar) */}
+                <Block role="Toolbar" className="p-4 border border-border-dashed rounded-lg">
+                  <Block role="Stack">
+                    <Text role="Label" content="Space: Bar (Tool Matrix)" />
+                    <div className="border-b border-border-default/20 my-2" />
+                    <Text role="Title" prominence="Hero" content="Hero Title (lg)" />
+                    <Text role="Heading" prominence="Hero" content="Hero Heading (base)" />
+                    <Text role="Body" prominence="Hero" content="Hero Body (sm)" />
+                  </Block>
+                </Block>
+              </Block>
+            </Block>
+
+            <Block role="Stack">
+              <Text
+                role="Heading"
+                prominence="Standard"
+                content="B. Formalized Separation Strategy"
+              />
+              <Block role="Grid" spec={{ columns: 2 }}>
+                {/* Stack (Gap Separation) */}
+                <Block role="Stack" className="border border-red-500/20 p-4">
+                  <Text
+                    role="Body"
+                    content="Block role='Stack': Meta.separation='gap'. Should be transparent. (Red border added manually)."
+                  />
+                </Block>
+
+                {/* Card (Surface Separation) */}
+                <Block role="Card">
+                  <Text
+                    role="Body"
+                    content="Block role='Card': Meta.separation='surface'. Should have Surface background token."
+                  />
+                </Block>
+              </Block>
+            </Block>
+          </Block>
+        </Block>
+      </Section>
+    </Page>
+  );
 };

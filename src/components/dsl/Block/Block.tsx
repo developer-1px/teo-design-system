@@ -1,17 +1,31 @@
 /**
  * Block - Functional Component (IDDL v1.0 Spec Strict)
- * 
+ *
  * Implements the Part 1 core specification:
  * - 5 Axes: Role, Intent, Prominence, Density, Spec
  * - Hierarchy: Block children can be Block or Element
  */
 
-import React, { useRef } from 'react';
-import { BlockLayoutProvider, useBlockLayoutContext, useLayoutContext } from '@/components/context/IDDLContext.tsx';
+import type React from 'react';
+import { useRef } from 'react';
+import {
+  BlockLayoutProvider,
+  useBlockLayoutContext,
+  useLayoutContext,
+} from '@/components/context/IDDLContext.tsx';
 import type { BlockProps, BlockRendererProps } from '@/components/dsl/Block/Block.types';
+import type { SpaceCategory } from '@/components/dsl/Shared.types'; // Imported
+import { useIDDLToken } from '@/shared/iddl/token-engine';
 import { cn } from '@/shared/lib/utils';
 import { getRoleConfig } from './role-config';
-import { useIDDLToken } from '@/shared/iddl/token-engine';
+
+const BLOCK_SPACE_MAP: Record<string, SpaceCategory> = {
+  Toolbar: 'bar',
+  Statusbar: 'bar',
+  Navigation: 'rail',
+  Panel: 'well',
+  // Card does NOT define a *Space* (it defines a Surface but context inside is usually Standard/Surface)
+};
 
 export function Block({
   as,
@@ -35,6 +49,15 @@ export function Block({
   const computedDensity = density ?? parentCtx.density ?? 'Standard';
   const computedIntent = intent ?? parentCtx.intent ?? 'Neutral';
 
+  // Resolve Space (Axiom v2.0)
+  // Priority: Block Role Definition > Parent Block > Section > 'surface'
+  const definedSpace = BLOCK_SPACE_MAP[role as string];
+  const inheritedSpace = parentCtx.space || sectionCtx.space || 'surface';
+  const computedSpace = definedSpace || inheritedSpace;
+
+  // 2. Fetch Role Configuration (Moved up for Token Engine)
+  const roleConfig = getRoleConfig(role);
+
   // ⚡️ IDDL Token Engine Integration (v6.0)
   const tokens = useIDDLToken({
     role: role as string,
@@ -44,11 +67,14 @@ export function Block({
     density: computedDensity,
     state: {
       selected: selectionModel?.isSelected?.(value) ?? false,
-    }
+    },
+    context: {
+      ancestry: {
+        space: computedSpace,
+      },
+    },
+    roleMeta: roleConfig?.meta, // Axiom v7.0
   });
-
-  // 2. Fetch Role Configuration
-  const roleConfig = getRoleConfig(role);
 
   // 3. Determine Component Tag
   const componentRef = useRef<HTMLElement>(null);
@@ -72,15 +98,15 @@ export function Block({
     roleConfig?.baseStyles,
     sectionOverride?.baseStyles,
     tokens.surface.background,
-    tokens.surface.blur,     // v6.1: backdrop-blur class
+    tokens.surface.blur, // v6.1: backdrop-blur class
     tokens.typography.color,
-    tokens.geometry.width,  // v6.0: border width class (e.g. border-2)
-    tokens.geometry.color,  // v6.0: border color class (e.g. border-primary)
+    tokens.geometry.width, // v6.0: border width class (e.g. border-2)
+    tokens.geometry.color, // v6.0: border color class (e.g. border-primary)
     tokens.geometry.radius, // v6.0: border radius class (e.g. rounded-lg)
     tokens.geometry.outline, // v6.2: outline class (e.g. outline-1)
     tokens.geometry.outlineOffset, // v6.2: outline-offset class
     tokens.shadow.boxShadow, // v6.0: shadow class (e.g. shadow-md)
-    tokens.extraClasses,     // v6.5: Premium extra classes
+    tokens.extraClasses, // v6.5: Premium extra classes
     className
   );
 
@@ -94,6 +120,7 @@ export function Block({
     mode: sectionCtx.mode,
     sectionRole: sectionCtx.role as string,
     pageRole: sectionCtx.pageRole,
+    space: computedSpace, // Propagate Space
   };
 
   const Renderer = roleConfig?.renderer;
@@ -129,7 +156,7 @@ export function Block({
           style={{
             padding: tokens.spacing.padding,
             gap: tokens.spacing.gap,
-            ...((rest as any).style || {})
+            ...((rest as any).style || {}),
           }}
           {...ariaProps}
           data-role={role}

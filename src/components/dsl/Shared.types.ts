@@ -47,6 +47,8 @@ export type Intent =
   | 'Critical' // 위험/파괴 (Red) - v1.0.0의 Danger
   | 'Info'; // 참고 정보 (Blue)
 
+export type SpaceCategory = 'canvas' | 'bar' | 'rail' | 'well' | 'float' | 'surface';
+
 export interface LayoutContextValue {
   prominence?: Prominence;
   role?: string; // Generic role (Section or Block)
@@ -58,6 +60,7 @@ export interface LayoutContextValue {
   mode?: 'view' | 'edit';
   type?: string; // v5.2: Section Type (Bar, Panel, etc.)
   scale?: any; // v5.2: Type Scale Tokens
+  space?: SpaceCategory; // v7.0: Context-Aware Space (Axiomatic)
 
   // v5.1 Section Design Context (Optional propagated properties)
   preferIconOnly?: boolean;

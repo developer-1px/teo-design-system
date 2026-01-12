@@ -123,14 +123,8 @@ export const SlideList = ({
               selectionModel={selectionModel}
             >
               {/* Slide Number Badge - Absolute positioned */}
-              <Block
-                role="Container"
-              >
-                <Text
-                  role="Caption"
-                  prominence="Strong"
-                  content={index + 1}
-                />
+              <Block role="Container">
+                <Text role="Caption" prominence="Strong" content={index + 1} />
               </Block>
 
               {/* Thumbnail Container */}
@@ -139,13 +133,8 @@ export const SlideList = ({
               </Block>
 
               {/* Slide Title - Bottom overlay */}
-              <Block
-                role="Container"
-              >
-                <Text
-                  role="Caption"
-                  content={slide.title || '제목 없음'}
-                />
+              <Block role="Container">
+                <Text role="Caption" content={slide.title || '제목 없음'} />
               </Block>
             </Block>
           );

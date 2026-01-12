@@ -21,10 +21,7 @@ export const ListView = ({ data }: ListViewProps) => {
           const keys = Object.keys(obj).slice(0, 4); // 최대 4개 필드
 
           return (
-            <Block
-              key={index}
-              role="ListItem"
-            >
+            <Block key={index} role="ListItem">
               {/* 첫 번째 필드 (제목) */}
               <Block role="Container">
                 <Text role="Body" prominence="Strong" content={String(obj[keys[0]])} />

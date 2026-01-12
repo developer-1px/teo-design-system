@@ -94,11 +94,7 @@ export const IDEPage = () => {
 
       {/* Breadcrumbs */}
       {activeFile && (
-        <Block
-          role="Breadcrumbs"
-          layout="inline"
-          prominence="Subtle"
-        >
+        <Block role="Breadcrumbs" layout="inline" prominence="Subtle">
           <Text role="Caption" content="src" prominence="Subtle" />
           <Block role="DividerVertical" />
           <Text role="Caption" content="apps" prominence="Subtle" />
@@ -157,10 +153,7 @@ export const IDEPage = () => {
         <Section role="PrimarySidebar">
           {currentView === 'files' && (
             <Block role="Stack">
-              <Block
-                role="Toolbar"
-                density="Compact"
-              >
+              <Block role="Toolbar" density="Compact">
                 <Text role="Caption" prominence="Subtle" content="EXPLORER" />
               </Block>
               <Block role="ScrollArea">
@@ -215,11 +208,7 @@ export const IDEPage = () => {
         <RightNav onViewChange={setRightPanelView} onClose={() => setRightPanelView(null)} />
       </Section>
 
-      <Section
-        role="Status"
-        prominence="Standard"
-        density="Compact"
-      >
+      <Section role="Status" prominence="Standard" density="Compact">
         <Block role="Toolbar">
           {/* Left: Git Branch & Errors */}
           <Block role="Inline">

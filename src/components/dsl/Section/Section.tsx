@@ -27,11 +27,29 @@ import type {
   SectionProps,
   SectionRole,
   SectionType,
+  SpaceCategory, // Imported
 } from '@/components/dsl/Section/Section.types';
 import { cn } from '@/shared/lib/utils';
 import { getSectionRoleConfig } from './configs/registry';
 import { SECTION_DESIGN_CONTEXTS, SECTION_RULES } from './configs/section-spec';
 import { TYPE_SCALES } from './configs/section-tokens';
+
+const SECTION_SPACE_MAP: Record<string, SpaceCategory> = {
+  Main: 'canvas',
+  Stage: 'canvas',
+  Sidebar: 'rail',
+  PrimarySidebar: 'rail',
+  SecondarySidebar: 'rail',
+  Aside: 'rail',
+  Header: 'bar',
+  Footer: 'bar',
+  Toolbar: 'bar',
+  Statusbar: 'bar',
+  Panel: 'well',
+  Sheet: 'surface',
+  Dialog: 'surface',
+  Drawer: 'surface',
+};
 
 // Styles for Section Variants
 const sectionVariants = cva('flex flex-col relative', {
@@ -51,10 +69,10 @@ const sectionVariants = cva('flex flex-col relative', {
   },
 });
 
-import { useIDDLToken } from '@/shared/iddl/token-engine';
-import { useResizable } from '@/shared/hooks/useResizable';
 import { createPortal } from 'react-dom';
 import { useLayoutPortal } from '@/components/dsl/Page/context/LayoutPortalContext';
+import { useResizable } from '@/shared/hooks/useResizable';
+import { useIDDLToken } from '@/shared/iddl/token-engine';
 
 export function Section({
   as,
@@ -94,10 +112,11 @@ export function Section({
     role: role as string,
     sectionRole: role as string,
     sectionType: computedType,
-    prominence: prominence || (variant === 'Card' ? 'Strong' : variant === 'Hero' ? 'Hero' : 'Standard'),
+    prominence:
+      prominence || (variant === 'Card' ? 'Strong' : variant === 'Hero' ? 'Hero' : 'Standard'),
     intent: computedIntent,
     density: computedDensity,
-    state: { hover: false } // Basic state for now
+    state: { hover: false }, // Basic state for now
   });
 
   const portalContext = useLayoutPortal();
@@ -141,8 +160,10 @@ export function Section({
   let resizeDirection: 'left' | 'right' | 'top' | 'bottom' = 'right';
   if (resizableConfig.direction) {
     // Map 'horizontal'/'vertical' to specific sides if generic
-    if (resizableConfig.direction === 'horizontal') resizeDirection = role === 'SecondarySidebar' || role === 'Aside' ? 'left' : 'right';
-    else if (resizableConfig.direction === 'vertical') resizeDirection = role === 'Panel' || role === 'Footer' ? 'top' : 'bottom';
+    if (resizableConfig.direction === 'horizontal')
+      resizeDirection = role === 'SecondarySidebar' || role === 'Aside' ? 'left' : 'right';
+    else if (resizableConfig.direction === 'vertical')
+      resizeDirection = role === 'Panel' || role === 'Footer' ? 'top' : 'bottom';
   } else {
     // Auto-detect based on role
     if (role === 'PrimarySidebar' || role === 'Nav') resizeDirection = 'right';
@@ -151,10 +172,14 @@ export function Section({
     else if (role === 'Header') resizeDirection = 'bottom';
   }
 
-  const { size: resizedSize, handleProps: resizeHandleProps, isResizing } = useResizable({
-    initialSize: (dimensions.fixedWidth || dimensions.fixedHeight || 250),
+  const {
+    size: resizedSize,
+    handleProps: resizeHandleProps,
+    isResizing,
+  } = useResizable({
+    initialSize: dimensions.fixedWidth || dimensions.fixedHeight || 250,
     minSize: resizableConfig.minSize || dimensions.minWidth || 50,
-    maxSize: resizableConfig.maxSize || dimensions.maxWidth as number || 800,
+    maxSize: resizableConfig.maxSize || (dimensions.maxWidth as number) || 800,
     direction: resizeDirection,
   });
 
@@ -163,28 +188,38 @@ export function Section({
     maxWidth: dimensions.maxWidth,
     minHeight: dimensions.minHeight,
     maxHeight: dimensions.maxHeight,
-    width: isResizable && (resizeDirection === 'left' || resizeDirection === 'right') ? resizedSize : dimensions.fixedWidth,
-    height: isResizable && (resizeDirection === 'top' || resizeDirection === 'bottom') ? resizedSize : dimensions.fixedHeight,
+    width:
+      isResizable && (resizeDirection === 'left' || resizeDirection === 'right')
+        ? resizedSize
+        : dimensions.fixedWidth,
+    height:
+      isResizable && (resizeDirection === 'top' || resizeDirection === 'bottom')
+        ? resizedSize
+        : dimensions.fixedHeight,
   };
 
   const collapsibleStyle: React.CSSProperties = isCollapsible
     ? {
-      ...(isHorizontalCollapse
-        ? {
-          width: isCollapsed
-            ? (collapsibleConfig?.collapsedSize ?? 0)
-            : (collapsibleConfig?.expandedSize ?? 'auto'),
-        }
-        : {
-          height: isCollapsed
-            ? (collapsibleConfig?.collapsedSize ?? 0)
-            : (collapsibleConfig?.expandedSize ?? 'auto'),
-        }),
-    }
+        ...(isHorizontalCollapse
+          ? {
+              width: isCollapsed
+                ? (collapsibleConfig?.collapsedSize ?? 0)
+                : (collapsibleConfig?.expandedSize ?? 'auto'),
+            }
+          : {
+              height: isCollapsed
+                ? (collapsibleConfig?.collapsedSize ?? 0)
+                : (collapsibleConfig?.expandedSize ?? 'auto'),
+            }),
+      }
     : {};
 
   const transitionClass =
     isCollapsible && useTransition ? 'transition-all duration-200 ease-in-out' : '';
+
+  // 1. Resolve Space Context (Axiom v2.0)
+  // Use mapping or fallback to 'surface'
+  const space = SECTION_SPACE_MAP[role as string] || 'surface';
 
   const content = (
     <LayoutProvider
@@ -198,6 +233,7 @@ export function Section({
         depth: parentCtx.depth + 1,
         mode: computedMode,
         pageRole: parentCtx.pageRole,
+        space: space, // Inject Space
         // v5.1 Design Context Propagation
         preferIconOnly: specContext.preferIconOnly,
         truncateText: specContext.truncateText,
@@ -249,7 +285,10 @@ export function Section({
         )}
 
         {/* Section Body */}
-        <div className={cn('flex-1 relative flex flex-col', overflowClass)} style={{ padding: tokens.spacing.padding }}>
+        <div
+          className={cn('flex-1 relative flex flex-col', overflowClass)}
+          style={{ padding: tokens.spacing.padding }}
+        >
           {children}
         </div>
       </Element>

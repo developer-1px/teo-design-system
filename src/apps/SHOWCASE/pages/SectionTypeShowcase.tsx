@@ -22,10 +22,7 @@ export function SectionTypeShowcase() {
           </p>
 
           <div className="border border-border-default rounded overflow-hidden">
-            <Section
-              role="Header"
-              type="Bar"
-            >
+            <Section role="Header" type="Bar">
               <div className="flex items-center gap-4 px-4 h-full">
                 <Text role="Heading" prominence="Hero" content="Hero Text" />
                 <Text role="Heading" prominence="Standard" content="Standard" />
@@ -44,10 +41,7 @@ export function SectionTypeShowcase() {
           </p>
 
           <div className="border border-border-default rounded overflow-hidden h-64 flex">
-            <Section
-              role="Panel"
-              type="Panel"
-            >
+            <Section role="Panel" type="Panel">
               <div>
                 <Text role="Label" content="Section Title" />
                 <Text role="Heading" prominence="Hero" content="Hero Text" />
@@ -94,10 +88,7 @@ export function SectionTypeShowcase() {
           <Text role="Title" prominence="Standard" content="Type: Layer (Modal)" />
 
           <div className="relative h-64 bg-surface-ground border border-border-default rounded flex items-center justify-center p-8">
-            <Section
-              role="Modal"
-              type="Layer"
-            >
+            <Section role="Modal" type="Layer">
               <Text role="Heading" prominence="Hero" content="Modal Title" />
               <Text
                 role="Body"
@@ -106,10 +97,7 @@ export function SectionTypeShowcase() {
               />
               <div className="flex justify-end gap-2">
                 <Text role="Label" content="Cancel" />
-                <Text
-                  role="Label"
-                  content="Confirm"
-                />
+                <Text role="Label" content="Confirm" />
               </div>
             </Section>
           </div>
@@ -124,10 +112,7 @@ export function SectionTypeShowcase() {
               <button className="px-4 py-2 bg-surface-elevated border border-border-default rounded">
                 Hover Me
               </button>
-              <Section
-                role="Popover"
-                type="Float"
-              >
+              <Section role="Popover" type="Float">
                 <Text role="Body" prominence="Standard" content="Floating Tooltip" />
               </Section>
             </div>

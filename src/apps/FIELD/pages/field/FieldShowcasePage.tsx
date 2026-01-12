@@ -1,7 +1,7 @@
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/dsl/Block/Block';
 import { Field } from '@/components/dsl/Element/Field/Field';
 import { Text } from '@/components/dsl/Element/Text/Text';
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
 export function FieldShowcasePage() {
   const categories = [
@@ -28,11 +28,7 @@ export function FieldShowcasePage() {
           ======================================== */}
       <Block role="Stack">
         <Block role="Stack">
-          <Text
-            role="Title"
-            prominence="Hero"
-            content="1. Input Category"
-          />
+          <Text role="Title" prominence="Hero" content="1. Input Category" />
           <Text
             role="Body"
             prominence="Standard"
@@ -43,11 +39,7 @@ export function FieldShowcasePage() {
         {/* 1.1 Textbox */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="1.1 Textbox"
-            />
+            <Text role="Title" prominence="Strong" content="1.1 Textbox" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -117,11 +109,7 @@ export function FieldShowcasePage() {
         {/* 1.3 Spinbutton */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="1.3 Spinbutton"
-            />
+            <Text role="Title" prominence="Strong" content="1.3 Spinbutton" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -143,11 +131,7 @@ export function FieldShowcasePage() {
         {/* 1.4 Otp */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="1.4 Otp"
-            />
+            <Text role="Title" prominence="Strong" content="1.4 Otp" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -174,11 +158,7 @@ export function FieldShowcasePage() {
           ======================================== */}
       <Block role="Stack">
         <Block role="Stack">
-          <Text
-            role="Title"
-            prominence="Hero"
-            content="2. Choice Category"
-          />
+          <Text role="Title" prominence="Hero" content="2. Choice Category" />
           <Text
             role="Body"
             prominence="Standard"
@@ -189,11 +169,7 @@ export function FieldShowcasePage() {
         {/* 2.1 Checkbox */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="2.1 Checkbox"
-            />
+            <Text role="Title" prominence="Strong" content="2.1 Checkbox" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -328,11 +304,7 @@ export function FieldShowcasePage() {
         {/* 2.5 Listbox */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="2.5 Listbox"
-            />
+            <Text role="Title" prominence="Strong" content="2.5 Listbox" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -367,11 +339,7 @@ export function FieldShowcasePage() {
           ======================================== */}
       <Block role="Stack">
         <Block role="Stack">
-          <Text
-            role="Title"
-            prominence="Hero"
-            content="3. Control Category"
-          />
+          <Text role="Title" prominence="Hero" content="3. Control Category" />
           <Text
             role="Body"
             prominence="Standard"
@@ -382,11 +350,7 @@ export function FieldShowcasePage() {
         {/* 3.1 Slider */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="3.1 Slider"
-            />
+            <Text role="Title" prominence="Strong" content="3.1 Slider" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -415,11 +379,7 @@ export function FieldShowcasePage() {
         {/* 3.2 Colorpicker */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="3.2 Colorpicker"
-            />
+            <Text role="Title" prominence="Strong" content="3.2 Colorpicker" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -501,11 +461,7 @@ export function FieldShowcasePage() {
         {/* 4.1 Datepicker */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="4.1 Datepicker"
-            />
+            <Text role="Title" prominence="Strong" content="4.1 Datepicker" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -532,11 +488,7 @@ export function FieldShowcasePage() {
         {/* 4.2 Timepicker */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="4.2 Timepicker"
-            />
+            <Text role="Title" prominence="Strong" content="4.2 Timepicker" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -557,11 +509,7 @@ export function FieldShowcasePage() {
         {/* 4.3 Filepicker */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="4.3 Filepicker"
-            />
+            <Text role="Title" prominence="Strong" content="4.3 Filepicker" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -582,11 +530,7 @@ export function FieldShowcasePage() {
         {/* 4.4 Signature */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="4.4 Signature"
-            />
+            <Text role="Title" prominence="Strong" content="4.4 Signature" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -613,11 +557,7 @@ export function FieldShowcasePage() {
         {/* 4.5 Calendar */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="4.5 Calendar"
-            />
+            <Text role="Title" prominence="Strong" content="4.5 Calendar" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -643,11 +583,7 @@ export function FieldShowcasePage() {
           ======================================== */}
       <Block role="Stack">
         <Block role="Stack">
-          <Text
-            role="Title"
-            prominence="Hero"
-            content="5. Meta Category"
-          />
+          <Text role="Title" prominence="Hero" content="5. Meta Category" />
           <Text
             role="Body"
             prominence="Standard"
@@ -658,11 +594,7 @@ export function FieldShowcasePage() {
         {/* 5.1 Hidden */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="5.1 Hidden"
-            />
+            <Text role="Title" prominence="Strong" content="5.1 Hidden" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -697,11 +629,7 @@ export function FieldShowcasePage() {
           ======================================== */}
       <Block role="Stack">
         <Block role="Stack">
-          <Text
-            role="Title"
-            prominence="Hero"
-            content="6. Prominence & Intent Variants"
-          />
+          <Text role="Title" prominence="Hero" content="6. Prominence & Intent Variants" />
           <Text
             role="Body"
             prominence="Standard"
@@ -712,11 +640,7 @@ export function FieldShowcasePage() {
         {/* Prominence variants */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="Prominence Levels"
-            />
+            <Text role="Title" prominence="Strong" content="Prominence Levels" />
             <Text role="Body" prominence="Subtle" content="Hero → Standard → Strong → Subtle" />
           </Block>
 
@@ -755,11 +679,7 @@ export function FieldShowcasePage() {
         {/* Intent variants */}
         <Block role="Stack">
           <Block role="Stack">
-            <Text
-              role="Title"
-              prominence="Strong"
-              content="Intent Colors"
-            />
+            <Text role="Title" prominence="Strong" content="Intent Colors" />
             <Text
               role="Body"
               prominence="Subtle"
@@ -816,11 +736,7 @@ export function FieldShowcasePage() {
           ======================================== */}
       <Block role="Stack">
         <Block role="Stack">
-          <Text
-            role="Title"
-            prominence="Hero"
-            content="7. Density Variants"
-          />
+          <Text role="Title" prominence="Hero" content="7. Density Variants" />
           <Text
             role="Body"
             prominence="Standard"

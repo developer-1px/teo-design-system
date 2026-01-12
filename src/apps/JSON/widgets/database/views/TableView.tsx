@@ -53,42 +53,22 @@ export const TableView = ({
             return <Text role="Caption" prominence="Subtle" content="null" />;
           }
           if (value === undefined) {
-            return (
-              <Text role="Caption" prominence="Subtle" content="undefined" />
-            );
+            return <Text role="Caption" prominence="Subtle" content="undefined" />;
           }
 
           // boolean
           if (typeof value === 'boolean') {
-            return (
-              <Text
-                role="Body"
-                content={String(value)}
-                highlight={searchQuery}
-              />
-            );
+            return <Text role="Body" content={String(value)} highlight={searchQuery} />;
           }
 
           // number
           if (typeof value === 'number') {
-            return (
-              <Text
-                role="Body"
-                content={value.toLocaleString()}
-                highlight={searchQuery}
-              />
-            );
+            return <Text role="Body" content={value.toLocaleString()} highlight={searchQuery} />;
           }
 
           // array
           if (Array.isArray(value)) {
-            return (
-              <Text
-                role="Caption"
-                prominence="Subtle"
-                content={`[Array] x${value.length}`}
-              />
-            );
+            return <Text role="Caption" prominence="Subtle" content={`[Array] x${value.length}`} />;
           }
 
           // object

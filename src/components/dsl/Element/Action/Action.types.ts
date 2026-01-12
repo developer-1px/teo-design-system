@@ -3,7 +3,7 @@
  */
 
 import type React from 'react';
-import type { ReactNode, HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import type { AsProp, Density, Intent, Prominence } from '../../Shared.types';
 
 /**
@@ -115,7 +115,8 @@ import type { TokenOutput } from '@/shared/iddl/token-engine';
  * Action Renderer Props
  * 모든 Action renderer가 공통으로 받는 props
  */
-export interface ActionRendererProps extends Omit<ActionProps, 'role' | 'prominence' | 'intent' | 'density'> {
+export interface ActionRendererProps
+  extends Omit<ActionProps, 'role' | 'prominence' | 'intent' | 'density'> {
   role: ActionRole;
   computedProminence: Prominence;
   computedIntent: Intent;

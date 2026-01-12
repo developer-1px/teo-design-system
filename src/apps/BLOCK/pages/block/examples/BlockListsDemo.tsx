@@ -26,11 +26,7 @@ export function BlockListsDemo() {
         <Text role="Label" content="List Layout (role='List')" />
         <Block role="List">
           {['First Item', 'Second Item', 'Third Item'].map((item) => (
-            <Block
-              key={item}
-              role="Inline"
-              clickable
-            >
+            <Block key={item} role="Inline" clickable>
               <Text role="Body" content={item} />
             </Block>
           ))}

@@ -11,10 +11,10 @@ import { cva } from 'class-variance-authority';
 import type React from 'react';
 import { useBlockLayoutContext, useLayoutContext } from '@/components/context/IDDLContext.tsx';
 import type { TextProps } from '@/components/dsl/Element/Text/Text.types';
+import { useIDDLToken } from '@/shared/iddl/token-engine';
 import { cn } from '@/shared/lib/utils';
 import { getRoleConfig } from './configs/registry';
 import { isComplexConfig } from './configs/types';
-import { useIDDLToken } from '@/shared/iddl/token-engine';
 
 /**
  * Alignment variants
@@ -84,6 +84,11 @@ export function Text({
     prominence: computedProminence,
     intent: computedIntent,
     density: ctx.density,
+    context: {
+      ancestry: {
+        space: blockCtx.space || ctx.space || 'surface',
+      },
+    },
   });
 
   if (hidden) return null;
@@ -115,17 +120,6 @@ export function Text({
 
   // Determine HTML tag
   const Element: any = as || getHtmlTag(role, computedProminence, htmlTag, spec);
-
-  // v5.2: Adaptive Scaling (Override for precise control)
-  const enableAdaptiveScaling =
-    ctx.scale && ['Hero', 'Standard', 'Subtle'].includes(computedProminence);
-
-  const adaptiveStyle: React.CSSProperties = enableAdaptiveScaling
-    ? {
-      fontSize: ctx.scale?.text[computedProminence as 'Hero' | 'Standard' | 'Subtle'],
-      lineHeight: '1.5',
-    }
-    : {};
 
   // Render content with highlighting
   const renderContent = () => {
@@ -175,7 +169,6 @@ export function Text({
       // Label role support
       htmlFor={role === 'Label' ? spec?.for : undefined}
       style={{
-        ...adaptiveStyle,
         ...rest.style,
       }}
       {...rest}

@@ -61,11 +61,7 @@ export const DSLSlideCanvas = ({
       {/* Canvas Container - 중앙 정렬 */}
       <Block role="Container">
         {/* Slide Canvas - 16:9 aspect ratio container */}
-        <Block
-          role="Container"
-          prominence="Standard"
-          density="Comfortable"
-        >
+        <Block role="Container" prominence="Standard" density="Comfortable">
           {/* Slide Content Container */}
           <Section
             role="Container"
@@ -121,22 +117,14 @@ export const DSLSlideCanvas = ({
 
           {/* Slide Number - Top left overlay */}
           {!fullscreen && currentIndex !== undefined && totalSlides !== undefined && (
-            <Block
-              role="Toolbar"
-              prominence="Subtle"
-              density="Compact"
-            >
+            <Block role="Toolbar" prominence="Subtle" density="Compact">
               <Text role="Caption" content={`${currentIndex + 1} / ${totalSlides}`} />
             </Block>
           )}
 
           {/* Keyboard Shortcuts Hint - Bottom center overlay */}
           {!fullscreen && (
-            <Block
-              role="Toolbar"
-              density="Compact"
-              prominence="Subtle"
-            >
+            <Block role="Toolbar" density="Compact" prominence="Subtle">
               <Block role="Toolbar" density="Compact">
                 <Text role="Code" content="←" />
                 <Text role="Code" content="→" />

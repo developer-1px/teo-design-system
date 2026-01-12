@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 import { Block } from '@/components/dsl/Block/Block';
 import { Action } from '@/components/dsl/Element/Action/Action';
 import { Text } from '@/components/dsl/Element/Text/Text';
+import { ShowcasePage } from '@/components/showcase/ShowcasePage';
 
 export function ActionShowcasePage() {
   const [activeCategoryId, setActiveCategoryId] = useState('matrix');
@@ -38,15 +38,16 @@ export function ActionShowcasePage() {
       <Block role="Container" id="matrix">
         <Block role="Stack">
           <Text role="Title" prominence="Strong" content="1. Button Matrix" />
-          <Text role="Body" prominence="Subtle" content="The core combinations of Prominence and Intent axes." />
+          <Text
+            role="Body"
+            prominence="Subtle"
+            content="The core combinations of Prominence and Intent axes."
+          />
         </Block>
 
         <Block role="Card" density="Standard">
           {/* Header Row */}
-          <Block
-            role="Grid"
-            spec={{ columns: 7 }}
-          >
+          <Block role="Grid" spec={{ columns: 7 }}>
             <Text role="Label" content="Prominence" />
             {intents.map((intent) => (
               <Text key={intent} role="Label" content={intent} />
@@ -55,11 +56,7 @@ export function ActionShowcasePage() {
 
           {/* Rows */}
           {['Hero', 'Strong', 'Standard', 'Subtle'].map((prominence: any) => (
-            <Block
-              key={prominence}
-              role="Grid"
-              spec={{ columns: 7 }}
-            >
+            <Block key={prominence} role="Grid" spec={{ columns: 7 }}>
               <Text role="Label" content={prominence} />
               {intents.map((intent) => (
                 <Action
@@ -68,7 +65,7 @@ export function ActionShowcasePage() {
                   label="Action"
                   prominence={prominence}
                   intent={intent}
-                  onClick={() => { }}
+                  onClick={() => {}}
                 />
               ))}
             </Block>
@@ -82,7 +79,11 @@ export function ActionShowcasePage() {
       <Block role="Container" id="density">
         <Block role="Stack">
           <Text role="Title" prominence="Strong" content="2. Density & Spacing" />
-          <Text role="Body" prominence="Subtle" content="Adaptive layouts based on the Density axis (Compact, Standard, Comfortable)." />
+          <Text
+            role="Body"
+            prominence="Subtle"
+            content="Adaptive layouts based on the Density axis (Compact, Standard, Comfortable)."
+          />
         </Block>
 
         <Block role="Grid" spec={{ columns: 3 }}>
@@ -114,7 +115,11 @@ export function ActionShowcasePage() {
       <Block role="Container" id="combinations">
         <Block role="Stack">
           <Text role="Title" prominence="Strong" content="3. UI Combinations" />
-          <Text role="Body" prominence="Subtle" content="Realistic implementation of interactive patterns using Action & Block." />
+          <Text
+            role="Body"
+            prominence="Subtle"
+            content="Realistic implementation of interactive patterns using Action & Block."
+          />
         </Block>
 
         <Block role="Grid" spec={{ columns: 2 }}>
@@ -151,7 +156,10 @@ export function ActionShowcasePage() {
                   <Text role="Label" content="Jane Doe" prominence="Strong" />
                   <Text role="Caption" content="2 hours ago" prominence="Subtle" />
                 </Block>
-                <Text role="Body" content="I've updated the button tokens to support the new shadow-xl variant. Please review the Hero prominence." />
+                <Text
+                  role="Body"
+                  content="I've updated the button tokens to support the new shadow-xl variant. Please review the Hero prominence."
+                />
               </Block>
             </Block>
             <Block role="Toolbar">
@@ -160,7 +168,12 @@ export function ActionShowcasePage() {
               <Action role="IconButton" icon="Smile" prominence="Subtle" label="Emoji" />
             </Block>
             <Block>
-              <Action role="Button" label="Resolve Conversation" prominence="Strong" intent="Positive" />
+              <Action
+                role="Button"
+                label="Resolve Conversation"
+                prominence="Strong"
+                intent="Positive"
+              />
             </Block>
           </Block>
         </Block>
@@ -190,7 +203,13 @@ export function ActionShowcasePage() {
           </Block>
           <Block role="Card">
             <Text role="Label" content="Selected" prominence="Subtle" />
-            <Action role="Button" label="Active State" selected prominence="Strong" intent="Positive" />
+            <Action
+              role="Button"
+              label="Active State"
+              selected
+              prominence="Strong"
+              intent="Positive"
+            />
           </Block>
           <Block role="Card">
             <Text role="Label" content="Default" prominence="Subtle" />
@@ -216,18 +235,42 @@ export function ActionShowcasePage() {
           <Block role="Toolbar">
             <Text role="Label" content="Text + Icon" />
             <Action role="Button" label="Configure Systems" icon="Settings" prominence="Standard" />
-            <Action role="Button" label="Delete Resource" icon="Trash" prominence="Hero" intent="Critical" />
-            <Action role="Button" label="Commit Changes" icon="Save" prominence="Strong" intent="Brand" />
+            <Action
+              role="Button"
+              label="Delete Resource"
+              icon="Trash"
+              prominence="Hero"
+              intent="Critical"
+            />
+            <Action
+              role="Button"
+              label="Commit Changes"
+              icon="Save"
+              prominence="Strong"
+              intent="Brand"
+            />
           </Block>
           <Block role="Divider" />
 
           <Block role="Toolbar">
             <Text role="Label" content="Icon Only" />
             <Action role="IconButton" icon="Settings" prominence="Standard" label="Settings" />
-            <Action role="IconButton" icon="Trash" prominence="Hero" intent="Critical" label="Delete" />
+            <Action
+              role="IconButton"
+              icon="Trash"
+              prominence="Hero"
+              intent="Critical"
+              label="Delete"
+            />
             <Action role="IconButton" icon="Plus" prominence="Strong" intent="Brand" label="Add" />
             <Action role="IconButton" icon="MoreHorizontal" prominence="Subtle" label="More" />
-            <Action role="IconButton" icon="Search" prominence="Standard" intent="Info" label="Search" />
+            <Action
+              role="IconButton"
+              icon="Search"
+              prominence="Standard"
+              intent="Info"
+              label="Search"
+            />
           </Block>
         </Block>
       </Block>
@@ -238,7 +281,11 @@ export function ActionShowcasePage() {
       <Block role="Container" id="components">
         <Block role="Stack">
           <Text role="Title" prominence="Strong" content="6. Specialized Actions" />
-          <Text role="Body" prominence="Subtle" content="Semantic components for complex contextual interactions." />
+          <Text
+            role="Body"
+            prominence="Subtle"
+            content="Semantic components for complex contextual interactions."
+          />
         </Block>
 
         <Block role="Grid" spec={{ columns: 2 }}>
@@ -295,7 +342,11 @@ export function ActionShowcasePage() {
       <Block role="Container" id="links">
         <Block role="Stack">
           <Text role="Title" prominence="Strong" content="7. Navigation Links" />
-          <Text role="Body" prominence="Subtle" content="Semantic hyperlinks with standard typography." />
+          <Text
+            role="Body"
+            prominence="Subtle"
+            content="Semantic hyperlinks with standard typography."
+          />
         </Block>
 
         <Block role="Card">
