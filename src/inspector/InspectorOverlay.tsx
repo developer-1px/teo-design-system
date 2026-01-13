@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Action } from "../design-system/Action";
 import { Text } from "../design-system/Text";
 import { Frame } from "../design-system/Frame";
+import { Overlay } from "../design-system/Overlay";
 
 // --- React Fiber Helpers ---
 
@@ -413,36 +414,37 @@ export function InspectorOverlay() {
         onClick={handleClick}
       >
         {/* Top Status Badge - Compact */}
-        <Frame
+        <Overlay
           position="fixed"
-          top={2}
-          left="50%"
+          y="2px"
+          x="50%"
           zIndex={10002}
-          surface="primary"
-          rounded="full"
-          p="0.5 2"
-          row
-          align="center"
-          gap={1.5}
-          shadow="lg"
-          style={{
-            transform: "translateX(-50%)",
-            pointerEvents: "auto",
-          }}
+          style={{ transform: "translateX(-50%)", pointerEvents: "auto" }}
+          clickOutsideToDismiss={false}
         >
-          {isLocked ? (
-            <Lock size={10} color="var(--primary-fg)" />
-          ) : (
-            <Unlock size={10} color="var(--primary-fg)" />
-          )}
-          <Text
-            variant={6}
-            weight="bold"
-            style={{ color: "var(--primary-fg)" }}
+          <Frame
+            surface="primary"
+            rounded="full"
+            p="0.5 2"
+            row
+            align="center"
+            gap={1.5}
+            shadow="lg"
           >
-            {isLocked ? "LOCKED" : "INSPECT"}
-          </Text>
-        </Frame>
+            {isLocked ? (
+              <Lock size={10} color="var(--primary-fg)" />
+            ) : (
+              <Unlock size={10} color="var(--primary-fg)" />
+            )}
+            <Text
+              variant={6}
+              weight="bold"
+              style={{ color: "var(--primary-fg)" }}
+            >
+              {isLocked ? "LOCKED" : "INSPECT"}
+            </Text>
+          </Frame>
+        </Overlay>
 
         {/* Highlight Box */}
         {targetRect && (
@@ -518,29 +520,33 @@ export function InspectorOverlay() {
 
       {/* Notification Toast - Compact */}
       {notification && (
-        <Frame
+        <Overlay
           position="fixed"
           bottom={4}
-          left="50%"
+          x="50%"
           zIndex={10005}
-          surface="primary"
-          rounded="md"
-          p="1 3"
-          row
-          align="center"
-          gap={2}
-          shadow="lg"
           style={{ transform: "translateX(-50%)" }}
+          clickOutsideToDismiss={false}
         >
-          <Copy size={12} color="var(--primary-fg)" />
-          <Text
-            variant={6}
-            weight="medium"
-            style={{ color: "var(--primary-fg)" }}
+          <Frame
+            surface="primary"
+            rounded="md"
+            p="1 3"
+            row
+            align="center"
+            gap={2}
+            shadow="lg"
           >
-            {notification}
-          </Text>
-        </Frame>
+            <Copy size={12} color="var(--primary-fg)" />
+            <Text
+              variant={6}
+              weight="medium"
+              style={{ color: "var(--primary-fg)" }}
+            >
+              {notification}
+            </Text>
+          </Frame>
+        </Overlay>
       )}
     </>
   );
@@ -705,171 +711,177 @@ function InspectorPanel({
   }, []);
 
   return (
-    <Frame
+    <Overlay
       position="fixed"
-      style={{
-        top: position.y,
-        left: position.x,
-        maxHeight: "80vh",
-        pointerEvents: "auto",
-        border: "1px solid var(--border-color)"
-      }}
-      surface="base"
-      rounded="lg"
-      shadow="2xl"
+      x={position.x}
+      y={position.y}
       zIndex={10003}
+      style={{
+        pointerEvents: "auto",
+      }}
+      clickOutsideToDismiss={false} // Panel handles its own interactions
     >
-      {/* Draggable Header - Compact */}
       <Frame
-        surface="sunken"
-        p="0 2"
-        row
-        align="center"
-        justify="between"
-        style={{ cursor: 'grab', userSelect: 'none', borderBottom: "1px solid var(--border-color)" }}
-        onMouseDown={handleMouseDown}
+        style={{
+          maxHeight: "80vh",
+          border: "1px solid var(--border-color)"
+        }}
+        surface="base"
+        rounded="lg"
+        shadow="2xl"
       >
-        <Frame row align="center" gap={1.5}>
-          <Lock size={10} className="text-primary" />
-          <Text weight="bold" size={5}>
-            {name}
-          </Text>
-        </Frame>
-        <Frame row gap={0.5}>
-          <Action
-            icon={Copy}
-            variant="ghost"
-            size={5}
-            iconSize={10}
-            tooltip="Copy HTML"
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent drag start
-              handleCopy();
-            }}
-          />
-          <Action
-            icon={X}
-            variant="ghost"
-            size={5}
-            iconSize={10}
-            tooltip="Close Inspector"
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent drag start
-              onClose();
-            }}
-          />
-        </Frame>
-      </Frame>
-
-      {/* Content - Compact */}
-      <Frame p="2 0" overflow="auto">
-        {/* AI Assist Section (Always Visible) */}
-        <Frame gap={0.5} p="0 2 2 2">
-          <Frame row align="center" justify="between">
-            <Frame row align="center" gap={1}>
-              <Wand2 size={10} className="text-tertiary" />
-              <Text
-                weight="bold"
-                size={6}
-                color="tertiary"
-                style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
-              >
-                AI Assist
-              </Text>
-            </Frame>
+        {/* Draggable Header - Compact */}
+        <Frame
+          surface="sunken"
+          p="0 2"
+          row
+          align="center"
+          justify="between"
+          style={{ cursor: 'grab', userSelect: 'none', borderBottom: "1px solid var(--border-color)" }}
+          onMouseDown={handleMouseDown}
+        >
+          <Frame row align="center" gap={1.5}>
+            <Lock size={10} className="text-primary" />
+            <Text weight="bold" size={5}>
+              {name}
+            </Text>
+          </Frame>
+          <Frame row gap={0.5}>
             <Action
-              icon={RefreshCw}
+              icon={Copy}
               variant="ghost"
-              size={4}
+              size={5}
               iconSize={10}
-              tooltip="새로운 제안 보기"
-              onClick={() => setRandomPrompts(getRandomPrompts(5))}
+              tooltip="Copy HTML"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent drag start
+                handleCopy();
+              }}
+            />
+            <Action
+              icon={X}
+              variant="ghost"
+              size={5}
+              iconSize={10}
+              tooltip="Close Inspector"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent drag start
+                onClose();
+              }}
             />
           </Frame>
-          <Frame gap={0.5}>
-            {randomPrompts.map((item) => (
-              <Action
-                key={item.label}
-                size={5}
-                variant="ghost"
-                justify="start"
-                label={item.label}
-                onClick={() => handlePromptClick(item.prompt)}
-                style={{
-                  width: "100%",
-                  justifyContent: "flex-start",
-                  textAlign: "left"
-                }}
-              />
-            ))}
-          </Frame>
         </Frame>
 
-        {/* Details Toggle */}
-        <Frame p="0 2" row align="center">
-          <Action
-            variant="ghost"
-            size={5}
-            icon={showDetails ? ChevronDown : ChevronRight}
-            label={showDetails ? "Hide Details" : "Show Details"}
-            onClick={() => setShowDetails(!showDetails)}
-            style={{ width: "100%", justifyContent: "flex-start", color: "var(--text-tertiary)" }}
-          />
-        </Frame>
-
-        {/* Properties & Hierarchy (Collapsible) */}
-        {showDetails && properties.map((section) => {
-          if (section.section === "Flex" && !hasFlex) return null;
-          return (
-            <Frame key={section.section} gap={0.5} p="2 2 0 2">
-              <Text
-                weight="bold"
-                size={6}
-                color="tertiary"
-                style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
-              >
-                {section.section}
-              </Text>
-              <Frame gap={0} style={{ border: "1px solid var(--border-color)" }} rounded="sm" overflow="hidden">
-                {section.items.map((item, i) => (
-                  <Frame
-                    key={item.key}
-                    row
-                    justify="between"
-                    align="center"
-                    p="0.5 1.5"
-                    surface={i % 2 === 0 ? "base" : "sunken"}
-                    style={{
-                      borderBottom:
-                        i < section.items.length - 1
-                          ? "1px solid var(--border-color)"
-                          : undefined,
-                    }}
-                  >
-                    <Text size={6} color="secondary">
-                      {item.key}
-                    </Text>
-                    <Text
-                      size={6}
-                      mono
-                      style={{
-                        maxWidth: "110px",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        textAlign: "right",
-                      }}
-                      title={item.value}
-                    >
-                      {item.value}
-                    </Text>
-                  </Frame>
-                ))}
+        {/* Content - Compact */}
+        <Frame p="2 0" overflow="auto">
+          {/* AI Assist Section (Always Visible) */}
+          <Frame gap={0.5} p="0 2 2 2">
+            <Frame row align="center" justify="between">
+              <Frame row align="center" gap={1}>
+                <Wand2 size={10} className="text-tertiary" />
+                <Text
+                  weight="bold"
+                  size={6}
+                  color="tertiary"
+                  style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
+                >
+                  AI Assist
+                </Text>
               </Frame>
+              <Action
+                icon={RefreshCw}
+                variant="ghost"
+                size={4}
+                iconSize={10}
+                tooltip="새로운 제안 보기"
+                onClick={() => setRandomPrompts(getRandomPrompts(5))}
+              />
             </Frame>
-          );
-        })}
+            <Frame gap={0.5}>
+              {randomPrompts.map((item) => (
+                <Action
+                  key={item.label}
+                  size={5}
+                  variant="ghost"
+                  justify="start"
+                  label={item.label}
+                  onClick={() => handlePromptClick(item.prompt)}
+                  style={{
+                    width: "100%",
+                    justifyContent: "flex-start",
+                    textAlign: "left"
+                  }}
+                />
+              ))}
+            </Frame>
+          </Frame>
+
+          {/* Details Toggle */}
+          <Frame p="0 2" row align="center">
+            <Action
+              variant="ghost"
+              size={5}
+              icon={showDetails ? ChevronDown : ChevronRight}
+              label={showDetails ? "Hide Details" : "Show Details"}
+              onClick={() => setShowDetails(!showDetails)}
+              style={{ width: "100%", justifyContent: "flex-start", color: "var(--text-tertiary)" }}
+            />
+          </Frame>
+
+          {/* Properties & Hierarchy (Collapsible) */}
+          {showDetails && properties.map((section) => {
+            if (section.section === "Flex" && !hasFlex) return null;
+            return (
+              <Frame key={section.section} gap={0.5} p="2 2 0 2">
+                <Text
+                  weight="bold"
+                  size={6}
+                  color="tertiary"
+                  style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
+                >
+                  {section.section}
+                </Text>
+                <Frame gap={0} style={{ border: "1px solid var(--border-color)" }} rounded="sm" overflow="hidden">
+                  {section.items.map((item, i) => (
+                    <Frame
+                      key={item.key}
+                      row
+                      justify="between"
+                      align="center"
+                      p="0.5 1.5"
+                      surface={i % 2 === 0 ? "base" : "sunken"}
+                      style={{
+                        borderBottom:
+                          i < section.items.length - 1
+                            ? "1px solid var(--border-color)"
+                            : undefined,
+                      }}
+                    >
+                      <Text size={6} color="secondary">
+                        {item.key}
+                      </Text>
+                      <Text
+                        size={6}
+                        mono
+                        style={{
+                          maxWidth: "110px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          textAlign: "right",
+                        }}
+                        title={item.value}
+                      >
+                        {item.value}
+                      </Text>
+                    </Frame>
+                  ))}
+                </Frame>
+              </Frame>
+            );
+          })}
+        </Frame>
       </Frame>
-    </Frame>
+    </Overlay>
   );
 }

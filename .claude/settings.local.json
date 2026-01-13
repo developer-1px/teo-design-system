@@ -8,7 +8,10 @@
       "Bash(done)",
       "Bash(for file in src/App.tsx src/apps/cms/*.tsx)",
       "Bash([ -f \"$file\" ])",
-      "Bash(continue)"
+      "Bash(continue)",
+      "Bash(for file in src/App.tsx src/apps/CMSApp.tsx src/apps/CRMApp.tsx src/apps/LandingApp.tsx src/apps/SlideApp.tsx src/apps/TextSystemApp.tsx src/apps/cms/BodyContentSection.tsx src/apps/cms/CMSNavigation.tsx src/apps/cms/CMSSidebar.tsx src/apps/cms/EditableWrapper.tsx src/apps/cms/HeaderHero.tsx src/apps/cms/ImageFooterBanner.tsx src/components/FloatingToolbar.tsx)",
+      "Bash(do if grep -q \"import.*Frame\" \"$file\")",
+      "Bash(then echo \"=== $file ===\" grep -B2 -A5 \"position=\" \"$file\")"
     ],
     "deny": [],
     "ask": []
