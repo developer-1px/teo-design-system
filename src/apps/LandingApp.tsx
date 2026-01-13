@@ -1,4 +1,4 @@
-import { ArrowRight, Box, Component, Grid, Layers, Zap, Type, Monitor, PanelTop } from "lucide-react";
+import { ArrowRight, Box, Component, Grid, Layers, Zap, Type, Monitor, PanelTop, LayoutTemplate, PenTool, MousePointerClick } from "lucide-react";
 import { Action } from "../design-system/Action";
 import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame";
@@ -151,6 +151,21 @@ export function LandingApp() {
               icon={Zap}
               title="Experience"
               description="Global context scaler that adapts all child spacing and typography (App, Landing, Document)."
+            />
+            <FeatureCard
+              icon={LayoutTemplate}
+              title="Frame"
+              description="The universal layout primitive. Flexbox/Grid wrapper with zero-runtime token resolution."
+            />
+            <FeatureCard
+              icon={PenTool}
+              title="Field"
+              description="Input primitive for forms. Manages labels, values, and notes with semantic precision."
+            />
+            <FeatureCard
+              icon={MousePointerClick}
+              title="Action"
+              description="Interactive primitive for buttons and links. Handles states, variants, and icon composition."
             />
           </Frame>
         </Frame>
