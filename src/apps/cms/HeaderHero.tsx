@@ -54,7 +54,6 @@ export function HeaderHero() {
           p="1 3"
           rounded="full"
           surface="raised"
-          border
           row
           gap={2}
           align="center"
@@ -118,22 +117,21 @@ export function HeaderHero() {
         w="100%"
         maxWidth={250}
         h={125}
-        surface="sunken"
+        surface="raised"
         rounded="2xl"
-        border
         shadow="2xl"
         style={{
           position: "relative",
-          marginTop: "var(--space-20)",
+          marginTop: "64px",
           transform: "perspective(1000px) rotateX(5deg)",
-          margin: "var(--space-20) auto 0",
+          margin: "0 auto",
         }}
         overflow="hidden"
       >
         <Frame
           h={10}
           surface="raised"
-          border="bottom"
+          style={{ borderBottom: "1px solid var(--border-color)" }}
           row
           align="center"
           p="0 1"
@@ -146,7 +144,7 @@ export function HeaderHero() {
           <Command size={14} opacity={0.3} />
         </Frame>
         <Frame row fill justify="start">
-          <Frame w={50} border="right" surface="sunken" p={1} gap={1}>
+          <Frame w={50} style={{ borderRight: "1px solid var(--border-color)" }} surface="sunken" p={1} gap={1}>
             <Frame h={3} w="80%" surface="overlay" rounded="full" />
             <Frame h={3} w="60%" surface="overlay" rounded="full" />
             <Frame flex />
@@ -159,7 +157,6 @@ export function HeaderHero() {
               rounded="2xl"
               surface="raised"
               shadow="lg"
-              border
               pack
             >
               <Sparkles size={32} color="var(--color-primary)" />

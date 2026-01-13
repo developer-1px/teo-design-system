@@ -15,7 +15,7 @@ export function FeatureGridSection() {
       p="24px 6px"
       contentGap={4}
       surface="base"
-      border="bottom"
+      style={{ borderBottom: "1px solid var(--border-color)" }}
       maxWidth={300}
     >
       <ProseDocument maxWidth={160} gap={1} align="center">
@@ -87,8 +87,8 @@ function FeatureCardSmall({
   flex,
 }: FeatureCardSmallProps) {
   return (
-    <Frame flex={flex} p={6} surface="base" rounded="2xl" border gap={4}>
-      <Frame w={48} h={48} rounded="xl" surface="sunken" border pack>
+    <Frame flex={flex} p={6} surface="raised" rounded="2xl" gap={4}>
+      <Frame w={48} h={48} rounded="xl" surface="sunken" style={{ border: "1px solid var(--border-color)" }} pack>
         <Icon size={24} color="var(--color-primary)" />
       </Frame>
       <Frame gap={2}>
@@ -119,14 +119,13 @@ function FeatureCardLarge({
   return (
     <Frame
       flex={flex}
-      surface="base"
+      surface="raised"
       rounded="2xl"
-      border
       overflow="hidden"
       row
     >
       <Frame flex p={6} gap={4} justify="center">
-        <Frame w={12} h={12} rounded="xl" surface="sunken" border pack>
+        <Frame w={12} h={12} rounded="xl" surface="sunken" style={{ border: "1px solid var(--border-color)" }} pack>
           <Icon size={24} color="var(--color-primary)" />
         </Frame>
         <Frame gap={2}>
@@ -144,14 +143,13 @@ function FeatureCardLarge({
         <Frame
           w="40%"
           surface="raised"
-          border="left"
           style={{
             background:
               "linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
           }}
           pack
         >
-          <Frame w={30} h={40} surface="base" rounded="lg" shadow="xl" border />
+          <Frame w={30} h={40} surface="base" rounded="lg" shadow="xl" style={{ border: "1px solid var(--border-color)" }} />
         </Frame>
       )}
     </Frame>

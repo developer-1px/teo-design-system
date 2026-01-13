@@ -32,9 +32,7 @@ export default function IdeDemoApp() {
       <Part
         area="header"
         surface="raised"
-        border="bottom"
-        p={0}
-        style={{ zIndex: 10 }}
+        style={{ zIndex: 10, borderBottom: "1px solid var(--border-color)" }}
       >
         <Stack
           direction="row"
@@ -62,7 +60,7 @@ export default function IdeDemoApp() {
       </Part>
 
       {/* 2. Activity Bar */}
-      <Part area="activity" surface="sunken" border="right" p={2}>
+      <Part area="activity" surface="sunken" style={{ borderRight: "1px solid var(--border-color)" }} p={2}>
         <Stack gap={16} align="center" p="2 0 0 0">
           <Action
             icon={FileText}
@@ -93,7 +91,7 @@ export default function IdeDemoApp() {
       <Part
         area="sidebar"
         surface="base"
-        border="right"
+        style={{ borderRight: "1px solid var(--border-color)" }}
         resize="right"
         minSize={150}
         maxSize={500}
@@ -199,7 +197,7 @@ export default function IdeDemoApp() {
       <Part
         area="panel"
         surface="sunken"
-        border="left"
+        style={{ borderLeft: "1px solid var(--border-color)" }}
         resize="left"
         minSize={200}
         p={0}

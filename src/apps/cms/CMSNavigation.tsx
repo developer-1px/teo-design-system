@@ -19,12 +19,6 @@ export function TopCenterBar() {
       top={3}
       left="50%"
       style={{ transform: "translateX(-50%)" }}
-      surface="base"
-      rounded="full"
-      p={1}
-      gap={1}
-      shadow="lg"
-      border
       row
       zIndex={50}
       align="center"
@@ -59,7 +53,7 @@ export function TopRightBar() {
       zIndex={50}
       align="center"
     >
-      <Frame row gap={1} surface="base" p={1} rounded="full" border shadow="lg">
+      <Frame row gap={1} surface="raised" p={1} rounded="full" shadow="lg">
         <Frame p={1.5} rounded="full">
           <Moon size={16} />
         </Frame>
@@ -90,11 +84,11 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
       position="absolute"
       top={3}
       left={3}
-      zIndex={50}
+      zIndex={60}
       surface="base"
       p={2}
       rounded="full"
-      border
+      style={{ border: "1px solid var(--border-color)" }}
       shadow="lg"
       cursor="pointer"
       className=""

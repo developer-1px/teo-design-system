@@ -11,9 +11,13 @@ export function SiteHeader() {
       row
       align="center"
       justify="center"
-      border="bottom"
       surface="base"
-      style={{ position: "sticky", top: 0, zIndex: 40 }}
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        borderBottom: "1px solid var(--border-color)"
+      }}
     >
       <Frame
         w="100%"
@@ -28,7 +32,7 @@ export function SiteHeader() {
             h={32}
             rounded="lg"
             surface="primary"
-            border
+            style={{ border: "1px solid var(--border-color)" }}
             pack
             shadow="sm"
           >

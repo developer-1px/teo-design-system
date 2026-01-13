@@ -1,7 +1,6 @@
 import type React from "react";
 import type {
     AlignToken,
-    BorderToken,
     CursorToken,
     FrameSizeToken,
     JustifyToken,
@@ -48,7 +47,6 @@ export interface FrameProps
 
     // Surface
     surface?: SurfaceToken;
-    border?: BorderToken;
     rounded?: RoundedToken;
     overflow?: OverflowToken;
     cursor?: CursorToken;
@@ -57,7 +55,8 @@ export interface FrameProps
     shadow?: ShadowToken;
     opacity?: number;
     ratio?: string;
-    borderColor?: "default" | "text-4" | "text-primary" | "transparent";
+    border?: boolean | string;
+    borderColor?: string;
 
     // Positioning
     position?: "relative" | "absolute" | "fixed" | "sticky";

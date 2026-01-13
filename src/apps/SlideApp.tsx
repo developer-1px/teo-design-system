@@ -109,7 +109,7 @@ export function SlideApp() {
               shadow="lg"
               pack
               ratio="16/9"
-              style={{ width: "800px" }}
+              style={{ width: "1000px", maxWidth: "100%" }}
             >
               <Frame gap={4} align="center">
                 <Text variant={1} size="42px" weight="bold">

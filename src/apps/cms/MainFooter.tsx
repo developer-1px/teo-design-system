@@ -61,7 +61,7 @@ export function MainFooter() {
       </Frame>
 
       <Frame
-        border="top"
+        style={{ borderTop: "1px solid var(--border-color)" }}
         p="8px 0 0 0"
         row
         justify="between"

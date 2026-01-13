@@ -38,7 +38,6 @@ export function FloatingToolbar() {
       bottom={5}
       left="50%"
       zIndex={100}
-      style={{ transform: "translateX(-50%)" }}
       row
       gap={1}
       surface="base"
@@ -46,7 +45,7 @@ export function FloatingToolbar() {
       rounded="full"
       shadow="lg"
       align="center"
-      border
+      style={{ transform: "translateX(-50%)", border: "1px solid var(--border-color)" }}
     >
       {BOTTOM_TOOLS.map((tool, i) =>
         tool.separator ? (

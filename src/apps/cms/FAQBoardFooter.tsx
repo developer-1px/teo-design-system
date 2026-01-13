@@ -43,13 +43,12 @@ export function FAQBoardFooter() {
       <Frame
         p={8}
         w="100%"
-        surface="base"
+        surface="raised"
         rounded="2xl"
-        border
         row
         gap={6}
         align="center"
-        style={{ marginTop: 40 }}
+        style={{ marginTop: 24 }}
       >
         <Frame w={56} h={56} rounded="full" surface="sunken" pack>
           <HelpCircle size={24} />
@@ -86,7 +85,7 @@ function FAQRow({ q, a }: FAQRowProps) {
     <Frame
       w="100%"
       p="6 0"
-      border="bottom"
+      style={{ borderBottom: "1px solid var(--border-color)" }}
       gap={4}
       onClick={() => setIsOpen(!isOpen)}
       cursor="pointer"

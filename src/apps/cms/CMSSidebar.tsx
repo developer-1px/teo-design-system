@@ -5,8 +5,10 @@ import {
   FileText,
   Grid2X2,
   Image as ImageIcon,
+  Layout,
   Layers,
   List,
+  Menu,
   Settings,
   Type,
 } from "lucide-react";
@@ -17,40 +19,77 @@ import { Action } from "../../design-system/Action";
 
 export interface CMSSidebarProps {
   isOpen: boolean;
+  onToggle: () => void;
 }
 
-export function CMSSidebar({ isOpen }: CMSSidebarProps) {
+export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
   const [viewMode, setViewMode] = useState<"bar" | "thumbnail">("bar");
 
   return (
     <Frame
-      h="full"
-      surface="base"
-      border="right"
-      p={isOpen ? 2 : 0}
-      gap={isOpen ? 5 : 0}
+      position="absolute"
+      top={14}
+      left={3}
+      zIndex={50}
+      h="auto"
+      maxHeight="80vh"
+      surface="raised"
       style={{
-        width: isOpen ? 280 : 0,
-        opacity: isOpen ? 1 : 0,
+        border: "1px solid var(--border-color)",
+        width: isOpen ? 260 : 60,
         overflow: "hidden",
         whiteSpace: "nowrap",
+        transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        transformOrigin: "top left",
       }}
     >
-      <Frame row align="center" gap="8px" p="0px 8px">
-        <Frame
-          style={{ width: 24, height: 24 }}
+      {/* Header with Toggle */}
+      <Frame row align="center" gap={3} p="0 4px">
+        <Action
+          icon={isOpen ? Layout : Menu}
+          variant="ghost"
+          size="sm"
           rounded="md"
-          surface="primary"
-          pack
+          onClick={onToggle}
+          tooltip={isOpen ? "Collapse" : "Expand"}
+        />
+
+        <Frame
+          row
+          align="center"
+          gap={2}
+          style={{
+            opacity: isOpen ? 1 : 0,
+            transition: "opacity 0.2s",
+            pointerEvents: isOpen ? "auto" : "none"
+          }}
         >
-          <Layers size={14} color="#fff" />
+          <Frame
+            style={{ width: 24, height: 24 }}
+            rounded="md"
+            surface="primary"
+            pack
+          >
+            <Layers size={14} color="#fff" />
+          </Frame>
+          <Text weight="bold" style={{ fontSize: 16 }}>
+            Visual Builder
+          </Text>
         </Frame>
-        <Text weight="bold" style={{ fontSize: 16 }}>
-          Visual Builder
-        </Text>
       </Frame>
 
-      <Frame flex gap="8px" overflow="scroll">
+      {/* Content - Hidden when closed */}
+      <Frame
+        flex
+        gap="8px"
+        overflow="scroll"
+        style={{
+          opacity: isOpen ? 1 : 0,
+          transition: "opacity 0.2s",
+          pointerEvents: isOpen ? "auto" : "none",
+          display: isOpen ? "flex" : "none" // Fully hide to prevent layout issues
+        }}
+      >
         <Frame>
           <Frame p="0px 8px 8px 8px">
             <Text style={{ fontSize: 11 }} weight="bold" color="tertiary">
@@ -103,7 +142,15 @@ export function CMSSidebar({ isOpen }: CMSSidebarProps) {
         </Frame>
       </Frame>
 
-      <Frame border="top" p="16px 0px 0px 0px" row align="center" gap="8px">
+      {/* Footer Settings */}
+      <Frame
+        style={{
+          borderTop: "1px solid var(--border-color)",
+          opacity: isOpen ? 1 : 0,
+          transition: "opacity 0.2s",
+          display: isOpen ? "flex" : "none"
+        }}
+      >
         <Frame
           style={{ width: 32, height: 32 }}
           rounded="full"
@@ -139,7 +186,7 @@ function ElementButton({ icon: Icon, label }: ElementButtonProps) {
       align="center"
       gap="8px"
       cursor="grab"
-      border
+      style={{ border: "1px solid var(--border-color)" }}
     >
       <Icon size={20} opacity={0.6} />
       <Text style={{ fontSize: 12 }} weight="medium">
@@ -168,14 +215,14 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
         <Frame
           w="100%"
           ratio="16/9"
-          border
-          borderColor={active ? "text-primary" : "default"}
           surface={active ? "base" : "sunken"}
           rounded="md"
           pack
           cursor="pointer"
           style={{
+            border: "1px solid var(--border-color)",
             boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
+            borderColor: active ? "var(--text-primary)" : "var(--border-color)",
           }}
         >
           {active && (

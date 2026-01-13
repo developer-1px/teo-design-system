@@ -6,7 +6,7 @@ import { Frame } from "../../design-system/Frame";
 
 export function ImageFooterBanner() {
   return (
-    <Frame w="100%" p="24 0" surface="base" border="bottom">
+    <Frame w="100%" p="24 0" surface="base" style={{ borderBottom: "1px solid var(--border-color)" }}>
       <Frame
         w="100%"
         h={125}

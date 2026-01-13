@@ -40,7 +40,7 @@ export function LandingApp() {
             p="1 3"
             surface="sunken"
             rounded="full"
-            border
+            style={{ border: "1px solid var(--border-color)" }}
             row
             gap={2}
             align="center"
@@ -200,8 +200,8 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <Frame p={6} surface="raised" rounded="2xl" border gap={4}>
-      <Frame w={8} h={8} surface="base" rounded="xl" pack border shadow="sm">
+    <Frame p={6} surface="raised" rounded="2xl" style={{ border: "1px solid var(--border-color)" }} gap={4}>
+      <Frame w={8} h={8} surface="base" rounded="xl" pack style={{ border: "1px solid var(--border-color)" }} shadow="sm">
         <Icon size={24} color="var(--text-primary)" />
       </Frame>
       <Frame gap={2}>

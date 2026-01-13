@@ -1,4 +1,4 @@
-import { Copy, Lock, Unlock, X } from "lucide-react";
+import { Copy, Lock, Unlock, X, ChevronRight, ChevronDown, Wand2, RefreshCw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { Action } from "../design-system/Action";
@@ -548,6 +548,25 @@ export function InspectorOverlay() {
 
 // --- Properties Panel Component ---
 
+const PROMPT_POOL = [
+  { label: "토큰 사용", prompt: "이 컴포넌트를 하드코딩된 값(px) 대신 디자인 시스템 토큰(간격, 색상, 반경)을 사용하도록 리팩토링해주세요." },
+  { label: "콤팩트하게", prompt: "이 컴포넌트의 패딩과 간격을 줄여서 더 콤팩트하고 정보 밀도를 높여주세요." },
+  { label: "아이콘 수정", prompt: "이모지나 일반 SVG 아이콘을 디자인 시스템의 Lucide-React 아이콘으로 교체해주세요." },
+  { label: "Props 정리", prompt: "사용하지 않는 불필요한 props를 제거하고 컴포넌트 구조를 단순화해주세요." },
+  { label: "컴포넌트 추출", prompt: "이 논리적 단위를 별도의 재사용 가능한 하위 컴포넌트로 추출해주세요." },
+  { label: "다크모드 수정", prompt: "다크 모드에서 올바르게 보이도록 모든 색상(배경, 테두리, 텍스트)이 시맨틱 토큰을 사용하는지 확인해주세요." },
+  { label: "레이아웃 정렬", prompt: "이 컴포넌트의 자식 요소 정렬이 잘못되었습니다. flex 속성을 수정하여 올바른 레이아웃을 잡아주세요." },
+  { label: "반응형 적용", prompt: "이 컴포넌트가 모바일에서도 잘 보이도록 반응형 스타일(flex-wrap 등)을 적용해주세요." },
+  { label: "접근성 향상", prompt: "스크린 리더 사용자를 위해 적절한 aria 속성과 시맨틱 태그를 추가해주세요." },
+  { label: "조건부 렌더링", prompt: "이 컴포넌트의 렌더링 로직을 확인하고, 조건부 렌더링이 더 깔끔하게 되도록 수정해주세요." },
+  { label: "타이포그래피", prompt: "수동 스타일 오버라이드 대신 Text 컴포넌트의 variant prop을 사용하여 타이포그래피를 표준화해주세요." },
+];
+
+function getRandomPrompts(count: number) {
+  const shuffled = [...PROMPT_POOL].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
+
 function InspectorPanel({
   element,
   name,
@@ -620,15 +639,14 @@ function InspectorPanel({
     });
   }
 
-  // AI Assist Prompts
-  const aiPrompts = [
-    { label: "Fix Padding", prompt: "The padding on this component looks wrong. Please adjust it to match the design system spacing (use p prop with scalar 2, 3, etc)." },
-    { label: "Fix Alignment", prompt: "The alignment of children in this component is incorrect. Please fix the flex properties (align, justify) to ensure proper layout." },
-    { label: "Convert to Row", prompt: "Convert this component to a horizontal row layout (add 'row' prop) and ensure spacing is correct." },
-    { label: "Convert to Column", prompt: "Convert this component to a vertical stack layout (default Frame) and ensure spacing is correct." },
-    { label: "Tighten Spacing", prompt: "Reduce the gap and padding in this component to make it more compact." },
-    { label: "Make Responsive", prompt: "Ensure this component is responsive. It should adapt gracefully to smaller screens (use flex-wrap or responsive props)." },
-  ];
+  // State
+  const [showDetails, setShowDetails] = useState(false);
+  const [randomPrompts, setRandomPrompts] = useState<{ label: string, prompt: string }[]>([]);
+
+  // Initialize random prompts on mount
+  useEffect(() => {
+    setRandomPrompts(getRandomPrompts(5));
+  }, []);
 
   const handlePromptClick = (prompt: string) => {
     const clone = element.cloneNode(true) as HTMLElement;
@@ -694,12 +712,11 @@ function InspectorPanel({
         left: position.x,
         maxHeight: "80vh",
         pointerEvents: "auto",
+        border: "1px solid var(--border-color)"
       }}
-      w={65} // size-65 (260px)
       surface="base"
       rounded="lg"
       shadow="2xl"
-      border
       zIndex={10003}
     >
       {/* Draggable Header - Compact */}
@@ -709,12 +726,7 @@ function InspectorPanel({
         row
         align="center"
         justify="between"
-        border="bottom"
-        h={6} // size-6 (32px)
-        style={{
-          cursor: "grab",
-          userSelect: "none",
-        }}
+        style={{ cursor: 'grab', userSelect: 'none', borderBottom: "1px solid var(--border-color)" }}
         onMouseDown={handleMouseDown}
       >
         <Frame row align="center" gap={1.5}>
@@ -751,18 +763,31 @@ function InspectorPanel({
 
       {/* Content - Compact */}
       <Frame p="2 0" overflow="auto">
-        {/* AI Assist Section */}
+        {/* AI Assist Section (Always Visible) */}
         <Frame gap={0.5} p="0 2 2 2">
-          <Text
-            weight="bold"
-            size={6}
-            color="tertiary"
-            style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
-          >
-            AI Assist
-          </Text>
+          <Frame row align="center" justify="between">
+            <Frame row align="center" gap={1}>
+              <Wand2 size={10} className="text-tertiary" />
+              <Text
+                weight="bold"
+                size={6}
+                color="tertiary"
+                style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
+              >
+                AI Assist
+              </Text>
+            </Frame>
+            <Action
+              icon={RefreshCw}
+              variant="ghost"
+              size={4}
+              iconSize={10}
+              tooltip="새로운 제안 보기"
+              onClick={() => setRandomPrompts(getRandomPrompts(5))}
+            />
+          </Frame>
           <Frame gap={0.5}>
-            {aiPrompts.map((item) => (
+            {randomPrompts.map((item) => (
               <Action
                 key={item.label}
                 size={5}
@@ -780,11 +805,23 @@ function InspectorPanel({
           </Frame>
         </Frame>
 
-        {/* Properties & Hierarchy */}
-        {properties.map((section) => {
+        {/* Details Toggle */}
+        <Frame p="0 2" row align="center">
+          <Action
+            variant="ghost"
+            size={5}
+            icon={showDetails ? ChevronDown : ChevronRight}
+            label={showDetails ? "Hide Details" : "Show Details"}
+            onClick={() => setShowDetails(!showDetails)}
+            style={{ width: "100%", justifyContent: "flex-start", color: "var(--text-tertiary)" }}
+          />
+        </Frame>
+
+        {/* Properties & Hierarchy (Collapsible) */}
+        {showDetails && properties.map((section) => {
           if (section.section === "Flex" && !hasFlex) return null;
           return (
-            <Frame key={section.section} gap={0.5} p="0 2 2 2">
+            <Frame key={section.section} gap={0.5} p="2 2 0 2">
               <Text
                 weight="bold"
                 size={6}
@@ -793,7 +830,7 @@ function InspectorPanel({
               >
                 {section.section}
               </Text>
-              <Frame gap={0} border rounded="sm" overflow="hidden">
+              <Frame gap={0} style={{ border: "1px solid var(--border-color)" }} rounded="sm" overflow="hidden">
                 {section.items.map((item, i) => (
                   <Frame
                     key={item.key}

@@ -63,6 +63,70 @@ function TokenLabel({ name, role }: { name: string; role: string }) {
 
 
 
+import { Experience, type ExperienceType } from "../design-system/Experience";
+import { Prose as ProseContext, Card, Field as FieldContext } from "../design-system/typography";
+
+function ExperienceSection({ title, value, children }: { title: string, value: ExperienceType, children: React.ReactNode }) {
+  return (
+    <Frame gap={4}>
+      <Text size={2} mono style={{ color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        {title}
+      </Text>
+      <Experience value={value}>
+        <Frame
+          surface="sunken"
+          p={6}
+          rounded="2xl"
+          style={{ border: "1px solid var(--border-color)" }}
+        >
+          {children}
+        </Frame>
+      </Experience>
+    </Frame>
+  );
+}
+
+function ContextDemo() {
+  return (
+    <Frame gap={8} grid columns="1fr 1fr 1fr">
+      {/* Prose Context */}
+      <Frame gap={4}>
+        <Text size={2} mono color="tertiary">Context: Prose</Text>
+        <Frame>
+          <ProseContext.Title>Prose Title</ProseContext.Title>
+          <ProseContext.Body>
+            Prose Body - Optimized for continuous reading flow.
+            The scale changes based on experience.
+          </ProseContext.Body>
+          <ProseContext.Note>Prose Note - Annotations.</ProseContext.Note>
+        </Frame>
+      </Frame>
+
+      {/* Card Context */}
+      <Frame gap={4}>
+        <Text size={2} mono color="tertiary">Context: Card</Text>
+        <Frame surface="base" p={4} rounded="xl" border shadow="sm">
+          <Card.Title>Card Title</Card.Title>
+          <Card.Desc>Card Desc - Summarized chunks of info.</Card.Desc>
+          <Card.Note>Card Note - Metadata</Card.Note>
+        </Frame>
+      </Frame>
+
+      {/* Field Context */}
+      <Frame gap={4}>
+        <Text size={2} mono color="tertiary">Context: Field</Text>
+        <Frame surface="base" p={4} rounded="xl" border gap={3}>
+          <Frame>
+            <FieldContext.Label>Field Label</FieldContext.Label>
+            <FieldContext.Value>Field Value Input</FieldContext.Value>
+            <FieldContext.Note>Field Note - Helper text</FieldContext.Note>
+          </Frame>
+        </Frame>
+      </Frame>
+    </Frame>
+  );
+}
+
 export function TokensApp() {
   return (
     <Frame fill surface="base" overflow="auto">
@@ -77,15 +141,37 @@ export function TokensApp() {
             </Prose>
           </ProseDocument>
 
-          {/* Surfaces - Full Width Panorama */}
-          <Frame gap={8} w="100%">
-            <Frame gap={2} maxWidth="800px" align="center" style={{ textAlign: "center", margin: "0 auto" }}>
-              <Prose role="h2">Surfaces</Prose>
-              <Prose role="body">
-                The fundamental layers of our interface. Each surface provides context and depth through semantic background colors.
-              </Prose>
-            </Frame>
+          {/* MDK Text System Demo */}
+          <ProseDocument maxWidth="1000px" gap={8}>
+            <ProseContext.Title>MDK Text System</ProseContext.Title>
+            <ProseContext.Body style={{ color: "var(--text-secondary)" }}>
+              The new 4-level hierarchy: Experience &gt; Context &gt; Slot &gt; Variant.
+              Changing the Experience automatically scales all Context Slots.
+            </ProseContext.Body>
 
+            <Frame gap={8}>
+              {/* Experience: Application (Default) */}
+              <ExperienceSection title="Experience: Application" value="application">
+                <ContextDemo />
+              </ExperienceSection>
+
+              {/* Experience: Landing */}
+              <ExperienceSection title="Experience: Landing" value="landing">
+                <ContextDemo />
+              </ExperienceSection>
+
+              {/* Experience: Document */}
+              <ExperienceSection title="Experience: Document" value="document">
+                <ContextDemo />
+              </ExperienceSection>
+            </Frame>
+          </ProseDocument>
+
+          <Frame w="100%" h="1px" surface="overlay" />
+
+          {/* Legacy Token Reference (Surfaces) */}
+          <ProseDocument maxWidth="1000px" gap={8} className="legacy-surfaces">
+            <Prose role="h2">Surfaces (Legacy)</Prose>
             <Frame
               row
               w="100%"
@@ -129,12 +215,15 @@ export function TokensApp() {
                 </Frame>
               ))}
             </Frame>
-          </Frame>
+          </ProseDocument>
 
-          {/* Typography */}
+          {/* Prose System */}
           <ProseDocument maxWidth="1000px" gap={6}>
-            <Prose role="h2">Typography</Prose>
-            <Frame gap={6} surface="sunken" p={12} rounded="3xl" border>
+            <Prose role="h2">Prose System</Prose>
+            <Prose role="body" color="secondary">
+              Semantic typography for long-form content and documents.
+            </Prose>
+            <Frame gap={6} surface="sunken" p={12} rounded="3xl" style={{ border: "1px solid var(--border-color)" }}>
               <Prose role="h1">Display H1</Prose>
               <Prose role="h2">Heading H2</Prose>
               <Prose role="h3">Heading H3</Prose>
@@ -151,8 +240,35 @@ export function TokensApp() {
             </Frame>
           </ProseDocument>
 
+          {/* App UI Text System */}
+          <ProseDocument maxWidth="1000px" gap={6}>
+            <Prose role="h2">App UI Text System</Prose>
+            <Prose role="body" color="secondary">
+              Compact, dense typography for application interfaces and controls.
+            </Prose>
+            <Frame gap={6} surface="sunken" p={12} rounded="3xl" style={{ border: "1px solid var(--border-color)" }}>
+              <Frame gap={4}>
+                <Text variant="heading-lg">Heading LG</Text>
+                <Text variant="heading-md">Heading MD</Text>
+                <Text variant="heading-sm">Heading SM</Text>
+              </Frame>
+              <Frame w="100%" h="1px" surface="base" />
+              <Frame gap={4}>
+                <Text variant="body-lg">Body LG - The quick brown fox jumps over the lazy dog.</Text>
+                <Text variant="body-md">Body MD - The quick brown fox jumps over the lazy dog.</Text>
+                <Text variant="body-sm">Body SM - The quick brown fox jumps over the lazy dog.</Text>
+              </Frame>
+              <Frame w="100%" h="1px" surface="base" />
+              <Frame gap={4}>
+                <Text variant="caption">Caption - Metadata and secondary information.</Text>
+                <Text variant="caption-sm">Caption SM - Small metadata and timestamps.</Text>
+                <Text variant="code">Code - console.log("Hello World");</Text>
+              </Frame>
+            </Frame>
+          </ProseDocument>
+
           {/* Interaction */}
-          <ProseDocument maxWidth="1200px" gap={6}>
+          <ProseDocument maxWidth="1000px" gap={6}>
             <Prose role="h2">Interaction</Prose>
             <Frame gap={8}>
               {INTERACTION_TOKENS.map((group) => (
@@ -204,7 +320,7 @@ export function TokensApp() {
                               surface="selected"
                               p="1.5 4"
                               rounded="md"
-                              border
+                              style={{ border: "1px solid var(--border-color)" }}
                             >
                               <Text size={3} weight="bold">
                                 Selected State
@@ -238,7 +354,7 @@ export function TokensApp() {
           </ProseDocument>
 
           {/* Colors */}
-          <ProseDocument maxWidth="1200px" gap={6}>
+          <ProseDocument maxWidth="1000px" gap={6}>
             <Prose role="h2">Text & Accents</Prose>
             <Frame gap={8} w="100%">
               {/* Text Hierarchy Group */}
@@ -253,7 +369,7 @@ export function TokensApp() {
                   p={8}
                   gap={6}
                   rounded="xl"
-                  border
+                  style={{ border: "1px solid var(--border-color)" }}
                 >
                   <Frame gap={1}>
                     <Text size={5} weight="bold" style={{ color: "var(--text-primary)" }}>
@@ -301,10 +417,9 @@ export function TokensApp() {
                     surface="base"
                     p={6}
                     rounded="xl"
-                    border
+                    style={{ minWidth: "240px", border: "1px solid var(--border-color)" }}
                     gap={3}
                     flex={1}
-                    style={{ minWidth: "240px" }}
                   >
                     <Frame
                       surface="primary"
@@ -328,10 +443,9 @@ export function TokensApp() {
                     surface="base"
                     p={6}
                     rounded="xl"
-                    border
+                    style={{ minWidth: "240px", border: "1px solid var(--border-color)" }}
                     gap={3}
                     flex={1}
-                    style={{ minWidth: "240px" }}
                   >
                     <Text style={{ color: "var(--link-color)" }} weight="medium">
                       View Documentation →
@@ -344,10 +458,9 @@ export function TokensApp() {
                     surface="base"
                     p={6}
                     rounded="xl"
-                    border
+                    style={{ minWidth: "240px", border: "1px solid var(--border-color)" }}
                     gap={3}
                     flex={1}
-                    style={{ minWidth: "240px" }}
                   >
                     <Frame
                       p={4}
@@ -378,7 +491,7 @@ export function TokensApp() {
                     rounded="sm"
                   />
                   <Text size={2} mono color="tertiary">
-                    {space} 
+                    {space}
                   </Text>
                 </Frame>
               ))}
@@ -429,9 +542,9 @@ export function TokensApp() {
               ))}
             </Frame>
           </ProseDocument>
-        </Frame>
-      </ProseSection>
-    </Frame>
+        </Frame >
+      </ProseSection >
+    </Frame >
   );
 }
 

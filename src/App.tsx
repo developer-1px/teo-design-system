@@ -12,6 +12,8 @@ import { Frame } from "./design-system/Frame";
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
 import { CRMApp } from "./apps/CRMApp";
+import { LoginApp } from "./apps/LoginApp";
+import { TextSystemApp } from "./apps/TextSystemApp";
 import { useTheme } from "./design-system/theme";
 
 function NavItem({ to, label }: { to: string; label: string }) {
@@ -21,7 +23,7 @@ function NavItem({ to, label }: { to: string; label: string }) {
         <Frame
           p="1.5 3.5"
           rounded="full"
-          surface={isActive ? "selected" : undefined}
+          surface={isActive ? "sunken" : undefined}
           style={{
             color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
           }}
@@ -41,16 +43,16 @@ function Navigation() {
     <Frame
       position="fixed"
       zIndex={9999}
-      style={{ bottom: 20, left: 20 }}
-      surface="overlay"
+      surface="raised"
       rounded="full"
       shadow="xl"
       p={1}
       row
       gap={1}
-      border
+      style={{ bottom: 20, left: 20 }}
     >
       <NavItem to="/" label="Home" />
+      <NavItem to="/text" label="Text" />
       <NavItem to="/tokens" label="Tokens" />
       <NavItem to="/slide" label="Slide" />
 
@@ -58,6 +60,7 @@ function Navigation() {
       <NavItem to="/cms" label="CMS" />
 
       <NavItem to="/crm" label="CRM" />
+      <NavItem to="/login" label="Login" />
       <ThemeToggleItem />
     </Frame>
   );
@@ -93,12 +96,14 @@ function App() {
 
         <Routes>
           <Route path="/" element={<LandingApp />} />
+          <Route path="/text" element={<TextSystemApp />} />
           <Route path="/tokens" element={<TokensApp />} />
           <Route path="/slide" element={<SlideApp />} />
 
           <Route path="/ide" element={<IdeDemoApp />} />
           <Route path="/cms" element={<CMSApp />} />
           <Route path="/crm" element={<CRMApp />} />
+          <Route path="/login" element={<LoginApp />} />
         </Routes>
         <Navigation />
       </Frame>

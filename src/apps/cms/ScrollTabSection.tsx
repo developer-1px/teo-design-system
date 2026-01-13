@@ -21,7 +21,7 @@ const TABS = [
 
 export function ScrollTabSection() {
   return (
-    <ProseSection w="100%" p="6 0" border="bottom" surface="base">
+    <ProseSection w="100%" p="6 0" style={{ borderBottom: "1px solid var(--border-color)" }} surface="base">
       <Frame
         row
         gap={2}

@@ -44,8 +44,6 @@ export function SlidesPanel() {
             <Frame
               w="100%"
               ratio="16/9"
-              border
-              borderColor={num === 1 ? "default" : "transparent"}
               surface={num === 1 ? "base" : "raised"}
               rounded="round"
               flex

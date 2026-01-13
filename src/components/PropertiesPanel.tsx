@@ -101,9 +101,12 @@ export function PropertiesPanel() {
         row
         p={1}
         gap={1}
-        border="bottom"
-        borderColor="default"
-        style={{ flexShrink: 0, height: "40px" }}
+        style={{
+          flexShrink: 0,
+          height: "40px",
+          borderBottom: "1px solid var(--border-color)",
+          borderColor: "var(--border-color)"
+        }}
       >
         {["DESIGN", "ANIMATE"].map((tab) => (
           <Frame
@@ -142,7 +145,7 @@ export function PropertiesPanel() {
           justify="between"
           surface="sunken"
           rounded="md"
-          border
+          style={{ border: "1px solid var(--border-color)" }}
           p="1px"
           gap="1px"
         >
@@ -249,7 +252,7 @@ export function PropertiesPanel() {
               align="center"
               surface="sunken"
               rounded="md"
-              border
+              style={{ border: "1px solid var(--border-color)" }}
               p="1px"
               gap="1px"
             >
@@ -279,10 +282,9 @@ export function PropertiesPanel() {
             value="F4F4F5"
             icon={
               <Frame
-                style={{ width: "10px", height: "10px" }}
+                style={{ width: "10px", height: "10px", border: "1px solid var(--border-color)" }}
                 surface="base"
                 rounded="round"
-                border
               />
             }
             rightIcon={
@@ -299,9 +301,11 @@ export function PropertiesPanel() {
               value="000000"
               icon={
                 <Frame
-                  style={{ width: "10px", height: "10px" }}
-                  border
-                  borderColor="text-primary"
+                  style={{
+                    width: "10px",
+                    height: "10px",
+                    border: "1px solid var(--text-primary)"
+                  }}
                   rounded="round"
                 />
               }

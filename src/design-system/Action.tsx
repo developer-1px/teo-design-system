@@ -104,12 +104,12 @@ export function Action({
       surface={surface}
       p={p ?? (label ? 2 : 0)}
       gap={gap ?? 2}
-      border={border}
       row
       pack
       justify={mapJustify(justify) as any}
       opacity={opacity}
       style={{
+        border: border ? "1px solid var(--border-color)" : undefined,
         minWidth: !label && size ? (toToken(size, "size") as any) : undefined, // Ensure square for icons
         cursor: "pointer", // Indicate interactivity
         color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",

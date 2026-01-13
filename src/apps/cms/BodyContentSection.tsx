@@ -9,7 +9,7 @@ export function BodyContentSection() {
       w="100%"
       p="24 6"
       surface="sunken"
-      border="bottom"
+      style={{ borderBottom: "1px solid var(--border-color)" }}
       maxWidth="100%"
     >
       <Frame
@@ -55,7 +55,6 @@ export function BodyContentSection() {
             surface="raised"
             rounded="3xl"
             shadow="2xl"
-            border
             style={{ position: "relative" }}
           >
             <Frame
@@ -64,10 +63,9 @@ export function BodyContentSection() {
               left="-40px"
               w={45}
               h={45}
-              surface="base"
+              surface="raised"
               rounded="2xl"
               shadow="lg"
-              border
               p={6}
               gap={4}
             >
@@ -83,10 +81,9 @@ export function BodyContentSection() {
               right="-40px"
               w={55}
               h={55}
-              surface="base"
+              surface="raised"
               rounded="2xl"
               shadow="lg"
-              border
               p={6}
               gap={4}
             >

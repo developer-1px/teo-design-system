@@ -4,7 +4,7 @@ import { Frame } from "../design-system/Frame";
 
 // CMS Sections
 import { BodyContentSection } from "./cms/BodyContentSection";
-import { SidebarToggle, TopCenterBar, TopRightBar } from "./cms/CMSNavigation";
+import { TopCenterBar, TopRightBar } from "./cms/CMSNavigation";
 import { CMSSidebar } from "./cms/CMSSidebar";
 import { FAQBoardFooter } from "./cms/FAQBoardFooter";
 import { FeatureGridSection } from "./cms/FeatureGridSection";
@@ -21,13 +21,9 @@ export function CMSApp() {
     <Frame fill surface="raised" overflow="hidden" p="0">
       <TopCenterBar />
       <TopRightBar />
-      <SidebarToggle
-        isOpen={isSidebarOpen}
-        onClick={() => setSidebarOpen(!isSidebarOpen)}
-      />
 
-      <Frame row fill align="stretch">
-        <CMSSidebar isOpen={isSidebarOpen} />
+      <Frame row fill align="stretch" position="relative">
+        <CMSSidebar isOpen={isSidebarOpen} onToggle={() => setSidebarOpen(!isSidebarOpen)} />
         <Frame
           flex
           fill

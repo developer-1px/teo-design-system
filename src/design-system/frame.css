@@ -45,10 +45,8 @@
 }
 
 /* Layout Keyword Classes */
-/* Layout Keyword Classes */
 .hbox {
     flex-direction: row;
-    align-items: center;
 }
 
 .vbox {

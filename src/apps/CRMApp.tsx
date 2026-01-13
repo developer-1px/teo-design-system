@@ -160,9 +160,7 @@ function StageBadge({ stage }: { stage: DealStage }) {
         <Frame
             p="1 2"
             rounded="md"
-            style={{ backgroundColor: bg }}
-            border
-            borderColor="transparent"
+            style={{ backgroundColor: bg, border: "1px solid var(--border-color)" }}
         >
             <Text variant="caption-sm" weight="medium" style={{ color }}>
                 {stage}
@@ -214,11 +212,10 @@ function Sidebar() {
         <Frame
             w="240px"
             surface="sunken"
-            border="right"
             p="3 3"
             gap={4}
             h="full"
-            style={{ minWidth: 240 }}
+            style={{ minWidth: 240, borderRight: "1px solid var(--border-color)" }}
         >
             {/* Workspace Switcher */}
             <Action variant="ghost" rounded="md">
@@ -290,11 +287,7 @@ function Header() {
     return (
         <Frame
             p="3 5"
-            border="bottom"
-            row
-            align="center"
-            justify="between"
-            style={{ height: 60 }}
+            style={{ height: 60, borderBottom: "1px solid var(--border-color)" }}
         >
             <Frame row align="center" gap={2}>
                 <Text variant="body-md" color="tertiary">
@@ -306,8 +299,7 @@ function Header() {
                 <Frame row align="center" gap={2}>
                     <LayoutGrid size={16} />
                     <Text variant="heading-sm" color="primary">
-                        Deals
-                    </Text>
+                        Deals</Text>
                 </Frame>
             </Frame>
 
@@ -319,9 +311,7 @@ function Header() {
                 align="center"
                 p="1.5 3"
                 gap={2}
-                style={{ width: 320 }}
-                border
-                borderColor="transparent"
+                style={{ width: 320, border: "1px solid var(--border-color)" }}
             >
                 <Search size={14} color="var(--text-tertiary)" />
                 <Text variant="body-sm" color="tertiary">
@@ -332,8 +322,7 @@ function Header() {
                     surface="raised"
                     rounded="sm"
                     p={0}
-                    border
-                    style={{ borderColor: "var(--border-color)" }}
+                    style={{ borderColor: "var(--border-color)", border: "1px solid var(--border-color)" }}
                 >
                     <Text variant="caption-sm" color="tertiary">
                         ⌘K
@@ -362,12 +351,11 @@ function Toolbar() {
     return (
         <Frame
             p="2 5"
-            border="bottom"
+            style={{ height: 48, borderBottom: "1px solid var(--border-color)" }}
             row
             align="center"
             gap={2}
             surface="base"
-            style={{ height: 48 }}
         >
             <Action variant="ghost" icon={List} label="Table" />
             <Action variant="ghost" icon={LayoutGrid} label="Kanban" opacity={0.5} />
@@ -391,10 +379,9 @@ function TableHeader() {
             grid
             columns={TABLE_COLS}
             p="0 4"
-            border="bottom"
             align="center"
             gap={4}
-            style={{ height: 36, backgroundColor: "var(--surface-base)" }}
+            style={{ height: 36, backgroundColor: "var(--surface-base)", borderBottom: "1px solid var(--border-color)" }}
         >
             <Frame>
                 <Text variant="caption-sm" color="tertiary" weight="medium">
@@ -453,8 +440,7 @@ function TableRow({
                 p="0 4"
                 align="center"
                 gap={4}
-                style={{ height: 44 }}
-                border="bottom"
+                style={{ height: 44, borderBottom: "1px solid var(--border-color)" }}
             >
                 <Text variant="code" color="tertiary">
                     {deal.id}
@@ -534,8 +520,7 @@ function Drawer({
                 align="center"
                 justify="between"
                 p="4 6"
-                border="bottom"
-                style={{ height: 60 }}
+                style={{ height: 60, borderBottom: "1px solid var(--border-color)" }}
             >
                 <Frame row align="center" gap={3}>
                     <Avatar initial={deal.name[0]} color={deal.avatarColor} size={32} />
@@ -605,7 +590,7 @@ function Drawer({
             </Frame>
 
             {/* Drawer Footer */}
-            <Frame p="4 6" border="top" row justify="end" gap={2} surface="sunken">
+            <Frame p="4 6" style={{ borderTop: "1px solid var(--border-color)" }} row justify="end" gap={2} surface="sunken">
                 <Action label="Delete" variant="ghost" />
             </Frame>
         </Frame>
@@ -689,9 +674,8 @@ export function CRMApp() {
             <Frame
                 fill
                 flex
-                style={{ position: "relative" }}
+                style={{ position: "relative", borderLeft: "1px solid var(--border-color)" }}
                 overflow="hidden"
-                border="left"
             >
                 <Header />
                 <Toolbar />

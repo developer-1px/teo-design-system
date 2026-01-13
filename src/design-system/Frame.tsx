@@ -36,7 +36,6 @@ export function Frame({
   justify,
 
   surface,
-  border,
   rounded,
   overflow,
   cursor,
@@ -44,7 +43,6 @@ export function Frame({
   shadow,
   opacity,
   ratio,
-  borderColor,
 
   position,
   top,
@@ -81,27 +79,6 @@ export function Frame({
     fill,
   } as FrameProps);
 
-  // --- Legacy Computed Styles (for props not covered by frame.css yet) ---
-  const computedBorder: React.CSSProperties = {};
-  const finalBorder = border ?? (surface === "selected" ? true : undefined);
-
-  const colorStr = borderColor
-    ? borderColor === "default"
-      ? "var(--border-color)"
-      : borderColor === "transparent"
-        ? "transparent"
-        : `var(--${borderColor})`
-    : "var(--border-color)";
-
-  if (finalBorder === true)
-    computedBorder.border = `var(--border-width) solid ${colorStr}`;
-  else if (typeof finalBorder === "string") {
-    const key =
-      `border${finalBorder.charAt(0).toUpperCase() + finalBorder.slice(1)}` as keyof React.CSSProperties;
-    // @ts-expect-error
-    computedBorder[key] = `var(--border-width) solid ${colorStr}`;
-  }
-
   const computedStyle: React.CSSProperties = {
     // Grid Areas/Columns (Dynamic)
     gridTemplateColumns: columns,
@@ -125,18 +102,16 @@ export function Frame({
     flex: typeof flex === "number" ? flex : undefined,
     flexShrink: (w !== undefined || h !== undefined || ratio !== undefined) ? 0 : undefined,
 
-    ...computedBorder,
-
     // Visual Props
     opacity,
     aspectRatio: ratio,
 
     // Positioning
     zIndex,
-    top: toToken(top, "space"),
-    bottom: toToken(bottom, "space"),
-    left: toToken(left, "space"),
-    right: toToken(right, "space"),
+    top,
+    bottom,
+    left,
+    right,
 
     color: surface === "primary" ? "var(--primary-fg)" : "inherit",
 

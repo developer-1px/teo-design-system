@@ -18,6 +18,7 @@ interface SectionProps {
   rounded?: RoundedToken;
   surface?: SurfaceToken;
   shadow?: "sm" | "md" | "lg";
+  flex?: boolean | number;
 }
 
 export function Section({
@@ -27,6 +28,18 @@ export function Section({
   fill,
   ...props
 }: SectionProps) {
+  // Border Logic
+  const computedBorder: React.CSSProperties = {};
+  const finalBorder = props.border ?? true; // Default to true if undefined
+
+  if (finalBorder === true) {
+    computedBorder.border = "1px solid var(--border-color)";
+  } else if (typeof finalBorder === "string") {
+    const key = `border${finalBorder.charAt(0).toUpperCase() + finalBorder.slice(1)}` as keyof React.CSSProperties;
+    // @ts-expect-error
+    computedBorder[key] = "1px solid var(--border-color)";
+  }
+
   return (
     <Frame
       surface="base"
@@ -34,7 +47,7 @@ export function Section({
       p={0} // Force zero padding so children/separators can hit edges
       fill={fill}
       style={{
-        border: "1px solid var(--border-color)",
+        ...computedBorder,
         overflow: "hidden",
         position: "relative",
         display: "flex",

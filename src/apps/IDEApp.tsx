@@ -35,7 +35,7 @@ function ActivityBar({
       w={48}
       fill
       surface="sunken"
-      border="right"
+      style={{ borderRight: "1px solid var(--border-color)" }}
       align="center"
       p="2 0"
       gap={2}
@@ -114,7 +114,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
   if (activeTab !== "explorer") {
     // Placeholder for other tabs
     return (
-      <Frame style={{ width: 250 }} fill surface="sunken" border="right">
+      <Frame style={{ width: 250, borderRight: "1px solid var(--border-color)" }} fill surface="sunken">
         <Frame style={{ height: 35 }} p="0 4" justify="center">
           <Text variant={4} size={6} weight="medium" opacity={0.6}>
             {activeTab.toUpperCase()}
@@ -125,7 +125,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
   }
 
   return (
-    <Frame style={{ width: 250 }} fill surface="sunken" border="right">
+    <Frame style={{ width: 250, borderRight: "1px solid var(--border-color)" }} fill surface="sunken">
       <Frame
         style={{ height: 35 }}
         p="0 5"
@@ -250,8 +250,7 @@ function FolderItem({
       {expanded && (
         <Frame
           p="0 0 0 12"
-          border="left"
-          style={{ borderLeftColor: "transparent" }}
+          style={{ borderLeftColor: "transparent", borderLeft: "1px solid var(--border-color)" }}
         >
           {children}
         </Frame>
@@ -316,7 +315,7 @@ function FileItem({
 
 function EditorTabs() {
   return (
-    <Frame row style={{ height: 35 }} surface="sunken" border="bottom">
+    <Frame row style={{ height: 35, borderBottom: "1px solid var(--border-color)" }} surface="sunken">
       <Tab title="App" icon="react" active />
       <Tab title="IDEApp" icon="react" modified />
       <Tab title="useStore.ts" icon="ts" />
@@ -366,9 +365,8 @@ function Tab({
         cursor: "pointer",
         borderTopColor: active ? "var(--text-primary)" : "transparent",
         borderRight: "1px solid var(--border-color)",
+        borderTop: active ? "1px solid var(--border-color)" : undefined,
       }}
-      surface={active ? "base" : "raised"}
-      border={active ? "top" : undefined}
       p="0 3"
       row
       align="center"
@@ -520,7 +518,7 @@ function CodeEditor() {
 
 function Panel() {
   return (
-    <Frame style={{ height: 150 }} surface="base" border="top">
+    <Frame style={{ height: 150, borderTop: "1px solid var(--border-color)" }} surface="base">
       <Frame row style={{ height: 35 }} p="0 4" gap={4} align="center">
         <Text variant={4} size={6} weight="medium" opacity={0.6}>
           PROBLEMS
