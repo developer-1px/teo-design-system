@@ -13,7 +13,7 @@ import {
   Type,
 } from "lucide-react";
 import { useState } from "react";
-import { Text } from "../../design-system/Text";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 import { Action } from "../../design-system/Action";
 
@@ -72,9 +72,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           >
             <Layers size={14} color="#fff" />
           </Frame>
-          <Text weight="bold" style={{ fontSize: 16 }}>
+          <Card.Title style={{ fontWeight: "bold", fontSize: 16 }}>
             Visual Builder
-          </Text>
+          </Card.Title>
         </Frame>
       </Frame>
 
@@ -92,9 +92,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       >
         <Frame>
           <Frame p="0px 8px 8px 8px">
-            <Text style={{ fontSize: 11 }} weight="bold" color="tertiary">
+            <Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
               ELEMENTS
-            </Text>
+            </Card.Note>
           </Frame>
           <Frame grid columns="1fr 1fr" gap="8px">
             <ElementButton icon={Type} label="Text" />
@@ -113,9 +113,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
         <Frame gap="8px">
           <Frame row align="center" justify="between" p="0px 8px 8px 8px">
-            <Text style={{ fontSize: 11 }} weight="bold" color="tertiary">
+            <Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
               LAYERS
-            </Text>
+            </Card.Note>
             <Frame row gap={1} surface="sunken" p="2px" rounded="md">
               <Action
                 icon={List}
@@ -160,12 +160,12 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           <Settings size={16} />
         </Frame>
         <Frame gap="2px">
-          <Text style={{ fontSize: 13 }} weight="medium">
+          <Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
             Site Settings
-          </Text>
-          <Text style={{ fontSize: 11 }} color="tertiary">
+          </Card.Title>
+          <Card.Note style={{ fontSize: 11, color: "var(--text-tertiary)" }}>
             General, SEO, Analytics
-          </Text>
+          </Card.Note>
         </Frame>
       </Frame>
     </Frame>
@@ -189,9 +189,9 @@ function ElementButton({ icon: Icon, label }: ElementButtonProps) {
       style={{ border: "1px solid var(--border-color)" }}
     >
       <Icon size={20} opacity={0.6} />
-      <Text style={{ fontSize: 12 }} weight="medium">
+      <Card.Title style={{ fontSize: 12, fontWeight: 500 }}>
         {label}
-      </Text>
+      </Card.Title>
     </Frame>
   );
 }
@@ -208,9 +208,9 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
       <Frame gap={1.5} p="0 8px">
         <Frame row gap={2} align="center">
           <FileText size={10} opacity={0.5} />
-          <Text style={{ fontSize: 11 }} weight={active ? "bold" : "medium"}>
+          <Card.Note style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}>
             {label}
-          </Text>
+          </Card.Note>
         </Frame>
         <Frame
           w="100%"
@@ -245,9 +245,9 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
     >
       <Frame row gap="8px" align="center">
         <FileText size={14} opacity={0.5} />
-        <Text style={{ fontSize: 13 }} weight={active ? "bold" : "medium"}>
+        <Card.Title style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}>
           {label}
-        </Text>
+        </Card.Title>
       </Frame>
       {active && <ChevronRight size={12} opacity={0.5} />}
     </Frame>

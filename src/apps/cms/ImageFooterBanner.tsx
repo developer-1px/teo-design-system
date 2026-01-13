@@ -1,7 +1,7 @@
 import { Cpu, Globe, Shield, Zap } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { ProseOld, ProseDocument } from "../../design-system/ProseOld.tsx";
-import { Text } from "../../design-system/Text";
+import { Prose } from "../../design-system/text/Prose";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 
 export function ImageFooterBanner() {
@@ -28,19 +28,20 @@ export function ImageFooterBanner() {
           }}
         />
 
-        <ProseDocument p={6} maxWidth={640} gap={6} align="center" zIndex={10}>
-          <ProseOld color="white" role="h2" align="center">
+        <Frame p={6} style={{ maxWidth: 640 }} gap={6} align="center" zIndex={10}>
+          <Prose.Title variant="xl" style={{ color: "white", textAlign: "center" }}>
             Ready to elevate <br /> your web presence?
-          </ProseOld>
-          <ProseOld
-            color="white"
-            role="body"
-            align="center"
-            style={{ opacity: 0.6 }}
+          </Prose.Title>
+          <Prose.Body
+            style={{
+              color: "white",
+              textAlign: "center",
+              opacity: 0.6
+            }}
           >
             Join 2,000+ companies building high-performance marketing sites with
             our Visual Engine.
-          </ProseOld>
+          </Prose.Body>
           <Frame row gap={4}>
             <Action
               label="Start for Free"
@@ -60,38 +61,38 @@ export function ImageFooterBanner() {
               rounded="full"
             />
           </Frame>
-        </ProseDocument>
+        </Frame>
       </Frame>
 
       {/* Partner Logos */}
       <Frame style={{ paddingTop: 48, paddingBottom: 24 }} gap={6} align="center">
-        <Text size={12} weight="bold" color="tertiary" opacity={0.5}>
+        <Card.Note style={{ fontWeight: "bold", color: "var(--text-tertiary)", opacity: 0.5 }}>
           TRUSTED WORLDWIDE
-        </Text>
+        </Card.Note>
         <Frame row gap={12} p="0 6" justify="center" opacity={0.3} wrap="wrap">
           <Frame row gap={2} align="center">
             <Zap size={24} />
-            <Text size={24} weight="bold">
+            <Card.Title>
               Bolt
-            </Text>
+            </Card.Title>
           </Frame>
           <Frame row gap={2} align="center">
             <Globe size={24} />
-            <Text size={24} weight="bold">
+            <Card.Title>
               Stripe
-            </Text>
+            </Card.Title>
           </Frame>
           <Frame row gap={2} align="center">
             <Shield size={24} />
-            <Text size={24} weight="bold">
+            <Card.Title>
               Linear
-            </Text>
+            </Card.Title>
           </Frame>
           <Frame row gap={2} align="center">
             <Cpu size={24} />
-            <Text size={24} weight="bold">
+            <Card.Title>
               Vercel
-            </Text>
+            </Card.Title>
           </Frame>
         </Frame>
       </Frame>

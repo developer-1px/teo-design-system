@@ -1,38 +1,37 @@
 import { Check, MessageSquare, Zap } from "lucide-react";
-import { ProseOld, ProseSection } from "../../design-system/ProseOld.tsx";
-import { Text } from "../../design-system/Text";
+import { Prose } from "../../design-system/text/Prose";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 
 export function BodyContentSection() {
   return (
-    <ProseSection
+    <Frame
       w="100%"
       p="24 6"
       surface="sunken"
       style={{ borderBottom: "1px solid var(--border-color)" }}
-      maxWidth="100%"
     >
       <Frame
         row
         gap={6}
         align="center"
         w="100%"
-        maxWidth={300}
+        maxWidth={1280}
         style={{ margin: "0 auto" }}
       >
         <Frame w="50%" gap={2}>
           <Frame gap={1}>
-            <Text size={14} weight="bold" color="primary">
+            <Card.Note style={{ fontSize: 14, fontWeight: "bold", color: "var(--text-primary)" }}>
               THE PROCESS
-            </Text>
-            <ProseOld role="h2">
+            </Card.Note>
+            <Prose.Title variant="lg">
               Unleash your <br /> internal creative.
-            </ProseOld>
+            </Prose.Title>
           </Frame>
-          <ProseOld role="body" color="secondary">
+          <Prose.Body style={{ color: "var(--text-secondary)" }}>
             Workflow shouldn't be a bottleneck. Our platform allows developers
             to focus on logic while designers handle the visuals.
-          </ProseOld>
+          </Prose.Body>
           <Frame gap={1}>
             <CheckItem
               title="Pure Token-based design"
@@ -99,7 +98,7 @@ export function BodyContentSection() {
           </Frame>
         </Frame>
       </Frame>
-    </ProseSection>
+    </Frame>
   );
 }
 
@@ -122,12 +121,12 @@ function CheckItem({ title, desc }: CheckItemProps) {
         <Check size={14} color="#fff" />
       </Frame>
       <Frame gap={1}>
-        <Text weight="bold" size={16}>
+        <Card.Title style={{ fontSize: 16, fontWeight: "bold" }}>
           {title}
-        </Text>
-        <Text size={14} color="secondary" opacity={0.7}>
+        </Card.Title>
+        <Card.Desc style={{ fontSize: 14, color: "var(--text-secondary)", opacity: 0.7 }}>
           {desc}
-        </Text>
+        </Card.Desc>
       </Frame>
     </Frame>
   );

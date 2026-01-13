@@ -1,38 +1,35 @@
 import { Cpu, MessageSquare, Shield, Zap } from "lucide-react";
-import {
-  ProseOld,
-  ProseDocument,
-  ProseSection,
-} from "../../design-system/ProseOld.tsx";
-import { Text } from "../../design-system/Text";
+import { Prose } from "../../design-system/text/Prose";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
 
 export function FeatureGridSection() {
   return (
-    <ProseSection
+    <Frame
       w="100%"
       p="24px 6px"
-      contentGap={4}
+      gap={4}
       surface="base"
-      style={{ borderBottom: "1px solid var(--border-color)" }}
-      maxWidth={300}
+      style={{ borderBottom: "1px solid var(--border-color)", maxWidth: 1280, margin: "0 auto" }}
     >
-      <ProseDocument maxWidth={160} gap={1} align="center">
-        <Text
-          size={12}
-          weight="bold"
-          color="primary"
-          style={{ letterSpacing: "0.05em" }}
+      <Frame style={{ maxWidth: 800, margin: "0 auto" }} gap={1} align="center">
+        <Card.Note
+          style={{
+            fontWeight: "bold",
+            color: "var(--text-primary)",
+            letterSpacing: "0.05em",
+            fontSize: "12px"
+          }}
         >
           FEATURES
-        </Text>
+        </Card.Note>
         <EditableWrapper>
-          <ProseOld role="h2">
+          <Prose.Title variant="md">
             Everything you need <br /> to scale.
-          </ProseOld>
+          </Prose.Title>
         </EditableWrapper>
-      </ProseDocument>
+      </Frame>
 
       <Frame gap={4} w="100%">
         {/* Row 1 */}
@@ -69,7 +66,7 @@ export function FeatureGridSection() {
           />
         </Frame>
       </Frame>
-    </ProseSection>
+    </Frame>
   );
 }
 
@@ -93,12 +90,12 @@ function FeatureCardSmall({
       </Frame>
       <Frame gap={2}>
         <EditableWrapper>
-          <ProseOld role="h4">{title}</ProseOld>
+          <Card.Title>{title}</Card.Title>
         </EditableWrapper>
         <EditableWrapper>
-          <ProseOld role="body-sm" color="secondary">
+          <Card.Desc style={{ color: "var(--text-secondary)" }}>
             {desc}
-          </ProseOld>
+          </Card.Desc>
         </EditableWrapper>
       </Frame>
     </Frame>
@@ -130,12 +127,12 @@ function FeatureCardLarge({
         </Frame>
         <Frame gap={2}>
           <EditableWrapper>
-            <ProseOld role="h3">{title}</ProseOld>
+            <Card.Title>{title}</Card.Title>
           </EditableWrapper>
           <EditableWrapper>
-            <ProseOld role="body" color="secondary">
+            <Card.Desc style={{ color: "var(--text-secondary)" }}>
               {desc}
-            </ProseOld>
+            </Card.Desc>
           </EditableWrapper>
         </Frame>
       </Frame>

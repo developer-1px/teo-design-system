@@ -53,11 +53,9 @@ function Navigation() {
       <NavItem to="/" label="Home" />
       <NavItem to="/text" label="Text" />
       <NavItem to="/tokens" label="Tokens" />
+
       <NavItem to="/slide" label="Slide" />
-
-      <NavItem to="/ide" label="IDE" />
       <NavItem to="/cms" label="CMS" />
-
       <NavItem to="/crm" label="CRM" />
       <NavItem to="/login" label="Login" />
       <ThemeToggleItem />

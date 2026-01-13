@@ -1,24 +1,24 @@
 import { HelpCircle, Plus } from "lucide-react";
 import { useState } from "react";
 import { Action } from "../../design-system/Action";
-import { ProseOld, ProseSection } from "../../design-system/ProseOld.tsx";
-import { Text } from "../../design-system/Text";
+import { Prose } from "../../design-system/text/Prose";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 
 export function FAQBoardFooter() {
   return (
-    <ProseSection
+    <Frame
       w="100%"
       p="96 24"
-      contentGap={12}
+      gap={12}
       surface="base"
-      maxWidth={680}
+      style={{ maxWidth: 680, margin: "0 auto" }}
     >
       <Frame gap={2} align="center" w="100%">
-        <Text size={12} weight="bold" color="primary">
+        <Card.Note style={{ fontWeight: "bold", color: "var(--text-primary)" }}>
           SUPPORT
-        </Text>
-        <ProseOld role="h2">Common questions</ProseOld>
+        </Card.Note>
+        <Prose.Title variant="lg">Common questions</Prose.Title>
       </Frame>
 
       <Frame w="100%" gap={4}>
@@ -54,12 +54,12 @@ export function FAQBoardFooter() {
           <HelpCircle size={24} />
         </Frame>
         <Frame gap={1}>
-          <Text weight="bold" size={18}>
+          <Card.Title>
             Still have questions?
-          </Text>
-          <Text size={15} color="secondary">
+          </Card.Title>
+          <Card.Desc>
             We're here to help. Contact our support team 24/7.
-          </Text>
+          </Card.Desc>
         </Frame>
         <Frame flex />
         <Action
@@ -70,7 +70,7 @@ export function FAQBoardFooter() {
           rounded="lg"
         />
       </Frame>
-    </ProseSection>
+    </Frame>
   );
 }
 
@@ -91,9 +91,9 @@ function FAQRow({ q, a }: FAQRowProps) {
       cursor="pointer"
     >
       <Frame row justify="between" align="center" w="100%">
-        <Text size={20} weight="bold">
+        <Card.Title>
           {q}
-        </Text>
+        </Card.Title>
         <Plus
           size={20}
           style={{
@@ -104,13 +104,11 @@ function FAQRow({ q, a }: FAQRowProps) {
       </Frame>
       {isOpen && (
         <Frame p="0 8 4 0">
-          <Text
-            size={16}
-            color="secondary"
-            style={{ lineHeight: 1.6, opacity: 0.8 }}
+          <Prose.Body
+            style={{ opacity: 0.8 }}
           >
             {a}
-          </Text>
+          </Prose.Body>
         </Frame>
       )}
     </Frame>

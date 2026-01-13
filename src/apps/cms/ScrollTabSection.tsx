@@ -1,5 +1,4 @@
 import { Action } from "../../design-system/Action";
-import { ProseSection } from "../../design-system/ProseOld.tsx";
 import { Frame } from "../../design-system/Frame";
 
 const TABS = [
@@ -21,7 +20,7 @@ const TABS = [
 
 export function ScrollTabSection() {
   return (
-    <ProseSection w="100%" p="6 0" style={{ borderBottom: "1px solid var(--border-color)" }} surface="base">
+    <Frame w="100%" p="6 0" style={{ borderBottom: "1px solid var(--border-color)" }} surface="base">
       <Frame
         row
         gap={2}
@@ -45,6 +44,6 @@ export function ScrollTabSection() {
           />
         ))}
       </Frame>
-    </ProseSection>
+    </Frame>
   );
 }

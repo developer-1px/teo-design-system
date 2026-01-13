@@ -1,5 +1,5 @@
 import { Action } from "../../design-system/Action";
-import { Text } from "../../design-system/Text";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 
 export function SiteHeader() {
@@ -36,13 +36,13 @@ export function SiteHeader() {
             pack
             shadow="sm"
           >
-            <Text weight="bold" color="white">
+            <Card.Title style={{ color: "white" }}>
               M
-            </Text>
+            </Card.Title>
           </Frame>
-          <Text weight="bold" size={18}>
+          <Card.Title>
             Minimal
-          </Text>
+          </Card.Title>
         </Frame>
 
         <Frame row gap={6}>

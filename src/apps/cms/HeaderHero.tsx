@@ -1,19 +1,18 @@
 import { ArrowUpRight, Command, Sparkles } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { ProseOld, ProseActions, ProseSection } from "../../design-system/ProseOld.tsx";
-import { Text } from "../../design-system/Text";
+import { Prose } from "../../design-system/text/Prose";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
 
 export function HeaderHero() {
   return (
-    <ProseSection
+    <Frame
       w="100%"
       p="21 5"
-      contentGap={3}
+      gap={3}
       surface="base"
-      style={{ minHeight: "90vh", position: "relative", overflow: "hidden" }}
-      maxWidth={300}
+      style={{ minHeight: "90vh", position: "relative", overflow: "hidden", maxWidth: 1280, margin: "0 auto" }}
     >
       {/* Background Decoration */}
       <Frame
@@ -45,7 +44,7 @@ export function HeaderHero() {
 
       <Frame
         w="100%"
-        maxWidth={200}
+        maxWidth={800}
         style={{ margin: "0 auto" }}
         gap={1.5}
         align="center"
@@ -59,38 +58,41 @@ export function HeaderHero() {
           align="center"
         >
           <Sparkles size={12} color="var(--color-primary)" />
-          <Text
-            size={12}
-            weight="bold"
-            color="secondary"
-            style={{ letterSpacing: "0.02em" }}
+          <Card.Note
+            style={{
+              fontSize: "12px",
+              fontWeight: "bold",
+              color: "var(--text-secondary)",
+              letterSpacing: "0.02em"
+            }}
           >
             NEXT GENERATION CMS IS HERE
-          </Text>
+          </Card.Note>
         </Frame>
 
         <EditableWrapper style={{ width: "100%" }}>
-          <ProseOld role="h1" align="center">
+          <Prose.Title variant="xl" style={{ textAlign: "center" }}>
             Build your dream site <br />
             <span style={{ color: "var(--color-primary)" }}>
               pixel by pixel.
             </span>
-          </ProseOld>
+          </Prose.Title>
         </EditableWrapper>
 
         <EditableWrapper style={{ maxWidth: 600 }}>
-          <ProseOld
-            role="body"
-            color="secondary"
-            align="center"
-            style={{ opacity: 0.8 }}
+          <Prose.Body
+            style={{
+              color: "var(--text-secondary)",
+              textAlign: "center",
+              opacity: 0.8
+            }}
           >
             The visual engine for creators who demand perfection. No code, no
             constraints, just pure creativity.
-          </ProseOld>
+          </Prose.Body>
         </EditableWrapper>
 
-        <ProseActions align="center" gap={3}>
+        <Frame row gap={3} align="center">
           <Action
             label="Start Creating"
             variant="primary"
@@ -106,10 +108,10 @@ export function HeaderHero() {
             variant="surface"
             size="lg"
             h={14}
-            p="0 2"
+            p="0 6"
             rounded="full"
           />
-        </ProseActions>
+        </Frame>
       </Frame>
 
       {/* Hero Visual: Mockup UI */}
@@ -168,6 +170,6 @@ export function HeaderHero() {
           </Frame>
         </Frame>
       </Frame>
-    </ProseSection>
+    </Frame>
   );
 }

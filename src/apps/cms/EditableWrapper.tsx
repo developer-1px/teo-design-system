@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text } from "../../design-system/Text";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 
 export interface EditableWrapperProps {
@@ -44,9 +44,9 @@ export function EditableWrapper({
           h={4}
           pack
         >
-          <Text size={5} weight="bold" color="inherit" style={{ lineHeight: 1 }}>
+          <Card.Note style={{ fontSize: "10px", fontWeight: "bold", color: "inherit", lineHeight: 1 }}>
             EDIT
-          </Text>
+          </Card.Note>
         </Frame>
       )}
       {children}

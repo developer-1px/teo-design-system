@@ -9,7 +9,7 @@ import {
   Share,
 } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Text } from "../../design-system/Text";
+import { Card } from "../../design-system/text/Card";
 import { Frame } from "../../design-system/Frame";
 
 export function TopCenterBar() {
@@ -26,13 +26,13 @@ export function TopCenterBar() {
       <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
       <Frame w={0.5} h={4} surface="overlay" />
       <Frame row gap={2} align="center" style={{ padding: "0 8px" }}>
-        <Text size={13} weight="medium">
+        <Card.Note style={{ fontSize: 13, fontWeight: "medium" }}>
           Page:
-        </Text>
+        </Card.Note>
         <Frame row gap={1} align="center" cursor="pointer">
-          <Text size={13} weight="bold">
+          <Card.Title style={{ fontSize: 13, fontWeight: "bold" }}>
             Marketing Home
-          </Text>
+          </Card.Title>
           <ChevronDown size={12} opacity={0.5} />
         </Frame>
       </Frame>
