@@ -1,0 +1,369 @@
+/* Base Frame */
+.frame {
+    /* Base */
+    display: flex;
+    box-sizing: border-box;
+    /* Ensure padding doesn't affect width */
+
+    /* Variable Defaults (Reset to prevent inheritance) */
+    --unit: 4px;
+    --p: 0;
+    --gap: 0;
+
+    /* Dynamic Props via Variables */
+    padding: calc(var(--p) * var(--unit));
+    gap: calc(var(--gap) * var(--unit));
+
+    /* Layout Defaults */
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+/* Base Layout Display */
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.inline-grid {
+    display: inline-grid;
+}
+
+/* Fill Utility */
+.fill {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+}
+
+/* Layout Keyword Classes */
+/* Layout Keyword Classes */
+.hbox {
+    flex-direction: row;
+    align-items: center;
+}
+
+.vbox {
+    flex-direction: column;
+    align-items: stretch;
+    /* Default for vbox per request */
+}
+
+.pack {
+    justify-content: center;
+    align-items: center;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.nowrap {
+    flex-wrap: nowrap;
+}
+
+.wrap-reverse {
+    flex-wrap: wrap-reverse;
+}
+
+/* Flex Utilities (Align) */
+.items-start {
+    align-items: flex-start;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.items-end {
+    align-items: flex-end;
+}
+
+.items-stretch {
+    align-items: stretch;
+}
+
+.items-baseline {
+    align-items: baseline;
+}
+
+/* Flex Utilities (Justify) */
+.justify-start {
+    justify-content: flex-start;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+.justify-evenly {
+    justify-content: space-evenly;
+}
+
+/* Flex Utilities (Flex) */
+.flex-1 {
+    flex: 1 1 0%;
+}
+
+.flex-auto {
+    flex: 1 1 auto;
+}
+
+.flex-none {
+    flex: none;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.shrink {
+    flex-shrink: 1;
+}
+
+.shrink-0 {
+    flex-shrink: 0;
+}
+
+/* Flex Utilities (Self) */
+.self-auto {
+    align-self: auto;
+}
+
+.self-start {
+    align-self: flex-start;
+}
+
+.self-center {
+    align-self: center;
+}
+
+.self-end {
+    align-self: flex-end;
+}
+
+.self-stretch {
+    align-self: stretch;
+}
+
+/* Sizing Keywords */
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.w-screen {
+    width: 100vw;
+}
+
+.h-screen {
+    height: 100vh;
+}
+
+/* Radius Keywords (Mapping to tokens) */
+.r-none {
+    border-radius: var(--radius-none);
+}
+
+.r-sm {
+    border-radius: var(--radius-sm);
+}
+
+.r-md {
+    border-radius: var(--radius-md);
+}
+
+.r-lg {
+    border-radius: var(--radius-lg);
+}
+
+.r-xl {
+    border-radius: var(--radius-xl);
+}
+
+.r-2xl {
+    border-radius: var(--radius-2xl);
+}
+
+.r-3xl {
+    border-radius: var(--radius-3xl);
+}
+
+.r-full {
+    border-radius: var(--radius-full);
+}
+
+.r-round {
+    border-radius: var(--radius-round);
+}
+
+/* Surface Keywords */
+.surface-base {
+    background-color: var(--surface-base);
+}
+
+.surface-sunken {
+    background-color: var(--surface-sunken);
+}
+
+.surface-raised {
+    background-color: var(--surface-raised);
+    box-shadow: var(--shadow-sm);
+    border: var(--border-width) solid var(--border-color);
+}
+
+.surface-overlay {
+    background-color: var(--surface-overlay);
+    box-shadow: var(--shadow-lg);
+    border: var(--border-width) solid var(--border-color);
+}
+
+/* Modern Semantic Surfaces */
+.surface-page {
+    background-color: var(--surface-page);
+}
+
+.surface-panel {
+    background-color: var(--surface-panel);
+    border-right: var(--border-width) solid var(--border-color);
+    /* Default to sidebar style */
+}
+
+.surface-card {
+    background-color: var(--surface-card);
+    box-shadow: var(--shadow-sm);
+    border: var(--border-width) solid var(--border-color);
+}
+
+.surface-primary {
+    background-color: var(--surface-primary);
+    color: var(--primary-fg);
+}
+
+.surface-selected {
+    background-color: var(--surface-selected);
+}
+
+.surface-hover {
+    background-color: var(--control-bg-hover);
+}
+
+/* Position */
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.sticky {
+    position: sticky;
+}
+
+/* Overflow */
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+.overflow-scroll {
+    overflow: scroll;
+}
+
+.overflow-visible {
+    overflow: visible;
+}
+
+/* Cursor */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
+.cursor-text {
+    cursor: text;
+}
+
+.cursor-move {
+    cursor: move;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
+.cursor-grab {
+    cursor: grab;
+}
+
+.cursor-grabbing {
+    cursor: grabbing;
+}
+
+/* Shadow */
+.shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+.shadow-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+.shadow-2xl {
+    box-shadow: var(--shadow-2xl);
+}
+
+/* Border Colors */
+.border-default {
+    border-color: var(--border-color);
+}
+
+.border-transparent {
+    border-color: transparent;
+}
+
+.border-primary {
+    border-color: var(--text-primary);
+}

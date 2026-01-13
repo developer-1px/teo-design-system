@@ -197,7 +197,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
                 <FolderItem name="apps" expanded>
                   <FileItem name="CMSApp" icon="react" />
                   <FileItem name="IDEApp" icon="react" />
-                  <FileItem name="LinearApp" icon="react" />
+
                   <FileItem name="SlideApp" icon="react" />
                 </FolderItem>
                 <FolderItem name="design-system">

@@ -5,12 +5,101 @@ import { Action } from "../design-system/Action";
 import { Text } from "../design-system/Text";
 import { Frame } from "../design-system/Frame";
 
+// --- React Fiber Helpers ---
+
+// Internal React Fiber property key (depends on React version, usually starts with __reactFiber)
+function getFiberFromElement(element: any): any {
+  // Try standard key
+  const key = Object.keys(element).find((k) => k.startsWith("__reactFiber$"));
+  if (key) return element[key];
+
+  // Fallback: Iterate all keys (including non-enumerable if possible via loop, though Object.keys assumes enumerable)
+  // Some React versions use __reactInternalInstance$
+  for (const k in element) {
+    if (k.startsWith("__reactFiber$") || k.startsWith("__reactInternalInstance$")) {
+      return element[k];
+    }
+  }
+  return null;
+}
+
+interface ComponentStackItem {
+  name: string;
+  fileName?: string;
+  lineNumber?: string;
+  columnNumber?: string;
+}
+
+// function getComponentStack removed
+
+function getStackFromFiber(startFiber: any): ComponentStackItem[] {
+  const stack: ComponentStackItem[] = [];
+  let fiber = startFiber;
+
+  while (fiber) {
+    const debugSource = fiber._debugSource;
+    const type = fiber.type;
+
+    let name = "";
+    if (typeof type === "function") {
+      name = type.displayName || type.name || "Anonymous";
+    } else if (typeof type === "object" && type !== null) {
+      // Memo, ForwardRef, etc.
+      name = type.displayName || (type.render ? type.render.name : "") || "Component";
+    } else if (typeof type === "string") {
+      name = type; // 'div', 'span'
+    }
+
+    if (name && debugSource) {
+      // Clean up filename
+      let fileName = debugSource.fileName ? debugSource.fileName : "";
+      if (fileName) {
+        const parts = fileName.split("/");
+        const base = parts.pop(); // index.tsx
+        if (base && (base === "index.tsx" || base === "index.ts" || base === "index.js" || base === "index.jsx") && parts.length > 0) {
+          fileName = `${parts.pop()}/${base}`;
+        } else {
+          fileName = base || "";
+        }
+      }
+
+      stack.push({
+        name,
+        fileName,
+        lineNumber: debugSource.lineNumber,
+        columnNumber: debugSource.columnNumber
+      });
+    }
+
+    fiber = fiber.return;
+  }
+
+  return stack.filter((item, index, self) =>
+    index === 0 ||
+    (item.fileName !== self[index - 1].fileName || item.lineNumber !== self[index - 1].lineNumber)
+  );
+}
+
+function findNearestHostNode(fiber: any): HTMLElement | null {
+  let current = fiber;
+  while (current) {
+    if (typeof current.type === 'string' && current.stateNode instanceof HTMLElement) {
+      return current.stateNode;
+    }
+    // We only need to go down to find the *first* host node. 
+    // If a component returns a Fragment or array, this might find just the first one.
+    // This is generally acceptable for highlighting "the component".
+    current = current.child;
+  }
+  return null;
+}
 export function InspectorOverlay() {
   const [isActive, setIsActive] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [targetName, setTargetName] = useState<string | null>(null);
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
+  const [componentStack, setComponentStack] = useState<ComponentStackItem[]>([]);
   const [notification, setNotification] = useState<string | null>(null);
 
   const triggerLock = (el: HTMLElement) => {
@@ -115,27 +204,150 @@ export function InspectorOverlay() {
 
       if (!element) return;
 
-      // Find nearest parent with data-react-inspector
-      // The plugin injects data-react-inspector="file:line:col"
-      const target = element.closest("[data-react-inspector]") as HTMLElement;
+      // --- Snapping Logic ---
 
-      if (target) {
-        // Initial set
-        const rect = target.getBoundingClientRect();
-        setTargetRect(rect);
-        setTargetElement(target);
+      // 1. Traverse to find the relevant Design System Component (Fiber)
+      // We prioritize "Atomic" components (Action, Field) over their internals.
 
-        const inspectorData = target.getAttribute("data-react-inspector");
-        if (inspectorData) {
-          // Parse standard format: absolute/path/to/file:line:col
-          const parts = inspectorData.split(":");
-          const filePath = parts[0];
-          const line = parts[1];
-          const fileName = filePath.split("/").pop();
-          setTargetName(
-            line ? `${fileName}:${line}` : fileName || inspectorData,
-          );
+      const atoms = [
+        "Action", "Field", "Input", "Switch", "Checkbox", "Radio",
+        "Badge", "Avatar", "Prose", "ProseDocument", "ProseSection"
+      ];
+
+      const allDsComponents = [
+        ...atoms,
+        "Frame", "Text", "Separator", "Stack", "Grid", "Cell",
+        "Section", "Sidebar", "Part", "Header", "Footer"
+      ];
+
+      let targetFiber = getFiberFromElement(element as HTMLElement);
+      let hostNode = element as HTMLElement;
+
+      let currentFiber = targetFiber;
+      let depth = 0;
+      let foundFiber = null;
+      let firstDsFiber = null;
+
+      // Search for DS Component Fiber
+      while (currentFiber && depth < 15) {
+        const type = currentFiber.type;
+        let name = "";
+
+        if (typeof type === "function") {
+          name = type.displayName || type.name || "";
+        } else if (typeof type === "object" && type) {
+          name = type.displayName || (type.render ? type.render.name : "") || "";
         }
+
+        if (allDsComponents.includes(name)) {
+          if (!firstDsFiber) firstDsFiber = currentFiber;
+          if (atoms.includes(name)) {
+            foundFiber = currentFiber;
+            break;
+          }
+          foundFiber = currentFiber;
+        }
+        currentFiber = currentFiber.return;
+        depth++;
+      }
+
+      // Resolve Atomic Ownership (if we hit a generic inside an Atom)
+      if (firstDsFiber) {
+        const name = (typeof firstDsFiber.type === 'function' ? firstDsFiber.type.displayName || firstDsFiber.type.name : firstDsFiber.type.displayName) || "";
+        if (atoms.includes(name)) {
+          foundFiber = firstDsFiber;
+        } else {
+          let p = firstDsFiber.return;
+          let d = 0;
+          let owner = null;
+          while (p && d < 4) {
+            const pName = (typeof p.type === 'function' ? p.type.displayName || p.type.name : (p.type?.displayName)) || "";
+            if (atoms.includes(pName)) {
+              owner = p;
+              break;
+            }
+            p = p.return;
+            d++;
+          }
+          foundFiber = owner || firstDsFiber;
+        }
+      }
+
+      // 2. Resolve Host Node & Source Info
+      if (foundFiber) {
+        const rootHost = findNearestHostNode(foundFiber);
+        if (rootHost) {
+          hostNode = rootHost;
+        }
+        targetFiber = foundFiber; // Points to the DS Component Fiber (e.g. Action)
+
+        const rect = hostNode.getBoundingClientRect();
+        setTargetRect(rect);
+        setTargetElement(hostNode);
+
+        // Name Resolution: Get the component name from the Fiber
+        const type = targetFiber.type;
+        let componentName = "";
+        if (typeof type === "function") {
+          componentName = type.displayName || type.name || "Component";
+        } else if (typeof type === "object" && type) {
+          componentName = type.displayName || (type.render ? type.render.name : "") || "Component";
+        }
+
+        // Source Resolution: Try data-react-inspector first (Most Accurate Path)
+        // The attribute is usually on the host node generated by the component.
+        // Format: "src/apps/Sidebar.tsx:42:10"
+        const inspectorData = hostNode.getAttribute("data-react-inspector");
+
+        if (inspectorData) {
+          // Parse: src/apps/Sidebar.tsx:42:10
+          const parts = inspectorData.split(":");
+          let line = "";
+          let file = inspectorData;
+
+          if (parts.length >= 2) {
+            // Last two checks for numbers (line:col)
+            if (!isNaN(Number(parts[parts.length - 1])) && !isNaN(Number(parts[parts.length - 2]))) {
+              line = parts[parts.length - 2]; // Get line number
+              parts.pop(); // col
+              parts.pop(); // lineNum
+              file = parts.join(":"); // Rejoin rest as file path
+            }
+          }
+
+          // Clean File Path (Handle index.tsx)
+          // file: /Users/user/.../src/apps/Sidebar.tsx or plain src/apps/Sidebar.tsx
+          const fileParts = file.split("/");
+          const base = fileParts.pop();
+          if (base && (base.startsWith("index.") && fileParts.length > 0)) {
+            file = `${fileParts.pop()}/${base}`;
+          } else {
+            file = base || file;
+          }
+
+          // Set Target Name: Sidebar.tsx:42(Action)
+          setTargetName(`${file}:${line}(${componentName})`);
+
+          // Mock stack for panel (just one item since we used the attribute)
+          setComponentStack([{
+            name: componentName,
+            fileName: file,
+            lineNumber: line,
+            columnNumber: ""
+          }]);
+        } else {
+          // Fallback to Fiber Stack (Old Logic) if attribute missing
+          const stack = getStackFromFiber(targetFiber);
+          setComponentStack(stack);
+
+          if (stack.length > 0) {
+            const top = stack[0];
+            setTargetName(`${top.fileName}:${top.lineNumber}(${top.name})`);
+          } else {
+            setTargetName(componentName || hostNode.tagName.toLowerCase());
+          }
+        }
+
       } else {
         setTargetRect(null);
         setTargetName(null);
@@ -289,6 +501,7 @@ export function InspectorOverlay() {
         <InspectorPanel
           element={targetElement}
           name={targetName || "Element"}
+          stack={componentStack}
           initialX={initialX}
           initialY={initialY}
           onClose={() => {
@@ -338,6 +551,7 @@ export function InspectorOverlay() {
 function InspectorPanel({
   element,
   name,
+  stack,
   initialX,
   initialY,
   onClose,
@@ -345,6 +559,7 @@ function InspectorPanel({
 }: {
   element: HTMLElement;
   name: string;
+  stack: ComponentStackItem[];
   initialX: number;
   initialY: number;
   onClose: () => void;
@@ -393,6 +608,40 @@ function InspectorPanel({
       ],
     },
   ];
+
+  // Additional Section for Hierarchy
+  if (stack && stack.length > 0) {
+    properties.push({
+      section: "Hierarchy",
+      items: stack.map((item, i) => ({
+        key: `${i + 1}`, // Simple index key
+        value: `${item.fileName}:${item.lineNumber}(${item.name})` // Format: File:Line(Name)
+      }))
+    });
+  }
+
+  // AI Assist Prompts
+  const aiPrompts = [
+    { label: "Fix Padding", prompt: "The padding on this component looks wrong. Please adjust it to match the design system spacing (use p prop with scalar 2, 3, etc)." },
+    { label: "Fix Alignment", prompt: "The alignment of children in this component is incorrect. Please fix the flex properties (align, justify) to ensure proper layout." },
+    { label: "Convert to Row", prompt: "Convert this component to a horizontal row layout (add 'row' prop) and ensure spacing is correct." },
+    { label: "Convert to Column", prompt: "Convert this component to a vertical stack layout (default Frame) and ensure spacing is correct." },
+    { label: "Tighten Spacing", prompt: "Reduce the gap and padding in this component to make it more compact." },
+    { label: "Make Responsive", prompt: "Ensure this component is responsive. It should adapt gracefully to smaller screens (use flex-wrap or responsive props)." },
+  ];
+
+  const handlePromptClick = (prompt: string) => {
+    const clone = element.cloneNode(true) as HTMLElement;
+    clone.innerHTML = ""; // Just the shell to avoid noise
+    const shell = clone.outerHTML;
+
+    // Construct Prompt
+    const fullPrompt = `I need to modify this component in ${name} (${stack[0]?.fileName || "unknown file"}).\n\nComponent Shell:\n${shell}\n\nRequest: ${prompt}\n\nPlease provide the corrected code.`;
+
+    navigator.clipboard.writeText(fullPrompt).then(() => {
+      onCopy("Prompt copied!");
+    });
+  };
 
   // Filter
   const hasFlex =
@@ -502,6 +751,36 @@ function InspectorPanel({
 
       {/* Content - Compact */}
       <Frame p="2 0" overflow="auto">
+        {/* AI Assist Section */}
+        <Frame gap={0.5} p="0 2 2 2">
+          <Text
+            weight="bold"
+            size={6}
+            color="tertiary"
+            style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
+          >
+            AI Assist
+          </Text>
+          <Frame gap={0.5}>
+            {aiPrompts.map((item) => (
+              <Action
+                key={item.label}
+                size={5}
+                variant="ghost"
+                justify="start"
+                label={item.label}
+                onClick={() => handlePromptClick(item.prompt)}
+                style={{
+                  width: "100%",
+                  justifyContent: "flex-start",
+                  textAlign: "left"
+                }}
+              />
+            ))}
+          </Frame>
+        </Frame>
+
+        {/* Properties & Hierarchy */}
         {properties.map((section) => {
           if (section.section === "Flex" && !hasFlex) return null;
           return (

@@ -35,12 +35,6 @@ export interface StackProps extends React.HTMLAttributes<HTMLDivElement> {
 
   // Padding
   p?: number | string;
-  px?: number | string;
-  py?: number | string;
-  pt?: number | string;
-  pb?: number | string;
-  pl?: number | string;
-  pr?: number | string;
 }
 
 export function Stack({
@@ -65,12 +59,6 @@ export function Stack({
   rows,
   areas,
   p,
-  px,
-  py,
-  pt,
-  pb,
-  pl,
-  pr,
   style,
   className = "",
   ...props
@@ -95,20 +83,13 @@ export function Stack({
     return v;
   };
 
-  const resolvePadding = (v: number | string | undefined) =>
-    typeof v === "number" ? `var(--space-${v})` : v;
-
   const computedStyle: React.CSSProperties = {
     display: grid ? "grid" : "flex",
     flexDirection: grid ? undefined : flexDir,
     gap: toToken(gap, "space") as any,
     flexWrap: wrap === true ? "wrap" : (wrap as any),
 
-    padding: resolvePadding(p),
-    paddingTop: resolvePadding(pt) ?? resolvePadding(py),
-    paddingBottom: resolvePadding(pb) ?? resolvePadding(py),
-    paddingLeft: resolvePadding(pl) ?? resolvePadding(px),
-    paddingRight: resolvePadding(pr) ?? resolvePadding(px),
+    padding: toToken(p, "space") as any,
 
     alignItems: mapAlign(align),
     justifyContent: mapJustify(justify),

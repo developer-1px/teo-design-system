@@ -20,7 +20,6 @@ export function MainFooter() {
               rounded="xl"
               surface="primary"
               pack
-              shadow="lg"
             >
               <Sparkles size={20} color="#fff" />
             </Frame>

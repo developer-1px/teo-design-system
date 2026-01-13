@@ -6,7 +6,7 @@ import { Frame } from "../../design-system/Frame";
 
 export function ImageFooterBanner() {
   return (
-    <Frame w="100%" p="96 24" surface="base" border="bottom">
+    <Frame w="100%" p="24 0" surface="base" border="bottom">
       <Frame
         w="100%"
         h={125}
@@ -64,7 +64,7 @@ export function ImageFooterBanner() {
       </Frame>
 
       {/* Partner Logos */}
-      <Frame p="12 0 0 0" gap={6} align="center">
+      <Frame style={{ paddingTop: 48, paddingBottom: 24 }} gap={6} align="center">
         <Text size={12} weight="bold" color="tertiary" opacity={0.5}>
           TRUSTED WORLDWIDE
         </Text>

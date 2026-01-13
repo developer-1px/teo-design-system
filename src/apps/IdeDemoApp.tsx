@@ -63,7 +63,7 @@ export default function IdeDemoApp() {
 
       {/* 2. Activity Bar */}
       <Part area="activity" surface="sunken" border="right" p={2}>
-        <Stack gap={16} align="center" pt={2}>
+        <Stack gap={16} align="center" p="2 0 0 0">
           <Action
             icon={FileText}
             variant="ghost"
@@ -79,7 +79,7 @@ export default function IdeDemoApp() {
           />
         </Stack>
         <Stack fill />
-        <Stack gap={16} align="center" pb={2}>
+        <Stack gap={16} align="center" p="0 0 2 0">
           <Action
             icon={Settings}
             variant="ghost"
@@ -107,7 +107,7 @@ export default function IdeDemoApp() {
               variant="ghost"
               justify="start"
             />
-            <Stack pl={3} gap={2}>
+            <Stack p="0 0 0 3" gap={2}>
               <Action
                 label="components"
                 icon={FileText}

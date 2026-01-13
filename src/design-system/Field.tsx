@@ -9,6 +9,7 @@ interface FieldProps
   rightIcon?: React.ReactNode;
   w?: string | number;
   flex?: boolean | number;
+  inputStyle?: React.CSSProperties;
 }
 
 export function Field({
@@ -19,6 +20,7 @@ export function Field({
   flex,
   className = "",
   style,
+  inputStyle,
   value,
   onChange,
   ...props
@@ -29,7 +31,7 @@ export function Field({
       row
       align="center"
       gap={1.5}
-      p={`0 ${rightIcon ? 1.5 : 2} 0 2`}
+      p={`1.5 ${rightIcon ? 1.5 : 2} 1.5 2`}
       w={flex ? undefined : w}
       as="label"
       className={`field-base ${className}`}
@@ -76,6 +78,7 @@ export function Field({
           minWidth: 0,
           flex: 1,
           cursor: "text",
+          ...inputStyle,
         }}
       />
       {rightIcon && (

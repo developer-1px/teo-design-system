@@ -26,7 +26,7 @@ export function CMSApp() {
         onClick={() => setSidebarOpen(!isSidebarOpen)}
       />
 
-      <Frame row fill>
+      <Frame row fill align="stretch">
         <CMSSidebar isOpen={isSidebarOpen} />
         <Frame
           flex

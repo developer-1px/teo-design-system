@@ -1,4 +1,5 @@
-import { Frame, type FrameProps } from "./Frame";
+import { Frame } from "./Frame";
+import type { FrameProps } from "./props";
 
 export interface PartProps extends FrameProps {
   area?: string; // Grid area name

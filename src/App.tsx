@@ -1,13 +1,18 @@
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
+import { Moon, Sun } from "lucide-react";
 import { CMSApp } from "./apps/CMSApp";
 import IdeDemoApp from "./apps/IdeDemoApp";
 import { LandingApp } from "./apps/LandingApp";
-import { LinearApp } from "./apps/LinearApp";
+
 import { SlideApp } from "./apps/SlideApp";
 import { TokensApp } from "./apps/TokensApp";
 import { Text } from "./design-system/Text";
 import { Frame } from "./design-system/Frame";
+
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
+
+import { CRMApp } from "./apps/CRMApp";
+import { useTheme } from "./design-system/theme";
 
 function NavItem({ to, label }: { to: string; label: string }) {
   return (
@@ -48,9 +53,34 @@ function Navigation() {
       <NavItem to="/" label="Home" />
       <NavItem to="/tokens" label="Tokens" />
       <NavItem to="/slide" label="Slide" />
-      <NavItem to="/linear" label="Linear" />
+
       <NavItem to="/ide" label="IDE" />
       <NavItem to="/cms" label="CMS" />
+
+      <NavItem to="/crm" label="CRM" />
+      <ThemeToggleItem />
+    </Frame>
+  );
+}
+
+function ThemeToggleItem() {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+
+  return (
+    <Frame
+      onClick={toggleTheme}
+      p={2}
+      rounded="full"
+      style={{
+        color: "var(--text-secondary)",
+      }}
+      cursor="pointer"
+      surface="hover"
+      align="center"
+      justify="center"
+    >
+      {isDark ? <Sun size={16} /> : <Moon size={16} />}
     </Frame>
   );
 }
@@ -60,13 +90,15 @@ function App() {
     <HashRouter>
       <InspectorOverlay />
       <Frame fill overflow="hidden">
+
         <Routes>
           <Route path="/" element={<LandingApp />} />
           <Route path="/tokens" element={<TokensApp />} />
           <Route path="/slide" element={<SlideApp />} />
-          <Route path="/linear" element={<LinearApp />} />
+
           <Route path="/ide" element={<IdeDemoApp />} />
           <Route path="/cms" element={<CMSApp />} />
+          <Route path="/crm" element={<CRMApp />} />
         </Routes>
         <Navigation />
       </Frame>

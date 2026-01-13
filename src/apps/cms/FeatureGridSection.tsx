@@ -12,7 +12,7 @@ export function FeatureGridSection() {
   return (
     <ProseSection
       w="100%"
-      p="24 6"
+      p="24px 6px"
       contentGap={4}
       surface="base"
       border="bottom"

@@ -1,3 +1,5 @@
+
+
 export type RoundedToken =
   | boolean
   | "none"
@@ -15,7 +17,11 @@ export type SurfaceToken =
   | "sunken"
   | "overlay"
   | "primary"
-  | "selected";
+  | "selected"
+  | "page"
+  | "panel"
+  | "card"
+  | "hover";
 
 export type ActionVariant = "ghost" | "surface" | "primary";
 
@@ -61,3 +67,4 @@ export type CursorToken =
   | "grab"
   | "grabbing";
 export type ShadowToken = "sm" | "md" | "lg" | "xl" | "2xl";
+

@@ -21,12 +21,10 @@ export function LandingApp() {
         top={0}
         zIndex={100}
         style={{
-          backdropFilter: "blur(12px)",
-          background: "rgba(255,255,255,0.7)",
           borderBottom: "1px solid var(--border-subtle)",
         }}
       >
-        <Prose role="h4">MDK</Prose>
+        <Prose role="h4">TMDK</Prose>
         <Frame row gap={2}>
           <Action label="Documentation" variant="ghost" />
           <Action label="Components" variant="ghost" />
@@ -55,7 +53,7 @@ export function LandingApp() {
           </Frame>
 
           <Prose role="h1" align="center" style={{ maxWidth: 800 }}>
-            Build faster with the Minimal Design Kit
+            Build faster with the Teo's Minimal Design Kit
           </Prose>
 
           <Prose

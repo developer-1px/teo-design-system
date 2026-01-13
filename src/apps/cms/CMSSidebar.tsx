@@ -24,12 +24,13 @@ export function CMSSidebar({ isOpen }: CMSSidebarProps) {
 
   return (
     <Frame
+      h="full"
       surface="base"
       border="right"
       p={isOpen ? 2 : 0}
+      gap={isOpen ? 5 : 0}
       style={{
         width: isOpen ? 280 : 0,
-        gap: 24,
         opacity: isOpen ? 1 : 0,
         overflow: "hidden",
         whiteSpace: "nowrap",

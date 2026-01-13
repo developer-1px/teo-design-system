@@ -1,5 +1,6 @@
 import type React from "react";
-import { Frame, type FrameProps } from "./Frame";
+import { Frame } from "./Frame";
+import type { FrameProps } from "./props";
 import "./tokens.css";
 
 type ProseRole = "h1" | "h2" | "h3" | "h4" | "body" | "body-sm" | "caption";
@@ -115,6 +116,30 @@ export function ProseSection({
       ) : (
         children
       )}
+    </Frame>
+  );
+}
+
+export function ProseActions({
+  children,
+  align = "left",
+  gap = 2,
+  ...props
+}: Omit<React.ComponentProps<typeof Frame>, "align"> & {
+  align?: "left" | "center" | "right";
+}) {
+  const justify =
+    align === "center" ? "center" : align === "right" ? "end" : "start";
+
+  return (
+    <Frame
+      row
+      gap={gap}
+      justify={justify}
+      style={{ marginTop: "var(--space-6)" }}
+      {...props}
+    >
+      {children}
     </Frame>
   );
 }

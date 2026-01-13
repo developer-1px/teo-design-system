@@ -19,7 +19,7 @@ export function EditableWrapper({
       position="relative"
       style={{
         outline: isHovered
-          ? "2px solid var(--color-primary)"
+          ? "2px solid var(--primary-bg)"
           : "2px solid transparent",
         outlineOffset: "2px",
         ...style,
@@ -35,16 +35,16 @@ export function EditableWrapper({
       {isHovered && (
         <Frame
           position="absolute"
-          top={-24}
-          left={0}
+          top={-10}
+          left={-2}
           surface="primary"
-          p="0 2"
+          p="0 1.5"
           rounded="sm"
           zIndex={50}
-          h={20}
-          align="center"
+          h={4}
+          pack
         >
-          <Text size={10} weight="bold" color="#fff">
+          <Text size={5} weight="bold" color="inherit" style={{ lineHeight: 1 }}>
             EDIT
           </Text>
         </Frame>

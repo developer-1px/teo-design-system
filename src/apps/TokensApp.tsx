@@ -7,20 +7,7 @@ import {
 import { Text } from "../design-system/Text";
 import { Frame } from "../design-system/Frame";
 
-const TEXT_COLORS = [
-  { name: "text-primary", var: "--text-primary", hex: "#18181b" },
-  { name: "text-body", var: "--text-body", hex: "#3f3f46" },
-  { name: "text-subtle", var: "--text-subtle", hex: "#71717a" },
-  { name: "text-muted", var: "--text-muted", hex: "#a1a1aa" },
-  { name: "text-dim", var: "--text-dim", hex: "#d4d4d8" },
-];
 
-const ACCENT_COLORS = [
-  { name: "primary-bg", var: "--primary-bg", hex: "#18181b" },
-  { name: "primary-fg", var: "--primary-fg", hex: "#ffffff" },
-  { name: "link-color", var: "--link-color", hex: "#646cff" },
-  { name: "border-color", var: "--border-color", hex: "#e4e4e7" },
-];
 
 const INTERACTION_TOKENS = [
   {
@@ -58,34 +45,23 @@ const SPACINGS = [
   30, 40,
 ];
 
-function ColorCard({
-  name,
-  variable,
-  hex,
-}: {
-  name: string;
-  variable: string;
-  hex: string;
-}) {
+function TokenLabel({ name, role }: { name: string; role: string }) {
   return (
-    <Frame surface="sunken" rounded="lg" overflow="hidden">
-      <Frame h={24} style={{ background: `var(${variable})` }} />
-      <Frame p={3} gap={1}>
-        <Frame row justify="between" align="center">
-          <Text weight="bold" size={3}>
-            {name}
-          </Text>
-          <Text size={2} color="tertiary" mono>
-            {hex}
-          </Text>
-        </Frame>
-        <Text size={2} color="tertiary" mono>
-          var({variable})
-        </Text>
-      </Frame>
+    <Frame row align="center" gap={2}>
+      <Text size={2} mono style={{ color: "var(--text-tertiary)", opacity: 0.7 }}>
+        var(--{name})
+      </Text>
+      <Text size={2} color="tertiary" style={{ opacity: 0.5 }}>
+        •
+      </Text>
+      <Text size={2} color="secondary">
+        {role}
+      </Text>
     </Frame>
   );
 }
+
+
 
 export function TokensApp() {
   return (
@@ -113,46 +89,42 @@ export function TokensApp() {
             <Frame
               row
               w="100%"
-              rounded="2xl"
-              overflow="hidden"
-              border
-              shadow="2xl"
+              gap={6}
               style={{ minHeight: "300px" }}
             >
               {[
-                { id: "base", name: "Base", desc: "Root background." },
-                { id: "sunken", name: "Sunken", desc: "Wells & groups." },
-                { id: "raised", name: "Raised", desc: "Cards & popups." },
-                { id: "overlay", name: "Overlay", desc: "Modals & menus." },
-                { id: "primary", name: "Primary", desc: "Brand contrast." },
-              ].map((s, i) => (
+                { id: "base", name: "Page", desc: "App Background", hex: "#FFFFFF" },
+                { id: "sunken", name: "Panel", desc: "Sidebar / Wells", hex: "#F9F9FB" },
+                { id: "raised", name: "Card", desc: "Content Areas", hex: "#FFFFFF" },
+                { id: "overlay", name: "Overlay", desc: "Menus / Dialogs", hex: "#FFFFFF" },
+                { id: "primary", name: "Primary", desc: "Brand Action", hex: "#18181B" },
+              ].map((s) => (
                 <Frame
                   key={s.id}
                   surface={s.id as any}
                   p={8}
-                  gap={3}
+                  gap={4}
                   flex={1}
+                  rounded="2xl"
                   align="center"
                   justify="center"
-                  style={{
-                    textAlign: "center",
-                    borderRight: i < 4 ? "1px solid var(--border-color)" : undefined,
-                  }}
+                  style={{ textAlign: "center" }}
                 >
                   <Frame gap={1} align="center">
                     <Text weight="bold" size={5}>
                       {s.name}
                     </Text>
-                    <Text size={2} color="tertiary" mono style={{ opacity: 0.6 }}>
-                      {s.id}
+                    <Text size={2} color="tertiary" mono>
+                      {s.hex}
                     </Text>
                   </Frame>
-                  <Text size={2} color="secondary" style={{ maxWidth: "160px", lineHeight: 1.4 }}>
+                  <Text size={2} color="secondary" style={{ maxWidth: "160px", lineHeight: 1.4, opacity: 0.8 }}>
                     {s.desc}
                   </Text>
-                  <Frame h={8} />
-                  <Text size={1} color="tertiary" mono style={{ opacity: 0.4 }}>
-                    var(--surface-{s.id})
+
+                  {/* Token Reference */}
+                  <Text size={1} color="tertiary" mono style={{ marginTop: 8, opacity: 0.5 }}>
+                    surface-{s.id}
                   </Text>
                 </Frame>
               ))}
@@ -268,20 +240,126 @@ export function TokensApp() {
           {/* Colors */}
           <ProseDocument maxWidth="1200px" gap={6}>
             <Prose role="h2">Text & Accents</Prose>
-            <Frame
-              grid
-              columns="repeat(auto-fill, minmax(220px, 1fr))"
-              gap={6}
-              w="100%"
-            >
-              {[...TEXT_COLORS, ...ACCENT_COLORS].map((color) => (
-                <ColorCard
-                  key={color.name}
-                  name={color.name}
-                  variable={color.var}
-                  hex={color.hex}
-                />
-              ))}
+            <Frame gap={8} w="100%">
+              {/* Text Hierarchy Group */}
+              <Frame gap={4}>
+                <Prose role="h3">Content Hierarchy</Prose>
+                <Prose role="body" color="secondary">
+                  Appropriate color usage establishes reading order and importance.
+                </Prose>
+
+                <Frame
+                  surface="sunken"
+                  p={8}
+                  gap={6}
+                  rounded="xl"
+                  border
+                >
+                  <Frame gap={1}>
+                    <Text size={5} weight="bold" style={{ color: "var(--text-primary)" }}>
+                      The Design System
+                    </Text>
+                    <TokenLabel name="text-primary" role="Headings / Titles" />
+                  </Frame>
+
+                  <Frame gap={1}>
+                    <Text size={3} style={{ color: "var(--text-body)", lineHeight: 1.6 }}>
+                      Our design system provides a comprehensive suite of components and tokens to build consistent, high-quality interfaces.
+                    </Text>
+                    <TokenLabel name="text-body" role="Main Content" />
+                  </Frame>
+
+                  <Frame gap={1}>
+                    <Text size={2} style={{ color: "var(--text-subtle)" }}>
+                      Last updated on Jan 12, 2024 by @antigravity
+                    </Text>
+                    <TokenLabel name="text-subtle" role="Metadata / Secondary" />
+                  </Frame>
+                  <Frame gap={1}>
+                    <Text size={2} style={{ color: "var(--text-muted)" }}>
+                      Enter your comments here...
+                    </Text>
+                    <TokenLabel name="text-muted" role="Placeholders / Disabled" />
+                  </Frame>
+                </Frame>
+              </Frame>
+
+              {/* UI Elements Group */}
+              <Frame gap={4}>
+                <Prose role="h3">Core Actions</Prose>
+                <Prose role="body" color="secondary">
+                  Semantic colors for interactive elements and structural borders.
+                </Prose>
+
+                <Frame
+                  row
+                  gap={8}
+                  wrap="wrap"
+                >
+                  {/* Primary Button Example */}
+                  <Frame
+                    surface="base"
+                    p={6}
+                    rounded="xl"
+                    border
+                    gap={3}
+                    flex={1}
+                    style={{ minWidth: "240px" }}
+                  >
+                    <Frame
+                      surface="primary"
+                      p="2 4"
+                      rounded="md"
+                      align="center"
+                      w="min-content"
+                    >
+                      <Text style={{ color: "var(--primary-fg)" }} weight="medium">
+                        Save Changes
+                      </Text>
+                    </Frame>
+                    <Frame gap={1}>
+                      <TokenLabel name="primary-bg" role="Action Background" />
+                      <TokenLabel name="primary-fg" role="Action Text" />
+                    </Frame>
+                  </Frame>
+
+                  {/* Links Example */}
+                  <Frame
+                    surface="base"
+                    p={6}
+                    rounded="xl"
+                    border
+                    gap={3}
+                    flex={1}
+                    style={{ minWidth: "240px" }}
+                  >
+                    <Text style={{ color: "var(--link-color)" }} weight="medium">
+                      View Documentation →
+                    </Text>
+                    <TokenLabel name="link-color" role="Interactive Links" />
+                  </Frame>
+
+                  {/* Border Example */}
+                  <Frame
+                    surface="base"
+                    p={6}
+                    rounded="xl"
+                    border
+                    gap={3}
+                    flex={1}
+                    style={{ minWidth: "240px" }}
+                  >
+                    <Frame
+                      p={4}
+                      rounded="lg"
+                      style={{ border: "1px solid var(--border-color)" }}
+                    >
+                      <Text size={2} color="secondary">Card with Border</Text>
+                    </Frame>
+                    <TokenLabel name="border-color" role="Structural Dividers" />
+                  </Frame>
+                </Frame>
+              </Frame>
             </Frame>
           </ProseDocument>
 
@@ -300,7 +378,7 @@ export function TokensApp() {
                     rounded="sm"
                   />
                   <Text size={2} mono color="tertiary">
-                    {space}
+                    {space} 
                   </Text>
                 </Frame>
               ))}

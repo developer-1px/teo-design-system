@@ -1,6 +1,6 @@
 import { ArrowUpRight, Command, Sparkles } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Prose, ProseSection } from "../../design-system/Prose";
+import { Prose, ProseActions, ProseSection } from "../../design-system/Prose";
 import { Text } from "../../design-system/Text";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
@@ -91,7 +91,7 @@ export function HeaderHero() {
           </Prose>
         </EditableWrapper>
 
-        <Frame row gap={1} p={1}>
+        <ProseActions align="center" gap={3}>
           <Action
             label="Start Creating"
             variant="primary"
@@ -110,7 +110,7 @@ export function HeaderHero() {
             p="0 2"
             rounded="full"
           />
-        </Frame>
+        </ProseActions>
       </Frame>
 
       {/* Hero Visual: Mockup UI */}
@@ -150,7 +150,7 @@ export function HeaderHero() {
             <Frame h={3} w="80%" surface="overlay" rounded="full" />
             <Frame h={3} w="60%" surface="overlay" rounded="full" />
             <Frame flex />
-            <Frame h={10} w="100%" surface="overlay" rounded="lg" />
+            <Frame h={10} w="100%" surface="raised" rounded="lg" />
           </Frame>
           <Frame flex surface="base" p={3} gap={1.5} pack>
             <Frame

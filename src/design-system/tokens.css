@@ -3,13 +3,23 @@
      Premium Zinc Palette (Tailwind-like Zinc) 
   */
 
-  /* Light Theme */
-  --surface-base: #ffffff;
-  --surface-sunken: #f4f4f5;
-  --surface-raised: #e4e4e7;
-  --surface-overlay: #d4d4d8;
+  /* Semantic Surfaces (Modern Architecture) */
+  --surface-page: #ffffff;
+  /* Global App Background: White */
+  --surface-panel: #f9f9fb;
+  /* Sidebars: Very subtle grey to distinguish from white page */
+  --surface-card: #ffffff;
+  /* Content Cards: White (requires border/shadow on white page) */
+  --surface-overlay: #ffffff;
+  /* Floating Elements */
+
+  /* Legacy Mapping (Backend Compatibility) */
+  --surface-base: var(--surface-page);
+  --surface-sunken: var(--surface-panel);
+  --surface-raised: var(--surface-card);
+  --surface-selected: var(--surface-page);
+  /* Often same as base or specific color */
   --surface-primary: var(--primary-bg);
-  --surface-selected: var(--surface-base);
 
   --text-primary: #18181b;
   --text-body: #3f3f46;
@@ -46,10 +56,58 @@
   --prose-body-sm-spacing: 0em;
   --prose-body-sm-weight: 400;
 
-  --prose-caption-size: 14px;
   --prose-caption-height: 1.5;
   --prose-caption-spacing: 0.05em;
   --prose-caption-weight: 500;
+
+  /* Semantic Text System (UI) */
+  --text-code-size: 12px;
+  --text-code-height: 1.5;
+  --text-code-weight: 400;
+  --text-code-spacing: 0em;
+  --font-family-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --text-heading-lg-size: 20px;
+  --text-heading-lg-weight: 600;
+  --text-heading-lg-height: 1.25;
+  --text-heading-lg-spacing: -0.01em;
+
+  --text-heading-md-size: 16px;
+  --text-heading-md-weight: 600;
+  --text-heading-md-height: 1.3;
+  --text-heading-md-spacing: -0.01em;
+
+  --text-heading-sm-size: 14px;
+  --text-heading-sm-weight: 600;
+  --text-heading-sm-height: 1.4;
+  --text-heading-sm-spacing: 0em;
+
+  --text-body-lg-size: 16px;
+  --text-body-lg-weight: 400;
+  --text-body-lg-height: 1.5;
+  --text-body-lg-spacing: 0em;
+
+  --text-body-md-size: 14px;
+  --text-body-md-weight: 400;
+  --text-body-md-height: 1.5;
+  --text-body-md-spacing: 0em;
+
+  --text-body-sm-size: 13px;
+  /* High Density UI Standard */
+  --text-body-sm-weight: 400;
+  --text-body-sm-height: 1.4;
+  --text-body-sm-spacing: 0em;
+
+  --text-caption-size: 12px;
+  --text-caption-weight: 400;
+  --text-caption-height: 1.4;
+  --text-caption-spacing: 0em;
+
+  --text-caption-sm-size: 11px;
+  --text-caption-sm-weight: 500;
+  --text-caption-sm-height: 1.3;
+  --text-caption-sm-spacing: 0.05em;
+
   --text-muted: #a1a1aa;
   --text-dim: #d4d4d8;
 
@@ -70,7 +128,6 @@
     0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
   --shadow-lg:
     0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
   /* Typography */
   --font-family:
     "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -150,8 +207,7 @@
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-full: 9999px;
-  --radius-round: 50%;
-  --radius-round-md: 8px;
+  --radius-round: 8px;
   --radius-xl: 12px;
   --radius-2xl: 16px;
   --radius-3xl: 24px;
@@ -163,23 +219,59 @@
   --field-bg-hover: var(--surface-raised);
   --field-bg-focus: var(--surface-base);
 
-  --tab-bg-active: var(--surface-base);
+  /* --- Tier 2: Semantic Controls (Inputs) --- */
+  --control-bg-default: #f4f4f5;
+  /* Zinc-100: Explicitly distinct from white page */
+  --control-bg-hover: #f4f4f5;
+  /* Maintain sunken on hover */
+  --control-bg-focus: #ffffff;
+  /* White on focus for clean input feeling on white base */
 
-  /* Numeric Aliases (Backward Compatibility) */
-  --surface-1: var(--surface-base);
-  --surface-2: var(--surface-sunken);
-  --surface-3: var(--surface-raised);
-  --surface-4: var(--surface-overlay);
+  --control-border-default: var(--border-color);
+  /* Minimal but visible */
+  --control-border-hover: var(--text-dim);
+  /* Slightly darker on hover */
+  --control-border-focus: var(--text-muted);
+  /* Darker grey on focus, not black */
+
+  --control-radius-sm: 6px;
+  --control-height-sm: 24px;
+
+  /* --- Tier 3: Component Tokens (Field) --- */
+  --field-bg: var(--control-bg-default);
+  --field-bg-hover: var(--control-bg-hover);
+  --field-bg-focus: var(--control-bg-focus);
+
+  --field-border: var(--control-border-default);
+  --field-border-hover: var(--control-border-hover);
+  --field-border-focus: var(--control-border-focus);
+
+  --field-radius: var(--control-radius-sm);
+  --field-height: var(--control-height-sm);
+
+  /* Component Tokens (Legacy/Others) */
+  --tab-bg-active: var(--surface-base);
 
   --text-secondary: var(--text-body);
 }
 
 /* Dark Theme - Premium Graphite/Obsidian */
 [data-theme="dark"] {
-  --surface-base: #18181b;
-  --surface-sunken: #09090b;
-  --surface-raised: #27272a;
+  /* Semantic Surfaces */
+  --surface-page: #18181b;
+  /* Main Background */
+  --surface-panel: #09090b;
+  /* Sidebar (Darker) */
+  --surface-card: #27272a;
+  /* Cards (Lighter) */
   --surface-overlay: #3f3f46;
+  /* Menus (Lightest) */
+
+  /* Legacy Mapping */
+  --surface-base: var(--surface-page);
+  --surface-sunken: var(--surface-panel);
+  --surface-raised: var(--surface-card);
+  --surface-overlay: var(--surface-overlay);
   --surface-primary: var(--primary-bg);
 
   --text-primary: #fafafa;
@@ -201,12 +293,18 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 
-  --tab-bg-active: var(--surface-raised);
+  /* Semantic Controls - Dark Mode */
+  --control-bg-default: var(--surface-sunken);
+  --control-bg-hover: var(--surface-raised);
+  --control-bg-focus: var(--surface-card);
 
-  --field-bg: var(--surface-sunken);
-  --field-bg-hover: var(--surface-raised);
+  --control-border-default: transparent;
+  --control-border-hover: var(--surface-overlay);
+  --control-border-focus: var(--primary-bg);
+
+  --tab-bg-active: var(--surface-raised);
 }
 
-.frame > * {
+.frame>* {
   flex-shrink: 0;
 }

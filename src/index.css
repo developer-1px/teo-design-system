@@ -119,12 +119,12 @@ button {
   height: var(--field-height);
   border-radius: var(--field-radius);
   background-color: var(--field-bg);
-  border: var(--border-width) solid transparent;
+  border: 1px solid var(--field-border);
 }
 
 .field-base:hover {
-  background-color: var(--field-bg);
-  border-color: var(--surface-overlay);
+  background-color: var(--field-bg-hover);
+  border-color: var(--field-border-hover);
 }
 
 .field-input {
@@ -169,8 +169,8 @@ input::placeholder {
 .field-base:active,
 .field-base:focus-within,
 .field-base.is-scrubbing {
-  background-color: var(--field-bg);
-  border-color: var(--surface-overlay);
+  background-color: var(--field-bg-focus);
+  border-color: var(--field-border-focus);
 }
 
 .field-base.is-scrubbing .field-input {
