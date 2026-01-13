@@ -1033,8 +1033,8 @@ function FAQBoardFooter() {
 					p="0 4"
 					radius="lg"
 				/>
+			</ProseDocument>
 		</Frame>
-		</Frame >
 	);
 }
 
