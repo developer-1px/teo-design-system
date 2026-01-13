@@ -26,7 +26,6 @@ import {
 import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame";
-import { Frame } from "../design-system/Frame";
 import { Prose } from "../design-system/Prose";
 import { Text } from "../design-system/Text";
 
@@ -476,7 +475,9 @@ function HeaderHero() {
 					align="center"
 					className="hover-scale"
 				>
-					<Sparkles size={12} color="var(--color-primary)" />
+					<Frame w={16} h={16} pack>
+						<Sparkles size={12} color="var(--color-primary)" />
+					</Frame>
 					<Text
 						size={12}
 						weight="bold"

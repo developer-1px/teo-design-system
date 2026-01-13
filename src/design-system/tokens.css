@@ -138,3 +138,9 @@
 	--field-bg: var(--surface-sunken);
 	--field-bg-hover: var(--surface-raised);
 }
+
+.frame {
+	flex-shrink: 0;
+	width: fit-content;
+	height: fit-content;
+}

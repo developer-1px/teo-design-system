@@ -232,7 +232,7 @@ export function Frame({
 
 	return (
 		<Component
-			className={className}
+			className={`frame ${className}`}
 			style={computedStyle}
 			onClick={props.onClick}
 			title={title}
