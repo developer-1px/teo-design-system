@@ -5,7 +5,7 @@ import type { FontWeight, TypographyVariant } from "./types";
 interface TextProps {
 	children: React.ReactNode;
 	variant?: TypographyVariant;
-	as?: any;
+	as?: React.ElementType;
 
 	// Overrides
 	weight?: FontWeight;

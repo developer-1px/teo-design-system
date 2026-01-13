@@ -25,7 +25,7 @@ export function Section({
 }: SectionProps) {
 	return (
 		<Frame
-			surface={1}
+			surface="base"
 			radius="none"
 			fill={fill}
 			{...props}

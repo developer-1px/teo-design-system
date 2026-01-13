@@ -5,10 +5,13 @@ import "./index.css"; // Keep for reset if needed, but tokens.css handles most
 import App from "./App.tsx";
 import { ThemeProvider } from "./design-system/theme";
 
-createRoot(document.getElementById("root")!).render(
-	<StrictMode>
-		<ThemeProvider>
-			<App />
-		</ThemeProvider>
-	</StrictMode>,
-);
+const root = document.getElementById("root");
+if (root) {
+	createRoot(root).render(
+		<StrictMode>
+			<ThemeProvider>
+				<App />
+			</ThemeProvider>
+		</StrictMode>,
+	);
+}

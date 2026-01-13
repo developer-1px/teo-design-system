@@ -97,13 +97,31 @@ export function SlideApp() {
 								</Text>
 								<Frame height={4} />
 								<Frame row gap={3}>
-									<Frame width={40} height={40} surface="sunken" radius="full" pack>
+									<Frame
+										width={40}
+										height={40}
+										surface="sunken"
+										radius="full"
+										pack
+									>
 										<Square size={16} color="var(--text-body)" />
 									</Frame>
-									<Frame width={40} height={40} surface="raised" radius="full" pack>
+									<Frame
+										width={40}
+										height={40}
+										surface="raised"
+										radius="full"
+										pack
+									>
 										<Circle size={16} color="var(--text-body)" />
 									</Frame>
-									<Frame width={40} height={40} surface="overlay" radius="full" pack>
+									<Frame
+										width={40}
+										height={40}
+										surface="overlay"
+										radius="full"
+										pack
+									>
 										<Type size={16} color="var(--text-body)" />
 									</Frame>
 								</Frame>

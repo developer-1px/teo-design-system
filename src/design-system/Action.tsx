@@ -77,14 +77,12 @@ export function Action({
 			p={label ? 2 : 0}
 			gap="6px"
 			row
-			align="center"
-			justify="center"
+			pack
 			opacity={opacity}
 			style={{
 				minWidth: !label && size ? size : undefined, // Ensure square for icons
-				border: "none", // Reset native button border
-				background: surface ? undefined : "transparent", // Reset native button bg if no surface
 				cursor: "pointer", // Indicate interactivity
+				color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",
 				...styleOverride,
 			}}
 			{...props}
@@ -94,9 +92,7 @@ export function Action({
 					className="action-icon"
 					style={{
 						display: "flex",
-						transform: iconRotation
-							? `rotate(${iconRotation}deg)`
-							: undefined,
+						transform: iconRotation ? `rotate(${iconRotation}deg)` : undefined,
 						transition: "transform 0.2s ease",
 					}}
 				>
@@ -111,6 +107,7 @@ export function Action({
 						fontSize: 10,
 						lineHeight: 1,
 						whiteSpace: "nowrap",
+						color: "inherit",
 					}}
 				>
 					{label}

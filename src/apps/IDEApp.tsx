@@ -553,7 +553,14 @@ function Panel() {
 
 function StatusBar() {
 	return (
-		<Frame h={22} surface="overlay" row align="center" justify="between" p="0 3">
+		<Frame
+			h={22}
+			surface="overlay"
+			row
+			align="center"
+			justify="between"
+			p="0 3"
+		>
 			<Frame row gap={3}>
 				<Frame row gap={1} align="center">
 					<GitBranch size={10} color="white" />

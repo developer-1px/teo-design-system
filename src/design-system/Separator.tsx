@@ -16,7 +16,7 @@ export function Separator({
 
 	return (
 		<Frame
-			surface={3}
+			surface="raised"
 			width={isHorizontal ? length : 1}
 			height={isHorizontal ? 1 : length}
 			style={style}

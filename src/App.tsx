@@ -1,124 +1,75 @@
-import {
-	ChevronDown,
-	Circle,
-	Grid,
-	Play,
-	Plus,
-	Share,
-	Square,
-	Type,
-} from "lucide-react";
-import { FloatingToolbar } from "./components/FloatingToolbar";
-import { PropertiesPanel } from "./components/PropertiesPanel";
-import { SlidesPanel } from "./components/SlidesPanel";
-import { Action } from "./design-system/Action";
+import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
+import { CMSApp } from "./apps/CMSApp";
+import { IDEApp } from "./apps/IDEApp";
+import { LandingApp } from "./apps/LandingApp";
+import { LinearApp } from "./apps/LinearApp";
+import { SlideApp } from "./apps/SlideApp";
+import { InspectorOverlay } from "./components/InspectorOverlay";
 import { Frame } from "./design-system/Frame";
 import { Text } from "./design-system/Text";
 
+function NavItem({ to, label }: { to: string; label: string }) {
+	return (
+		<NavLink to={to} style={{ textDecoration: "none" }}>
+			{({ isActive }) => (
+				<Frame
+					p="2 3"
+					radius="md"
+					surface={isActive ? "raised" : undefined}
+					style={{
+						color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+						transition: "all 0.2s ease",
+					}}
+					cursor="pointer"
+				>
+					<Text variant={4} weight={isActive ? "bold" : "medium"}>
+						{label}
+					</Text>
+				</Frame>
+			)}
+		</NavLink>
+	);
+}
+
+function Navigation() {
+	return (
+		<Frame
+			position="fixed"
+			bottom={20}
+			left={20}
+			zIndex={9999}
+			surface="overlay"
+			radius="full"
+			shadow="lg"
+			p={1}
+			row
+			gap={1}
+			border
+		>
+			<NavItem to="/" label="Home" />
+			<NavItem to="/slide" label="Slide" />
+			<NavItem to="/linear" label="Linear" />
+			<NavItem to="/ide" label="IDE" />
+			<NavItem to="/cms" label="CMS" />
+		</Frame>
+	);
+}
+
 function App() {
 	return (
-		<Frame fill surface="sunken" overflow="hidden">
-			{/* 1. Global Header */}
-			<Frame
-				row
-				justify="between"
-				align="center"
-				p={2}
-				position="absolute"
-				top={0}
-				left={0}
-				right={0}
-				zIndex={10}
-				height={44}
-			>
-				<Frame row gap={3} align="center">
-					<Action icon={Grid} iconSize={16} size={28} />
-					<Frame row gap={2} align="center">
-						<Text variant={2} weight="bold" size={12}>
-							Untitled Presentation
-						</Text>
-						<Action icon={ChevronDown} iconSize={12} size={20} opacity={0.5} />
-					</Frame>
-				</Frame>
-				<Frame row gap={2} align="center">
-					<Frame
-						row
-						gap={1}
-						align="center"
-						surface="base"
-						p={1}
-						radius="round"
-						shadow="sm"
-					>
-						<Frame width={16} height={16} surface="overlay" radius="round" />
-						<Action icon={Plus} iconSize={10} size={20} />
-					</Frame>
-					<Action
-						icon={Play}
-						iconSize={14}
-						label="Present"
-						variant="primary"
-						radius="round"
-						size={24}
-					/>
-					<Action
-						icon={Share}
-						iconSize={14}
-						label="Share"
-						variant="surface"
-						radius="round"
-						size={24}
-					/>
-				</Frame>
+		<HashRouter>
+			<InspectorOverlay />
+			<Frame fill overflow="hidden">
+				<Routes>
+					<Route path="/" element={<LandingApp />} />
+					<Route path="/slide" element={<SlideApp />} />
+					<Route path="/linear" element={<LinearApp />} />
+					<Route path="/ide" element={<IDEApp />} />
+					<Route path="/cms" element={<CMSApp />} />
+				</Routes>
+				<Navigation />
 			</Frame>
-
-			{/* Main Layout Area */}
-			<Frame flex row fill p={2} gap={2} style={{ paddingTop: 48 }}>
-				{/* 2. Left Sidebar (Slides Strip) */}
-				<SlidesPanel />
-
-				{/* 3. Central Canvas Area */}
-				<Frame
-					flex
-					fill
-					position="relative"
-					radius="round"
-					overflow="hidden"
-					as="main"
-				>
-					<Frame fill pack overflow="auto">
-						<Frame surface="base" width={800} shadow="lg" pack ratio="16/9">
-							<Frame gap={4} align="center">
-								<Text variant={1} size={42} weight="bold">
-									Minimal Design Kit
-								</Text>
-								<Text variant={3} size={14}>
-									Refined & Polished UI.
-								</Text>
-								<Frame height={4} />
-								<Frame row gap={3}>
-									<Frame width={40} height={40} surface="sunken" radius="round" pack>
-										<Square size={16} color="var(--text-body)" />
-									</Frame>
-									<Frame width={40} height={40} surface="raised" radius="round" pack>
-										<Circle size={16} color="var(--text-body)" />
-									</Frame>
-									<Frame width={40} height={40} surface="overlay" radius="round" pack>
-										<Type size={16} color="var(--text-body)" />
-									</Frame>
-								</Frame>
-							</Frame>
-						</Frame>
-					</Frame>
-				</Frame>
-
-				{/* 4. Right Sidebar (Design Panel) */}
-				<PropertiesPanel />
-			</Frame>
-
-			{/* 5. Bottom Floating Toolbar */}
-			<FloatingToolbar />
-		</Frame>
+		</HashRouter>
 	);
 }
 

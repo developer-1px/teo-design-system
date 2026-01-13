@@ -8,6 +8,8 @@
 	--surface-sunken: #f4f4f5;
 	--surface-raised: #e4e4e7;
 	--surface-overlay: #d4d4d8;
+	--surface-primary: var(--primary-bg);
+	--surface-selected: var(--surface-base);
 
 	--text-primary: #18181b;
 	--text-body: #3f3f46;
@@ -77,6 +79,7 @@
 	--surface-sunken: #09090b;
 	--surface-raised: #27272a;
 	--surface-overlay: #3f3f46;
+	--surface-primary: var(--primary-bg);
 
 	--text-primary: #fafafa;
 	--text-body: #e4e4e7;

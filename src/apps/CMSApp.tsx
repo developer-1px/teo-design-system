@@ -28,6 +28,55 @@ import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame";
 import { Text } from "../design-system/Text";
 
+// --- Types ---
+
+interface ElementButtonProps {
+	icon: React.ElementType;
+	label: string;
+}
+
+interface LayerItemProps {
+	icon: React.ElementType;
+	label: string;
+	active?: boolean;
+}
+
+interface EditableWrapperProps {
+	children: React.ReactNode;
+	onEdit?: () => void;
+	style?: React.CSSProperties;
+}
+
+interface FeatureCardSmallProps {
+	icon: React.ElementType;
+	title: string;
+	desc: string;
+	flex?: number | boolean;
+}
+
+interface FeatureCardLargeProps {
+	icon: React.ElementType;
+	title: string;
+	desc: string;
+	flex?: number | boolean;
+	image?: boolean;
+}
+
+interface CheckItemProps {
+	title: string;
+	desc: string;
+}
+
+interface FAQRowProps {
+	q: string;
+	a: string;
+}
+
+interface FooterLinkColumnProps {
+	title: string;
+	links: string[];
+}
+
 // --- CMS UI: Floating Toolbars ---
 
 function TopCenterBar() {
@@ -38,7 +87,7 @@ function TopCenterBar() {
 			left="50%"
 			style={{ transform: "translateX(-50%)" }}
 			zIndex={100}
-			surface={2}
+			surface="raised"
 			rounded="full"
 			border
 			shadow="lg"
@@ -76,7 +125,7 @@ function TopRightBar() {
 			top={24}
 			right={24}
 			zIndex={100}
-			surface={2}
+			surface="raised"
 			rounded="full"
 			border
 			shadow="lg"
@@ -100,7 +149,7 @@ function TopRightBar() {
 				opacity={0.3}
 				rounded="full"
 			/>
-			<Frame w={1} h={16} surface={4} />
+			<Frame w={1} h={16} surface="overlay" />
 			<Action
 				label="Preview"
 				icon={Eye}
@@ -126,7 +175,7 @@ function SidebarToggle({
 			top={24}
 			left={24}
 			zIndex={100}
-			surface={isOpen ? 3 : 2}
+			surface={isOpen ? "overlay" : "raised"}
 			rounded="md"
 			border
 			shadow="lg"
@@ -153,7 +202,7 @@ function CMSSidebar({ isOpen }: { isOpen: boolean }) {
 	return (
 		<Frame
 			w={280}
-			surface={1}
+			surface="sunken"
 			border="right"
 			p="6 0"
 			gap={8}
@@ -209,12 +258,12 @@ function CMSSidebar({ isOpen }: { isOpen: boolean }) {
 	);
 }
 
-function ElementButton({ icon: Icon, label }: any) {
+function ElementButton({ icon: Icon, label }: ElementButtonProps) {
 	return (
 		<Frame
 			w="48%"
 			h={72}
-			surface={2}
+			surface="raised"
 			rounded="lg"
 			border
 			pack
@@ -230,7 +279,7 @@ function ElementButton({ icon: Icon, label }: any) {
 	);
 }
 
-function LayerItem({ icon: Icon, label, active }: any) {
+function LayerItem({ icon: Icon, label, active }: LayerItemProps) {
 	return (
 		<Frame
 			row
@@ -238,7 +287,7 @@ function LayerItem({ icon: Icon, label, active }: any) {
 			align="center"
 			p="2 3"
 			rounded="md"
-			surface={active ? 2 : 0}
+			surface={active ? "raised" : "base"}
 			border={active}
 		>
 			<Icon
@@ -265,7 +314,7 @@ function LayerItem({ icon: Icon, label, active }: any) {
 
 // --- Editable Component Utility ---
 
-function EditableWrapper({ children, onEdit, style }: any) {
+function EditableWrapper({ children, onEdit, style }: EditableWrapperProps) {
 	const [isHovered, setIsHovered] = useState(false);
 	return (
 		<Frame
@@ -319,14 +368,14 @@ function SiteHeader() {
 			row
 			align="center"
 			justify="between"
-			surface={0}
+			surface="base"
 			border="bottom"
 			position="sticky"
 			top={0}
 			zIndex={40}
 			style={{
 				backdropFilter: "blur(12px)",
-				backgroundColor: "rgba(var(--surface-0-rgb), 0.8)",
+				backgroundColor: "rgba(255, 255, 255, 0.8)",
 			}}
 		>
 			<Frame row gap={3} align="center">
@@ -383,7 +432,7 @@ function HeaderHero() {
 			p="24 12"
 			pack
 			gap={8}
-			surface={0}
+			surface="base"
 			style={{ minHeight: "80vh", position: "relative", overflow: "hidden" }}
 		>
 			{/* Background Decoration */}
@@ -418,7 +467,7 @@ function HeaderHero() {
 				<Frame
 					p="1 3"
 					rounded="full"
-					surface={2}
+					surface="raised"
 					border
 					row
 					gap={2}
@@ -489,7 +538,7 @@ function HeaderHero() {
 				w="100%"
 				maxWidth={1000}
 				h={500}
-				surface={1}
+				surface="sunken"
 				rounded="2xl"
 				border
 				shadow="2xl"
@@ -502,32 +551,32 @@ function HeaderHero() {
 			>
 				<Frame
 					h={40}
-					surface={2}
+					surface="raised"
 					border="bottom"
 					row
 					align="center"
 					p="0 4"
 					gap={1.5}
 				>
-					<Frame w={10} h={10} rounded="full" surface={4} />
-					<Frame w={10} h={10} rounded="full" surface={4} />
-					<Frame w={10} h={10} rounded="full" surface={4} />
+					<Frame w={10} h={10} rounded="full" surface="overlay" />
+					<Frame w={10} h={10} rounded="full" surface="overlay" />
+					<Frame w={10} h={10} rounded="full" surface="overlay" />
 					<Frame flex />
 					<Command size={14} opacity={0.3} />
 				</Frame>
 				<Frame row fill contentStart>
-					<Frame w={200} border="right" surface={1} p={4} gap={4}>
-						<Frame h={12} w="80%" surface={3} rounded="full" />
-						<Frame h={12} w="60%" surface={3} rounded="full" />
+					<Frame w={200} border="right" surface="sunken" p={4} gap={4}>
+						<Frame h={12} w="80%" surface="overlay" rounded="full" />
+						<Frame h={12} w="60%" surface="overlay" rounded="full" />
 						<Frame flex />
-						<Frame h={40} w="100%" surface={3} rounded="lg" />
+						<Frame h={40} w="100%" surface="overlay" rounded="lg" />
 					</Frame>
-					<Frame flex surface={0} p={12} gap={6} pack>
+					<Frame flex surface="base" p={12} gap={6} pack>
 						<Frame
 							w={80}
 							h={80}
 							rounded="2xl"
-							surface={2}
+							surface="raised"
 							shadow="lg"
 							border
 							pack
@@ -535,8 +584,8 @@ function HeaderHero() {
 							<Sparkles size={32} color="var(--color-primary)" />
 						</Frame>
 						<Frame gap={2} align="center">
-							<Frame h={20} w={200} surface={3} rounded="full" />
-							<Frame h={12} w={300} surface={2} rounded="full" />
+							<Frame h={20} w={200} surface="overlay" rounded="full" />
+							<Frame h={12} w={300} surface="raised" rounded="full" />
 						</Frame>
 					</Frame>
 				</Frame>
@@ -547,7 +596,7 @@ function HeaderHero() {
 
 function FeatureGridSection() {
 	return (
-		<Frame w="100%" p="24 12" gap={12} surface={1} border="bottom">
+		<Frame w="100%" p="24 12" gap={12} surface="sunken" border="bottom">
 			<Frame gap={3} align="center" maxWidth={700} style={{ margin: "0 auto" }}>
 				<Text
 					size={12}
@@ -613,18 +662,23 @@ function FeatureGridSection() {
 	);
 }
 
-function FeatureCardSmall({ icon: Icon, title, desc, flex }: any) {
+function FeatureCardSmall({
+	icon: Icon,
+	title,
+	desc,
+	flex,
+}: FeatureCardSmallProps) {
 	return (
 		<Frame
 			flex={flex}
 			p={6}
-			surface={0}
+			surface="base"
 			rounded="2xl"
 			border
 			gap={4}
 			className="hover-card"
 		>
-			<Frame w={48} h={48} rounded="xl" surface={1} border pack>
+			<Frame w={48} h={48} rounded="xl" surface="sunken" border pack>
 				<Icon size={24} color="var(--color-primary)" />
 			</Frame>
 			<Frame gap={2}>
@@ -643,11 +697,17 @@ function FeatureCardSmall({ icon: Icon, title, desc, flex }: any) {
 	);
 }
 
-function FeatureCardLarge({ icon: Icon, title, desc, flex, image }: any) {
+function FeatureCardLarge({
+	icon: Icon,
+	title,
+	desc,
+	flex,
+	image,
+}: FeatureCardLargeProps) {
 	return (
 		<Frame
 			flex={flex}
-			surface={0}
+			surface="base"
 			rounded="2xl"
 			border
 			overflow="hidden"
@@ -655,7 +715,7 @@ function FeatureCardLarge({ icon: Icon, title, desc, flex, image }: any) {
 			className="hover-card"
 		>
 			<Frame flex p={6} gap={4} justify="center">
-				<Frame w={48} h={48} rounded="xl" surface={1} border pack>
+				<Frame w={48} h={48} rounded="xl" surface="sunken" border pack>
 					<Icon size={24} color="var(--color-primary)" />
 				</Frame>
 				<Frame gap={2}>
@@ -674,15 +734,15 @@ function FeatureCardLarge({ icon: Icon, title, desc, flex, image }: any) {
 			{image && (
 				<Frame
 					w="40%"
-					surface={2}
+					surface="raised"
 					border="left"
 					style={{
 						background:
-							"linear-gradient(45deg, var(--surface-1), var(--surface-3))",
+							"linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
 					}}
 					pack
 				>
-					<Frame w={120} h={160} surface={0} rounded="lg" shadow="xl" border />
+					<Frame w={120} h={160} surface="base" rounded="lg" shadow="xl" border />
 				</Frame>
 			)}
 		</Frame>
@@ -695,7 +755,7 @@ function BodyContentSection() {
 			w="100%"
 			p="24 12"
 			gap={16}
-			surface={0}
+			surface="base"
 			border="bottom"
 			row
 			align="center"
@@ -732,11 +792,11 @@ function BodyContentSection() {
 					/>
 				</Frame>
 			</Frame>
-			<Frame flex align="center" justify="center">
+			<Frame flex pack>
 				<Frame
 					w={400}
 					h={500}
-					surface={2}
+					surface="raised"
 					rounded="3xl"
 					shadow="2xl"
 					border
@@ -748,7 +808,7 @@ function BodyContentSection() {
 						left={-40}
 						width={180}
 						height={180}
-						surface={0}
+						surface="base"
 						radius="2xl"
 						shadow="lg"
 						border
@@ -757,8 +817,8 @@ function BodyContentSection() {
 					>
 						<Zap size={32} color="var(--color-warning)" />
 						<Frame gap={2}>
-							<Frame height={10} width="100%" surface={3} radius="full" />
-							<Frame height={10} width="60%" surface={3} radius="full" />
+							<Frame height={10} width="100%" surface="overlay" radius="full" />
+							<Frame height={10} width="60%" surface="overlay" radius="full" />
 						</Frame>
 					</Frame>
 					<Frame
@@ -767,7 +827,7 @@ function BodyContentSection() {
 						right={-40}
 						width={220}
 						height={220}
-						surface={0}
+						surface="base"
 						radius="2xl"
 						shadow="lg"
 						border
@@ -777,10 +837,10 @@ function BodyContentSection() {
 						<MessageSquare size={32} color="var(--color-primary)" />
 						<Frame gap={2}>
 							<Frame row gap={2} align="center">
-								<Frame width={24} height={24} radius="full" surface={3} />
-								<Frame height={8} width={100} surface={3} radius="full" />
+								<Frame width={24} height={24} radius="full" surface="overlay" />
+								<Frame height={8} width={100} surface="overlay" radius="full" />
 							</Frame>
-							<Frame height={8} width="100%" surface={2} radius="full" />
+							<Frame height={8} width="100%" surface="raised" radius="full" />
 						</Frame>
 					</Frame>
 				</Frame>
@@ -789,7 +849,7 @@ function BodyContentSection() {
 	);
 }
 
-function CheckItem({ title, desc }: any) {
+function CheckItem({ title, desc }: CheckItemProps) {
 	return (
 		<Frame row gap={4} align="start">
 			<Frame
@@ -797,8 +857,7 @@ function CheckItem({ title, desc }: any) {
 				height={24}
 				radius="full"
 				surface="primary"
-				align="center"
-				justify="center"
+				pack
 				style={{ marginTop: 2 }}
 			>
 				<Check size={14} color="#fff" />
@@ -817,15 +876,14 @@ function CheckItem({ title, desc }: any) {
 
 function ImageFooterBanner() {
 	return (
-		<Frame width="100%" p="24 12" surface={1} border="bottom">
+		<Frame width="100%" p="24 12" surface="sunken" border="bottom">
 			<Frame
 				width="100%"
 				height={500}
 				radius="3xl"
 				overflow="hidden"
 				position="relative"
-				align="center"
-				justify="center"
+				pack
 				style={{ background: "linear-gradient(225deg, #1a1a1a, #000)" }}
 			>
 				{/* Visual texture */}
@@ -920,7 +978,7 @@ function ImageFooterBanner() {
 
 function FAQBoardFooter() {
 	return (
-		<Frame width="100%" p="24 12" gap={12} surface={0} align="center">
+		<Frame width="100%" p="24 12" gap={12} surface="base" align="center">
 			<Frame gap={2} align="center">
 				<Text size={12} weight="bold" color="primary">
 					SUPPORT
@@ -966,8 +1024,7 @@ function FAQBoardFooter() {
 					height={56}
 					radius="full"
 					surface={3}
-					align="center"
-					justify="center"
+					pack
 				>
 					<HelpCircle size={24} />
 				</Frame>
@@ -992,7 +1049,7 @@ function FAQBoardFooter() {
 	);
 }
 
-function FAQRow({ q, a }: any) {
+function FAQRow({ q, a }: FAQRowProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<Frame
@@ -1042,8 +1099,7 @@ function MainFooter() {
 							height={40}
 							radius="xl"
 							surface="primary"
-							align="center"
-							justify="center"
+							pack
 							shadow="lg"
 						>
 							<Sparkles size={20} color="#fff" />
@@ -1100,7 +1156,7 @@ function MainFooter() {
 	);
 }
 
-function FooterLinkColumn({ title, links }: any) {
+function FooterLinkColumn({ title, links }: FooterLinkColumnProps) {
 	return (
 		<Frame gap={4}>
 			<Text

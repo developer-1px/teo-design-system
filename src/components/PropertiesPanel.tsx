@@ -26,7 +26,7 @@ import { Text } from "../design-system/Text";
 
 const ALIGNMENT_TOOLS = [
 	{ icon: AlignLeft, label: "Left" },
-	{ icon: AlignCenter, label: "Center", variant: "surface" as const },
+	{ icon: AlignCenter, label: "Center", surface: "selected" as const },
 	{ icon: AlignRight, label: "Right" },
 	{ separator: true },
 	{ icon: AlignJustify, label: "Justify" },
@@ -103,10 +103,9 @@ export function PropertiesPanel() {
 					<Frame
 						key={tab}
 						flex
-						justify="center"
-						align="center"
+						pack
 						radius="round"
-						onClick={() => setActiveTab(tab as any)}
+						onClick={() => setActiveTab(tab as "DESIGN" | "ANIMATE")}
 						style={{
 							cursor: "pointer",
 							transition: "background-color 0.2s ease",
@@ -133,7 +132,7 @@ export function PropertiesPanel() {
 
 			<Frame p={3} gap={2} overflow="auto" flex fill style={{ minHeight: 0 }}>
 				{/* Alignment */}
-				<Frame row justify="between" surface="sunken">
+				<Frame row justify="between" surface="sunken" radius="round">
 					{ALIGNMENT_TOOLS.map((tool, i) =>
 						tool.separator ? (
 							<Separator key={i} orientation="vertical" length="12px" />
@@ -142,7 +141,7 @@ export function PropertiesPanel() {
 								key={i}
 								icon={tool.icon}
 								iconSize={12}
-								variant={tool.variant}
+								surface={(tool as any).surface}
 								radius="round"
 								size={24}
 								iconRotation={tool.rotation}
@@ -178,7 +177,7 @@ export function PropertiesPanel() {
 							value={transform.h}
 							onChange={(v) => updateTransform("h", v)}
 						/>
-						<Frame width={24} align="center" justify="center">
+						<Frame width={24} pack>
 							<Action icon={Lock} iconSize={10} size={20} opacity={0.3} />
 						</Frame>
 					</Frame>
@@ -228,7 +227,7 @@ export function PropertiesPanel() {
 										key={i}
 										icon={Icon}
 										iconSize={12}
-										variant={i === 0 ? "surface" : undefined}
+										surface={i === 0 ? "selected" : undefined}
 										radius="round"
 										size={24}
 									/>
@@ -248,7 +247,13 @@ export function PropertiesPanel() {
 					<Field
 						value="F4F4F5"
 						icon={
-							<Frame width={10} height={10} surface="base" radius="round" border />
+							<Frame
+								width={10}
+								height={10}
+								surface="base"
+								radius="round"
+								border
+							/>
 						}
 						rightIcon={
 							<Text variant={4} size={10}>

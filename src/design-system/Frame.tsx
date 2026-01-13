@@ -9,8 +9,8 @@ import type {
 	OverflowToken,
 	RadiusToken,
 	ShadowToken,
-	SurfaceToken
-} from './types';
+	SurfaceToken,
+} from "./types";
 
 interface FrameProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, "style" | "title" | "color"> {
@@ -101,16 +101,18 @@ export function Frame({
 }: FrameProps) {
 	// Border Logic
 	const computedBorder: React.CSSProperties = {};
+	const finalBorder = border ?? (surface === "selected" ? true : undefined);
+
 	const colorStr = borderColor
 		? borderColor === "default"
 			? "var(--border-color)"
 			: `var(--${borderColor})`
 		: "var(--border-color)";
 
-	if (border === true) computedBorder.border = `1px solid ${colorStr}`;
-	else if (typeof border === "string") {
+	if (finalBorder === true) computedBorder.border = `1px solid ${colorStr}`;
+	else if (typeof finalBorder === "string") {
 		const key =
-			`border${border.charAt(0).toUpperCase() + border.slice(1)}` as keyof React.CSSProperties;
+			`border${finalBorder.charAt(0).toUpperCase() + finalBorder.slice(1)}` as keyof React.CSSProperties;
 		// @ts-expect-error
 		computedBorder[key] = `1px solid ${colorStr}`;
 	}
@@ -223,7 +225,7 @@ export function Frame({
 					: `${right}px`
 				: right,
 
-		color: "inherit",
+		color: surface === "primary" ? "var(--primary-fg)" : "inherit",
 
 		...style,
 	};
