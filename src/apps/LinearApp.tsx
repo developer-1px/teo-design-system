@@ -33,12 +33,12 @@ import { Text } from "../design-system/Text";
 
 function LinearSidebar() {
 	return (
-		<Frame w={240} surface="sunken" border="right" p="3   0" gap={1}>
+		<Frame surface="sunken" border="right" p="3 0" gap={1} style={{ width: 240 }}>
 			{/* Workspace Switcher */}
 			<Frame p="0 2">
 				<Action variant="ghost" rounded="md">
 					<Frame row gap={2} align="center" w="100%">
-						<Frame w={16} h={16} rounded="sm" surface="overlay" pack border>
+						<Frame style={{ width: 16, height: 16 }} rounded="sm" surface="overlay" pack border>
 							<Text size={10} weight="bold">
 								A
 							</Text>
@@ -51,7 +51,7 @@ function LinearSidebar() {
 					</Frame>
 				</Action>
 			</Frame>
-			<Frame h={8} />
+			<Frame style={{ height: 8 }} />
 
 			{/* Compose & Search */}
 			<Frame p="0 2" gap={1}>
@@ -70,7 +70,7 @@ function LinearSidebar() {
 					</Frame>
 				</Action>
 			</Frame>
-			<Frame h={16} />
+			<Frame style={{ height: 16 }} />
 
 			{/* Main Navigation */}
 			<Frame gap={0} p="0 2">
@@ -79,11 +79,11 @@ function LinearSidebar() {
 				<NavItem icon={Layers} label="Views" />
 			</Frame>
 
-			<Frame h={16} />
+			<Frame style={{ height: 16 }} />
 
 			{/* Favorites */}
 			<Frame p="0 4" row align="center" justify="between">
-				<Frame row gap={2} align="center" opacity={0.6} className="hover-item">
+				<Frame row gap={2} align="center" opacity={0.6}>
 					<Star size={12} />
 					<Text size={11} weight="medium">
 						FAVORITES
@@ -96,7 +96,7 @@ function LinearSidebar() {
 				<NavItem icon={Layout} label="Roadmap Q4" />
 			</Frame>
 
-			<Frame h={24} />
+			<Frame style={{ height: 24 }} />
 
 			{/* Your Teams */}
 			<Frame p="0 4" row align="center" justify="between">
@@ -111,14 +111,14 @@ function LinearSidebar() {
 					opacity={0.5}
 				/>
 			</Frame>
-			<Frame h={4} />
+			<Frame style={{ height: 4 }} />
 			<Frame gap={0} p="0 2">
 				<NavItem icon={Layout} label="Engineering" />
 				<NavItem icon={Zap} label="Design" />
 				<NavItem icon={Signal} label="Product" />
 			</Frame>
 
-			<Frame h={24} />
+			<Frame style={{ height: 24 }} />
 
 			{/* Projects */}
 			<Frame p="0 4" row align="center" justify="between">
@@ -133,7 +133,7 @@ function LinearSidebar() {
 					opacity={0.5}
 				/>
 			</Frame>
-			<Frame h={4} />
+			<Frame style={{ height: 4 }} />
 			<Frame gap={0} p="0 2">
 				<NavItem icon={PlayCircle} label="Q4 - Marketing Launch" />
 				<NavItem icon={PlayCircle} label="Mobile App Redesign" />
@@ -143,15 +143,15 @@ function LinearSidebar() {
 
 			{/* Bottom Actions */}
 			<Frame p="0 2" gap={0} border="top">
-				<Frame h={8} />
+				<Frame style={{ height: 8 }} />
 				<NavItem icon={Users} label="Invite people" />
 				<NavItem icon={HelpCircle} label="Help & Support" />
 				<NavItem icon={Settings} label="Settings" />
 
-				<Frame h={8} />
+				<Frame style={{ height: 8 }} />
 				<Action variant="ghost" rounded="md">
 					<Frame row gap={2} align="center">
-						<Frame w={20} h={20} rounded="full" surface="overlay" pack>
+						<Frame style={{ width: 20, height: 20 }} rounded="full" surface="overlay" pack>
 							<UserCircle size={20} opacity={0.8} />
 						</Frame>
 						<Text size={13} weight="medium" color="primary">
@@ -254,18 +254,18 @@ function IssueRow({
 				grid
 				columns={ISSUE_GRID_COLS}
 				align="center"
-				h={40}
 				border="bottom"
 				p="0 5"
 				gap={3}
 				w="100%"
+				style={{ height: 40 }}
 			>
 				<Frame row align="center" gap={1}>
 					<Action
 						icon={CheckCircle2}
-						size={16}
 						iconSize={12}
 						opacity={0.1}
+						style={{ width: 16, height: 16 }}
 						rounded="sm"
 					/>
 					<Text size={12} color="tertiary" mono>
@@ -273,7 +273,7 @@ function IssueRow({
 					</Text>
 				</Frame>
 				<Frame row align="center" justify="start">
-					{/* @ts-expect-error -- Icon is valid */}
+
 					<StatusIcon size={14} color={statusColor} />
 				</Frame>
 				<Frame row align="center" justify="start">
@@ -285,7 +285,7 @@ function IssueRow({
 					</Text>
 				</Frame>
 				<Frame row justify="center">
-					<Frame w={18} h={18} rounded="full" surface="raised" border pack>
+					<Frame style={{ width: 18, height: 18 }} rounded="full" surface="raised" border pack>
 						<Text size={9} weight="bold" color="secondary">
 							{assigneeStr}
 						</Text>
@@ -309,13 +309,13 @@ function LinearIssueList() {
 				row
 				justify="between"
 				align="center"
-				h={56}
 				p="0 6"
 				border="bottom"
+				style={{ height: 56 }}
 			>
 				<Frame row gap={3} align="center">
 					<Frame row align="center" gap={2}>
-						<Frame w={20} h={20} rounded="sm" surface="sunken" pack>
+						<Frame style={{ width: 20, height: 20 }} rounded="sm" surface="sunken" pack>
 							<Circle size={12} color="var(--text-secondary)" />
 						</Frame>
 						<Text size={14} weight="medium" color="tertiary">
@@ -328,15 +328,15 @@ function LinearIssueList() {
 					</Frame>
 				</Frame>
 				<Frame row gap={1} align="center">
-					<Action icon={Search} variant="ghost" size={28} />
-					<Action icon={Bell} variant="ghost" size={28} />
+					<Action icon={Search} variant="ghost" style={{ width: 28, height: 28 }} />
+					<Action icon={Bell} variant="ghost" style={{ width: 28, height: 28 }} />
 					<Frame p="0 2">
-						<Frame w={1} h={16} surface="raised" />
+						<Frame style={{ width: 1, height: 16 }} surface="raised" />
 					</Frame>
 					<Action
 						icon={LayoutTemplate}
 						variant="ghost"
-						size={28}
+						style={{ width: 28, height: 28 }}
 						opacity={0.6}
 					/>
 				</Frame>
@@ -347,9 +347,9 @@ function LinearIssueList() {
 				row
 				justify="between"
 				align="center"
-				h={48}
 				p="0 6"
 				border="bottom"
+				style={{ height: 48 }}
 			>
 				<Frame row gap={1} align="center">
 					<Action variant="ghost" rounded="md">
@@ -379,11 +379,11 @@ function LinearIssueList() {
 				grid
 				columns={ISSUE_GRID_COLS}
 				align="center"
-				h={36}
 				border="bottom"
 				p="0 5"
 				gap={3}
 				surface="base"
+				style={{ height: 36 }}
 			>
 				<Frame>
 					<Text size={11} weight="medium" color="tertiary">

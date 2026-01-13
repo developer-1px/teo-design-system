@@ -1,6 +1,6 @@
 import { Copy } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Frame } from "../design-system/Frame";
+
 import { Text } from "../design-system/Text";
 
 export function InspectorOverlay() {
@@ -149,7 +149,6 @@ export function InspectorOverlay() {
                             border: "1px solid #3b82f6", // Thinner border
                             backgroundColor: "rgba(59, 130, 246, 0.15)", // Slightly more transparent
                             pointerEvents: "none",
-                            transition: "all 0.05s cubic-bezier(0.2, 0, 0, 1)", // Much faster
                             boxSizing: "border-box",
                             borderRadius: "3px",
                         }}
@@ -171,10 +170,9 @@ export function InspectorOverlay() {
                                 gap: "3px",
                                 boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
                                 transformOrigin: "bottom left",
-                                animation: "popIn 0.1s cubic-bezier(0.2, 0, 0, 1)",
                             }}
                         >
-                            <Text variant={6} weight="bold" style={{ color: "white", fontSize: "10px" }}>
+                            <Text variant={4} weight="bold" style={{ color: "white", fontSize: "10px" }}>
                                 {targetName}
                             </Text>
                             <span style={{ opacity: 0.6, fontSize: "9px" }}>
@@ -202,24 +200,13 @@ export function InspectorOverlay() {
                         alignItems: "center",
                         gap: "6px",
                         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                        animation: "fadeIn 0.15s cubic-bezier(0.2, 0, 0, 1)",
                     }}
                 >
                     <Copy size={12} />
-                    <Text variant={6} weight="medium" style={{ color: "white", fontSize: "12px" }}>{notification}</Text>
+                    <Text variant={4} weight="medium" style={{ color: "white", fontSize: "12px" }}>{notification}</Text>
                 </div>
             )}
 
-            <style>{`
-				@keyframes popIn {
-					from { opacity: 0; transform: scale(0.9) translateY(2px); }
-					to { opacity: 1; transform: scale(1) translateY(0); }
-				}
-				@keyframes fadeIn {
-					from { opacity: 0; transform: translate(-50%, 8px); }
-					to { opacity: 1; transform: translate(-50%, 0); }
-				}
-			`}</style>
         </>
     );
 }

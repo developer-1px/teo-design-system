@@ -35,7 +35,7 @@ export function FloatingToolbar() {
 	return (
 		<Frame
 			position="absolute"
-			bottom={24}
+			bottom={5}
 			left="50%"
 			zIndex={100}
 			style={{ transform: "translateX(-50%)" }}
@@ -43,7 +43,7 @@ export function FloatingToolbar() {
 			gap={1}
 			surface="base"
 			p={1}
-			radius="full"
+			rounded="full"
 			shadow="lg"
 			align="center"
 			border
@@ -57,19 +57,19 @@ export function FloatingToolbar() {
 						icon={tool.icon}
 						iconSize={18}
 						variant={tool.variant}
-						radius="full"
+						rounded="full"
 						tooltip={tool.tooltip}
-						size={32}
+						size={6}
 					/>
 				),
 			)}
 			<Action
 				icon={theme === "light" ? Moon : Sun}
 				iconSize={18}
-				radius="full"
+				rounded="full"
 				onClick={toggleTheme}
 				tooltip="Toggle Theme"
-				size={32}
+				size={6}
 			/>
 		</Frame>
 	);

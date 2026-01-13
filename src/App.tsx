@@ -13,12 +13,11 @@ function NavItem({ to, label }: { to: string; label: string }) {
 		<NavLink to={to} style={{ textDecoration: "none" }}>
 			{({ isActive }) => (
 				<Frame
-					p="2 3"
-					radius="md"
-					surface={isActive ? "raised" : undefined}
+					p="1.5 3.5"
+					rounded="full"
+					surface={isActive ? "selected" : undefined}
 					style={{
 						color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
-						transition: "all 0.2s ease",
 					}}
 					cursor="pointer"
 				>
@@ -35,12 +34,11 @@ function Navigation() {
 	return (
 		<Frame
 			position="fixed"
-			bottom={20}
-			left={20}
 			zIndex={9999}
+			style={{ bottom: 20, left: 20 }}
 			surface="overlay"
-			radius="full"
-			shadow="lg"
+			rounded="full"
+			shadow="xl"
 			p={1}
 			row
 			gap={1}

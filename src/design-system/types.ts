@@ -1,4 +1,4 @@
-export type RadiusToken = "none" | "full" | "round";
+export type RoundedToken = boolean | "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full" | "round";
 export type SurfaceToken = "base" | "raised" | "sunken" | "overlay" | "primary" | "selected";
 
 export type ActionVariant = "ghost" | "surface" | "primary";
@@ -39,5 +39,7 @@ export type CursorToken =
 	| "default"
 	| "text"
 	| "move"
-	| "not-allowed";
-export type ShadowToken = "sm" | "md" | "lg";
+	| "not-allowed"
+	| "grab"
+	| "grabbing";
+export type ShadowToken = "sm" | "md" | "lg" | "xl" | "2xl";

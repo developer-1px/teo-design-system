@@ -29,15 +29,15 @@ export function SlideApp() {
 				left={0}
 				right={0}
 				zIndex={10}
-				height={44}
+				style={{ height: "44px" }}
 			>
 				<Frame row gap={3} align="center">
-					<Action icon={Grid} iconSize={16} size={28} />
+					<Action icon={Grid} iconSize={16} style={{ width: "28px", height: "28px" }} />
 					<Frame row gap={2} align="center">
-						<Text variant={2} weight="bold" size={12}>
+						<Text variant={2} weight="bold" size={4}>
 							Untitled Presentation
 						</Text>
-						<Action icon={ChevronDown} iconSize={12} size={20} opacity={0.5} />
+						<Action icon={ChevronDown} iconSize={12} style={{ width: "20px", height: "20px" }} opacity={0.5} />
 					</Frame>
 				</Frame>
 				<Frame row gap={2} align="center">
@@ -47,33 +47,33 @@ export function SlideApp() {
 						align="center"
 						surface="base"
 						p={1}
-						radius="full"
+						rounded="round"
 						shadow="sm"
 					>
-						<Frame width={16} height={16} surface="overlay" radius="full" />
-						<Action icon={Plus} iconSize={10} size={20} />
+						<Frame style={{ width: "16px", height: "16px" }} surface="overlay" rounded="round" />
+						<Action icon={Plus} iconSize={10} style={{ width: "20px", height: "20px" }} />
 					</Frame>
 					<Action
 						icon={Play}
 						iconSize={14}
 						label="Present"
 						variant="primary"
-						radius="full"
-						size={24}
+						rounded="round"
+						style={{ height: "24px" }}
 					/>
 					<Action
 						icon={Share}
 						iconSize={14}
 						label="Share"
 						variant="surface"
-						radius="full"
-						size={24}
+						rounded="round"
+						style={{ height: "24px" }}
 					/>
 				</Frame>
 			</Frame>
 
 			{/* Main Layout Area */}
-			<Frame flex row fill p={2} gap={2} style={{ paddingTop: 48 }}>
+			<Frame flex row fill p={2} gap={2} style={{ paddingTop: "48px" }}>
 				{/* 2. Left Sidebar (Slides Strip) */}
 				<SlidesPanel />
 
@@ -82,44 +82,41 @@ export function SlideApp() {
 					flex
 					fill
 					position="relative"
-					radius="full"
+					rounded="round"
 					overflow="hidden"
 					as="main"
 				>
 					<Frame fill pack overflow="auto">
-						<Frame surface="base" width={800} shadow="lg" pack ratio="16/9">
+						<Frame surface="base" shadow="lg" pack ratio="16/9" style={{ width: "800px" }}>
 							<Frame gap={4} align="center">
-								<Text variant={1} size={42} weight="bold">
+								<Text variant={1} size="42px" weight="bold">
 									Minimal Design Kit
 								</Text>
-								<Text variant={3} size={14}>
+								<Text variant={3} size={3}>
 									Refined & Polished UI.
 								</Text>
-								<Frame height={4} />
+								<Frame style={{ height: "4px" }} />
 								<Frame row gap={3}>
 									<Frame
-										width={40}
-										height={40}
+										style={{ width: "40px", height: "40px" }}
 										surface="sunken"
-										radius="full"
+										rounded="round"
 										pack
 									>
 										<Square size={16} color="var(--text-body)" />
 									</Frame>
 									<Frame
-										width={40}
-										height={40}
+										style={{ width: "40px", height: "40px" }}
 										surface="raised"
-										radius="full"
+										rounded="round"
 										pack
 									>
 										<Circle size={16} color="var(--text-body)" />
 									</Frame>
 									<Frame
-										width={40}
-										height={40}
+										style={{ width: "40px", height: "40px" }}
 										surface="overlay"
-										radius="full"
+										rounded="round"
 										pack
 									>
 										<Type size={16} color="var(--text-body)" />

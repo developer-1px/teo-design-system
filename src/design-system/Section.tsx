@@ -3,6 +3,8 @@ import { Frame } from "./Frame";
 import { Text } from "./Text";
 import "./tokens.css";
 
+import type { RoundedToken, SurfaceToken } from "./types";
+
 interface SectionProps {
 	children?: React.ReactNode;
 	title?: string;
@@ -11,8 +13,10 @@ interface SectionProps {
 	fill?: boolean;
 	style?: React.CSSProperties;
 	border?: boolean | "top" | "bottom" | "left" | "right";
-	radius?: "none" | "pill" | "round";
-	surface?: 1 | 2 | 3 | 4;
+	w?: string | number;
+	h?: string | number;
+	rounded?: RoundedToken;
+	surface?: SurfaceToken;
 	shadow?: "sm" | "md" | "lg";
 }
 
@@ -26,13 +30,15 @@ export function Section({
 	return (
 		<Frame
 			surface="base"
-			radius="none"
-			fill={fill}
 			{...props}
+			p={0} // Force zero padding so children/separators can hit edges
+			fill={fill}
 			style={{
 				border: "1px solid var(--border-color)",
-				overflow: "hidden", // Sections usually contain stuff
+				overflow: "hidden",
 				position: "relative",
+				display: "flex",
+				flexDirection: "column",
 				...props.style,
 			}}
 		>
@@ -41,21 +47,28 @@ export function Section({
 					row
 					align="center"
 					gap={2}
-					padding={3}
-					style={{ borderBottom: "1px solid var(--border-color)" }}
+					p={2}
+					style={{
+						borderBottom: "1px solid var(--border-color)",
+						flexShrink: 0,
+					}}
 				>
 					{icon && <span style={{ color: "var(--text-subtle)" }}>{icon}</span>}
 					{title && (
 						<Text
 							variant={4}
-							style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
+							style={{
+								textTransform: "uppercase",
+								letterSpacing: "0.05em",
+								fontWeight: "bold",
+							}}
 						>
 							{title}
 						</Text>
 					)}
 				</Frame>
 			)}
-			<Frame fill flex style={{ overflow: "auto" }}>
+			<Frame fill flex style={{ overflow: "auto", minHeight: 0 }}>
 				{children}
 			</Frame>
 		</Frame>

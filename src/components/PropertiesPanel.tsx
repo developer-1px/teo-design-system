@@ -44,13 +44,20 @@ const PropertySection = ({
 	children: React.ReactNode;
 }) => (
 	<Frame gap={2}>
-		<Frame row justify="between" align="center">
-			<Text variant={3} weight="bold" size={10}>
+		<Frame row justify="between" align="center" p="2 2 0 2">
+			<Text variant={3} weight="bold" size={5}>
 				{title}
 			</Text>
-			<Action icon={Plus} iconSize={12} size={20} opacity={0.4} />
+			<Action
+				icon={Plus}
+				iconSize={12}
+				style={{ width: "20px", height: "20px" }}
+				opacity={0.4}
+			/>
 		</Frame>
-		<Frame gap={1}>{children}</Frame>
+		<Frame gap={1} p="0 2 2 2">
+			{children}
+		</Frame>
 		<Separator />
 	</Frame>
 );
@@ -88,27 +95,25 @@ export function PropertiesPanel() {
 		setTransform((prev) => ({ ...prev, [key]: value }));
 
 	return (
-		<Section style={{ width: 260 }} surface="base" radius="round" shadow="sm">
+		<Section style={{ width: "260px" }} surface="base" rounded="lg" shadow="sm">
 			{/* Tabs */}
 			<Frame
 				row
 				p={1}
 				gap={1}
-				height={40}
 				border="bottom"
 				borderColor="default"
-				style={{ flexShrink: 0 }}
+				style={{ flexShrink: 0, height: "40px" }}
 			>
 				{["DESIGN", "ANIMATE"].map((tab) => (
 					<Frame
 						key={tab}
 						flex
 						pack
-						radius="round"
+						rounded="round"
 						onClick={() => setActiveTab(tab as "DESIGN" | "ANIMATE")}
 						style={{
 							cursor: "pointer",
-							transition: "background-color 0.2s ease",
 							backgroundColor:
 								activeTab === tab ? "var(--tab-bg-active)" : "transparent",
 						}}
@@ -116,7 +121,7 @@ export function PropertiesPanel() {
 						<Text
 							variant={4}
 							weight={activeTab === tab ? "bold" : "medium"}
-							size={10}
+							size={5}
 							style={{
 								color:
 									activeTab === tab
@@ -130,9 +135,9 @@ export function PropertiesPanel() {
 				))}
 			</Frame>
 
-			<Frame p={3} gap={2} overflow="auto" flex fill style={{ minHeight: 0 }}>
+			<Frame p={2} gap={2} overflow="auto" flex fill style={{ minHeight: 0 }}>
 				{/* Alignment */}
-				<Frame row justify="between" surface="sunken" radius="round">
+				<Frame row justify="between" surface="sunken" rounded="md" border p={0.5}>
 					{ALIGNMENT_TOOLS.map((tool, i) =>
 						tool.separator ? (
 							<Separator key={i} orientation="vertical" length="12px" />
@@ -142,8 +147,8 @@ export function PropertiesPanel() {
 								icon={tool.icon}
 								iconSize={12}
 								surface={(tool as any).surface}
-								radius="round"
-								size={24}
+								rounded="round"
+								style={{ height: "24px" }}
 								iconRotation={tool.rotation}
 							/>
 						),
@@ -164,7 +169,7 @@ export function PropertiesPanel() {
 							value={transform.y}
 							onChange={(v) => updateTransform("y", v)}
 						/>
-						<Frame width={24} />
+						<Frame style={{ width: "24px" }} />
 					</Frame>
 					<Frame row gap={2} align="center">
 						<TransformField
@@ -177,8 +182,13 @@ export function PropertiesPanel() {
 							value={transform.h}
 							onChange={(v) => updateTransform("h", v)}
 						/>
-						<Frame width={24} pack>
-							<Action icon={Lock} iconSize={10} size={20} opacity={0.3} />
+						<Frame style={{ width: "24px" }} pack>
+							<Action
+								icon={Lock}
+								iconSize={10}
+								style={{ width: "20px", height: "20px" }}
+								opacity={0.3}
+							/>
 						</Frame>
 					</Frame>
 					<Frame row gap={2} align="center">
@@ -192,16 +202,16 @@ export function PropertiesPanel() {
 							value={transform.corner}
 							onChange={(v) => updateTransform("corner", v)}
 						/>
-						<Frame width={24} />
+						<Frame style={{ width: "24px" }} />
 					</Frame>
-					<Separator />
 				</Frame>
+				<Separator />
 
 				{/* Properties */}
 				<PropertySection title="LAYER">
 					<Frame row justify="between" gap={3}>
 						<Field value="Normal" rightIcon={<ChevronDown size={10} />} flex />
-						<Field value="100%" icon={<Eye size={10} />} width={70} />
+						<Field value="100%" icon={<Eye size={10} />} style={{ width: "70px" }} />
 					</Frame>
 				</PropertySection>
 
@@ -214,13 +224,13 @@ export function PropertiesPanel() {
 								rightIcon={<ChevronDown size={10} />}
 								flex
 							/>
-							<Field value="42" width={50} />
+							<Field value="42" style={{ width: "50px" }} />
 						</Frame>
 						<Frame row gap={2}>
 							<Field label="LH" value="Auto" flex />
 							<Field label="LS" value="0%" flex />
 						</Frame>
-						<Frame row align="center" surface="sunken" radius="round">
+						<Frame row align="center" surface="sunken" rounded="md" border p={0.5}>
 							{[AlignLeft, AlignCenter, AlignRight, AlignJustify].map(
 								(Icon, i) => (
 									<Action
@@ -228,16 +238,16 @@ export function PropertiesPanel() {
 										icon={Icon}
 										iconSize={12}
 										surface={i === 0 ? "selected" : undefined}
-										radius="round"
-										size={24}
+										rounded="round"
+										style={{ height: "24px" }}
 									/>
 								),
 							)}
 							<Action
 								icon={MoreHorizontal}
 								iconSize={12}
-								radius="round"
-								size={24}
+								rounded="round"
+								style={{ height: "24px" }}
 							/>
 						</Frame>
 					</Frame>
@@ -248,15 +258,14 @@ export function PropertiesPanel() {
 						value="F4F4F5"
 						icon={
 							<Frame
-								width={10}
-								height={10}
+								style={{ width: "10px", height: "10px" }}
 								surface="base"
-								radius="round"
+								rounded="round"
 								border
 							/>
 						}
 						rightIcon={
-							<Text variant={4} size={10}>
+							<Text variant={4} size={5}>
 								100%
 							</Text>
 						}
@@ -269,32 +278,31 @@ export function PropertiesPanel() {
 							value="000000"
 							icon={
 								<Frame
-									width={10}
-									height={10}
+									style={{ width: "10px", height: "10px" }}
 									border
 									borderColor="text-primary"
-									radius="round"
+									rounded="round"
 								/>
 							}
 							rightIcon={
 								<Frame row gap={2}>
-									<Text variant={4} size={10}>
+									<Text variant={4} size={5}>
 										100%
 									</Text>
-									<Action icon={Eye} iconSize={10} size={16} />
-									<Action icon={Minus} iconSize={10} size={16} />
+									<Action icon={Eye} iconSize={10} style={{ width: "16px", height: "16px" }} />
+									<Action icon={Minus} iconSize={10} style={{ width: "16px", height: "16px" }} />
 								</Frame>
 							}
 							style={{ flexShrink: 0 }}
 						/>
 						<Frame row gap={2} align="center">
-							<Field value="1.5" width={50} />
+							<Field value="1.5" style={{ width: "50px" }} />
 							<Field
 								value="Inside"
 								rightIcon={<ChevronDown size={10} />}
 								flex
 							/>
-							<Action icon={Settings} iconSize={10} radius="round" size={24} />
+							<Action icon={Settings} iconSize={10} rounded="round" style={{ height: "24px" }} />
 						</Frame>
 					</Frame>
 				</PropertySection>
@@ -303,18 +311,18 @@ export function PropertiesPanel() {
 					<Field
 						value="Drop Shadow"
 						icon={<Sun size={10} />}
-						rightIcon={<Action icon={Settings} iconSize={10} size={16} />}
+						rightIcon={<Action icon={Settings} iconSize={10} style={{ width: "16px", height: "16px" }} />}
 					/>
 				</PropertySection>
 
 				<PropertySection title="EXPORT">
 					<Field
 						value="PNG"
-						rightIcon={<Action icon={Plus} iconSize={10} size={16} />}
+						rightIcon={<Action icon={Plus} iconSize={10} style={{ width: "16px", height: "16px" }} />}
 					/>
 				</PropertySection>
 
-				<Frame height={100} />
+				<Frame style={{ height: "100px" }} />
 			</Frame>
 		</Section>
 	);

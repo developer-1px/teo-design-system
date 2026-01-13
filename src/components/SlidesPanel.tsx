@@ -10,12 +10,12 @@ export function SlidesPanel() {
 	return (
 		<Section
 			title="Slides"
-			style={{ width: 220, minWidth: 200 }}
+			style={{ width: "220px", minWidth: "200px" }}
 			surface="base"
-			radius="round"
+			rounded="round"
 			shadow="sm"
 		>
-			<Frame p={3} gap={3} overflow="auto" flex fill style={{ minHeight: 0 }}>
+			<Frame p={2} gap={2} overflow="auto" flex fill style={{ minHeight: 0 }}>
 				{slides.map((num) => (
 					<Frame
 						key={num}
@@ -26,8 +26,8 @@ export function SlidesPanel() {
 						<Frame row justify="between" align="center">
 							<Text
 								variant={4}
-								size={11}
 								style={{
+									fontSize: "11px",
 									color:
 										num === 1 ? "var(--text-primary)" : "var(--text-subtle)",
 								}}
@@ -37,17 +37,17 @@ export function SlidesPanel() {
 							<Action
 								icon={MoreHorizontal}
 								iconSize={12}
-								size={20}
+								style={{ width: "20px", height: "20px" }}
 								opacity={num === 1 ? 0.6 : 0}
 							/>
 						</Frame>
 						<Frame
-							width="100%"
+							w="100%"
 							ratio="16/9"
 							border
 							borderColor={num === 1 ? "default" : "transparent"}
-							surface={num === 1 ? 1 : 2}
-							radius="round"
+							surface={num === 1 ? "base" : "raised"}
+							rounded="round"
 							flex
 							align="center"
 							justify="center"
@@ -55,13 +55,12 @@ export function SlidesPanel() {
 							style={{
 								boxShadow:
 									num === 1 ? "0 0 0 1.5px var(--text-primary)" : "none",
-								transition: "all 0.2s ease",
 							}}
 						>
 							{num === 1 ? (
-								<Frame width="60%" height={2} surface="sunken" />
+								<Frame w="60%" style={{ height: "2px" }} surface="sunken" />
 							) : (
-								<Text variant={4} size={10}>
+								<Text variant={4} size={5}>
 									{num}
 								</Text>
 							)}

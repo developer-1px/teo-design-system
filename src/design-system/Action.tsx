@@ -2,7 +2,8 @@ import React from "react";
 import { Frame } from "./Frame";
 import { Text } from "./Text";
 import "./tokens.css";
-import type { ActionVariant, RadiusToken, SurfaceToken } from "./types";
+import type { ActionVariant, RoundedToken, SurfaceToken } from "./types";
+import { toToken } from "./utils";
 
 interface ActionProps
 	extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
@@ -12,10 +13,15 @@ interface ActionProps
 	variant?: ActionVariant;
 
 	// Layout overrides
-	radius?: RadiusToken;
+	rounded?: RoundedToken;
+	p?: number | string;
+	gap?: number | string;
+	border?: boolean;
 
 	// Shortcuts
-	size?: number; // Sets unique width & height (square)
+	size?: number | string; // Sets unique width & height (square)
+	w?: number | string;
+	h?: number | string;
 	iconSize?: number; // Sets icon size if icon is a component
 	iconRotation?: number; // Internalized rotation
 
@@ -23,6 +29,7 @@ interface ActionProps
 	opacity?: number;
 	surface?: SurfaceToken; // Explicit surface control
 	tooltip?: string;
+	glow?: boolean;
 }
 
 export function Action({
@@ -30,13 +37,19 @@ export function Action({
 	icon,
 	label,
 	variant,
-	radius = "round",
+	rounded = "round",
+	p,
+	gap,
+	border,
+	w,
+	h,
 	size,
 	iconSize = 16,
 	iconRotation,
 	opacity,
 	surface,
 	tooltip,
+	glow,
 	className = "",
 	style: styleOverride,
 	...props
@@ -47,7 +60,7 @@ export function Action({
 		if (React.isValidElement(icon)) return icon;
 
 		const Icon = icon as React.ElementType;
-		// @ts-expect-error
+		// @ts-ignore
 		return <Icon size={iconSize} />;
 	};
 
@@ -62,27 +75,29 @@ export function Action({
 
 	// Logic: If variant is 'surface', ensure radius defaults to 'round' (8px) if not overridden.
 	// Although the prop default is 'round', this makes the intent explicit and robust vs future prop changes.
-	const finalRadius =
-		radius ?? (finalVariant === "surface" ? "round" : "round");
+	const finalRounded =
+		rounded ?? (finalVariant === "surface" ? "round" : "round");
 
 	return (
 		<Frame
 			as="button"
 			className={`action-base action-${finalVariant} ${className}`}
 			title={tooltip}
-			width={finalWidth}
-			height={finalHeight}
-			radius={finalRadius}
+			w={w ?? finalWidth}
+			h={h ?? finalHeight}
+			rounded={finalRounded}
 			surface={surface}
-			p={label ? 2 : 0}
-			gap="6px"
+			p={p ?? (label ? 2 : 0)}
+			gap={gap ?? 2}
+			border={border}
 			row
 			pack
 			opacity={opacity}
 			style={{
-				minWidth: !label && size ? size : undefined, // Ensure square for icons
+				minWidth: !label && size ? (toToken(size, "size") as any) : undefined, // Ensure square for icons
 				cursor: "pointer", // Indicate interactivity
 				color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",
+				boxShadow: glow ? "0 0 20px -5px var(--primary-bg)" : undefined,
 				...styleOverride,
 			}}
 			{...props}
@@ -93,7 +108,6 @@ export function Action({
 					style={{
 						display: "flex",
 						transform: iconRotation ? `rotate(${iconRotation}deg)` : undefined,
-						transition: "transform 0.2s ease",
 					}}
 				>
 					{renderIcon()}
@@ -103,8 +117,8 @@ export function Action({
 				<Text
 					variant={4}
 					weight="medium"
+					size={5}
 					style={{
-						fontSize: 10,
 						lineHeight: 1,
 						whiteSpace: "nowrap",
 						color: "inherit",

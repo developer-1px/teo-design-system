@@ -114,9 +114,9 @@ function Sidebar({ activeTab }: { activeTab: string }) {
 	if (activeTab !== "explorer") {
 		// Placeholder for other tabs
 		return (
-			<Frame w={250} fill surface="sunken" border="right">
-				<Frame h={35} p="0 4" justify="center">
-					<Text size={11} weight="medium" opacity={0.6}>
+			<Frame style={{ width: 250 }} fill surface="sunken" border="right">
+				<Frame style={{ height: 35 }} p="0 4" justify="center">
+					<Text variant={4} size={6} weight="medium" opacity={0.6}>
 						{activeTab.toUpperCase()}
 					</Text>
 				</Frame>
@@ -125,9 +125,9 @@ function Sidebar({ activeTab }: { activeTab: string }) {
 	}
 
 	return (
-		<Frame w={250} fill surface="sunken" border="right">
-			<Frame h={35} p="0 5" align="center" justify="between" row>
-				<Text size={11} weight="medium">
+		<Frame style={{ width: 250 }} fill surface="sunken" border="right">
+			<Frame style={{ height: 35 }} p="0 5" align="center" justify="between" row>
+				<Text variant={4} size={6} weight="medium">
 					EXPLORER
 				</Text>
 				<Action
@@ -153,7 +153,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
 							) : (
 								<ChevronRight size={12} />
 							)}
-							<Text size={11} weight="bold" opacity={0.8}>
+							<Text variant={4} size={6} weight="bold" opacity={0.8}>
 								OPEN EDITORS
 							</Text>
 						</Frame>
@@ -180,7 +180,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
 							) : (
 								<ChevronRight size={12} />
 							)}
-							<Text size={11} weight="bold" opacity={0.8}>
+							<Text variant={4} size={6} weight="bold" opacity={0.8}>
 								MINIMAL-DESIGN-KIT
 							</Text>
 						</Frame>
@@ -279,8 +279,8 @@ function FileItem({
 			rounded="none"
 		>
 			<Frame row align="center" gap={2} p="0 0 0 16" w="100%">
-				<Frame w={12} h={12} pack>
-					<Text size={10} style={{ color: getIconColor(), fontWeight: "bold" }}>
+				<Frame style={{ width: 12, height: 12 }} pack>
+					<Text size={5} style={{ color: getIconColor(), fontWeight: "bold" }}>
 						{icon === "react" ? "TSX" : icon === "ts" ? "TS" : "{}"}
 					</Text>
 				</Frame>
@@ -291,8 +291,7 @@ function FileItem({
 					<>
 						<Frame flex />
 						<Frame
-							w={8}
-							h={8}
+							style={{ width: 8, height: 8 }}
 							rounded="full"
 							surface="sunken"
 							style={{ backgroundColor: "var(--text-secondary)" }}
@@ -308,7 +307,7 @@ function FileItem({
 
 function EditorTabs() {
 	return (
-		<Frame row h={35} surface="sunken" border="bottom">
+		<Frame row style={{ height: 35 }} surface="sunken" border="bottom">
 			<Tab title="App.tsx" icon="react" active />
 			<Tab title="IDEApp.tsx" icon="react" modified />
 			<Tab title="useStore.ts" icon="ts" />
@@ -317,14 +316,14 @@ function EditorTabs() {
 				<Action
 					icon={Split}
 					variant="ghost"
-					size={28}
+					style={{ width: 28, height: 28 }}
 					iconSize={14}
 					opacity={0.6}
 				/>
 				<Action
 					icon={MoreHorizontal}
 					variant="ghost"
-					size={28}
+					style={{ width: 28, height: 28 }}
 					iconSize={14}
 					opacity={0.6}
 				/>
@@ -352,22 +351,16 @@ function Tab({
 
 	return (
 		<Frame
-			w={120}
-			h="100%"
-			surface={active ? 1 : 2}
+			style={{ width: 120, height: "100%", cursor: "pointer", borderTopColor: active ? "var(--text-primary)" : "transparent", borderRight: "1px solid var(--border-color)" }}
+			surface={active ? "base" : "raised"}
 			border={active ? "top" : undefined}
 			p="0 3"
 			row
 			align="center"
 			justify="between"
-			style={{
-				borderTopColor: active ? "var(--text-primary)" : "transparent",
-				borderRight: "1px solid var(--border-color)",
-				cursor: "pointer",
-			}}
 		>
 			<Frame row align="center" gap={2}>
-				<Text size={10} style={{ color: getIconColor(), fontWeight: "bold" }}>
+				<Text size={5} style={{ color: getIconColor(), fontWeight: "bold" }}>
 					{icon === "react" ? "TSX" : "TS"}
 				</Text>
 				<Text size={13} color={active ? "primary" : "secondary"}>
@@ -376,17 +369,17 @@ function Tab({
 			</Frame>
 			<Action
 				icon={modified ? undefined : X}
-				size={20}
+				style={{ width: 20, height: 20 }}
 				iconSize={12}
 				variant="ghost"
 				opacity={0.5}
 				onClick={(e) => {
 					e.stopPropagation();
-					onClose(file.id);
+					// onClose(file.id);
 				}}
 			>
 				{modified ? (
-					<Frame w={8} h={8} rounded="full" surface="overlay" />
+					<Frame style={{ width: 8, height: 8 }} rounded="full" surface="overlay" />
 				) : undefined}
 			</Action>
 		</Frame>
@@ -395,7 +388,7 @@ function Tab({
 
 function Breadcrumbs() {
 	return (
-		<Frame row h={22} align="center" p="0 4" gap={1} surface="base">
+		<Frame row style={{ height: 22 }} align="center" p="0 4" gap={1} surface="base">
 			<Text size={12} color="tertiary">
 				src
 			</Text>
@@ -501,19 +494,20 @@ function CodeEditor() {
 
 function Panel() {
 	return (
-		<Frame h={150} surface="base" border="top">
-			<Frame row h={35} p="0 4" gap={4} align="center">
-				<Text size={11} weight="medium" opacity={0.6}>
+		<Frame style={{ height: 150 }} surface="base" border="top">
+			<Frame row style={{ height: 35 }} p="0 4" gap={4} align="center">
+				<Text variant={4} size={6} weight="medium" opacity={0.6}>
 					PROBLEMS
 				</Text>
-				<Text size={11} weight="medium" opacity={0.6}>
+				<Text variant={4} size={6} weight="medium" opacity={0.6}>
 					OUTPUT
 				</Text>
-				<Text size={11} weight="medium" opacity={0.6}>
+				<Text variant={4} size={6} weight="medium" opacity={0.6}>
 					DEBUG CONSOLE
 				</Text>
 				<Text
-					size={11}
+					variant={4}
+					size={6}
 					weight="medium"
 					style={{ borderBottom: "1px solid var(--text-primary)" }}
 				>
@@ -539,10 +533,10 @@ function Panel() {
 					nothing to commit, working tree clean
 				</Text>
 				<Frame row align="center" gap={2} p="2 0 0 0">
-					<Text size={12} color="secondary">
+					<Text size={4} color="secondary">
 						➜ minimal-design-kit
 					</Text>
-					<Frame w={6} h={14} surface="overlay" opacity={0.8} />
+					<Frame style={{ width: 6, height: 14 }} surface="overlay" opacity={0.8} />
 				</Frame>
 			</Frame>
 		</Frame>
@@ -554,7 +548,7 @@ function Panel() {
 function StatusBar() {
 	return (
 		<Frame
-			h={22}
+			style={{ height: 22 }}
 			surface="overlay"
 			row
 			align="center"
@@ -603,10 +597,9 @@ function StatusBar() {
 				</Frame>
 				<Action
 					icon={UserCircle}
-					size={14}
+					style={{ width: 14, height: 14, color: "white" }}
 					iconSize={10}
 					variant="ghost"
-					style={{ color: "white" }}
 				/>
 			</Frame>
 		</Frame>

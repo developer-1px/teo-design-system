@@ -1,6 +1,7 @@
 import type React from "react";
 import "./tokens.css";
 import type { FontWeight, TypographyVariant } from "./types";
+import { toToken } from "./utils";
 
 interface TextProps {
 	children: React.ReactNode;
@@ -9,8 +10,10 @@ interface TextProps {
 
 	// Overrides
 	weight?: FontWeight;
+	mono?: boolean;
 	opacity?: number;
-	size?: number; // Override pixel size
+	size?: number | string; // Override size (number for token, string for px)
+	color?: string; // Explicit color override
 
 	className?: string; // Allow minimal overrides or layout positioning
 	style?: React.CSSProperties;
@@ -21,8 +24,10 @@ export function Text({
 	variant = 3,
 	as,
 	weight,
+	mono,
 	opacity,
 	size,
+	color,
 	className = "",
 	style: styleProp = {},
 }: TextProps) {
@@ -45,19 +50,16 @@ export function Text({
 	};
 
 	const baseStyle = {
-		color: colorMap[variant as keyof typeof colorMap] || "var(--text-body)",
-		fontSize: size ? `${size}px` : `var(--font-size-${variant})`,
+		color: color || colorMap[variant as keyof typeof colorMap] || "var(--text-body)",
+		fontSize: size ? toToken(size, "font-size") : `var(--font-size-${variant})`,
 		fontWeight: weight
-			? weight === "bold"
-				? 600
-				: weight === "medium"
-					? 500
-					: 400
+			? toToken(weight, "font-weight")
 			: variant <= 2
 				? "var(--font-weight-bold)"
 				: "var(--font-weight-regular)",
 		lineHeight: 1.5,
 		margin: 0,
+		fontFamily: mono ? "monospace" : undefined,
 		opacity,
 	} as React.CSSProperties;
 

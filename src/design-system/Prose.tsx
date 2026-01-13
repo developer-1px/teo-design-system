@@ -1,5 +1,5 @@
 import type React from "react";
-import { Frame } from "./Frame";
+import { Frame, type FrameProps } from "./Frame";
 import "./tokens.css";
 
 type ProseRole =
@@ -71,16 +71,16 @@ export function Prose({
     );
 }
 
-interface ProseDocumentProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ProseDocumentProps extends FrameProps {
     children: React.ReactNode;
     maxWidth?: number | string;
     className?: string;
-    gap?: number;
+    gap?: number | string;
 }
 
 export function ProseDocument({
     children,
-    maxWidth = 680,
+    maxWidth = "800px",
     className = "",
     style,
     gap = 4,
@@ -88,7 +88,7 @@ export function ProseDocument({
 }: ProseDocumentProps) {
     return (
         <Frame
-            width="100%"
+            w="100%"
             maxWidth={maxWidth}
             gap={gap}
             style={{
@@ -100,6 +100,26 @@ export function ProseDocument({
             {...props}
         >
             {children}
+        </Frame>
+    );
+}
+
+export function ProseSection({
+    children,
+    maxWidth,
+    contentGap,
+    p = "96 24",
+    w = "100%",
+    ...props
+}: React.ComponentProps<typeof Frame> & {
+    maxWidth?: number | string;
+    contentGap?: number | string;
+}) {
+    return (
+        <Frame w={w} p={p} {...props}>
+            <ProseDocument maxWidth={maxWidth} gap={contentGap}>
+                {children}
+            </ProseDocument>
         </Frame>
     );
 }

@@ -7,7 +7,7 @@ interface FieldProps
 	label?: string;
 	icon?: React.ReactNode;
 	rightIcon?: React.ReactNode;
-	width?: string | number;
+	w?: string | number;
 	flex?: boolean | number;
 }
 
@@ -15,7 +15,7 @@ export function Field({
 	label,
 	icon,
 	rightIcon,
-	width = "100%",
+	w = "100%",
 	flex,
 	className = "",
 	style,
@@ -28,15 +28,13 @@ export function Field({
 			flex={flex}
 			row
 			align="center"
-			gap={4}
-			padding={0}
-			width={flex ? undefined : width}
+			gap={1.5}
+			p={`0 ${rightIcon ? 1.5 : 2} 0 2`}
+			w={flex ? undefined : w}
 			as="label"
 			className={`field-base ${className}`}
 			style={{
 				cursor: "text",
-				paddingLeft: 6,
-				paddingRight: rightIcon ? 4 : 6,
 				...style,
 			}}
 		>
@@ -55,12 +53,12 @@ export function Field({
 				<Text
 					variant={4}
 					className="field-label"
+					size={6}
+					weight="bold"
 					style={{
-						width: 14,
-						marginRight: 2,
+						width: "var(--space-3-5)", // Approximately 14px if we added 3.5
+						marginRight: "var(--space-0-5)",
 						flexShrink: 0,
-						fontSize: 9,
-						fontWeight: 600,
 						whiteSpace: "nowrap",
 						textAlign: "center",
 					}}

@@ -1,5 +1,6 @@
 * {
 	box-sizing: border-box;
+	margin: 0;
 }
 
 *,
@@ -8,18 +9,14 @@
 	box-sizing: border-box;
 }
 
-* {
-	margin: 0;
-}
-
 :root {
-	font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
+	font-family: var(--font-family);
+	line-height: var(--line-height-base);
+	font-weight: var(--font-weight-regular);
 
 	color-scheme: light dark;
 	color: var(--text-primary);
-	background-color: var(--surface-1);
+	background-color: var(--surface-base);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -35,7 +32,7 @@ body,
 	width: 100%;
 	padding: 0;
 	overflow: hidden;
-	background-color: var(--surface-1);
+	background-color: var(--surface-base);
 }
 
 body {
@@ -45,21 +42,21 @@ body {
 }
 
 [data-theme="dark"] body {
-	background-color: var(--surface-1);
+	background-color: var(--surface-base);
 }
 
 a {
-	font-weight: 500;
-	color: #646cff;
+	font-weight: var(--font-weight-medium);
+	color: var(--link-color);
 	text-decoration: inherit;
 }
 
 a:hover {
-	color: #535bf2;
+	color: var(--link-hover-color);
 }
 
 h1 {
-	font-size: 3.2em;
+	font-size: var(--font-size-1);
 	line-height: 1.1;
 }
 
@@ -73,7 +70,6 @@ button {
 
 /* Action Component Styles (Token Driven) */
 .action-base {
-	transition: all 0.1s ease;
 	user-select: none;
 	border-radius: inherit;
 }
@@ -83,26 +79,26 @@ button {
 }
 
 .action-ghost:hover {
-	background-color: var(--surface-3);
+	background-color: var(--surface-raised);
 	color: var(--text-primary);
 }
 
 .action-ghost:active {
-	background-color: var(--surface-4);
+	background-color: var(--surface-overlay);
 }
 
 .action-surface {
-	background-color: var(--surface-1);
+	background-color: var(--surface-base);
 	color: var(--text-primary);
-	border: 1px solid var(--border-color);
+	border: var(--border-width) solid var(--border-color);
 }
 
 .action-surface:hover {
-	background-color: var(--surface-3);
+	background-color: var(--surface-raised);
 }
 
 .action-surface:active {
-	background-color: var(--surface-4);
+	background-color: var(--surface-overlay);
 }
 
 .action-primary {
@@ -122,22 +118,19 @@ button {
 .field-base {
 	height: var(--field-height);
 	border-radius: var(--field-radius);
-	/* Smoother transition for 'don't do it suddenly' */
-	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	background-color: var(--field-bg);
-	border: 1px solid transparent;
+	border: var(--border-width) solid transparent;
 }
 
 .field-base:hover {
 	background-color: var(--field-bg);
-	/* Step 1: Subtle surface tone outline */
-	border-color: var(--surface-4);
+	border-color: var(--surface-overlay);
 }
 
 .field-input {
 	color: var(--text-primary);
-	font-size: 11px;
-	font-weight: 500;
+	font-size: var(--font-size-input);
+	font-weight: var(--font-weight-medium);
 	border: none;
 	background: none;
 	width: 100%;
@@ -150,21 +143,17 @@ input::placeholder {
 }
 
 /* Field Child Elements specific handling */
-/* Icon styling based on parent state */
 .field-base .field-icon {
 	opacity: 0.7;
-	transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .field-base:focus-within .field-icon {
 	opacity: 1;
 }
 
-/* Label styling based on parent state */
 .field-base .field-label {
 	opacity: 0.6;
 	color: var(--text-subtle);
-	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .field-base:focus-within .field-label {
@@ -181,11 +170,10 @@ input::placeholder {
 .field-base:focus-within,
 .field-base.is-scrubbing {
 	background-color: var(--field-bg);
-	/* Step 2: Slightly darker tone, maintaining surface feel */
-	border-color: var(--surface-4);
+	border-color: var(--surface-overlay);
 }
 
 .field-base.is-scrubbing .field-input {
-	color: var(--text-secondary);
+	color: var(--text-body);
 	opacity: 0.5;
 }

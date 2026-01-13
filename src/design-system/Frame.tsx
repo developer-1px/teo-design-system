@@ -7,30 +7,43 @@ import type {
 	FrameSizeToken,
 	JustifyToken,
 	OverflowToken,
-	RadiusToken,
+	RoundedToken,
 	ShadowToken,
 	SurfaceToken,
 } from "./types";
+import { toToken } from "./utils";
 
-interface FrameProps
+export interface FrameProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, "style" | "title" | "color"> {
 	children?: React.ReactNode;
 	as?: React.ElementType;
 	style?: React.CSSProperties;
 	className?: React.HTMLAttributes<HTMLDivElement>["className"];
-	onClick?: () => void;
+	onClick?: React.MouseEventHandler<HTMLElement>;
 
 	// Layout
 	p?: number | string; // Shorthand for padding
 	gap?: number | string;
 	pack?: boolean;
 
-	width?: FrameSizeToken | string | number;
-	height?: FrameSizeToken | string | number;
+	w?: FrameSizeToken | string | number;
+	h?: FrameSizeToken | string | number;
 
 	flex?: boolean | number;
 	row?: boolean;
+	wrap?: "wrap" | "nowrap" | "wrap-reverse";
 	fill?: boolean;
+
+	minWidth?: number | string;
+	minHeight?: number | string;
+	maxWidth?: number | string;
+	maxHeight?: number | string;
+
+	// Grid
+	grid?: boolean;
+	columns?: string;
+	rows?: string;
+	areas?: string;
 
 	align?: AlignToken;
 	justify?: JustifyToken;
@@ -38,7 +51,7 @@ interface FrameProps
 	// Surface
 	surface?: SurfaceToken;
 	border?: BorderToken;
-	radius?: RadiusToken;
+	rounded?: RoundedToken;
 	overflow?: OverflowToken;
 	cursor?: CursorToken;
 
@@ -67,18 +80,29 @@ export function Frame({
 	p,
 	gap = 0,
 	pack,
-	width,
-	height,
+	w,
+	h,
 
 	flex,
 	row,
+	wrap,
 	fill,
+	grid,
+	columns,
+	rows,
+	areas,
+
+	minWidth,
+	minHeight,
+	maxWidth,
+	maxHeight,
+
 	align,
 	justify,
 
 	surface,
 	border,
-	radius,
+	rounded,
 	overflow,
 	cursor,
 
@@ -111,38 +135,37 @@ export function Frame({
 				: `var(--${borderColor})`
 		: "var(--border-color)";
 
-	if (finalBorder === true) computedBorder.border = `1px solid ${colorStr}`;
+	if (finalBorder === true) computedBorder.border = `var(--border-width) solid ${colorStr}`;
 	else if (typeof finalBorder === "string") {
 		const key =
 			`border${finalBorder.charAt(0).toUpperCase() + finalBorder.slice(1)}` as keyof React.CSSProperties;
 		// @ts-expect-error
-		computedBorder[key] = `1px solid ${colorStr}`;
+		computedBorder[key] = `var(--border-width) solid ${colorStr}`;
 	}
 
-	// Radius Logic
-	let borderRadius: string | undefined;
-	if (radius === "full") borderRadius = "var(--radius-full)";
-	else if (radius === "round") borderRadius = "var(--radius-round-md)";
-	else if (radius === "none") borderRadius = "var(--radius-none)";
+	// Rounded Logic
+	const borderRadius = toToken(rounded, "radius");
 
 	// Pack Logic
 	const effectiveAlign = align ?? (pack ? "center" : undefined);
 	const effectiveJustify = justify ?? (pack ? "center" : undefined);
 
+	// Padding Logic
+	const finalP = p !== undefined ? p : surface ? 2 : 0;
+	const resolvedPadding = toToken(finalP, "space");
+
 	const computedStyle: React.CSSProperties = {
 		backgroundColor: surface ? `var(--surface-${surface})` : undefined,
 		borderRadius,
-		padding:
-			typeof p === "number" ? (p > 0 ? `var(--space-${p})` : undefined) : p,
-		gap:
-			typeof gap === "number"
-				? gap > 0 && gap <= 6
-					? `var(--space-${gap})`
-					: `${gap}px`
-				: gap,
+		padding: resolvedPadding as any,
+		gap: toToken(gap, "space") as any,
 
-		display: "flex",
+		display: grid ? "grid" : "flex",
+		gridTemplateColumns: columns,
+		gridTemplateRows: rows,
+		gridTemplateAreas: areas,
 		flexDirection: row ? "row" : "column",
+		flexWrap: wrap,
 		alignItems:
 			effectiveAlign === "start"
 				? "flex-start"
@@ -161,21 +184,21 @@ export function Frame({
 							: effectiveJustify,
 
 		width:
-			ratio && height && !width
+			ratio && h && !w
 				? undefined
 				: fill
 					? "100%"
-					: typeof width === "number"
-						? `${width}px`
-						: width,
+					: (toToken(w, "size") as any),
 		height:
-			ratio && width
+			ratio && w
 				? undefined
 				: fill
 					? "100%"
-					: typeof height === "number"
-						? `${height}px`
-						: height,
+					: (toToken(h, "size") as any),
+		minWidth: toToken(minWidth, "size") as any,
+		minHeight: toToken(minHeight, "size") as any,
+		maxWidth: toToken(maxWidth, "size") as any,
+		maxHeight: toToken(maxHeight, "size") as any,
 
 		flex: fill
 			? 1
@@ -185,7 +208,7 @@ export function Frame({
 					? flex
 					: undefined,
 		flexShrink:
-			width !== undefined || height !== undefined || ratio !== undefined
+			w !== undefined || h !== undefined || ratio !== undefined
 				? 0
 				: 1,
 		flexGrow: fill || flex ? 1 : 0,
@@ -202,30 +225,10 @@ export function Frame({
 		// Positioning
 		position,
 		zIndex,
-		top:
-			typeof top === "number"
-				? top >= 0 && top <= 6
-					? `var(--space-${top})`
-					: `${top}px`
-				: top,
-		bottom:
-			typeof bottom === "number"
-				? bottom >= 0 && bottom <= 6
-					? `var(--space-${bottom})`
-					: `${bottom}px`
-				: bottom,
-		left:
-			typeof left === "number"
-				? left >= 0 && left <= 6
-					? `var(--space-${left})`
-					: `${left}px`
-				: left,
-		right:
-			typeof right === "number"
-				? right >= 0 && right <= 6
-					? `var(--space-${right})`
-					: `${right}px`
-				: right,
+		top: typeof top === "number" ? `var(--space-${top})` : top,
+		bottom: typeof bottom === "number" ? `var(--space-${bottom})` : bottom,
+		left: typeof left === "number" ? `var(--space-${left})` : left,
+		right: typeof right === "number" ? `var(--space-${right})` : right,
 
 		color: surface === "primary" ? "var(--primary-fg)" : "inherit",
 
