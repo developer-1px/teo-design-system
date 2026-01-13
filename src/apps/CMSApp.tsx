@@ -464,7 +464,7 @@ function HeaderHero() {
 				}}
 			/>
 
-			<ProseDocument maxWidth={900} gap={6} align="center">
+			<ProseDocument maxWidth={800} gap={6} align="center">
 				<Frame
 					p="1 3"
 					rounded="full"
@@ -596,7 +596,7 @@ function HeaderHero() {
 function FeatureGridSection() {
 	return (
 		<Frame w="100%" p="96 24" gap={16} surface="base" border="bottom">
-			<ProseDocument maxWidth={700} gap={3} align="center">
+			<ProseDocument maxWidth={640} gap={3} align="center">
 				<Text
 					size={12}
 					weight="bold"
@@ -891,7 +891,7 @@ function ImageFooterBanner() {
 					}}
 				/>
 
-				<ProseDocument maxWidth={700} gap={6} align="center" zIndex={10}>
+				<ProseDocument maxWidth={640} gap={6} align="center" zIndex={10}>
 					<Prose
 						color="white"
 						role="h2"
@@ -978,7 +978,7 @@ function FAQBoardFooter() {
 				</Prose>
 			</Frame>
 
-			<ProseDocument maxWidth={800} gap={4}>
+			<ProseDocument maxWidth={680} gap={4}>
 				<FAQRow
 					q="How secure is my data?"
 					a="We use industry-standard encryption and SOC2 certification to ensure your data stays protected at all times."
@@ -1005,7 +1005,7 @@ function FAQBoardFooter() {
 				row
 				gap={6}
 				align="center"
-				maxWidth={800}
+				maxWidth={680}
 				style={{ marginTop: 40 }}
 			>
 				<Frame
