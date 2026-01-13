@@ -291,10 +291,9 @@ function FileItem({
 					<>
 						<Frame flex />
 						<Frame
-							style={{ width: 8, height: 8 }}
+							style={{ width: 8, height: 8, backgroundColor: "var(--text-secondary)" }}
 							rounded="full"
 							surface="sunken"
-							style={{ backgroundColor: "var(--text-secondary)" }}
 						/>
 					</>
 				)}

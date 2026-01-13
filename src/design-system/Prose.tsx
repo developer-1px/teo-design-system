@@ -108,7 +108,7 @@ export function ProseSection({
     children,
     maxWidth,
     contentGap,
-    p = "96 24",
+    p = "96px 24px",
     w = "100%",
     ...props
 }: React.ComponentProps<typeof Frame> & {

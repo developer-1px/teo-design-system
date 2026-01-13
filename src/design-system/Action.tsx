@@ -17,6 +17,8 @@ interface ActionProps
 	p?: number | string;
 	gap?: number | string;
 	border?: boolean;
+	flex?: boolean | number;
+	fill?: boolean;
 
 	// Shortcuts
 	size?: number | string; // Sets unique width & height (square)

@@ -9,8 +9,8 @@ export function SlidesPanel() {
 
 	return (
 		<Section
-			title="Slides"
-			style={{ width: "220px", minWidth: "200px" }}
+			title="LAYERS"
+			style={{ width: "160px", minWidth: "160px" }}
 			surface="base"
 			rounded="round"
 			shadow="sm"
@@ -27,7 +27,7 @@ export function SlidesPanel() {
 							<Text
 								variant={4}
 								style={{
-									fontSize: "11px",
+									fontSize: "10px",
 									color:
 										num === 1 ? "var(--text-primary)" : "var(--text-subtle)",
 								}}
@@ -37,7 +37,7 @@ export function SlidesPanel() {
 							<Action
 								icon={MoreHorizontal}
 								iconSize={12}
-								style={{ width: "20px", height: "20px" }}
+								style={{ width: "20px", height: "16px" }}
 								opacity={num === 1 ? 0.6 : 0}
 							/>
 						</Frame>
@@ -56,15 +56,7 @@ export function SlidesPanel() {
 								boxShadow:
 									num === 1 ? "0 0 0 1.5px var(--text-primary)" : "none",
 							}}
-						>
-							{num === 1 ? (
-								<Frame w="60%" style={{ height: "2px" }} surface="sunken" />
-							) : (
-								<Text variant={4} size={5}>
-									{num}
-								</Text>
-							)}
-						</Frame>
+						/>
 					</Frame>
 				))}
 			</Frame>

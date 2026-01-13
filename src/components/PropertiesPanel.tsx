@@ -137,7 +137,7 @@ export function PropertiesPanel() {
 
 			<Frame p={2} gap={2} overflow="auto" flex fill style={{ minHeight: 0 }}>
 				{/* Alignment */}
-				<Frame row justify="between" surface="sunken" rounded="md" border p={0.5}>
+				<Frame row justify="between" surface="sunken" rounded="md" border p="1px" gap="1px">
 					{ALIGNMENT_TOOLS.map((tool, i) =>
 						tool.separator ? (
 							<Separator key={i} orientation="vertical" length="12px" />
@@ -148,7 +148,8 @@ export function PropertiesPanel() {
 								iconSize={12}
 								surface={(tool as any).surface}
 								rounded="round"
-								style={{ height: "24px" }}
+								size="24px"
+								flex
 								iconRotation={tool.rotation}
 							/>
 						),
@@ -230,8 +231,8 @@ export function PropertiesPanel() {
 							<Field label="LH" value="Auto" flex />
 							<Field label="LS" value="0%" flex />
 						</Frame>
-						<Frame row align="center" surface="sunken" rounded="md" border p={0.5}>
-							{[AlignLeft, AlignCenter, AlignRight, AlignJustify].map(
+						<Frame row justify="between" align="center" surface="sunken" rounded="md" border p="1px" gap="1px">
+							{[AlignLeft, AlignCenter, AlignRight, AlignJustify, MoreHorizontal].map(
 								(Icon, i) => (
 									<Action
 										key={i}
@@ -239,16 +240,11 @@ export function PropertiesPanel() {
 										iconSize={12}
 										surface={i === 0 ? "selected" : undefined}
 										rounded="round"
-										style={{ height: "24px" }}
+										size="24px"
+										flex
 									/>
 								),
 							)}
-							<Action
-								icon={MoreHorizontal}
-								iconSize={12}
-								rounded="round"
-								style={{ height: "24px" }}
-							/>
 						</Frame>
 					</Frame>
 				</PropertySection>

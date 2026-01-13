@@ -65,9 +65,9 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
 - Common: `--space-1` (4px), `--space-2` (8px), `--space-3` (12px), `--space-4` (16px), `--space-5` (24px), `--space-6` (32px)
 
 **Size Scale (Layout):**
-- `--size-3` through `--size-80` (12px through 320px)
-- Common component sizes: `--size-3` (12px), `--size-4` (16px), `--size-6` (32px)
-- Layout sizes: `--size-50` through `--size-80` (200px through 320px)
+- `--size-3` through `--size-300` (12px through 1200px)
+- Common component sizes: `--size-3` (12px), `--size-4` (16px), `--size-6` (32px), `--size-action` (40px), `--size-header` (80px)
+- Layout sizes: `--size-50` through `--size-300` (200px through 1200px)
 
 **Typography:**
 - **Font Sizes**: `--font-size-1` through `--font-size-6` (32px, 20px, 14px, 12px, 10px, 9px)
@@ -194,9 +194,10 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
 The project uses **React Router DOM** with a hash router to showcase multiple demo applications:
 
 - **`/` (LandingApp)** - Landing page showcase
+- **`/tokens` (TokensApp)** - Design tokens reference and documentation
 - **`/slide` (SlideApp)** - Presentation tool interface (Figma/Canva-like)
 - **`/linear` (LinearApp)** - Linear-style interface
-- **`/ide` (IDEApp)** - IDE-style interface
+- **`/ide` (IDEApp)** - IDE-style interface (VS Code-like)
 - **`/cms` (CMSApp)** - CMS/website builder interface
 
 Each app demonstrates different design patterns and component compositions. The main `App.tsx` includes a floating navigation pill to switch between demos.
@@ -246,19 +247,23 @@ The project uses TypeScript project references:
 - `tsconfig.app.json` - Application source code config
 - `tsconfig.node.json` - Node.js tooling (Vite config, etc.)
 
-## ESLint Configuration
+## Code Quality Tools
 
-Uses flat config format (`eslint.config.js`) with:
+**ESLint** - Uses flat config format (`eslint.config.js`) with:
 - `@eslint/js` - JavaScript recommended rules
 - `typescript-eslint` - TypeScript rules
 - `eslint-plugin-react-hooks` - React hooks rules
 - `eslint-plugin-react-refresh` - Fast refresh validation
 
+**Biome** - Alternative formatter/linter configured via `biome.json` (optional, not in npm scripts)
+
 ## Important Notes
 
-- Never use barrel exports (per user's global instructions)
-- Components follow inline styles via props rather than separate CSS modules
-- All interactive states (hover, focus, active) are defined in `index.css`
-- The design system is self-contained - no external component libraries
-- Theme switching is handled via `data-theme` attribute on document root
-- During development, use **Cmd+Shift** to activate the React Inspector overlay for component debugging
+- **Package Manager**: Use `npm` (package-lock.json is the active lock file, though pnpm-lock.yaml exists from earlier)
+- **Architecture**: Never use barrel exports (per user's global instructions); prefer FSD (Feature-Sliced Design) architecture
+- **Component Philosophy**: Components follow inline styles via props rather than separate CSS modules
+- **Styling**: All interactive states (hover, focus, active) are defined in `index.css`
+- **Design System**: Self-contained with no external component libraries (except Lucide for icons)
+- **Theme Switching**: Handled via `data-theme` attribute on document root with localStorage persistence
+- **Development Tools**: Use **Cmd+Shift** during dev to activate the React Inspector overlay for component debugging
+- **Known Limitations**: See `IDE_DESIGN_FEEDBACK.md` for design system enhancement suggestions (resizable layouts, tree components, syntax highlighting, custom scrollbars, tab management)

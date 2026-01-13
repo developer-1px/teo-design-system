@@ -9,19 +9,19 @@ export function HeaderHero() {
     return (
         <ProseSection
             w="100%"
-            p="84 24"
-            contentGap={12}
+            p="21 5"
+            contentGap={3}
             surface="base"
             style={{ minHeight: "90vh", position: "relative", overflow: "hidden" }}
-            maxWidth={1200}
+            maxWidth={300}
         >
             {/* Background Decoration */}
             <Frame
                 position="absolute"
-                top={-100}
-                right={-100}
-                w={400}
-                h={400}
+                top={-25}
+                right={-25}
+                w={100}
+                h={100}
                 rounded="full"
                 style={{
                     background: "var(--color-primary)",
@@ -31,10 +31,10 @@ export function HeaderHero() {
             />
             <Frame
                 position="absolute"
-                bottom={-100}
-                left={-100}
-                w={400}
-                h={400}
+                bottom={-25}
+                left={-25}
+                w={100}
+                h={100}
                 rounded="full"
                 style={{
                     background: "var(--color-warning)",
@@ -45,9 +45,9 @@ export function HeaderHero() {
 
             <Frame
                 w="100%"
-                maxWidth={800}
+                maxWidth={200}
                 style={{ margin: "0 auto" }}
-                gap={6}
+                gap={1.5}
                 align="center"
             >
                 <Frame
@@ -57,7 +57,6 @@ export function HeaderHero() {
                     border
                     row
                     gap={2}
-                    align="center"
                     align="center"
                 >
                     <Sparkles size={12} color="var(--color-primary)" />
@@ -92,13 +91,13 @@ export function HeaderHero() {
                     </Prose>
                 </EditableWrapper>
 
-                <Frame row gap={4} p={4}>
+                <Frame row gap={1} p={1}>
                     <Action
                         label="Start Creating"
                         variant="primary"
                         size="lg"
                         glow
-                        h={56}
+                        h={14}
                         rounded="full"
                     >
                         <ArrowUpRight size={20} />
@@ -107,8 +106,8 @@ export function HeaderHero() {
                         label="Talk to Sales"
                         variant="surface"
                         size="lg"
-                        h={56}
-                        p="0 8"
+                        h={14}
+                        p="0 2"
                         rounded="full"
                     />
                 </Frame>
@@ -117,28 +116,28 @@ export function HeaderHero() {
             {/* Hero Visual: Mockup UI */}
             <Frame
                 w="100%"
-                maxWidth={1000}
-                h={500}
+                maxWidth={250}
+                h={125}
                 surface="sunken"
                 rounded="2xl"
                 border
                 shadow="2xl"
                 style={{
                     position: "relative",
-                    marginTop: 80,
+                    marginTop: "var(--space-20)",
                     transform: "perspective(1000px) rotateX(5deg)",
-                    margin: "80px auto 0",
+                    margin: "var(--space-20) auto 0",
                 }}
                 overflow="hidden"
             >
                 <Frame
-                    h={40}
+                    h={10}
                     surface="raised"
                     border="bottom"
                     row
                     align="center"
-                    p="0 4"
-                    gap={1.5}
+                    p="0 1"
+                    gap={0.5}
                 >
                     <Frame w={10} h={10} rounded="full" surface="overlay" />
                     <Frame w={10} h={10} rounded="full" surface="overlay" />
@@ -147,16 +146,16 @@ export function HeaderHero() {
                     <Command size={14} opacity={0.3} />
                 </Frame>
                 <Frame row fill justify="start">
-                    <Frame w={200} border="right" surface="sunken" p={4} gap={4}>
-                        <Frame h={12} w="80%" surface="overlay" rounded="full" />
-                        <Frame h={12} w="60%" surface="overlay" rounded="full" />
+                    <Frame w={50} border="right" surface="sunken" p={1} gap={1}>
+                        <Frame h={3} w="80%" surface="overlay" rounded="full" />
+                        <Frame h={3} w="60%" surface="overlay" rounded="full" />
                         <Frame flex />
-                        <Frame h={40} w="100%" surface="overlay" rounded="lg" />
+                        <Frame h={10} w="100%" surface="overlay" rounded="lg" />
                     </Frame>
-                    <Frame flex surface="base" p={12} gap={6} pack>
+                    <Frame flex surface="base" p={3} gap={1.5} pack>
                         <Frame
-                            w={80}
-                            h={80}
+                            w={20}
+                            h={20}
                             rounded="2xl"
                             surface="raised"
                             shadow="lg"
@@ -165,9 +164,9 @@ export function HeaderHero() {
                         >
                             <Sparkles size={32} color="var(--color-primary)" />
                         </Frame>
-                        <Frame gap={2} align="center">
-                            <Frame h={20} w={200} surface="overlay" rounded="full" />
-                            <Frame h={12} w={300} surface="raised" rounded="full" />
+                        <Frame gap={0.5} align="center">
+                            <Frame h={5} w={50} surface="overlay" rounded="full" />
+                            <Frame h={3} w={75} surface="raised" rounded="full" />
                         </Frame>
                     </Frame>
                 </Frame>

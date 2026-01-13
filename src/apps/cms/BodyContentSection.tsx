@@ -7,21 +7,21 @@ export function BodyContentSection() {
     return (
         <ProseSection
             w="100%"
-            p="96 24"
+            p="24 6"
             surface="sunken"
             border="bottom"
             maxWidth="100%"
         >
             <Frame
                 row
-                gap={24}
+                gap={6}
                 align="center"
                 w="100%"
-                maxWidth={1200}
+                maxWidth={300}
                 style={{ margin: "0 auto" }}
             >
-                <Frame w="50%" gap={8}>
-                    <Frame gap={4}>
+                <Frame w="50%" gap={2}>
+                    <Frame gap={1}>
                         <Text size={14} weight="bold" color="primary">
                             THE PROCESS
                         </Text>
@@ -33,7 +33,7 @@ export function BodyContentSection() {
                         Workflow shouldn't be a bottleneck. Our platform allows developers to
                         focus on logic while designers handle the visuals.
                     </Prose>
-                    <Frame gap={4}>
+                    <Frame gap={1}>
                         <CheckItem
                             title="Pure Token-based design"
                             desc="Align with your existing CSS/Tailwind system effortlessly."
@@ -50,8 +50,8 @@ export function BodyContentSection() {
                 </Frame>
                 <Frame flex pack>
                     <Frame
-                        w={400}
-                        h={500}
+                        w={100}
+                        h={125}
                         surface="raised"
                         rounded="3xl"
                         shadow="2xl"
@@ -60,10 +60,10 @@ export function BodyContentSection() {
                     >
                         <Frame
                             position="absolute"
-                            top={40}
-                            left={-40}
-                            w={180}
-                            h={180}
+                            top="40px"
+                            left="-40px"
+                            w={45}
+                            h={45}
                             surface="base"
                             rounded="2xl"
                             shadow="lg"
@@ -79,10 +79,10 @@ export function BodyContentSection() {
                         </Frame>
                         <Frame
                             position="absolute"
-                            bottom={40}
-                            right={-40}
-                            w={220}
-                            h={220}
+                            bottom="40px"
+                            right="-40px"
+                            w={55}
+                            h={55}
                             surface="base"
                             rounded="2xl"
                             shadow="lg"
@@ -92,11 +92,11 @@ export function BodyContentSection() {
                         >
                             <MessageSquare size={32} color="var(--color-primary)" />
                             <Frame gap={2}>
-                                <Frame row gap={2} align="center">
-                                    <Frame w={24} h={24} rounded="full" surface="overlay" />
-                                    <Frame h={8} w={100} surface="overlay" rounded="full" />
+                                <Frame row gap={0.5} align="center">
+                                    <Frame w={6} h={6} rounded="full" surface="overlay" />
+                                    <Frame h={2} w={25} surface="overlay" rounded="full" />
                                 </Frame>
-                                <Frame h={8} w="100%" surface="raised" rounded="full" />
+                                <Frame h={2} w="100%" surface="raised" rounded="full" />
                             </Frame>
                         </Frame>
                     </Frame>
@@ -113,10 +113,10 @@ interface CheckItemProps {
 
 function CheckItem({ title, desc }: CheckItemProps) {
     return (
-        <Frame row gap={4} align="start">
+        <Frame row gap={1} align="start">
             <Frame
-                w={24}
-                h={24}
+                w={6}
+                h={6}
                 rounded="full"
                 surface="primary"
                 pack

@@ -1,10 +1,13 @@
-import { Copy } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Copy, Lock, Unlock, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
+import { Action } from "../design-system/Action";
+import { Frame } from "../design-system/Frame";
 import { Text } from "../design-system/Text";
 
 export function InspectorOverlay() {
     const [isActive, setIsActive] = useState(false);
+    const [isLocked, setIsLocked] = useState(false);
     const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
     const [targetName, setTargetName] = useState<string | null>(null);
     const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
@@ -15,11 +18,35 @@ export function InspectorOverlay() {
         const handleKeyDown = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.key === "d") {
                 e.preventDefault();
-                setIsActive((prev) => !prev);
-                // Reset state when closing
-                if (isActive) {
+
+                if (isLocked) {
+                    // If locked, close everything
+                    setIsLocked(false);
+                    setIsActive(false);
                     setTargetRect(null);
                     setTargetName(null);
+                    setTargetElement(null);
+                } else if (isActive) {
+                    // If active (hovering), try to lock
+                    if (targetElement) {
+                        setIsLocked(true);
+                    } else {
+                        // If nothing under cursor, close
+                        setIsActive(false);
+                    }
+                } else {
+                    // If closed, open
+                    setIsActive(true);
+                }
+            }
+
+            // Esc to cancel/unlock
+            if (e.key === "Escape") {
+                if (isLocked) {
+                    setIsLocked(false);
+                } else {
+                    setIsActive(false);
+                    setTargetRect(null);
                     setTargetElement(null);
                 }
             }
@@ -27,11 +54,44 @@ export function InspectorOverlay() {
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isActive]);
+    }, [isActive, isLocked, targetElement]);
 
-    // Mouse move handler to find target
+    // Sync Target Rect on Scroll/Resize via RAF
     useEffect(() => {
-        if (!isActive) return;
+        if (!targetElement) return;
+
+        let animationFrameId: number;
+
+        const updateRect = () => {
+            if (targetElement) {
+                const newRect = targetElement.getBoundingClientRect();
+                // Only update if changes to avoid thrashing
+                setTargetRect((prev) => {
+                    if (
+                        !prev ||
+                        prev.top !== newRect.top ||
+                        prev.left !== newRect.left ||
+                        prev.width !== newRect.width ||
+                        prev.height !== newRect.height
+                    ) {
+                        return newRect;
+                    }
+                    return prev;
+                });
+            }
+            animationFrameId = requestAnimationFrame(updateRect);
+        };
+
+        updateRect();
+
+        return () => {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        };
+    }, [targetElement]);
+
+    // Mouse move handler to find target (Only if not locked)
+    useEffect(() => {
+        if (!isActive || isLocked) return;
 
         const handleMouseMove = (e: MouseEvent) => {
             // Hide the overlay temporarily to check what's underneath
@@ -49,6 +109,7 @@ export function InspectorOverlay() {
             const target = element.closest("[data-react-inspector]") as HTMLElement;
 
             if (target) {
+                // Initial set
                 const rect = target.getBoundingClientRect();
                 setTargetRect(rect);
                 setTargetElement(target);
@@ -71,33 +132,41 @@ export function InspectorOverlay() {
 
         window.addEventListener("mousemove", handleMouseMove);
         return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [isActive]);
+    }, [isActive, isLocked]);
 
-    // Click to copy
+    // Click to lock (if not locked)
     const handleClick = (e: React.MouseEvent) => {
-        if (!targetElement) return;
-
         e.stopPropagation();
         e.preventDefault();
 
-        // Clone and strip children
-        const clone = targetElement.cloneNode(true) as HTMLElement;
-        clone.innerHTML = "";
-
-        // Get the outerHTML
-        const html = clone.outerHTML;
-
-        navigator.clipboard.writeText(html).then(() => {
-            setNotification("Component shell copied!");
-            setTimeout(() => {
-                setNotification(null);
-            }, 2000);
-        });
-
-        setIsActive(false);
+        if (!isLocked && targetElement) {
+            setIsLocked(true);
+        }
     };
 
     if (!isActive) return null;
+
+    // Calculate panel position (Right of element, fallback to Left if not enough space)
+    let initialX = 20;
+    let initialY = 20;
+
+    if (targetRect) {
+        const PANEL_WIDTH = 260; // size-65
+        const GAP = 8;
+        const spaceRight = window.innerWidth - targetRect.right;
+
+        if (spaceRight > PANEL_WIDTH + GAP) {
+            initialX = targetRect.right + GAP;
+        } else {
+            initialX = targetRect.left - PANEL_WIDTH - GAP;
+        }
+
+        // Ensure Y is within bounds
+        initialY = Math.max(10, Math.min(targetRect.top, window.innerHeight - 300));
+
+        // Safety check for X
+        initialX = Math.max(10, Math.min(initialX, window.innerWidth - PANEL_WIDTH - 10));
+    }
 
     return (
         <>
@@ -111,31 +180,33 @@ export function InspectorOverlay() {
                     width: "100vw",
                     height: "100vh",
                     zIndex: 10000,
-                    cursor: "crosshair",
+                    pointerEvents: isLocked ? "none" : "auto", // Allow clicking through when locked (except panel)
                 }}
                 onClick={handleClick}
             >
-                {/* Top Badge */}
-                <div
+                {/* Top Status Badge - Compact */}
+                <Frame
+                    position="fixed"
+                    top={2}
+                    left="50%"
+                    zIndex={10002}
+                    surface="primary"
+                    rounded="full"
+                    p="0.5 2"
+                    row
+                    align="center"
+                    gap={1.5}
+                    shadow="lg"
                     style={{
-                        position: "fixed",
-                        top: "12px",
-                        left: "50%",
                         transform: "translateX(-50%)",
-                        backgroundColor: "#ef4444", // Red for debug/attention
-                        color: "white",
-                        padding: "4px 12px",
-                        borderRadius: "999px",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        boxShadow: "0 2px 8px rgba(239, 68, 68, 0.4)",
-                        pointerEvents: "none",
-                        zIndex: 10002,
-                        letterSpacing: "0.02em",
+                        pointerEvents: "auto",
                     }}
                 >
-                    DEBUG MODE
-                </div>
+                    {isLocked ? <Lock size={10} color="var(--primary-fg)" /> : <Unlock size={10} color="var(--primary-fg)" />}
+                    <Text variant={6} weight="bold" style={{ color: "var(--primary-fg)" }}>
+                        {isLocked ? "LOCKED" : "INSPECT"}
+                    </Text>
+                </Frame>
 
                 {/* Highlight Box */}
                 {targetRect && (
@@ -146,67 +217,304 @@ export function InspectorOverlay() {
                             left: targetRect.left,
                             width: targetRect.width,
                             height: targetRect.height,
-                            border: "1px solid #3b82f6", // Thinner border
-                            backgroundColor: "rgba(59, 130, 246, 0.15)", // Slightly more transparent
+                            border: isLocked ? "2px solid var(--link-color)" : "1px solid var(--link-color)",
+                            backgroundColor: isLocked
+                                ? "transparent"
+                                : "rgba(59, 130, 246, 0.1)",
                             pointerEvents: "none",
                             boxSizing: "border-box",
                             borderRadius: "3px",
+                            zIndex: 10001,
+                            transition: "all 0.1s ease-out",
                         }}
                     >
-                        {/* Label Tag - More compact */}
-                        <div
-                            style={{
-                                position: "absolute",
-                                top: "-22px", // Closer
-                                left: "0",
-                                backgroundColor: "#3b82f6",
-                                color: "white",
-                                padding: "2px 6px", // Reduced padding
-                                borderRadius: "3px",
-                                fontSize: "10px", // Smaller font
-                                whiteSpace: "nowrap",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "3px",
-                                boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
-                                transformOrigin: "bottom left",
-                            }}
+                        {/* Label Tag - Compact */}
+                        <Frame
+                            position="absolute"
+                            top={-24} // Adjusted for label height
+                            left={0}
+                            style={{ backgroundColor: "var(--link-color)" }}
+                            p="0 1.5"
+                            rounded="sm"
+                            h={5} // 24px
+                            row
+                            align="center"
+                            gap={1}
+                            shadow="sm"
                         >
-                            <Text variant={4} weight="bold" style={{ color: "white", fontSize: "10px" }}>
+                            <Text
+                                size={6}
+                                weight="bold"
+                                style={{ color: "white" }}
+                            >
                                 {targetName}
                             </Text>
-                            <span style={{ opacity: 0.6, fontSize: "9px" }}>
+                            <Text size={6} style={{ color: "white", opacity: 0.8 }}>
                                 {Math.round(targetRect.width)}×{Math.round(targetRect.height)}
-                            </span>
-                        </div>
+                            </Text>
+                        </Frame>
                     </div>
                 )}
             </div>
 
-            {/* Notification Toast - Faster animation */}
-            {notification && (
-                <div
-                    style={{
-                        position: "fixed",
-                        bottom: "24px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        backgroundColor: "#18181b",
-                        color: "white",
-                        padding: "6px 12px",
-                        borderRadius: "6px",
-                        zIndex: 10001,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            {/* Draggable Properties Panel (Only when locked) */}
+            {isLocked && targetElement && (
+                <InspectorPanel
+                    element={targetElement}
+                    name={targetName || "Element"}
+                    initialX={initialX}
+                    initialY={initialY}
+                    onClose={() => {
+                        setIsLocked(false);
+                        setTargetElement(null);
                     }}
-                >
-                    <Copy size={12} />
-                    <Text variant={4} weight="medium" style={{ color: "white", fontSize: "12px" }}>{notification}</Text>
-                </div>
+                    onCopy={(text) => {
+                        setIsLocked(false);
+                        setNotification(text);
+                        setTimeout(() => setNotification(null), 2000);
+                    }}
+                />
             )}
 
+            {/* Notification Toast - Compact */}
+            {notification && (
+                <Frame
+                    position="fixed"
+                    bottom={4}
+                    left="50%"
+                    zIndex={10005}
+                    surface="primary"
+                    rounded="md"
+                    p="1 3"
+                    row
+                    align="center"
+                    gap={2}
+                    shadow="lg"
+                    style={{ transform: "translateX(-50%)" }}
+                >
+                    <Copy size={12} color="var(--primary-fg)" />
+                    <Text
+                        variant={6}
+                        weight="medium"
+                        style={{ color: "var(--primary-fg)" }}
+                    >
+                        {notification}
+                    </Text>
+                </Frame>
+            )}
         </>
+    );
+}
+
+// --- Properties Panel Component ---
+
+function InspectorPanel({
+    element,
+    name,
+    initialX,
+    initialY,
+    onClose,
+    onCopy,
+}: {
+    element: HTMLElement;
+    name: string;
+    initialX: number;
+    initialY: number;
+    onClose: () => void;
+    onCopy: (msg: string) => void;
+}) {
+    // Initialize position only once on mount, so it doesn't jump around if parent rerenders
+    const [position, setPosition] = useState({ x: initialX, y: initialY });
+    const isDragging = useRef(false);
+    const dragOffset = useRef({ x: 0, y: 0 });
+
+    const styles = window.getComputedStyle(element);
+    const getProp = (key: string) => styles.getPropertyValue(key);
+
+    const properties = [
+        {
+            section: "Layout", items: [
+                { key: "Display", value: getProp("display") },
+                { key: "Pos", value: getProp("position") },
+                { key: "W", value: `${Math.round(element.offsetWidth)}` },
+                { key: "H", value: `${Math.round(element.offsetHeight)}` },
+                { key: "Pad", value: getProp("padding") },
+                { key: "Marg", value: getProp("margin") },
+            ]
+        },
+        {
+            section: "Flex", items: [
+                { key: "Dir", value: getProp("flex-direction") },
+                { key: "Align", value: getProp("align-items") },
+                { key: "Justify", value: getProp("justify-content") },
+                { key: "Gap", value: getProp("gap") },
+                { key: "Wrap", value: getProp("flex-wrap") },
+            ]
+        },
+        {
+            section: "Style", items: [
+                { key: "Bg", value: getProp("background-color") },
+                { key: "Color", value: getProp("color") },
+                { key: "Radius", value: getProp("border-radius") },
+                { key: "Font", value: `${getProp("font-size")} ${getProp("font-family").split(",")[0]}` },
+            ],
+        },
+    ];
+
+    // Filter
+    const hasFlex = getProp("display").includes("flex") || getProp("display").includes("grid");
+
+    const handleCopy = () => {
+        const clone = element.cloneNode(true) as HTMLElement;
+        clone.innerHTML = "";
+        const html = clone.outerHTML;
+        navigator.clipboard.writeText(html).then(() => {
+            onCopy("Component shell copied!");
+        });
+    };
+
+    // Drag Logic
+    const handleMouseDown = (e: React.MouseEvent) => {
+        isDragging.current = true;
+        dragOffset.current = {
+            x: e.clientX - position.x,
+            y: e.clientY - position.y
+        };
+    };
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            if (!isDragging.current) return;
+            setPosition({
+                x: e.clientX - dragOffset.current.x,
+                y: e.clientY - dragOffset.current.y
+            });
+        };
+
+        const handleMouseUp = () => {
+            isDragging.current = false;
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseup", handleMouseUp);
+        };
+    }, []);
+
+    return (
+        <Frame
+            position="fixed"
+            style={{
+                top: position.y,
+                left: position.x,
+                maxHeight: "80vh",
+                pointerEvents: "auto",
+            }}
+            w={65} // size-65 (260px)
+            surface="base"
+            rounded="lg"
+            shadow="2xl"
+            border
+            zIndex={10003}
+        >
+            {/* Draggable Header - Compact */}
+            <Frame
+                surface="sunken"
+                p="0 2"
+                row
+                align="center"
+                justify="between"
+                border="bottom"
+                h={6} // size-6 (32px)
+                style={{
+                    cursor: "grab",
+                    userSelect: "none"
+                }}
+                onMouseDown={handleMouseDown}
+            >
+                <Frame row align="center" gap={1.5}>
+                    <Lock size={10} className="text-primary" />
+                    <Text weight="bold" size={5}>
+                        {name}
+                    </Text>
+                </Frame>
+                <Frame row gap={0.5}>
+                    <Action
+                        icon={Copy}
+                        variant="ghost"
+                        size={20}
+                        iconSize={10}
+                        tooltip="Copy HTML"
+                        onClick={(e) => {
+                            e.stopPropagation(); // Prevent drag start
+                            handleCopy();
+                        }}
+                    />
+                    <Action
+                        icon={X}
+                        variant="ghost"
+                        size={20}
+                        iconSize={10}
+                        tooltip="Close Inspector"
+                        onClick={(e) => {
+                            e.stopPropagation(); // Prevent drag start
+                            onClose();
+                        }}
+                    />
+                </Frame>
+            </Frame>
+
+            {/* Content - Compact */}
+            <Frame
+                p="2 0"
+                overflow="auto"
+            >
+                {properties.map((section) => {
+                    if (section.section === "Flex" && !hasFlex) return null;
+                    return (
+                        <Frame key={section.section} gap={0.5} p="0 2 2 2">
+                            <Text weight="bold" size={6} color="tertiary" style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                                {section.section}
+                            </Text>
+                            <Frame gap={0} border rounded="sm" overflow="hidden">
+                                {section.items.map((item, i) => (
+                                    <Frame
+                                        key={item.key}
+                                        row
+                                        justify="between"
+                                        align="center"
+                                        p="0.5 1.5"
+                                        surface={i % 2 === 0 ? "base" : "sunken"}
+                                        style={{
+                                            borderBottom: i < section.items.length - 1 ? "1px solid var(--border-color)" : undefined
+                                        }}
+                                    >
+                                        <Text size={6} color="secondary">
+                                            {item.key}
+                                        </Text>
+                                        <Text
+                                            size={6}
+                                            mono
+                                            style={{
+                                                maxWidth: "110px",
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                                whiteSpace: "nowrap",
+                                                textAlign: "right",
+                                            }}
+                                            title={item.value}
+                                        >
+                                            {item.value}
+                                        </Text>
+                                    </Frame>
+                                ))}
+                            </Frame>
+                        </Frame>
+                    );
+                })}
+            </Frame>
+        </Frame>
     );
 }

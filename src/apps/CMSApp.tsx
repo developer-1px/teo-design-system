@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Frame } from "../design-system/Frame";
-import { ProseDocument } from "../design-system/Prose";
+// import { ProseDocument } from "../design-system/Prose";
 
 // CMS Sections
 import { BodyContentSection } from "./cms/BodyContentSection";
 import { CMSSidebar } from "./cms/CMSSidebar";
 import { SidebarToggle, TopCenterBar, TopRightBar } from "./cms/CMSNavigation";
+import { ScrollTabSection } from "./cms/ScrollTabSection";
 import { FAQBoardFooter } from "./cms/FAQBoardFooter";
 import { FeatureGridSection } from "./cms/FeatureGridSection";
 import { HeaderHero } from "./cms/HeaderHero";
@@ -33,31 +34,19 @@ export function CMSApp() {
 					surface="overlay"
 					align="center"
 					justify="start"
-					p="28px 8px 12px 8px"
 					overflow="auto"
 				>
 					{/* The Canvas */}
-					<ProseDocument
-						maxWidth={isSidebarOpen ? "1000px" : "1200px"}
-						gap={0}
-						surface="base"
-						shadow="2xl"
-						rounded="3xl"
-						overflow="hidden"
-						style={{
-							minHeight: "100%",
-						}}
-						border
-					>
+					<Frame w="100%" style={{ minHeight: "100%" }}>
 						<SiteHeader />
+						<ScrollTabSection />
 						<HeaderHero />
 						<FeatureGridSection />
 						<BodyContentSection />
 						<ImageFooterBanner />
 						<FAQBoardFooter />
 						<MainFooter />
-					</ProseDocument>
-					<Frame h="160px" />
+					</Frame>
 				</Frame>
 			</Frame>
 		</Frame>

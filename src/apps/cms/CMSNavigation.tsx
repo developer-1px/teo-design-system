@@ -16,13 +16,13 @@ export function TopCenterBar() {
     return (
         <Frame
             position="absolute"
-            top={12}
+            top={3}
             left="50%"
             style={{ transform: "translateX(-50%)" }}
             surface="base"
             rounded="full"
-            p={4}
-            gap={4}
+            p={1}
+            gap={1}
             shadow="lg"
             border
             row
@@ -30,19 +30,19 @@ export function TopCenterBar() {
             align="center"
         >
             <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
-            <Frame w={1} h={16} surface="overlay" />
-            <Frame row gap={8} align="center" style={{ padding: "0 8px" }}>
+            <Frame w={0.5} h={4} surface="overlay" />
+            <Frame row gap={2} align="center" style={{ padding: "0 8px" }}>
                 <Text size={13} weight="medium">
                     Page:
                 </Text>
-                <Frame row gap={4} align="center" cursor="pointer">
+                <Frame row gap={1} align="center" cursor="pointer">
                     <Text size={13} weight="bold">
                         Marketing Home
                     </Text>
                     <ChevronDown size={12} opacity={0.5} />
                 </Frame>
             </Frame>
-            <Frame w={1} h={16} surface="overlay" />
+            <Frame w={0.5} h={4} surface="overlay" />
             <Action icon={Play} variant="ghost" size="sm" rounded="full" />
         </Frame>
     );
@@ -52,18 +52,18 @@ export function TopRightBar() {
     return (
         <Frame
             position="absolute"
-            top={12}
-            right={12}
+            top={3}
+            right={3}
             row
-            gap={8}
+            gap={2}
             zIndex={50}
             align="center"
         >
-            <Frame row gap={4} surface="base" p={4} rounded="full" border shadow="lg">
-                <Frame p={6} rounded="full">
+            <Frame row gap={1} surface="base" p={1} rounded="full" border shadow="lg">
+                <Frame p={1.5} rounded="full">
                     <Moon size={16} />
                 </Frame>
-                <Frame p={6} rounded="full">
+                <Frame p={1.5} rounded="full">
                     <Bell size={16} />
                 </Frame>
             </Frame>
@@ -88,11 +88,11 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
     return (
         <Frame
             position="absolute"
-            top={12}
-            left={12}
+            top={3}
+            left={3}
             zIndex={50}
             surface="base"
-            p={8}
+            p={2}
             rounded="full"
             border
             shadow="lg"

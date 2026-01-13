@@ -3,7 +3,7 @@ export type SurfaceToken = "base" | "raised" | "sunken" | "overlay" | "primary" 
 
 export type ActionVariant = "ghost" | "surface" | "primary";
 
-export type TypographyVariant = 1 | 2 | 3 | 4;
+export type TypographyVariant = 1 | 2 | 3 | 4 | 5 | 6;
 export type FontWeight = "bold" | "regular" | "medium";
 
 export type FrameSizeToken =
@@ -21,7 +21,9 @@ export type FrameSizeToken =
 	| 60
 	| 65
 	| 70
-	| 80; // Layout
+	| 80
+	| "header"
+	| "action"; // Layout
 
 export type AlignToken = "start" | "center" | "end" | "stretch" | "baseline";
 export type JustifyToken =

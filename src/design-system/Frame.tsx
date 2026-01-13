@@ -151,7 +151,8 @@ export function Frame({
 	const effectiveJustify = justify ?? (pack ? "center" : undefined);
 
 	// Padding Logic
-	const finalP = p !== undefined ? p : surface ? 2 : 0;
+	// Padding Logic
+	const finalP = p ?? 0;
 	const resolvedPadding = toToken(finalP, "space");
 
 	const computedStyle: React.CSSProperties = {

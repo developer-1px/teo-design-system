@@ -8,13 +8,13 @@ export function FeatureGridSection() {
     return (
         <ProseSection
             w="100%"
-            p="96 24"
-            contentGap={16}
+            p="24 6"
+            contentGap={4}
             surface="base"
             border="bottom"
-            maxWidth={1200}
+            maxWidth={300}
         >
-            <ProseDocument maxWidth={640} gap={3} align="center">
+            <ProseDocument maxWidth={160} gap={1} align="center">
                 <Text
                     size={12}
                     weight="bold"
@@ -30,9 +30,9 @@ export function FeatureGridSection() {
                 </EditableWrapper>
             </ProseDocument>
 
-            <Frame gap={16} w="100%">
+            <Frame gap={4} w="100%">
                 {/* Row 1 */}
-                <Frame row gap={16} wrap="wrap">
+                <Frame row gap={4} wrap="wrap">
                     <FeatureCardLarge
                         icon={Zap}
                         title="Lightning Fast"
@@ -49,7 +49,7 @@ export function FeatureGridSection() {
                 </Frame>
 
                 {/* Row 2 */}
-                <Frame row gap={16}>
+                <Frame row gap={4}>
                     <Frame style={{ gridColumn: "span 2" }}>
                         <FeatureCardLarge
                             icon={Shield}
@@ -131,7 +131,7 @@ function FeatureCardLarge({
             row
         >
             <Frame flex p={6} gap={4} justify="center">
-                <Frame w={48} h={48} rounded="xl" surface="sunken" border pack>
+                <Frame w={12} h={12} rounded="xl" surface="sunken" border pack>
                     <Icon size={24} color="var(--color-primary)" />
                 </Frame>
                 <Frame gap={2}>
@@ -158,7 +158,7 @@ function FeatureCardLarge({
                     }}
                     pack
                 >
-                    <Frame w={120} h={160} surface="base" rounded="lg" shadow="xl" border />
+                    <Frame w={30} h={40} surface="base" rounded="lg" shadow="xl" border />
                 </Frame>
             )}
         </Frame>

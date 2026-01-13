@@ -6,13 +6,13 @@ import { Text } from "../design-system/Text";
 
 export function LandingApp() {
     return (
-        <Frame fill surface="base" overflow="auto">
+        <Frame fill surface="base" overflow="auto" p={0}>
             {/* Navigation */}
             <Frame
                 row
                 justify="between"
                 align="center"
-                p="24 40"
+                p="5 6"
                 position="sticky"
                 top={0}
                 zIndex={100}
@@ -33,7 +33,7 @@ export function LandingApp() {
             {/* Main Content wrapped in ProseDocument */}
             <ProseDocument maxWidth="1200px" gap={0}>
                 {/* Hero Section */}
-                <ProseSection p="120 24" align="center" contentGap={6}>
+                <ProseSection p="120px 24px" align="center" contentGap={6}>
                     <Frame
                         p="1 3"
                         surface="sunken"
@@ -64,7 +64,7 @@ export function LandingApp() {
                         crafted for modern web applications.
                     </Prose>
 
-                    <Frame row gap={3} p="4 0 0 0">
+                    <Frame row gap={3} p="32px 0 0 0" justify="center">
                         {/* Main CTA */}
                         <Action variant="primary" rounded="full" p="3 5" gap={2}>
                             <Text variant={3} weight="bold" style={{ color: "white" }}>
@@ -83,7 +83,7 @@ export function LandingApp() {
                 </ProseSection>
 
                 {/* Why Section */}
-                <ProseSection align="center" contentGap={6}>
+                <ProseSection align="center" contentGap={6} p="96px 24px">
                     <Prose role="h2" align="center">
                         왜 만들었는가?
                     </Prose>
@@ -103,8 +103,8 @@ export function LandingApp() {
                 </ProseSection>
 
                 {/* Features Grid */}
-                <ProseSection p="96 24" contentGap={12}>
-                    <Frame gap={4} align="center" p="0 0 8 0">
+                <ProseSection p="96px 24px" contentGap={12}>
+                    <Frame gap={4} align="center" p="0 0 32px 0">
                         <Prose role="h2">Everything you need</Prose>
                         <Prose role="body" color="secondary">
                             Comprehensive primitives for any layout.
@@ -114,7 +114,7 @@ export function LandingApp() {
                     <Frame
                         grid
                         gap={4}
-                        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}
+                        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}
                     >
                         <FeatureCard
                             icon={Box}
@@ -140,8 +140,8 @@ export function LandingApp() {
                 </ProseSection>
 
                 {/* Footer */}
-                <ProseSection p="96 24" contentGap={4}>
-                    <Frame h={1} surface="sunken" w="100%" />
+                <ProseSection p="96px 24px" contentGap={4}>
+                    <Frame h="1px" surface="sunken" w="100%" />
                     <Frame row justify="between" p="8 0 0 0" align="center">
                         <Prose role="caption" color="tertiary">
                             © 2026 Minimal Design Kit. All rights reserved.
@@ -172,7 +172,7 @@ export function LandingApp() {
                     </Frame>
                 </ProseSection>
             </ProseDocument>
-        </Frame>
+        </Frame >
     );
 }
 
@@ -190,8 +190,8 @@ function FeatureCard({
             gap={4}
         >
             <Frame
-                w={48}
-                h={48}
+                w={8}
+                h={8}
                 surface="base"
                 rounded="xl"
                 pack

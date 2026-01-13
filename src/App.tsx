@@ -4,6 +4,7 @@ import { IDEApp } from "./apps/IDEApp";
 import { LandingApp } from "./apps/LandingApp";
 import { LinearApp } from "./apps/LinearApp";
 import { SlideApp } from "./apps/SlideApp";
+import { TokensApp } from "./apps/TokensApp";
 import { InspectorOverlay } from "./components/InspectorOverlay";
 import { Frame } from "./design-system/Frame";
 import { Text } from "./design-system/Text";
@@ -45,11 +46,12 @@ function Navigation() {
 			border
 		>
 			<NavItem to="/" label="Home" />
+			<NavItem to="/tokens" label="Tokens" />
 			<NavItem to="/slide" label="Slide" />
 			<NavItem to="/linear" label="Linear" />
 			<NavItem to="/ide" label="IDE" />
 			<NavItem to="/cms" label="CMS" />
-		</Frame>
+		</Frame >
 	);
 }
 
@@ -60,6 +62,7 @@ function App() {
 			<Frame fill overflow="hidden">
 				<Routes>
 					<Route path="/" element={<LandingApp />} />
+					<Route path="/tokens" element={<TokensApp />} />
 					<Route path="/slide" element={<SlideApp />} />
 					<Route path="/linear" element={<LinearApp />} />
 					<Route path="/ide" element={<IDEApp />} />

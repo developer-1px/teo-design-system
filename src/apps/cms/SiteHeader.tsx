@@ -7,7 +7,7 @@ export function SiteHeader() {
     return (
         <Frame
             w="100%"
-            h={80}
+            h="header"
             p="0 24"
             row
             align="center"
@@ -16,34 +16,43 @@ export function SiteHeader() {
             surface="base"
             style={{ position: "sticky", top: 0, zIndex: 40 }}
         >
-            <Frame row gap={2} align="center">
-                <Frame w={32} h={32} rounded="lg" surface="primary" border pack shadow="sm">
-                    <Text weight="bold" color="white">
-                        M
+            <Frame
+                w="100%"
+                maxWidth={300}
+                row
+                justify="between"
+                align="center"
+                style={{ margin: "0 auto" }}
+            >
+                <Frame row gap={2} align="center">
+                    <Frame w={32} h={32} rounded="lg" surface="primary" border pack shadow="sm">
+                        <Text weight="bold" color="white">
+                            M
+                        </Text>
+                    </Frame>
+                    <Text weight="bold" size={18}>
+                        Minimal
                     </Text>
                 </Frame>
-                <Text weight="bold" size={18}>
-                    Minimal
-                </Text>
-            </Frame>
 
-            <Frame row gap={6}>
-                <Frame row gap={2}>
-                    <Action label="Features" variant="ghost" />
-                    <Action label="Pricing" variant="ghost" />
-                    <Action label="Resources" variant="ghost" />
-                </Frame>
+                <Frame row gap={6}>
+                    <Frame row gap={2}>
+                        <Action label="Features" variant="ghost" />
+                        <Action label="Pricing" variant="ghost" />
+                        <Action label="Resources" variant="ghost" />
+                    </Frame>
 
-                <Frame row gap={4} align="center">
-                    <Action label="Log in" variant="ghost" h={40} p="0 4" rounded="lg" />
-                    <Action
-                        label="Get Started"
-                        variant="primary"
-                        h={40}
-                        p="0 6"
-                        rounded="full"
-                        glow
-                    />
+                    <Frame row gap={4} align="center">
+                        <Action label="Log in" variant="ghost" h="action" p="0 4" rounded="lg" />
+                        <Action
+                            label="Get Started"
+                            variant="primary"
+                            h="action"
+                            p="0 6"
+                            rounded="full"
+                            glow
+                        />
+                    </Frame>
                 </Frame>
             </Frame>
         </Frame>

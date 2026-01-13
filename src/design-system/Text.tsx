@@ -3,7 +3,8 @@ import "./tokens.css";
 import type { FontWeight, TypographyVariant } from "./types";
 import { toToken } from "./utils";
 
-interface TextProps {
+interface TextProps
+	extends Omit<React.HTMLAttributes<HTMLElement>, "style" | "className" | "color"> {
 	children: React.ReactNode;
 	variant?: TypographyVariant;
 	as?: React.ElementType;
@@ -30,6 +31,7 @@ export function Text({
 	color,
 	className = "",
 	style: styleProp = {},
+	...props
 }: TextProps) {
 	// Map hierarchy to automatic tags if not specified
 	const Tag =
@@ -47,6 +49,8 @@ export function Text({
 		2: "var(--text-body)",
 		3: "var(--text-subtle)",
 		4: "var(--text-muted)",
+		5: "var(--text-muted)",
+		6: "var(--text-dim)",
 	};
 
 	const baseStyle = {
@@ -64,7 +68,7 @@ export function Text({
 	} as React.CSSProperties;
 
 	return (
-		<Tag className={className} style={{ ...baseStyle, ...styleProp }}>
+		<Tag className={className} style={{ ...baseStyle, ...styleProp }} {...props}>
 			{children}
 		</Tag>
 	);
