@@ -14,6 +14,42 @@
 	--text-primary: #18181b;
 	--text-body: #3f3f46;
 	--text-subtle: #71717a;
+
+	/* Prose System */
+	--prose-h1-size: 80px;
+	--prose-h1-height: 1.1;
+	--prose-h1-spacing: -0.03em;
+	--prose-h1-weight: 700;
+
+	--prose-h2-size: 56px;
+	--prose-h2-height: 1.2;
+	--prose-h2-spacing: -0.02em;
+	--prose-h2-weight: 700;
+
+	--prose-h3-size: 40px;
+	--prose-h3-height: 1.3;
+	--prose-h3-spacing: -0.01em;
+	--prose-h3-weight: 600;
+
+	--prose-h4-size: 24px;
+	--prose-h4-height: 1.4;
+	--prose-h4-spacing: 0em;
+	--prose-h4-weight: 600;
+
+	--prose-body-size: 20px;
+	--prose-body-height: 1.6;
+	--prose-body-spacing: 0em;
+	--prose-body-weight: 400;
+
+	--prose-body-sm-size: 16px;
+	--prose-body-sm-height: 1.6;
+	--prose-body-sm-spacing: 0em;
+	--prose-body-sm-weight: 400;
+
+	--prose-caption-size: 14px;
+	--prose-caption-height: 1.5;
+	--prose-caption-spacing: 0.05em;
+	--prose-caption-weight: 500;
 	--text-muted: #a1a1aa;
 	--text-dim: #d4d4d8;
 

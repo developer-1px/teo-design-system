@@ -26,6 +26,8 @@ import {
 import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame";
+import { Prose } from "../design-system/Prose";
 import { Text } from "../design-system/Text";
 
 // --- Types ---
@@ -486,29 +488,27 @@ function HeaderHero() {
 				</Frame>
 
 				<EditableWrapper style={{ width: "100%" }}>
-					<Text
+					<Prose
+						role="h1"
 						align="center"
-						size={80}
-						weight="bold"
-						style={{ lineHeight: 1, letterSpacing: "-0.04em" }}
 					>
 						Build your dream site <br />
 						<span style={{ color: "var(--color-primary)" }}>
 							pixel by pixel.
 						</span>
-					</Text>
+					</Prose>
 				</EditableWrapper>
 
 				<EditableWrapper style={{ maxWidth: 600 }}>
-					<Text
-						size={22}
+					<Prose
+						role="body"
 						color="secondary"
 						align="center"
-						style={{ lineHeight: 1.5, opacity: 0.8 }}
+						style={{ opacity: 0.8 }}
 					>
 						The visual engine for creators who demand perfection. No code, no
 						constraints, just pure creativity.
-					</Text>
+					</Prose>
 				</EditableWrapper>
 
 				<Frame row gap={4} p={4}>
@@ -606,23 +606,21 @@ function FeatureGridSection() {
 				>
 					CAPABILITIES
 				</Text>
-				<Text
-					size={56}
-					weight="bold"
+				<Prose
+					role="h2"
 					align="center"
-					style={{ letterSpacing: "-0.02em" }}
 				>
 					Crafted for detail.
-				</Text>
-				<Text
-					size={18}
+				</Prose>
+				<Prose
+					role="body"
 					color="secondary"
 					align="center"
-					style={{ lineHeight: 1.6, opacity: 0.6 }}
+					style={{ opacity: 0.6 }}
 				>
 					Every component is built with the highest design standards in mind.
 					From typography to interactions, it's all handled.
-				</Text>
+				</Prose>
 			</Frame>
 
 			<Frame gap={4}>
@@ -683,14 +681,14 @@ function FeatureCardSmall({
 			</Frame>
 			<Frame gap={2}>
 				<EditableWrapper>
-					<Text variant={1} size={20} weight="bold">
+					<Prose role="h4">
 						{title}
-					</Text>
+					</Prose>
 				</EditableWrapper>
 				<EditableWrapper>
-					<Text variant={3} size={15} style={{ lineHeight: 1.5 }}>
+					<Prose role="body-sm" color="secondary">
 						{desc}
-					</Text>
+					</Prose>
 				</EditableWrapper>
 			</Frame>
 		</Frame>
@@ -720,14 +718,14 @@ function FeatureCardLarge({
 				</Frame>
 				<Frame gap={2}>
 					<EditableWrapper>
-						<Text variant={1} size={24} weight="bold">
+						<Prose role="h3">
 							{title}
-						</Text>
+						</Prose>
 					</EditableWrapper>
 					<EditableWrapper>
-						<Text variant={3} size={16} style={{ lineHeight: 1.5 }}>
+						<Prose role="body" color="secondary">
 							{desc}
-						</Text>
+						</Prose>
 					</EditableWrapper>
 				</Frame>
 			</Frame>
@@ -765,18 +763,14 @@ function BodyContentSection() {
 					<Text size={14} weight="bold" color="primary">
 						THE PROCESS
 					</Text>
-					<Text
-						size={64}
-						weight="bold"
-						style={{ lineHeight: 1.1, letterSpacing: "-0.03em" }}
-					>
+					<Prose role="h2">
 						Unleash your <br /> internal creative.
-					</Text>
+					</Prose>
 				</Frame>
-				<Text size={20} color="secondary" style={{ lineHeight: 1.6 }}>
+				<Prose role="body" color="secondary">
 					Workflow shouldn't be a bottleneck. Our platform allows developers to
 					focus on logic while designers handle the visuals.
-				</Text>
+				</Prose>
 				<Frame gap={4}>
 					<CheckItem
 						title="Pure Token-based design"
@@ -899,25 +893,22 @@ function ImageFooterBanner() {
 				/>
 
 				<Frame gap={6} align="center" zIndex={10} maxWidth={700}>
-					<Text
-						color="#fff"
-						size={64}
-						weight="bold"
+					<Prose
+						color="white"
+						role="h2"
 						align="center"
-						style={{ letterSpacing: "-0.04em" }}
 					>
 						Ready to elevate <br /> your web presence?
-					</Text>
-					<Text
-						color="#fff"
-						opacity={0.6}
-						size={20}
+					</Prose>
+					<Prose
+						color="white"
+						role="body"
 						align="center"
-						style={{ lineHeight: 1.5 }}
+						style={{ opacity: 0.6 }}
 					>
 						Join 2,000+ companies building high-performance marketing sites with
 						our Visual Engine.
-					</Text>
+					</Prose>
 					<Frame row gap={4}>
 						<Action
 							label="Start for Free"
@@ -983,9 +974,9 @@ function FAQBoardFooter() {
 				<Text size={12} weight="bold" color="primary">
 					SUPPORT
 				</Text>
-				<Text size={48} weight="bold">
+				<Prose role="h2">
 					Common questions
-				</Text>
+				</Prose>
 			</Frame>
 
 			<Frame width="100%" maxWidth={800} gap={4}>
