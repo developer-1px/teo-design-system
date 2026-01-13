@@ -144,3 +144,7 @@
 	width: fit-content;
 	height: fit-content;
 }
+
+.frame>* {
+	flex-shrink: 0;
+}

@@ -475,9 +475,7 @@ function HeaderHero() {
 					align="center"
 					className="hover-scale"
 				>
-					<Frame w={16} h={16} pack>
-						<Sparkles size={12} color="var(--color-primary)" />
-					</Frame>
+					<Sparkles size={12} color="var(--color-primary)" />
 					<Text
 						size={12}
 						weight="bold"
