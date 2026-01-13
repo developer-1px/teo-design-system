@@ -26,7 +26,7 @@ import {
 import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame";
-import { Prose } from "../design-system/Prose";
+import { Prose, ProseDocument } from "../design-system/Prose";
 import { Text } from "../design-system/Text";
 
 // --- Types ---
@@ -464,7 +464,7 @@ function HeaderHero() {
 				}}
 			/>
 
-			<Frame align="center" gap={6} w="100%" maxWidth={900}>
+			<ProseDocument maxWidth={900} gap={6} align="center">
 				<Frame
 					p="1 3"
 					rounded="full"
@@ -530,7 +530,7 @@ function HeaderHero() {
 						rounded="full"
 					/>
 				</Frame>
-			</Frame>
+			</ProseDocument>
 
 			{/* Hero Visual: Mockup UI */}
 			<Frame
@@ -596,7 +596,7 @@ function HeaderHero() {
 function FeatureGridSection() {
 	return (
 		<Frame w="100%" p="96 24" gap={16} surface="base" border="bottom">
-			<Frame gap={3} align="center" maxWidth={700} style={{ margin: "0 auto" }}>
+			<ProseDocument maxWidth={700} gap={3} align="center">
 				<Text
 					size={12}
 					weight="bold"
@@ -620,7 +620,7 @@ function FeatureGridSection() {
 					Every component is built with the highest design standards in mind.
 					From typography to interactions, it's all handled.
 				</Prose>
-			</Frame>
+			</ProseDocument>
 
 			<Frame gap={4}>
 				{/* Bento Grid Layout - Refactored to CSS Grid */}
@@ -891,7 +891,7 @@ function ImageFooterBanner() {
 					}}
 				/>
 
-				<Frame gap={6} align="center" zIndex={10} maxWidth={700}>
+				<ProseDocument maxWidth={700} gap={6} align="center" zIndex={10}>
 					<Prose
 						color="white"
 						role="h2"
@@ -927,7 +927,7 @@ function ImageFooterBanner() {
 							radius="full"
 						/>
 					</Frame>
-				</Frame>
+				</ProseDocument>
 			</Frame>
 
 			{/* Partner Logos */}
@@ -978,7 +978,7 @@ function FAQBoardFooter() {
 				</Prose>
 			</Frame>
 
-			<Frame width="100%" maxWidth={800} gap={4}>
+			<ProseDocument maxWidth={800} gap={4}>
 				<FAQRow
 					q="How secure is my data?"
 					a="We use industry-standard encryption and SOC2 certification to ensure your data stays protected at all times."
@@ -995,9 +995,9 @@ function FAQBoardFooter() {
 					q="Is there a limit on bandwidth?"
 					a="Our Enterprise plans offer unlimited bandwidth, while Pro plans have generous limits."
 				/>
-			</Frame>
+			</ProseDocument>
 
-			<Frame
+			<ProseDocument
 				p={8}
 				surface={1}
 				radius="2xl"
@@ -1005,9 +1005,8 @@ function FAQBoardFooter() {
 				row
 				gap={6}
 				align="center"
-				width="100%"
 				maxWidth={800}
-				style={{ margin: "40px auto 0" }}
+				style={{ marginTop: 40 }}
 			>
 				<Frame
 					width={56}
@@ -1034,8 +1033,8 @@ function FAQBoardFooter() {
 					p="0 4"
 					radius="lg"
 				/>
-			</Frame>
 		</Frame>
+		</Frame >
 	);
 }
 
@@ -1192,9 +1191,9 @@ export function CMSApp() {
 					overflow="auto"
 				>
 					{/* The Canvas */}
-					<Frame
-						width="100%"
+					<ProseDocument
 						maxWidth={isSidebarOpen ? 1000 : 1200}
+						gap={0}
 						surface="base"
 						shadow="2xl"
 						radius="3xl"
@@ -1212,7 +1211,7 @@ export function CMSApp() {
 						<ImageFooterBanner />
 						<FAQBoardFooter />
 						<MainFooter />
-					</Frame>
+					</ProseDocument>
 					<Frame height={160} />
 				</Frame>
 			</Frame>
