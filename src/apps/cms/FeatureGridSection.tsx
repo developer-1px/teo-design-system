@@ -1,166 +1,159 @@
 import { Cpu, MessageSquare, Shield, Zap } from "lucide-react";
-import { Frame } from "../../design-system/Frame";
-import { Prose, ProseDocument, ProseSection } from "../../design-system/Prose";
+import {
+  Prose,
+  ProseDocument,
+  ProseSection,
+} from "../../design-system/Prose";
 import { Text } from "../../design-system/Text";
+import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
 
 export function FeatureGridSection() {
-    return (
-        <ProseSection
-            w="100%"
-            p="24 6"
-            contentGap={4}
-            surface="base"
-            border="bottom"
-            maxWidth={300}
+  return (
+    <ProseSection
+      w="100%"
+      p="24 6"
+      contentGap={4}
+      surface="base"
+      border="bottom"
+      maxWidth={300}
+    >
+      <ProseDocument maxWidth={160} gap={1} align="center">
+        <Text
+          size={12}
+          weight="bold"
+          color="primary"
+          style={{ letterSpacing: "0.05em" }}
         >
-            <ProseDocument maxWidth={160} gap={1} align="center">
-                <Text
-                    size={12}
-                    weight="bold"
-                    color="primary"
-                    style={{ letterSpacing: "0.05em" }}
-                >
-                    FEATURES
-                </Text>
-                <EditableWrapper>
-                    <Prose role="h2">
-                        Everything you need <br /> to scale.
-                    </Prose>
-                </EditableWrapper>
-            </ProseDocument>
+          FEATURES
+        </Text>
+        <EditableWrapper>
+          <Prose role="h2">
+            Everything you need <br /> to scale.
+          </Prose>
+        </EditableWrapper>
+      </ProseDocument>
 
-            <Frame gap={4} w="100%">
-                {/* Row 1 */}
-                <Frame row gap={4} wrap="wrap">
-                    <FeatureCardLarge
-                        icon={Zap}
-                        title="Lightning Fast"
-                        desc="Optimized for speed with zero-runtime overhead."
-                        flex={2}
-                        image
-                    />
-                    <FeatureCardSmall
-                        icon={MessageSquare}
-                        title="Real-time Comments"
-                        desc="Collaborate with your team directly on the canvas."
-                        flex={1}
-                    />
-                </Frame>
+      <Frame gap={4} w="100%">
+        {/* Row 1 */}
+        <Frame row gap={4} wrap="wrap">
+          <FeatureCardLarge
+            icon={Zap}
+            title="Lightning Fast"
+            desc="Optimized for speed with zero-runtime overhead."
+            flex={2}
+            image
+          />
+          <FeatureCardSmall
+            icon={MessageSquare}
+            title="Real-time Comments"
+            desc="Collaborate with your team directly on the canvas."
+            flex={1}
+          />
+        </Frame>
 
-                {/* Row 2 */}
-                <Frame row gap={4}>
-                    <Frame style={{ gridColumn: "span 2" }}>
-                        <FeatureCardLarge
-                            icon={Shield}
-                            title="Enterprise Security"
-                            desc="Built for teams that demand safety and role-based access control."
-                            flex={1}
-                        />
-                    </Frame>
-                    <FeatureCardSmall
-                        icon={Cpu}
-                        title="AI Automation"
-                        desc="Let AI generate layouts."
-                    />
-                </Frame>
-            </Frame>
-        </ProseSection>
-    );
+        {/* Row 2 */}
+        <Frame row gap={4}>
+          <Frame style={{ gridColumn: "span 2" }}>
+            <FeatureCardLarge
+              icon={Shield}
+              title="Enterprise Security"
+              desc="Built for teams that demand safety and role-based access control."
+              flex={1}
+            />
+          </Frame>
+          <FeatureCardSmall
+            icon={Cpu}
+            title="AI Automation"
+            desc="Let AI generate layouts."
+          />
+        </Frame>
+      </Frame>
+    </ProseSection>
+  );
 }
 
 interface FeatureCardSmallProps {
-    icon: React.ElementType;
-    title: string;
-    desc: string;
-    flex?: number;
+  icon: React.ElementType;
+  title: string;
+  desc: string;
+  flex?: number;
 }
 
 function FeatureCardSmall({
-    icon: Icon,
-    title,
-    desc,
-    flex,
+  icon: Icon,
+  title,
+  desc,
+  flex,
 }: FeatureCardSmallProps) {
-    return (
-        <Frame
-            flex={flex}
-            p={6}
-            surface="base"
-            rounded="2xl"
-            border
-            gap={4}
-        >
-            <Frame w={48} h={48} rounded="xl" surface="sunken" border pack>
-                <Icon size={24} color="var(--color-primary)" />
-            </Frame>
-            <Frame gap={2}>
-                <EditableWrapper>
-                    <Prose role="h4">
-                        {title}
-                    </Prose>
-                </EditableWrapper>
-                <EditableWrapper>
-                    <Prose role="body-sm" color="secondary">
-                        {desc}
-                    </Prose>
-                </EditableWrapper>
-            </Frame>
-        </Frame>
-    );
+  return (
+    <Frame flex={flex} p={6} surface="base" rounded="2xl" border gap={4}>
+      <Frame w={48} h={48} rounded="xl" surface="sunken" border pack>
+        <Icon size={24} color="var(--color-primary)" />
+      </Frame>
+      <Frame gap={2}>
+        <EditableWrapper>
+          <Prose role="h4">{title}</Prose>
+        </EditableWrapper>
+        <EditableWrapper>
+          <Prose role="body-sm" color="secondary">
+            {desc}
+          </Prose>
+        </EditableWrapper>
+      </Frame>
+    </Frame>
+  );
 }
 
 interface FeatureCardLargeProps extends FeatureCardSmallProps {
-    image?: boolean;
+  image?: boolean;
 }
 
 function FeatureCardLarge({
-    icon: Icon,
-    title,
-    desc,
-    flex,
-    image,
+  icon: Icon,
+  title,
+  desc,
+  flex,
+  image,
 }: FeatureCardLargeProps) {
-    return (
-        <Frame
-            flex={flex}
-            surface="base"
-            rounded="2xl"
-            border
-            overflow="hidden"
-            row
-        >
-            <Frame flex p={6} gap={4} justify="center">
-                <Frame w={12} h={12} rounded="xl" surface="sunken" border pack>
-                    <Icon size={24} color="var(--color-primary)" />
-                </Frame>
-                <Frame gap={2}>
-                    <EditableWrapper>
-                        <Prose role="h3">
-                            {title}
-                        </Prose>
-                    </EditableWrapper>
-                    <EditableWrapper>
-                        <Prose role="body" color="secondary">
-                            {desc}
-                        </Prose>
-                    </EditableWrapper>
-                </Frame>
-            </Frame>
-            {image && (
-                <Frame
-                    w="40%"
-                    surface="raised"
-                    border="left"
-                    style={{
-                        background:
-                            "linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
-                    }}
-                    pack
-                >
-                    <Frame w={30} h={40} surface="base" rounded="lg" shadow="xl" border />
-                </Frame>
-            )}
+  return (
+    <Frame
+      flex={flex}
+      surface="base"
+      rounded="2xl"
+      border
+      overflow="hidden"
+      row
+    >
+      <Frame flex p={6} gap={4} justify="center">
+        <Frame w={12} h={12} rounded="xl" surface="sunken" border pack>
+          <Icon size={24} color="var(--color-primary)" />
         </Frame>
-    );
+        <Frame gap={2}>
+          <EditableWrapper>
+            <Prose role="h3">{title}</Prose>
+          </EditableWrapper>
+          <EditableWrapper>
+            <Prose role="body" color="secondary">
+              {desc}
+            </Prose>
+          </EditableWrapper>
+        </Frame>
+      </Frame>
+      {image && (
+        <Frame
+          w="40%"
+          surface="raised"
+          border="left"
+          style={{
+            background:
+              "linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
+          }}
+          pack
+        >
+          <Frame w={30} h={40} surface="base" rounded="lg" shadow="xl" border />
+        </Frame>
+      )}
+    </Frame>
+  );
 }

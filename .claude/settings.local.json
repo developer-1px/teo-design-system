@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(for file in src/apps/IDEApp.tsx src/apps/IdeDemoApp.tsx src/apps/LandingApp.tsx src/apps/LinearApp.tsx src/apps/TokensApp.tsx src/inspector/InspectorOverlay.tsx)",
+      "Bash(do)",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(for file in src/App.tsx src/apps/cms/*.tsx)",
+      "Bash([ -f \"$file\" ])",
+      "Bash(continue)"
     ],
     "deny": [],
     "ask": []

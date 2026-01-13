@@ -1,46 +1,46 @@
 import type React from "react";
 
 interface SeparatorProps {
-	orientation?: "horizontal" | "vertical";
-	length?: string | number;
-	thickness?: string | number;
-	color?: string;
-	style?: React.CSSProperties;
-	className?: string;
+  orientation?: "horizontal" | "vertical";
+  length?: string | number;
+  thickness?: string | number;
+  color?: string;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
 export function Separator({
-	orientation = "horizontal",
-	length = "100%",
-	thickness = "var(--border-width)",
-	color = "var(--border-color)",
-	style,
-	className = "",
+  orientation = "horizontal",
+  length = "100%",
+  thickness = "var(--border-width)",
+  color = "var(--border-color)",
+  style,
+  className = "",
 }: SeparatorProps) {
-	const isHorizontal = orientation === "horizontal";
+  const isHorizontal = orientation === "horizontal";
 
-	const finalStyle: React.CSSProperties = {
-		backgroundColor: color,
-		width: isHorizontal
-			? typeof length === "number"
-				? `${length}px`
-				: length
-			: thickness,
-		height: isHorizontal
-			? thickness
-			: typeof length === "number"
-				? `${length}px`
-				: length,
-		flexShrink: 0,
-		...style,
-	};
+  const finalStyle: React.CSSProperties = {
+    backgroundColor: color,
+    width: isHorizontal
+      ? typeof length === "number"
+        ? `${length}px`
+        : length
+      : thickness,
+    height: isHorizontal
+      ? thickness
+      : typeof length === "number"
+        ? `${length}px`
+        : length,
+    flexShrink: 0,
+    ...style,
+  };
 
-	return (
-		<div
-			className={`separator ${className}`}
-			style={finalStyle}
-			role="separator"
-			aria-orientation={orientation}
-		/>
-	);
+  return (
+    <div
+      className={`separator ${className}`}
+      style={finalStyle}
+      role="separator"
+      aria-orientation={orientation}
+    />
+  );
 }
