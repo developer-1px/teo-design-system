@@ -429,11 +429,11 @@ function HeaderHero() {
 	return (
 		<Frame
 			w="100%"
-			p="24 12"
+			p="84 24"
 			pack
-			gap={8}
+			gap={12}
 			surface="base"
-			style={{ minHeight: "80vh", position: "relative", overflow: "hidden" }}
+			style={{ minHeight: "90vh", position: "relative", overflow: "hidden" }}
 		>
 			{/* Background Decoration */}
 			<Frame
@@ -544,7 +544,7 @@ function HeaderHero() {
 				shadow="2xl"
 				style={{
 					position: "relative",
-					marginTop: 40,
+					marginTop: 80,
 					transform: "perspective(1000px) rotateX(5deg)",
 				}}
 				overflow="hidden"
@@ -596,7 +596,7 @@ function HeaderHero() {
 
 function FeatureGridSection() {
 	return (
-		<Frame w="100%" p="24 12" gap={12} surface="sunken" border="bottom">
+		<Frame w="100%" p="96 24" gap={16} surface="base" border="bottom">
 			<Frame gap={3} align="center" maxWidth={700} style={{ margin: "0 auto" }}>
 				<Text
 					size={12}
@@ -607,7 +607,7 @@ function FeatureGridSection() {
 					CAPABILITIES
 				</Text>
 				<Text
-					size={48}
+					size={56}
 					weight="bold"
 					align="center"
 					style={{ letterSpacing: "-0.02em" }}
@@ -618,7 +618,7 @@ function FeatureGridSection() {
 					size={18}
 					color="secondary"
 					align="center"
-					style={{ lineHeight: 1.6, opacity: 0.7 }}
+					style={{ lineHeight: 1.6, opacity: 0.6 }}
 				>
 					Every component is built with the highest design standards in mind.
 					From typography to interactions, it's all handled.
@@ -627,7 +627,7 @@ function FeatureGridSection() {
 
 			<Frame gap={4}>
 				{/* Bento Grid Layout - Refactored to CSS Grid */}
-				<Frame grid columns={3} gap={4}>
+				<Frame grid columns={3} gap={6}>
 					<FeatureCardSmall
 						icon={Zap}
 						title="Instant Preview"
@@ -753,9 +753,9 @@ function BodyContentSection() {
 	return (
 		<Frame
 			w="100%"
-			p="24 12"
-			gap={16}
-			surface="base"
+			p="96 24"
+			gap={24}
+			surface="sunken"
 			border="bottom"
 			row
 			align="center"
@@ -766,7 +766,7 @@ function BodyContentSection() {
 						THE PROCESS
 					</Text>
 					<Text
-						size={56}
+						size={64}
 						weight="bold"
 						style={{ lineHeight: 1.1, letterSpacing: "-0.03em" }}
 					>
@@ -876,7 +876,7 @@ function CheckItem({ title, desc }: CheckItemProps) {
 
 function ImageFooterBanner() {
 	return (
-		<Frame width="100%" p="24 12" surface="sunken" border="bottom">
+		<Frame width="100%" p="96 24" surface="base" border="bottom">
 			<Frame
 				width="100%"
 				height={500}
@@ -978,7 +978,7 @@ function ImageFooterBanner() {
 
 function FAQBoardFooter() {
 	return (
-		<Frame width="100%" p="24 12" gap={12} surface="base" align="center">
+		<Frame width="100%" p="96 24" gap={12} surface="base" align="center">
 			<Frame gap={2} align="center">
 				<Text size={12} weight="bold" color="primary">
 					SUPPORT
@@ -1090,7 +1090,7 @@ function FAQRow({ q, a }: FAQRowProps) {
 
 function MainFooter() {
 	return (
-		<Frame width="100%" p="16 12 8 12" surface={1} gap={16}>
+		<Frame width="100%" p="64 24" surface="sunken" gap={16}>
 			<Frame row justify="between" align="start">
 				<Frame gap={6} width="35%">
 					<Frame row gap={3} align="center">
@@ -1182,7 +1182,7 @@ export function CMSApp() {
 	const [isSidebarOpen, setSidebarOpen] = useState(true);
 
 	return (
-		<Frame fill surface={2} overflow="hidden">
+		<Frame fill surface="raised" overflow="hidden">
 			<TopCenterBar />
 			<TopRightBar />
 			<SidebarToggle
@@ -1195,7 +1195,7 @@ export function CMSApp() {
 				<Frame
 					flex
 					fill
-					surface={3}
+					surface="overlay"
 					align="center"
 					justify="start"
 					p="28 8 12 8"
@@ -1205,7 +1205,7 @@ export function CMSApp() {
 					<Frame
 						width="100%"
 						maxWidth={isSidebarOpen ? 1000 : 1200}
-						surface={0}
+						surface="base"
 						shadow="2xl"
 						radius="3xl"
 						overflow="hidden"
