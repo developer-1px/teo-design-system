@@ -8,14 +8,14 @@ import {
 	Square,
 	Type,
 } from "lucide-react";
-import { FloatingToolbar } from "./components/FloatingToolbar";
-import { PropertiesPanel } from "./components/PropertiesPanel";
-import { SlidesPanel } from "./components/SlidesPanel";
-import { Action } from "./design-system/Action";
-import { Frame } from "./design-system/Frame";
-import { Text } from "./design-system/Text";
+import { FloatingToolbar } from "../components/FloatingToolbar";
+import { PropertiesPanel } from "../components/PropertiesPanel";
+import { SlidesPanel } from "../components/SlidesPanel";
+import { Action } from "../design-system/Action";
+import { Frame } from "../design-system/Frame";
+import { Text } from "../design-system/Text";
 
-function App() {
+export function SlideApp() {
 	return (
 		<Frame fill surface="sunken" overflow="hidden">
 			{/* 1. Global Header */}
@@ -47,10 +47,10 @@ function App() {
 						align="center"
 						surface="base"
 						p={1}
-						radius="round"
+						radius="full"
 						shadow="sm"
 					>
-						<Frame width={16} height={16} surface="overlay" radius="round" />
+						<Frame width={16} height={16} surface="overlay" radius="full" />
 						<Action icon={Plus} iconSize={10} size={20} />
 					</Frame>
 					<Action
@@ -58,7 +58,7 @@ function App() {
 						iconSize={14}
 						label="Present"
 						variant="primary"
-						radius="round"
+						radius="full"
 						size={24}
 					/>
 					<Action
@@ -66,7 +66,7 @@ function App() {
 						iconSize={14}
 						label="Share"
 						variant="surface"
-						radius="round"
+						radius="full"
 						size={24}
 					/>
 				</Frame>
@@ -82,7 +82,7 @@ function App() {
 					flex
 					fill
 					position="relative"
-					radius="round"
+					radius="full"
 					overflow="hidden"
 					as="main"
 				>
@@ -97,13 +97,13 @@ function App() {
 								</Text>
 								<Frame height={4} />
 								<Frame row gap={3}>
-									<Frame width={40} height={40} surface="sunken" radius="round" pack>
+									<Frame width={40} height={40} surface="sunken" radius="full" pack>
 										<Square size={16} color="var(--text-body)" />
 									</Frame>
-									<Frame width={40} height={40} surface="raised" radius="round" pack>
+									<Frame width={40} height={40} surface="raised" radius="full" pack>
 										<Circle size={16} color="var(--text-body)" />
 									</Frame>
-									<Frame width={40} height={40} surface="overlay" radius="round" pack>
+									<Frame width={40} height={40} surface="overlay" radius="full" pack>
 										<Type size={16} color="var(--text-body)" />
 									</Frame>
 								</Frame>
@@ -121,5 +121,3 @@ function App() {
 		</Frame>
 	);
 }
-
-export default App;
