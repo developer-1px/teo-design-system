@@ -1,8 +1,6 @@
-import { MoreHorizontal } from "lucide-react";
-import { Action } from "../design-system/Action";
-import { Frame } from "../design-system/Frame";
-import { Section } from "../design-system/Section";
-import { Card } from "../design-system/text/Card";
+import {Frame} from "../design-system/Frame"
+import {Section} from "../design-system/Section"
+import {Card} from "../design-system/text/Card"
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -15,45 +13,33 @@ export function SlidesPanel() {
       rounded="round"
       shadow="sm"
     >
-      <Frame p={2} gap={2} overflow="auto" flex fill style={{ minHeight: 0 }}>
+      <Frame overflow="auto" surface="sunken" flex fill style={{ minHeight: 0 }}>
         {slides.map((num) => (
           <Frame
             key={num}
             gap={1}
-            style={{ flexShrink: 0 }}
-            opacity={num === 1 ? 1 : 0.6}
+            p={2}
+            border={num === 1}
           >
-            <Frame row justify="between" align="center">
+            <Frame row justify="between" align="end" gap={1}>
               <Card.Note
                 style={{
-                  fontSize: "10px",
                   color:
-                    num === 1 ? "var(--text-primary)" : "var(--text-subtle)",
+                    num === 1 ? "var(--text-white)" : "var(--text-subtle)",
                 }}
               >
                 {num}
               </Card.Note>
-              <Action
-                icon={MoreHorizontal}
-                iconSize={12}
-                style={{ width: "20px", height: "16px" }}
-                opacity={num === 1 ? 0.6 : 0}
+              <Frame
+                w="100%"
+                ratio="16/9"
+                surface="raised"
+                rounded="round"
+                flex
+                pack
+                overflow="hidden"
               />
             </Frame>
-            <Frame
-              w="100%"
-              ratio="16/9"
-              surface={num === 1 ? "base" : "raised"}
-              rounded="round"
-              flex
-              align="center"
-              justify="center"
-              overflow="hidden"
-              style={{
-                boxShadow:
-                  num === 1 ? "0 0 0 1.5px var(--text-primary)" : "none",
-              }}
-            />
           </Frame>
         ))}
       </Frame>
