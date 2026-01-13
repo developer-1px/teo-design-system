@@ -2,7 +2,7 @@ import { MoreHorizontal } from "lucide-react";
 import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame";
 import { Section } from "../design-system/Section";
-import { Text } from "../design-system/Text";
+import { Card } from "../design-system/text/Card";
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -24,8 +24,7 @@ export function SlidesPanel() {
             opacity={num === 1 ? 1 : 0.6}
           >
             <Frame row justify="between" align="center">
-              <Text
-                variant={4}
+              <Card.Note
                 style={{
                   fontSize: "10px",
                   color:
@@ -33,7 +32,7 @@ export function SlidesPanel() {
                 }}
               >
                 {num}
-              </Text>
+              </Card.Note>
               <Action
                 icon={MoreHorizontal}
                 iconSize={12}

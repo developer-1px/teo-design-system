@@ -79,7 +79,7 @@ button {
 }
 
 .action-ghost:hover {
-  background-color: var(--surface-raised);
+  background-color: var(--control-bg-hover);
   color: var(--text-primary);
 }
 

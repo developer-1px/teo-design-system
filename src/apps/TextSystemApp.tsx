@@ -54,6 +54,71 @@ export function TextSystemApp() {
                     />
                 </Frame>
 
+                {/* Section 0: Text System Intro (1-Column Layout) */}
+                <Frame
+                    w="100%"
+                    h="100vh"
+                    style={{ scrollSnapAlign: "start" }}
+                    align="center"
+                    justify="center"
+                    surface="base"
+                    p={10}
+                >
+                    <Frame
+                        align="center"
+                        gap={8}
+                        maxWidth="800px"
+                    >
+                        <Frame
+                            p={4}
+                            rounded="3xl"
+                            surface="input"
+                            style={{
+                                background: "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
+                                border: "1px solid var(--border-color)",
+                                boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)"
+                            }}
+                        >
+                            <FileText size={80} strokeWidth={1} style={{ opacity: 0.8 }} />
+                        </Frame>
+
+                        <Frame align="center" gap={4}>
+                            <Prose.Title variant="xl" style={{ fontSize: "72px", letterSpacing: "-0.04em", lineHeight: 1 }}>
+                                Text System
+                            </Prose.Title>
+                            <Prose.Body style={{ fontSize: "24px", textAlign: "center", opacity: 0.6, maxWidth: "600px" }}>
+                                A semantic, context-aware hierarchy engine.
+                            </Prose.Body>
+                        </Frame>
+
+                        {/* Hierarchy Visualization */}
+                        <Frame row gap={4} style={{ marginTop: "var(--space-8)" }}>
+                            {[
+                                { title: "Experience", desc: "Global Scale", icon: Globe },
+                                { title: "Context", desc: "Semantic Role", icon: FileText },
+                                { title: "Slot", desc: "Content Area", icon: Monitor }, // Placeholder icon for slot
+                                { title: "Variant", desc: "Visual Style", icon: Monitor }, // Placeholder
+                            ].map((layer, i) => (
+                                <Frame key={i} row align="center" gap={2}>
+                                    <Frame
+                                        surface="raised"
+                                        p="4 6"
+                                        rounded="xl"
+                                        shadow="sm"
+                                        gap={1}
+                                        w="160px"
+                                    >
+                                        <Card.Note style={{ opacity: 0.5, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Layer {i + 1}</Card.Note>
+                                        <Card.Title>{layer.title}</Card.Title>
+                                        <Card.Desc>{layer.desc}</Card.Desc>
+                                    </Frame>
+                                    {i < 3 && <Frame h="2px" w="20px" surface="border" />}
+                                </Frame>
+                            ))}
+                        </Frame>
+                    </Frame>
+                </Frame>
+
                 {/* Section 1: Context: Prose */}
                 <ShowcaseSection
                     title="Context: Prose"
@@ -92,7 +157,7 @@ export function TextSystemApp() {
                 >
                     <Frame gap={8} row wrap="wrap" justify="center">
                         <Frame surface="raised" p={6} rounded="xl" gap={3} w="320px" shadow="sm" style={{ border: "1px solid var(--border-color)" }}>
-                            <Frame w="40px" h="40px" rounded="lg" surface="sunken" align="center" justify="center" style={{ marginBottom: "var(--space-2)" }}>
+                            <Frame w="40px" h="40px" rounded="lg" surface="sunken" pack style={{ marginBottom: "var(--space-2)" }}>
                                 <Globe size={20} />
                             </Frame>
                             <Card.Title>Project Alpha</Card.Title>
@@ -106,7 +171,7 @@ export function TextSystemApp() {
                         </Frame>
 
                         <Frame surface="raised" p={6} rounded="xl" gap={3} w="320px" shadow="sm" style={{ border: "1px solid var(--border-color)" }}>
-                            <Frame w="40px" h="40px" rounded="lg" surface="sunken" align="center" justify="center" style={{ marginBottom: "var(--space-2)" }}>
+                            <Frame w="40px" h="40px" rounded="lg" surface="sunken" pack style={{ marginBottom: "var(--space-2)" }}>
                                 <FileText size={20} />
                             </Frame>
                             <Card.Title>Q1 Report</Card.Title>

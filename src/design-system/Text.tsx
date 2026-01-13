@@ -1,7 +1,7 @@
 import type React from "react";
-import "./tokens.css";
-import type { FontWeight, TypographyVariant } from "./types";
-import { toToken } from "./utils";
+import "./lib/tokens.css";
+import type { FontWeight, TypographyVariant } from "./lib/types.ts";
+import { toToken } from "./lib/utils.ts";
 
 
 

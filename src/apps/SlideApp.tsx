@@ -12,8 +12,9 @@ import { FloatingToolbar } from "../components/FloatingToolbar";
 import { PropertiesPanel } from "../components/PropertiesPanel";
 import { SlidesPanel } from "../components/SlidesPanel";
 import { Action } from "../design-system/Action";
+import { Menu } from "../design-system/text/Menu";
 import { Frame } from "../design-system/Frame";
-import { Text } from "../design-system/Text";
+import { Prose } from "../design-system/text/Prose";
 
 export function SlideApp() {
   return (
@@ -38,9 +39,9 @@ export function SlideApp() {
             style={{ width: "28px", height: "28px" }}
           />
           <Frame row gap={2} align="center">
-            <Text variant={2} weight="bold" size={4}>
+            <Menu.Item style={{ fontWeight: 600 }}>
               Untitled Presentation
-            </Text>
+            </Menu.Item>
             <Action
               icon={ChevronDown}
               iconSize={12}
@@ -54,7 +55,7 @@ export function SlideApp() {
             row
             gap={1}
             align="center"
-            surface="base"
+            surface="overlay"
             p={1}
             rounded="round"
             shadow="sm"
@@ -75,16 +76,18 @@ export function SlideApp() {
             iconSize={14}
             label="Present"
             variant="primary"
-            rounded="round"
-            style={{ height: "24px" }}
+            rounded="md"
+            h="28px"
+            p="0 3"
           />
           <Action
             icon={Share}
             iconSize={14}
             label="Share"
             variant="surface"
-            rounded="round"
-            style={{ height: "24px" }}
+            rounded="md"
+            h="28px"
+            p="0 3"
           />
         </Frame>
       </Frame>
@@ -112,12 +115,12 @@ export function SlideApp() {
               style={{ width: "1000px", maxWidth: "100%" }}
             >
               <Frame gap={4} align="center">
-                <Text variant={1} size="42px" weight="bold">
+                <Prose.Title variant="xl">
                   Minimal Design Kit
-                </Text>
-                <Text variant={3} size={3}>
+                </Prose.Title>
+                <Prose.Title variant="md" style={{ color: "var(--text-secondary)" }}>
                   Refined & Polished UI.
-                </Text>
+                </Prose.Title>
                 <Frame style={{ height: "4px" }} />
                 <Frame row gap={3}>
                   <Frame

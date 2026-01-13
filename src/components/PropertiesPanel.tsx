@@ -20,7 +20,8 @@ import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
-import { Text } from "../design-system/Text";
+import { Card } from "../design-system/text/Card";
+import { Menu } from "../design-system/text/Menu";
 
 // --- Data ---
 
@@ -44,10 +45,10 @@ const PropertySection = ({
   children: React.ReactNode;
 }) => (
   <Frame gap={2}>
-    <Frame row justify="between" align="center" p="2 2 0 2">
-      <Text variant={3} weight="bold" size={5}>
+    <Frame row justify="between" align="center" p="0 2">
+      <Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
-      </Text>
+      </Menu.Group>
       <Action
         icon={Plus}
         iconSize={12}
@@ -109,23 +110,20 @@ export function PropertiesPanel() {
         }}
       >
         {["DESIGN", "ANIMATE"].map((tab) => (
-          <Frame
+          <Action
             key={tab}
             flex
-            pack
-            rounded="round"
+            variant="ghost"
             onClick={() => setActiveTab(tab as "DESIGN" | "ANIMATE")}
             style={{
-              cursor: "pointer",
               backgroundColor:
-                activeTab === tab ? "var(--tab-bg-active)" : "transparent",
+                activeTab === tab ? "var(--tab-bg-active)" : undefined,
             }}
           >
-            <Text
-              variant={4}
-              weight={activeTab === tab ? "bold" : "medium"}
-              size={5}
+            <Menu.Item
               style={{
+                fontWeight: activeTab === tab ? "bold" : "medium",
+                fontSize: "12px",
                 color:
                   activeTab === tab
                     ? "var(--text-primary)"
@@ -133,8 +131,8 @@ export function PropertiesPanel() {
               }}
             >
               {tab}
-            </Text>
-          </Frame>
+            </Menu.Item>
+          </Action>
         ))}
       </Frame>
 
@@ -288,9 +286,9 @@ export function PropertiesPanel() {
               />
             }
             rightIcon={
-              <Text variant={4} size={5}>
+              <Card.Note style={{ fontSize: "12px" }}>
                 100%
-              </Text>
+              </Card.Note>
             }
           />
         </PropertySection>
@@ -311,9 +309,9 @@ export function PropertiesPanel() {
               }
               rightIcon={
                 <Frame row gap={2}>
-                  <Text variant={4} size={5}>
+                  <Card.Note style={{ fontSize: "12px" }}>
                     100%
-                  </Text>
+                  </Card.Note>
                   <Action
                     icon={Eye}
                     iconSize={10}

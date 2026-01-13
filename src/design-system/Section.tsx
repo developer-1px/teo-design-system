@@ -1,9 +1,8 @@
-import type React from "react";
-import { Text } from "./Text";
+import { Card } from "./text/Card";
 import { Frame } from "./Frame";
-import "./tokens.css";
+import "./lib/tokens.css";
 
-import type { RoundedToken, SurfaceToken } from "./types";
+import type { RoundedToken, SurfaceToken } from "./lib/types.ts";
 
 interface SectionProps {
   children?: React.ReactNode;
@@ -68,8 +67,7 @@ export function Section({
         >
           {icon && <span style={{ color: "var(--text-subtle)" }}>{icon}</span>}
           {title && (
-            <Text
-              variant={4}
+            <Card.Note
               style={{
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
@@ -77,7 +75,7 @@ export function Section({
               }}
             >
               {title}
-            </Text>
+            </Card.Note>
           )}
         </Frame>
       )}

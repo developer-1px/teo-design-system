@@ -40,7 +40,6 @@ export const Card = {
             ...style
         }} {...props}>
             {children}
-            {children}
         </Text>
     ),
     Code: ({ children, style, ...props }: any) => (

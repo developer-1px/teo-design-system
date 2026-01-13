@@ -1,10 +1,10 @@
 import type React from "react";
-import "./tokens.css";
-import "./frame.css";
+import "./lib/tokens.css";
+import "./lib/frame.css";
 
-import type { FrameProps } from "./props";
-import { toToken } from "./utils";
-import { frameToSettings } from "./frameToSettings";
+import type { FrameProps } from "./lib/props.ts";
+import { toToken } from "./lib/utils.ts";
+import { frameToSettings } from "./lib/frameToSettings.ts";
 
 
 

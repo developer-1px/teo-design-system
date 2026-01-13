@@ -1,6 +1,6 @@
 import React from "react";
-import type { FrameProps } from "./props";
-import { toToken } from "./utils";
+import type { FrameProps } from "./props.ts";
+import { toToken } from "./utils.ts";
 
 export function frameToSettings(props: FrameProps): { className: string; style: React.CSSProperties } {
     const classes: string[] = [];

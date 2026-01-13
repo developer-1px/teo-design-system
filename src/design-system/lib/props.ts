@@ -8,7 +8,7 @@ import type {
     RoundedToken,
     ShadowToken,
     SurfaceToken,
-} from "./types";
+} from "./types.ts";
 
 export interface FrameProps
     extends Omit<React.HTMLAttributes<HTMLElement>, "style" | "title" | "color"> {

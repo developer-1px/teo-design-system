@@ -1,7 +1,7 @@
 import type React from "react";
-import "./tokens.css";
-import type { AlignToken, JustifyToken } from "./types";
-import { toToken } from "./utils";
+import "./lib/tokens.css";
+import type { AlignToken, JustifyToken } from "./lib/types.ts";
+import { toToken } from "./lib/utils.ts";
 
 export interface StackProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;

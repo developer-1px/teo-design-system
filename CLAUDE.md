@@ -110,7 +110,7 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
   // Alignment
   align="center"  // align-items (start, center, end, stretch, baseline)
   justify="between" // justify-content (start, center, end, between, around, evenly)
-  pack            // Shortcut for align="center" justify="center"
+  pack            // Shortcut for pack
 
   // Visual
   surface="base"  // Background from surface tokens (base, raised, sunken, overlay, primary, selected)

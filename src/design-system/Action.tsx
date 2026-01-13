@@ -1,9 +1,10 @@
 import React from "react";
 import { Frame } from "./Frame";
 import { Text } from "./Text";
-import "./tokens.css";
-import type { ActionVariant, RoundedToken, SurfaceToken } from "./types";
-import { toToken } from "./utils";
+import { Menu } from "./text/Menu";
+import "./lib/tokens.css";
+import type { ActionVariant, RoundedToken, SurfaceToken } from "./lib/types.ts";
+import { toToken } from "./lib/utils.ts";
 
 interface ActionProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
@@ -134,18 +135,16 @@ export function Action({
         </span>
       )}
       {label && (
-        <Text
-          variant={4}
-          weight="medium"
-          size={5}
+        <Menu.Item
           style={{
             lineHeight: 1,
             whiteSpace: "nowrap",
             color: "inherit",
+            fontWeight: "var(--font-weight-medium)",
           }}
         >
           {label}
-        </Text>
+        </Menu.Item>
       )}
       {children}
     </Frame>
