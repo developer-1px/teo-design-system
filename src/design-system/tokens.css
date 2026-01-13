@@ -139,10 +139,6 @@
 	--field-bg-hover: var(--surface-raised);
 }
 
-.frame {
-	flex-shrink: 0;
-}
-
 .frame>* {
 	flex-shrink: 0;
 }

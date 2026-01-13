@@ -106,7 +106,9 @@ export function Frame({
 	const colorStr = borderColor
 		? borderColor === "default"
 			? "var(--border-color)"
-			: `var(--${borderColor})`
+			: borderColor === "transparent"
+				? "transparent"
+				: `var(--${borderColor})`
 		: "var(--border-color)";
 
 	if (finalBorder === true) computedBorder.border = `1px solid ${colorStr}`;

@@ -70,3 +70,36 @@ export function Prose({
         </Component>
     );
 }
+
+interface ProseDocumentProps extends React.HTMLAttributes<HTMLDivElement> {
+    children: React.ReactNode;
+    maxWidth?: number | string;
+    className?: string;
+    gap?: number;
+}
+
+export function ProseDocument({
+    children,
+    maxWidth = 680,
+    className = "",
+    style,
+    gap = 4,
+    ...props
+}: ProseDocumentProps) {
+    return (
+        <Frame
+            width="100%"
+            maxWidth={maxWidth}
+            gap={gap}
+            style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                ...style,
+            }}
+            className={`prose-document ${className}`}
+            {...props}
+        >
+            {children}
+        </Frame>
+    );
+}
