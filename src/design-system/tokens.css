@@ -141,8 +141,6 @@
 
 .frame {
 	flex-shrink: 0;
-	width: fit-content;
-	height: fit-content;
 }
 
 .frame>* {
