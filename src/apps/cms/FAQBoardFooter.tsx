@@ -1,7 +1,7 @@
 import { HelpCircle, Plus } from "lucide-react";
 import { useState } from "react";
 import { Action } from "../../design-system/Action";
-import { Prose, ProseSection } from "../../design-system/Prose";
+import { ProseOld, ProseSection } from "../../design-system/ProseOld.tsx";
 import { Text } from "../../design-system/Text";
 import { Frame } from "../../design-system/Frame";
 
@@ -18,7 +18,7 @@ export function FAQBoardFooter() {
         <Text size={12} weight="bold" color="primary">
           SUPPORT
         </Text>
-        <Prose role="h2">Common questions</Prose>
+        <ProseOld role="h2">Common questions</ProseOld>
       </Frame>
 
       <Frame w="100%" gap={4}>

@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Frame } from "../design-system/Frame";
 import { Experience, type ExperienceType } from "../design-system/Experience";
-import { Prose as ProseContext, Card, Field, Table, Menu } from "../design-system/typography";
 import { Action } from "../design-system/Action";
 import { Monitor, FileText, Globe } from "lucide-react";
+import { Prose } from "../design-system/text/Prose";
+import { Card } from "../design-system/text/Card";
+import { Field } from "../design-system/text/Field";
+import { Table } from "../design-system/text/Table";
+import { Menu } from "../design-system/text/Menu";
 
 /* 
   Text System Showcase
@@ -61,16 +65,16 @@ export function TextSystemApp() {
 </Prose.Body>`}
                 >
                     <Frame gap={6} maxWidth="600px">
-                        <ProseContext.Title>Context: Prose</ProseContext.Title>
-                        <ProseContext.Body>
+                        <Prose.Title>Context: Prose</Prose.Title>
+                        <Prose.Body>
                             The <strong>Prose</strong> context is designed for continuous reading. It manages line height, spacing, and font weight to ensure comfortable legibility.
-                        </ProseContext.Body>
-                        <ProseContext.Body>
+                        </Prose.Body>
+                        <Prose.Body>
                             The <strong>Experience</strong> (Application, Landing, or Document) automatically adjusts the scale. For example, 'Landing' experience will render this text significantly larger than 'Application'.
-                        </ProseContext.Body>
-                        <ProseContext.Note>
+                        </Prose.Body>
+                        <Prose.Note>
                             Try switching the Experience mode at the top to see this text adapt live.
-                        </ProseContext.Note>
+                        </Prose.Note>
                     </Frame>
                 </ShowcaseSection>
 
@@ -128,7 +132,7 @@ export function TextSystemApp() {
 </Frame>`}
                 >
                     <Frame surface="raised" p={8} rounded="2xl" gap={6} w="400px" shadow="md" style={{ border: "1px solid var(--border-color)" }}>
-                        <ProseContext.Title style={{ fontSize: "var(--prose-h3-size)" }}>Account Settings</ProseContext.Title>
+                        <Prose.Title style={{ fontSize: "var(--prose-h3-size)" }}>Account Settings</Prose.Title>
 
                         <Frame gap={4}>
                             <Frame gap={1.5}>
@@ -299,8 +303,8 @@ function ShowcaseSection({ title, description, code, children }: any) {
                 style={{ borderRight: "1px solid var(--border-color)" }}
             >
                 <Frame gap={4}>
-                    <ProseContext.Title style={{ fontSize: "32px" }}>{title}</ProseContext.Title>
-                    <ProseContext.Body style={{ opacity: 0.7 }}>{description}</ProseContext.Body>
+                    <Prose.Title style={{ fontSize: "32px" }}>{title}</Prose.Title>
+                    <Prose.Body style={{ opacity: 0.7 }}>{description}</Prose.Body>
                 </Frame>
 
                 <Frame

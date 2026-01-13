@@ -1,9 +1,9 @@
 import { Cpu, MessageSquare, Shield, Zap } from "lucide-react";
 import {
-  Prose,
+  ProseOld,
   ProseDocument,
   ProseSection,
-} from "../../design-system/Prose";
+} from "../../design-system/ProseOld.tsx";
 import { Text } from "../../design-system/Text";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
@@ -28,9 +28,9 @@ export function FeatureGridSection() {
           FEATURES
         </Text>
         <EditableWrapper>
-          <Prose role="h2">
+          <ProseOld role="h2">
             Everything you need <br /> to scale.
-          </Prose>
+          </ProseOld>
         </EditableWrapper>
       </ProseDocument>
 
@@ -93,12 +93,12 @@ function FeatureCardSmall({
       </Frame>
       <Frame gap={2}>
         <EditableWrapper>
-          <Prose role="h4">{title}</Prose>
+          <ProseOld role="h4">{title}</ProseOld>
         </EditableWrapper>
         <EditableWrapper>
-          <Prose role="body-sm" color="secondary">
+          <ProseOld role="body-sm" color="secondary">
             {desc}
-          </Prose>
+          </ProseOld>
         </EditableWrapper>
       </Frame>
     </Frame>
@@ -130,12 +130,12 @@ function FeatureCardLarge({
         </Frame>
         <Frame gap={2}>
           <EditableWrapper>
-            <Prose role="h3">{title}</Prose>
+            <ProseOld role="h3">{title}</ProseOld>
           </EditableWrapper>
           <EditableWrapper>
-            <Prose role="body" color="secondary">
+            <ProseOld role="body" color="secondary">
               {desc}
-            </Prose>
+            </ProseOld>
           </EditableWrapper>
         </Frame>
       </Frame>

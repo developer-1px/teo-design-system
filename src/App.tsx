@@ -1,7 +1,6 @@
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
 import { CMSApp } from "./apps/CMSApp";
-import IdeDemoApp from "./apps/IdeDemoApp";
 import { LandingApp } from "./apps/LandingApp";
 
 import { SlideApp } from "./apps/SlideApp";
@@ -100,7 +99,6 @@ function App() {
           <Route path="/tokens" element={<TokensApp />} />
           <Route path="/slide" element={<SlideApp />} />
 
-          <Route path="/ide" element={<IdeDemoApp />} />
           <Route path="/cms" element={<CMSApp />} />
           <Route path="/crm" element={<CRMApp />} />
           <Route path="/login" element={<LoginApp />} />

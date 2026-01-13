@@ -1,554 +1,276 @@
 
-import {
-  Prose,
-  ProseDocument,
-  ProseSection,
-} from "../design-system/Prose";
-import { Text } from "../design-system/Text";
 import { Frame } from "../design-system/Frame";
 
+import { ProseSection, ProseDocument } from "../design-system/ProseOld.tsx";
+import {Prose} from "../design-system/text/Prose.tsx"
+import {Card} from "../design-system/text/Card.tsx"
+import {Field} from "../design-system/text/Field.tsx"
+import {Table} from "../design-system/text/Table.tsx"
+import {Menu} from "../design-system/text/Menu.tsx"
 
+// --- Data Structures (No Hardcoding) ---
 
-const INTERACTION_TOKENS = [
+const TEXT_CONTEXTS = [
   {
-    label: "Field Backgrounds",
-    description: "States for form fields",
-    tokens: [
-      { name: "field-bg", var: "--field-bg" },
-      { name: "field-bg-hover", var: "--field-bg-hover" },
-      { name: "field-bg-focus", var: "--field-bg-focus" },
+    name: "Prose",
+    desc: "Long-form content and document flow",
+    Component: Prose,
+    slots: [
+      { name: "Title", sample: "Prose Title (H1-H4)", desc: "Headings" },
+      { name: "Body", sample: "Prose Body - Optimized for readability in documentation.", desc: "Paragraphs" },
+      { name: "Note", sample: "Prose Note - Asides and annotations.", desc: "Metadata" },
+      { name: "Code", sample: "console.log('Prose Code')", desc: "Inline Code" },
     ],
   },
   {
-    label: "Link Colors",
-    description: "States for text links",
-    tokens: [
-      { name: "link-color", var: "--link-color" },
-      { name: "link-hover-color", var: "--link-hover-color" },
+    name: "Card",
+    desc: "UI components and summarized content",
+    Component: Card,
+    slots: [
+      { name: "Title", sample: "Card Title", desc: "Component Heading" },
+      { name: "Desc", sample: "Card Description - Short summary text.", desc: "Content" },
+      { name: "Note", sample: "Card Note - 12m ago", desc: "Metadata" },
+      { name: "Code", sample: "git commit", desc: "Technical Data" },
     ],
   },
   {
-    label: "Component States",
-    description: "Tab and special component states",
-    tokens: [
-      { name: "tab-bg-active", var: "--tab-bg-active" },
-      { name: "surface-selected", var: "--surface-selected" },
-      { name: "focus-ring", var: "--focus-ring" },
+    name: "Field",
+    desc: "Form inputs and key-value pairs",
+    Component: Field,
+    slots: [
+      { name: "Label", sample: "Email Address", desc: "Input Label" },
+      { name: "Value", sample: "user@example.com", desc: "Input Display" },
+      { name: "Note", sample: "We'll never share your email.", desc: "Helper Text" },
+    ],
+  },
+  {
+    name: "Table",
+    desc: "Tabular data",
+    Component: Table,
+    slots: [
+      { name: "Head", sample: "COLUMN NAME", desc: "Header Cell" },
+      { name: "Cell", sample: "Table Cell Content", desc: "Body Cell" },
+    ],
+  },
+  {
+    name: "Menu",
+    desc: "Navigation and lists",
+    Component: Menu,
+    slots: [
+      { name: "Group", sample: "SECTION", desc: "Group Label" },
+      { name: "Item", sample: "Menu Item Label", desc: "Action Item" },
     ],
   },
 ];
 
-const SHADOWS: any[] = ["sm", "md", "lg"];
-const RADII: any[] = ["none", "rounded", "full"];
-const SPACINGS = [
-  0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 12, 16, 20, 21, 24, 25,
-  30, 40,
+const SURFACES = [
+  { id: "base", hex: "#FFFFFF", desc: "Page Background" },
+  { id: "sunken", hex: "#F9F9FB", desc: "Sidebars / Wells" },
+  { id: "raised", hex: "#FFFFFF", desc: "Cards / Sheets" },
+  { id: "overlay", hex: "#FFFFFF", desc: "Dialogs / Menus" },
+  { id: "selected", hex: "#F4F4F5", desc: "Active States" },
 ];
 
-function TokenLabel({ name, role }: { name: string; role: string }) {
-  return (
-    <Frame row align="center" gap={2}>
-      <Text size={2} mono style={{ color: "var(--text-tertiary)", opacity: 0.7 }}>
-        var(--{name})
-      </Text>
-      <Text size={2} color="tertiary" style={{ opacity: 0.5 }}>
-        •
-      </Text>
-      <Text size={2} color="secondary">
-        {role}
-      </Text>
-    </Frame>
-  );
-}
+const SPACING = [0, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32];
+const RADIUS = ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"];
+const SHADOWS = ["sm", "md", "lg"];
 
-
-
-import { Experience, type ExperienceType } from "../design-system/Experience";
-import { Prose as ProseContext, Card, Field as FieldContext } from "../design-system/typography";
-
-function ExperienceSection({ title, value, children }: { title: string, value: ExperienceType, children: React.ReactNode }) {
-  return (
-    <Frame gap={4}>
-      <Text size={2} mono style={{ color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-        {title}
-      </Text>
-      <Experience value={value}>
-        <Frame
-          surface="sunken"
-          p={6}
-          rounded="2xl"
-          style={{ border: "1px solid var(--border-color)" }}
-        >
-          {children}
-        </Frame>
-      </Experience>
-    </Frame>
-  );
-}
-
-function ContextDemo() {
-  return (
-    <Frame gap={8} grid columns="1fr 1fr 1fr">
-      {/* Prose Context */}
-      <Frame gap={4}>
-        <Text size={2} mono color="tertiary">Context: Prose</Text>
-        <Frame>
-          <ProseContext.Title>Prose Title</ProseContext.Title>
-          <ProseContext.Body>
-            Prose Body - Optimized for continuous reading flow.
-            The scale changes based on experience.
-          </ProseContext.Body>
-          <ProseContext.Note>Prose Note - Annotations.</ProseContext.Note>
-        </Frame>
-      </Frame>
-
-      {/* Card Context */}
-      <Frame gap={4}>
-        <Text size={2} mono color="tertiary">Context: Card</Text>
-        <Frame surface="base" p={4} rounded="xl" border shadow="sm">
-          <Card.Title>Card Title</Card.Title>
-          <Card.Desc>Card Desc - Summarized chunks of info.</Card.Desc>
-          <Card.Note>Card Note - Metadata</Card.Note>
-        </Frame>
-      </Frame>
-
-      {/* Field Context */}
-      <Frame gap={4}>
-        <Text size={2} mono color="tertiary">Context: Field</Text>
-        <Frame surface="base" p={4} rounded="xl" border gap={3}>
-          <Frame>
-            <FieldContext.Label>Field Label</FieldContext.Label>
-            <FieldContext.Value>Field Value Input</FieldContext.Value>
-            <FieldContext.Note>Field Note - Helper text</FieldContext.Note>
-          </Frame>
-        </Frame>
-      </Frame>
-    </Frame>
-  );
-}
+// --- Components ---
 
 export function TokensApp() {
   return (
     <Frame fill surface="base" overflow="auto">
-      <ProseSection p="96 0" layout="full">
-        <Frame gap={20} w="100%">
+      <ProseSection p="80 0" layout="full">
+        <ProseDocument maxWidth="1000px" gap={12}>
+
           {/* Header */}
-          <ProseDocument maxWidth="800px" gap={4}>
-            <Prose role="h1">Design Tokens</Prose>
-            <Prose role="body" color="secondary">
-              A comprehensive reference of the design values that power the
-              Minimal Design Kit.
-            </Prose>
-          </ProseDocument>
-
-          {/* MDK Text System Demo */}
-          <ProseDocument maxWidth="1000px" gap={8}>
-            <ProseContext.Title>MDK Text System</ProseContext.Title>
-            <ProseContext.Body style={{ color: "var(--text-secondary)" }}>
-              The new 4-level hierarchy: Experience &gt; Context &gt; Slot &gt; Variant.
-              Changing the Experience automatically scales all Context Slots.
-            </ProseContext.Body>
-
-            <Frame gap={8}>
-              {/* Experience: Application (Default) */}
-              <ExperienceSection title="Experience: Application" value="application">
-                <ContextDemo />
-              </ExperienceSection>
-
-              {/* Experience: Landing */}
-              <ExperienceSection title="Experience: Landing" value="landing">
-                <ContextDemo />
-              </ExperienceSection>
-
-              {/* Experience: Document */}
-              <ExperienceSection title="Experience: Document" value="document">
-                <ContextDemo />
-              </ExperienceSection>
-            </Frame>
-          </ProseDocument>
+          <Frame gap={4}>
+            <Prose.Title>Design Tokens & System</Prose.Title>
+            <Prose.Body style={{ color: "var(--text-secondary)" }}>
+              Reference for the Minimal Design Kit token system.
+              Typography is organized by <b>Context</b> rather than size.
+            </Prose.Body>
+          </Frame>
 
           <Frame w="100%" h="1px" surface="overlay" />
 
-          {/* Legacy Token Reference (Surfaces) */}
-          <ProseDocument maxWidth="1000px" gap={8} className="legacy-surfaces">
-            <Prose role="h2">Surfaces (Legacy)</Prose>
-            <Frame
-              row
-              w="100%"
-              gap={6}
-              style={{ minHeight: "300px" }}
-            >
-              {[
-                { id: "base", name: "Page", desc: "App Background", hex: "#FFFFFF" },
-                { id: "sunken", name: "Panel", desc: "Sidebar / Wells", hex: "#F9F9FB" },
-                { id: "raised", name: "Card", desc: "Content Areas", hex: "#FFFFFF" },
-                { id: "overlay", name: "Overlay", desc: "Menus / Dialogs", hex: "#FFFFFF" },
-                { id: "primary", name: "Primary", desc: "Brand Action", hex: "#18181B" },
-              ].map((s) => (
+          {/* 1. Text System (Dynamic from Data) */}
+          <Frame gap={8}>
+            <Prose.Title>Text System (By Context)</Prose.Title>
+
+            <Frame gap={12}>
+              {TEXT_CONTEXTS.map((ctx) => (
+                <Frame key={ctx.name} gap={4}>
+                  <Frame row justify="between" align="baseline">
+                    <Prose.Title style={{ fontSize: "var(--font-size-2)" }}>{ctx.name}</Prose.Title>
+                    <Card.Note>{ctx.desc}</Card.Note>
+                  </Frame>
+
+                  <Frame
+                    surface="sunken"
+                    rounded="xl"
+                    p={6}
+                    style={{ border: "1px solid var(--border-color)" }}
+                    gap={0}
+                  >
+                    {ctx.slots.map((slot) => {
+                      // Dynamically access the slot component
+                      // @ts-ignore - We know these components exist in the MDK imports
+                      const SlotComponent = ctx.Component[slot.name];
+
+                      return (
+                        <Frame
+                          key={slot.name}
+                          row
+                          align="center"
+                          gap={4}
+                          p="4 0"
+                          style={{ borderBottom: "1px solid var(--border-color)" }}
+                        >
+                          {/* Slot Name */}
+                          <Frame w={120}>
+                            <Card.Code style={{ color: "var(--text-tertiary)" }}>
+                              {ctx.name}.{slot.name}
+                            </Card.Code>
+                          </Frame>
+
+                          {/* Sample Render */}
+                          <Frame flex={1}>
+                            <SlotComponent>
+                              {slot.sample}
+                            </SlotComponent>
+                          </Frame>
+
+                          {/* Role Description */}
+                          <Frame w={120} justify="end">
+                            <Card.Note>{slot.desc}</Card.Note>
+                          </Frame>
+                        </Frame>
+                      );
+                    })}
+                  </Frame>
+                </Frame>
+              ))}
+            </Frame>
+          </Frame>
+
+          {/* 1.1 Prose Title Variants */}
+          <Frame gap={8}>
+            <Prose.Title>Prose Title Variants</Prose.Title>
+            <Frame surface="sunken" p={8} rounded="xl" gap={4} style={{ border: "1px solid var(--border-color)" }}>
+              <Frame gap={2}>
+                <Prose.Title variant="xl">Display Title (xl)</Prose.Title>
+                <Card.Code style={{ color: "var(--text-tertiary)" }}>variant="xl" (H1 Display)</Card.Code>
+              </Frame>
+              <Frame w="100%" h="1px" surface="base" />
+              <Frame gap={2}>
+                <Prose.Title variant="lg">Page Title (lg)</Prose.Title>
+                <Card.Code style={{ color: "var(--text-tertiary)" }}>variant="lg" (H2)</Card.Code>
+              </Frame>
+              <Frame w="100%" h="1px" surface="base" />
+              <Frame gap={2}>
+                <Prose.Title variant="md">Section Title (md)</Prose.Title>
+                <Card.Code style={{ color: "var(--text-tertiary)" }}>variant="md" (H3)</Card.Code>
+              </Frame>
+              <Frame w="100%" h="1px" surface="base" />
+              <Frame gap={2}>
+                <Prose.Title variant="sm">Subsection Title (sm)</Prose.Title>
+                <Card.Code style={{ color: "var(--text-tertiary)" }}>variant="sm" (H4)</Card.Code>
+              </Frame>
+            </Frame>
+          </Frame>
+
+          <Frame w="100%" h="1px" surface="overlay" />
+
+          {/* 2. Surfaces */}
+          <Frame gap={8}>
+            <Prose.Title>Surfaces</Prose.Title>
+            <Frame row wrap="wrap" gap={6}>
+              {SURFACES.map((s) => (
                 <Frame
                   key={s.id}
                   surface={s.id as any}
-                  p={8}
-                  gap={4}
-                  flex={1}
+                  w={120}
+                  h={120}
                   rounded="2xl"
-                  align="center"
-                  justify="center"
-                  style={{ textAlign: "center" }}
-                >
-                  <Frame gap={1} align="center">
-                    <Text weight="bold" size={5}>
-                      {s.name}
-                    </Text>
-                    <Text size={2} color="tertiary" mono>
-                      {s.hex}
-                    </Text>
-                  </Frame>
-                  <Text size={2} color="secondary" style={{ maxWidth: "160px", lineHeight: 1.4, opacity: 0.8 }}>
-                    {s.desc}
-                  </Text>
-
-                  {/* Token Reference */}
-                  <Text size={1} color="tertiary" mono style={{ marginTop: 8, opacity: 0.5 }}>
-                    surface-{s.id}
-                  </Text>
-                </Frame>
-              ))}
-            </Frame>
-          </ProseDocument>
-
-          {/* Prose System */}
-          <ProseDocument maxWidth="1000px" gap={6}>
-            <Prose role="h2">Prose System</Prose>
-            <Prose role="body" color="secondary">
-              Semantic typography for long-form content and documents.
-            </Prose>
-            <Frame gap={6} surface="sunken" p={12} rounded="3xl" style={{ border: "1px solid var(--border-color)" }}>
-              <Prose role="h1">Display H1</Prose>
-              <Prose role="h2">Heading H2</Prose>
-              <Prose role="h3">Heading H3</Prose>
-              <Prose role="h4">Heading H4</Prose>
-              <Prose role="body">
-                Body Text - The quick brown fox jumps over the lazy dog.
-              </Prose>
-              <Prose role="body-sm">
-                Body Small - The quick brown fox jumps over the lazy dog.
-              </Prose>
-              <Prose role="caption">
-                CAPTION - THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.
-              </Prose>
-            </Frame>
-          </ProseDocument>
-
-          {/* App UI Text System */}
-          <ProseDocument maxWidth="1000px" gap={6}>
-            <Prose role="h2">App UI Text System</Prose>
-            <Prose role="body" color="secondary">
-              Compact, dense typography for application interfaces and controls.
-            </Prose>
-            <Frame gap={6} surface="sunken" p={12} rounded="3xl" style={{ border: "1px solid var(--border-color)" }}>
-              <Frame gap={4}>
-                <Text variant="heading-lg">Heading LG</Text>
-                <Text variant="heading-md">Heading MD</Text>
-                <Text variant="heading-sm">Heading SM</Text>
-              </Frame>
-              <Frame w="100%" h="1px" surface="base" />
-              <Frame gap={4}>
-                <Text variant="body-lg">Body LG - The quick brown fox jumps over the lazy dog.</Text>
-                <Text variant="body-md">Body MD - The quick brown fox jumps over the lazy dog.</Text>
-                <Text variant="body-sm">Body SM - The quick brown fox jumps over the lazy dog.</Text>
-              </Frame>
-              <Frame w="100%" h="1px" surface="base" />
-              <Frame gap={4}>
-                <Text variant="caption">Caption - Metadata and secondary information.</Text>
-                <Text variant="caption-sm">Caption SM - Small metadata and timestamps.</Text>
-                <Text variant="code">Code - console.log("Hello World");</Text>
-              </Frame>
-            </Frame>
-          </ProseDocument>
-
-          {/* Interaction */}
-          <ProseDocument maxWidth="1000px" gap={6}>
-            <Prose role="h2">Interaction</Prose>
-            <Frame gap={8}>
-              {INTERACTION_TOKENS.map((group) => (
-                <Frame key={group.label} gap={4}>
-                  <Frame>
-                    <Prose role="h4">{group.label}</Prose>
-                    <Prose role="body-sm" color="secondary">
-                      {group.description}
-                    </Prose>
-                  </Frame>
-                  <Frame
-                    grid
-                    columns="repeat(auto-fill, minmax(240px, 1fr))"
-                    gap={6}
-                    w="100%"
-                  >
-                    {group.tokens.map((token) => (
-                      <Frame
-                        key={token.name}
-                        surface="sunken"
-                        rounded="xl"
-                        overflow="hidden"
-                      >
-                        <Frame
-                          h={24}
-                          style={{
-                            background:
-                              token.name === "focus-ring"
-                                ? "transparent"
-                                : `var(${token.var})`,
-                            boxShadow:
-                              token.name === "focus-ring"
-                                ? `var(${token.var})`
-                                : "none",
-                          }}
-                          align="center"
-                          justify="center"
-                        >
-                          {token.name.includes("link") && (
-                            <Text
-                              style={{ color: `var(${token.var})` }}
-                              weight="medium"
-                            >
-                              Sample Link
-                            </Text>
-                          )}
-                          {token.name === "surface-selected" && (
-                            <Frame
-                              surface="selected"
-                              p="1.5 4"
-                              rounded="md"
-                              style={{ border: "1px solid var(--border-color)" }}
-                            >
-                              <Text size={3} weight="bold">
-                                Selected State
-                              </Text>
-                            </Frame>
-                          )}
-                          {token.name === "tab-bg-active" && (
-                            <Frame
-                              style={{ background: "var(--tab-bg-active)" }}
-                              p="1.5 4"
-                              rounded="md"
-                            >
-                              <Text size={3}>Active Tab</Text>
-                            </Frame>
-                          )}
-                        </Frame>
-                        <Frame p={4} gap={1.5}>
-                          <Text weight="bold" size={3}>
-                            {token.name}
-                          </Text>
-                          <Text size={2} color="tertiary" mono>
-                            var({token.var})
-                          </Text>
-                        </Frame>
-                      </Frame>
-                    ))}
-                  </Frame>
-                </Frame>
-              ))}
-            </Frame>
-          </ProseDocument>
-
-          {/* Colors */}
-          <ProseDocument maxWidth="1000px" gap={6}>
-            <Prose role="h2">Text & Accents</Prose>
-            <Frame gap={8} w="100%">
-              {/* Text Hierarchy Group */}
-              <Frame gap={4}>
-                <Prose role="h3">Content Hierarchy</Prose>
-                <Prose role="body" color="secondary">
-                  Appropriate color usage establishes reading order and importance.
-                </Prose>
-
-                <Frame
-                  surface="sunken"
-                  p={8}
-                  gap={6}
-                  rounded="xl"
+                  shadow="sm"
+                  p={4}
+                  justify="between"
                   style={{ border: "1px solid var(--border-color)" }}
                 >
-                  <Frame gap={1}>
-                    <Text size={5} weight="bold" style={{ color: "var(--text-primary)" }}>
-                      The Design System
-                    </Text>
-                    <TokenLabel name="text-primary" role="Headings / Titles" />
-                  </Frame>
-
-                  <Frame gap={1}>
-                    <Text size={3} style={{ color: "var(--text-body)", lineHeight: 1.6 }}>
-                      Our design system provides a comprehensive suite of components and tokens to build consistent, high-quality interfaces.
-                    </Text>
-                    <TokenLabel name="text-body" role="Main Content" />
-                  </Frame>
-
-                  <Frame gap={1}>
-                    <Text size={2} style={{ color: "var(--text-subtle)" }}>
-                      Last updated on Jan 12, 2024 by @antigravity
-                    </Text>
-                    <TokenLabel name="text-subtle" role="Metadata / Secondary" />
-                  </Frame>
-                  <Frame gap={1}>
-                    <Text size={2} style={{ color: "var(--text-muted)" }}>
-                      Enter your comments here...
-                    </Text>
-                    <TokenLabel name="text-muted" role="Placeholders / Disabled" />
+                  <Card.Title style={{ fontSize: "var(--font-size-3)" }}>{s.id}</Card.Title>
+                  <Frame>
+                    <Card.Desc>{s.desc}</Card.Desc>
+                    <Card.Code style={{ opacity: 0.5 }}>{s.hex}</Card.Code>
                   </Frame>
                 </Frame>
-              </Frame>
-
-              {/* UI Elements Group */}
-              <Frame gap={4}>
-                <Prose role="h3">Core Actions</Prose>
-                <Prose role="body" color="secondary">
-                  Semantic colors for interactive elements and structural borders.
-                </Prose>
-
-                <Frame
-                  row
-                  gap={8}
-                  wrap="wrap"
-                >
-                  {/* Primary Button Example */}
-                  <Frame
-                    surface="base"
-                    p={6}
-                    rounded="xl"
-                    style={{ minWidth: "240px", border: "1px solid var(--border-color)" }}
-                    gap={3}
-                    flex={1}
-                  >
-                    <Frame
-                      surface="primary"
-                      p="2 4"
-                      rounded="md"
-                      align="center"
-                      w="min-content"
-                    >
-                      <Text style={{ color: "var(--primary-fg)" }} weight="medium">
-                        Save Changes
-                      </Text>
-                    </Frame>
-                    <Frame gap={1}>
-                      <TokenLabel name="primary-bg" role="Action Background" />
-                      <TokenLabel name="primary-fg" role="Action Text" />
-                    </Frame>
-                  </Frame>
-
-                  {/* Links Example */}
-                  <Frame
-                    surface="base"
-                    p={6}
-                    rounded="xl"
-                    style={{ minWidth: "240px", border: "1px solid var(--border-color)" }}
-                    gap={3}
-                    flex={1}
-                  >
-                    <Text style={{ color: "var(--link-color)" }} weight="medium">
-                      View Documentation →
-                    </Text>
-                    <TokenLabel name="link-color" role="Interactive Links" />
-                  </Frame>
-
-                  {/* Border Example */}
-                  <Frame
-                    surface="base"
-                    p={6}
-                    rounded="xl"
-                    style={{ minWidth: "240px", border: "1px solid var(--border-color)" }}
-                    gap={3}
-                    flex={1}
-                  >
-                    <Frame
-                      p={4}
-                      rounded="lg"
-                      style={{ border: "1px solid var(--border-color)" }}
-                    >
-                      <Text size={2} color="secondary">Card with Border</Text>
-                    </Frame>
-                    <TokenLabel name="border-color" role="Structural Dividers" />
-                  </Frame>
-                </Frame>
-              </Frame>
+              ))}
             </Frame>
-          </ProseDocument>
+          </Frame>
 
-          {/* Spacing */}
-          <ProseDocument maxWidth="1000px" gap={6}>
-            <Prose role="h2">Spacing</Prose>
-            <Frame row wrap="wrap" gap={6}>
-              {SPACINGS.map((space) => (
-                <Frame key={space} gap={2} align="center">
+          {/* 3. Spacing */}
+          <Frame gap={8}>
+            <Prose.Title>Spacing</Prose.Title>
+            <Frame row wrap="wrap" gap={4}>
+              {SPACING.map((sp) => (
+                <Frame key={sp} align="center" gap={2}>
                   <Frame
-                    style={{
-                      width: toToken(space, "space") as any,
-                      height: 48,
-                    }}
+                    h={32}
+                    style={{ width: `var(--space-${String(sp).replace(".", "-")})` }}
                     surface="primary"
                     rounded="sm"
                   />
-                  <Text size={2} mono color="tertiary">
-                    {space}
-                  </Text>
+                  <Card.Code style={{ fontSize: "9px", color: "var(--text-tertiary)" }}>
+                    {sp}
+                  </Card.Code>
                 </Frame>
               ))}
             </Frame>
-          </ProseDocument>
+          </Frame>
 
-          {/* Radius */}
-          <ProseDocument maxWidth="1000px" gap={6}>
-            <Prose role="h2">Radius</Prose>
-            <Frame row wrap="wrap" gap={8}>
-              {RADII.map((radius) => (
+          {/* 4. Radius */}
+          <Frame gap={8}>
+            <Prose.Title>Radius</Prose.Title>
+            <Frame row wrap="wrap" gap={6}>
+              {RADIUS.map((r) => (
                 <Frame
-                  key={radius}
-                  w={40}
-                  ratio="1"
-                  surface="raised"
-                  rounded={radius === "rounded" ? true : radius}
-                  pack
-                  p={8}
+                  key={r}
+                  w={64}
+                  h={64}
+                  surface="sunken"
+                  align="center"
+                  justify="center"
+                  style={{ borderRadius: `var(--radius-${r})`, border: "1px solid var(--border-color)" }}
                 >
-                  <Text size={3} color="secondary" weight="bold">
-                    {radius}
-                  </Text>
+                  <Card.Code style={{ fontSize: "10px" }}>{r}</Card.Code>
                 </Frame>
               ))}
             </Frame>
-          </ProseDocument>
+          </Frame>
 
-          {/* Shadows */}
-          <ProseDocument maxWidth="1000px" gap={6}>
-            <Prose role="h2">Shadows</Prose>
-            <Frame row gap={10} p={12} surface="sunken" rounded="3xl">
-              {SHADOWS.map((shadow) => (
+          {/* 5. Shadows */}
+          <Frame gap={8}>
+            <Prose.Title>Shadows</Prose.Title>
+            <Frame row wrap="wrap" gap={12} surface="sunken" p={12} rounded="3xl">
+              {SHADOWS.map((s) => (
                 <Frame
-                  key={shadow}
-                  w={48}
-                  h={48}
+                  key={s}
+                  w={80}
+                  h={80}
                   surface="base"
                   rounded="2xl"
                   align="center"
-                  pack
-                  shadow={shadow}
+                  justify="center"
+                  shadow={s as any}
                 >
-                  <Text weight="bold" color="secondary" size={4}>
-                    {shadow}
-                  </Text>
+                  <Card.Title>{s}</Card.Title>
                 </Frame>
               ))}
             </Frame>
-          </ProseDocument>
-        </Frame >
-      </ProseSection >
-    </Frame >
-  );
-}
+          </Frame>
 
-// Helper to resolve tokens for spacing visualization
-function toToken(value: number | string, prefix: string) {
-  return `var(--${prefix}-${String(value).replace(".", "-")})`;
+        </ProseDocument>
+      </ProseSection>
+    </Frame>
+  );
 }

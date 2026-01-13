@@ -3,7 +3,7 @@ import { Section } from "../design-system/Section";
 import { Text } from "../design-system/Text";
 import { Field } from "../design-system/Field";
 import { Action } from "../design-system/Action";
-import { Prose, ProseDocument } from "../design-system/Prose";
+import { ProseOld, ProseDocument } from "../design-system/ProseOld.tsx";
 import { ArrowRight, Lock, Mail } from "lucide-react";
 
 export function LoginApp() {
@@ -91,10 +91,10 @@ export function LoginApp() {
                             <Lock size={32} />
                         </Frame>
 
-                        <Prose role="h2">Secure & Minimal Design System</Prose>
-                        <Prose role="body" color="secondary">
+                        <ProseOld role="h2">Secure & Minimal Design System</ProseOld>
+                        <ProseOld role="body" color="secondary">
                             Experience the "Pure White" architecture. A design system built for data-dense interfaces where content is the hero.
-                        </Prose>
+                        </ProseOld>
 
                         <Frame gap={4} style={{ marginTop: 16 }}>
                             <FeatureRow title="Zero Decoration" desc="Focus on content hierarchy and spacing." />

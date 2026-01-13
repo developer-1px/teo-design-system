@@ -1,5 +1,5 @@
 import { Check, MessageSquare, Zap } from "lucide-react";
-import { Prose, ProseSection } from "../../design-system/Prose";
+import { ProseOld, ProseSection } from "../../design-system/ProseOld.tsx";
 import { Text } from "../../design-system/Text";
 import { Frame } from "../../design-system/Frame";
 
@@ -25,14 +25,14 @@ export function BodyContentSection() {
             <Text size={14} weight="bold" color="primary">
               THE PROCESS
             </Text>
-            <Prose role="h2">
+            <ProseOld role="h2">
               Unleash your <br /> internal creative.
-            </Prose>
+            </ProseOld>
           </Frame>
-          <Prose role="body" color="secondary">
+          <ProseOld role="body" color="secondary">
             Workflow shouldn't be a bottleneck. Our platform allows developers
             to focus on logic while designers handle the visuals.
-          </Prose>
+          </ProseOld>
           <Frame gap={1}>
             <CheckItem
               title="Pure Token-based design"

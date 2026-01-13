@@ -1,41 +1,39 @@
-import { ArrowRight, Box, Component, Grid, Layers, Zap } from "lucide-react";
+import { ArrowRight, Box, Component, Grid, Layers, Zap, Type, Monitor, PanelTop } from "lucide-react";
 import { Action } from "../design-system/Action";
-import {
-  Prose,
-  ProseDocument,
-  ProseSection,
-} from "../design-system/Prose";
-import { Text } from "../design-system/Text";
+import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame";
+import { Prose } from "../design-system/text/Prose";
+import { Card } from "../design-system/text/Card";
+import { Menu } from "../design-system/text/Menu";
 
 export function LandingApp() {
   return (
-    <Frame fill surface="base" overflow="auto" p={0}>
-      {/* Navigation */}
-      <Frame
-        row
-        justify="between"
-        align="center"
-        p="5 6"
-        position="sticky"
-        top={0}
-        zIndex={100}
-        style={{
-          borderBottom: "1px solid var(--border-subtle)",
-        }}
-      >
-        <Prose role="h4">TMDK</Prose>
-        <Frame row gap={2}>
-          <Action label="Documentation" variant="ghost" />
-          <Action label="Components" variant="ghost" />
-          <Action label="Download" variant="primary" />
+    <Experience value="landing">
+      <Frame fill surface="base" overflow="auto" p={0}>
+        {/* Navigation */}
+        <Frame
+          row
+          justify="between"
+          align="center"
+          p="5 6"
+          position="sticky"
+          top={0}
+          zIndex={100}
+          surface="base"
+          style={{
+            borderBottom: "1px solid var(--border-subtle)",
+          }}
+        >
+          <Prose.Title variant="sm">TMDK</Prose.Title>
+          <Frame row gap={2}>
+            <Action label="Documentation" variant="ghost" />
+            <Action label="Components" variant="ghost" />
+            <Action label="Download" variant="primary" />
+          </Frame>
         </Frame>
-      </Frame>
 
-      {/* Main Content wrapped in ProseDocument */}
-      <ProseDocument maxWidth={300} gap={0}>
         {/* Hero Section */}
-        <ProseSection p="30 6" align="center" contentGap={6}>
+        <Frame p="30 6" align="center" gap={6}>
           <Frame
             p="1 3"
             surface="sunken"
@@ -47,57 +45,53 @@ export function LandingApp() {
             cursor="pointer"
           >
             <Zap size={12} fill="currentColor" color="var(--text-tertiary)" />
-            <Prose role="caption" style={{ fontWeight: 600 }}>
+            <Card.Note style={{ fontWeight: 600, color: "var(--text-secondary)" }}>
               New: Layout Engine v2.0
-            </Prose>
+            </Card.Note>
           </Frame>
 
-          <Prose role="h1" align="center" style={{ maxWidth: 800 }}>
+          <Prose.Title variant="xl" style={{ maxWidth: 800, textAlign: "center" }}>
             Build faster with the Teo's Minimal Design Kit
-          </Prose>
+          </Prose.Title>
 
-          <Prose
-            role="body"
-            align="center"
-            color="secondary"
+          <Prose.Body
             style={{
               maxWidth: 600,
               fontSize: "1.125rem",
-              lineHeight: "1.75rem",
+              textAlign: "center",
+              color: "var(--text-secondary)"
             }}
           >
             A collection of high-quality, accessible, and performant React
             components crafted for modern web applications.
-          </Prose>
+          </Prose.Body>
 
           <Frame row gap={3} p="8 0 0 0" justify="center">
             {/* Main CTA */}
             <Action variant="primary" rounded="full" p="3 5" gap={2}>
-              <Text variant={3} weight="bold" style={{ color: "white" }}>
-                Get Started
-              </Text>
+              <Menu.Item style={{ color: "white", fontWeight: 600 }}>Get Started</Menu.Item>
               <ArrowRight size={16} color="white" />
             </Action>
 
             {/* Secondary CTA */}
             <Action variant="surface" rounded="full" p="3 5" gap={2} border>
-              <Text variant={3} weight="bold" color="secondary">
-                View Components
-              </Text>
+              <Menu.Item style={{ color: "var(--text-secondary)", fontWeight: 600 }}>View Components</Menu.Item>
             </Action>
           </Frame>
-        </ProseSection>
+        </Frame>
 
         {/* Why Section */}
-        <ProseSection align="center" contentGap={6} p="24 6">
-          <Prose role="h2" align="center">
+        <Frame align="center" gap={6} p="24 6">
+          <Prose.Title variant="lg" style={{ textAlign: "center" }}>
             왜 만들었는가?
-          </Prose>
-          <Prose
-            role="body"
-            align="center"
-            color="secondary"
-            style={{ fontSize: "1.25rem", lineHeight: "1.8" }}
+          </Prose.Title>
+          <Prose.Body
+            style={{
+              maxWidth: 800,
+              fontSize: "1.25rem",
+              textAlign: "center",
+              color: "var(--text-secondary)"
+            }}
           >
             프론트엔드 디자인은 결국 '수렴진화'하고 있으며, 그 최종 형태는
             불필요한 장식이 배제된 채 오직 기능과 의도만이 남는 것이라 믿습니다.{" "}
@@ -111,16 +105,16 @@ export function LandingApp() {
             <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>
               이것이 바로 Minimal Design Kit가 추구하는 방향입니다.
             </span>
-          </Prose>
-        </ProseSection>
+          </Prose.Body>
+        </Frame>
 
         {/* Features Grid */}
-        <ProseSection p="24 6" contentGap={12}>
+        <Frame p="24 6" gap={12}>
           <Frame gap={4} align="center" p="0 0 8 0">
-            <Prose role="h2">Everything you need</Prose>
-            <Prose role="body" color="secondary">
+            <Prose.Title variant="lg">Everything you need</Prose.Title>
+            <Prose.Body style={{ color: "var(--text-secondary)" }}>
               Comprehensive primitives for any layout.
-            </Prose>
+            </Prose.Body>
           </Frame>
 
           <Frame
@@ -128,65 +122,55 @@ export function LandingApp() {
             gap={4}
             style={{
               gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              maxWidth: 1200,
+              margin: "0 auto",
+              width: "100%"
             }}
           >
             <FeatureCard
-              icon={Box}
-              title="Atomic Components"
-              description="Button, Input, Checkbox, and more. All the basics covered with strict type safety."
+              icon={Type}
+              title="Text"
+              description="Semantic typography system based on 4-level hierarchy: Experience > Context > Slot > Variant."
             />
             <FeatureCard
               icon={Layers}
-              title="Layout Engine"
-              description="Powerful Frame component for Flexbox and Grid layouts without writing CSS."
+              title="Surface"
+              description="Intelligent layering system (Base, Sunken, Raised, Overlay) that manages depth and hierarchy."
             />
             <FeatureCard
-              icon={Grid}
-              title="Design Tokens"
-              description="Consistent spacing, typography, and colors via our IDDL token system."
+              icon={PanelTop}
+              title="Section"
+              description="Layout partitioning components that handle content width, spacing, and alignment automatically."
             />
             <FeatureCard
               icon={Component}
-              title="React Ready"
-              description="Built with React best practices, ready to drop into your Vite or Next.js app."
+              title="Overlay"
+              description="Floating context managers for Dialogs, Menus, and Tooltips with z-index discipline."
+            />
+            <FeatureCard
+              icon={Zap}
+              title="Experience"
+              description="Global context scaler that adapts all child spacing and typography (App, Landing, Document)."
             />
           </Frame>
-        </ProseSection>
+        </Frame>
 
         {/* Footer */}
-        <ProseSection p="24 6" contentGap={4}>
+        <Frame p="24 6" gap={4}>
           <Frame h="1px" surface="sunken" w="100%" />
           <Frame row justify="between" p="8 0 0 0" align="center">
-            <Prose role="caption" color="tertiary">
+            <Card.Note>
               © 2026 Minimal Design Kit. All rights reserved.
-            </Prose>
+            </Card.Note>
             <Frame row gap={4}>
-              <Prose
-                role="caption"
-                color="secondary"
-                style={{ textDecoration: "none", cursor: "pointer" }}
-              >
-                Twitter
-              </Prose>
-              <Prose
-                role="caption"
-                color="secondary"
-                style={{ textDecoration: "none", cursor: "pointer" }}
-              >
-                GitHub
-              </Prose>
-              <Prose
-                role="caption"
-                color="secondary"
-                style={{ textDecoration: "none", cursor: "pointer" }}
-              >
-                Discord
-              </Prose>
+              <Card.Note style={{ cursor: "pointer" }}>Twitter</Card.Note>
+              <Card.Note style={{ cursor: "pointer" }}>GitHub</Card.Note>
+              <Card.Note style={{ cursor: "pointer" }}>Discord</Card.Note>
             </Frame>
           </Frame>
-        </ProseSection>
-      </ProseDocument>
-    </Frame>
+        </Frame>
+      </Frame>
+    </Experience>
   );
 }
 
@@ -200,17 +184,13 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <Frame p={6} surface="raised" rounded="2xl" style={{ border: "1px solid var(--border-color)" }} gap={4}>
+    <Frame p={6} surface="sunken  " rounded="2xl" style={{ border: "1px solid var(--border-color)" }} gap={4}>
       <Frame w={8} h={8} surface="base" rounded="xl" pack style={{ border: "1px solid var(--border-color)" }} shadow="sm">
         <Icon size={24} color="var(--text-primary)" />
       </Frame>
       <Frame gap={2}>
-        <Prose role="h3" style={{ fontSize: "1.1rem" }}>
-          {title}
-        </Prose>
-        <Prose role="body-sm" color="secondary">
-          {description}
-        </Prose>
+        <Card.Title>{title}</Card.Title>
+        <Card.Desc>{description}</Card.Desc>
       </Frame>
     </Frame>
   );

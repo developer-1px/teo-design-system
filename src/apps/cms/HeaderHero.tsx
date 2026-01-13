@@ -1,6 +1,6 @@
 import { ArrowUpRight, Command, Sparkles } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Prose, ProseActions, ProseSection } from "../../design-system/Prose";
+import { ProseOld, ProseActions, ProseSection } from "../../design-system/ProseOld.tsx";
 import { Text } from "../../design-system/Text";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
@@ -70,16 +70,16 @@ export function HeaderHero() {
         </Frame>
 
         <EditableWrapper style={{ width: "100%" }}>
-          <Prose role="h1" align="center">
+          <ProseOld role="h1" align="center">
             Build your dream site <br />
             <span style={{ color: "var(--color-primary)" }}>
               pixel by pixel.
             </span>
-          </Prose>
+          </ProseOld>
         </EditableWrapper>
 
         <EditableWrapper style={{ maxWidth: 600 }}>
-          <Prose
+          <ProseOld
             role="body"
             color="secondary"
             align="center"
@@ -87,7 +87,7 @@ export function HeaderHero() {
           >
             The visual engine for creators who demand perfection. No code, no
             constraints, just pure creativity.
-          </Prose>
+          </ProseOld>
         </EditableWrapper>
 
         <ProseActions align="center" gap={3}>

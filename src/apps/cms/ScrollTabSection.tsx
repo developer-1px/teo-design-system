@@ -1,5 +1,5 @@
 import { Action } from "../../design-system/Action";
-import { ProseSection } from "../../design-system/Prose";
+import { ProseSection } from "../../design-system/ProseOld.tsx";
 import { Frame } from "../../design-system/Frame";
 
 const TABS = [

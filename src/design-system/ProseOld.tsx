@@ -16,7 +16,7 @@ interface ProseProps
   style?: React.CSSProperties;
 }
 
-export function Prose({
+export function ProseOld({
   role,
   children,
   as,

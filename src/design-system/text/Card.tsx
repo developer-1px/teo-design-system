@@ -40,6 +40,20 @@ export const Card = {
             ...style
         }} {...props}>
             {children}
+            {children}
+        </Text>
+    ),
+    Code: ({ children, style, ...props }: any) => (
+        <Text as="code" style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "var(--card-code-size)",
+            fontWeight: "var(--card-code-weight)",
+            lineHeight: "var(--card-code-height)",
+            letterSpacing: "var(--card-code-spacing)",
+            color: "var(--card-code-color)",
+            ...style
+        }} {...props}>
+            {children}
         </Text>
     ),
 };

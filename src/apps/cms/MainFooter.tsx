@@ -1,5 +1,5 @@
 import { ArrowUpRight, Globe, MessageSquare, Sparkles } from "lucide-react";
-import { ProseSection } from "../../design-system/Prose";
+import { ProseSection } from "../../design-system/ProseOld.tsx";
 import { Text } from "../../design-system/Text";
 import { Frame } from "../../design-system/Frame";
 

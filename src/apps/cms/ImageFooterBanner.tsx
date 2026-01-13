@@ -1,6 +1,6 @@
 import { Cpu, Globe, Shield, Zap } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Prose, ProseDocument } from "../../design-system/Prose";
+import { ProseOld, ProseDocument } from "../../design-system/ProseOld.tsx";
 import { Text } from "../../design-system/Text";
 import { Frame } from "../../design-system/Frame";
 
@@ -29,10 +29,10 @@ export function ImageFooterBanner() {
         />
 
         <ProseDocument p={6} maxWidth={640} gap={6} align="center" zIndex={10}>
-          <Prose color="white" role="h2" align="center">
+          <ProseOld color="white" role="h2" align="center">
             Ready to elevate <br /> your web presence?
-          </Prose>
-          <Prose
+          </ProseOld>
+          <ProseOld
             color="white"
             role="body"
             align="center"
@@ -40,7 +40,7 @@ export function ImageFooterBanner() {
           >
             Join 2,000+ companies building high-performance marketing sites with
             our Visual Engine.
-          </Prose>
+          </ProseOld>
           <Frame row gap={4}>
             <Action
               label="Start for Free"

@@ -16,8 +16,6 @@
 
     /* Layout Defaults */
     flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
 }
 
 /* Base Layout Display */
@@ -51,8 +49,6 @@
 
 .vbox {
     flex-direction: column;
-    align-items: stretch;
-    /* Default for vbox per request */
 }
 
 .pack {
