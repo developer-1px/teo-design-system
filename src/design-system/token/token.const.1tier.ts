@@ -61,12 +61,7 @@ export type SpaceToken = (typeof Space)[keyof typeof Space];
 // Icon Size
 // ---------------------------------
 export const IconSizeScale = [10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40,
-  48,   // large action / empty-state icon
-  64,   // feature / hero symbol
-  80,   // empty state, marketing block에서 가장 많이 나옴
-  96,   // 강조용 large icon (2×48)
-  128,  // 섹션 헤더 / 브랜드 심볼
-  160,  // 히어로 영역 심볼
+  44, 48, 56, 64, 72, 80, 88, 96, 112, 128, 144, 160,
   192,  // 대형 empty / landing
   256,  // 브랜딩 / splash
   384,  // 풀섹션 비주얼
@@ -89,11 +84,17 @@ export const IconSize = {
   n32: "icon-size.n32",
   n36: "icon-size.n36",
   n40: "icon-size.n40",
+  n44: "icon-size.n44",
   n48: "icon-size.n48",
+  n56: "icon-size.n56",
   n64: "icon-size.n64",
+  n72: "icon-size.n72",
   n80: "icon-size.n80",
+  n88: "icon-size.n88",
   n96: "icon-size.n96",
+  n112: "icon-size.n112",
   n128: "icon-size.n128",
+  n144: "icon-size.n144",
   n160: "icon-size.n160",
   n192: "icon-size.n192",
   n256: "icon-size.n256",
