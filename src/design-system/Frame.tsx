@@ -4,7 +4,8 @@ import "./lib/frame.css";
 
 import type { FrameOverrides, FrameProps } from "./lib/props.ts";
 import { frameToSettings } from "./lib/frameToSettings.ts";
-import { resolveLayout } from "./lib/frameLayout.ts";
+
+import {resolveLayout} from "./Frame/Layout/Layout.ts"
 
 export function Frame({
   children,

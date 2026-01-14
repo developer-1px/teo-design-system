@@ -6,7 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - `npm run dev` - Start development server (port 5173)
 - `npm run build` - Build production bundle (TypeScript compilation + Vite build)
-- `npm run lint` - Run ESLint on TypeScript/TSX files
+- `npm run lint` - Run Biome linter on all files
+- `npm run format` - Format code with Biome
+- `npm run check` - Run Biome check and auto-fix issues
+- `npm run typecheck` - Run TypeScript compiler check
 - `npm run preview` - Preview production build
 
 ## Project Overview

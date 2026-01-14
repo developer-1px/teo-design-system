@@ -136,7 +136,7 @@ export interface FrameProps
   /**
    * High-level layout preset.
    */
-  layout?: import("../Layout").LayoutToken;
+  layout?: import("../Frame/Layout/Layout.ts").LayoutToken;
 
   /**
    * Ad-hoc overrides for specific instances.
