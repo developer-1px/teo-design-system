@@ -4,7 +4,7 @@ import { Text } from "./text/Text.tsx";
 import { Icon } from "./Icon";
 import { IconSize, type IconSizeToken } from "./token/token.const.1tier";
 
-import "./lib/tokens.css";
+
 import type { ActionVariant, RoundedToken, SurfaceToken } from "./lib/types.ts";
 import { toToken } from "./lib/utils.ts";
 

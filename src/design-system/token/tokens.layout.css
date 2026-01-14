@@ -1,0 +1,80 @@
+:root {
+    /* Spacing Scale (4px base) */
+    --space-0: 0px;
+    --space-0-5: 2px;
+    --space-1: 4px;
+    --space-1-5: 6px;
+    --space-2: 8px;
+    --space-2-5: 10px;
+    --space-3: 12px;
+    --space-3-5: 14px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 28px;
+    --space-8: 48px;
+    --space-9: 36px;
+    --space-10: 64px;
+    --space-12: 80px;
+    --space-16: 128px;
+    --space-20: 160px;
+    --space-21: 84px;
+    --space-24: 96px;
+    --space-25: 100px;
+    --space-30: 120px;
+    --space-40: 160px;
+
+    /* Size Scale (Layout) */
+    --size-3: 12px;
+    --size-4: 16px;
+    --size-5: 24px;
+    --size-6: 32px;
+    --size-7: 28px;
+    --size-8: 48px;
+    --size-action: 40px;
+    /* New Token */
+    --size-header: 80px;
+    /* New Token */
+    --size-10: 64px;
+    --size-12: 80px;
+    --size-13: 104px;
+    --size-16: 128px;
+    --size-20: 160px;
+    --size-25: 100px;
+    --size-40: 160px;
+    --size-50: 200px;
+    --size-55: 220px;
+    --size-60: 240px;
+    --size-65: 260px;
+    --size-70: 280px;
+    --size-80: 320px;
+    --size-100: 400px;
+    --size-125: 500px;
+    --size-150: 600px;
+    --size-200: 800px;
+    --size-250: 1000px;
+    --size-300: 1200px;
+
+    /* Radius */
+    --radius-none: 0px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-full: 32px;
+    --radius-round: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-3xl: 24px;
+
+    /* Shadows */
+    /* Shadows - Extremely Soft / Atmospheric */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-md:
+        0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    --shadow-lg:
+        0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+.frame>* {
+    flex-shrink: 0;
+}

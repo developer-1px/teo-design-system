@@ -1,6 +1,6 @@
 import { Text } from "./text/Text.tsx";
 import { Frame } from "./Frame";
-import "./lib/tokens.css";
+
 
 import type { RoundedToken, SurfaceToken } from "./lib/types.ts";
 

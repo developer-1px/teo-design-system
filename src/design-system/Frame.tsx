@@ -1,5 +1,5 @@
 import type React from "react";
-import "./lib/tokens.css";
+
 import "./lib/frame.css";
 
 import type { FrameOverrides, FrameProps } from "./lib/props.ts";

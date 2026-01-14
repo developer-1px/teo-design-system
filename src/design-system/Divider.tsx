@@ -1,5 +1,5 @@
 import type React from "react";
-import "./lib/tokens.css";
+
 
 interface DividerProps {
   variant?: "line" | "dot" | "slash" | "spacer";

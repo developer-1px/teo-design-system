@@ -1,5 +1,5 @@
 import React from "react";
-import "./lib/tokens.css";
+
 import { IconSize, type IconSizeToken } from "./token/token.const.1tier";
 import { toToken } from "./lib/utils";
 
