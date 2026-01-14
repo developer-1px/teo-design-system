@@ -1,5 +1,3 @@
-
-
 export type RoundedToken =
   | boolean
   | "none"
@@ -67,4 +65,3 @@ export type CursorToken =
   | "grab"
   | "grabbing";
 export type ShadowToken = "sm" | "md" | "lg" | "xl" | "2xl";
-

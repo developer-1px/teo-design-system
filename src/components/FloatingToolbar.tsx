@@ -42,14 +42,16 @@ export function FloatingToolbar() {
       style={{ transform: "translateX(-50%)" }}
     >
       <Frame
+        override={{
+          gap: 1,
+          p: 1,
+          rounded: "full",
+          shadow: "lg",
+          style: { border: "1px solid var(--border-color)" },
+        }}
         row
-        gap={1}
         surface="base"
-        p={1}
-        rounded="full"
-        shadow="lg"
         align="center"
-        style={{ border: "1px solid var(--border-color)" }}
       >
         {BOTTOM_TOOLS.map((tool, i) =>
           tool.separator ? (

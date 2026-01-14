@@ -20,12 +20,14 @@ function NavItem({ to, label }: { to: string; label: string }) {
     <NavLink to={to} style={{ textDecoration: "none" }}>
       {({ isActive }) => (
         <Frame
-          p="1.5 3.5"
-          rounded="full"
-          surface={isActive ? "sunken" : undefined}
-          style={{
-            color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+          override={{
+            p: "1.5 3.5",
+            rounded: "full",
+            style: {
+              color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+            },
           }}
+          surface={isActive ? "sunken" : undefined}
           cursor="pointer"
         >
           <Text variant={4} weight={isActive ? "bold" : "medium"}>
@@ -40,14 +42,15 @@ function NavItem({ to, label }: { to: string; label: string }) {
 function Navigation() {
   return (
     <Frame
-
+      override={{
+        rounded: "full",
+        shadow: "xl",
+        p: 1,
+        gap: 1,
+        style: { position: "fixed", bottom: 20, left: 20, zIndex: 9999 },
+      }}
       surface="raised"
-      rounded="full"
-      shadow="xl"
-      p={1}
       row
-      gap={1}
-      style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
     >
       <NavItem to="/" label="Home" />
       <NavItem to="/text" label="Text" />
@@ -68,12 +71,14 @@ function ThemeToggleItem() {
 
   return (
     <Frame
-      onClick={toggleTheme}
-      p={2}
-      rounded="full"
-      style={{
-        color: "var(--text-secondary)",
+      override={{
+        p: 2,
+        rounded: "full",
+        style: {
+          color: "var(--text-secondary)",
+        },
       }}
+      onClick={toggleTheme}
       cursor="pointer"
       surface="hover"
       align="center"
@@ -89,7 +94,6 @@ function App() {
     <HashRouter>
       <InspectorOverlay />
       <Frame fill overflow="hidden">
-
         <Routes>
           <Route path="/" element={<LandingApp />} />
           <Route path="/text" element={<TextSystemApp />} />

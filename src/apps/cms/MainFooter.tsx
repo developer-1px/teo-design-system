@@ -5,43 +5,53 @@ import { Frame } from "../../design-system/Frame";
 export function MainFooter() {
   return (
     <Frame
-      w="100%"
-      p="64px 24px"
+      override={{
+        w: "100%",
+        p: "64px 24px",
+        gap: "16px",
+        style: { maxWidth: "1200px", margin: "0 auto" },
+      }}
       surface="sunken"
-      gap="16px"
-      style={{ maxWidth: "1200px", margin: "0 auto" }}
     >
-      <Frame row justify="between" align="start" w="100%">
-        <Frame gap="6px" w="35%">
-          <Frame row gap="3px" align="center">
+      <Frame override={{ w: "100%" }} row justify="between" align="start">
+        <Frame override={{ gap: "6px", w: "35%" }}>
+          <Frame override={{ gap: "3px" }} row align="center">
             <Frame
-              style={{ width: 40, height: 40 }}
-              rounded="xl"
+              override={{ style: { width: 40, height: 40 }, rounded: "xl" }}
               surface="primary"
               pack
             >
               <Sparkles size={20} color="#fff" />
             </Frame>
             <Text.Card.Title
-              style={{ fontWeight: "bold", fontSize: "20px", letterSpacing: "-0.02em" }}
+              style={{
+                fontWeight: "bold",
+                fontSize: "20px",
+                letterSpacing: "-0.02em",
+              }}
             >
               VisualEngine
             </Text.Card.Title>
           </Frame>
           <Text.Card.Desc
-            style={{ fontSize: "16px", lineHeight: "1.6", opacity: 0.7, color: "var(--text-secondary)" }}
+            style={{
+              fontSize: "16px",
+              lineHeight: "1.6",
+              opacity: 0.7,
+              color: "var(--text-secondary)",
+            }}
           >
             Building the future of the visual web. Join us in redefining how
             websites are crafted.
           </Text.Card.Desc>
-          <Frame row gap="4px">
+          <Frame override={{ gap: "4px" }} row>
             <Globe size={20} opacity={0.4} />
             <MessageSquare size={20} opacity={0.4} />
             <ArrowUpRight size={20} opacity={0.4} />
           </Frame>
         </Frame>
 
-        <Frame row gap="16px">
+        <Frame override={{ gap: "16px" }} row>
           <FooterLinkColumn
             title="PRODUCT"
             links={["Features", "Design", "Automation", "Templates"]}
@@ -58,21 +68,27 @@ export function MainFooter() {
       </Frame>
 
       <Frame
-        style={{ borderTop: "1px solid var(--border-color)" }}
-        p="8px 0 0 0"
+        override={{
+          style: { borderTop: "1px solid var(--border-color)" },
+          p: "8px 0 0 0",
+          w: "100%",
+        }}
         row
         justify="between"
         align="center"
-        w="100%"
       >
         <Text.Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
           © 2024 VisualEngine Inc. All rights reserved.
         </Text.Card.Note>
-        <Frame row gap="6px">
-          <Text.Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
+        <Frame override={{ gap: "6px" }} row>
+          <Text.Card.Note
+            style={{ fontSize: 13, color: "var(--text-tertiary)" }}
+          >
             Privacy Policy
           </Text.Card.Note>
-          <Text.Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
+          <Text.Card.Note
+            style={{ fontSize: 13, color: "var(--text-tertiary)" }}
+          >
             Terms of Service
           </Text.Card.Note>
         </Frame>
@@ -88,9 +104,14 @@ interface FooterLinkColumnProps {
 
 function FooterLinkColumn({ title, links }: FooterLinkColumnProps) {
   return (
-    <Frame gap="4px">
+    <Frame override={{ gap: "4px" }}>
       <Text.Card.Note
-        style={{ fontSize: 11, letterSpacing: "0.05em", fontWeight: "bold", color: "var(--text-tertiary)" }}
+        style={{
+          fontSize: 11,
+          letterSpacing: "0.05em",
+          fontWeight: "bold",
+          color: "var(--text-tertiary)",
+        }}
       >
         {title}
       </Text.Card.Note>

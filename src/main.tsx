@@ -5,8 +5,6 @@ import "./index.css"; // Keep for reset if needed, but tokens.css handles most
 import App from "./App";
 import { ThemeProvider } from "./design-system/theme";
 
-
-
 const root = document.getElementById("root");
 if (root) {
   createRoot(root).render(

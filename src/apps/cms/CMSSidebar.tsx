@@ -23,21 +23,23 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
   return (
     <Frame
-      h="100%"
-      surface="raised"
-      p={1}
-      gap={1}
-      style={{
-        borderRight: "1px solid var(--border-color)",
-        width: isOpen ? 240 : 60,
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        transformOrigin: "top left",
-        transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+      override={{
+        h: "100%",
+        p: 1,
+        gap: 1,
+        style: {
+          borderRight: "1px solid var(--border-color)",
+          width: isOpen ? 240 : 60,
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          transformOrigin: "top left",
+          transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        },
       }}
+      surface="raised"
     >
       {/* Header with Toggle */}
-      <Frame row align="center" gap={3} p="0 4px">
+      <Frame override={{ gap: 3, p: "0 4px" }} row align="center">
         <Action
           icon={isOpen ? Layout : Menu}
           variant="ghost"
@@ -48,33 +50,47 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         />
 
         <Frame
+          override={{
+            gap: 2,
+            style: {
+              opacity: isOpen ? 1 : 0,
+              transition: "opacity 0.2s",
+              pointerEvents: isOpen ? "auto" : "none",
+            },
+          }}
           row
           align="center"
-          gap={2}
-          style={{
-            opacity: isOpen ? 1 : 0,
-            transition: "opacity 0.2s",
-            pointerEvents: isOpen ? "auto" : "none"
-          }}
-        >
-        </Frame>
+        ></Frame>
       </Frame>
 
       {/* Content - Hidden when closed */}
       <Frame
-        flex
-        gap="8px"
-        overflow="scroll"
-        style={{
-          opacity: isOpen ? 1 : 0,
-          transition: "opacity 0.2s",
-          pointerEvents: isOpen ? "auto" : "none",
-          display: isOpen ? "flex" : "none" // Fully hide to prevent layout issues
+        override={{
+          gap: "8px",
+          style: {
+            opacity: isOpen ? 1 : 0,
+            transition: "opacity 0.2s",
+            pointerEvents: isOpen ? "auto" : "none",
+            display: isOpen ? "flex" : "none", // Fully hide to prevent layout issues
+          },
         }}
+        flex
+        overflow="scroll"
       >
-        <Frame gap={2} p="0px 8px 8px 8px" row align="center" justify="between">
-          <Frame row gap={2} align="center">
-            <Text.Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
+        <Frame
+          override={{ gap: 2, p: "0px 8px 8px 8px" }}
+          row
+          align="center"
+          justify="between"
+        >
+          <Frame override={{ gap: 2 }} row align="center">
+            <Text.Card.Note
+              style={{
+                fontSize: 11,
+                fontWeight: "bold",
+                color: "var(--text-tertiary)",
+              }}
+            >
               SECTIONS
             </Text.Card.Note>
             <Action
@@ -86,7 +102,11 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
               onClick={() => console.log("Add Section")}
             />
           </Frame>
-          <Frame row gap={1} surface="sunken" p="2px" rounded="md">
+          <Frame
+            override={{ gap: 1, p: "2px", rounded: "md" }}
+            row
+            surface="sunken"
+          >
             <Action
               icon={Grid2X2}
               size={5}
@@ -104,7 +124,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           </Frame>
         </Frame>
 
-        <Frame gap={viewMode === "thumbnail" ? "12px" : "4px"}>
+        <Frame override={{ gap: viewMode === "thumbnail" ? "12px" : "4px" }}>
           <LayerItem label="Hero Section" active viewMode={viewMode} />
           <LayerItem label="Feature Grid" viewMode={viewMode} />
           <LayerItem label="Testimonials" viewMode={viewMode} />
@@ -114,30 +134,33 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
       {/* Footer Settings */}
       <Frame
+        override={{
+          gap: 3,
+          p: 3,
+          style: {
+            borderTop: "1px solid var(--border-color)",
+            opacity: isOpen ? 1 : 0,
+            transition: "opacity 0.2s",
+            display: isOpen ? "flex" : "none",
+          },
+        }}
         row
         align="center"
-        gap={3}
-        p={3}
-        style={{
-          borderTop: "1px solid var(--border-color)",
-          opacity: isOpen ? 1 : 0,
-          transition: "opacity 0.2s",
-          display: isOpen ? "flex" : "none"
-        }}
       >
         <Frame
-          style={{ width: 32, height: 32 }}
-          rounded="full"
+          override={{ style: { width: 32, height: 32 }, rounded: "full" }}
           surface="sunken"
           pack
         >
           <Settings size={16} />
         </Frame>
-        <Frame gap="2px">
+        <Frame override={{ gap: "2px" }}>
           <Text.Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
             Site Settings
           </Text.Card.Title>
-          <Text.Card.Note style={{ fontSize: 11, color: "var(--text-tertiary)" }}>
+          <Text.Card.Note
+            style={{ fontSize: 11, color: "var(--text-tertiary)" }}
+          >
             General, SEO, Analytics
           </Text.Card.Note>
         </Frame>
@@ -145,8 +168,6 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
     </Frame>
   );
 }
-
-
 
 interface LayerItemProps {
   label: string;
@@ -157,28 +178,37 @@ interface LayerItemProps {
 function LayerItem({ label, active, viewMode }: LayerItemProps) {
   if (viewMode === "thumbnail") {
     return (
-      <Frame gap={1.5} p="0 8px">
-        <Frame row gap={2} align="center">
+      <Frame override={{ gap: 1.5, p: "0 8px" }}>
+        <Frame override={{ gap: 2 }} row align="center">
           <FileText size={10} opacity={0.5} />
-          <Text.Card.Note style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}>
+          <Text.Card.Note
+            style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}
+          >
             {label}
           </Text.Card.Note>
         </Frame>
         <Frame
-          w="100%"
+          override={{
+            w: "100%",
+            rounded: "md",
+            style: {
+              border: "1px solid var(--border-color)",
+              boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
+              borderColor: active
+                ? "var(--text-primary)"
+                : "var(--border-color)",
+            },
+          }}
           ratio="16/9"
           surface={active ? "base" : "sunken"}
-          rounded="md"
           pack
           cursor="pointer"
-          style={{
-            border: "1px solid var(--border-color)",
-            boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
-            borderColor: active ? "var(--text-primary)" : "var(--border-color)",
-          }}
         >
           {active && (
-            <Frame w={8} h={8} rounded="full" surface="primary" shadow="sm" />
+            <Frame
+              override={{ w: 8, h: 8, rounded: "full", shadow: "sm" }}
+              surface="primary"
+            />
           )}
         </Frame>
       </Frame>
@@ -187,17 +217,18 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
 
   return (
     <Frame
+      override={{ p: "8px 12px", rounded: "md" }}
       row
       align="center"
       justify="between"
-      p="8px 12px"
-      rounded="md"
       surface={active ? "raised" : undefined}
       cursor="pointer"
     >
-      <Frame row gap="8px" align="center">
+      <Frame override={{ gap: "8px" }} row align="center">
         <FileText size={14} opacity={0.5} />
-        <Text.Card.Title style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}>
+        <Text.Card.Title
+          style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}
+        >
           {label}
         </Text.Card.Title>
       </Frame>

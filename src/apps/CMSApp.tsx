@@ -19,23 +19,31 @@ export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <Frame fill surface="raised" overflow="hidden" p="0">
+    <Frame override={{ p: "0" }} fill surface="raised" overflow="hidden">
       <TopCenterBar />
       <TopRightBar />
 
-      <Frame row fill align="stretch" style={{ position: "relative" }}>
-        <CMSSidebar isOpen={isSidebarOpen} onToggle={() => setSidebarOpen(!isSidebarOpen)} />
+      <Frame
+        override={{ style: { position: "relative" } }}
+        row
+        fill
+        align="stretch"
+      >
+        <CMSSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setSidebarOpen(!isSidebarOpen)}
+        />
         <Frame
+          override={{ p: "0" }}
           flex
           fill
           surface="overlay"
           align="center"
           justify="start"
           overflow="auto"
-          p="0"
         >
           {/* The Canvas */}
-          <Frame w="100%" style={{ minHeight: "100%" }}>
+          <Frame override={{ w: "100%", style: { minHeight: "100%" } }}>
             <SiteHeader
               isSidebarOpen={isSidebarOpen}
               onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)}

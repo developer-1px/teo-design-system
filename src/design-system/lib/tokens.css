@@ -416,6 +416,6 @@
   --prose-body-weight: 400;
 }
 
-.frame>* {
+.frame > * {
   flex-shrink: 0;
 }

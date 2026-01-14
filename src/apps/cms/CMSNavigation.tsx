@@ -23,24 +23,25 @@ export function TopCenterBar() {
       style={{ transform: "translateX(-50%)", pointerEvents: "auto" }}
       clickOutsideToDismiss={false}
     >
-      <Frame
-        row
-        align="center"
-      >
+      <Frame row align="center">
         <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
-        <Frame w={0.5} h={4} surface="overlay" />
-        <Frame row gap={2} align="center" style={{ padding: "0 8px" }}>
+        <Frame override={{ w: 0.5, h: 4 }} surface="overlay" />
+        <Frame
+          override={{ gap: 2, style: { padding: "0 8px" } }}
+          row
+          align="center"
+        >
           <Text.Card.Note style={{ fontSize: 13, fontWeight: "medium" }}>
             Page:
           </Text.Card.Note>
-          <Frame row gap={1} align="center" cursor="pointer">
+          <Frame override={{ gap: 1 }} row align="center" cursor="pointer">
             <Text.Card.Title style={{ fontSize: 13, fontWeight: "bold" }}>
               Marketing Home
             </Text.Card.Title>
             <ChevronDown size={12} opacity={0.5} />
           </Frame>
         </Frame>
-        <Frame w={0.5} h={4} surface="overlay" />
+        <Frame override={{ w: 0.5, h: 4 }} surface="overlay" />
         <Action icon={Play} variant="ghost" size="sm" rounded="full" />
       </Frame>
     </Overlay>
@@ -57,16 +58,16 @@ export function TopRightBar() {
       clickOutsideToDismiss={false}
       style={{ pointerEvents: "auto" }}
     >
-      <Frame
-        row
-        gap={2}
-        align="center"
-      >
-        <Frame row gap={1} surface="raised" p={1} rounded="full" shadow="lg">
-          <Frame p={1.5} rounded="full">
+      <Frame override={{ gap: 2 }} row align="center">
+        <Frame
+          override={{ gap: 1, p: 1, rounded: "full", shadow: "lg" }}
+          row
+          surface="raised"
+        >
+          <Frame override={{ p: 1.5, rounded: "full" }}>
             <Moon size={16} />
           </Frame>
-          <Frame p={1.5} rounded="full">
+          <Frame override={{ p: 1.5, rounded: "full" }}>
             <Bell size={16} />
           </Frame>
         </Frame>
@@ -99,11 +100,13 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
       style={{ pointerEvents: "auto" }}
     >
       <Frame
+        override={{
+          p: 2,
+          rounded: "full",
+          style: { border: "1px solid var(--border-color)" },
+          shadow: "lg",
+        }}
         surface="base"
-        p={2}
-        rounded="full"
-        style={{ border: "1px solid var(--border-color)" }}
-        shadow="lg"
         cursor="pointer"
         className=""
         onClick={onClick}

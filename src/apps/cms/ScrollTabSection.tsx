@@ -20,19 +20,28 @@ const TABS = [
 
 export function ScrollTabSection() {
   return (
-    <Frame w="100%" p="6 0" style={{ borderBottom: "1px solid var(--border-color)" }} surface="base">
+    <Frame
+      override={{
+        w: "100%",
+        p: "6 0",
+        style: { borderBottom: "1px solid var(--border-color)" },
+      }}
+      surface="base"
+    >
       <Frame
-        row
-        gap={2}
-        w="100%"
-        overflow="auto"
-        style={{
-          // Hide scrollbar for cleaner look but keep functionality
-          msOverflowStyle: "none",
-          scrollbarWidth: "none",
-          WebkitOverflowScrolling: "touch",
+        override={{
+          gap: 2,
+          w: "100%",
+          style: {
+            // Hide scrollbar for cleaner look but keep functionality
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+            WebkitOverflowScrolling: "touch",
+          },
+          p: "0 6",
         }}
-        p="0 6"
+        row
+        overflow="auto"
       >
         {TABS.map((tab, i) => (
           <Action

@@ -60,11 +60,12 @@ export function ProseOld({
   );
 }
 
-interface ProseDocumentProps extends FrameProps {
+interface ProseDocumentProps extends Omit<FrameProps, "gap" | "maxWidth"> {
   children: React.ReactNode;
   maxWidth?: number | string;
   className?: string;
   gap?: number | string;
+  style?: React.CSSProperties;
 }
 
 export function ProseDocument({
@@ -77,14 +78,16 @@ export function ProseDocument({
 }: ProseDocumentProps) {
   return (
     <Frame
-      w="100%"
-      maxWidth={maxWidth}
-      gap={gap}
-      p="0 6"
-      style={{
-        marginLeft: "auto",
-        marginRight: "auto",
-        ...style,
+      override={{
+        w: "100%",
+        maxWidth: maxWidth,
+        gap: gap,
+        p: "0 6",
+        style: {
+          marginLeft: "auto",
+          marginRight: "auto",
+          ...style,
+        },
       }}
       className={`prose-document ${className}`}
       {...props}
@@ -102,13 +105,15 @@ export function ProseSection({
   p = "24 0",
   w = "100%",
   ...props
-}: React.ComponentProps<typeof Frame> & {
+}: Omit<React.ComponentProps<typeof Frame>, "layout" | "p" | "w"> & {
   maxWidth?: number | string;
   contentGap?: number | string;
   layout?: "centered" | "full";
+  p?: any; // Allow loose
+  w?: any; // Allow loose
 }) {
   return (
-    <Frame w={w} p={p} {...props}>
+    <Frame override={{ w: w, p: p }} {...props}>
       {layout === "centered" ? (
         <ProseDocument maxWidth={maxWidth} gap={contentGap}>
           {children}
@@ -125,18 +130,18 @@ export function ProseActions({
   align = "left",
   gap = 2,
   ...props
-}: Omit<React.ComponentProps<typeof Frame>, "align"> & {
+}: Omit<React.ComponentProps<typeof Frame>, "align" | "gap"> & {
   align?: "left" | "center" | "right";
+  gap?: number | string;
 }) {
   const justify =
     align === "center" ? "center" : align === "right" ? "end" : "start";
 
   return (
     <Frame
+      override={{ gap: gap, style: { marginTop: "var(--space-6)" } }}
       row
-      gap={gap}
       justify={justify}
-      style={{ marginTop: "var(--space-6)" }}
       {...props}
     >
       {children}

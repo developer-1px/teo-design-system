@@ -7,47 +7,59 @@ import { EditableWrapper } from "./EditableWrapper";
 export function HeaderHero() {
   return (
     <Frame
-      w="100%"
-      p="21 5"
-      gap={3}
+      override={{
+        w: "100%",
+        p: "21 5",
+        gap: 3,
+        style: {
+          minHeight: "90vh",
+          position: "relative",
+          overflow: "hidden",
+          maxWidth: 1280,
+          margin: "0 auto",
+        },
+      }}
       surface="base"
-      style={{ minHeight: "90vh", position: "relative", overflow: "hidden", maxWidth: 1280, margin: "0 auto" }}
     >
       {/* Background Decoration */}
       <Frame
-        style={{
-          position: "absolute",
-          top: -25,
-          right: -25,
-          background: "var(--color-primary)",
-          filter: "blur(150px)",
-          opacity: 0.1,
+        override={{
+          style: {
+            position: "absolute",
+            top: -25,
+            right: -25,
+            background: "var(--color-primary)",
+            filter: "blur(150px)",
+            opacity: 0.1,
+          },
         }}
       />
       <Frame
-        style={{
-          position: "absolute",
-          bottom: -25,
-          left: -25,
-          background: "var(--color-warning)",
-          filter: "blur(150px)",
-          opacity: 0.15,
+        override={{
+          style: {
+            position: "absolute",
+            bottom: -25,
+            left: -25,
+            background: "var(--color-warning)",
+            filter: "blur(150px)",
+            opacity: 0.15,
+          },
         }}
       />
 
       <Frame
-        w="100%"
-        maxWidth={800}
-        style={{ margin: "0 auto" }}
-        gap={1.5}
+        override={{
+          w: "100%",
+          maxWidth: 800,
+          style: { margin: "0 auto" },
+          gap: 1.5,
+        }}
         align="center"
       >
         <Frame
-          p="1 3"
-          rounded="full"
+          override={{ p: "1 3", rounded: "full", gap: 2 }}
           surface="raised"
           row
-          gap={2}
           align="center"
         >
           <Sparkles size={12} color="var(--color-primary)" />
@@ -56,7 +68,7 @@ export function HeaderHero() {
               fontSize: "12px",
               fontWeight: "bold",
               color: "var(--text-secondary)",
-              letterSpacing: "0.02em"
+              letterSpacing: "0.02em",
             }}
           >
             NEXT GENERATION CMS IS HERE
@@ -77,7 +89,7 @@ export function HeaderHero() {
             style={{
               color: "var(--text-secondary)",
               textAlign: "center",
-              opacity: 0.8
+              opacity: 0.8,
             }}
           >
             The visual engine for creators who demand perfection. No code, no
@@ -85,7 +97,7 @@ export function HeaderHero() {
           </Text.Prose.Body>
         </EditableWrapper>
 
-        <Frame row gap={3} align="center">
+        <Frame override={{ gap: 3 }} row align="center">
           <Action
             label="Start Creating"
             variant="primary"
@@ -109,56 +121,89 @@ export function HeaderHero() {
 
       {/* Hero Visual: Mockup UI */}
       <Frame
-        w="100%"
-        maxWidth={250}
-        h={125}
-        surface="raised"
-        rounded="2xl"
-        shadow="2xl"
-        style={{
-          position: "relative",
-          marginTop: "64px",
-          transform: "perspective(1000px) rotateX(5deg)",
-          margin: "0 auto",
+        override={{
+          w: "100%",
+          maxWidth: 250,
+          h: 125,
+          rounded: "2xl",
+          shadow: "2xl",
+          style: {
+            position: "relative",
+            marginTop: "64px",
+            transform: "perspective(1000px) rotateX(5deg)",
+            margin: "0 auto",
+          },
         }}
+        surface="raised"
         overflow="hidden"
       >
         <Frame
-          h={10}
+          override={{
+            h: 10,
+            style: { borderBottom: "1px solid var(--border-color)" },
+            p: "0 1",
+            gap: 0.5,
+          }}
           surface="raised"
-          style={{ borderBottom: "1px solid var(--border-color)" }}
           row
           align="center"
-          p="0 1"
-          gap={0.5}
         >
-          <Frame w={10} h={10} rounded="full" surface="overlay" />
-          <Frame w={10} h={10} rounded="full" surface="overlay" />
-          <Frame w={10} h={10} rounded="full" surface="overlay" />
+          <Frame
+            override={{ w: 10, h: 10, rounded: "full" }}
+            surface="overlay"
+          />
+          <Frame
+            override={{ w: 10, h: 10, rounded: "full" }}
+            surface="overlay"
+          />
+          <Frame
+            override={{ w: 10, h: 10, rounded: "full" }}
+            surface="overlay"
+          />
           <Frame flex />
           <Command size={14} opacity={0.3} />
         </Frame>
         <Frame row fill justify="start">
-          <Frame w={50} style={{ borderRight: "1px solid var(--border-color)" }} surface="sunken" p={1} gap={1}>
-            <Frame h={3} w="80%" surface="overlay" rounded="full" />
-            <Frame h={3} w="60%" surface="overlay" rounded="full" />
-            <Frame flex />
-            <Frame h={10} w="100%" surface="raised" rounded="lg" />
-          </Frame>
-          <Frame flex surface="base" p={3} gap={1.5} pack>
+          <Frame
+            override={{
+              w: 50,
+              style: { borderRight: "1px solid var(--border-color)" },
+              p: 1,
+              gap: 1,
+            }}
+            surface="sunken"
+          >
             <Frame
-              w={20}
-              h={20}
-              rounded="2xl"
+              override={{ h: 3, w: "80%", rounded: "full" }}
+              surface="overlay"
+            />
+            <Frame
+              override={{ h: 3, w: "60%", rounded: "full" }}
+              surface="overlay"
+            />
+            <Frame flex />
+            <Frame
+              override={{ h: 10, w: "100%", rounded: "lg" }}
               surface="raised"
-              shadow="lg"
+            />
+          </Frame>
+          <Frame override={{ p: 3, gap: 1.5 }} flex surface="base" pack>
+            <Frame
+              override={{ w: 20, h: 20, rounded: "2xl", shadow: "lg" }}
+              surface="raised"
               pack
             >
               <Sparkles size={32} color="var(--color-primary)" />
             </Frame>
-            <Frame gap={0.5} align="center">
-              <Frame h={5} w={50} surface="overlay" rounded="full" />
-              <Frame h={3} w={75} surface="raised" rounded="full" />
+            <Frame override={{ gap: 0.5 }} align="center">
+              <Frame
+                override={{ h: 5, w: 50, rounded: "full" }}
+                surface="overlay"
+              />
+              <Frame
+                override={{ h: 3, w: 75, rounded: "full" }}
+                surface="raised"
+              />
             </Frame>
           </Frame>
         </Frame>

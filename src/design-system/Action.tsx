@@ -96,31 +96,33 @@ export function Action({
 
   return (
     <Frame
+      override={{
+        w: w ?? finalWidth,
+        h: h ?? finalHeight,
+        rounded: finalRounded,
+        p: p ?? (label ? 2 : 0),
+        gap: gap ?? 2,
+        opacity: opacity,
+        style: {
+          border: border ? "1px solid var(--border-color)" : undefined,
+          minWidth: !label && size ? (toToken(size, "size") as any) : undefined, // Ensure square for icons
+          cursor: "pointer", // Indicate interactivity
+          color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",
+          boxShadow: shadow
+            ? `var(--shadow-${shadow})`
+            : glow
+              ? "0 0 20px -5px var(--primary-bg)"
+              : undefined,
+          ...styleOverride,
+        },
+      }}
       as="button"
       className={`action-base action-${finalVariant} ${className}`}
       title={tooltip}
-      w={w ?? finalWidth}
-      h={h ?? finalHeight}
-      rounded={finalRounded}
       surface={surface}
-      p={p ?? (label ? 2 : 0)}
-      gap={gap ?? 2}
       row
       pack
       justify={mapJustify(justify) as any}
-      opacity={opacity}
-      style={{
-        border: border ? "1px solid var(--border-color)" : undefined,
-        minWidth: !label && size ? (toToken(size, "size") as any) : undefined, // Ensure square for icons
-        cursor: "pointer", // Indicate interactivity
-        color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",
-        boxShadow: shadow
-          ? `var(--shadow-${shadow})`
-          : glow
-            ? "0 0 20px -5px var(--primary-bg)"
-            : undefined,
-        ...styleOverride,
-      }}
       {...props}
     >
       {icon && (

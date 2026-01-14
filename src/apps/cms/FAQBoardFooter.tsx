@@ -7,20 +7,24 @@ import { Frame } from "../../design-system/Frame";
 export function FAQBoardFooter() {
   return (
     <Frame
-      w="100%"
-      p="96 24"
-      gap={12}
+      override={{
+        w: "100%",
+        p: "96 24",
+        gap: 12,
+        style: { maxWidth: 680, margin: "0 auto" },
+      }}
       surface="base"
-      style={{ maxWidth: 680, margin: "0 auto" }}
     >
-      <Frame gap={2} align="center" w="100%">
-        <Text.Card.Note style={{ fontWeight: "bold", color: "var(--text-primary)" }}>
+      <Frame override={{ gap: 2, w: "100%" }} align="center">
+        <Text.Card.Note
+          style={{ fontWeight: "bold", color: "var(--text-primary)" }}
+        >
           SUPPORT
         </Text.Card.Note>
         <Text.Prose.Title variant="lg">Common questions</Text.Prose.Title>
       </Frame>
 
-      <Frame w="100%" gap={4}>
+      <Frame override={{ w: "100%", gap: 4 }}>
         <FAQRow
           q="How secure is my data?"
           a="We use industry-standard encryption and SOC2 certification to ensure your data stays protected at all times."
@@ -40,22 +44,26 @@ export function FAQBoardFooter() {
       </Frame>
 
       <Frame
-        p={8}
-        w="100%"
+        override={{
+          p: 8,
+          w: "100%",
+          rounded: "2xl",
+          gap: 6,
+          style: { marginTop: 24 },
+        }}
         surface="raised"
-        rounded="2xl"
         row
-        gap={6}
         align="center"
-        style={{ marginTop: 24 }}
       >
-        <Frame w={56} h={56} rounded="full" surface="sunken" pack>
+        <Frame
+          override={{ w: 56, h: 56, rounded: "full" }}
+          surface="sunken"
+          pack
+        >
           <HelpCircle size={24} />
         </Frame>
-        <Frame gap={1}>
-          <Text.Card.Title>
-            Still have questions?
-          </Text.Card.Title>
+        <Frame override={{ gap: 1 }}>
+          <Text.Card.Title>Still have questions?</Text.Card.Title>
           <Text.Card.Desc>
             We're here to help. Contact our support team 24/7.
           </Text.Card.Desc>
@@ -82,17 +90,17 @@ function FAQRow({ q, a }: FAQRowProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Frame
-      w="100%"
-      p="6 0"
-      style={{ borderBottom: "1px solid var(--border-color)" }}
-      gap={4}
+      override={{
+        w: "100%",
+        p: "6 0",
+        style: { borderBottom: "1px solid var(--border-color)" },
+        gap: 4,
+      }}
       onClick={() => setIsOpen(!isOpen)}
       cursor="pointer"
     >
-      <Frame row justify="between" align="center" w="100%">
-        <Text.Card.Title>
-          {q}
-        </Text.Card.Title>
+      <Frame override={{ w: "100%" }} row justify="between" align="center">
+        <Text.Card.Title>{q}</Text.Card.Title>
         <Plus
           size={20}
           style={{
@@ -102,12 +110,8 @@ function FAQRow({ q, a }: FAQRowProps) {
         />
       </Frame>
       {isOpen && (
-        <Frame p="0 8 4 0">
-          <Text.Prose.Body
-            style={{ opacity: 0.8 }}
-          >
-            {a}
-          </Text.Prose.Body>
+        <Frame override={{ p: "0 8 4 0" }}>
+          <Text.Prose.Body style={{ opacity: 0.8 }}>{a}</Text.Prose.Body>
         </Frame>
       )}
     </Frame>

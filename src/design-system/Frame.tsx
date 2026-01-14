@@ -2,112 +2,96 @@ import type React from "react";
 import "./lib/tokens.css";
 import "./lib/frame.css";
 
-import type { FrameProps } from "./lib/props.ts";
+import type { FrameOverrides, FrameProps } from "./lib/props.ts";
 import { toToken } from "./lib/utils.ts";
 import { frameToSettings } from "./lib/frameToSettings.ts";
-
-
+import { resolveLayout } from "./lib/frameLayout.ts";
 
 export function Frame({
   children,
   as: Component = "div",
-
-  p,
-  gap,
-  pack,
-  w,
-  h,
-
-  flex,
-  row,
-  wrap,
-  fill,
-  grid,
-  columns,
-  rows,
-  areas,
-
-  minWidth,
-  minHeight,
-  maxWidth,
-  maxHeight,
-
-  align,
-  justify,
-
-  surface,
-  rounded,
-  overflow,
-  cursor,
-
-  shadow,
-  opacity,
-  ratio,
-
-
-
+  layout,
+  override,
   title,
   className = "",
-  style = {},
+  // style is NOT destructured as it's not in FrameProps. We rely on override.style.
+  // Note: if 'style' is passed in ...props (legacy), TS will complain at call site,
+  // and we ignore it here unless we explicitly look for it.
   ...props
 }: FrameProps) {
-  // --- New Settings (Hybrid CSS/Vars) ---
-  // Calculates classNames and scalar variables (e.g., --p: 2)
-  const { className: settingsClass, style: settingsStyle } = frameToSettings({
-    row,
-    pack,
-    wrap,
-    p,
-    gap,
-    w,
-    h,
-    rounded,
-    surface,
+  // 1. Resolve Layout
+  const layoutSettings = layout ? resolveLayout(layout) : {};
 
-    align,
-    justify,
-    flex,
-    overflow,
-    cursor,
-    shadow,
-    grid,
-    fill,
-  } as FrameProps);
+  // 2. Merge Overrides (Layout override < Direct override)
+  // We extract style specifically to merge it last
+  const combinedOverrideStyle = {
+    ...layoutSettings.override?.style,
+    ...override?.style,
+  };
+
+  const combinedOverride: FrameOverrides = {
+    ...layoutSettings.override,
+    ...override,
+  };
+
+  // 3. Construct Settings Input (Layout < Props < Override)
+  // This flattens strict props and loose overrides into one Loose object for calculation
+  const settingsInput: FrameOverrides = {
+    ...layoutSettings,
+    ...props,
+    ...combinedOverride,
+  } as FrameOverrides;
+
+  // 4. Calculate Settings (Classes & CSS Vars)
+  const { className: settingsClass, style: settingsStyle } =
+    frameToSettings(settingsInput);
+
+  // 5. Compute Final Style
+  // Logic from previous Frame.tsx for specific computed props (grid, size logic)
+  // We need to access props from settingsInput to ensure consistency
+
+  const p = settingsInput; // Alias for brevity
 
   const computedStyle: React.CSSProperties = {
     // Grid Areas/Columns (Dynamic)
-    gridTemplateColumns: columns,
-    gridTemplateRows: rows,
-    gridTemplateAreas: areas,
+    gridTemplateColumns: p.columns,
+    gridTemplateRows: p.rows,
+    gridTemplateAreas: p.areas,
 
-    // Sizing (W/H fallback for numeric values)
-    width: (typeof w === 'number' || (typeof w === 'string' && !['full', 'screen'].includes(w)))
-      ? toToken(w, "size") as any
-      : undefined,
-    height: (typeof h === 'number' || (typeof h === 'string' && !['full', 'screen'].includes(h)))
-      ? toToken(h, "size") as any
-      : undefined,
+    // Sizing (W/H fallback/token logic)
+    // Note: frameToSettings might handle some classes, but we need inline styles for numeric/token values sometimes?
+    // In previous Frame.tsx, width/height logic was explicit:
+    width:
+      typeof p.w === "number" ||
+      (typeof p.w === "string" && !["full", "screen"].includes(p.w))
+        ? (toToken(p.w, "size") as any)
+        : undefined,
+    height:
+      typeof p.h === "number" ||
+      (typeof p.h === "string" && !["full", "screen"].includes(p.h))
+        ? (toToken(p.h, "size") as any)
+        : undefined,
 
-    minWidth: toToken(minWidth, "size") as any,
-    minHeight: toToken(minHeight, "size") as any,
-    maxWidth: toToken(maxWidth, "size") as any,
-    maxHeight: toToken(maxHeight, "size") as any,
+    minWidth: toToken(p.minWidth, "size") as any,
+    minHeight: toToken(p.minHeight, "size") as any,
+    maxWidth: toToken(p.maxWidth, "size") as any,
+    maxHeight: toToken(p.maxHeight, "size") as any,
 
-    // Flex (Fallback for numeric values)
-    flex: typeof flex === "number" ? flex : undefined,
-    flexShrink: (w !== undefined || h !== undefined || ratio !== undefined) ? 0 : undefined,
+    // Flex
+    flex: typeof p.flex === "number" ? p.flex : undefined,
+    flexShrink:
+      p.w !== undefined || p.h !== undefined || p.ratio !== undefined
+        ? 0
+        : undefined,
 
-    // Visual Props
-    opacity,
-    aspectRatio: ratio,
+    // Visual
+    opacity: p.opacity as any,
+    aspectRatio: p.ratio,
 
-    // Positioning
-
-
-    color: surface === "primary" ? "var(--primary-fg)" : "inherit",
+    color: p.surface === "primary" ? "var(--primary-fg)" : "inherit",
 
     ...settingsStyle, // Injected variables (--p, --gap)
-    ...style, // User overrides
+    ...combinedOverrideStyle, // User arbitrary style overrides
   };
 
   return (
@@ -116,6 +100,14 @@ export function Frame({
       style={computedStyle}
       onClick={props.onClick}
       title={title}
+      // We pass ...props to DOM mostly for event handlers, aria, etc.
+      // But props contains strict styling props too (p, w).
+      // React ignores unknown props on DOM elements if they are not standard attributes.
+      // 'p', 'gap' etc are NOT valid HTML attributes.
+      // However, we should try to filter them out?
+      // Previous Frame didn't filter aggressively, just relied on React or Component being 'div'.
+      // If 'Component' is a styled component or custom, it might receive them.
+      // For now, we preserve behavior passing ...props.
       {...props}
     >
       {children}

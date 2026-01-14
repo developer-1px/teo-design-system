@@ -27,44 +27,56 @@ export function Section({
   fill,
   ...props
 }: SectionProps) {
+  const { w, h, flex, rounded, shadow, style, border, ...rest } = props;
+
   // Border Logic
   const computedBorder: React.CSSProperties = {};
-  const finalBorder = props.border ?? true; // Default to true if undefined
+  const finalBorder = border ?? true; // Default to true if undefined
 
   if (finalBorder === true) {
     computedBorder.border = "1px solid var(--border-color)";
   } else if (typeof finalBorder === "string") {
-    const key = `border${finalBorder.charAt(0).toUpperCase() + finalBorder.slice(1)}` as keyof React.CSSProperties;
+    const key =
+      `border${finalBorder.charAt(0).toUpperCase() + finalBorder.slice(1)}` as keyof React.CSSProperties;
     // @ts-expect-error
     computedBorder[key] = "1px solid var(--border-color)";
   }
 
   return (
     <Frame
+      override={{
+        p: 0,
+        w,
+        h,
+        flex,
+        rounded,
+        shadow,
+        style: {
+          ...computedBorder,
+          overflow: "hidden",
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          ...style,
+        },
+      }}
       as="section"
       surface="base"
-      {...props}
-      p={0} // Force zero padding so children/separators can hit edges
       fill={fill}
-      style={{
-        ...computedBorder,
-        overflow: "hidden",
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        ...props.style,
-      }}
+      {...rest}
     >
       {(title || icon) && (
         <Frame
+          override={{
+            gap: 2,
+            p: 2,
+            style: {
+              borderBottom: "1px solid var(--border-color)",
+              flexShrink: 0,
+            },
+          }}
           row
           align="center"
-          gap={2}
-          p={2}
-          style={{
-            borderBottom: "1px solid var(--border-color)",
-            flexShrink: 0,
-          }}
         >
           {icon && <span style={{ color: "var(--text-subtle)" }}>{icon}</span>}
           {title && (
@@ -80,7 +92,7 @@ export function Section({
           )}
         </Frame>
       )}
-      <Frame fill flex style={{ overflow: "auto", minHeight: 0 }}>
+      <Frame override={{ style: { overflow: "auto", minHeight: 0 } }} fill flex>
         {children}
       </Frame>
     </Frame>

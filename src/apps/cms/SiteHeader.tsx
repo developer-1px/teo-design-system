@@ -7,57 +7,59 @@ export interface SiteHeaderProps {
   onToggleSidebar?: () => void;
 }
 
-export function SiteHeader({ isSidebarOpen: _isSidebarOpen, onToggleSidebar: _onToggleSidebar }: SiteHeaderProps) {
+export function SiteHeader({
+  isSidebarOpen: _isSidebarOpen,
+  onToggleSidebar: _onToggleSidebar,
+}: SiteHeaderProps) {
   return (
     <Frame
-      w="100%"
-      h="header"
-      p="0 6"
+      override={{
+        w: "100%",
+        h: "header",
+        p: "0 6",
+        style: {
+          position: "sticky",
+          top: 0,
+          zIndex: 100,
+          borderBottom: "1px solid var(--border-color)",
+        },
+      }}
       row
       align="center"
       justify="center"
       surface="base"
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        borderBottom: "1px solid var(--border-color)"
-      }}
     >
       <Frame
-        w="100%"
-        maxWidth={300}
+        override={{ w: "100%", maxWidth: 300 }}
         row
         justify="between"
         align="center"
       >
-        <Frame row gap={2} align="center">
+        <Frame override={{ gap: 2 }} row align="center">
           <Frame
-            w={32}
-            h={32}
-            rounded="lg"
+            override={{
+              w: 32,
+              h: 32,
+              rounded: "lg",
+              style: { border: "1px solid var(--border-color)" },
+              shadow: "sm",
+            }}
             surface="primary"
-            style={{ border: "1px solid var(--border-color)" }}
             pack
-            shadow="sm"
           >
-            <Text.Card.Title style={{ color: "white" }}>
-              M
-            </Text.Card.Title>
+            <Text.Card.Title style={{ color: "white" }}>M</Text.Card.Title>
           </Frame>
-          <Text.Card.Title>
-            Minimal
-          </Text.Card.Title>
+          <Text.Card.Title>Minimal</Text.Card.Title>
         </Frame>
 
-        <Frame row gap={6}>
-          <Frame row gap={2}>
+        <Frame override={{ gap: 6 }} row>
+          <Frame override={{ gap: 2 }} row>
             <Action label="Features" variant="ghost" />
             <Action label="Pricing" variant="ghost" />
             <Action label="Resources" variant="ghost" />
           </Frame>
 
-          <Frame row gap={4} align="center">
+          <Frame override={{ gap: 4 }} row align="center">
             <Action
               label="Log in"
               variant="ghost"

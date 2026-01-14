@@ -5,40 +5,64 @@ import { Frame } from "../../design-system/Frame";
 
 export function ImageFooterBanner() {
   return (
-    <Frame w="100%" p="24 0" surface="base" style={{ borderBottom: "1px solid var(--border-color)" }}>
+    <Frame
+      override={{
+        w: "100%",
+        p: "24 0",
+        style: { borderBottom: "1px solid var(--border-color)" },
+      }}
+      surface="base"
+    >
       <Frame
-        w="100%"
-        h={125}
-        rounded="3xl"
+        override={{
+          w: "100%",
+          h: 125,
+          rounded: "3xl",
+          style: {
+            position: "relative",
+            background: "linear-gradient(225deg, #1a1a1a, #000)",
+          },
+        }}
         overflow="hidden"
-        style={{ position: "relative", background: "linear-gradient(225deg, #1a1a1a, #000)" }}
       >
         {/* Visual texture */}
         <Frame
-          style={{
-            position: "absolute",
-            opacity: 0.1,
-            backgroundImage:
-              "radial-gradient(circle at center, #fff 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
+          override={{
+            style: {
+              position: "absolute",
+              opacity: 0.1,
+              backgroundImage:
+                "radial-gradient(circle at center, #fff 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            },
           }}
         />
 
-        <Frame p={6} style={{ maxWidth: 640, position: "relative", zIndex: 10 }} gap={6} align="center">
-          <Text.Prose.Title variant="xl" style={{ color: "white", textAlign: "center" }}>
+        <Frame
+          override={{
+            p: 6,
+            style: { maxWidth: 640, position: "relative", zIndex: 10 },
+            gap: 6,
+          }}
+          align="center"
+        >
+          <Text.Prose.Title
+            variant="xl"
+            style={{ color: "white", textAlign: "center" }}
+          >
             Ready to elevate <br /> your web presence?
           </Text.Prose.Title>
           <Text.Prose.Body
             style={{
               color: "white",
               textAlign: "center",
-              opacity: 0.6
+              opacity: 0.6,
             }}
           >
             Join 2,000+ companies building high-performance marketing sites with
             our Visual Engine.
           </Text.Prose.Body>
-          <Frame row gap={4}>
+          <Frame override={{ gap: 4 }} row>
             <Action
               label="Start for Free"
               variant="primary"
@@ -61,34 +85,40 @@ export function ImageFooterBanner() {
       </Frame>
 
       {/* Partner Logos */}
-      <Frame style={{ paddingTop: 48, paddingBottom: 24 }} gap={6} align="center">
-        <Text.Card.Note style={{ fontWeight: "bold", color: "var(--text-tertiary)", opacity: 0.5 }}>
+      <Frame
+        override={{ style: { paddingTop: 48, paddingBottom: 24 }, gap: 6 }}
+        align="center"
+      >
+        <Text.Card.Note
+          style={{
+            fontWeight: "bold",
+            color: "var(--text-tertiary)",
+            opacity: 0.5,
+          }}
+        >
           TRUSTED WORLDWIDE
         </Text.Card.Note>
-        <Frame row gap={12} p="0 6" justify="center" opacity={0.3} wrap="wrap">
-          <Frame row gap={2} align="center">
+        <Frame
+          override={{ gap: 12, p: "0 6", opacity: 0.3 }}
+          row
+          justify="center"
+          wrap="wrap"
+        >
+          <Frame override={{ gap: 2 }} row align="center">
             <Zap size={24} />
-            <Text.Card.Title>
-              Bolt
-            </Text.Card.Title>
+            <Text.Card.Title>Bolt</Text.Card.Title>
           </Frame>
-          <Frame row gap={2} align="center">
+          <Frame override={{ gap: 2 }} row align="center">
             <Globe size={24} />
-            <Text.Card.Title>
-              Stripe
-            </Text.Card.Title>
+            <Text.Card.Title>Stripe</Text.Card.Title>
           </Frame>
-          <Frame row gap={2} align="center">
+          <Frame override={{ gap: 2 }} row align="center">
             <Shield size={24} />
-            <Text.Card.Title>
-              Linear
-            </Text.Card.Title>
+            <Text.Card.Title>Linear</Text.Card.Title>
           </Frame>
-          <Frame row gap={2} align="center">
+          <Frame override={{ gap: 2 }} row align="center">
             <Cpu size={24} />
-            <Text.Card.Title>
-              Vercel
-            </Text.Card.Title>
+            <Text.Card.Title>Vercel</Text.Card.Title>
           </Frame>
         </Frame>
       </Frame>

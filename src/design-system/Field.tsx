@@ -27,26 +27,30 @@ export function Field({
 }: FieldProps) {
   return (
     <Frame
+      override={{
+        gap: 1.5,
+        p: `1.5 ${rightIcon ? 1.5 : 2} 1.5 2`,
+        w: flex ? undefined : w,
+        style: {
+          cursor: "text",
+          ...style,
+        },
+      }}
       flex={flex}
       row
       align="center"
-      gap={1.5}
-      p={`1.5 ${rightIcon ? 1.5 : 2} 1.5 2`}
-      w={flex ? undefined : w}
       as="label"
       className={`field-base ${className}`}
-      style={{
-        cursor: "text",
-        ...style,
-      }}
     >
       {icon && (
         <Frame
-          className="field-icon"
-          style={{
-            display: "flex",
-            flexShrink: 0,
+          override={{
+            style: {
+              display: "flex",
+              flexShrink: 0,
+            },
           }}
+          className="field-icon"
         >
           {icon}
         </Frame>
@@ -83,10 +87,12 @@ export function Field({
       />
       {rightIcon && (
         <Frame
-          style={{
-            opacity: 0.4,
-            display: "flex",
-            flexShrink: 0,
+          override={{
+            style: {
+              opacity: 0.4,
+              display: "flex",
+              flexShrink: 0,
+            },
           }}
         >
           {rightIcon}

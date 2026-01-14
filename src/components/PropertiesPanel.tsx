@@ -43,8 +43,8 @@ const PropertySection = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <Frame gap={2}>
-    <Frame row justify="between" align="center" p="0 2">
+  <Frame override={{ gap: 2 }}>
+    <Frame override={{ p: "0 2" }} row justify="between" align="center">
       <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
       </Text.Menu.Group>
@@ -55,9 +55,7 @@ const PropertySection = ({
         opacity={0.4}
       />
     </Frame>
-    <Frame gap={1} p="0 2 2 2">
-      {children}
-    </Frame>
+    <Frame override={{ gap: 1, p: "0 2 2 2" }}>{children}</Frame>
     <Separator />
   </Frame>
 );
@@ -98,15 +96,17 @@ export function PropertiesPanel() {
     <Section style={{ width: "260px" }} surface="base" rounded="lg" shadow="sm">
       {/* Tabs */}
       <Frame
-        row
-        p={1}
-        gap={1}
-        style={{
-          flexShrink: 0,
-          height: "40px",
-          borderBottom: "1px solid var(--border-color)",
-          borderColor: "var(--border-color)"
+        override={{
+          p: 1,
+          gap: 1,
+          style: {
+            flexShrink: 0,
+            height: "40px",
+            borderBottom: "1px solid var(--border-color)",
+            borderColor: "var(--border-color)",
+          },
         }}
+        row
       >
         {["DESIGN", "ANIMATE"].map((tab) => (
           <Action
@@ -135,16 +135,23 @@ export function PropertiesPanel() {
         ))}
       </Frame>
 
-      <Frame p={2} gap={2} overflow="auto" flex fill style={{ minHeight: 0 }}>
+      <Frame
+        override={{ p: 2, gap: 2, style: { minHeight: 0 } }}
+        overflow="auto"
+        flex
+        fill
+      >
         {/* Alignment */}
         <Frame
+          override={{
+            rounded: "md",
+            style: { border: "1px solid var(--border-color)" },
+            p: "1px",
+            gap: "1px",
+          }}
           row
           justify="between"
           surface="sunken"
-          rounded="md"
-          style={{ border: "1px solid var(--border-color)" }}
-          p="1px"
-          gap="1px"
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
             tool.separator ? (
@@ -166,8 +173,8 @@ export function PropertiesPanel() {
         <Separator />
 
         {/* Transform */}
-        <Frame gap={2}>
-          <Frame row gap={2} align="center">
+        <Frame override={{ gap: 2 }}>
+          <Frame override={{ gap: 2 }} row align="center">
             <TransformField
               label="X"
               value={transform.x}
@@ -178,9 +185,9 @@ export function PropertiesPanel() {
               value={transform.y}
               onChange={(v) => updateTransform("y", v)}
             />
-            <Frame style={{ width: "24px" }} />
+            <Frame override={{ style: { width: "24px" } }} />
           </Frame>
-          <Frame row gap={2} align="center">
+          <Frame override={{ gap: 2 }} row align="center">
             <TransformField
               label="W"
               value={transform.w}
@@ -191,7 +198,7 @@ export function PropertiesPanel() {
               value={transform.h}
               onChange={(v) => updateTransform("h", v)}
             />
-            <Frame style={{ width: "24px" }} pack>
+            <Frame override={{ style: { width: "24px" } }} pack>
               <Action
                 icon={Lock}
                 iconSize={10}
@@ -200,7 +207,7 @@ export function PropertiesPanel() {
               />
             </Frame>
           </Frame>
-          <Frame row gap={2} align="center">
+          <Frame override={{ gap: 2 }} row align="center">
             <TransformField
               label="°"
               value={transform.r}
@@ -211,14 +218,14 @@ export function PropertiesPanel() {
               value={transform.corner}
               onChange={(v) => updateTransform("corner", v)}
             />
-            <Frame style={{ width: "24px" }} />
+            <Frame override={{ style: { width: "24px" } }} />
           </Frame>
         </Frame>
         <Separator />
 
         {/* Properties */}
         <PropertySection title="LAYER">
-          <Frame row justify="between" gap={3}>
+          <Frame override={{ gap: 3 }} row justify="between">
             <Field value="Normal" rightIcon={<ChevronDown size={10} />} flex />
             <Field
               value="100%"
@@ -229,9 +236,9 @@ export function PropertiesPanel() {
         </PropertySection>
 
         <PropertySection title="TEXT">
-          <Frame gap="6px">
+          <Frame override={{ gap: "6px" }}>
             <Field value="Inter" rightIcon={<ChevronDown size={10} />} />
-            <Frame row gap={2}>
+            <Frame override={{ gap: 2 }} row>
               <Field
                 value="Regular"
                 rightIcon={<ChevronDown size={10} />}
@@ -239,19 +246,21 @@ export function PropertiesPanel() {
               />
               <Field value="42" style={{ width: "50px" }} />
             </Frame>
-            <Frame row gap={2}>
+            <Frame override={{ gap: 2 }} row>
               <Field label="LH" value="Auto" flex />
               <Field label="LS" value="0%" flex />
             </Frame>
             <Frame
+              override={{
+                rounded: "md",
+                style: { border: "1px solid var(--border-color)" },
+                p: "1px",
+                gap: "1px",
+              }}
               row
               justify="between"
               align="center"
               surface="sunken"
-              rounded="md"
-              style={{ border: "1px solid var(--border-color)" }}
-              p="1px"
-              gap="1px"
             >
               {[
                 AlignLeft,
@@ -279,35 +288,41 @@ export function PropertiesPanel() {
             value="F4F4F5"
             icon={
               <Frame
-                style={{ width: "10px", height: "10px", border: "1px solid var(--border-color)" }}
+                override={{
+                  style: {
+                    width: "10px",
+                    height: "10px",
+                    border: "1px solid var(--border-color)",
+                  },
+                  rounded: "round",
+                }}
                 surface="base"
-                rounded="round"
               />
             }
             rightIcon={
-              <Text.Card.Note style={{ fontSize: "12px" }}>
-                100%
-              </Text.Card.Note>
+              <Text.Card.Note style={{ fontSize: "12px" }}>100%</Text.Card.Note>
             }
           />
         </PropertySection>
 
         <PropertySection title="STROKE">
-          <Frame gap="6px">
+          <Frame override={{ gap: "6px" }}>
             <Field
               value="000000"
               icon={
                 <Frame
-                  style={{
-                    width: "10px",
-                    height: "10px",
-                    border: "1px solid var(--text-primary)"
+                  override={{
+                    style: {
+                      width: "10px",
+                      height: "10px",
+                      border: "1px solid var(--text-primary)",
+                    },
+                    rounded: "round",
                   }}
-                  rounded="round"
                 />
               }
               rightIcon={
-                <Frame row gap={2}>
+                <Frame override={{ gap: 2 }} row>
                   <Text.Card.Note style={{ fontSize: "12px" }}>
                     100%
                   </Text.Card.Note>
@@ -325,7 +340,7 @@ export function PropertiesPanel() {
               }
               style={{ flexShrink: 0 }}
             />
-            <Frame row gap={2} align="center">
+            <Frame override={{ gap: 2 }} row align="center">
               <Field value="1.5" style={{ width: "50px" }} />
               <Field
                 value="Inside"
@@ -369,7 +384,7 @@ export function PropertiesPanel() {
           />
         </PropertySection>
 
-        <Frame style={{ height: "100px" }} />
+        <Frame override={{ style: { height: "100px" } }} />
       </Frame>
     </Section>
   );

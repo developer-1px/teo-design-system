@@ -1,0 +1,176 @@
+:root {
+  /* 
+   * TMDK 1-Tier Numeric Tokens (Whitelist)
+   * Derived from token.const.1tier.ts
+   */
+
+  /* ---------- Space (spacing) ---------- */
+  --space-n0: 0px;
+  --space-n2: 2px;
+  --space-n4: 4px;
+  --space-n6: 6px;
+  --space-n8: 8px;
+  --space-n10: 10px;
+  --space-n12: 12px;
+  --space-n14: 14px;
+  --space-n16: 16px;
+  --space-n18: 18px;
+  --space-n20: 20px;
+  --space-n24: 24px;
+  --space-n28: 28px;
+  --space-n32: 32px;
+  --space-n36: 36px;
+  --space-n40: 40px;
+  --space-n44: 44px;
+  --space-n48: 48px;
+  --space-n56: 56px;
+  --space-n64: 64px;
+  --space-n72: 72px;
+  --space-n80: 80px;
+  --space-n96: 96px;
+
+  /* ---------- Size (container/layout) ---------- */
+  --size-n0: 0px;
+  --size-n2: 2px;
+  --size-n4: 4px;
+  --size-n6: 6px;
+  --size-n8: 8px;
+  --size-n10: 10px;
+  --size-n12: 12px;
+  --size-n14: 14px;
+  --size-n16: 16px;
+  --size-n20: 20px;
+  --size-n24: 24px;
+  --size-n28: 28px;
+  --size-n32: 32px;
+  --size-n36: 36px;
+  --size-n40: 40px;
+  --size-n44: 44px;
+  --size-n48: 48px;
+  --size-n56: 56px;
+  --size-n64: 64px;
+  --size-n72: 72px;
+  --size-n80: 80px;
+  --size-n96: 96px;
+  --size-n112: 112px;
+  --size-n128: 128px;
+  --size-n160: 160px;
+  --size-n192: 192px;
+  --size-n224: 224px;
+  --size-n256: 256px;
+  --size-n320: 320px;
+  --size-n384: 384px;
+  --size-n448: 448px;
+  --size-n512: 512px;
+
+  /* ---------- Icon Size ---------- */
+  --icon-size-n10: 10px;
+  --icon-size-n12: 12px;
+  --icon-size-n14: 14px;
+  --icon-size-n16: 16px;
+  --icon-size-n18: 18px;
+  --icon-size-n20: 20px;
+  --icon-size-n24: 24px;
+  --icon-size-n28: 28px;
+  --icon-size-n32: 32px;
+
+  /* ---------- Radius ---------- */
+  --radius-n0: 0px;
+  --radius-n2: 2px;
+  --radius-n4: 4px;
+  --radius-n6: 6px;
+  --radius-n8: 8px;
+  --radius-n10: 10px;
+  --radius-n12: 12px;
+  --radius-n16: 16px;
+  --radius-n20: 20px;
+  --radius-n24: 24px;
+
+  /* ---------- Border Width ---------- */
+  --border-width-n0: 0px;
+  --border-width-n1: 1px;
+  --border-width-n2: 2px;
+  --border-width-n3: 3px;
+  --border-width-n4: 4px;
+
+  /* ---------- Font Size ---------- */
+  --font-size-n10: 10px;
+  --font-size-n11: 11px;
+  --font-size-n12: 12px;
+  --font-size-n13: 13px;
+  --font-size-n14: 14px;
+  --font-size-n15: 15px;
+  --font-size-n16: 16px;
+  --font-size-n18: 18px;
+  --font-size-n20: 20px;
+  --font-size-n22: 22px;
+  --font-size-n24: 24px;
+  --font-size-n28: 28px;
+  --font-size-n32: 32px;
+  --font-size-n36: 36px;
+  --font-size-n40: 40px;
+  --font-size-n48: 48px;
+
+  /* ---------- Font Weight ---------- */
+  --font-weight-n300: 300;
+  --font-weight-n400: 400;
+  --font-weight-n500: 500;
+  --font-weight-n600: 600;
+  --font-weight-n700: 700;
+  --font-weight-n800: 800;
+
+  /* ---------- Line Height ---------- */
+  --line-height-n110: 1.1;
+  --line-height-n115: 1.15;
+  --line-height-n120: 1.2;
+  --line-height-n125: 1.25;
+  --line-height-n130: 1.3;
+  --line-height-n135: 1.35;
+  --line-height-n140: 1.4;
+  --line-height-n145: 1.45;
+  --line-height-n150: 1.5;
+  --line-height-n155: 1.55;
+  --line-height-n160: 1.6;
+  --line-height-n165: 1.65;
+  --line-height-n170: 1.7;
+  --line-height-n175: 1.75;
+  --line-height-n180: 1.8;
+  --line-height-n190: 1.9;
+  --line-height-n200: 2;
+
+  /* ---------- Opacity ---------- */
+  --opacity-n0: 0;
+  --opacity-n5: 0.05;
+  --opacity-n10: 0.1;
+  --opacity-n20: 0.2;
+  --opacity-n30: 0.3;
+  --opacity-n40: 0.4;
+  --opacity-n50: 0.5;
+  --opacity-n60: 0.6;
+  --opacity-n70: 0.7;
+  --opacity-n80: 0.8;
+  --opacity-n90: 0.9;
+  --opacity-n100: 1;
+
+  /* ---------- Z Index ---------- */
+  --z-index-n0: 0;
+  --z-index-n1: 1;
+  --z-index-n2: 2;
+  --z-index-n5: 5;
+  --z-index-n10: 10;
+  --z-index-n20: 20;
+  --z-index-n30: 30;
+  --z-index-n40: 40;
+  --z-index-n50: 50;
+  --z-index-n75: 75;
+  --z-index-n100: 100;
+
+  /* ---------- Aspect Ratio ---------- */
+  --aspect-ratio-n1_1: 1 / 1;
+  --aspect-ratio-n4_3: 4 / 3;
+  --aspect-ratio-n3_4: 3 / 4;
+  --aspect-ratio-n16_9: 16 / 9;
+  --aspect-ratio-n9_16: 9 / 16;
+  --aspect-ratio-n21_9: 21 / 9;
+  --aspect-ratio-n2_1: 2 / 1;
+}

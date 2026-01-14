@@ -35,7 +35,14 @@ export interface TextProps
   mono?: boolean;
   opacity?: number;
   size?: number | string; // Override size (number for token, string for px)
-  color?: "primary" | "secondary" | "tertiary" | "muted" | "dim" | "white" | string;
+  color?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "muted"
+    | "dim"
+    | "white"
+    | string;
 
   className?: string;
   style?: React.CSSProperties;
@@ -126,7 +133,7 @@ function getTagForVariant(variant: TextVariant): React.ElementType {
 
 function resolveColor(
   color: TextProps["color"],
-  variant: TextVariant
+  variant: TextVariant,
 ): string | undefined {
   if (color) {
     if (["primary", "secondary", "tertiary", "muted", "dim"].includes(color)) {
@@ -156,7 +163,8 @@ function resolveTypography(variant: TextVariant): React.CSSProperties {
   if (typeof variant === "number") {
     return {
       fontSize: `var(--font-size-${variant})`,
-      fontWeight: variant <= 2 ? "var(--font-weight-bold)" : "var(--font-weight-regular)",
+      fontWeight:
+        variant <= 2 ? "var(--font-weight-bold)" : "var(--font-weight-regular)",
       lineHeight: 1.5,
     };
   }

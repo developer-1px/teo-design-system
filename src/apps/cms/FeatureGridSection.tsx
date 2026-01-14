@@ -6,19 +6,28 @@ import { EditableWrapper } from "./EditableWrapper";
 export function FeatureGridSection() {
   return (
     <Frame
-      w="100%"
-      p="24px 6px"
-      gap={4}
+      override={{
+        w: "100%",
+        p: "24px 6px",
+        gap: 4,
+        style: {
+          borderBottom: "1px solid var(--border-color)",
+          maxWidth: 1280,
+          margin: "0 auto",
+        },
+      }}
       surface="base"
-      style={{ borderBottom: "1px solid var(--border-color)", maxWidth: 1280, margin: "0 auto" }}
     >
-      <Frame style={{ maxWidth: 800, margin: "0 auto" }} gap={1} align="center">
+      <Frame
+        override={{ style: { maxWidth: 800, margin: "0 auto" }, gap: 1 }}
+        align="center"
+      >
         <Text.Card.Note
           style={{
             fontWeight: "bold",
             color: "var(--text-primary)",
             letterSpacing: "0.05em",
-            fontSize: "12px"
+            fontSize: "12px",
           }}
         >
           FEATURES
@@ -30,9 +39,9 @@ export function FeatureGridSection() {
         </EditableWrapper>
       </Frame>
 
-      <Frame gap={4} w="100%">
+      <Frame override={{ gap: 4, w: "100%" }}>
         {/* Row 1 */}
-        <Frame row gap={4} wrap="wrap">
+        <Frame override={{ gap: 4 }} row wrap="wrap">
           <FeatureCardLarge
             icon={Zap}
             title="Lightning Fast"
@@ -49,8 +58,8 @@ export function FeatureGridSection() {
         </Frame>
 
         {/* Row 2 */}
-        <Frame row gap={4}>
-          <Frame style={{ gridColumn: "span 2" }}>
+        <Frame override={{ gap: 4 }} row>
+          <Frame override={{ style: { gridColumn: "span 2" } }}>
             <FeatureCardLarge
               icon={Shield}
               title="Enterprise Security"
@@ -83,11 +92,24 @@ function FeatureCardSmall({
   flex,
 }: FeatureCardSmallProps) {
   return (
-    <Frame flex={flex} p={6} surface="raised" rounded="2xl" gap={4}>
-      <Frame w={48} h={48} rounded="xl" surface="sunken" style={{ border: "1px solid var(--border-color)" }} pack>
+    <Frame
+      override={{ p: 6, rounded: "2xl", gap: 4 }}
+      flex={flex}
+      surface="raised"
+    >
+      <Frame
+        override={{
+          w: 48,
+          h: 48,
+          rounded: "xl",
+          style: { border: "1px solid var(--border-color)" },
+        }}
+        surface="sunken"
+        pack
+      >
         <Icon size={24} color="var(--color-primary)" />
       </Frame>
-      <Frame gap={2}>
+      <Frame override={{ gap: 2 }}>
         <EditableWrapper>
           <Text.Card.Title>{title}</Text.Card.Title>
         </EditableWrapper>
@@ -114,17 +136,26 @@ function FeatureCardLarge({
 }: FeatureCardLargeProps) {
   return (
     <Frame
+      override={{ rounded: "2xl" }}
       flex={flex}
       surface="raised"
-      rounded="2xl"
       overflow="hidden"
       row
     >
-      <Frame flex p={6} gap={4} justify="center">
-        <Frame w={12} h={12} rounded="xl" surface="sunken" style={{ border: "1px solid var(--border-color)" }} pack>
+      <Frame override={{ p: 6, gap: 4 }} flex justify="center">
+        <Frame
+          override={{
+            w: 12,
+            h: 12,
+            rounded: "xl",
+            style: { border: "1px solid var(--border-color)" },
+          }}
+          surface="sunken"
+          pack
+        >
           <Icon size={24} color="var(--color-primary)" />
         </Frame>
-        <Frame gap={2}>
+        <Frame override={{ gap: 2 }}>
           <EditableWrapper>
             <Text.Card.Title>{title}</Text.Card.Title>
           </EditableWrapper>
@@ -137,15 +168,26 @@ function FeatureCardLarge({
       </Frame>
       {image && (
         <Frame
-          w="40%"
-          surface="raised"
-          style={{
-            background:
-              "linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
+          override={{
+            w: "40%",
+            style: {
+              background:
+                "linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
+            },
           }}
+          surface="raised"
           pack
         >
-          <Frame w={30} h={40} surface="base" rounded="lg" shadow="xl" style={{ border: "1px solid var(--border-color)" }} />
+          <Frame
+            override={{
+              w: 30,
+              h: 40,
+              rounded: "lg",
+              shadow: "xl",
+              style: { border: "1px solid var(--border-color)" },
+            }}
+            surface="base"
+          />
         </Frame>
       )}
     </Frame>

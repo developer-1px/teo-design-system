@@ -1,5 +1,5 @@
-import { Frame } from "../design-system/Frame"
-import { Section } from "../design-system/Section"
+import { Frame } from "../design-system/Frame";
+import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text";
 
 export function SlidesPanel() {
@@ -13,28 +13,27 @@ export function SlidesPanel() {
       rounded="round"
       shadow="sm"
     >
-      <Frame overflow="auto" surface="sunken" flex fill style={{ minHeight: 0 }}>
+      <Frame
+        override={{ style: { minHeight: 0 } }}
+        overflow="auto"
+        surface="sunken"
+        flex
+        fill
+      >
         {slides.map((num) => (
-          <Frame
-            key={num}
-            gap={1}
-            p={2}
-            border={num === 1}
-          >
-            <Frame row justify="between" align="end" gap={1}>
+          <Frame override={{ gap: 1, p: 2 }} key={num} border={num === 1}>
+            <Frame override={{ gap: 1 }} row justify="between" align="end">
               <Text.Card.Note
                 style={{
-                  color:
-                    num === 1 ? "var(--text-white)" : "var(--text-subtle)",
+                  color: num === 1 ? "var(--text-white)" : "var(--text-subtle)",
                 }}
               >
                 {num}
               </Text.Card.Note>
               <Frame
-                w="100%"
+                override={{ w: "100%", rounded: "round" }}
                 ratio="16/9"
                 surface="raised"
-                rounded="round"
                 flex
                 pack
                 overflow="hidden"
