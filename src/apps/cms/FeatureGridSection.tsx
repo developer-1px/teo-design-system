@@ -2,6 +2,8 @@ import { Cpu, MessageSquare, Shield, Zap } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
+import { Icon } from "../../design-system/Icon";
+import { IconSize } from "../../design-system/token/token.const.1tier";
 
 export function FeatureGridSection() {
   return (
@@ -86,7 +88,7 @@ interface FeatureCardSmallProps {
 }
 
 function FeatureCardSmall({
-  icon: Icon,
+  icon: IconSrc,
   title,
   desc,
   flex,
@@ -107,7 +109,7 @@ function FeatureCardSmall({
         surface="sunken"
         pack
       >
-        <Icon size={24} color="var(--color-primary)" />
+        <Icon src={IconSrc} size={IconSize.n24} style={{ color: "var(--color-primary)" }} />
       </Frame>
       <Frame override={{ gap: 2 }}>
         <EditableWrapper>
@@ -128,7 +130,7 @@ interface FeatureCardLargeProps extends FeatureCardSmallProps {
 }
 
 function FeatureCardLarge({
-  icon: Icon,
+  icon: IconSrc,
   title,
   desc,
   flex,
@@ -153,7 +155,7 @@ function FeatureCardLarge({
           surface="sunken"
           pack
         >
-          <Icon size={24} color="var(--color-primary)" />
+          <Icon src={IconSrc} size={IconSize.n24} style={{ color: "var(--color-primary)" }} />
         </Frame>
         <Frame override={{ gap: 2 }}>
           <EditableWrapper>

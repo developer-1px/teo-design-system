@@ -3,6 +3,8 @@ import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
+import { Icon } from "../../design-system/Icon";
+import { IconSize } from "../../design-system/token/token.const.1tier";
 
 export function HeaderHero() {
   return (
@@ -62,7 +64,7 @@ export function HeaderHero() {
           row
           align="center"
         >
-          <Sparkles size={12} color="var(--color-primary)" />
+          <Icon src={Sparkles} size={IconSize.n12} style={{ color: "var(--color-primary)" }} />
           <Text.Card.Note
             style={{
               fontSize: "12px",
@@ -106,7 +108,7 @@ export function HeaderHero() {
             h={14}
             rounded="full"
           >
-            <ArrowUpRight size={20} />
+            <Icon src={ArrowUpRight} size={IconSize.n20} />
           </Action>
           <Action
             label="Talk to Sales"

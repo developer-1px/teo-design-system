@@ -13,6 +13,8 @@ import { Action } from "../design-system/Action";
 import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
 import { Overlay } from "../design-system/Overlay";
+import { Icon } from "../design-system/Icon";
+import { IconSize } from "../design-system/token/token.const.1tier";
 
 // --- React Fiber Helpers ---
 
@@ -517,9 +519,9 @@ export function InspectorOverlay() {
             align="center"
           >
             {isLocked ? (
-              <Lock size={10} color="var(--primary-fg)" />
+              <Icon src={Lock} size={IconSize.n10} style={{ color: "var(--primary-fg)" }} />
             ) : (
-              <Unlock size={10} color="var(--primary-fg)" />
+              <Icon src={Unlock} size={IconSize.n10} style={{ color: "var(--primary-fg)" }} />
             )}
             <Text
               variant={6}
@@ -630,7 +632,7 @@ export function InspectorOverlay() {
             row
             align="center"
           >
-            <Copy size={12} color="var(--primary-fg)" />
+            <Icon src={Copy} size={IconSize.n12} style={{ color: "var(--primary-fg)" }} />
             <Text
               variant={6}
               weight="medium"

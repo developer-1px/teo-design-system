@@ -12,6 +12,8 @@ import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Overlay } from "../../design-system/Overlay";
+import { Icon } from "../../design-system/Icon";
+import { IconSize } from "../../design-system/token/token.const.1tier";
 
 export function TopCenterBar() {
   return (
@@ -38,7 +40,7 @@ export function TopCenterBar() {
             <Text.Card.Title style={{ fontSize: 13, fontWeight: "bold" }}>
               Marketing Home
             </Text.Card.Title>
-            <ChevronDown size={12} opacity={0.5} />
+            <Icon src={ChevronDown} size={IconSize.n12} style={{ opacity: 0.5 }} />
           </Frame>
         </Frame>
         <Frame override={{ w: 0.5, h: 4 }} surface="overlay" />
@@ -65,10 +67,10 @@ export function TopRightBar() {
           surface="raised"
         >
           <Frame override={{ p: 1.5, rounded: "full" }}>
-            <Moon size={16} />
+            <Icon src={Moon} size={IconSize.n16} />
           </Frame>
           <Frame override={{ p: 1.5, rounded: "full" }}>
-            <Bell size={16} />
+            <Icon src={Bell} size={IconSize.n16} />
           </Frame>
         </Frame>
         <Action
@@ -111,7 +113,7 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
         className=""
         onClick={onClick}
       >
-        {isOpen ? <Layout size={20} /> : <Menu size={20} />}
+        {isOpen ? <Icon src={Layout} size={IconSize.n20} /> : <Icon src={Menu} size={IconSize.n20} />}
       </Frame>
     </Overlay>
   );

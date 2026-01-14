@@ -4,6 +4,8 @@ import { Experience, type ExperienceType } from "../design-system/Experience";
 import { Action } from "../design-system/Action";
 import { Monitor, FileText, Globe } from "lucide-react";
 import { Text } from "../design-system/text/Text";
+import { Icon } from "../design-system/Icon";
+import { IconSize } from "../design-system/token/token.const.1tier";
 
 /* 
   Text System Showcase
@@ -86,7 +88,7 @@ export function TextSystemApp() {
               }}
               surface="sunken"
             >
-              <FileText size={80} strokeWidth={1} style={{ opacity: 0.8 }} />
+              <Icon src={FileText} size={80} style={{ strokeWidth: 1, opacity: 0.8 }} />
             </Frame>
 
             <Frame override={{ gap: 4 }} align="center">
@@ -226,7 +228,7 @@ export function TextSystemApp() {
                 surface="sunken"
                 pack
               >
-                <Globe size={20} />
+                <Icon src={Globe} size={IconSize.n20} />
               </Frame>
               <Text.Card.Title>Project Alpha</Text.Card.Title>
               <Text.Card.Desc>
@@ -267,7 +269,7 @@ export function TextSystemApp() {
                 surface="sunken"
                 pack
               >
-                <FileText size={20} />
+                <Icon src={FileText} size={IconSize.n20} />
               </Frame>
               <Text.Card.Title>Q1 Report</Text.Card.Title>
               <Text.Card.Desc>
@@ -588,7 +590,7 @@ export function TextSystemApp() {
 
 // --- Components ---
 
-function ExperienceButton({ active, onClick, icon: Icon, label }: any) {
+function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
   return (
     <Frame
       override={{
@@ -606,7 +608,7 @@ function ExperienceButton({ active, onClick, icon: Icon, label }: any) {
       row
       align="center"
     >
-      <Icon size={14} />
+      <Icon src={IconSrc} size={IconSize.n14} />
       <Text.Menu.Item>{label}</Text.Menu.Item>
     </Frame>
   );

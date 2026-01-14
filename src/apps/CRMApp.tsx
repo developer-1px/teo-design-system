@@ -26,6 +26,8 @@ import { Divider } from "../design-system/Divider";
 import { Frame } from "../design-system/Frame";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text.tsx";
+import { Icon } from "../design-system/Icon";
+import { IconSize } from "../design-system/token/token.const.1tier";
 
 // --- Mock Data ---
 
@@ -176,12 +178,12 @@ function StageBadge({ stage }: { stage: DealStage }) {
 }
 
 function SidebarItem({
-  icon: Icon,
+  icon: IconSrc,
   label,
   active,
   count,
 }: {
-  icon: any;
+  icon: React.ElementType;
   label: string;
   active?: boolean;
   count?: number;
@@ -190,8 +192,11 @@ function SidebarItem({
     <Action variant={active ? "surface" : "ghost"} rounded="md" w="100%">
       <Frame override={{ gap: 3, w: "100%", p: "1.5 2" }} row align="center">
         <Icon
-          size={16}
-          color={active ? "var(--text-primary)" : "var(--text-secondary)"}
+          src={IconSrc}
+          size={IconSize.n16}
+          style={{
+            color: active ? "var(--text-primary)" : "var(--text-secondary)",
+          }}
         />
         <Text
           variant="body-sm"
@@ -291,7 +296,7 @@ function SectionLabel({ label }: { label: string }) {
 function SelectorIcon() {
   return (
     <Frame override={{ style: { opacity: 0.4 } }}>
-      <ChevronDown size={14} />
+      <Icon src={ChevronDown} size={IconSize.n14} />
     </Frame>
   );
 }
@@ -312,7 +317,7 @@ function Header() {
           /
         </Text>
         <Frame override={{ gap: 2 }} row align="center">
-          <LayoutGrid size={16} />
+          <Icon src={LayoutGrid} size={IconSize.n16} />
           <Text variant="heading-sm" color="primary">
             Deals
           </Text>
@@ -331,7 +336,7 @@ function Header() {
         row
         align="center"
       >
-        <Search size={14} color="var(--text-tertiary)" />
+        <Icon src={Search} size={IconSize.n14} style={{ color: "var(--text-tertiary)" }} />
         <Text variant="body-sm" color="tertiary">
           Search...
         </Text>
@@ -500,7 +505,7 @@ function TableRow({
             align="center"
             justify="center"
           >
-            <Globe size={10} color="var(--text-tertiary)" />
+            <Icon src={Globe} size={IconSize.n10} style={{ color: "var(--text-tertiary)" }} />
           </Frame>
           <Text variant="body-sm" color="secondary">
             {deal.company}
@@ -517,7 +522,7 @@ function TableRow({
             align="center"
             justify="center"
           >
-            <User size={10} />
+            <Icon src={User} size={IconSize.n10} />
           </Frame>
           <Text variant="body-sm" color="secondary">
             {deal.owner}
@@ -655,13 +660,13 @@ function Drawer({
 }
 
 function PropertyRow({
-  icon: Icon,
+  icon: IconSrc,
   label,
   value,
   primary,
   empty,
 }: {
-  icon: any;
+  icon: React.ElementType;
   label: string;
   value: string;
   primary?: boolean;
@@ -670,7 +675,7 @@ function PropertyRow({
   return (
     <Frame override={{ style: { height: 32 }, gap: 4 }} row align="center">
       <Frame override={{ gap: 2, w: 140 }} row align="center">
-        <Icon size={14} color="var(--text-tertiary)" />
+        <Icon src={IconSrc} size={IconSize.n14} style={{ color: "var(--text-tertiary)" }} />
         <Text variant="body-sm" color="tertiary">
           {label}
         </Text>
@@ -703,7 +708,7 @@ function ActivityItem({
         align="center"
         justify="center"
       >
-        <User size={14} color="var(--text-secondary)" />
+        <Icon src={User} size={IconSize.n14} style={{ color: "var(--text-secondary)" }} />
       </Frame>
       <Frame override={{ gap: 1 }}>
         <Frame override={{ gap: 1 }} row>

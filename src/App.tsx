@@ -13,6 +13,8 @@ import { InspectorOverlay } from "./inspector/InspectorOverlay";
 import { CRMApp } from "./apps/CRMApp";
 import { LoginApp } from "./apps/LoginApp";
 import { TextSystemApp } from "./apps/TextSystemApp";
+import { Icon } from "./design-system/Icon";
+import { IconSize } from "./design-system/token/token.const.1tier";
 import { useTheme } from "./design-system/theme";
 
 function NavItem({ to, label }: { to: string; label: string }) {
@@ -84,7 +86,7 @@ function ThemeToggleItem() {
       align="center"
       justify="center"
     >
-      {isDark ? <Sun size={16} /> : <Moon size={16} />}
+      {isDark ? <Icon src={Sun} size={IconSize.n16} /> : <Icon src={Moon} size={IconSize.n16} />}
     </Frame>
   );
 }

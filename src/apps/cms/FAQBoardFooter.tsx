@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Icon } from "../../design-system/Icon";
+import { IconSize } from "../../design-system/token/token.const.1tier";
 
 export function FAQBoardFooter() {
   return (
@@ -60,7 +62,7 @@ export function FAQBoardFooter() {
           surface="sunken"
           pack
         >
-          <HelpCircle size={24} />
+          <Icon src={HelpCircle} size={IconSize.n24} />
         </Frame>
         <Frame override={{ gap: 1 }}>
           <Text.Card.Title>Still have questions?</Text.Card.Title>
@@ -101,12 +103,13 @@ function FAQRow({ q, a }: FAQRowProps) {
     >
       <Frame override={{ w: "100%" }} row justify="between" align="center">
         <Text.Card.Title>{q}</Text.Card.Title>
-        <Plus
-          size={20}
+        <Icon
+          src={Plus}
+          size={IconSize.n20}
           style={{
             transform: isOpen ? "rotate(45deg)" : "none",
+            opacity: 0.4,
           }}
-          opacity={0.4}
         />
       </Frame>
       {isOpen && (

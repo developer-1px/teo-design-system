@@ -5,6 +5,8 @@ import { Field } from "../design-system/Field";
 import { Action } from "../design-system/Action";
 import { ProseOld, ProseDocument } from "../design-system/ProseOld.tsx";
 import { ArrowRight, Lock, Mail } from "lucide-react";
+import { Icon } from "../design-system/Icon";
+import { IconSize } from "../design-system/token/token.const.1tier";
 
 export function LoginApp() {
   return (
@@ -32,13 +34,13 @@ export function LoginApp() {
               <Field
                 label="Email address"
                 placeholder="name@company.com"
-                icon={<Mail size={16} />}
+                icon={<Icon src={Mail} size={IconSize.n16} />}
               />
               <Field
                 label="Password"
                 type="password"
                 placeholder="••••••••"
-                icon={<Lock size={16} />}
+                icon={<Icon src={Lock} size={IconSize.n16} />}
               />
             </Frame>
 
@@ -102,7 +104,7 @@ export function LoginApp() {
               align="center"
               justify="center"
             >
-              <Lock size={32} />
+              <Icon src={Lock} size={IconSize.n32} />
             </Frame>
 
             <ProseOld role="h2">Secure & Minimal Design System</ProseOld>

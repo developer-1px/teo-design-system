@@ -1,6 +1,8 @@
 import { Check, MessageSquare, Zap } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Icon } from "../../design-system/Icon";
+import { IconSize } from "../../design-system/token/token.const.1tier";
 
 export function BodyContentSection() {
   return (
@@ -79,7 +81,7 @@ export function BodyContentSection() {
               }}
               surface="raised"
             >
-              <Zap size={32} color="var(--color-warning)" />
+              <Icon src={Zap} size={IconSize.n32} style={{ color: "var(--color-warning)" }} />
               <Frame override={{ gap: 2 }}>
                 <Frame
                   override={{ h: 10, w: "100%", rounded: "full" }}
@@ -103,7 +105,7 @@ export function BodyContentSection() {
               }}
               surface="raised"
             >
-              <MessageSquare size={32} color="var(--color-primary)" />
+              <Icon src={MessageSquare} size={IconSize.n32} style={{ color: "var(--color-primary)" }} />
               <Frame override={{ gap: 2 }}>
                 <Frame override={{ gap: 0.5 }} row align="center">
                   <Frame
@@ -141,7 +143,7 @@ function CheckItem({ title, desc }: CheckItemProps) {
         surface="primary"
         pack
       >
-        <Check size={14} color="#fff" />
+        <Icon src={Check} size={IconSize.n14} color="#fff" />
       </Frame>
       <Frame override={{ gap: 1 }}>
         <Text.Card.Title style={{ fontSize: 16, fontWeight: "bold" }}>

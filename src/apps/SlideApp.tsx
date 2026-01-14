@@ -14,6 +14,8 @@ import { SlidesPanel } from "../components/SlidesPanel";
 import { Action } from "../design-system/Action";
 import { Text } from "../design-system/text/Text";
 import { Frame } from "../design-system/Frame";
+import { Icon } from "../design-system/Icon";
+import { IconSize } from "../design-system/token/token.const.1tier";
 
 export function SlideApp() {
   return (
@@ -38,7 +40,7 @@ export function SlideApp() {
         <Frame override={{ gap: 3 }} row align="center">
           <Action
             icon={Grid}
-            iconSize={16}
+            iconSize={IconSize.n16}
             style={{ width: "28px", height: "28px" }}
           />
           <Frame override={{ gap: 2 }} row align="center">
@@ -47,7 +49,7 @@ export function SlideApp() {
             </Text.Menu.Item>
             <Action
               icon={ChevronDown}
-              iconSize={12}
+              iconSize={IconSize.n12}
               style={{ width: "20px", height: "20px" }}
               opacity={0.5}
             />
@@ -69,13 +71,13 @@ export function SlideApp() {
             />
             <Action
               icon={Plus}
-              iconSize={10}
+              iconSize={IconSize.n10}
               style={{ width: "20px", height: "20px" }}
             />
           </Frame>
           <Action
             icon={Play}
-            iconSize={14}
+            iconSize={IconSize.n14}
             label="Present"
             variant="primary"
             rounded="md"
@@ -84,7 +86,7 @@ export function SlideApp() {
           />
           <Action
             icon={Share}
-            iconSize={14}
+            iconSize={IconSize.n14}
             label="Share"
             variant="surface"
             rounded="md"
@@ -142,7 +144,7 @@ export function SlideApp() {
                     surface="sunken"
                     pack
                   >
-                    <Square size={16} color="var(--text-body)" />
+                    <Icon src={Square} size={IconSize.n16} style={{ color: "var(--text-body)" }} />
                   </Frame>
                   <Frame
                     override={{
@@ -152,7 +154,7 @@ export function SlideApp() {
                     surface="raised"
                     pack
                   >
-                    <Circle size={16} color="var(--text-body)" />
+                    <Icon src={Circle} size={IconSize.n16} style={{ color: "var(--text-body)" }} />
                   </Frame>
                   <Frame
                     override={{
@@ -162,7 +164,7 @@ export function SlideApp() {
                     surface="overlay"
                     pack
                   >
-                    <Type size={16} color="var(--text-body)" />
+                    <Icon src={Type} size={IconSize.n16} style={{ color: "var(--text-body)" }} />
                   </Frame>
                 </Frame>
               </Frame>

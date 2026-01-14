@@ -21,6 +21,8 @@ import { Frame } from "../design-system/Frame";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
+import { Icon } from "../design-system/Icon";
+import { IconSize } from "../design-system/token/token.const.1tier";
 
 // --- Data ---
 
@@ -50,7 +52,7 @@ const PropertySection = ({
       </Text.Menu.Group>
       <Action
         icon={Plus}
-        iconSize={12}
+        iconSize={IconSize.n12}
         style={{ width: "20px", height: "20px" }}
         opacity={0.4}
       />
@@ -160,7 +162,7 @@ export function PropertiesPanel() {
               <Action
                 key={i}
                 icon={tool.icon}
-                iconSize={12}
+                iconSize={IconSize.n12}
                 surface={(tool as any).surface}
                 rounded="round"
                 size="24px"
@@ -201,7 +203,7 @@ export function PropertiesPanel() {
             <Frame override={{ style: { width: "24px" } }} pack>
               <Action
                 icon={Lock}
-                iconSize={10}
+                iconSize={IconSize.n10}
                 style={{ width: "20px", height: "20px" }}
                 opacity={0.3}
               />
@@ -226,10 +228,10 @@ export function PropertiesPanel() {
         {/* Properties */}
         <PropertySection title="LAYER">
           <Frame override={{ gap: 3 }} row justify="between">
-            <Field value="Normal" rightIcon={<ChevronDown size={10} />} flex />
+            <Field value="Normal" rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />} flex />
             <Field
               value="100%"
-              icon={<Eye size={10} />}
+              icon={<Icon src={Eye} size={IconSize.n10} />}
               style={{ width: "70px" }}
             />
           </Frame>
@@ -237,11 +239,11 @@ export function PropertiesPanel() {
 
         <PropertySection title="TEXT">
           <Frame override={{ gap: "6px" }}>
-            <Field value="Inter" rightIcon={<ChevronDown size={10} />} />
+            <Field value="Inter" rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />} />
             <Frame override={{ gap: 2 }} row>
               <Field
                 value="Regular"
-                rightIcon={<ChevronDown size={10} />}
+                rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
                 flex
               />
               <Field value="42" style={{ width: "50px" }} />
@@ -272,7 +274,7 @@ export function PropertiesPanel() {
                 <Action
                   key={i}
                   icon={Icon}
-                  iconSize={12}
+                  iconSize={IconSize.n12}
                   surface={i === 0 ? "selected" : undefined}
                   rounded="round"
                   size="24px"
@@ -328,12 +330,12 @@ export function PropertiesPanel() {
                   </Text.Card.Note>
                   <Action
                     icon={Eye}
-                    iconSize={10}
+                    iconSize={IconSize.n10}
                     style={{ width: "16px", height: "16px" }}
                   />
                   <Action
                     icon={Minus}
-                    iconSize={10}
+                    iconSize={IconSize.n10}
                     style={{ width: "16px", height: "16px" }}
                   />
                 </Frame>
@@ -344,12 +346,12 @@ export function PropertiesPanel() {
               <Field value="1.5" style={{ width: "50px" }} />
               <Field
                 value="Inside"
-                rightIcon={<ChevronDown size={10} />}
+                rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
                 flex
               />
               <Action
                 icon={Settings}
-                iconSize={10}
+                iconSize={IconSize.n10}
                 rounded="round"
                 style={{ height: "24px" }}
               />
@@ -360,11 +362,11 @@ export function PropertiesPanel() {
         <PropertySection title="EFFECTS">
           <Field
             value="Drop Shadow"
-            icon={<Sun size={10} />}
+            icon={<Icon src={Sun} size={IconSize.n10} />}
             rightIcon={
               <Action
                 icon={Settings}
-                iconSize={10}
+                iconSize={IconSize.n10}
                 style={{ width: "16px", height: "16px" }}
               />
             }
@@ -377,7 +379,7 @@ export function PropertiesPanel() {
             rightIcon={
               <Action
                 icon={Plus}
-                iconSize={10}
+                iconSize={IconSize.n10}
                 style={{ width: "16px", height: "16px" }}
               />
             }

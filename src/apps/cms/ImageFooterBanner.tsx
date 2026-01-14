@@ -2,6 +2,8 @@ import { Cpu, Globe, Shield, Zap } from "lucide-react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Icon } from "../../design-system/Icon";
+import { IconSize } from "../../design-system/token/token.const.1tier";
 
 export function ImageFooterBanner() {
   return (
@@ -105,19 +107,19 @@ export function ImageFooterBanner() {
           wrap="wrap"
         >
           <Frame override={{ gap: 2 }} row align="center">
-            <Zap size={24} />
+            <Icon src={Zap} size={IconSize.n24} />
             <Text.Card.Title>Bolt</Text.Card.Title>
           </Frame>
           <Frame override={{ gap: 2 }} row align="center">
-            <Globe size={24} />
+            <Icon src={Globe} size={IconSize.n24} />
             <Text.Card.Title>Stripe</Text.Card.Title>
           </Frame>
           <Frame override={{ gap: 2 }} row align="center">
-            <Shield size={24} />
+            <Icon src={Shield} size={IconSize.n24} />
             <Text.Card.Title>Linear</Text.Card.Title>
           </Frame>
           <Frame override={{ gap: 2 }} row align="center">
-            <Cpu size={24} />
+            <Icon src={Cpu} size={IconSize.n24} />
             <Text.Card.Title>Vercel</Text.Card.Title>
           </Frame>
         </Frame>

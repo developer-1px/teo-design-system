@@ -1,6 +1,8 @@
 import React from "react";
 import { Frame } from "./Frame";
 import { Text } from "./text/Text.tsx";
+import { Icon } from "./Icon";
+import { IconSize, type IconSizeToken } from "./token/token.const.1tier";
 
 import "./lib/tokens.css";
 import type { ActionVariant, RoundedToken, SurfaceToken } from "./lib/types.ts";
@@ -25,7 +27,7 @@ interface ActionProps
   size?: number | string; // Sets unique width & height (square)
   w?: number | string;
   h?: number | string;
-  iconSize?: number; // Sets icon size if icon is a component
+  iconSize?: number | IconSizeToken; // Sets icon size if icon is a component
   iconRotation?: number; // Internalized rotation
 
   // Visual
@@ -64,13 +66,18 @@ export function Action({
   ...props
 }: ActionProps) {
   // Helper to render icon
+  // Helper to render icon
   const renderIcon = () => {
     if (!icon) return null;
     if (React.isValidElement(icon)) return icon;
 
-    const Icon = icon as React.ElementType;
-
-    return <Icon size={iconSize} />;
+    return (
+      <Icon
+        src={icon as React.ElementType}
+        size={iconSize || IconSize.n16}
+        style={{ display: "block" }} // Ensure no extra spacing quirks
+      />
+    );
   };
 
   // Logic: Actions with a label default to 'surface' if variant not specified.

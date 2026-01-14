@@ -1,6 +1,8 @@
 import { ArrowUpRight, Globe, MessageSquare, Sparkles } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Icon } from "../../design-system/Icon";
+import { IconSize } from "../../design-system/token/token.const.1tier";
 
 export function MainFooter() {
   return (
@@ -21,7 +23,7 @@ export function MainFooter() {
               surface="primary"
               pack
             >
-              <Sparkles size={20} color="#fff" />
+              <Icon src={Sparkles} size={IconSize.n20} color="#fff" />
             </Frame>
             <Text.Card.Title
               style={{
@@ -45,9 +47,9 @@ export function MainFooter() {
             websites are crafted.
           </Text.Card.Desc>
           <Frame override={{ gap: "4px" }} row>
-            <Globe size={20} opacity={0.4} />
-            <MessageSquare size={20} opacity={0.4} />
-            <ArrowUpRight size={20} opacity={0.4} />
+            <Icon src={Globe} size={IconSize.n20} style={{ opacity: 0.4 }} />
+            <Icon src={MessageSquare} size={IconSize.n20} style={{ opacity: 0.4 }} />
+            <Icon src={ArrowUpRight} size={IconSize.n20} style={{ opacity: 0.4 }} />
           </Frame>
         </Frame>
 

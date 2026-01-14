@@ -18,6 +18,8 @@ import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
+import { Icon } from "../design-system/Icon";
+import { IconSize } from "../design-system/token/token.const.1tier";
 
 // --- Activity Bar ---
 
@@ -46,7 +48,7 @@ function ActivityBar({
         icon={Files}
         variant="ghost"
         size={48}
-        iconSize={24}
+        iconSize={IconSize.n24}
         opacity={isActive("explorer") ? 1 : 0.5}
         onClick={() => onTabChange("explorer")}
         style={{
@@ -58,7 +60,7 @@ function ActivityBar({
         icon={Search}
         variant="ghost"
         size={48}
-        iconSize={24}
+        iconSize={IconSize.n24}
         opacity={isActive("search") ? 1 : 0.5}
         onClick={() => onTabChange("search")}
       />
@@ -66,7 +68,7 @@ function ActivityBar({
         icon={GitBranch}
         variant="ghost"
         size={48}
-        iconSize={24}
+        iconSize={IconSize.n24}
         opacity={isActive("source-control") ? 1 : 0.5}
         onClick={() => onTabChange("source-control")}
       />
@@ -74,7 +76,7 @@ function ActivityBar({
         icon={Bug}
         variant="ghost"
         size={48}
-        iconSize={24}
+        iconSize={IconSize.n24}
         opacity={isActive("debug") ? 1 : 0.5}
         onClick={() => onTabChange("debug")}
       />
@@ -82,7 +84,7 @@ function ActivityBar({
         icon={LayoutGrid}
         variant="ghost"
         size={48}
-        iconSize={24}
+        iconSize={IconSize.n24}
         opacity={isActive("extensions") ? 1 : 0.5}
         onClick={() => onTabChange("extensions")}
       />
@@ -93,14 +95,14 @@ function ActivityBar({
         icon={UserCircle}
         variant="ghost"
         size={48}
-        iconSize={24}
+        iconSize={IconSize.n24}
         opacity={0.5}
       />
       <Action
         icon={Settings}
         variant="ghost"
         size={48}
-        iconSize={24}
+        iconSize={IconSize.n24}
         opacity={0.5}
       />
     </Frame>
@@ -152,7 +154,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
         <Action
           icon={MoreHorizontal}
           size={20}
-          iconSize={14}
+          iconSize={IconSize.n14}
           variant="ghost"
           opacity={0.5}
         />
@@ -168,9 +170,9 @@ function Sidebar({ activeTab }: { activeTab: string }) {
           >
             <Frame override={{ gap: 1 }} row align="center">
               {openEditorsExpanded ? (
-                <ChevronDown size={12} />
+                <Icon src={ChevronDown} size={IconSize.n12} />
               ) : (
-                <ChevronRight size={12} />
+                <Icon src={ChevronRight} size={IconSize.n12} />
               )}
               <Text variant={4} size={6} weight="bold" opacity={0.8}>
                 OPEN EDITORS
@@ -195,9 +197,9 @@ function Sidebar({ activeTab }: { activeTab: string }) {
           >
             <Frame override={{ gap: 1 }} row align="center">
               {projectExpanded ? (
-                <ChevronDown size={12} />
+                <Icon src={ChevronDown} size={IconSize.n12} />
               ) : (
-                <ChevronRight size={12} />
+                <Icon src={ChevronRight} size={IconSize.n12} />
               )}
               <Text variant={4} size={6} weight="bold" opacity={0.8}>
                 MINIMAL-DESIGN-KIT
@@ -251,9 +253,9 @@ function FolderItem({
       >
         <Frame override={{ gap: 2, p: "0 0 0 4" }} row align="center">
           {expanded ? (
-            <ChevronDown size={12} opacity={0.6} />
+            <Icon src={ChevronDown} size={IconSize.n12} style={{ opacity: 0.6 }} />
           ) : (
-            <ChevronRight size={12} opacity={0.6} />
+            <Icon src={ChevronRight} size={IconSize.n12} style={{ opacity: 0.6 }} />
           )}
           <Text size={13} color="secondary">
             {name}
@@ -351,14 +353,14 @@ function EditorTabs() {
           icon={Split}
           variant="ghost"
           style={{ width: 28, height: 28 }}
-          iconSize={14}
+          iconSize={IconSize.n14}
           opacity={0.6}
         />
         <Action
           icon={MoreHorizontal}
           variant="ghost"
           style={{ width: 28, height: 28 }}
-          iconSize={14}
+          iconSize={IconSize.n14}
           opacity={0.6}
         />
       </Frame>
@@ -411,7 +413,7 @@ function Tab({
       <Action
         icon={modified ? undefined : X}
         style={{ width: 20, height: 20 }}
-        iconSize={12}
+        iconSize={IconSize.n12}
         variant="ghost"
         opacity={0.5}
         onClick={(e) => {
@@ -441,7 +443,7 @@ function Breadcrumbs() {
       <Text size={12} color="tertiary">
         src
       </Text>
-      <ChevronRight size={12} color="var(--text-tertiary)" />
+      <Icon src={ChevronRight} size={IconSize.n12} style={{ color: "var(--text-tertiary)" }} />
       <Text size={12} color="tertiary">
         App
       </Text>
@@ -623,20 +625,20 @@ function StatusBar() {
     >
       <Frame override={{ gap: 3 }} row>
         <Frame override={{ gap: 1 }} row align="center">
-          <GitBranch size={10} color="white" />
+          <Icon src={GitBranch} size={IconSize.n10} style={{ color: "white" }} />
           <Text size={11} color="white" weight="medium">
             main*
           </Text>
         </Frame>
         <Frame override={{ gap: 1 }} row align="center">
-          <RefreshCw size={10} color="white" />
+          <Icon src={RefreshCw} size={IconSize.n10} style={{ color: "white" }} />
         </Frame>
         <Frame override={{ gap: 1, p: "0 0 0 2" }} row align="center">
-          <AlertCircle size={10} color="white" />
+          <Icon src={AlertCircle} size={IconSize.n10} style={{ color: "white" }} />
           <Text size={11} color="white">
             0
           </Text>
-          <AlertCircle size={10} color="white" />
+          <Icon src={AlertCircle} size={IconSize.n10} style={{ color: "white" }} />
           <Text size={11} color="white">
             0
           </Text>
@@ -664,7 +666,7 @@ function StatusBar() {
         <Action
           icon={UserCircle}
           style={{ width: 14, height: 14, color: "white" }}
-          iconSize={10}
+          iconSize={IconSize.n10}
           variant="ghost"
         />
       </Frame>

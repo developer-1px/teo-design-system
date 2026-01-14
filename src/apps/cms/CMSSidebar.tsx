@@ -12,6 +12,8 @@ import { useState } from "react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Action } from "../../design-system/Action";
+import { Icon } from "../../design-system/Icon";
+import { IconSize } from "../../design-system/token/token.const.1tier";
 
 export interface CMSSidebarProps {
   isOpen: boolean;
@@ -152,7 +154,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           surface="sunken"
           pack
         >
-          <Settings size={16} />
+          <Icon src={Settings} size={IconSize.n16} />
         </Frame>
         <Frame override={{ gap: "2px" }}>
           <Text.Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
@@ -180,7 +182,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
     return (
       <Frame override={{ gap: 1.5, p: "0 8px" }}>
         <Frame override={{ gap: 2 }} row align="center">
-          <FileText size={10} opacity={0.5} />
+          <Icon src={FileText} size={IconSize.n10} style={{ opacity: 0.5 }} />
           <Text.Card.Note
             style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}
           >
@@ -225,14 +227,14 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
       cursor="pointer"
     >
       <Frame override={{ gap: "8px" }} row align="center">
-        <FileText size={14} opacity={0.5} />
+        <Icon src={FileText} size={IconSize.n14} style={{ opacity: 0.5 }} />
         <Text.Card.Title
           style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}
         >
           {label}
         </Text.Card.Title>
       </Frame>
-      {active && <ChevronRight size={12} opacity={0.5} />}
+      {active && <Icon src={ChevronRight} size={IconSize.n12} style={{ opacity: 0.5 }} />}
     </Frame>
   );
 }

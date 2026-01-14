@@ -13,6 +13,8 @@ import { Action } from "../design-system/Action";
 import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame";
 import { Text } from "../design-system/text/Text";
+import { Icon } from "../design-system/Icon";
+import { IconSize } from "../design-system/token/token.const.1tier";
 
 export function LandingApp() {
   return (
@@ -55,7 +57,7 @@ export function LandingApp() {
             align="center"
             cursor="pointer"
           >
-            <Zap size={12} fill="currentColor" color="var(--text-tertiary)" />
+            <Icon src={Zap} size={IconSize.n12} style={{ fill: "currentColor", color: "var(--text-tertiary)" }} />
             <Text.Card.Note
               style={{ fontWeight: 600, color: "var(--text-secondary)" }}
             >
@@ -88,7 +90,7 @@ export function LandingApp() {
               <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>
                 Get Started
               </Text.Menu.Item>
-              <ArrowRight size={16} color="white" />
+              <Icon src={ArrowRight} size={IconSize.n16} style={{ color: "white" }} />
             </Action>
 
             {/* Secondary CTA */}
@@ -227,11 +229,11 @@ export function LandingApp() {
 }
 
 function FeatureCard({
-  icon: Icon,
+  icon: IconSrc,
   title,
   description,
 }: {
-  icon: any;
+  icon: React.ElementType;
   title: string;
   description: string;
 }) {
@@ -256,7 +258,7 @@ function FeatureCard({
         surface="base"
         pack
       >
-        <Icon size={24} color="var(--text-primary)" />
+        <Icon src={IconSrc} size={IconSize.n24} style={{ color: "var(--text-primary)" }} />
       </Frame>
       <Frame override={{ gap: 2 }}>
         <Text.Card.Title>{title}</Text.Card.Title>

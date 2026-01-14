@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame";
+import { IconSize } from "../design-system/token/token.const.1tier";
 import { Overlay } from "../design-system/Overlay";
 import { Separator } from "../design-system/Separator";
 import { useTheme } from "../design-system/theme";
@@ -60,7 +61,7 @@ export function FloatingToolbar() {
             <Action
               key={i}
               icon={tool.icon}
-              iconSize={18}
+              iconSize={IconSize.n18}
               variant={tool.variant}
               rounded="full"
               tooltip={tool.tooltip}
@@ -70,7 +71,7 @@ export function FloatingToolbar() {
         )}
         <Action
           icon={theme === "light" ? Moon : Sun}
-          iconSize={18}
+          iconSize={IconSize.n18}
           rounded="full"
           onClick={toggleTheme}
           tooltip="Toggle Theme"
