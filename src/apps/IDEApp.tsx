@@ -568,7 +568,6 @@ function Panel() {
           DEBUG CONSOLE
         </Text>
         <Text
-          variant={4}
           size={FontSize.n9}
           weight="medium"
           style={{ borderBottom: "1px solid var(--text-primary)" }}

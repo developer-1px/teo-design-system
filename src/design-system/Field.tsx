@@ -58,7 +58,6 @@ export function Field({
       )}
       {label && (
         <Text
-          variant={4}
           className="field-label"
           size={FontSize.n9}
           weight="bold"

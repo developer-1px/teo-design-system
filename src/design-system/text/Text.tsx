@@ -1,5 +1,5 @@
 import type React from "react";
-import type { FontWeight, TypographyVariant, FontSizeToken } from "../lib/types.ts";
+import type { FontWeight, FontSizeToken } from "../lib/types.ts";
 import { toToken } from "../lib/utils.ts";
 
 import { Card } from "./context/Card.tsx";
@@ -17,8 +17,7 @@ export type TextVariant =
   | "body-sm"
   | "caption"
   | "caption-sm"
-  | "code"
-  | TypographyVariant; // Keep numeric for compat
+  | "code";
 
 export interface TextProps
   extends Omit<
@@ -65,7 +64,7 @@ export function TextRoot({
   const Tag = (as || getTagForVariant(variant)) as any;
 
   // 2. Resolve Color
-  const colorValue = resolveColor(color, variant);
+  const colorValue = resolveColor(color);
 
   // 3. Resolve Typography Styles
   const typoStyle = resolveTypography(variant);
@@ -120,12 +119,6 @@ export const Text = Object.assign(TextRoot, {
 // --- Helpers ---
 
 function getTagForVariant(variant: TextVariant): React.ElementType {
-  if (typeof variant === "number") {
-    if (variant === 1) return "h1";
-    if (variant === 2) return "h2";
-    if (variant === 3) return "p";
-    return "span";
-  }
   if (variant.startsWith("heading")) {
     if (variant === "heading-lg") return "h2";
     if (variant === "heading-md") return "h3";
@@ -137,7 +130,6 @@ function getTagForVariant(variant: TextVariant): React.ElementType {
 
 function resolveColor(
   color: TextProps["color"],
-  variant: TextVariant,
 ): string | undefined {
   if (color) {
     if (["primary", "secondary", "tertiary", "muted", "dim"].includes(color)) {
@@ -149,38 +141,10 @@ function resolveColor(
 
   // Defaults based on hierarchy if no color specified
   // (Optional: could enforce specific defaults per role, but usually inherits or defaults to body)
-  if (typeof variant === "number") {
-    // Legacy fallback
-    const map: Record<number, string> = {
-      1: "var(--text-primary)",
-      2: "var(--text-body)",
-      3: "var(--text-subtle)",
-    };
-    return map[variant] || "var(--text-body)";
-  }
-
   return "var(--text-body)";
 }
 
 function resolveTypography(variant: TextVariant): React.CSSProperties {
-  // If legacy numeric -> Map to Tier 1 Absolute Scale (Migration Fallback)
-  // This should be removed once all call-sites are migrated.
-  if (typeof variant === "number") {
-    const map: Record<number, string> = {
-      1: "var(--font-size-n32)", // 32px
-      2: "var(--font-size-n20)", // 20px
-      3: "var(--font-size-n14)", // 14px
-      4: "var(--font-size-n12)", // 12px
-      5: "var(--font-size-n10)", // 10px
-      6: "var(--font-size-n9)",  // 9px
-    };
-    return {
-      fontSize: map[variant] || `var(--font-size-n14)`,
-      fontWeight: variant <= 2 ? "var(--font-weight-bold)" : "var(--font-weight-regular)",
-      lineHeight: 1.5,
-    };
-  }
-
   // New Semantic System
   return {
     fontSize: `var(--text-${variant}-size)`,

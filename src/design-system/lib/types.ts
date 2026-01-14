@@ -23,7 +23,6 @@ export type SurfaceToken =
 
 export type ActionVariant = "ghost" | "surface" | "primary";
 
-export type TypographyVariant = 1 | 2 | 3 | 4 | 5 | 6;
 export type FontWeight = "bold" | "regular" | "medium";
 
 export type AlignToken = "start" | "center" | "end" | "stretch" | "baseline";

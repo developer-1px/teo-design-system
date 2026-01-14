@@ -113,14 +113,7 @@
     --font-size-n56: 56px;
     --font-size-n64: 64px;
 
-    /* Legacy Scale (Deprecated) */
-    --font-size-1: 32px;
-    --font-size-2: 20px;
-    --font-size-3: 14px;
-    --font-size-4: 12px;
-    --font-size-5: 10px;
-    --font-size-6: 9px;
-    --font-size-input: 11px;
+
 
     /* 
      === MDK Text System === 
