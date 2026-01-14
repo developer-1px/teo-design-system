@@ -2,7 +2,7 @@ import {
   ChevronRight,
   FileText,
   Grid2X2,
-  Layout,
+  Layout as LayoutIcon,
   List,
   Menu,
   Plus,
@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Action } from "../../design-system/Action";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
@@ -42,9 +43,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       surface="raised"
     >
       {/* Header with Toggle */}
-      <Frame override={{ gap: Space.n12, py: Space.n0, px: Space.n4 }} row align="center">
+      <Frame override={{ gap: Space.n12, py: Space.n0, px: Space.n4 }} layout={Layout.Row.Header.Default} align="center">
         <Action
-          icon={isOpen ? Layout : Menu}
+          icon={isOpen ? LayoutIcon : Menu}
           variant="ghost"
           size="sm"
           rounded="md"
@@ -61,7 +62,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
               pointerEvents: isOpen ? "auto" : "none",
             },
           }}
-          row
+          layout={Layout.Row.Actions.Default}
           align="center"
         ></Frame>
       </Frame>
@@ -82,11 +83,11 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       >
         <Frame
           override={{ gap: Space.n8, pt: Space.n0, pr: Space.n8, pb: Space.n8, pl: Space.n8 }}
-          row
+          layout={Layout.Row.Header.Default}
           align="center"
           justify="between"
         >
-          <Frame override={{ gap: Space.n8 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
             <Text.Card.Note
               style={{
                 fontSize: 11,
@@ -107,7 +108,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           </Frame>
           <Frame
             override={{ gap: Space.n4, style: { padding: "2px" }, rounded: "md" }}
-            row
+            layout={Layout.Row.Actions.Default}
             surface="sunken"
           >
             <Action
@@ -147,7 +148,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
             display: isOpen ? "flex" : "none",
           },
         }}
-        row
+        layout={Layout.Row.Item.Default}
         align="center"
       >
         <Frame
@@ -182,7 +183,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
   if (viewMode === "thumbnail") {
     return (
       <Frame override={{ gap: Space.n6, py: Space.n0, px: Space.n8 }}>
-        <Frame override={{ gap: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Meta.Default} align="center">
           <Icon src={FileText} size={IconSize.n10} style={{ opacity: 0.5 }} />
           <Text.Card.Note
             style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}
@@ -221,13 +222,13 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
   return (
     <Frame
       override={{ py: Space.n8, px: Space.n12, rounded: "md" }}
-      row
+      layout={Layout.Row.Item.Default}
       align="center"
       justify="between"
       surface={active ? "raised" : undefined}
       cursor="pointer"
     >
-      <Frame override={{ gap: Space.n8 }} row align="center">
+      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
         <Icon src={FileText} size={IconSize.n14} style={{ opacity: 0.5 }} />
         <Text.Card.Title
           style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}

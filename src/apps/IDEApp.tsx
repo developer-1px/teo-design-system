@@ -19,6 +19,7 @@ import { Action } from "../design-system/Action";
 import { Space } from "../design-system/token/token.const.1tier";
 import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
 import { IconSize, FontSize, Size } from "../design-system/token/token.const.1tier";
 
@@ -148,7 +149,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
         override={{ style: { height: 35 }, px: Space.n20 }}
         align="center"
         justify="between"
-        row
+        layout={Layout.Row.Header.Default}
       >
         <Text size={FontSize.n9} weight="medium">
           EXPLORER
@@ -170,7 +171,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
             rounded="none"
             onClick={() => setOpenEditorsExpanded(!openEditorsExpanded)}
           >
-            <Frame override={{ gap: Space.n4 }} row align="center">
+            <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Tight} align="center">
               {openEditorsExpanded ? (
                 <Icon src={ChevronDown} size={IconSize.n12} />
               ) : (
@@ -197,7 +198,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
             rounded="none"
             onClick={() => setProjectExpanded(!projectExpanded)}
           >
-            <Frame override={{ gap: Space.n4 }} row align="center">
+            <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Tight} align="center">
               {projectExpanded ? (
                 <Icon src={ChevronDown} size={IconSize.n12} />
               ) : (
@@ -253,7 +254,7 @@ function FolderItem({
         rounded="none"
         onClick={() => setExpanded(!expanded)}
       >
-        <Frame override={{ gap: Space.n8, pl: Space.n16 }} row align="center">
+        <Frame override={{ gap: Space.n8, pl: Space.n16 }} layout={Layout.Row.Item.Compact} align="center">
           {expanded ? (
             <Icon src={ChevronDown} size={IconSize.n12} style={{ opacity: 0.6 }} />
           ) : (
@@ -308,7 +309,7 @@ function FileItem({
       surface={active ? "raised" : undefined}
       rounded="none"
     >
-      <Frame override={{ gap: Space.n8, pl: Space.n64, w: Size.full }} row align="center">
+      <Frame override={{ gap: Space.n8, pl: Space.n64, w: Size.full }} layout={Layout.Row.Item.Compact} align="center">
         <Frame override={{ style: { width: 12, height: 12 } }} pack>
           <Text size={FontSize.n10} style={{ color: getIconColor(), fontWeight: "bold" }}>
             {icon === "react" ? "TSX" : icon === "ts" ? "TS" : "{}"}
@@ -346,14 +347,14 @@ function EditorTabs() {
       override={{
         style: { height: 35, borderBottom: "1px solid var(--border-color)" },
       }}
-      row
+      layout={Layout.Row.Shell.Default}
       surface="sunken"
     >
       <Tab title="App" icon="react" active />
       <Tab title="IDEApp" icon="react" modified />
       <Tab title="useStore.ts" icon="ts" />
       <Frame flex />
-      <Frame override={{ px: Space.n8, gap: Space.n4 }} row align="center">
+      <Frame override={{ px: Space.n8, gap: Space.n4 }} layout={Layout.Row.Actions.Compact} align="center">
         <Action
           icon={Split}
           variant="ghost"
@@ -404,11 +405,11 @@ function Tab({
         py: Space.n0,
         px: Space.n12,
       }}
-      row
+      layout={Layout.Row.Item.Default}
       align="center"
       justify="between"
     >
-      <Frame override={{ gap: Space.n8 }} row align="center">
+      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Meta.Default} align="center">
         <Text size={FontSize.n10} style={{ color: getIconColor(), fontWeight: "bold" }}>
           {icon === "react" ? "TSX" : "TS"}
         </Text>
@@ -442,7 +443,7 @@ function Breadcrumbs() {
   return (
     <Frame
       override={{ style: { height: 22 }, px: Space.n16, gap: Space.n4 }}
-      row
+      layout={Layout.Row.Meta.Default}
       align="center"
       surface="base"
     >
@@ -459,7 +460,7 @@ function Breadcrumbs() {
 
 function CodeEditor() {
   return (
-    <Frame flex fill surface="base" row overflow="hidden">
+    <Frame flex fill surface="base" layout={Layout.Row.Shell.Default} overflow="hidden">
       {/* Gutter */}
       <Frame
         override={{
@@ -562,7 +563,7 @@ function Panel() {
     >
       <Frame
         override={{ style: { height: 35 }, px: Space.n16, gap: Space.n16 }}
-        row
+        layout={Layout.Row.Toolbar.Default}
         align="center"
       >
         <Text size={FontSize.n9} weight="medium" opacity={0.6}>
@@ -587,7 +588,7 @@ function Panel() {
         flex
         fill
       >
-        <Frame override={{ gap: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Compact} align="center">
           <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
@@ -604,7 +605,7 @@ function Panel() {
         <Text size={FontSize.n12} color="secondary">
           nothing to commit, working tree clean
         </Text>
-        <Frame override={{ gap: Space.n8, pt: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n8, pt: Space.n8 }} layout={Layout.Row.Item.Compact} align="center">
           <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
@@ -625,21 +626,21 @@ function StatusBar() {
     <Frame
       override={{ style: { height: 22 }, px: Space.n12 }}
       surface="overlay"
-      row
+      layout={Layout.Row.Toolbar.Compact}
       align="center"
       justify="between"
     >
-      <Frame override={{ gap: Space.n12 }} row>
-        <Frame override={{ gap: Space.n4 }} row align="center">
+      <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Tight}>
+        <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Tight} align="center">
           <Icon src={GitBranch} size={IconSize.n10} style={{ color: "white" }} />
           <Text size={FontSize.n11} color="white" weight="medium">
             main*
           </Text>
         </Frame>
-        <Frame override={{ gap: Space.n4 }} row align="center">
+        <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Tight} align="center">
           <Icon src={RefreshCw} size={IconSize.n10} style={{ color: "white" }} />
         </Frame>
-        <Frame override={{ gap: Space.n4, pl: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n4, pl: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
           <Icon src={AlertCircle} size={IconSize.n10} style={{ color: "white" }} />
           <Text size={FontSize.n11} color="white">
             0
@@ -651,7 +652,7 @@ function StatusBar() {
         </Frame>
       </Frame>
 
-      <Frame override={{ gap: Space.n16 }} row>
+      <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Meta.Default}>
         <Text size={FontSize.n11} color="white">
           Ln 5, Col 24
         </Text>
@@ -664,7 +665,7 @@ function StatusBar() {
         <Text size={FontSize.n11} color="white">
           TypeScript JSX
         </Text>
-        <Frame override={{ gap: Space.n4 }} row align="center">
+        <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Meta.Default} align="center">
           <Text size={FontSize.n11} color="white">
             Prettier
           </Text>

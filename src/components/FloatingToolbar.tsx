@@ -13,7 +13,8 @@ import {
 import { Action } from "../design-system/Action";
 import { Space } from "../design-system/token/token.const.1tier";
 import { Frame } from "../design-system/Frame/Frame.tsx";
-import { IconSize } from "../design-system/token/token.const.1tier";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { IconSize, Size } from "../design-system/token/token.const.1tier";
 import { Overlay } from "../design-system/Overlay";
 import { Separator } from "../design-system/Separator";
 import { useTheme } from "../design-system/theme";
@@ -51,7 +52,7 @@ export function FloatingToolbar() {
           shadow: "lg",
           style: { border: "1px solid var(--border-color)" },
         }}
-        row
+        layout={Layout.Row.Toolbar.Default}
         surface="base"
         align="center"
       >
@@ -66,7 +67,7 @@ export function FloatingToolbar() {
               variant={tool.variant}
               rounded="full"
               tooltip={tool.tooltip}
-              size={6}
+              size={Size.n32}
             />
           ),
         )}

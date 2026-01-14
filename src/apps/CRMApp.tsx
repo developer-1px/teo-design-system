@@ -24,6 +24,7 @@ import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Divider } from "../design-system/Divider";
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text.tsx";
 import { Icon } from "../design-system/Icon";
@@ -190,8 +191,8 @@ function SidebarItem({
   count?: number;
 }) {
   return (
-    <Action variant={active ? "surface" : "ghost"} rounded="md" w="100%">
-      <Frame override={{ gap: Space.n12, w: Size.full, py: Space.n6, px: Space.n8 }} row align="center">
+    <Action variant={active ? "surface" : "ghost"} rounded="md" w="100%" justify="start">
+      <Frame override={{ gap: Space.n12, w: Size.full, py: Space.n6, px: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
         <Icon
           src={IconSrc}
           size={IconSize.n16}
@@ -230,7 +231,7 @@ function Sidebar() {
     >
       {/* Workspace Switcher */}
       <Action variant="ghost" rounded="md">
-        <Frame override={{ gap: Space.n12, p: Space.n4 }} row align="center">
+        <Frame override={{ gap: Space.n12, p: Space.n4 }} layout={Layout.Row.Item.Default} align="center">
           <Avatar initial="O" color="black" size={20} />
           <Text weight="bold" variant="body-sm">
             Orbit Inc.
@@ -265,7 +266,7 @@ function Sidebar() {
       {/* Bottom Actions */}
       <Frame override={{ gap: Space.n4 }}>
         <SidebarItem icon={Settings} label="Settings" />
-        <Frame override={{ gap: Space.n12, p: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n12, p: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
           <Avatar initial="M" color="#4F46E5" size={20} />
           <Text variant="body-sm" weight="medium">
             Mike R.
@@ -308,14 +309,14 @@ function Header() {
         style: { height: 60, borderBottom: "1px solid var(--border-color)" },
       }}
     >
-      <Frame override={{ gap: Space.n8 }} row align="center">
+      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Meta.Default} align="center">
         <Text variant="body-md" color="tertiary">
           Records
         </Text>
         <Text variant="body-md" color="tertiary">
           /
         </Text>
-        <Frame override={{ gap: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Meta.Default} align="center">
           <Icon src={LayoutGrid} size={IconSize.n16} />
           <Text variant="heading-sm" color="primary">
             Deals
@@ -333,7 +334,7 @@ function Header() {
           style: { width: 320, border: "1px solid var(--border-color)" },
         }}
         surface="sunken"
-        row
+        layout={Layout.Row.Toolbar.Compact}
         align="center"
       >
         <Icon src={Search} size={IconSize.n14} style={{ color: "var(--text-tertiary)" }} />
@@ -358,7 +359,7 @@ function Header() {
         </Frame>
       </Frame>
 
-      <Frame override={{ gap: Space.n8 }} row>
+      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
         <Action variant="surface" border icon={ShareIcon} label="Share" />
         <Action
           variant="primary"
@@ -387,7 +388,7 @@ function Toolbar() {
         style: { height: 48, borderBottom: "1px solid var(--border-color)" },
         gap: Space.n8,
       }}
-      row
+      layout={Layout.Row.Toolbar.Default}
       align="center"
       surface="base"
     >
@@ -495,13 +496,13 @@ function TableRow({
         <Text variant="code" color="tertiary">
           {deal.id}
         </Text>
-        <Frame override={{ gap: Space.n12 }} row align="center">
+        <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Tight} align="center">
           <Avatar initial={deal.name[0]} color={deal.avatarColor} size={20} />
           <Text variant="body-sm" weight="medium" color="primary">
             {deal.name}
           </Text>
         </Frame>
-        <Frame override={{ gap: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Compact} align="center">
           <Frame
             override={{ style: { width: 16, height: 16 }, rounded: "sm" }}
             surface="raised"
@@ -518,7 +519,7 @@ function TableRow({
         <Text variant="code" color="secondary">
           {deal.value}
         </Text>
-        <Frame override={{ gap: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Compact} align="center">
           <Frame
             override={{ style: { width: 18, height: 18 }, rounded: "full" }}
             surface="overlay"
@@ -575,11 +576,11 @@ function Drawer({
           px: Space.n24,
           style: { height: 60, borderBottom: "1px solid var(--border-color)" },
         }}
-        row
+        layout={Layout.Row.Header.Default}
         align="center"
         justify="between"
       >
-        <Frame override={{ gap: Space.n12 }} row align="center">
+        <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default} align="center">
           <Avatar initial={deal.name[0]} color={deal.avatarColor} size={32} />
           <Frame>
             <Text variant="heading-md" color="primary">
@@ -590,7 +591,7 @@ function Drawer({
             </Text>
           </Frame>
         </Frame>
-        <Frame override={{ gap: Space.n8 }} row>
+        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
           <Action icon={MoreHorizontal} variant="ghost" />
           <Action icon={X} variant="ghost" onClick={onClose} />
         </Frame>
@@ -654,7 +655,7 @@ function Drawer({
           style: { borderTop: "1px solid var(--border-color)" },
           gap: Space.n8,
         }}
-        row
+        layout={Layout.Row.Actions.Default}
         justify="end"
         surface="sunken"
       >
@@ -678,8 +679,8 @@ function PropertyRow({
   empty?: boolean;
 }) {
   return (
-    <Frame override={{ style: { height: 32 }, gap: Space.n16 }} row align="center">
-      <Frame override={{ gap: Space.n8, w: Size.n144 }} row align="center">
+    <Frame override={{ style: { height: 32 }, gap: Space.n16 }} layout={Layout.Row.Item.Default} align="center">
+      <Frame override={{ gap: Space.n8, w: Size.n144 }} layout={Layout.Row.Meta.Default} align="center">
         <Icon src={IconSrc} size={IconSize.n14} style={{ color: "var(--text-tertiary)" }} />
         <Text variant="body-sm" color="tertiary">
           {label}
@@ -706,7 +707,7 @@ function ActivityItem({
   time: string;
 }) {
   return (
-    <Frame override={{ gap: Space.n12 }} row>
+    <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default}>
       <Frame
         override={{ style: { width: 24, height: 24 }, rounded: "full" }}
         surface="raised"
@@ -716,7 +717,7 @@ function ActivityItem({
         <Icon src={User} size={IconSize.n14} style={{ color: "var(--text-secondary)" }} />
       </Frame>
       <Frame override={{ gap: Space.n4 }}>
-        <Frame override={{ gap: Space.n4 }} row>
+        <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Tight}>
           <Text variant="body-sm" weight="medium" color="primary">
             {user}
           </Text>
@@ -739,7 +740,7 @@ export function CRMApp() {
   const selectedDeal = DEALS.find((d) => d.id === selectedDealId) || null;
 
   return (
-    <Frame fill row surface="base">
+    <Frame fill layout={Layout.Row.Shell.Default} surface="base">
       <Sidebar />
       <Frame
         override={{

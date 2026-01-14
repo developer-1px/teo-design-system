@@ -5,18 +5,17 @@ import "../lib/frame.css";
 import type { FrameOverrides, FrameProps } from "./FrameProps.ts";
 import { frameToSettings } from "../lib/frameToSettings.ts";
 
-import {resolveLayout} from "./Layout/Layout.ts"
+import { resolveLayout } from "./Layout/Layout.ts"
 
 export function Frame({
   children,
   as: Component = "div",
+  style,
   layout,
   override,
   title,
   className = "",
-  // style is NOT destructured as it's not in FrameProps. We rely on override.style.
-  // Note: if 'style' is passed in ...props (legacy), TS will complain at call site,
-  // and we ignore it here unless we explicitly look for it.
+  // style is now a top-level prop.
   ...props
 }: FrameProps) {
   // 1. Resolve Layout
@@ -26,7 +25,10 @@ export function Frame({
   // We extract style specifically to merge it last
   const combinedOverrideStyle = {
     ...layoutSettings.override?.style,
+    // @ts-ignore - layoutSettings might have top-level style if we updated Layout.ts
+    ...layoutSettings.style,
     ...override?.style,
+    ...style,
   };
 
   const combinedOverride: FrameOverrides = {

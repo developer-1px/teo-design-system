@@ -8,9 +8,10 @@ import React, { useState } from "react";
 
 import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Overlay } from "../design-system/Overlay";
 import { Icon } from "../design-system/Icon";
-import {IconSize, FontSize, Space, Size} from "../design-system/token/token.const.1tier"
+import { IconSize, FontSize, Space, Size } from "../design-system/token/token.const.1tier"
 import { generateJSX } from "./lib/inspector-utils";
 import { InspectorPanel } from "./components/InspectorPanel";
 import { useInspectorTarget } from "./hooks/useInspectorTarget";
@@ -130,8 +131,7 @@ export function InspectorOverlay() {
           <Frame
             override={{ rounded: "full", py: Space.n2, px: Space.n8, gap: Space.n6, shadow: "lg" }}
             surface="primary"
-            row
-            align="center"
+            layout={Layout.Row.Meta.Default}
           >
             {isLocked ? (
               <Icon src={Lock} size={IconSize.n10} style={{ color: "var(--primary-fg)" }} />
@@ -195,9 +195,8 @@ export function InspectorOverlay() {
                   gap: Space.n4,
                   shadow: "sm",
                 }}
-                 // 24px
-                row
-                align="center"
+                // 24px
+                layout={Layout.Row.Meta.Default}
               >
                 <Text size={FontSize.n9} weight="bold" style={{ color: "white" }}>
                   {targetName}
@@ -245,8 +244,7 @@ export function InspectorOverlay() {
           <Frame
             override={{ rounded: "md", py: Space.n4, px: Space.n12, gap: Space.n8, shadow: "lg" }}
             surface="primary"
-            row
-            align="center"
+            layout={Layout.Row.Meta.Default}
           >
             <Icon src={Copy} size={IconSize.n12} style={{ color: "var(--primary-fg)" }} />
             <Text

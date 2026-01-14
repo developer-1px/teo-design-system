@@ -1,4 +1,5 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text.tsx";
@@ -11,7 +12,7 @@ import { IconSize, FontSize } from "../design-system/token/token.const.1tier";
 
 export function LoginApp() {
   return (
-    <Frame fill row>
+    <Frame fill layout={Layout.Row.Shell.Default}>
       {/* Left: Login Form */}
       <Frame
         override={{ p: Space.n32 }}
@@ -45,8 +46,8 @@ export function LoginApp() {
               />
             </Frame>
 
-            <Frame row justify="between" align="center">
-              <Frame override={{ gap: Space.n8 }} row align="center" cursor="pointer">
+            <Frame layout={Layout.Row.Item.Between}>
+              <Frame layout={Layout.Row.Item.Tight} cursor="pointer">
                 {/* Checkbox simulation */}
                 <Frame
                   override={{
@@ -137,7 +138,7 @@ export function LoginApp() {
 
 function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame override={{ gap: Space.n16 }} row align="start">
+    <Frame layout={Layout.Row.Item.Default} align="start">
       <Frame
         override={{ w: Size.n8, h: Size.n8, rounded: "full", style: { marginTop: 4 } }}
         surface="primary"

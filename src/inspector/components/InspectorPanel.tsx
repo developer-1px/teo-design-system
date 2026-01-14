@@ -3,6 +3,7 @@ import { Lock, Copy, X, ChevronRight, ChevronDown, RefreshCw } from "lucide-reac
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { FontSize, Space } from "../../design-system/token/token.const.1tier";
 import { PropertyTree } from "./PropertyTree";
 import type { ComponentStackItem } from "../lib/fiber-utils";
@@ -223,18 +224,17 @@ export function InspectorPanel({
                         },
                     }}
                     surface="sunken"
-                    row
-                    align="center"
+                    layout={Layout.Row.Header.Default}
                     justify="between"
                     onMouseDown={handleMouseDown}
                 >
-                    <Frame override={{ gap: Space.n6 }} row align="center">
+                    <Frame override={{ gap: Space.n6 }} layout={Layout.Row.Item.Tight}>
                         <Lock size={10} className="text-primary" />
                         <Text weight="bold" size={FontSize.n10}>
                             {title}
                         </Text>
                     </Frame>
-                    <Frame override={{ gap: Space.n2 }} row>
+                    <Frame override={{ gap: Space.n2 }} layout={Layout.Row.Actions.Default}>
                         <Action
                             icon={Copy}
                             variant="ghost"
@@ -271,7 +271,7 @@ export function InspectorPanel({
 
                     {/* AI Assist Section (Collapsible) */}
                     <Frame override={{ gap: Space.n2, pt: Space.n0, pr: Space.n8, pb: Space.n8, pl: Space.n8 }}>
-                        <Frame row align="center" justify="between">
+                        <Frame layout={Layout.Row.Header.Default} justify="between">
                             <Action
                                 variant="ghost"
                                 size={5}

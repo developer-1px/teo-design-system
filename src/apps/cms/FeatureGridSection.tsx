@@ -1,6 +1,7 @@
 import { Cpu, MessageSquare, Shield, Zap } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { EditableWrapper } from "./EditableWrapper";
 import { Icon } from "../../design-system/Icon";
@@ -45,7 +46,7 @@ export function FeatureGridSection() {
 
       <Frame override={{ gap: Space.n16, w: Size.full }}>
         {/* Row 1 */}
-        <Frame override={{ gap: Space.n16 }} row wrap="wrap">
+        <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Item.Default} wrap="wrap">
           <FeatureCardLarge
             icon={Zap}
             title="Lightning Fast"
@@ -62,7 +63,7 @@ export function FeatureGridSection() {
         </Frame>
 
         {/* Row 2 */}
-        <Frame override={{ gap: Space.n16 }} row>
+        <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Item.Default}>
           <Frame override={{ style: { gridColumn: "span 2" } }}>
             <FeatureCardLarge
               icon={Shield}
@@ -144,7 +145,7 @@ function FeatureCardLarge({
       flex={flex}
       surface="raised"
       overflow="hidden"
-      row
+      layout={Layout.Row.Item.Default}
     >
       <Frame override={{ p: Space.n24, gap: Space.n16 }} flex justify="center">
         <Frame

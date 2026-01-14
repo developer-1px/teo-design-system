@@ -770,7 +770,7 @@ We've established a unique component hierarchy:
 **Tier 2: Blocks** (Pre-built patterns)
 - Form, Card, SearchBar, Panel
 
-Read more: [MDK Hierarchy Discussion](./09-mdk-unique-hierarchy-discussion.md)
+Read more: [MDK Hierarchy Discussion](09-mdk-unique-hierarchy-discussion.md)
 ```
 
 ---

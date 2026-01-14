@@ -14,6 +14,7 @@ import { SlidesPanel } from "../components/SlidesPanel";
 import { Action } from "../design-system/Action";
 import { Text } from "../design-system/text/Text";
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
 import { Space } from "../design-system/token/token.const.1tier";
 import { IconSize } from "../design-system/token/token.const.1tier";
@@ -34,17 +35,15 @@ export function SlideApp() {
             height: "44px",
           },
         }}
-        row
-        justify="between"
-        align="center"
+        layout={Layout.Row.Header.Default}
       >
-        <Frame override={{ gap: Space.n12 }} row align="center">
+        <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default} align="center">
           <Action
             icon={Grid}
             iconSize={IconSize.n16}
             style={{ width: "28px", height: "28px" }}
           />
-          <Frame override={{ gap: Space.n8 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
             <Text.Menu.Item style={{ fontWeight: 600 }}>
               Untitled Presentation
             </Text.Menu.Item>
@@ -56,10 +55,10 @@ export function SlideApp() {
             />
           </Frame>
         </Frame>
-        <Frame override={{ gap: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default} align="center">
           <Frame
             override={{ gap: Space.n4, p: Space.n4, rounded: "round", shadow: "sm" }}
-            row
+            layout={Layout.Row.Item.Compact}
             align="center"
             surface="overlay"
           >
@@ -103,7 +102,7 @@ export function SlideApp() {
       <Frame
         override={{ p: Space.n8, gap: Space.n8, style: { paddingTop: "48px" } }}
         flex
-        row
+        layout={Layout.Row.Shell.Default}
         fill
       >
         {/* 2. Left Sidebar (Slides Strip) */}
@@ -138,7 +137,7 @@ export function SlideApp() {
                   Refined & Polished UI.
                 </Text.Prose.Title>
                 <Frame override={{ style: { height: "4px" } }} />
-                <Frame override={{ gap: Space.n12 }} row>
+                <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Actions.Center}>
                   <Frame
                     override={{
                       style: { width: "40px", height: "40px" },

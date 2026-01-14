@@ -1,6 +1,7 @@
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space, Size } from "../../design-system/token/token.const.1tier";
 
 export interface SiteHeaderProps {
@@ -24,18 +25,18 @@ export function SiteHeader({
           borderBottom: "1px solid var(--border-color)",
         },
       }}
-      row
+      layout={Layout.Row.Header.Default}
       align="center"
       justify="center"
       surface="base"
     >
       <Frame
         override={{ w: Size.full, style: { maxWidth: "300px" } }}
-        row
+        layout={Layout.Row.Header.Default}
         justify="between"
         align="center"
       >
-        <Frame override={{ gap: Space.n8 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
           <Frame
             override={{
               w: Size.n32,
@@ -52,14 +53,14 @@ export function SiteHeader({
           <Text.Card.Title>Minimal</Text.Card.Title>
         </Frame>
 
-        <Frame override={{ gap: Space.n24 }} row>
-          <Frame override={{ gap: Space.n8 }} row>
+        <Frame override={{ gap: Space.n24 }} layout={Layout.Row.Actions.Default}>
+          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
             <Action label="Features" variant="ghost" />
             <Action label="Pricing" variant="ghost" />
             <Action label="Resources" variant="ghost" />
           </Frame>
 
-          <Frame override={{ gap: Space.n16 }} row align="center">
+          <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Actions.Between} align="center">
             <Action
               label="Log in"
               variant="ghost"

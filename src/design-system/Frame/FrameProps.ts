@@ -34,7 +34,7 @@ export interface FrameOverrides {
   h?: SizeToken
 
   flex?: boolean | number | string;
-  row?: boolean;
+  row?: boolean; // Used internally by Layout presets
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
   fill?: boolean;
 
@@ -57,6 +57,8 @@ export interface FrameOverrides {
   rounded?: RoundedToken | (string & {}) | number;
   overflow?: OverflowToken;
   cursor?: CursorToken;
+
+  override?: FrameOverrides;
 
   // Visual
   shadow?: ShadowToken;
@@ -95,7 +97,6 @@ export interface FrameStrictProps {
   h?: HeightToken;
 
   flex?: boolean | number;
-  row?: boolean;
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
   fill?: boolean;
 
@@ -128,7 +129,7 @@ export interface FrameStrictProps {
 }
 
 export interface FrameProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, "style" | "title" | "color">,
+  extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "color">,
   FrameStrictProps {
   children?: React.ReactNode;
   as?: React.ElementType;

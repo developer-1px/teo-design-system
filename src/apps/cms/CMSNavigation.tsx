@@ -1,7 +1,7 @@
 import {
   Bell,
   ChevronDown,
-  Layout,
+  Layout as LayoutIcon,
   Menu,
   Monitor,
   Moon,
@@ -11,6 +11,7 @@ import {
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Overlay } from "../../design-system/Overlay";
 import { Icon } from "../../design-system/Icon";
@@ -26,18 +27,18 @@ export function TopCenterBar() {
       style={{ transform: "translateX(-50%)", pointerEvents: "auto" }}
       clickOutsideToDismiss={false}
     >
-      <Frame row align="center">
+      <Frame layout={Layout.Row.Toolbar.Default} align="center">
         <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
         <Frame override={{ style: { width: "0.5px" }, h: Size.n4 }} surface="overlay" />
         <Frame
           override={{ gap: Space.n8, style: { padding: "0 8px" } }}
-          row
+          layout={Layout.Row.Meta.Default}
           align="center"
         >
           <Text.Card.Note style={{ fontSize: 13, fontWeight: "medium" }}>
             Page:
           </Text.Card.Note>
-          <Frame override={{ gap: Space.n4 }} row align="center" cursor="pointer">
+          <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Compact} align="center" cursor="pointer">
             <Text.Card.Title style={{ fontSize: 13, fontWeight: "bold" }}>
               Marketing Home
             </Text.Card.Title>
@@ -61,10 +62,10 @@ export function TopRightBar() {
       clickOutsideToDismiss={false}
       style={{ pointerEvents: "auto" }}
     >
-      <Frame override={{ gap: Space.n8 }} row align="center">
+      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default} align="center">
         <Frame
           override={{ gap: Space.n4, p: Space.n4, rounded: "full", shadow: "lg" }}
-          row
+          layout={Layout.Row.Actions.Default}
           surface="raised"
         >
           <Frame override={{ p: Space.n6, rounded: "full" }}>
@@ -114,7 +115,7 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
         className=""
         onClick={onClick}
       >
-        {isOpen ? <Icon src={Layout} size={IconSize.n20} /> : <Icon src={Menu} size={IconSize.n20} />}
+        {isOpen ? <Icon src={LayoutIcon} size={IconSize.n20} /> : <Icon src={Menu} size={IconSize.n20} />}
       </Frame>
     </Overlay>
   );

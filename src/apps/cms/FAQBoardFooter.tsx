@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize, Size } from "../../design-system/token/token.const.1tier";
@@ -56,7 +57,7 @@ export function FAQBoardFooter() {
           style: { marginTop: 24 },
         }}
         surface="raised"
-        row
+        layout={Layout.Slots.Media.Default}
         align="center"
       >
         <Frame
@@ -105,7 +106,7 @@ function FAQRow({ q, a }: FAQRowProps) {
       onClick={() => setIsOpen(!isOpen)}
       cursor="pointer"
     >
-      <Frame override={{ w: Size.full }} row justify="between" align="center">
+      <Frame override={{ w: Size.full }} layout={Layout.Row.Item.Between} align="center">
         <Text.Card.Title>{q}</Text.Card.Title>
         <Icon
           src={Plus}

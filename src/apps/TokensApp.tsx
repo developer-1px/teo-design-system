@@ -1,4 +1,5 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 
 import { ProseSection, ProseDocument } from "../design-system/ProseOld.tsx";
 import {
@@ -119,7 +120,7 @@ export function TokensApp() {
             <Frame override={{ gap: Space.n48 }}>
               {TEXT_CONTEXTS.map((ctx) => (
                 <Frame override={{ gap: Space.n16 }} key={ctx.name}>
-                  <Frame row justify="between" align="baseline">
+                  <Frame layout={Layout.Row.Item.Between} align="baseline">
                     <Text.Prose.Title
                       style={{ fontSize: "var(--font-size-2)" }}
                     >
@@ -145,7 +146,7 @@ export function TokensApp() {
                       return (
                         <Frame
                           override={{
-                            gap: Space.n16,
+                            // gap: Space.n16, // Removed in favor of semantic preset default (12px)
                             py: Space.n16,
                             px: Space.n0,
                             style: {
@@ -153,8 +154,7 @@ export function TokensApp() {
                             },
                           }}
                           key={slot.name}
-                          row
-                          align="center"
+                          layout={Layout.Row.Item.Default}
                         >
                           {/* Slot Name */}
                           <Frame override={{ w: Size.n128 }}>
@@ -238,7 +238,7 @@ export function TokensApp() {
           {/* 2. Surfaces */}
           <Frame override={{ gap: Space.n8 }}>
             <Text.Prose.Title>Surfaces</Text.Prose.Title>
-            <Frame override={{ gap: Space.n24 }} row wrap="wrap">
+            <Frame override={{ gap: Space.n24 }} layout={Layout.Wrap.Chips.Default}>
               {SURFACES.map((s) => (
                 <Frame
                   override={{
@@ -270,7 +270,7 @@ export function TokensApp() {
           {/* 3. Spacing */}
           <Frame override={{ gap: Space.n8 }}>
             <Text.Prose.Title>Spacing</Text.Prose.Title>
-            <Frame override={{ gap: Space.n24 }} row wrap="wrap">
+            <Frame override={{ gap: Space.n24 }} layout={Layout.Wrap.Chips.Default}>
               {SPACING.map((sp) => (
                 <Frame override={{ gap: Space.n8 }} key={sp} align="center">
                   <Frame
@@ -296,7 +296,7 @@ export function TokensApp() {
           {/* 4. Radius */}
           <Frame override={{ gap: Space.n32 }}>
             <Text.Prose.Title>Radius</Text.Prose.Title>
-            <Frame override={{ gap: Space.n24 }} row wrap="wrap">
+            <Frame override={{ gap: Space.n24 }} layout={Layout.Wrap.Chips.Default}>
               {RADIUS.map((r) => (
                 <Frame
                   override={{
@@ -325,8 +325,8 @@ export function TokensApp() {
             <Text.Prose.Title>Shadows</Text.Prose.Title>
             <Frame
               override={{ gap: Space.n48, p: Space.n48, rounded: "3xl" }}
-              row
-              wrap="wrap"
+              override={{ gap: Space.n48, p: Space.n48, rounded: "3xl" }}
+              layout={Layout.Wrap.Chips.Default}
               surface="sunken"
             >
               {SHADOWS.map((s) => (

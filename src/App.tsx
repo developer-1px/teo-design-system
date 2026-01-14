@@ -7,6 +7,7 @@ import { SlideApp } from "./apps/SlideApp";
 import { TokensApp } from "./apps/TokensApp";
 import { Text } from "./design-system/text/Text.tsx";
 import { Frame } from "./design-system/Frame/Frame.tsx";
+import { Layout } from "./design-system/Frame/Layout/Layout.ts";
 import { Space } from "./design-system/token/token.const.1tier";
 
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
@@ -54,7 +55,7 @@ function Navigation() {
         style: { position: "fixed", bottom: 20, left: 20, zIndex: 9999 },
       }}
       surface="raised"
-      row
+      layout={Layout.Row.Toolbar.Default}
     >
       <NavItem to="/" label="Home" />
       <NavItem to="/text" label="Text" />
@@ -97,7 +98,7 @@ function App() {
   return (
     <HashRouter>
       <InspectorOverlay />
-      <Frame fill overflow="hidden">
+      <Frame fill>
         <Routes>
           <Route path="/" element={<LandingApp />} />
           <Route path="/text" element={<TextSystemApp />} />

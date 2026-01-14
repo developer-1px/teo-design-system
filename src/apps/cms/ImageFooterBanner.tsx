@@ -2,6 +2,7 @@ import { Cpu, Globe, Shield, Zap } from "lucide-react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize, Size } from "../../design-system/token/token.const.1tier";
@@ -66,7 +67,7 @@ export function ImageFooterBanner() {
             Join 2,000+ companies building high-performance marketing sites with
             our Visual Engine.
           </Text.Prose.Body>
-          <Frame override={{ gap: Space.n16 }} row>
+          <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Actions.Default}>
             <Action
               label="Start for Free"
               variant="primary"
@@ -106,23 +107,23 @@ export function ImageFooterBanner() {
         </Text.Card.Note>
         <Frame
           override={{ gap: Space.n48, py: Space.n0, px: Space.n24, opacity: 0.3 }}
-          row
+          layout={Layout.Wrap.Chips.Loose}
           justify="center"
           wrap="wrap"
         >
-          <Frame override={{ gap: Space.n8 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
             <Icon src={Zap} size={IconSize.n24} />
             <Text.Card.Title>Bolt</Text.Card.Title>
           </Frame>
-          <Frame override={{ gap: Space.n8 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
             <Icon src={Globe} size={IconSize.n24} />
             <Text.Card.Title>Stripe</Text.Card.Title>
           </Frame>
-          <Frame override={{ gap: Space.n8 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
             <Icon src={Shield} size={IconSize.n24} />
             <Text.Card.Title>Linear</Text.Card.Title>
           </Frame>
-          <Frame override={{ gap: Space.n8 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
             <Icon src={Cpu} size={IconSize.n24} />
             <Text.Card.Title>Vercel</Text.Card.Title>
           </Frame>

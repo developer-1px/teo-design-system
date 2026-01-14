@@ -1,5 +1,6 @@
 import type React from "react";
 import { Frame } from "./Frame/Frame.tsx";
+import { Layout } from "./Frame/Layout/Layout.ts";
 import { Space, Size } from "./token/token.const.1tier";
 import type { FrameProps } from "./Frame/FrameProps.ts";
 
@@ -158,7 +159,7 @@ export function ProseActions({
   return (
     <Frame
       override={{ gap: gap as any, style: { marginTop: "var(--space-6)" } }}
-      row
+      layout={Layout.Row.Actions.Default}
       justify={justify}
       {...props}
     >

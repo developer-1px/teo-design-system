@@ -1,5 +1,6 @@
 import type React from "react";
 import { Frame } from "./Frame/Frame.tsx";
+import { Layout } from "./Frame/Layout/Layout.ts";
 import { Text } from "./text/Text.tsx";
 import { FontSize, Space } from "./token/token.const.1tier.ts";
 
@@ -51,6 +52,8 @@ export function Field({
         pl: Space.n8,
         pr: rightIcon ? Space.n6 : Space.n8,
         w: resolveSizingProp(effW),
+        row: true, // Ensure row layout
+        align: "center",
         style: {
           width: resolveSizingStyle(effW),
           cursor: "text",
@@ -58,8 +61,6 @@ export function Field({
         },
       }}
       flex={flex}
-      row
-      align="center"
       as="label"
       className={`field-base ${className}`}
     >

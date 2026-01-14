@@ -1,4 +1,5 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Section } from "../design-system/Section";
 import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Text } from "../design-system/text/Text";
@@ -23,7 +24,7 @@ export function SlidesPanel() {
       >
         {slides.map((num) => (
           <Frame override={{ gap: Space.n4, p: Space.n8 }} key={num} border={num === 1}>
-            <Frame override={{ gap: Space.n4 }} row justify="between" align="end">
+            <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Between} justify="between" align="end">
               <Text.Card.Note
                 style={{
                   color: num === 1 ? "var(--text-white)" : "var(--text-subtle)",

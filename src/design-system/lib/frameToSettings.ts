@@ -34,9 +34,17 @@ export function frameToSettings(props: FrameOverrides): {
 
   // Function to resolve size/container tokens strictly
   // Supports size.n*, size.full, container.n*
-  const resolveSizing = (val: string | number | undefined) => {
+  const resolveSizing = (val: string | number | undefined, axis: "width" | "height") => {
     if (!val) return undefined;
     if (typeof val === "string") {
+      // Legacy Token Fixes
+      if (val === "size.full") return "100%";
+      if (val === "size.screen") return axis === "width" ? "100vw" : "100vh";
+      if (val === "size.min") return "min-content";
+      if (val === "size.max") return "max-content";
+      if (val === "size.fit") return "fit-content";
+      if (val === "size.auto") return "auto";
+
       // Strict Token Mapping
       if (val.startsWith("size.") || val.startsWith("container.")) {
         return `var(--${val.replace(".", "-")})`;
@@ -83,12 +91,12 @@ export function frameToSettings(props: FrameOverrides): {
     gap: resolveSpace(props.gap) as any,
 
     // Sizing (Strict)
-    width: resolveSizing(props.w) as any,
-    height: resolveSizing(props.h) as any,
-    minWidth: resolveSizing(props.minWidth) as any,
-    minHeight: resolveSizing(props.minHeight) as any,
-    maxWidth: resolveSizing(props.maxWidth) as any,
-    maxHeight: resolveSizing(props.maxHeight) as any,
+    width: resolveSizing(props.w, "width") as any,
+    height: resolveSizing(props.h, "height") as any,
+    minWidth: resolveSizing(props.minWidth, "width") as any,
+    minHeight: resolveSizing(props.minHeight, "height") as any,
+    maxWidth: resolveSizing(props.maxWidth, "width") as any,
+    maxHeight: resolveSizing(props.maxHeight, "height") as any,
   });
 
   // --- Base Layout ---

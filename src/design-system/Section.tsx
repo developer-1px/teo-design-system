@@ -1,5 +1,6 @@
 import { Text } from "./text/Text.tsx";
 import { Frame } from "./Frame/Frame.tsx";
+import { Layout } from "./Frame/Layout/Layout.ts";
 import { Space } from "./token/token.const.1tier";
 
 
@@ -93,7 +94,7 @@ export function Section({
               flexShrink: 0,
             },
           }}
-          row
+          layout={Layout.Row.Item.Tight}
           align="center"
         >
           {icon && <span style={{ color: "var(--text-subtle)" }}>{icon}</span>}

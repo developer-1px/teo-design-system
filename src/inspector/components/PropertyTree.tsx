@@ -4,6 +4,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import React from "react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { IconSize, FontSize, Space, Size } from "../../design-system/token/token.const.1tier";
 
@@ -35,9 +36,7 @@ export function PropertyTree({
                         paddingLeft: `${depth * 12 + 8}px`,
                     },
                 }}
-                row
-                justify="between"
-                align="center"
+                layout={Layout.Row.Item.Between}
                 surface={background}
             >
                 <Text size={FontSize.n9} color="secondary">
@@ -74,16 +73,14 @@ export function PropertyTree({
                         cursor: isEmpty ? "default" : "pointer",
                     },
                 }}
-                row
-                justify="between"
-                align="center"
+                layout={Layout.Row.Item.Between}
                 surface={background}
                 onClick={(e) => {
                     e.stopPropagation();
                     if (!isEmpty) setIsOpen(!isOpen);
                 }}
             >
-                <Frame row align="center" override={{ gap: Space.n16 }}>
+                <Frame layout={Layout.Row.Item.Default}>
                     {!isEmpty && (
                         <Icon
                             src={isOpen ? ChevronDown : ChevronRight}

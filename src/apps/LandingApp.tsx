@@ -13,6 +13,7 @@ import { Action } from "../design-system/Action";
 import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../design-system/text/Text";
 import { Icon } from "../design-system/Icon";
 import { IconSize } from "../design-system/token/token.const.1tier";
@@ -23,22 +24,20 @@ export function LandingApp() {
       <Frame override={{ p: Space.n0 }} fill surface="base" overflow="auto">
         {/* Navigation */}
         <Frame
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 100,
+            borderBottom: "1px solid var(--border-subtle)",
+          }}
           override={{
             py: Space.n20,
             px: Space.n24,
-            style: {
-              position: "sticky",
-              top: 0,
-              zIndex: 100,
-              borderBottom: "1px solid var(--border-subtle)",
-            },
           }}
-          row
-          justify="between"
-          align="center"
+          layout={Layout.Row.Header.Sticky}
         >
           <Text.Prose.Title variant="sm">TMDK</Text.Prose.Title>
-          <Frame override={{ gap: Space.n8 }} row>
+          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
             <Action label="Documentation" variant="ghost" />
             <Action label="Components" variant="ghost" />
             <Action label="Download" variant="primary" />
@@ -48,15 +47,15 @@ export function LandingApp() {
         {/* Hero Section */}
         <Frame override={{ py: Space.n128, px: Space.n24, gap: Space.n24 }} align="center">
           <Frame
+            style={{ border: "1px solid var(--border-color)" }}
             override={{
               py: Space.n4,
               px: Space.n12,
               rounded: "full",
-              style: { border: "1px solid var(--border-color)" },
               gap: Space.n8,
             }}
             surface="sunken"
-            row
+            layout={Layout.Row.Item.Tight}
             align="center"
             cursor="pointer"
           >
@@ -87,7 +86,7 @@ export function LandingApp() {
             components crafted for modern web applications.
           </Text.Prose.Body>
 
-          <Frame override={{ gap: Space.n12, pt: Space.n32, px: Space.n0, pb: Space.n0 }} row justify="center">
+          <Frame override={{ gap: Space.n12, pt: Space.n32, px: Space.n0, pb: Space.n0 }} layout={Layout.Row.Actions.Center}>
             {/* Main CTA */}
             <Action variant="primary" rounded="full" py={Space.n12} px={Space.n20} gap={Space.n8}>
               <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>
@@ -147,14 +146,14 @@ export function LandingApp() {
           </Frame>
 
           <Frame
+            style={{
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              maxWidth: 1200,
+              margin: "0 auto",
+              width: "100%",
+            }}
             override={{
               gap: Space.n16,
-              style: {
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-                maxWidth: 1200,
-                margin: "0 auto",
-                width: "100%",
-              },
             }}
             grid
           >
@@ -203,17 +202,16 @@ export function LandingApp() {
 
         {/* Footer */}
         <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n16 }}>
-          <Frame override={{ style: { height: "1px" }, w: Size.full }} surface="sunken" />
+          <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="sunken" />
           <Frame
             override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
-            row
-            justify="between"
-            align="center"
+            override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
+            layout={Layout.Row.Header.Default}
           >
             <Text.Card.Note>
               © 2026 Minimal Design Kit. All rights reserved.
             </Text.Card.Note>
-            <Frame override={{ gap: Space.n16 }} row>
+            <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Actions.Default}>
               <Text.Card.Note style={{ cursor: "pointer" }}>
                 Twitter
               </Text.Card.Note>
@@ -242,20 +240,20 @@ function FeatureCard({
 }) {
   return (
     <Frame
+      style={{ border: "1px solid var(--border-color)" }}
       override={{
         p: Space.n24,
         rounded: "2xl",
-        style: { border: "1px solid var(--border-color)" },
         gap: Space.n16,
       }}
       surface="sunken"
     >
       <Frame
+        style={{ border: "1px solid var(--border-color)" }}
         override={{
-          w: Size.n8,
-          h: Size.n8,
+          w: Size.n32,
+          h: Size.n32,
           rounded: "xl",
-          style: { border: "1px solid var(--border-color)" },
           shadow: "sm",
         }}
         surface="base"

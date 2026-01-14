@@ -1,5 +1,6 @@
 import React from "react";
 import { Frame } from "./Frame/Frame.tsx";
+import { Layout } from "./Frame/Layout/Layout.ts";
 import { Text } from "./text/Text.tsx";
 import { Icon } from "./Icon";
 import { IconSize, Space, type IconSizeToken, type SpaceToken } from "./token/token.const.1tier";
@@ -129,6 +130,7 @@ export function Action({
 
   return (
     <Frame
+      // Action is always a row
       override={{
         w: resolveSizingProp(effW),
         h: resolveSizingProp(effH),
@@ -136,6 +138,9 @@ export function Action({
         p: finalP,
         gap: (gap as SpaceToken) ?? Space.n4,
         opacity: opacity,
+        row: true, // Ensure row layout
+        // Default to center alignment (vertical)
+        align: "center",
         style: {
           width: resolveSizingStyle(effW),
           height: resolveSizingStyle(effH),
@@ -155,7 +160,6 @@ export function Action({
       className={`action-base action-${finalVariant} ${className}`}
       title={tooltip}
       surface={surface}
-      row
       pack
       justify={mapJustify(justify) as any}
       {...props}

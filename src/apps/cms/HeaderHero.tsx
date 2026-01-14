@@ -2,6 +2,7 @@ import { ArrowUpRight, Command, Sparkles } from "lucide-react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { EditableWrapper } from "./EditableWrapper";
 import { Icon } from "../../design-system/Icon";
@@ -62,7 +63,7 @@ export function HeaderHero() {
         <Frame
           override={{ py: Space.n4, px: Space.n12, rounded: "full", gap: Space.n8 }}
           surface="raised"
-          row
+          layout={Layout.Row.Item.Compact}
           align="center"
         >
           <Icon src={Sparkles} size={IconSize.n12} style={{ color: "var(--color-primary)" }} />
@@ -100,7 +101,7 @@ export function HeaderHero() {
           </Text.Prose.Body>
         </EditableWrapper>
 
-        <Frame override={{ gap: Space.n12 }} row align="center">
+        <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Actions.Default} align="center">
           <Action
             label="Start Creating"
             variant="primary"
@@ -147,7 +148,7 @@ export function HeaderHero() {
             gap: Space.n2,
           }}
           surface="raised"
-          row
+          layout={Layout.Row.Item.Tight}
           align="center"
         >
           <Frame
@@ -165,7 +166,7 @@ export function HeaderHero() {
           <Frame flex />
           <Command size={14} opacity={0.3} />
         </Frame>
-        <Frame row fill justify="start">
+        <Frame layout={Layout.Row.Shell.Default} fill justify="start">
           <Frame
             override={{
               w: Size.n48,

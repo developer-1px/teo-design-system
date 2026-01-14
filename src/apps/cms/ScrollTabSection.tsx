@@ -1,5 +1,6 @@
 import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space, Size } from "../../design-system/token/token.const.1tier";
 
 const TABS = [
@@ -43,7 +44,7 @@ export function ScrollTabSection() {
           py: Space.n0,
           px: Space.n24,
         }}
-        row
+        layout={Layout.Row.Item.Tight}
         overflow="auto"
       >
         {TABS.map((tab, i) => (

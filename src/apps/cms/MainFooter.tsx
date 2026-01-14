@@ -1,6 +1,7 @@
 import { ArrowUpRight, Globe, MessageSquare, Sparkles } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize, Size } from "../../design-system/token/token.const.1tier";
@@ -17,9 +18,9 @@ export function MainFooter() {
       }}
       surface="sunken"
     >
-      <Frame override={{ w: Size.full }} row justify="between" align="start">
+      <Frame override={{ w: Size.full }} layout={Layout.Row.Header.Default} justify="between" align="start">
         <Frame override={{ gap: Space.n6, style: { width: "35%" } }}>
-          <Frame override={{ gap: Space.n4 }} row align="center">
+          <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Tight} align="center">
             <Frame
               override={{ style: { width: 40, height: 40 }, rounded: "xl" }}
               surface="primary"
@@ -48,14 +49,14 @@ export function MainFooter() {
             Building the future of the visual web. Join us in redefining how
             websites are crafted.
           </Text.Card.Desc>
-          <Frame override={{ gap: Space.n4 }} row>
+          <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Actions.Default}>
             <Icon src={Globe} size={IconSize.n20} style={{ opacity: 0.4 }} />
             <Icon src={MessageSquare} size={IconSize.n20} style={{ opacity: 0.4 }} />
             <Icon src={ArrowUpRight} size={IconSize.n20} style={{ opacity: 0.4 }} />
           </Frame>
         </Frame>
 
-        <Frame override={{ gap: Space.n16 }} row>
+        <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Actions.Default}>
           <FooterLinkColumn
             title="PRODUCT"
             links={["Features", "Design", "Automation", "Templates"]}
@@ -80,14 +81,14 @@ export function MainFooter() {
           pl: Space.n0,
           w: Size.full,
         }}
-        row
+        layout={Layout.Row.Header.Default}
         justify="between"
         align="center"
       >
         <Text.Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
           © 2024 VisualEngine Inc. All rights reserved.
         </Text.Card.Note>
-        <Frame override={{ gap: Space.n6 }} row>
+        <Frame override={{ gap: Space.n6 }} layout={Layout.Row.Actions.Default}>
           <Text.Card.Note
             style={{ fontSize: 13, color: "var(--text-tertiary)" }}
           >

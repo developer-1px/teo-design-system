@@ -32,8 +32,9 @@
  * ```
  */
 
-import type { FrameProps } from "../FrameProps.ts";
+import type { FrameOverrides } from "../FrameProps.ts";
 import { Size, Space } from "../../token/token.const.1tier.ts";
+import type React from "react";
 
 export const Layout = {
   // ⬇️ Vertical Flow (Stack)
@@ -134,6 +135,8 @@ export const Layout = {
       Tight: "row.item.tight",
       /** Compact: `Space.n4` gap. High density. */
       Compact: "row.item.compact",
+      /** Between: `justify: between`. Use for 'Label ... Value' rows. */
+      Between: "row.item.between",
     },
 
     /**
@@ -157,6 +160,18 @@ export const Layout = {
       Default: "row.actions",
       /** Space-between: `justify: between`. Split actions (Cancel ... Save). */
       Between: "row.actions.between",
+      /** Center: `justify: center`. Centered action groups. */
+      Center: "row.actions.center",
+    },
+
+    /**
+     * **App Shell**
+     * - Layout: Horizontal, `align: stretch`.
+     * - Spacing: `Space.n0`.
+     * - Use for: Top-level App container (Sidebar + Content).
+     */
+    Shell: {
+      Default: "row.shell",
     },
   },
 
@@ -256,6 +271,10 @@ export const Layout = {
     /** Centered with padding. Use for full-page error screens. */
     Padded: "center.padded",
   },
+
+  // @FIXME: for dev mark
+  RowTemp: "row.temp",
+  StackTemp: "stack.temp"
 } as const;
 
 // Strict Type Extraction (Recursive)
@@ -269,7 +288,7 @@ export type LayoutToken = DeepValue<typeof Layout>;
  * Resolves a high-level LayoutToken (e.g. "stack.section")
  * into low-level FrameProps (flex, gap, padding, etc.)
  */
-export function resolveLayout(layout: LayoutToken): Partial<FrameProps> {
+export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: React.CSSProperties } {
   switch (layout) {
     // --- Stack ---
     case Layout.Stack.Content.Default:
@@ -324,7 +343,7 @@ export function resolveLayout(layout: LayoutToken): Partial<FrameProps> {
         gap: Space.n12,
         h: Size.n44,
         overflow: "hidden",
-        override: { style: { position: "sticky", top: 0, zIndex: 10 } },
+        style: { position: "sticky", top: 0, zIndex: 10 },
       };
 
     case Layout.Row.Toolbar.Default:
@@ -353,7 +372,7 @@ export function resolveLayout(layout: LayoutToken): Partial<FrameProps> {
         gap: Space.n12,
         h: Size.n44, // Match header
         overflow: "hidden",
-        override: { style: { position: "sticky", top: 0, zIndex: 10 } },
+        style: { position: "sticky", top: 0, zIndex: 10 },
       };
 
     case Layout.Row.Item.Default:
@@ -362,6 +381,8 @@ export function resolveLayout(layout: LayoutToken): Partial<FrameProps> {
       return { row: true, align: "center", justify: "start", gap: Space.n8 };
     case Layout.Row.Item.Compact:
       return { row: true, align: "center", justify: "start", gap: Space.n4 };
+    case Layout.Row.Item.Between:
+      return { row: true, align: "center", justify: "between", gap: Space.n12 };
 
     case Layout.Row.Meta.Default:
       return {
@@ -376,6 +397,11 @@ export function resolveLayout(layout: LayoutToken): Partial<FrameProps> {
       return { row: true, align: "center", justify: "end", gap: Space.n8 };
     case Layout.Row.Actions.Between:
       return { row: true, align: "center", justify: "between", gap: Space.n8 };
+    case Layout.Row.Actions.Center:
+      return { row: true, align: "center", justify: "center", gap: Space.n8 };
+
+    case Layout.Row.Shell.Default:
+      return { row: true, align: "stretch", gap: Space.n0 };
 
     // --- Wrap ---
     case Layout.Wrap.Chips.Default:
@@ -478,6 +504,12 @@ export function resolveLayout(layout: LayoutToken): Partial<FrameProps> {
         gap: Space.n12,
         p: Space.n24,
       }; // was 6 units (24px)
+
+    // --- Temporary / Dev ---
+    case Layout.RowTemp:
+      return { row: true, align: "center", gap: Space.n0 };
+    case Layout.StackTemp:
+      return { align: "start", gap: Space.n0 };
 
     default:
       return {};

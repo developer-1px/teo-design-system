@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Experience, type ExperienceType } from "../design-system/Experience";
 import { Action } from "../design-system/Action";
 import { Monitor, FileText, Globe } from "lucide-react";
@@ -18,29 +19,27 @@ export function TextSystemApp() {
   return (
     <Experience value={experience}>
       <Frame
+        style={{ scrollSnapType: "y mandatory", overflowY: "scroll" }}
         override={{
-          style: { scrollSnapType: "y mandatory", overflowY: "scroll" },
         }}
         fill
         surface="base"
       >
         {/* Floating Experience Switcher */}
         <Frame
+          style={{
+            position: "fixed",
+            top: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 100,
+          }}
           override={{
-            style: {
-              position: "fixed",
-              top: 24,
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 100,
-            },
             shadow: "lg",
             rounded: "full",
             p: Space.n4,
-            gap: Space.n4,
           }}
-          surface="raised"
-          row
+          layout={Layout.Row.Actions.Center}
         >
           <ExperienceButton
             active={experience === "landing"}
@@ -64,27 +63,27 @@ export function TextSystemApp() {
 
         {/* Section 0: Text System Intro (1-Column Layout) */}
         <Frame
+          style={{ scrollSnapAlign: "start" }}
           override={{
             w: Size.full,
             h: Size.screen,
-            style: { scrollSnapAlign: "start" },
             p: Space.n40,
           }}
           align="center"
           justify="center"
           surface="base"
         >
-          <Frame override={{ gap: Space.n32, style: { maxWidth: "var(--container-n800)" } }} align="center">
+          <Frame style={{ maxWidth: "var(--container-n800)" }} override={{ gap: Space.n32 }} align="center">
             <Frame
+              style={{
+                background:
+                  "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
+                border: "1px solid var(--border-color)",
+                boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
+              }}
               override={{
                 p: Space.n16,
                 rounded: "3xl",
-                style: {
-                  background:
-                    "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
-                  border: "1px solid var(--border-color)",
-                  boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
-                },
               }}
               surface="sunken"
             >
@@ -116,8 +115,9 @@ export function TextSystemApp() {
 
             {/* Hierarchy Visualization */}
             <Frame
-              override={{ gap: Space.n16, style: { marginTop: "var(--space-8)" } }}
-              row
+              style={{ marginTop: "var(--space-8)" }}
+              layout={Layout.Row.Item.Default}
+              override={{ gap: Space.n0 }}
             >
               {[
                 { title: "Experience", desc: "Global Scale", icon: Globe },
@@ -125,7 +125,7 @@ export function TextSystemApp() {
                 { title: "Slot", desc: "Content Area", icon: Monitor }, // Placeholder icon for slot
                 { title: "Variant", desc: "Visual Style", icon: Monitor }, // Placeholder
               ].map((layer, i) => (
-                <Frame override={{ gap: Space.n8 }} key={i} row align="center">
+                <Frame override={{ gap: Space.n0 }} key={i} layout={Layout.Row.Item.Default} align="center">
                   <Frame
                     override={{
                       py: Space.n16,
@@ -152,8 +152,9 @@ export function TextSystemApp() {
                   </Frame>
                   {i < 3 && (
                     <Frame
+                      style={{ height: "2px", background: "var(--border-color)" }}
                       override={{
-                        style: { height: "2px", background: "var(--border-color)" },
+                        w: Size.n32,
                       }}
                     />
                   )}
@@ -173,7 +174,7 @@ export function TextSystemApp() {
   Scales automatically with Experience.
 </Text.Prose.Body>`}
         >
-          <Frame override={{ gap: Space.n24, style: { maxWidth: "600px" } }}>
+          <Frame style={{ maxWidth: "600px" }} override={{ gap: Space.n24 }}>
             <Text.Prose.Title>Context: Prose</Text.Prose.Title>
             <Text.Prose.Body>
               The <strong>Prose</strong> context is designed for continuous
@@ -205,7 +206,7 @@ export function TextSystemApp() {
   <Text.Card.Note>Updated 2h ago</Text.Card.Note>
 </Frame>`}
         >
-          <Frame override={{ gap: Space.n32 }} row wrap="wrap" justify="center">
+          <Frame override={{ gap: Space.n32 }} layout={Layout.Wrap.Chips.Default} justify="center">
             <Frame
               override={{
                 p: Space.n24,
@@ -236,7 +237,7 @@ export function TextSystemApp() {
               </Text.Card.Desc>
               <Frame
                 override={{ style: { marginTop: "var(--space-4)" } }}
-                row
+                layout={Layout.RowTemp}
                 align="center"
                 justify="between"
               >
@@ -276,7 +277,7 @@ export function TextSystemApp() {
               </Text.Card.Desc>
               <Frame
                 override={{ style: { marginTop: "var(--space-4)" } }}
-                row
+                layout={Layout.RowTemp}
                 align="center"
                 justify="between"
               >
@@ -298,11 +299,11 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
+            style={{ width: "400px", border: "1px solid var(--border-color)" }}
             override={{
               p: Space.n32,
               rounded: "2xl",
               gap: Space.n24,
-              style: { width: "400px", border: "1px solid var(--border-color)" },
             }}
             surface="raised"
           >
@@ -314,14 +315,14 @@ export function TextSystemApp() {
               <Frame override={{ gap: Space.n6 }}>
                 <Text.Field.Label>Display Name</Text.Field.Label>
                 <Frame
+                  style={{
+                    paddingLeft: "var(--space-3)",
+                    paddingRight: "var(--space-3)",
+                    border: "1px solid var(--border-color)",
+                  }}
                   override={{
                     h: Size.n32,
                     rounded: "md",
-                    style: {
-                      paddingLeft: "var(--space-3)",
-                      paddingRight: "var(--space-3)",
-                      border: "1px solid var(--border-color)",
-                    },
                   }}
                   surface="sunken"
                   align="center"
@@ -335,14 +336,14 @@ export function TextSystemApp() {
               <Frame override={{ gap: Space.n6 }}>
                 <Text.Field.Label>Email Address</Text.Field.Label>
                 <Frame
+                  style={{
+                    paddingLeft: "var(--space-3)",
+                    paddingRight: "var(--space-3)",
+                    border: "1px solid var(--border-color)",
+                  }}
                   override={{
                     h: Size.n32,
                     rounded: "md",
-                    style: {
-                      paddingLeft: "var(--space-3)",
-                      paddingRight: "var(--space-3)",
-                      border: "1px solid var(--border-color)",
-                    },
                   }}
                   surface="sunken"
                   align="center"
@@ -359,11 +360,11 @@ export function TextSystemApp() {
               <Frame override={{ gap: Space.n6 }}>
                 <Text.Field.Label>Bio</Text.Field.Label>
                 <Frame
+                  style={{ border: "1px solid var(--border-color)" }}
                   override={{
                     h: Size.n80,
                     rounded: "md",
                     p: Space.n12,
-                    style: { border: "1px solid var(--border-color)" },
                   }}
                   surface="sunken"
                 >
@@ -375,8 +376,9 @@ export function TextSystemApp() {
             </Frame>
 
             <Frame
-              override={{ gap: Space.n12, style: { marginTop: "var(--space-4)" } }}
-              row
+              style={{ marginTop: "var(--space-4)" }}
+              override={{ gap: Space.n12 }}
+              layout={Layout.Row.Actions.Default}
               justify="end"
             >
               <Action variant="ghost" label="Cancel" />
@@ -399,21 +401,21 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
+            style={{ maxWidth: "var(--container-n800)", border: "1px solid var(--border-color)" }}
             override={{
               rounded: "xl",
               w: Size.full,
-              style: { maxWidth: "var(--container-n800)", border: "1px solid var(--border-color)" },
             }}
             surface="raised"
             overflow="hidden"
           >
             <Frame
+              style={{ borderBottom: "1px solid var(--border-color)" }}
               override={{
                 py: Space.n12,
                 px: Space.n16,
-                style: { borderBottom: "1px solid var(--border-color)" },
               }}
-              row
+              layout={Layout.Row.Item.Default}
               surface="sunken"
             >
               <Frame flex={2}>
@@ -460,13 +462,13 @@ export function TextSystemApp() {
               },
             ].map((user, i) => (
               <Frame
+                style={{ borderBottom: "1px solid var(--border-color)" }}
                 override={{
                   py: Space.n12,
                   px: Space.n16,
-                  style: { borderBottom: "1px solid var(--border-color)" },
                 }}
                 key={i}
-                row
+                layout={Layout.Row.Item.Default}
                 align="center"
                 surface="hover"
               >
@@ -483,19 +485,19 @@ export function TextSystemApp() {
                 </Frame>
                 <Frame flex={1}>
                   <Frame
+                    style={{
+                      display: "inline-flex",
+                      border: "1px solid var(--border-color)",
+                      fontSize: "11px",
+                      color:
+                        user.status === "Active"
+                          ? "var(--text-primary)"
+                          : "var(--text-muted)",
+                    }}
                     override={{
                       py: Space.n2,
                       px: Space.n8,
                       rounded: "full",
-                      style: {
-                        display: "inline-flex",
-                        border: "1px solid var(--border-color)",
-                        fontSize: "11px",
-                        color:
-                          user.status === "Active"
-                            ? "var(--text-primary)"
-                            : "var(--text-muted)",
-                      },
                     }}
                     surface={user.status === "Active" ? "sunken" : undefined}
                   >
@@ -527,12 +529,12 @@ export function TextSystemApp() {
   <Text.Menu.Item>Settings</Text.Menu.Item>
 </Frame>`}
         >
-          <Frame override={{ gap: Space.n48 }} row align="start">
+          <Frame override={{ gap: Space.n48 }} layout={Layout.Row.Item.Default} align="start">
             {/* Sidebar Menu Style */}
             <Frame
+              style={{ height: "400px", border: "1px solid var(--border-color)" }}
               override={{
                 w: Size.n240,
-                style: { height: "400px", border: "1px solid var(--border-color)" },
               }}
               surface="sunken"
             >
@@ -551,12 +553,12 @@ export function TextSystemApp() {
 
             {/* Context Menu Style */}
             <Frame
+              style={{ border: "1px solid var(--border-color)" }}
               override={{
                 w: Size.n224,
                 rounded: "xl",
                 p: Space.n4,
                 shadow: "lg",
-                style: { border: "1px solid var(--border-color)" },
               }}
               surface="raised"
             >
@@ -564,8 +566,8 @@ export function TextSystemApp() {
               <MenuItem>Edit</MenuItem>
               <MenuItem>Duplicate</MenuItem>
               <Frame
+                style={{ height: "1px", marginBlock: "var(--space-1)" }}
                 override={{
-                  style: { height: "1px", marginBlock: "var(--space-1)" },
                 }}
                 surface="base"
               />
@@ -577,7 +579,7 @@ export function TextSystemApp() {
           </Frame>
         </ShowcaseSection>
       </Frame>
-    </Experience>
+    </Experience >
   );
 }
 
@@ -599,7 +601,7 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
       }}
       onClick={onClick}
       surface={active ? "primary" : "hover"}
-      row
+      layout={Layout.Row.Item.Tight}
       align="center"
     >
       <Icon src={IconSrc} size={IconSize.n14} />
@@ -611,15 +613,15 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
 function ShowcaseSection({ title, description, code, children }: any) {
   return (
     <Frame
-      override={{ w: Size.full, h: Size.screen, style: { scrollSnapAlign: "start" } }}
-      row
+      style={{ scrollSnapAlign: "start" }}
+      override={{ w: Size.full, h: Size.screen }}
+      layout={Layout.Row.Shell.Default}
       overflow="hidden"
     >
       {/* Left: Code & Context */}
       <Frame
-        override={{
-          style: { width: "35%", borderRight: "1px solid var(--border-color)" },
-        }}
+        style={{ width: "35%", borderRight: "1px solid var(--border-color)" }}
+        p={Space.n24}
         surface="sunken"
         justify="center"
       >
@@ -633,17 +635,16 @@ function ShowcaseSection({ title, description, code, children }: any) {
         </Frame>
 
         <Frame
+          style={{
+            border: "1px solid var(--border-color)",
+            fontFamily: "var(--font-family-mono)",
+            fontSize: "13px",
+            lineHeight: "1.6",
+            overflowX: "auto",
+          }}
           override={{
             p: Space.n24,
             rounded: "xl",
-            style: {
-              border: "1px solid var(--border-color)",
-              fontFamily: "var(--font-family-mono)",
-              fontSize: "13px",
-              lineHeight: "1.6",
-              overflowX: "auto",
-            },
-            shadow: "sm",
           }}
           surface="base"
         >
@@ -653,11 +654,11 @@ function ShowcaseSection({ title, description, code, children }: any) {
 
       {/* Right: Preview */}
       <Frame
+        style={{
+          background:
+            "radial-gradient(circle at center, var(--surface-base) 0%, var(--surface-sunken) 100%)",
+        }}
         override={{
-          style: {
-            background:
-              "radial-gradient(circle at center, var(--surface-base) 0%, var(--surface-sunken) 100%)",
-          },
         }}
         flex={1}
         align="center"

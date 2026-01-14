@@ -1,6 +1,7 @@
 import { Check, MessageSquare, Zap } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize, Size } from "../../design-system/token/token.const.1tier";
@@ -22,7 +23,7 @@ export function BodyContentSection() {
           w: Size.full,
           style: { maxWidth: 1280, margin: "0 auto" },
         }}
-        row
+        layout={Layout.Row.Item.Default}
         align="center"
       >
         <Frame override={{ style: { width: "50%" }, gap: Space.n8 }}>
@@ -108,7 +109,7 @@ export function BodyContentSection() {
             >
               <Icon src={MessageSquare} size={IconSize.n32} style={{ color: "var(--color-primary)" }} />
               <Frame override={{ gap: Space.n8 }}>
-                <Frame override={{ gap: Space.n2 }} row align="center">
+                <Frame override={{ gap: Space.n2 }} layout={Layout.Row.Item.Compact} align="center">
                   <Frame
                     override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
                     surface="overlay"
@@ -138,7 +139,7 @@ interface CheckItemProps {
 
 function CheckItem({ title, desc }: CheckItemProps) {
   return (
-    <Frame override={{ gap: Space.n4 }} row align="start">
+    <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Default} align="start">
       <Frame
         override={{ w: Size.n8, h: Size.n8, rounded: "full", style: { marginTop: 2 } }}
         surface="primary"

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Space, Size } from "../design-system/token/token.const.1tier";
 
 // import { ProseDocument } from "../design-system/Prose";
@@ -26,7 +27,7 @@ export function CMSApp() {
 
       <Frame
         override={{ style: { position: "relative" } }}
-        row
+        layout={Layout.Row.Shell.Default}
         fill
         align="stretch"
       >
