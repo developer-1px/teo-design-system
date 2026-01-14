@@ -24,12 +24,14 @@ export function SlideApp() {
         justify="between"
         align="center"
         p={2}
-        position="absolute"
-        top={0}
-        left={0}
-        right={0}
-        zIndex={10}
-        style={{ height: "44px" }}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          height: "44px"
+        }}
       >
         <Frame row gap={3} align="center">
           <Action
@@ -100,7 +102,7 @@ export function SlideApp() {
         <Frame
           flex
           fill
-          position="relative"
+          style={{ position: 'relative' }}
           rounded="round"
           overflow="hidden"
           as="main"

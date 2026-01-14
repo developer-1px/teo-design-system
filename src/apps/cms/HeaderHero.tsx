@@ -15,26 +15,20 @@ export function HeaderHero() {
     >
       {/* Background Decoration */}
       <Frame
-        position="absolute"
-        top={-25}
-        right={-25}
-        w={100}
-        h={100}
-        rounded="full"
         style={{
+          position: "absolute",
+          top: -25,
+          right: -25,
           background: "var(--color-primary)",
           filter: "blur(150px)",
           opacity: 0.1,
         }}
       />
       <Frame
-        position="absolute"
-        bottom={-25}
-        left={-25}
-        w={100}
-        h={100}
-        rounded="full"
         style={{
+          position: "absolute",
+          bottom: -25,
+          left: -25,
           background: "var(--color-warning)",
           filter: "blur(150px)",
           opacity: 0.15,

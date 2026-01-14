@@ -14,11 +14,10 @@ export function LandingApp() {
           justify="between"
           align="center"
           p="5 6"
-          position="sticky"
-          top={0}
-          zIndex={100}
-          surface="base"
           style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 100,
             borderBottom: "1px solid var(--border-subtle)",
           }}
         >

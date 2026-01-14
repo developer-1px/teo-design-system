@@ -58,13 +58,7 @@ export interface FrameProps
     border?: boolean | string;
     borderColor?: string;
 
-    // Positioning
-    position?: "relative" | "absolute" | "fixed" | "sticky";
-    top?: number | string;
-    bottom?: number | string;
-    left?: number | string;
-    right?: number | string;
-    zIndex?: number;
+
 
     // Semantic
     title?: string;

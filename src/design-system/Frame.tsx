@@ -44,12 +44,7 @@ export function Frame({
   opacity,
   ratio,
 
-  position,
-  top,
-  bottom,
-  left,
-  right,
-  zIndex,
+
 
   title,
   className = "",
@@ -68,7 +63,7 @@ export function Frame({
     h,
     rounded,
     surface,
-    position,
+
     align,
     justify,
     flex,
@@ -107,11 +102,7 @@ export function Frame({
     aspectRatio: ratio,
 
     // Positioning
-    zIndex,
-    top,
-    bottom,
-    left,
-    right,
+
 
     color: surface === "primary" ? "var(--primary-fg)" : "inherit",
 

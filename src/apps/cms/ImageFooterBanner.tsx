@@ -11,15 +11,12 @@ export function ImageFooterBanner() {
         h={125}
         rounded="3xl"
         overflow="hidden"
-        position="relative"
-        pack
-        style={{ background: "linear-gradient(225deg, #1a1a1a, #000)" }}
+        style={{ position: "relative", background: "linear-gradient(225deg, #1a1a1a, #000)" }}
       >
         {/* Visual texture */}
         <Frame
-          position="absolute"
-          fill
           style={{
+            position: "absolute",
             opacity: 0.1,
             backgroundImage:
               "radial-gradient(circle at center, #fff 1px, transparent 1px)",
@@ -27,7 +24,7 @@ export function ImageFooterBanner() {
           }}
         />
 
-        <Frame p={6} style={{ maxWidth: 640 }} gap={6} align="center" zIndex={10}>
+        <Frame p={6} style={{ maxWidth: 640, position: "relative", zIndex: 10 }} gap={6} align="center">
           <Text.Prose.Title variant="xl" style={{ color: "white", textAlign: "center" }}>
             Ready to elevate <br /> your web presence?
           </Text.Prose.Title>

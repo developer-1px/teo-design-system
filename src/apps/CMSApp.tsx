@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Frame } from "../design-system/Frame";
+
 // import { ProseDocument } from "../design-system/Prose";
 
 // CMS Sections
@@ -22,7 +23,7 @@ export function CMSApp() {
       <TopCenterBar />
       <TopRightBar />
 
-      <Frame row fill align="stretch" position="relative">
+      <Frame row fill align="stretch" style={{ position: "relative" }}>
         <CMSSidebar isOpen={isSidebarOpen} onToggle={() => setSidebarOpen(!isSidebarOpen)} />
         <Frame
           flex
@@ -35,7 +36,10 @@ export function CMSApp() {
         >
           {/* The Canvas */}
           <Frame w="100%" style={{ minHeight: "100%" }}>
-            <SiteHeader />
+            <SiteHeader
+              isSidebarOpen={isSidebarOpen}
+              onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
+            />
             <ScrollTabSection />
             <HeaderHero />
             <FeatureGridSection />

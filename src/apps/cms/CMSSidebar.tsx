@@ -1,22 +1,17 @@
 import {
-  Box,
   ChevronRight,
-  Columns,
   FileText,
   Grid2X2,
-  Image as ImageIcon,
   Layout,
-  Layers,
   List,
   Menu,
+  Plus,
   Settings,
-  Type,
 } from "lucide-react";
 import { useState } from "react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Action } from "../../design-system/Action";
-import { Overlay } from "../../design-system/Overlay";
 
 export interface CMSSidebarProps {
   isOpen: boolean;
@@ -24,187 +19,134 @@ export interface CMSSidebarProps {
 }
 
 export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
-  const [viewMode, setViewMode] = useState<"bar" | "thumbnail">("bar");
+  const [viewMode, setViewMode] = useState<"bar" | "thumbnail">("thumbnail");
 
   return (
-    <Overlay
-      position="absolute"
-      y="14px"
-      x="3px"
-      zIndex={200}
-      clickOutsideToDismiss={false}
-      style={{ pointerEvents: "auto" }}
+    <Frame
+      h="100%"
+      surface="raised"
+      p={1}
+      gap={1}
+      style={{
+        borderRight: "1px solid var(--border-color)",
+        width: isOpen ? 240 : 60,
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        transformOrigin: "top left",
+        transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+      }}
     >
-      <Frame
-        h="auto"
-        maxHeight="80vh"
-        surface="raised"
-        style={{
-          border: "1px solid var(--border-color)",
-          width: isOpen ? 260 : 60,
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-          transformOrigin: "top left",
-        }}
-      >
-        {/* Header with Toggle */}
-        <Frame row align="center" gap={3} p="0 4px">
-          <Action
-            icon={isOpen ? Layout : Menu}
-            variant="ghost"
-            size="sm"
-            rounded="md"
-            onClick={onToggle}
-            tooltip={isOpen ? "Collapse" : "Expand"}
-          />
+      {/* Header with Toggle */}
+      <Frame row align="center" gap={3} p="0 4px">
+        <Action
+          icon={isOpen ? Layout : Menu}
+          variant="ghost"
+          size="sm"
+          rounded="md"
+          onClick={onToggle}
+          tooltip={isOpen ? "Collapse" : "Expand"}
+        />
 
-          <Frame
-            row
-            align="center"
-            gap={2}
-            style={{
-              opacity: isOpen ? 1 : 0,
-              transition: "opacity 0.2s",
-              pointerEvents: isOpen ? "auto" : "none"
-            }}
-          >
-            <Frame
-              style={{ width: 24, height: 24 }}
-              rounded="md"
-              surface="primary"
-              pack
-            >
-              <Layers size={14} color="#fff" />
-            </Frame>
-            <Text.Card.Title style={{ fontWeight: "bold", fontSize: 16 }}>
-              Visual Builder
-            </Text.Card.Title>
-          </Frame>
-        </Frame>
-
-        {/* Content - Hidden when closed */}
-        <Frame
-          flex
-          gap="8px"
-          overflow="scroll"
-          style={{
-            opacity: isOpen ? 1 : 0,
-            transition: "opacity 0.2s",
-            pointerEvents: isOpen ? "auto" : "none",
-            display: isOpen ? "flex" : "none" // Fully hide to prevent layout issues
-          }}
-        >
-          <Frame>
-            <Frame p="0px 8px 8px 8px">
-              <Text.Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
-                ELEMENTS
-              </Text.Card.Note>
-            </Frame>
-            <Frame grid columns="1fr 1fr" gap="8px">
-              <ElementButton icon={Type} label="Text" />
-              <ElementButton icon={ImageIcon} label="Image" />
-              <ElementButton icon={Box} label="Box" />
-              <ElementButton icon={Columns} label="Columns" />
-            </Frame>
-          </Frame>
-
-          <Frame
-            h="1px"
-            surface="overlay"
-            w="100%"
-            style={{ margin: "16px 0" }}
-          />
-
-          <Frame gap="8px">
-            <Frame row align="center" justify="between" p="0px 8px 8px 8px">
-              <Text.Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
-                LAYERS
-              </Text.Card.Note>
-              <Frame row gap={1} surface="sunken" p="2px" rounded="md">
-                <Action
-                  icon={List}
-                  size={5}
-                  variant={viewMode === "bar" ? "surface" : "ghost"}
-                  rounded="sm"
-                  onClick={() => setViewMode("bar")}
-                />
-                <Action
-                  icon={Grid2X2}
-                  size={5}
-                  variant={viewMode === "thumbnail" ? "surface" : "ghost"}
-                  rounded="sm"
-                  onClick={() => setViewMode("thumbnail")}
-                />
-              </Frame>
-            </Frame>
-            <Frame gap={viewMode === "thumbnail" ? "12px" : "4px"}>
-              <LayerItem label="Hero Section" active viewMode={viewMode} />
-              <LayerItem label="Feature Grid" viewMode={viewMode} />
-              <LayerItem label="Testimonials" viewMode={viewMode} />
-              <LayerItem label="Footer" viewMode={viewMode} />
-            </Frame>
-          </Frame>
-        </Frame>
-
-        {/* Footer Settings */}
         <Frame
           row
           align="center"
-          gap={3}
-          p={3}
+          gap={2}
           style={{
-            borderTop: "1px solid var(--border-color)",
             opacity: isOpen ? 1 : 0,
             transition: "opacity 0.2s",
-            display: isOpen ? "flex" : "none"
+            pointerEvents: isOpen ? "auto" : "none"
           }}
         >
-          <Frame
-            style={{ width: 32, height: 32 }}
-            rounded="full"
-            surface="sunken"
-            pack
-          >
-            <Settings size={16} />
-          </Frame>
-          <Frame gap="2px">
-            <Text.Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
-              Site Settings
-            </Text.Card.Title>
-            <Text.Card.Note style={{ fontSize: 11, color: "var(--text-tertiary)" }}>
-              General, SEO, Analytics
-            </Text.Card.Note>
-          </Frame>
         </Frame>
       </Frame>
-    </Overlay>
-  );
-}
 
-interface ElementButtonProps {
-  icon: React.ElementType;
-  label: string;
-}
+      {/* Content - Hidden when closed */}
+      <Frame
+        flex
+        gap="8px"
+        overflow="scroll"
+        style={{
+          opacity: isOpen ? 1 : 0,
+          transition: "opacity 0.2s",
+          pointerEvents: isOpen ? "auto" : "none",
+          display: isOpen ? "flex" : "none" // Fully hide to prevent layout issues
+        }}
+      >
+        <Frame gap={2} p="0px 8px 8px 8px" row align="center" justify="between">
+          <Frame row gap={2} align="center">
+            <Text.Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
+              SECTIONS
+            </Text.Card.Note>
+            <Action
+              icon={Plus}
+              size="xs" // smallest size
+              variant="ghost"
+              rounded="full"
+              tooltip="Add Section"
+              onClick={() => console.log("Add Section")}
+            />
+          </Frame>
+          <Frame row gap={1} surface="sunken" p="2px" rounded="md">
+            <Action
+              icon={Grid2X2}
+              size={5}
+              variant={viewMode === "thumbnail" ? "surface" : "ghost"}
+              rounded="sm"
+              onClick={() => setViewMode("thumbnail")}
+            />
+            <Action
+              icon={List}
+              size={5}
+              variant={viewMode === "bar" ? "surface" : "ghost"}
+              rounded="sm"
+              onClick={() => setViewMode("bar")}
+            />
+          </Frame>
+        </Frame>
 
-function ElementButton({ icon: Icon, label }: ElementButtonProps) {
-  return (
-    <Frame
-      surface="sunken"
-      p="12px"
-      rounded="lg"
-      align="center"
-      gap="8px"
-      cursor="grab"
-      style={{ border: "1px solid var(--border-color)" }}
-    >
-      <Icon size={20} opacity={0.6} />
-      <Text.Card.Title style={{ fontSize: 12, fontWeight: 500 }}>
-        {label}
-      </Text.Card.Title>
+        <Frame gap={viewMode === "thumbnail" ? "12px" : "4px"}>
+          <LayerItem label="Hero Section" active viewMode={viewMode} />
+          <LayerItem label="Feature Grid" viewMode={viewMode} />
+          <LayerItem label="Testimonials" viewMode={viewMode} />
+          <LayerItem label="Footer" viewMode={viewMode} />
+        </Frame>
+      </Frame>
+
+      {/* Footer Settings */}
+      <Frame
+        row
+        align="center"
+        gap={3}
+        p={3}
+        style={{
+          borderTop: "1px solid var(--border-color)",
+          opacity: isOpen ? 1 : 0,
+          transition: "opacity 0.2s",
+          display: isOpen ? "flex" : "none"
+        }}
+      >
+        <Frame
+          style={{ width: 32, height: 32 }}
+          rounded="full"
+          surface="sunken"
+          pack
+        >
+          <Settings size={16} />
+        </Frame>
+        <Frame gap="2px">
+          <Text.Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
+            Site Settings
+          </Text.Card.Title>
+          <Text.Card.Note style={{ fontSize: 11, color: "var(--text-tertiary)" }}>
+            General, SEO, Analytics
+          </Text.Card.Note>
+        </Frame>
+      </Frame>
     </Frame>
   );
 }
+
+
 
 interface LayerItemProps {
   label: string;

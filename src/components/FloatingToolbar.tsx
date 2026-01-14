@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame";
+import { Overlay } from "../design-system/Overlay";
 import { Separator } from "../design-system/Separator";
 import { useTheme } from "../design-system/theme";
 
@@ -33,43 +34,47 @@ export function FloatingToolbar() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <Frame
+    <Overlay
       position="absolute"
       bottom={5}
-      left="50%"
+      x="50%"
       zIndex={100}
-      row
-      gap={1}
-      surface="base"
-      p={1}
-      rounded="full"
-      shadow="lg"
-      align="center"
-      style={{ transform: "translateX(-50%)", border: "1px solid var(--border-color)" }}
+      style={{ transform: "translateX(-50%)" }}
     >
-      {BOTTOM_TOOLS.map((tool, i) =>
-        tool.separator ? (
-          <Separator key={i} orientation="vertical" length="16px" />
-        ) : (
-          <Action
-            key={i}
-            icon={tool.icon}
-            iconSize={18}
-            variant={tool.variant}
-            rounded="full"
-            tooltip={tool.tooltip}
-            size={6}
-          />
-        ),
-      )}
-      <Action
-        icon={theme === "light" ? Moon : Sun}
-        iconSize={18}
+      <Frame
+        row
+        gap={1}
+        surface="base"
+        p={1}
         rounded="full"
-        onClick={toggleTheme}
-        tooltip="Toggle Theme"
-        size={6}
-      />
-    </Frame>
+        shadow="lg"
+        align="center"
+        style={{ border: "1px solid var(--border-color)" }}
+      >
+        {BOTTOM_TOOLS.map((tool, i) =>
+          tool.separator ? (
+            <Separator key={i} orientation="vertical" length="16px" />
+          ) : (
+            <Action
+              key={i}
+              icon={tool.icon}
+              iconSize={18}
+              variant={tool.variant}
+              rounded="full"
+              tooltip={tool.tooltip}
+              size={6}
+            />
+          ),
+        )}
+        <Action
+          icon={theme === "light" ? Moon : Sun}
+          iconSize={18}
+          rounded="full"
+          onClick={toggleTheme}
+          tooltip="Toggle Theme"
+          size={6}
+        />
+      </Frame>
+    </Overlay>
   );
 }

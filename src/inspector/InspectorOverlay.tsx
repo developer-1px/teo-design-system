@@ -1,5 +1,5 @@
-import { Copy, Lock, Unlock, X, ChevronRight, ChevronDown, Wand2, RefreshCw } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Copy, Lock, Unlock, X, ChevronRight, ChevronDown, RefreshCw } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Action } from "../design-system/Action";
 import { Text } from "../design-system/text/Text.tsx";
@@ -101,6 +101,7 @@ export function InspectorOverlay() {
   const [targetName, setTargetName] = useState<string | null>(null);
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
   const [componentStack, setComponentStack] = useState<ComponentStackItem[]>([]);
+  const [targetProps, setTargetProps] = useState<Record<string, string>>({});
   const [notification, setNotification] = useState<string | null>(null);
 
   const triggerLock = (el: HTMLElement) => {
@@ -136,6 +137,7 @@ export function InspectorOverlay() {
           setTargetRect(null);
           setTargetName(null);
           setTargetElement(null);
+          setTargetProps({});
         } else {
           setIsActive(true);
         }
@@ -149,6 +151,7 @@ export function InspectorOverlay() {
           setIsActive(false);
           setTargetRect(null);
           setTargetElement(null);
+          setTargetProps({});
         }
       }
     };
@@ -282,6 +285,28 @@ export function InspectorOverlay() {
         }
         targetFiber = foundFiber; // Points to the DS Component Fiber (e.g. Action)
 
+        // Prop Extraction
+        const rawProps = targetFiber.memoizedProps || {};
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { children: _children, ...restProps } = rawProps;
+        const displayProps: Record<string, string> = {};
+
+        Object.entries(restProps).forEach(([key, value]) => {
+          if (key.startsWith("_")) return; // internal props
+          if (typeof value === "function") {
+            displayProps[key] = "fn()";
+          } else if (React.isValidElement(value)) {
+            displayProps[key] = "<Element />";
+          } else if (typeof value === "object" && value !== null) {
+            displayProps[key] = Array.isArray(value) ? `[${value.length}]` : "{...}";
+          } else if (value === undefined || value === null) {
+            displayProps[key] = String(value);
+          } else {
+            displayProps[key] = String(value);
+          }
+        });
+        setTargetProps(displayProps);
+
         const rect = hostNode.getBoundingClientRect();
         setTargetRect(rect);
         setTargetElement(hostNode);
@@ -353,6 +378,7 @@ export function InspectorOverlay() {
         setTargetRect(null);
         setTargetName(null);
         setTargetElement(null);
+        setTargetProps({});
       }
     };
 
@@ -469,31 +495,38 @@ export function InspectorOverlay() {
             }}
           >
             {/* Label Tag - Compact */}
-            <Frame
+            <Overlay
               position="absolute"
-              top={targetRect.top < 30 ? "0px" : "-25px"} // Flip inside if no space above
-              left="-1px"
+              y={targetRect.top < 30 ? "0px" : "-25px"} // Flip inside if no space above
+              x="-1px"
+              zIndex={1}
               style={{
-                backgroundColor: "var(--link-color)",
-                borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
-                borderBottomRightRadius:
-                  targetRect.top < 30 ? "4px" : undefined,
+                pointerEvents: "none"
               }}
-              p="0 1.5"
-              rounded="sm"
-              h={5} // 24px
-              row
-              align="center"
-              gap={1}
-              shadow="sm"
             >
-              <Text size={6} weight="bold" style={{ color: "white" }}>
-                {targetName}
-              </Text>
-              <Text size={6} style={{ color: "white", opacity: 0.8 }}>
-                {Math.round(targetRect.width)}×{Math.round(targetRect.height)}
-              </Text>
-            </Frame>
+              <Frame
+                style={{
+                  backgroundColor: "var(--link-color)",
+                  borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
+                  borderBottomRightRadius:
+                    targetRect.top < 30 ? "4px" : undefined,
+                }}
+                p="0 1.5"
+                rounded="sm"
+                h={5} // 24px
+                row
+                align="center"
+                gap={1}
+                shadow="sm"
+              >
+                <Text size={6} weight="bold" style={{ color: "white" }}>
+                  {targetName}
+                </Text>
+                <Text size={6} style={{ color: "white", opacity: 0.8 }}>
+                  {Math.round(targetRect.width)}×{Math.round(targetRect.height)}
+                </Text>
+              </Frame>
+            </Overlay>
           </div>
         )}
       </div>
@@ -504,6 +537,7 @@ export function InspectorOverlay() {
           element={targetElement}
           name={targetName || "Element"}
           stack={componentStack}
+          props={targetProps}
           initialX={initialX}
           initialY={initialY}
           onClose={() => {
@@ -577,6 +611,7 @@ function InspectorPanel({
   element,
   name,
   stack,
+  props,
   initialX,
   initialY,
   onClose,
@@ -585,6 +620,7 @@ function InspectorPanel({
   element: HTMLElement;
   name: string;
   stack: ComponentStackItem[];
+  props: Record<string, string>;
   initialX: number;
   initialY: number;
   onClose: () => void;
@@ -598,41 +634,8 @@ function InspectorPanel({
   const styles = window.getComputedStyle(element);
   const getProp = (key: string) => styles.getPropertyValue(key);
 
-  const properties = [
-    {
-      section: "Layout",
-      items: [
-        { key: "Display", value: getProp("display") },
-        { key: "Pos", value: getProp("position") },
-        { key: "W", value: `${Math.round(element.offsetWidth)}` },
-        { key: "H", value: `${Math.round(element.offsetHeight)}` },
-        { key: "Pad", value: getProp("padding") },
-        { key: "Marg", value: getProp("margin") },
-      ],
-    },
-    {
-      section: "Flex",
-      items: [
-        { key: "Dir", value: getProp("flex-direction") },
-        { key: "Align", value: getProp("align-items") },
-        { key: "Justify", value: getProp("justify-content") },
-        { key: "Gap", value: getProp("gap") },
-        { key: "Wrap", value: getProp("flex-wrap") },
-      ],
-    },
-    {
-      section: "Style",
-      items: [
-        { key: "Bg", value: getProp("background-color") },
-        { key: "Color", value: getProp("color") },
-        { key: "Radius", value: getProp("border-radius") },
-        {
-          key: "Font",
-          value: `${getProp("font-size")} ${getProp("font-family").split(",")[0]}`,
-        },
-      ],
-    },
-  ];
+  // DOM Properties Removed as per request
+  const properties: { section: string; items: { key: string; value: string }[] }[] = [];
 
   // Additional Section for Hierarchy
   if (stack && stack.length > 0) {
@@ -645,14 +648,22 @@ function InspectorPanel({
     });
   }
 
-  // State
-  const [showDetails, setShowDetails] = useState(false);
-  const [randomPrompts, setRandomPrompts] = useState<{ label: string, prompt: string }[]>([]);
+  // React Props Section (Priority)
+  if (Object.keys(props).length > 0) {
+    properties.unshift({
+      section: "React Props",
+      items: Object.entries(props).map(([key, value]) => ({
+        key,
+        value,
+      })),
+    });
+  }
 
-  // Initialize random prompts on mount
-  useEffect(() => {
-    setRandomPrompts(getRandomPrompts(5));
-  }, []);
+  // State
+  const [showAiAssist, setShowAiAssist] = useState(false);
+  const [randomPrompts, setRandomPrompts] = useState<{ label: string, prompt: string }[]>(() => getRandomPrompts(5));
+
+
 
   const handlePromptClick = (prompt: string) => {
     const clone = element.cloneNode(true) as HTMLElement;
@@ -668,8 +679,7 @@ function InspectorPanel({
   };
 
   // Filter
-  const hasFlex =
-    getProp("display").includes("flex") || getProp("display").includes("grid");
+  const hasFlex = getProp("display").includes("flex") || getProp("display").includes("grid");
 
   const handleCopy = () => {
     const clone = element.cloneNode(true) as HTMLElement;
@@ -710,6 +720,9 @@ function InspectorPanel({
     };
   }, []);
 
+  // Determine Title
+  const title = stack.length > 0 ? stack[0].name : "Element";
+
   return (
     <Overlay
       position="fixed"
@@ -743,7 +756,7 @@ function InspectorPanel({
           <Frame row align="center" gap={1.5}>
             <Lock size={10} className="text-primary" />
             <Text weight="bold" size={5}>
-              {name}
+              {title}
             </Text>
           </Frame>
           <Frame row gap={0.5}>
@@ -774,65 +787,65 @@ function InspectorPanel({
 
         {/* Content - Compact */}
         <Frame p="2 0" overflow="auto">
-          {/* AI Assist Section (Always Visible) */}
+          {/* File Path Subtitle */}
+          <Frame p="0 2 2 2">
+            <Text size={7} color="tertiary" style={{ wordBreak: "break-all" }}>
+              {name}
+            </Text>
+          </Frame>
+
+          {/* AI Assist Section (Collapsible) */}
           <Frame gap={0.5} p="0 2 2 2">
             <Frame row align="center" justify="between">
-              <Frame row align="center" gap={1}>
-                <Wand2 size={10} className="text-tertiary" />
-                <Text
-                  weight="bold"
-                  size={6}
-                  color="tertiary"
-                  style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
-                >
-                  AI Assist
-                </Text>
-              </Frame>
               <Action
-                icon={RefreshCw}
                 variant="ghost"
-                size={4}
-                iconSize={10}
-                tooltip="새로운 제안 보기"
-                onClick={() => setRandomPrompts(getRandomPrompts(5))}
+                size={5}
+                icon={showAiAssist ? ChevronDown : ChevronRight}
+                label="AI Assist"
+                onClick={() => setShowAiAssist(!showAiAssist)}
+                style={{ width: "100%", justifyContent: "flex-start", color: "var(--text-tertiary)" }}
               />
-            </Frame>
-            <Frame gap={0.5}>
-              {randomPrompts.map((item) => (
+              {showAiAssist && (
                 <Action
-                  key={item.label}
-                  size={5}
+                  icon={RefreshCw}
                   variant="ghost"
-                  justify="start"
-                  label={item.label}
-                  onClick={() => handlePromptClick(item.prompt)}
-                  style={{
-                    width: "100%",
-                    justifyContent: "flex-start",
-                    textAlign: "left"
+                  size={4}
+                  iconSize={10}
+                  tooltip="새로운 제안 보기"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setRandomPrompts(getRandomPrompts(5));
                   }}
                 />
-              ))}
+              )}
             </Frame>
+
+            {showAiAssist && (
+              <Frame gap={0.5} p="0 0 0 2">
+                {randomPrompts.map((item) => (
+                  <Action
+                    key={item.label}
+                    size={5}
+                    variant="ghost"
+                    justify="start"
+                    label={item.label}
+                    onClick={() => handlePromptClick(item.prompt)}
+                    style={{
+                      width: "100%",
+                      justifyContent: "flex-start",
+                      textAlign: "left"
+                    }}
+                  />
+                ))}
+              </Frame>
+            )}
           </Frame>
 
-          {/* Details Toggle */}
-          <Frame p="0 2" row align="center">
-            <Action
-              variant="ghost"
-              size={5}
-              icon={showDetails ? ChevronDown : ChevronRight}
-              label={showDetails ? "Hide Details" : "Show Details"}
-              onClick={() => setShowDetails(!showDetails)}
-              style={{ width: "100%", justifyContent: "flex-start", color: "var(--text-tertiary)" }}
-            />
-          </Frame>
-
-          {/* Properties & Hierarchy (Collapsible) */}
-          {showDetails && properties.map((section) => {
+          {/* Properties & Hierarchy (Always Visible now or simplified) */}
+          {properties.map((section) => {
             if (section.section === "Flex" && !hasFlex) return null;
             return (
-              <Frame key={section.section} gap={0.5} p="2 2 0 2">
+              <Frame key={section.section} gap={0.5} p="0 2 2 2">
                 <Text
                   weight="bold"
                   size={6}
@@ -864,7 +877,7 @@ function InspectorPanel({
                         size={6}
                         mono
                         style={{
-                          maxWidth: "110px",
+                          maxWidth: "140px",
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",

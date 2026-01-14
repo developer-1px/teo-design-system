@@ -19,10 +19,13 @@ export function TextSystemApp() {
 
                 {/* Floating Experience Switcher */}
                 <Frame
-                    position="fixed"
-                    top={24}
-                    style={{ left: "50%", transform: "translateX(-50%)" }}
-                    zIndex={100}
+                    style={{
+                        position: "fixed",
+                        top: 24,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        zIndex: 100
+                    }}
                     surface="raised"
                     shadow="lg"
                     rounded="full"

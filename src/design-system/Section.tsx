@@ -41,6 +41,7 @@ export function Section({
 
   return (
     <Frame
+      as="section"
       surface="base"
       {...props}
       p={0} // Force zero padding so children/separators can hit edges

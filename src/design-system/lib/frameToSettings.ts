@@ -56,10 +56,7 @@ export function frameToSettings(props: FrameProps): { className: string; style: 
         classes.push(`surface-${props.surface}`);
     }
 
-    // --- Position Classes ---
-    if (props.position) {
-        classes.push(props.position);
-    }
+
 
     // --- Overflow ---
     if (props.overflow) {

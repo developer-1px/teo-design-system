@@ -2,7 +2,12 @@ import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 
-export function SiteHeader() {
+export interface SiteHeaderProps {
+  isSidebarOpen?: boolean;
+  onToggleSidebar?: () => void;
+}
+
+export function SiteHeader({ isSidebarOpen: _isSidebarOpen, onToggleSidebar: _onToggleSidebar }: SiteHeaderProps) {
   return (
     <Frame
       w="100%"

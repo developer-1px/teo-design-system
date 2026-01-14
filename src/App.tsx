@@ -40,15 +40,14 @@ function NavItem({ to, label }: { to: string; label: string }) {
 function Navigation() {
   return (
     <Frame
-      position="fixed"
-      zIndex={9999}
+
       surface="raised"
       rounded="full"
       shadow="xl"
       p={1}
       row
       gap={1}
-      style={{ bottom: 20, left: 20 }}
+      style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
     >
       <NavItem to="/" label="Home" />
       <NavItem to="/text" label="Text" />

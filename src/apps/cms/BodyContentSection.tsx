@@ -56,9 +56,7 @@ export function BodyContentSection() {
             style={{ position: "relative" }}
           >
             <Frame
-              position="absolute"
-              top="40px"
-              left="-40px"
+              style={{ position: "absolute", top: "40px", left: "-40px" }}
               w={45}
               h={45}
               surface="raised"
@@ -74,9 +72,7 @@ export function BodyContentSection() {
               </Frame>
             </Frame>
             <Frame
-              position="absolute"
-              bottom="40px"
-              right="-40px"
+              style={{ position: "absolute", bottom: "40px", right: "-40px" }}
               w={55}
               h={55}
               surface="raised"

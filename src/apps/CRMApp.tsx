@@ -501,17 +501,17 @@ function Drawer({
 
     return (
         <Frame
-            position="absolute"
-            top={0}
-            right={0}
-            bottom={0}
             style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                bottom: 0,
                 width: 600,
                 backgroundColor: "var(--surface-base)",
                 boxShadow: "var(--shadow-lg)",
                 borderLeft: "1px solid var(--border-color)",
+                zIndex: 100,
             }}
-            zIndex={100}
             flex
         >
             {/* Drawer Header */}
