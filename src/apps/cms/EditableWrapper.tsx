@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Space, Size } from "../../design-system/token/token.const.1tier";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Overlay } from "../../design-system/Overlay";
@@ -38,7 +39,7 @@ export function EditableWrapper({
       {isHovered && (
         <Overlay position="absolute" y={-10} x={-2} zIndex={50}>
           <Frame
-            override={{ p: "0 1.5", rounded: "sm", h: 4 }}
+            override={{ py: Space.n0, px: Space.n6, rounded: "sm", h: Size.n4 }}
             surface="primary"
             pack
           >

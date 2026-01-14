@@ -5,7 +5,7 @@ import { Action } from "../design-system/Action";
 import { Monitor, FileText, Globe } from "lucide-react";
 import { Text } from "../design-system/text/Text";
 import { Icon } from "../design-system/Icon";
-import { IconSize, Space } from "../design-system/token/token.const.1tier";
+import { IconSize, Space, Size } from "../design-system/token/token.const.1tier";
 
 /* 
   Text System Showcase
@@ -36,7 +36,7 @@ export function TextSystemApp() {
             },
             shadow: "lg",
             rounded: "full",
-            p: 1,
+            p: Space.n4,
             gap: Space.n4,
           }}
           surface="raised"
@@ -65,19 +65,19 @@ export function TextSystemApp() {
         {/* Section 0: Text System Intro (1-Column Layout) */}
         <Frame
           override={{
-            w: "100%",
-            h: "100vh",
+            w: Size.full,
+            h: Size.screen,
             style: { scrollSnapAlign: "start" },
-            p: 10,
+            p: Space.n40,
           }}
           align="center"
           justify="center"
           surface="base"
         >
-          <Frame override={{ gap: Space.n32, maxWidth: "800px" }} align="center">
+          <Frame override={{ gap: Space.n32, style: { maxWidth: "var(--container-n800)" } }} align="center">
             <Frame
               override={{
-                p: 4,
+                p: Space.n16,
                 rounded: "3xl",
                 style: {
                   background:
@@ -128,11 +128,12 @@ export function TextSystemApp() {
                 <Frame override={{ gap: Space.n8 }} key={i} row align="center">
                   <Frame
                     override={{
-                      p: "4 6",
+                      py: Space.n16,
+                      px: Space.n24,
                       rounded: "xl",
                       shadow: "sm",
                       gap: Space.n4,
-                      w: "160px",
+                      w: Size.n160,
                     }}
                     surface="raised"
                   >
@@ -152,9 +153,7 @@ export function TextSystemApp() {
                   {i < 3 && (
                     <Frame
                       override={{
-                        h: "2px",
-                        w: "20px",
-                        style: { background: "var(--border-color)" },
+                        style: { height: "2px", background: "var(--border-color)" },
                       }}
                     />
                   )}
@@ -174,7 +173,7 @@ export function TextSystemApp() {
   Scales automatically with Experience.
 </Text.Prose.Body>`}
         >
-          <Frame override={{ gap: Space.n24, maxWidth: "600px" }}>
+          <Frame override={{ gap: Space.n24, style: { maxWidth: "600px" } }}>
             <Text.Prose.Title>Context: Prose</Text.Prose.Title>
             <Text.Prose.Body>
               The <strong>Prose</strong> context is designed for continuous
@@ -198,7 +197,7 @@ export function TextSystemApp() {
         <ShowcaseSection
           title="Context: Card"
           description="Compact, summarized information blocks."
-          code={`<Frame override={{ p: 6, rounded: "xl" }} surface="raised"   border>
+          code={`<Frame override={{ p: Space.n24, rounded: "xl" }} surface="raised"   border>
   <Text.Card.Title>Project Alpha</Text.Card.Title>
   <Text.Card.Desc>
     High-priority infrastructure migration.
@@ -209,10 +208,10 @@ export function TextSystemApp() {
           <Frame override={{ gap: Space.n32 }} row wrap="wrap" justify="center">
             <Frame
               override={{
-                p: 6,
+                p: Space.n24,
                 rounded: "xl",
                 gap: Space.n12,
-                w: "320px",
+                w: Size.n320,
                 shadow: "sm",
                 style: { border: "1px solid var(--border-color)" },
               }}
@@ -220,8 +219,8 @@ export function TextSystemApp() {
             >
               <Frame
                 override={{
-                  w: "40px",
-                  h: "40px",
+                  w: Size.n40,
+                  h: Size.n40,
                   rounded: "lg",
                   style: { marginBottom: "var(--space-2)" },
                 }}
@@ -250,10 +249,10 @@ export function TextSystemApp() {
 
             <Frame
               override={{
-                p: 6,
+                p: Space.n24,
                 rounded: "xl",
                 gap: Space.n12,
-                w: "320px",
+                w: Size.n320,
                 shadow: "sm",
                 style: { border: "1px solid var(--border-color)" },
               }}
@@ -261,8 +260,8 @@ export function TextSystemApp() {
             >
               <Frame
                 override={{
-                  w: "40px",
-                  h: "40px",
+                  w: Size.n40,
+                  h: Size.n40,
                   rounded: "lg",
                   style: { marginBottom: "var(--space-2)" },
                 }}
@@ -300,12 +299,10 @@ export function TextSystemApp() {
         >
           <Frame
             override={{
-              p: 8,
+              p: Space.n32,
               rounded: "2xl",
               gap: Space.n24,
-              w: "400px",
-              shadow: "md",
-              style: { border: "1px solid var(--border-color)" },
+              style: { width: "400px", border: "1px solid var(--border-color)" },
             }}
             surface="raised"
           >
@@ -318,7 +315,7 @@ export function TextSystemApp() {
                 <Text.Field.Label>Display Name</Text.Field.Label>
                 <Frame
                   override={{
-                    h: "32px",
+                    h: Size.n32,
                     rounded: "md",
                     style: {
                       paddingLeft: "var(--space-3)",
@@ -339,7 +336,7 @@ export function TextSystemApp() {
                 <Text.Field.Label>Email Address</Text.Field.Label>
                 <Frame
                   override={{
-                    h: "32px",
+                    h: Size.n32,
                     rounded: "md",
                     style: {
                       paddingLeft: "var(--space-3)",
@@ -363,9 +360,9 @@ export function TextSystemApp() {
                 <Text.Field.Label>Bio</Text.Field.Label>
                 <Frame
                   override={{
-                    h: "80px",
+                    h: Size.n80,
                     rounded: "md",
-                    p: 3,
+                    p: Space.n12,
                     style: { border: "1px solid var(--border-color)" },
                   }}
                   surface="sunken"
@@ -392,7 +389,7 @@ export function TextSystemApp() {
         <ShowcaseSection
           title="Context: Table"
           description="Tabular data with clear hierarchy between heads and cells."
-          code={`<Frame override={{ p: 3 }} row border="bottom" >
+          code={`<Frame override={{ p: Space.n12 }} row border="bottom" >
   <Text.Table.Head>Name</Text.Table.Head>
   <Text.Table.Head>Role</Text.Table.Head>
 </Frame>
@@ -404,17 +401,16 @@ export function TextSystemApp() {
           <Frame
             override={{
               rounded: "xl",
-              w: "100%",
-              maxWidth: "800px",
-              shadow: "sm",
-              style: { border: "1px solid var(--border-color)" },
+              w: Size.full,
+              style: { maxWidth: "var(--container-n800)", border: "1px solid var(--border-color)" },
             }}
             surface="raised"
             overflow="hidden"
           >
             <Frame
               override={{
-                p: "3 4",
+                py: Space.n12,
+                px: Space.n16,
                 style: { borderBottom: "1px solid var(--border-color)" },
               }}
               row
@@ -465,7 +461,8 @@ export function TextSystemApp() {
             ].map((user, i) => (
               <Frame
                 override={{
-                  p: "3 4",
+                  py: Space.n12,
+                  px: Space.n16,
                   style: { borderBottom: "1px solid var(--border-color)" },
                 }}
                 key={i}
@@ -487,7 +484,8 @@ export function TextSystemApp() {
                 <Frame flex={1}>
                   <Frame
                     override={{
-                      p: "0.5 2",
+                      py: Space.n2,
+                      px: Space.n8,
                       rounded: "full",
                       style: {
                         display: "inline-flex",
@@ -533,12 +531,8 @@ export function TextSystemApp() {
             {/* Sidebar Menu Style */}
             <Frame
               override={{
-                w: "240px",
-                h: "400px",
-                rounded: "2xl",
-                p: 4,
-                gap: Space.n8,
-                style: { border: "1px solid var(--border-color)" },
+                w: Size.n240,
+                style: { height: "400px", border: "1px solid var(--border-color)" },
               }}
               surface="sunken"
             >
@@ -547,7 +541,7 @@ export function TextSystemApp() {
               <MenuItem>Analytics</MenuItem>
               <MenuItem>Projects</MenuItem>
 
-              <Frame override={{ h: 4 }} />
+              <Frame override={{ h: Size.n4 }} />
 
               <Text.Menu.Group>Settings</Text.Menu.Group>
               <MenuItem>Team</MenuItem>
@@ -558,9 +552,9 @@ export function TextSystemApp() {
             {/* Context Menu Style */}
             <Frame
               override={{
-                w: "220px",
+                w: Size.n224,
                 rounded: "xl",
-                p: 1,
+                p: Space.n4,
                 shadow: "lg",
                 style: { border: "1px solid var(--border-color)" },
               }}
@@ -571,8 +565,7 @@ export function TextSystemApp() {
               <MenuItem>Duplicate</MenuItem>
               <Frame
                 override={{
-                  h: "1px",
-                  style: { marginBlock: "var(--space-1)" },
+                  style: { height: "1px", marginBlock: "var(--space-1)" },
                 }}
                 surface="base"
               />
@@ -599,7 +592,8 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
           cursor: "pointer",
           transition: "all 0.2s",
         },
-        p: "2 4",
+        py: Space.n8,
+        px: Space.n16,
         rounded: "full",
         gap: Space.n8,
       }}
@@ -617,17 +611,14 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
 function ShowcaseSection({ title, description, code, children }: any) {
   return (
     <Frame
-      override={{ w: "100%", h: "100vh", style: { scrollSnapAlign: "start" } }}
+      override={{ w: Size.full, h: Size.screen, style: { scrollSnapAlign: "start" } }}
       row
       overflow="hidden"
     >
       {/* Left: Code & Context */}
       <Frame
         override={{
-          w: "35%",
-          p: 10,
-          gap: Space.n32,
-          style: { borderRight: "1px solid var(--border-color)" },
+          style: { width: "35%", borderRight: "1px solid var(--border-color)" },
         }}
         surface="sunken"
         justify="center"
@@ -643,7 +634,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
 
         <Frame
           override={{
-            p: 6,
+            p: Space.n24,
             rounded: "xl",
             style: {
               border: "1px solid var(--border-color)",
@@ -682,7 +673,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
 function MenuItem({ children, active, style, ...props }: any) {
   return (
     <Frame
-      override={{ p: "2 3", rounded: "lg" }}
+      override={{ py: Space.n8, px: Space.n12, rounded: "lg" }}
       surface={active ? "selected" : "hover"}
       cursor="pointer"
       {...props}

@@ -27,6 +27,145 @@ This is a **minimal design system kit** demonstrating a refined, polished UI com
 
 The design system is located in `src/design-system/` and follows a **token-driven, prop-based component API**. All components use a consistent design token system defined in `tokens.css`.
 
+### MDK Core Architecture: 3-Tier Intent System
+
+**CRITICAL**: MDK uses a universal **3-Tier Intent System** as the foundational pattern for all component specifications. This is the consistent methodology for defining every component in the design system.
+
+#### 3-Tier Structure
+
+```
+Tier 1: Primitive (Container)
+   ↓
+Tier 2: Intent (Purpose/Why)
+   ↓
+Tier 3: Component (Implementation/How)
+```
+
+**Pattern**: `Primitive.{Intent}.{Component}`
+
+#### Philosophy: "Intent First, Props Follow"
+
+Every component specification must answer three questions in order:
+
+1. **WHY** does this exist? → Define Intent
+2. **WHAT** value does it provide? → Map Intent to capabilities
+3. **HOW** is it implemented? → Create Components
+
+#### Field Example
+
+```tsx
+// Tier 1: Primitive
+<Field name="email">
+
+  {/* Tier 2: Intent - Guidance (Why: User needs to know what to enter) */}
+  <Field.Guidance>
+    <Field.Label>Email</Field.Label>
+    <Field.Description>For login purposes</Field.Description>
+  </Field.Guidance>
+
+  {/* Tier 2: Intent - Control (Why: User needs to input data) */}
+  <Field.Control>
+    <Input />
+  </Field.Control>
+
+  {/* Tier 2: Intent - Validation (Why: Data must be correct) */}
+  <Field.Validation schema={emailSchema} />
+
+  {/* Tier 2: Intent - Feedback (Why: User needs to know if input is valid) */}
+  <Field.Feedback>
+    <Field.Error />
+  </Field.Feedback>
+
+</Field>
+```
+
+#### Action Example
+
+```tsx
+// Tier 1: Primitive
+<Action onClick={handleSave}>
+
+  {/* Tier 2: Intent - State (Why: User needs to know loading status) */}
+  <Action.State loading={isSaving} />
+
+  {/* Tier 2: Intent - Confirmation (Why: Prevent accidental actions) */}
+  <Action.Confirmation message="Save changes?" />
+
+  {/* Tier 2: Intent - Feedback (Why: User needs to know outcome) */}
+  <Action.Feedback>
+    <Action.Success message="Saved!" />
+  </Action.Feedback>
+
+  <Button>Save</Button>
+</Action>
+```
+
+#### 6 Core Intents
+
+**Field Intents**:
+1. **Guidance** - Guide user on what to enter (label, description, placeholder)
+2. **Control** - Provide input mechanism (Input, Select, Textarea, custom UI)
+3. **Validation** - Ensure data correctness (schema, rules, triggers)
+4. **Feedback** - Show validation results (error, success, warning)
+5. **State** - Manage field state (value, touched, dirty, valid)
+6. **Transform** - Convert data format (format, parse, sanitize)
+
+**Action Intents**:
+1. **Handler** - Define action behavior (onClick, async handling)
+2. **State** - Manage action state (loading, disabled, pending)
+3. **Confirmation** - Request user confirmation (dialog, message)
+4. **Feedback** - Show action results (success, error, progress)
+5. **Prevention** - Prevent unwanted execution (once, debounce, throttle)
+6. **Lifecycle** - Hook into action phases (onStart, onSuccess, onError)
+
+#### Progressive Enhancement: 3 Usage Levels
+
+The 3-Tier system supports progressive complexity:
+
+**Level 1: Simple** (Props-based, Intent hidden)
+```tsx
+<Field name="email" label="Email" validate={schema}>
+  <Input />
+</Field>
+```
+
+**Level 2: Structured** (Intent groups visible)
+```tsx
+<Field name="email">
+  <Field.Guidance label="Email" />
+  <Field.Validation schema={schema} />
+  <Field.Control><Input /></Field.Control>
+</Field>
+```
+
+**Level 3: Explicit** (Full Intent + Component control)
+```tsx
+<Field name="email">
+  <Field.Guidance>
+    <Field.Label>Email</Field.Label>
+    <Field.Description>Login credentials</Field.Description>
+  </Field.Guidance>
+  <Field.Control><CustomInput /></Field.Control>
+  <Field.Validation><Field.Schema value={schema} /></Field.Validation>
+  <Field.Feedback><Field.Error /></Field.Feedback>
+</Field>
+```
+
+#### 5 Design Principles
+
+1. **Intent Visibility** - API structure reveals WHY components exist
+2. **Progressive Enhancement** - Start simple, add complexity as needed
+3. **Default Composition** - Auto-render sensible defaults, allow overrides
+4. **Context Inheritance** - Child components inherit parent Intent contexts
+5. **Intent Independence** - Each Intent works standalone, order-agnostic
+
+#### Documentation Reference
+
+Complete 3-Tier specification details:
+- `docs/claude/13-field-action-purpose-definition.md` - Intent philosophy and WHY-first approach
+- `docs/claude/14-field-action-three-tier-structure.md` - Complete 3-Tier structure tables and examples
+- `.agent/conventions.md` - Implementation conventions and guidelines
+
 ### Core Components
 
 **Layout & Structure:**

@@ -43,16 +43,33 @@ export function Section({
     computedBorder[key] = "1px solid var(--border-color)";
   }
 
+
+  const resolveSizingProp = (val: string | number | undefined) => {
+    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+      return val as any;
+    }
+    return undefined;
+  };
+  const resolveSizingStyle = (val: string | number | undefined) => {
+    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+      return undefined;
+    }
+    if (typeof val === "number") return `${val}px`;
+    return val;
+  };
+
   return (
     <Frame
       override={{
-        p: 0,
-        w,
-        h,
+        p: Space.n0,
+        w: resolveSizingProp(w),
+        h: resolveSizingProp(h),
         flex,
         rounded,
         shadow,
         style: {
+          width: resolveSizingStyle(w),
+          height: resolveSizingStyle(h),
           ...computedBorder,
           overflow: "hidden",
           position: "relative",
@@ -70,7 +87,7 @@ export function Section({
         <Frame
           override={{
             gap: Space.n8,
-            p: 2,
+            p: Space.n8,
             style: {
               borderBottom: "1px solid var(--border-color)",
               flexShrink: 0,

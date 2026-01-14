@@ -14,7 +14,7 @@ import { Frame } from "../../design-system/Frame";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Overlay } from "../../design-system/Overlay";
 import { Icon } from "../../design-system/Icon";
-import { IconSize } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size } from "../../design-system/token/token.const.1tier";
 
 export function TopCenterBar() {
   return (
@@ -28,7 +28,7 @@ export function TopCenterBar() {
     >
       <Frame row align="center">
         <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
-        <Frame override={{ w: 0.5, h: 4 }} surface="overlay" />
+        <Frame override={{ style: { width: "0.5px" }, h: Size.n4 }} surface="overlay" />
         <Frame
           override={{ gap: Space.n8, style: { padding: "0 8px" } }}
           row
@@ -44,7 +44,7 @@ export function TopCenterBar() {
             <Icon src={ChevronDown} size={IconSize.n12} style={{ opacity: 0.5 }} />
           </Frame>
         </Frame>
-        <Frame override={{ w: 0.5, h: 4 }} surface="overlay" />
+        <Frame override={{ style: { width: "0.5px" }, h: Size.n4 }} surface="overlay" />
         <Action icon={Play} variant="ghost" size="sm" rounded="full" />
       </Frame>
     </Overlay>
@@ -63,14 +63,14 @@ export function TopRightBar() {
     >
       <Frame override={{ gap: Space.n8 }} row align="center">
         <Frame
-          override={{ gap: Space.n4, p: 1, rounded: "full", shadow: "lg" }}
+          override={{ gap: Space.n4, p: Space.n4, rounded: "full", shadow: "lg" }}
           row
           surface="raised"
         >
-          <Frame override={{ p: 1.5, rounded: "full" }}>
+          <Frame override={{ p: Space.n6, rounded: "full" }}>
             <Icon src={Moon} size={IconSize.n16} />
           </Frame>
-          <Frame override={{ p: 1.5, rounded: "full" }}>
+          <Frame override={{ p: Space.n6, rounded: "full" }}>
             <Icon src={Bell} size={IconSize.n16} />
           </Frame>
         </Frame>
@@ -104,7 +104,7 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
     >
       <Frame
         override={{
-          p: 2,
+          p: Space.n8,
           rounded: "full",
           style: { border: "1px solid var(--border-color)" },
           shadow: "lg",

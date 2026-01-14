@@ -1,5 +1,6 @@
 import type React from "react";
 import { Frame } from "./Frame";
+import { Space, Size } from "./token/token.const.1tier";
 import type { FrameProps } from "./lib/props.ts";
 
 
@@ -76,14 +77,31 @@ export function ProseDocument({
   gap = 4,
   ...props
 }: ProseDocumentProps) {
+
+  const resolveSizingProp = (val: string | number | undefined) => {
+    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+      return val as any;
+    }
+    return undefined;
+  };
+  const resolveSizingStyle = (val: string | number | undefined) => {
+    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+      return undefined;
+    }
+    if (typeof val === "number") return `${val}px`;
+    return val;
+  };
+
   return (
     <Frame
       override={{
-        w: "100%",
-        maxWidth: maxWidth,
+        w: Size.full,
+        maxWidth: resolveSizingProp(maxWidth),
         gap: gap as any,
-        p: "0 6",
+        py: Space.n0,
+        px: Space.n24,
         style: {
+          maxWidth: resolveSizingStyle(maxWidth),
           marginLeft: "auto",
           marginRight: "auto",
           ...style,
@@ -103,7 +121,7 @@ export function ProseSection({
   contentGap,
   layout = "centered",
   p = "24 0",
-  w = "100%",
+  w = Size.full,
   ...props
 }: Omit<React.ComponentProps<typeof Frame>, "layout" | "p" | "w"> & {
   maxWidth?: number | string;

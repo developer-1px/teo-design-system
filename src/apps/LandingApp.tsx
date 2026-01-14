@@ -10,7 +10,7 @@ import {
   MousePointerClick,
 } from "lucide-react";
 import { Action } from "../design-system/Action";
-import { Space } from "../design-system/token/token.const.1tier";
+import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame";
 import { Text } from "../design-system/text/Text";
@@ -20,11 +20,12 @@ import { IconSize } from "../design-system/token/token.const.1tier";
 export function LandingApp() {
   return (
     <Experience value="landing">
-      <Frame override={{ p: 0 }} fill surface="base" overflow="auto">
+      <Frame override={{ p: Space.n0 }} fill surface="base" overflow="auto">
         {/* Navigation */}
         <Frame
           override={{
-            p: "5 6",
+            py: Space.n20,
+            px: Space.n24,
             style: {
               position: "sticky",
               top: 0,
@@ -45,10 +46,11 @@ export function LandingApp() {
         </Frame>
 
         {/* Hero Section */}
-        <Frame override={{ p: "30 6", gap: Space.n24 }} align="center">
+        <Frame override={{ py: Space.n128, px: Space.n24, gap: Space.n24 }} align="center">
           <Frame
             override={{
-              p: "1 3",
+              py: Space.n4,
+              px: Space.n12,
               rounded: "full",
               style: { border: "1px solid var(--border-color)" },
               gap: Space.n8,
@@ -85,9 +87,9 @@ export function LandingApp() {
             components crafted for modern web applications.
           </Text.Prose.Body>
 
-          <Frame override={{ gap: Space.n12, p: "8 0 0 0" }} row justify="center">
+          <Frame override={{ gap: Space.n12, pt: Space.n32, px: Space.n0, pb: Space.n0 }} row justify="center">
             {/* Main CTA */}
-            <Action variant="primary" rounded="full" p="3 5" gap={2}>
+            <Action variant="primary" rounded="full" py={Space.n12} px={Space.n20} gap={Space.n8}>
               <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>
                 Get Started
               </Text.Menu.Item>
@@ -95,7 +97,7 @@ export function LandingApp() {
             </Action>
 
             {/* Secondary CTA */}
-            <Action variant="surface" rounded="full" p="3 5" gap={2} border>
+            <Action variant="surface" rounded="full" py={Space.n12} px={Space.n20} gap={Space.n8} border>
               <Text.Menu.Item
                 style={{ color: "var(--text-secondary)", fontWeight: 600 }}
               >
@@ -106,7 +108,7 @@ export function LandingApp() {
         </Frame>
 
         {/* Why Section */}
-        <Frame override={{ gap: Space.n24, p: "24 6" }} align="center">
+        <Frame override={{ gap: Space.n24, py: Space.n96, px: Space.n24 }} align="center">
           <Text.Prose.Title variant="lg" style={{ textAlign: "center" }}>
             왜 만들었는가?
           </Text.Prose.Title>
@@ -134,8 +136,8 @@ export function LandingApp() {
         </Frame>
 
         {/* Features Grid */}
-        <Frame override={{ p: "24 6", gap: Space.n48 }}>
-          <Frame override={{ gap: Space.n16, p: "0 0 8 0" }} align="center">
+        <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n48 }}>
+          <Frame override={{ gap: Space.n16, pb: Space.n32, pt: Space.n0, px: Space.n0 }} align="center">
             <Text.Prose.Title variant="lg">
               Everything you need
             </Text.Prose.Title>
@@ -200,10 +202,10 @@ export function LandingApp() {
         </Frame>
 
         {/* Footer */}
-        <Frame override={{ p: "24 6", gap: Space.n16 }}>
-          <Frame override={{ h: "1px", w: "100%" }} surface="sunken" />
+        <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n16 }}>
+          <Frame override={{ style: { height: "1px" }, w: Size.full }} surface="sunken" />
           <Frame
-            override={{ p: "8 0 0 0" }}
+            override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
             row
             justify="between"
             align="center"
@@ -241,7 +243,7 @@ function FeatureCard({
   return (
     <Frame
       override={{
-        p: 6,
+        p: Space.n24,
         rounded: "2xl",
         style: { border: "1px solid var(--border-color)" },
         gap: Space.n16,
@@ -250,8 +252,8 @@ function FeatureCard({
     >
       <Frame
         override={{
-          w: 8,
-          h: 8,
+          w: Size.n8,
+          h: Size.n8,
           rounded: "xl",
           style: { border: "1px solid var(--border-color)" },
           shadow: "sm",

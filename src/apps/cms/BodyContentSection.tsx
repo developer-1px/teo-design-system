@@ -3,14 +3,15 @@ import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
-import { IconSize } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size } from "../../design-system/token/token.const.1tier";
 
 export function BodyContentSection() {
   return (
     <Frame
       override={{
-        w: "100%",
-        p: "24 6",
+        w: Size.full,
+        py: Space.n96,
+        px: Space.n24,
         style: { borderBottom: "1px solid var(--border-color)" },
       }}
       surface="sunken"
@@ -18,14 +19,13 @@ export function BodyContentSection() {
       <Frame
         override={{
           gap: Space.n24,
-          w: "100%",
-          maxWidth: 1280,
-          style: { margin: "0 auto" },
+          w: Size.full,
+          style: { maxWidth: 1280, margin: "0 auto" },
         }}
         row
         align="center"
       >
-        <Frame override={{ w: "50%", gap: Space.n8 }}>
+        <Frame override={{ style: { width: "50%" }, gap: Space.n8 }}>
           <Frame override={{ gap: Space.n4 }}>
             <Text.Card.Note
               style={{
@@ -62,8 +62,8 @@ export function BodyContentSection() {
         <Frame flex pack>
           <Frame
             override={{
-              w: 100,
-              h: 125,
+              w: Size.n96,
+              h: Size.n128,
               rounded: "3xl",
               shadow: "2xl",
               style: { position: "relative" },
@@ -73,11 +73,11 @@ export function BodyContentSection() {
             <Frame
               override={{
                 style: { position: "absolute", top: "40px", left: "-40px" },
-                w: 45,
-                h: 45,
+                w: Size.n44,
+                h: Size.n44,
                 rounded: "2xl",
                 shadow: "lg",
-                p: 6,
+                p: Space.n24,
                 gap: Space.n16,
               }}
               surface="raised"
@@ -85,11 +85,11 @@ export function BodyContentSection() {
               <Icon src={Zap} size={IconSize.n32} style={{ color: "var(--color-warning)" }} />
               <Frame override={{ gap: Space.n8 }}>
                 <Frame
-                  override={{ h: 10, w: "100%", rounded: "full" }}
+                  override={{ h: Size.n12, w: Size.full, rounded: "full" }}
                   surface="overlay"
                 />
                 <Frame
-                  override={{ h: 10, w: "60%", rounded: "full" }}
+                  override={{ h: Size.n12, style: { width: "60%" }, rounded: "full" }}
                   surface="overlay"
                 />
               </Frame>
@@ -97,11 +97,11 @@ export function BodyContentSection() {
             <Frame
               override={{
                 style: { position: "absolute", bottom: "40px", right: "-40px" },
-                w: 55,
-                h: 55,
+                w: Size.n56,
+                h: Size.n56,
                 rounded: "2xl",
                 shadow: "lg",
-                p: 6,
+                p: Space.n24,
                 gap: Space.n16,
               }}
               surface="raised"
@@ -110,16 +110,16 @@ export function BodyContentSection() {
               <Frame override={{ gap: Space.n8 }}>
                 <Frame override={{ gap: Space.n2 }} row align="center">
                   <Frame
-                    override={{ w: 6, h: 6, rounded: "full" }}
+                    override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
                     surface="overlay"
                   />
                   <Frame
-                    override={{ h: 2, w: 25, rounded: "full" }}
+                    override={{ style: { height: "2px" }, w: Size.n24, rounded: "full" }}
                     surface="overlay"
                   />
                 </Frame>
                 <Frame
-                  override={{ h: 2, w: "100%", rounded: "full" }}
+                  override={{ style: { height: "2px" }, w: Size.full, rounded: "full" }}
                   surface="raised"
                 />
               </Frame>
@@ -140,7 +140,7 @@ function CheckItem({ title, desc }: CheckItemProps) {
   return (
     <Frame override={{ gap: Space.n4 }} row align="start">
       <Frame
-        override={{ w: 6, h: 6, rounded: "full", style: { marginTop: 2 } }}
+        override={{ w: Size.n8, h: Size.n8, rounded: "full", style: { marginTop: 2 } }}
         surface="primary"
         pack
       >

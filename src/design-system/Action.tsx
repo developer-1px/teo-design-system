@@ -17,7 +17,13 @@ interface ActionProps
 
   // Layout overrides
   rounded?: RoundedToken;
-  p?: number | string;
+  p?: SpaceToken;
+  px?: SpaceToken;
+  py?: SpaceToken;
+  pt?: SpaceToken;
+  pb?: SpaceToken;
+  pl?: SpaceToken;
+  pr?: SpaceToken;
   gap?: SpaceToken | number;
   border?: boolean;
   flex?: boolean | number;
@@ -94,6 +100,8 @@ export function Action({
   const finalRounded =
     rounded ?? (finalVariant === "surface" ? "round" : "round");
 
+  const finalP = p ?? (label ? Space.n8 : Space.n0);
+
   const mapJustify = (v: string | undefined) => {
     if (v === "start") return "flex-start";
     if (v === "end") return "flex-end";
@@ -101,16 +109,36 @@ export function Action({
     return v;
   };
 
+
+  const resolveSizingProp = (val: string | number | undefined) => {
+    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+      return val as any;
+    }
+    return undefined;
+  };
+  const resolveSizingStyle = (val: string | number | undefined) => {
+    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+      return undefined;
+    }
+    if (typeof val === "number") return `${val}px`;
+    return val;
+  };
+
+  const effW = w ?? finalWidth;
+  const effH = h ?? finalHeight;
+
   return (
     <Frame
       override={{
-        w: w ?? finalWidth,
-        h: h ?? finalHeight,
+        w: resolveSizingProp(effW),
+        h: resolveSizingProp(effH),
         rounded: finalRounded,
-        p: p ?? (label ? 2 : 0),
+        p: finalP,
         gap: (gap as SpaceToken) ?? Space.n4,
         opacity: opacity,
         style: {
+          width: resolveSizingStyle(effW),
+          height: resolveSizingStyle(effH),
           border: border ? "1px solid var(--border-color)" : undefined,
           minWidth: !label && size ? (toToken(size, "size") as any) : undefined, // Ensure square for icons
           cursor: "pointer", // Indicate interactivity

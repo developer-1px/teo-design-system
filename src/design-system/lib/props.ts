@@ -19,29 +19,29 @@ import type {
 // Used inside 'override={{ ... }}' prop
 export interface FrameOverrides {
   // Layout
-  p?: SpaceToken | (string & {}) | number;
-  px?: SpaceToken | (string & {}) | number;
-  py?: SpaceToken | (string & {}) | number;
-  pt?: SpaceToken | (string & {}) | number;
-  pb?: SpaceToken | (string & {}) | number;
-  pl?: SpaceToken | (string & {}) | number;
-  pr?: SpaceToken | (string & {}) | number;
+  p?: SpaceToken;
+  px?: SpaceToken;
+  py?: SpaceToken;
+  pt?: SpaceToken;
+  pb?: SpaceToken;
+  pl?: SpaceToken;
+  pr?: SpaceToken;
 
   gap?: SpaceToken;
   pack?: boolean;
 
-  w?: SizeToken | (string & {}) | number;
-  h?: SizeToken | (string & {}) | number;
+  w?: SizeToken
+  h?: SizeToken
 
   flex?: boolean | number | string;
   row?: boolean;
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
   fill?: boolean;
 
-  minWidth?: SizeToken | (string & {}) | number;
-  minHeight?: SizeToken | (string & {}) | number;
-  maxWidth?: SizeToken | (string & {}) | number;
-  maxHeight?: SizeToken | (string & {}) | number;
+  minWidth?: SizeToken
+  minHeight?: SizeToken
+  maxWidth?: SizeToken
+  maxHeight?: SizeToken
 
   // Grid
   grid?: boolean;

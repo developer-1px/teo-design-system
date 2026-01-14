@@ -1,5 +1,5 @@
 import { Frame } from "../design-system/Frame";
-import { Space } from "../design-system/token/token.const.1tier";
+import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text.tsx";
 import { Field } from "../design-system/Field";
@@ -14,13 +14,13 @@ export function LoginApp() {
     <Frame fill row>
       {/* Left: Login Form */}
       <Frame
-        override={{ p: 8 }}
+        override={{ p: Space.n32 }}
         flex={1}
         surface="base"
         align="center"
         justify="center"
       >
-        <Frame override={{ w: "100%", maxWidth: "400px", gap: Space.n32 }}>
+        <Frame override={{ w: Size.full, style: { maxWidth: "400px" }, gap: Space.n32 }}>
           <Frame override={{ gap: Space.n8 }}>
             <Text size={FontSize.n28} weight="bold">
               Welcome back
@@ -50,8 +50,8 @@ export function LoginApp() {
                 {/* Checkbox simulation */}
                 <Frame
                   override={{
-                    w: 4,
-                    h: 4,
+                    w: Size.n4,
+                    h: Size.n4,
                     rounded: "sm",
                     style: { border: "1px solid var(--border-color)" },
                   }}
@@ -91,12 +91,12 @@ export function LoginApp() {
       {/* Right: Description / Hero */}
       {/* Right: Description / Hero */}
       <Section flex={1} surface="panel" border="left">
-        <Frame override={{ p: 12 }} fill align="center" justify="center">
+        <Frame override={{ p: Space.n48 }} fill align="center" justify="center">
           <ProseDocument maxWidth={120} gap={8}>
             <Frame
               override={{
-                w: 64,
-                h: 64,
+                w: Size.n64,
+                h: Size.n64,
                 rounded: "2xl",
                 shadow: "lg",
                 style: { marginBottom: 16 },
@@ -139,7 +139,7 @@ function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
     <Frame override={{ gap: Space.n16 }} row align="start">
       <Frame
-        override={{ w: 6, h: 6, rounded: "full", style: { marginTop: 4 } }}
+        override={{ w: Size.n8, h: Size.n8, rounded: "full", style: { marginTop: 4 } }}
         surface="primary"
         flex={0}
       />

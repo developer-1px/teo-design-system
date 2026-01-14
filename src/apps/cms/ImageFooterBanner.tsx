@@ -4,22 +4,23 @@ import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
-import { IconSize } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size } from "../../design-system/token/token.const.1tier";
 
 export function ImageFooterBanner() {
   return (
     <Frame
       override={{
-        w: "100%",
-        p: "24 0",
+        w: Size.full,
+        py: Space.n96,
+        px: Space.n0,
         style: { borderBottom: "1px solid var(--border-color)" },
       }}
       surface="base"
     >
       <Frame
         override={{
-          w: "100%",
-          h: 125,
+          w: Size.full,
+          h: Size.n128,
           rounded: "3xl",
           style: {
             position: "relative",
@@ -43,7 +44,7 @@ export function ImageFooterBanner() {
 
         <Frame
           override={{
-            p: 6,
+            p: Space.n24,
             style: { maxWidth: 640, position: "relative", zIndex: 10 },
             gap: Space.n24,
           }}
@@ -72,7 +73,8 @@ export function ImageFooterBanner() {
               size="lg"
               glow
               h={56}
-              p="0 8"
+              py={Space.n0}
+              px={Space.n32}
               rounded="full"
             />
             <Action
@@ -80,7 +82,8 @@ export function ImageFooterBanner() {
               variant="surface"
               size="lg"
               h={56}
-              p="0 8"
+              py={Space.n0}
+              px={Space.n32}
               rounded="full"
             />
           </Frame>
@@ -102,7 +105,7 @@ export function ImageFooterBanner() {
           TRUSTED WORLDWIDE
         </Text.Card.Note>
         <Frame
-          override={{ gap: Space.n48, p: "0 6", opacity: 0.3 }}
+          override={{ gap: Space.n48, py: Space.n0, px: Space.n24, opacity: 0.3 }}
           row
           justify="center"
           wrap="wrap"

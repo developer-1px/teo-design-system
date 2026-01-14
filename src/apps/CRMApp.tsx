@@ -27,7 +27,7 @@ import { Frame } from "../design-system/Frame";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text.tsx";
 import { Icon } from "../design-system/Icon";
-import { IconSize, Space } from "../design-system/token/token.const.1tier";
+import { IconSize, Space, Size } from "../design-system/token/token.const.1tier";
 
 // --- Mock Data ---
 
@@ -131,7 +131,7 @@ function Avatar({
       <Text variant="caption-sm" weight="bold" style={{ color: "white" }}>
         {initial}
       </Text>
-    </Frame>
+    </Frame >
   );
 }
 
@@ -165,7 +165,8 @@ function StageBadge({ stage }: { stage: DealStage }) {
   return (
     <Frame
       override={{
-        p: "1 2",
+        py: Space.n4,
+        px: Space.n8,
         rounded: "md",
         style: { backgroundColor: bg, border: "1px solid var(--border-color)" },
       }}
@@ -190,7 +191,7 @@ function SidebarItem({
 }) {
   return (
     <Action variant={active ? "surface" : "ghost"} rounded="md" w="100%">
-      <Frame override={{ gap: Space.n12, w: "100%", p: "1.5 2" }} row align="center">
+      <Frame override={{ gap: Space.n12, w: Size.full, py: Space.n6, px: Space.n8 }} row align="center">
         <Icon
           src={IconSrc}
           size={IconSize.n16}
@@ -222,17 +223,14 @@ function Sidebar() {
   return (
     <Frame
       override={{
-        w: "240px",
-        p: "3 3",
-        gap: Space.n16,
-        h: "full",
-        style: { minWidth: 240, borderRight: "1px solid var(--border-color)" },
+        h: Size.full,
+        style: { width: "240px", minWidth: 240, borderRight: "1px solid var(--border-color)" },
       }}
       surface="sunken"
     >
       {/* Workspace Switcher */}
       <Action variant="ghost" rounded="md">
-        <Frame override={{ gap: Space.n12, p: "1" }} row align="center">
+        <Frame override={{ gap: Space.n12, p: Space.n4 }} row align="center">
           <Avatar initial="O" color="black" size={20} />
           <Text weight="bold" variant="body-sm">
             Orbit Inc.
@@ -267,7 +265,7 @@ function Sidebar() {
       {/* Bottom Actions */}
       <Frame override={{ gap: Space.n4 }}>
         <SidebarItem icon={Settings} label="Settings" />
-        <Frame override={{ gap: Space.n12, p: "2" }} row align="center">
+        <Frame override={{ gap: Space.n12, p: Space.n8 }} row align="center">
           <Avatar initial="M" color="#4F46E5" size={20} />
           <Text variant="body-sm" weight="medium">
             Mike R.
@@ -280,7 +278,7 @@ function Sidebar() {
 
 function SectionLabel({ label }: { label: string }) {
   return (
-    <Frame override={{ p: "1 2" }}>
+    <Frame override={{ py: Space.n4, px: Space.n8 }}>
       <Text
         variant="caption-sm"
         weight="bold"
@@ -305,7 +303,8 @@ function Header() {
   return (
     <Frame
       override={{
-        p: "3 5",
+        py: Space.n12,
+        px: Space.n20,
         style: { height: 60, borderBottom: "1px solid var(--border-color)" },
       }}
     >
@@ -328,7 +327,8 @@ function Header() {
       <Frame
         override={{
           rounded: "md",
-          p: "1.5 3",
+          py: Space.n6,
+          px: Space.n12,
           gap: Space.n8,
           style: { width: 320, border: "1px solid var(--border-color)" },
         }}
@@ -344,7 +344,7 @@ function Header() {
         <Frame
           override={{
             rounded: "sm",
-            p: 0,
+            p: Space.n0,
             style: {
               borderColor: "var(--border-color)",
               border: "1px solid var(--border-color)",
@@ -382,7 +382,8 @@ function Toolbar() {
   return (
     <Frame
       override={{
-        p: "2 5",
+        py: Space.n8,
+        px: Space.n20,
         style: { height: 48, borderBottom: "1px solid var(--border-color)" },
         gap: Space.n8,
       }}
@@ -410,7 +411,8 @@ function TableHeader() {
   return (
     <Frame
       override={{
-        p: "0 4",
+        px: Space.n16,
+        py: Space.n0,
         gap: Space.n16,
         style: {
           height: 36,
@@ -480,8 +482,9 @@ function TableRow({
     >
       <Frame
         override={{
-          w: "100%",
-          p: "0 4",
+          w: Size.full,
+          px: Space.n16,
+          py: Space.n0,
           gap: Space.n16,
           style: { height: 44, borderBottom: "1px solid var(--border-color)" },
         }}
@@ -568,7 +571,8 @@ function Drawer({
       {/* Drawer Header */}
       <Frame
         override={{
-          p: "4 6",
+          py: Space.n16,
+          px: Space.n24,
           style: { height: 60, borderBottom: "1px solid var(--border-color)" },
         }}
         row
@@ -594,7 +598,7 @@ function Drawer({
 
       {/* Drawer Body */}
       <Frame flex fill overflow="auto">
-        <Frame override={{ p: "6", gap: Space.n24 }}>
+        <Frame override={{ p: Space.n24, gap: Space.n24 }}>
           {/* Properties Section */}
           <Frame override={{ gap: Space.n16 }}>
             <Text variant="caption-sm" weight="bold" color="tertiary">
@@ -645,7 +649,8 @@ function Drawer({
       {/* Drawer Footer */}
       <Frame
         override={{
-          p: "4 6",
+          py: Space.n16,
+          px: Space.n24,
           style: { borderTop: "1px solid var(--border-color)" },
           gap: Space.n8,
         }}
@@ -674,7 +679,7 @@ function PropertyRow({
 }) {
   return (
     <Frame override={{ style: { height: 32 }, gap: Space.n16 }} row align="center">
-      <Frame override={{ gap: Space.n8, w: 140 }} row align="center">
+      <Frame override={{ gap: Space.n8, w: Size.n144 }} row align="center">
         <Icon src={IconSrc} size={IconSize.n14} style={{ color: "var(--text-tertiary)" }} />
         <Text variant="body-sm" color="tertiary">
           {label}

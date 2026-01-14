@@ -299,3 +299,241 @@ return <Card.Title>Hello</Card.Title>;
 import { Text } from "../design-system/text/Text";
 return <Text.Card.Title>Hello</Text.Card.Title>;
 ```
+
+---
+
+## 15. **CORE CONCEPT: 3-Tier Intent System**
+
+### Overview
+
+**CRITICAL**: MDK uses a universal **3-Tier Intent System** as the foundational pattern for all component specifications. This is the consistent methodology for defining every component in the design system.
+
+### Philosophy: "Intent First, Props Follow"
+
+Every component specification must answer three questions **in order**:
+
+1. **WHY** does this component exist? → Define Intent
+2. **WHAT** user problem does it solve? → Map Intent to capabilities
+3. **HOW** is it implemented? → Create Components and Props
+
+**Never start with "What props should this have?"** — Always start with "Why does this exist?"
+
+### 3-Tier Structure
+
+```
+Tier 1: Primitive (Container Component)
+   ↓
+Tier 2: Intent (Purpose/Why)
+   ↓
+Tier 3: Component (Implementation/How)
+```
+
+**API Pattern**: `Primitive.{Intent}.{Component}`
+
+### Example: Field Component
+
+```tsx
+// Tier 1: Primitive
+<Field name="email">
+
+  {/* Tier 2: Intent - Guidance (Why: User needs to know what to enter) */}
+  <Field.Guidance>
+    <Field.Label>Email</Field.Label>
+    <Field.Description>For login purposes</Field.Description>
+  </Field.Guidance>
+
+  {/* Tier 2: Intent - Control (Why: User needs to input data) */}
+  <Field.Control>
+    <Input />
+  </Field.Control>
+
+  {/* Tier 2: Intent - Validation (Why: Data must be correct) */}
+  <Field.Validation schema={emailSchema} />
+
+  {/* Tier 2: Intent - Feedback (Why: User needs to know if input is valid) */}
+  <Field.Feedback>
+    <Field.Error />
+  </Field.Feedback>
+
+</Field>
+```
+
+### Example: Action Component
+
+```tsx
+// Tier 1: Primitive
+<Action onClick={handleSave}>
+
+  {/* Tier 2: Intent - State (Why: User needs to know loading status) */}
+  <Action.State loading={isSaving} />
+
+  {/* Tier 2: Intent - Confirmation (Why: Prevent accidental actions) */}
+  <Action.Confirmation message="Save changes?" />
+
+  {/* Tier 2: Intent - Feedback (Why: User needs to know outcome) */}
+  <Action.Feedback>
+    <Action.Success message="Saved!" />
+  </Action.Feedback>
+
+  <Button>Save</Button>
+</Action>
+```
+
+### 6 Core Intents
+
+**Field Intents**:
+1. **Guidance** - Guide user on what to enter (label, description, placeholder, required)
+2. **Control** - Provide input mechanism (Input, Select, Textarea, Custom UI)
+3. **Validation** - Ensure data correctness (schema, rules, triggers, dependencies)
+4. **Feedback** - Show validation results (error, success, warning, info)
+5. **State** - Manage field state (value, touched, dirty, valid, disabled)
+6. **Transform** - Convert data format (format, parse, sanitize)
+
+**Action Intents**:
+1. **Handler** - Define action behavior (onClick, async handling)
+2. **State** - Manage action state (loading, disabled, pending, active)
+3. **Confirmation** - Request user confirmation (dialog, message, buttons)
+4. **Feedback** - Show action results (success, error, progress, toast)
+5. **Prevention** - Prevent unwanted execution (once, debounce, throttle, cooldown)
+6. **Lifecycle** - Hook into action phases (onStart, onSuccess, onError, onComplete)
+
+### Progressive Enhancement: 3 Usage Levels
+
+**Level 1: Simple** (Props-based, Intent hidden) - For rapid prototyping
+```tsx
+<Field name="email" label="Email" validate={schema}>
+  <Input />
+</Field>
+```
+
+**Level 2: Structured** (Intent groups visible) - For production apps
+```tsx
+<Field name="email">
+  <Field.Guidance label="Email" description="For login" />
+  <Field.Validation schema={schema} />
+  <Field.Control><Input /></Field.Control>
+  <Field.Feedback><Field.Error /></Field.Feedback>
+</Field>
+```
+
+**Level 3: Explicit** (Full Intent + Component control) - For maximum customization
+```tsx
+<Field name="email">
+  <Field.Guidance>
+    <Field.Label required>Email Address</Field.Label>
+    <Field.Description>We'll never share your email.</Field.Description>
+  </Field.Guidance>
+  <Field.Control><CustomFloatingInput /></Field.Control>
+  <Field.Validation><Field.Schema value={schema} /></Field.Validation>
+  <Field.Feedback>
+    <Field.Error>{(error) => <AnimatedError message={error.message} />}</Field.Error>
+  </Field.Feedback>
+  <Field.Transform>
+    <Field.Sanitize fn={(v) => v.trim().toLowerCase()} />
+  </Field.Transform>
+</Field>
+```
+
+### 5 Design Principles
+
+1. **Intent Visibility** - API structure reveals WHY components exist
+2. **Progressive Enhancement** - Start simple (Level 1), add complexity as needed (Level 2, 3)
+3. **Default Composition** - Intent components auto-render if no children provided
+4. **Context Inheritance** - Child components inherit parent and Intent contexts automatically
+5. **Intent Independence** - Each Intent works standalone and is order-agnostic
+
+### Context Inheritance Pattern
+
+```tsx
+// Field Context (name, id, value, error, touched)
+//   ↓ inherited by
+// Guidance Context (label, description, required, labelId)
+//   ↓ inherited by
+// Label Component (uses both contexts automatically)
+
+<Field name="email">  {/* Creates FieldContext */}
+  <Field.Guidance label="Email">  {/* Creates GuidanceContext, inherits FieldContext */}
+    <Field.Label />  {/* Inherits both FieldContext + GuidanceContext */}
+  </Field.Guidance>
+</Field>
+```
+
+### Implementation Convention
+
+**File Structure**:
+```
+src/design-system/
+├── Field/
+│   ├── Field.tsx              # Tier 1: Primitive + Context
+│   ├── Guidance/
+│   │   ├── Guidance.tsx       # Tier 2: Intent Context
+│   │   ├── Label.tsx          # Tier 3: Component
+│   │   ├── Description.tsx    # Tier 3: Component
+│   │   └── index.ts
+│   ├── Control/
+│   │   ├── Control.tsx        # Tier 2: Intent Context
+│   │   ├── Input.tsx          # Tier 3: Component
+│   │   └── index.ts
+│   └── index.ts
+```
+
+**Naming Convention**:
+- Tier 1 (Primitive): PascalCase noun (Field, Action, Frame, Prose)
+- Tier 2 (Intent): PascalCase concept (Guidance, Validation, Control, State)
+- Tier 3 (Component): PascalCase specific (Label, Input, Error, Schema)
+
+### Anti-Patterns to Avoid
+
+❌ **Intent Confusion**: Mixing multiple Intents in one component
+```tsx
+// BAD: Control Intent contains Validation Intent
+<Field.Input validate={schema} error={error} />
+
+// GOOD: Clear Intent separation
+<Field.Control><Input /></Field.Control>
+<Field.Validation schema={schema} />
+<Field.Feedback><Field.Error /></Field.Feedback>
+```
+
+❌ **Props First Thinking**: Starting with "what props do we need?"
+```tsx
+// BAD: Props without Intent reasoning
+"Let's add debounce, throttle, once, confirm to Button"
+
+// GOOD: Intent-driven reasoning
+"Why? User clicks too fast → Intent: Prevention → Props: debounce, throttle
+ Why? User might misclick → Intent: Confirmation → Props: confirm"
+```
+
+❌ **Arbitrary Grouping**: Technical grouping instead of Intent-based
+```tsx
+// BAD: What is "Visual" Intent?
+<Field.Visual><Label /><Error /></Field.Visual>
+
+// GOOD: Clear Intent purpose
+<Field.Guidance><Label /></Field.Guidance>
+<Field.Feedback><Error /></Field.Feedback>
+```
+
+### Documentation Reference
+
+Complete 3-Tier specification details:
+- `docs/claude/13-field-action-purpose-definition.md` - Intent philosophy and WHY-first approach
+- `docs/claude/14-field-action-three-tier-structure.md` - Complete 3-Tier structure tables and examples
+
+### Checklist: Before Implementing New Components
+
+- [ ] Define 3-5 user questions this component answers
+- [ ] Map each question to a specific Intent
+- [ ] Create Intent capability table (Why, What, User Question)
+- [ ] Design 3-Tier structure tree
+- [ ] Document all 3 usage levels (Simple, Structured, Explicit)
+- [ ] Verify Intent independence (each Intent works standalone)
+- [ ] Implement Context inheritance pattern
+- [ ] Write specification document following the template
+
+### MDK Slogan
+
+**"See the Intent, Control the Component"**
+
+*Intent를 보고, Component를 제어하라*

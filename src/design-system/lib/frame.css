@@ -1,21 +1,6 @@
 /* Base Frame */
-.frame {
-  /* Base */
+Frame {
   display: flex;
-  box-sizing: border-box;
-  /* Ensure padding doesn't affect width */
-
-  /* Variable Defaults (Reset to prevent inheritance) */
-  --unit: 4px;
-  --p: 0;
-  --gap: 0;
-
-  /* Dynamic Props via Variables */
-  padding: calc(var(--p) * var(--unit));
-  gap: calc(var(--gap) * var(--unit));
-
-  /* Layout Defaults */
-  flex-direction: column;
 }
 
 /* Base Layout Display */

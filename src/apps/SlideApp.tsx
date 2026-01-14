@@ -24,7 +24,7 @@ export function SlideApp() {
       {/* 1. Global Header */}
       <Frame
         override={{
-          p: 2,
+          p: Space.n8,
           style: {
             position: "absolute",
             top: 0,
@@ -58,7 +58,7 @@ export function SlideApp() {
         </Frame>
         <Frame override={{ gap: Space.n8 }} row align="center">
           <Frame
-            override={{ gap: Space.n4, p: 1, rounded: "round", shadow: "sm" }}
+            override={{ gap: Space.n4, p: Space.n4, rounded: "round", shadow: "sm" }}
             row
             align="center"
             surface="overlay"
@@ -83,7 +83,8 @@ export function SlideApp() {
             variant="primary"
             rounded="md"
             h="28px"
-            p="0 3"
+            py={Space.n0}
+            px={Space.n12}
           />
           <Action
             icon={Share}
@@ -92,14 +93,15 @@ export function SlideApp() {
             variant="surface"
             rounded="md"
             h="28px"
-            p="0 3"
+            py={Space.n0}
+            px={Space.n12}
           />
         </Frame>
       </Frame>
 
       {/* Main Layout Area */}
       <Frame
-        override={{ p: 2, gap: Space.n8, style: { paddingTop: "48px" } }}
+        override={{ p: Space.n8, gap: Space.n8, style: { paddingTop: "48px" } }}
         flex
         row
         fill

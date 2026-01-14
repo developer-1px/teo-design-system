@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Frame } from "../design-system/Frame";
+import { Space, Size } from "../design-system/token/token.const.1tier";
 
 // import { ProseDocument } from "../design-system/Prose";
 
@@ -19,7 +20,7 @@ export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <Frame override={{ p: "0" }} fill surface="raised" overflow="hidden">
+    <Frame override={{ p: Space.n0 }} fill surface="raised" overflow="hidden">
       <TopCenterBar />
       <TopRightBar />
 
@@ -34,7 +35,7 @@ export function CMSApp() {
           onToggle={() => setSidebarOpen(!isSidebarOpen)}
         />
         <Frame
-          override={{ p: "0" }}
+          override={{ p: Space.n0 }}
           flex
           fill
           surface="overlay"
@@ -43,7 +44,7 @@ export function CMSApp() {
           overflow="auto"
         >
           {/* The Canvas */}
-          <Frame override={{ w: "100%", style: { minHeight: "100%" } }}>
+          <Frame override={{ w: Size.full, style: { minHeight: "100%" } }}>
             <SiteHeader
               isSidebarOpen={isSidebarOpen}
               onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)}

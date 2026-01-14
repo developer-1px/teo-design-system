@@ -1,6 +1,6 @@
 import { Frame } from "../design-system/Frame";
 import { Section } from "../design-system/Section";
-import { Space } from "../design-system/token/token.const.1tier";
+import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Text } from "../design-system/text/Text";
 
 export function SlidesPanel() {
@@ -22,7 +22,7 @@ export function SlidesPanel() {
         fill
       >
         {slides.map((num) => (
-          <Frame override={{ gap: Space.n4, p: 2 }} key={num} border={num === 1}>
+          <Frame override={{ gap: Space.n4, p: Space.n8 }} key={num} border={num === 1}>
             <Frame override={{ gap: Space.n4 }} row justify="between" align="end">
               <Text.Card.Note
                 style={{
@@ -32,7 +32,7 @@ export function SlidesPanel() {
                 {num}
               </Text.Card.Note>
               <Frame
-                override={{ w: "100%", rounded: "round" }}
+                override={{ w: Size.full, rounded: "round" }}
                 ratio="16/9"
                 surface="raised"
                 flex

@@ -5,14 +5,15 @@ import { Frame } from "../../design-system/Frame";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { EditableWrapper } from "./EditableWrapper";
 import { Icon } from "../../design-system/Icon";
-import { IconSize } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size } from "../../design-system/token/token.const.1tier";
 
 export function HeaderHero() {
   return (
     <Frame
       override={{
-        w: "100%",
-        p: "21 5",
+        w: Size.full,
+        py: Space.n88,
+        px: Space.n20,
         gap: Space.n12,
         style: {
           minHeight: "90vh",
@@ -52,15 +53,14 @@ export function HeaderHero() {
 
       <Frame
         override={{
-          w: "100%",
-          maxWidth: 800,
-          style: { margin: "0 auto" },
+          w: Size.full,
+          style: { maxWidth: "var(--container-n800)", margin: "0 auto" },
           gap: Space.n6,
         }}
         align="center"
       >
         <Frame
-          override={{ p: "1 3", rounded: "full", gap: Space.n8 }}
+          override={{ py: Space.n4, px: Space.n12, rounded: "full", gap: Space.n8 }}
           surface="raised"
           row
           align="center"
@@ -116,7 +116,8 @@ export function HeaderHero() {
             variant="surface"
             size="lg"
             h={14}
-            p="0 6"
+            py={Space.n0}
+            px={Space.n24}
             rounded="full"
           />
         </Frame>
@@ -125,12 +126,9 @@ export function HeaderHero() {
       {/* Hero Visual: Mockup UI */}
       <Frame
         override={{
-          w: "100%",
-          maxWidth: 250,
-          h: 125,
-          rounded: "2xl",
-          shadow: "2xl",
+          w: Size.full,
           style: {
+            maxWidth: "250px",
             position: "relative",
             marginTop: "64px",
             transform: "perspective(1000px) rotateX(5deg)",
@@ -142,9 +140,10 @@ export function HeaderHero() {
       >
         <Frame
           override={{
-            h: 10,
+            h: Size.n12,
             style: { borderBottom: "1px solid var(--border-color)" },
-            p: "0 1",
+            py: Space.n0,
+            px: Space.n4,
             gap: Space.n2,
           }}
           surface="raised"
@@ -152,15 +151,15 @@ export function HeaderHero() {
           align="center"
         >
           <Frame
-            override={{ w: 10, h: 10, rounded: "full" }}
+            override={{ w: Size.n12, h: Size.n12, rounded: "full" }}
             surface="overlay"
           />
           <Frame
-            override={{ w: 10, h: 10, rounded: "full" }}
+            override={{ w: Size.n12, h: Size.n12, rounded: "full" }}
             surface="overlay"
           />
           <Frame
-            override={{ w: 10, h: 10, rounded: "full" }}
+            override={{ w: Size.n12, h: Size.n12, rounded: "full" }}
             surface="overlay"
           />
           <Frame flex />
@@ -169,30 +168,30 @@ export function HeaderHero() {
         <Frame row fill justify="start">
           <Frame
             override={{
-              w: 50,
+              w: Size.n48,
               style: { borderRight: "1px solid var(--border-color)" },
-              p: 1,
+              p: Space.n4,
               gap: Space.n4,
             }}
             surface="sunken"
           >
             <Frame
-              override={{ h: 3, w: "80%", rounded: "full" }}
+              override={{ style: { height: 3, width: "80%" }, rounded: "full" }}
               surface="overlay"
             />
             <Frame
-              override={{ h: 3, w: "60%", rounded: "full" }}
+              override={{ h: Size.n4, style: { width: "60%" }, rounded: "full" }}
               surface="overlay"
             />
             <Frame flex />
             <Frame
-              override={{ h: 10, w: "100%", rounded: "lg" }}
+              override={{ h: Size.n12, w: Size.full, rounded: "lg" }}
               surface="raised"
             />
           </Frame>
-          <Frame override={{ p: 3, gap: Space.n6 }} flex surface="base" pack>
+          <Frame override={{ p: Space.n12, gap: Space.n6 }} flex surface="base" pack>
             <Frame
-              override={{ w: 20, h: 20, rounded: "2xl", shadow: "lg" }}
+              override={{ w: Size.n20, h: Size.n20, rounded: "2xl", shadow: "lg" }}
               surface="raised"
               pack
             >
@@ -200,11 +199,11 @@ export function HeaderHero() {
             </Frame>
             <Frame override={{ gap: Space.n2 }} align="center">
               <Frame
-                override={{ h: 5, w: 50, rounded: "full" }}
+                override={{ h: Size.n4, w: Size.n48, rounded: "full" }}
                 surface="overlay"
               />
               <Frame
-                override={{ h: 3, w: 75, rounded: "full" }}
+                override={{ h: Size.n4, w: Size.n72, rounded: "full" }}
                 surface="raised"
               />
             </Frame>

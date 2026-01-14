@@ -24,7 +24,8 @@ function NavItem({ to, label }: { to: string; label: string }) {
       {({ isActive }) => (
         <Frame
           override={{
-            p: "1.5 3.5",
+            py: Space.n6,
+            px: Space.n14,
             rounded: "full",
             style: {
               color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
@@ -48,7 +49,7 @@ function Navigation() {
       override={{
         rounded: "full",
         shadow: "xl",
-        p: 1,
+        p: Space.n4,
         gap: Space.n4,
         style: { position: "fixed", bottom: 20, left: 20, zIndex: 9999 },
       }}
@@ -75,7 +76,7 @@ function ThemeToggleItem() {
   return (
     <Frame
       override={{
-        p: 2,
+        p: Space.n8,
         rounded: "full",
         style: {
           color: "var(--text-secondary)",

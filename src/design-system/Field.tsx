@@ -26,13 +26,33 @@ export function Field({
   onChange,
   ...props
 }: FieldProps) {
+
+  const resolveSizingProp = (val: string | number | undefined) => {
+    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+      return val as any;
+    }
+    return undefined;
+  };
+  const resolveSizingStyle = (val: string | number | undefined) => {
+    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+      return undefined;
+    }
+    if (typeof val === "number") return `${val}px`;
+    return val;
+  };
+
+  const effW = flex ? undefined : w;
+
   return (
     <Frame
       override={{
         gap: Space.n6,
-        p: `1.5 ${rightIcon ? 1.5 : 2} 1.5 2`,
-        w: flex ? undefined : w,
+        py: Space.n6,
+        pl: Space.n8,
+        pr: rightIcon ? Space.n6 : Space.n8,
+        w: resolveSizingProp(effW),
         style: {
+          width: resolveSizingStyle(effW),
           cursor: "text",
           ...style,
         },

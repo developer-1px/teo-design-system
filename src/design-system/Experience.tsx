@@ -1,5 +1,6 @@
 import React from "react";
 import { Frame } from "./Frame";
+import { Size } from "./token/token.const.1tier";
 
 export type ExperienceType = "application" | "landing" | "document";
 
@@ -18,7 +19,7 @@ export function Experience({
 }: ExperienceProps) {
   return (
     <Frame
-      override={{ style: style, w: "100%", h: "100%" }}
+      override={{ style: style, w: Size.full, h: Size.full }}
       className={className}
       // @ts-ignore - Custom attribute for CSS tokens
       data-experience={value}

@@ -46,7 +46,7 @@ export function FloatingToolbar() {
       <Frame
         override={{
           gap: Space.n4,
-          p: 1,
+          p: Space.n4,
           rounded: "full",
           shadow: "lg",
           style: { border: "1px solid var(--border-color)" },

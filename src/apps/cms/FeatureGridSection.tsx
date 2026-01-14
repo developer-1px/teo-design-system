@@ -4,14 +4,15 @@ import { Frame } from "../../design-system/Frame";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { EditableWrapper } from "./EditableWrapper";
 import { Icon } from "../../design-system/Icon";
-import { IconSize } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size } from "../../design-system/token/token.const.1tier";
 
 export function FeatureGridSection() {
   return (
     <Frame
       override={{
-        w: "100%",
-        p: "24px 6px",
+        w: Size.full,
+        py: Space.n24,
+        px: Space.n6,
         gap: Space.n16,
         style: {
           borderBottom: "1px solid var(--border-color)",
@@ -42,7 +43,7 @@ export function FeatureGridSection() {
         </EditableWrapper>
       </Frame>
 
-      <Frame override={{ gap: Space.n16, w: "100%" }}>
+      <Frame override={{ gap: Space.n16, w: Size.full }}>
         {/* Row 1 */}
         <Frame override={{ gap: Space.n16 }} row wrap="wrap">
           <FeatureCardLarge
@@ -96,14 +97,14 @@ function FeatureCardSmall({
 }: FeatureCardSmallProps) {
   return (
     <Frame
-      override={{ p: 6, rounded: "2xl", gap: Space.n16 }}
+      override={{ p: Space.n24, rounded: "2xl", gap: Space.n16 }}
       flex={flex}
       surface="raised"
     >
       <Frame
         override={{
-          w: 48,
-          h: 48,
+          w: Size.n48,
+          h: Size.n48,
           rounded: "xl",
           style: { border: "1px solid var(--border-color)" },
         }}
@@ -145,11 +146,11 @@ function FeatureCardLarge({
       overflow="hidden"
       row
     >
-      <Frame override={{ p: 6, gap: Space.n16 }} flex justify="center">
+      <Frame override={{ p: Space.n24, gap: Space.n16 }} flex justify="center">
         <Frame
           override={{
-            w: 12,
-            h: 12,
+            w: Size.n12,
+            h: Size.n12,
             rounded: "xl",
             style: { border: "1px solid var(--border-color)" },
           }}
@@ -172,8 +173,8 @@ function FeatureCardLarge({
       {image && (
         <Frame
           override={{
-            w: "40%",
             style: {
+              width: "40%",
               background:
                 "linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
             },
@@ -183,8 +184,8 @@ function FeatureCardLarge({
         >
           <Frame
             override={{
-              w: 30,
-              h: 40,
+              w: Size.n32,
+              h: Size.n40,
               rounded: "lg",
               shadow: "xl",
               style: { border: "1px solid var(--border-color)" },

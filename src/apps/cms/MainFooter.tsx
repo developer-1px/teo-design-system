@@ -3,21 +3,22 @@ import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
-import { IconSize } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size } from "../../design-system/token/token.const.1tier";
 
 export function MainFooter() {
   return (
     <Frame
       override={{
-        w: "100%",
-        p: "64px 24px",
+        w: Size.full,
+        py: Space.n64,
+        px: Space.n24,
         gap: Space.n16,
         style: { maxWidth: "1200px", margin: "0 auto" },
       }}
       surface="sunken"
     >
-      <Frame override={{ w: "100%" }} row justify="between" align="start">
-        <Frame override={{ gap: Space.n6, w: "35%" }}>
+      <Frame override={{ w: Size.full }} row justify="between" align="start">
+        <Frame override={{ gap: Space.n6, style: { width: "35%" } }}>
           <Frame override={{ gap: Space.n4 }} row align="center">
             <Frame
               override={{ style: { width: 40, height: 40 }, rounded: "xl" }}
@@ -73,8 +74,11 @@ export function MainFooter() {
       <Frame
         override={{
           style: { borderTop: "1px solid var(--border-color)" },
-          p: "8px 0 0 0",
-          w: "100%",
+          pt: Space.n8,
+          pr: Space.n0,
+          pb: Space.n0,
+          pl: Space.n0,
+          w: Size.full,
         }}
         row
         justify="between"

@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:ui.shadcn.com)"
+      "WebFetch(domain:ui.shadcn.com)",
+      "WebFetch(domain:www.radix-ui.com)",
+      "WebFetch(domain:react-hook-form.com)",
+      "WebFetch(domain:zod.dev)",
+      "Read(//Users/user/Desktop/**)"
     ],
     "deny": [],
     "ask": []

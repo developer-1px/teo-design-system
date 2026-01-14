@@ -1,7 +1,7 @@
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
-import { Space } from "../../design-system/token/token.const.1tier";
+import { Space, Size } from "../../design-system/token/token.const.1tier";
 
 export interface SiteHeaderProps {
   isSidebarOpen?: boolean;
@@ -15,10 +15,9 @@ export function SiteHeader({
   return (
     <Frame
       override={{
-        w: "100%",
-        h: "header",
-        p: "0 6",
+        w: Size.full,
         style: {
+          height: "var(--header-height)",
           position: "sticky",
           top: 0,
           zIndex: 100,
@@ -31,7 +30,7 @@ export function SiteHeader({
       surface="base"
     >
       <Frame
-        override={{ w: "100%", maxWidth: 300 }}
+        override={{ w: Size.full, style: { maxWidth: "300px" } }}
         row
         justify="between"
         align="center"
@@ -39,8 +38,8 @@ export function SiteHeader({
         <Frame override={{ gap: Space.n8 }} row align="center">
           <Frame
             override={{
-              w: 32,
-              h: 32,
+              w: Size.n32,
+              h: Size.n32,
               rounded: "lg",
               style: { border: "1px solid var(--border-color)" },
               shadow: "sm",
@@ -65,14 +64,16 @@ export function SiteHeader({
               label="Log in"
               variant="ghost"
               h="action"
-              p="0 4"
+              py={Space.n0}
+              px={Space.n16}
               rounded="lg"
             />
             <Action
               label="Get Started"
               variant="primary"
               h="action"
-              p="0 6"
+              py={Space.n0}
+              px={Space.n24}
               rounded="full"
               glow
             />

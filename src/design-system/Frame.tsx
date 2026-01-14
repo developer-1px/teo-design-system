@@ -3,7 +3,6 @@ import type React from "react";
 import "./lib/frame.css";
 
 import type { FrameOverrides, FrameProps } from "./lib/props.ts";
-import { toToken } from "./lib/utils.ts";
 import { frameToSettings } from "./lib/frameToSettings.ts";
 import { resolveLayout } from "./lib/frameLayout.ts";
 
@@ -46,6 +45,8 @@ export function Frame({
   const { className: settingsClass, style: settingsStyle } =
     frameToSettings(settingsInput);
 
+
+
   // 5. Compute Final Style
   // Logic from previous Frame.tsx for specific computed props (grid, size logic)
   // We need to access props from settingsInput to ensure consistency
@@ -58,24 +59,6 @@ export function Frame({
     gridTemplateRows: p.rows,
     gridTemplateAreas: p.areas,
 
-    // Sizing (W/H fallback/token logic)
-    // Note: frameToSettings might handle some classes, but we need inline styles for numeric/token values sometimes?
-    // In previous Frame.tsx, width/height logic was explicit:
-    width:
-      typeof p.w === "number" ||
-      (typeof p.w === "string" && !["full", "screen"].includes(p.w))
-        ? (toToken(p.w, "size") as any)
-        : undefined,
-    height:
-      typeof p.h === "number" ||
-      (typeof p.h === "string" && !["full", "screen"].includes(p.h))
-        ? (toToken(p.h, "size") as any)
-        : undefined,
-
-    minWidth: toToken(p.minWidth, "size") as any,
-    minHeight: toToken(p.minHeight, "size") as any,
-    maxWidth: toToken(p.maxWidth, "size") as any,
-    maxHeight: toToken(p.maxHeight, "size") as any,
 
     // Flex
     flex: typeof p.flex === "number" ? p.flex : undefined,
@@ -90,7 +73,7 @@ export function Frame({
 
     color: p.surface === "primary" ? "var(--primary-fg)" : "inherit",
 
-    ...settingsStyle, // Injected variables (--p, --gap)
+    ...settingsStyle, // Injected variables & standard props (p, gap, w, h, etc)
     ...combinedOverrideStyle, // User arbitrary style overrides
   };
 

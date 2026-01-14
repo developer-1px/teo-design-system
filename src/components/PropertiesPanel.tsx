@@ -47,7 +47,7 @@ const PropertySection = ({
   children: React.ReactNode;
 }) => (
   <Frame override={{ gap: Space.n8 }}>
-    <Frame override={{ p: "0 2" }} row justify="between" align="center">
+    <Frame override={{ py: Space.n0, px: Space.n8 }} row justify="between" align="center">
       <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
       </Text.Menu.Group>
@@ -58,7 +58,7 @@ const PropertySection = ({
         opacity={0.4}
       />
     </Frame>
-    <Frame override={{ gap: Space.n4, p: "0 2 2 2" }}>{children}</Frame>
+    <Frame override={{ gap: Space.n4, pt: Space.n0, pr: Space.n8, pb: Space.n8, pl: Space.n8 }}>{children}</Frame>
     <Separator />
   </Frame>
 );
@@ -100,7 +100,7 @@ export function PropertiesPanel() {
       {/* Tabs */}
       <Frame
         override={{
-          p: 1,
+          p: Space.n4,
           gap: Space.n4,
           style: {
             flexShrink: 0,
@@ -139,7 +139,7 @@ export function PropertiesPanel() {
       </Frame>
 
       <Frame
-        override={{ p: 2, gap: Space.n8, style: { minHeight: 0 } }}
+        override={{ p: Space.n8, gap: Space.n8, style: { minHeight: 0 } }}
         overflow="auto"
         flex
         fill
@@ -148,9 +148,7 @@ export function PropertiesPanel() {
         <Frame
           override={{
             rounded: "md",
-            style: { border: "1px solid var(--border-color)" },
-            p: "1px",
-            gap: "1px" as any, // TODO: 1px token?
+            style: { border: "1px solid var(--border-color)", padding: "1px", gap: "1px" }, // 1px style override
           }}
           row
           justify="between"
@@ -256,9 +254,7 @@ export function PropertiesPanel() {
             <Frame
               override={{
                 rounded: "md",
-                style: { border: "1px solid var(--border-color)" },
-                p: "1px",
-                gap: "1px" as any,
+                style: { border: "1px solid var(--border-color)", padding: "1px", gap: "1px" },
               }}
               row
               justify="between"

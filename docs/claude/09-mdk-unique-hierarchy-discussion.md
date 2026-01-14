@@ -319,10 +319,172 @@ SearchBar는 Field? Block? Navigation?
 
 여러 프리미티브의 조합이죠!
 
+### Yuki (UX 연구원)
+잠깐만요, Marcus! 방금 뭐라고 했어요?
+
+DatePicker는 **Field**라고 했잖아요:
+```tsx
+<Field.DatePicker>  // Input + Calendar 조합
+  <Field.Input />
+  <Overlay.Calendar />
+</Field.DatePicker>
+```
+
+SearchBar는 **Block**이라고 하고:
+```tsx
+<Block.SearchBar>  // Input + Button 조합
+  <Field.Input />
+  <Action.Button />
+</Block.SearchBar>
+```
+
+둘 다 여러 컴포넌트 조합인데 왜 분류가 달라요? **모순이에요!**
+
+### Marcus (개발자)
+아... 그러네요. (당황)
+
+### Sarah (아키텍트)
+Yuki가 중요한 지적을 했어요. 우리 기준이 일관되지 않네요.
+
+다시 생각해봅시다. 무엇이 다른 거죠?
+
 ### Alex (문서 작성자)
-정리하면:
-- **단일 입력 도구** → Field
-- **복잡한 조합** → Block
+제 생각엔... **목적**이 다른 것 같아요.
+
+**DatePicker**:
+- 목적: **날짜 값 하나를 선택**
+- 결과: `date: "2026-01-14"` (단일 값)
+- 폼 제출 시: 이 값이 서버로 전송됨
+
+**SearchBar**:
+- 목적: **검색 쿼리 실행**
+- 결과: 페이지 이동, 검색 결과 표시 (액션)
+- 폼 제출 시: 서버 전송이 아니라 즉시 검색
+
+### Dev (기여자)
+Alex 말이 맞아요! HTML 폼으로 생각해봐요:
+
+```html
+<!-- DatePicker: 폼 데이터 -->
+<form>
+  <input type="date" name="birthday" value="2026-01-14" />
+  <button type="submit">Submit</button>
+</form>
+
+<!-- SearchBar: 독립적 기능 -->
+<form action="/search">
+  <input type="search" name="q" />
+  <button type="submit">Search</button>
+</form>
+```
+
+DatePicker는 **폼의 일부분**이지만, SearchBar는 **그 자체로 완전한 기능**이에요!
+
+### Emma (디자이너)
+그런데 SearchBar도 검색어를 입력하잖아요? 그것도 값 아닌가요?
+
+### Yuki (UX 연구원)
+Emma, 좋은 질문이에요. 차이는 이거예요:
+
+**DatePicker (Field)**:
+1. 사용자가 날짜를 **선택**
+2. 값이 **저장**됨
+3. 나중에 폼 **제출** 시 전송
+
+**SearchBar (Block)**:
+1. 사용자가 검색어를 **입력**
+2. 즉시 **검색 실행** (행동)
+3. 검색어는 부수적, 검색 **액션**이 주목적
+
+### Marcus (개발자)
+그럼 이런 기준은 어때요?
+
+**Field 판단 기준**:
+- "이 값을 나중에 제출할 건가?" → **YES** = Field
+- 복잡해도 단일 값 선택이 목적인가? → **YES** = Field
+
+**Block 판단 기준**:
+- "이게 그 자체로 완전한 기능인가?" → **YES** = Block
+- 즉시 액션이 실행되는가? → **YES** = Block
+
+### Sarah (아키텍트)
+좋아요, 그럼 다시 정리해봅시다:
+
+```tsx
+// ✅ Field.DatePicker
+// - 날짜 "값" 선택
+// - 폼 제출 시 전송됨
+// - 복잡한 UI지만 목적은 "입력"
+<Field.DatePicker name="birthday" />
+
+// ✅ Block.SearchBar
+// - 검색 "실행"
+// - 즉시 결과 표시
+// - 완전한 기능 유닛
+<Block.SearchBar onSearch={handleSearch} />
+```
+
+### Alex (문서 작성자)
+더 명확하게 하려면, **폼 제출 테스트**를 해보면 돼요:
+
+```tsx
+<form onSubmit={handleSubmit}>
+  <Field.Input name="email" />
+  <Field.DatePicker name="birthday" />  {/* ✅ 제출됨 */}
+
+  <Block.SearchBar />  {/* ❌ 제출 안 됨, 독립적 */}
+
+  <Action.Submit>Submit</Action.Submit>
+</form>
+```
+
+DatePicker는 폼의 **일부**, SearchBar는 폼과 **독립적**!
+
+### Dev (기여자)
+다른 예시로 확인해볼까요?
+
+**ColorPicker**: Field? Block?
+
+```tsx
+<ColorPicker value="#ff0000" onChange={setColor} />
+```
+
+### Everyone (동시에)
+**Field.ColorPicker!**
+
+### Dev (기여자)
+맞아요! 왜냐면:
+- 색상 **값** 선택
+- 폼 제출 시 전송
+- 복잡한 UI (색상환, RGB 슬라이더) 하지만 목적은 "입력"
+
+**LoginForm**: Field? Block?
+
+```tsx
+<LoginForm onSubmit={handleLogin} />
+```
+
+### Everyone (동시에)
+**Block.LoginForm!**
+
+### Marcus (개발자)
+맞아요! 왜냐면:
+- Email 필드 + Password 필드 + Submit 버튼 조합
+- 완전한 기능 유닛
+- 여러 Field와 Action의 패턴
+
+### Yuki (UX 연구원)
+이제 명확해졌어요! 정리하면:
+
+**Field (복잡해도)**:
+- 단일 값 입력이 **주목적**
+- 폼 데이터의 일부
+- 예: DatePicker, ColorPicker, RichTextEditor
+
+**Block**:
+- 완전한 기능 유닛
+- 여러 프리미티브 조합
+- 예: SearchBar, LoginForm, ContactForm
 
 ---
 

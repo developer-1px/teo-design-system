@@ -20,7 +20,7 @@ import { Space } from "../design-system/token/token.const.1tier";
 import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
 import { Icon } from "../design-system/Icon";
-import { IconSize, FontSize } from "../design-system/token/token.const.1tier";
+import { IconSize, FontSize, Size } from "../design-system/token/token.const.1tier";
 
 // --- Activity Bar ---
 
@@ -36,9 +36,10 @@ function ActivityBar({
   return (
     <Frame
       override={{
-        w: 48,
+        w: Size.n48,
         style: { borderRight: "1px solid var(--border-color)" },
-        p: "2 0",
+        py: Space.n8,
+        px: Space.n0,
         gap: Space.n8,
       }}
       fill
@@ -126,7 +127,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
         fill
         surface="sunken"
       >
-        <Frame override={{ style: { height: 35 }, p: "0 4" }} justify="center">
+        <Frame override={{ style: { height: 35 }, px: Space.n16 }} justify="center">
           <Text size={FontSize.n9} weight="medium" opacity={0.6}>
             {activeTab.toUpperCase()}
           </Text>
@@ -144,7 +145,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
       surface="sunken"
     >
       <Frame
-        override={{ style: { height: 35 }, p: "0 5" }}
+        override={{ style: { height: 35 }, px: Space.n20 }}
         align="center"
         justify="between"
         row
@@ -252,7 +253,7 @@ function FolderItem({
         rounded="none"
         onClick={() => setExpanded(!expanded)}
       >
-        <Frame override={{ gap: Space.n8, p: "0 0 0 4" }} row align="center">
+        <Frame override={{ gap: Space.n8, pl: Space.n16 }} row align="center">
           {expanded ? (
             <Icon src={ChevronDown} size={IconSize.n12} style={{ opacity: 0.6 }} />
           ) : (
@@ -266,7 +267,10 @@ function FolderItem({
       {expanded && (
         <Frame
           override={{
-            p: "0 0 0 12",
+            pt: Space.n0,
+            pr: Space.n0,
+            pb: Space.n0,
+            pl: Space.n12,
             style: {
               borderLeftColor: "transparent",
               borderLeft: "1px solid var(--border-color)",
@@ -304,7 +308,7 @@ function FileItem({
       surface={active ? "raised" : undefined}
       rounded="none"
     >
-      <Frame override={{ gap: Space.n8, p: "0 0 0 16", w: "100%" }} row align="center">
+      <Frame override={{ gap: Space.n8, pl: Space.n64, w: Size.full }} row align="center">
         <Frame override={{ style: { width: 12, height: 12 } }} pack>
           <Text size={FontSize.n10} style={{ color: getIconColor(), fontWeight: "bold" }}>
             {icon === "react" ? "TSX" : icon === "ts" ? "TS" : "{}"}
@@ -349,7 +353,7 @@ function EditorTabs() {
       <Tab title="IDEApp" icon="react" modified />
       <Tab title="useStore.ts" icon="ts" />
       <Frame flex />
-      <Frame override={{ p: "0 2", gap: Space.n4 }} row align="center">
+      <Frame override={{ px: Space.n8, gap: Space.n4 }} row align="center">
         <Action
           icon={Split}
           variant="ghost"
@@ -397,7 +401,8 @@ function Tab({
           borderRight: "1px solid var(--border-color)",
           borderTop: active ? "1px solid var(--border-color)" : undefined,
         },
-        p: "0 3",
+        py: Space.n0,
+        px: Space.n12,
       }}
       row
       align="center"
@@ -436,7 +441,7 @@ function Tab({
 function Breadcrumbs() {
   return (
     <Frame
-      override={{ style: { height: 22 }, p: "0 4", gap: Space.n4 }}
+      override={{ style: { height: 22 }, px: Space.n16, gap: Space.n4 }}
       row
       align="center"
       surface="base"
@@ -458,8 +463,9 @@ function CodeEditor() {
       {/* Gutter */}
       <Frame
         override={{
-          w: 50,
-          p: "4 0",
+          w: Size.n48,
+          py: Space.n16,
+          px: Space.n0,
           gap: Space.n0,
           opacity: 0.4,
           style: { userSelect: "none" },
@@ -478,7 +484,7 @@ function CodeEditor() {
         ))}
       </Frame>
       {/* Code */}
-      <Frame override={{ p: "4 0", style: { position: "relative" } }} flex fill>
+      <Frame override={{ py: Space.n16, style: { position: "relative" } }} flex fill>
         <Text size={FontSize.n13} mono style={{ lineHeight: "20px", whiteSpace: "pre" }}>
           <span style={{ color: "#C586C0" }}>import</span>{" "}
           <span style={{ color: "#9CDCFE" }}>{"{"}</span>{" "}
@@ -555,7 +561,7 @@ function Panel() {
       surface="base"
     >
       <Frame
-        override={{ style: { height: 35 }, p: "0 4", gap: Space.n16 }}
+        override={{ style: { height: 35 }, px: Space.n16, gap: Space.n16 }}
         row
         align="center"
       >
@@ -577,7 +583,7 @@ function Panel() {
         </Text>
       </Frame>
       <Frame
-        override={{ p: "2 4", style: { fontFamily: "monospace" } }}
+        override={{ py: Space.n8, px: Space.n16, style: { fontFamily: "monospace" } }}
         flex
         fill
       >
@@ -598,7 +604,7 @@ function Panel() {
         <Text size={FontSize.n12} color="secondary">
           nothing to commit, working tree clean
         </Text>
-        <Frame override={{ gap: Space.n8, p: "2 0 0 0" }} row align="center">
+        <Frame override={{ gap: Space.n8, pt: Space.n8 }} row align="center">
           <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
@@ -617,7 +623,7 @@ function Panel() {
 function StatusBar() {
   return (
     <Frame
-      override={{ style: { height: 22 }, p: "0 3" }}
+      override={{ style: { height: 22 }, px: Space.n12 }}
       surface="overlay"
       row
       align="center"
@@ -633,7 +639,7 @@ function StatusBar() {
         <Frame override={{ gap: Space.n4 }} row align="center">
           <Icon src={RefreshCw} size={IconSize.n10} style={{ color: "white" }} />
         </Frame>
-        <Frame override={{ gap: Space.n4, p: "0 0 0 2" }} row align="center">
+        <Frame override={{ gap: Space.n4, pl: Space.n8 }} row align="center">
           <Icon src={AlertCircle} size={IconSize.n10} style={{ color: "white" }} />
           <Text size={FontSize.n11} color="white">
             0

@@ -14,7 +14,7 @@ import { Frame } from "../../design-system/Frame";
 import { Action } from "../../design-system/Action";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
-import { IconSize } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size } from "../../design-system/token/token.const.1tier";
 
 export interface CMSSidebarProps {
   isOpen: boolean;
@@ -27,8 +27,8 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
   return (
     <Frame
       override={{
-        h: "100%",
-        p: 1,
+        h: Size.full,
+        p: Space.n4,
         gap: Space.n4,
         style: {
           borderRight: "1px solid var(--border-color)",
@@ -42,7 +42,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       surface="raised"
     >
       {/* Header with Toggle */}
-      <Frame override={{ gap: Space.n12, p: "0 4px" }} row align="center">
+      <Frame override={{ gap: Space.n12, py: Space.n0, px: Space.n4 }} row align="center">
         <Action
           icon={isOpen ? Layout : Menu}
           variant="ghost"
@@ -81,7 +81,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         overflow="scroll"
       >
         <Frame
-          override={{ gap: Space.n8, p: "0px 8px 8px 8px" }}
+          override={{ gap: Space.n8, pt: Space.n0, pr: Space.n8, pb: Space.n8, pl: Space.n8 }}
           row
           align="center"
           justify="between"
@@ -106,7 +106,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
             />
           </Frame>
           <Frame
-            override={{ gap: Space.n4, p: "2px", rounded: "md" }}
+            override={{ gap: Space.n4, style: { padding: "2px" }, rounded: "md" }}
             row
             surface="sunken"
           >
@@ -139,7 +139,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       <Frame
         override={{
           gap: Space.n12,
-          p: 3,
+          p: Space.n12,
           style: {
             borderTop: "1px solid var(--border-color)",
             opacity: isOpen ? 1 : 0,
@@ -181,7 +181,7 @@ interface LayerItemProps {
 function LayerItem({ label, active, viewMode }: LayerItemProps) {
   if (viewMode === "thumbnail") {
     return (
-      <Frame override={{ gap: Space.n6, p: "0 8px" }}>
+      <Frame override={{ gap: Space.n6, py: Space.n0, px: Space.n8 }}>
         <Frame override={{ gap: Space.n8 }} row align="center">
           <Icon src={FileText} size={IconSize.n10} style={{ opacity: 0.5 }} />
           <Text.Card.Note
@@ -192,7 +192,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
         </Frame>
         <Frame
           override={{
-            w: "100%",
+            w: Size.full,
             rounded: "md",
             style: {
               border: "1px solid var(--border-color)",
@@ -209,7 +209,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
         >
           {active && (
             <Frame
-              override={{ w: 8, h: 8, rounded: "full", shadow: "sm" }}
+              override={{ w: Size.n8, h: Size.n8, rounded: "full", shadow: "sm" }}
               surface="primary"
             />
           )}
@@ -220,7 +220,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
 
   return (
     <Frame
-      override={{ p: "8px 12px", rounded: "md" }}
+      override={{ py: Space.n8, px: Space.n12, rounded: "md" }}
       row
       align="center"
       justify="between"
