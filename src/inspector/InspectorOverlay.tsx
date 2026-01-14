@@ -14,7 +14,7 @@ import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
 import { Overlay } from "../design-system/Overlay";
 import { Icon } from "../design-system/Icon";
-import { IconSize, FontSize } from "../design-system/token/token.const.1tier";
+import { IconSize, FontSize, Space } from "../design-system/token/token.const.1tier";
 
 // --- React Fiber Helpers ---
 
@@ -508,7 +508,7 @@ export function InspectorOverlay() {
           clickOutsideToDismiss={false}
         >
           <Frame
-            override={{ rounded: "full", p: "0.5 2", gap: 1.5, shadow: "lg" }}
+            override={{ rounded: "full", p: "0.5 2", gap: Space.n6, shadow: "lg" }}
             surface="primary"
             row
             align="center"
@@ -571,7 +571,7 @@ export function InspectorOverlay() {
                   p: "0 1.5",
                   rounded: "sm",
                   h: 5,
-                  gap: 1,
+                  gap: Space.n4,
                   shadow: "sm",
                 }}
                 // 24px
@@ -622,7 +622,7 @@ export function InspectorOverlay() {
           clickOutsideToDismiss={false}
         >
           <Frame
-            override={{ rounded: "md", p: "1 3", gap: 2, shadow: "lg" }}
+            override={{ rounded: "md", p: "1 3", gap: Space.n8, shadow: "lg" }}
             surface="primary"
             row
             align="center"
@@ -865,13 +865,13 @@ function InspectorPanel({
           justify="between"
           onMouseDown={handleMouseDown}
         >
-          <Frame override={{ gap: 1.5 }} row align="center">
+          <Frame override={{ gap: Space.n6 }} row align="center">
             <Lock size={10} className="text-primary" />
             <Text weight="bold" size={FontSize.n10}>
               {title}
             </Text>
           </Frame>
-          <Frame override={{ gap: 0.5 }} row>
+          <Frame override={{ gap: Space.n2 }} row>
             <Action
               icon={Copy}
               variant="ghost"
@@ -907,7 +907,7 @@ function InspectorPanel({
           </Frame>
 
           {/* AI Assist Section (Collapsible) */}
-          <Frame override={{ gap: 0.5, p: "0 2 2 2" }}>
+          <Frame override={{ gap: Space.n2, p: "0 2 2 2" }}>
             <Frame row align="center" justify="between">
               <Action
                 variant="ghost"
@@ -937,7 +937,7 @@ function InspectorPanel({
             </Frame>
 
             {showAiAssist && (
-              <Frame override={{ gap: 0.5, p: "0 0 0 2" }}>
+              <Frame override={{ gap: Space.n2, p: "0 0 0 2" }}>
                 {randomPrompts.map((item) => (
                   <Action
                     key={item.label}
@@ -962,7 +962,7 @@ function InspectorPanel({
             if (section.section === "Flex" && !hasFlex) return null;
             return (
               <Frame
-                override={{ gap: 0.5, p: "0 2 2 2" }}
+                override={{ gap: Space.n2, p: "0 2 2 2" }}
                 key={section.section}
               >
                 <Text
@@ -978,7 +978,7 @@ function InspectorPanel({
                 </Text>
                 <Frame
                   override={{
-                    gap: 0,
+                    gap: Space.n0,
                     style: { border: "1px solid var(--border-color)" },
                     rounded: "sm",
                   }}
@@ -1078,7 +1078,7 @@ function PropertyTree({
           if (!isEmpty) setIsOpen(!isOpen);
         }}
       >
-        <Frame row align="center" override={{ gap: 4 }}>
+        <Frame row align="center" override={{ gap: Space.n16 }}>
           {!isEmpty && (
             <Icon
               src={isOpen ? ChevronDown : ChevronRight}

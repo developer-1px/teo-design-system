@@ -1,4 +1,5 @@
 import { Frame } from "../design-system/Frame";
+import { Space } from "../design-system/token/token.const.1tier";
 import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text.tsx";
 import { Field } from "../design-system/Field";
@@ -19,8 +20,8 @@ export function LoginApp() {
         align="center"
         justify="center"
       >
-        <Frame override={{ w: "100%", maxWidth: "400px", gap: 8 }}>
-          <Frame override={{ gap: 2 }}>
+        <Frame override={{ w: "100%", maxWidth: "400px", gap: Space.n32 }}>
+          <Frame override={{ gap: Space.n8 }}>
             <Text size={FontSize.n28} weight="bold">
               Welcome back
             </Text>
@@ -29,8 +30,8 @@ export function LoginApp() {
             </Text>
           </Frame>
 
-          <Frame override={{ gap: 5 }}>
-            <Frame override={{ gap: 2 }}>
+          <Frame override={{ gap: Space.n20 }}>
+            <Frame override={{ gap: Space.n8 }}>
               <Field
                 label="Email address"
                 placeholder="name@company.com"
@@ -45,7 +46,7 @@ export function LoginApp() {
             </Frame>
 
             <Frame row justify="between" align="center">
-              <Frame override={{ gap: 2 }} row align="center" cursor="pointer">
+              <Frame override={{ gap: Space.n8 }} row align="center" cursor="pointer">
                 {/* Checkbox simulation */}
                 <Frame
                   override={{
@@ -113,7 +114,7 @@ export function LoginApp() {
               for data-dense interfaces where content is the hero.
             </ProseOld>
 
-            <Frame override={{ gap: 4, style: { marginTop: 16 } }}>
+            <Frame override={{ gap: Space.n16, style: { marginTop: 16 } }}>
               <FeatureRow
                 title="Zero Decoration"
                 desc="Focus on content hierarchy and spacing."
@@ -136,7 +137,7 @@ export function LoginApp() {
 
 function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame override={{ gap: 4 }} row align="start">
+    <Frame override={{ gap: Space.n16 }} row align="start">
       <Frame
         override={{ w: 6, h: 6, rounded: "full", style: { marginTop: 4 } }}
         surface="primary"

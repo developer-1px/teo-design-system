@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize } from "../../design-system/token/token.const.1tier";
 
@@ -12,12 +13,12 @@ export function FAQBoardFooter() {
       override={{
         w: "100%",
         p: "96 24",
-        gap: 12,
+        gap: Space.n48,
         style: { maxWidth: 680, margin: "0 auto" },
       }}
       surface="base"
     >
-      <Frame override={{ gap: 2, w: "100%" }} align="center">
+      <Frame override={{ gap: Space.n8, w: "100%" }} align="center">
         <Text.Card.Note
           style={{ fontWeight: "bold", color: "var(--text-primary)" }}
         >
@@ -26,7 +27,7 @@ export function FAQBoardFooter() {
         <Text.Prose.Title variant="lg">Common questions</Text.Prose.Title>
       </Frame>
 
-      <Frame override={{ w: "100%", gap: 4 }}>
+      <Frame override={{ w: "100%", gap: Space.n16 }}>
         <FAQRow
           q="How secure is my data?"
           a="We use industry-standard encryption and SOC2 certification to ensure your data stays protected at all times."
@@ -50,7 +51,7 @@ export function FAQBoardFooter() {
           p: 8,
           w: "100%",
           rounded: "2xl",
-          gap: 6,
+          gap: Space.n24,
           style: { marginTop: 24 },
         }}
         surface="raised"
@@ -64,7 +65,7 @@ export function FAQBoardFooter() {
         >
           <Icon src={HelpCircle} size={IconSize.n24} />
         </Frame>
-        <Frame override={{ gap: 1 }}>
+        <Frame override={{ gap: Space.n4 }}>
           <Text.Card.Title>Still have questions?</Text.Card.Title>
           <Text.Card.Desc>
             We're here to help. Contact our support team 24/7.
@@ -96,7 +97,7 @@ function FAQRow({ q, a }: FAQRowProps) {
         w: "100%",
         p: "6 0",
         style: { borderBottom: "1px solid var(--border-color)" },
-        gap: 4,
+        gap: Space.n16,
       }}
       onClick={() => setIsOpen(!isOpen)}
       cursor="pointer"

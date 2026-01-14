@@ -10,6 +10,7 @@ import {
   MousePointerClick,
 } from "lucide-react";
 import { Action } from "../design-system/Action";
+import { Space } from "../design-system/token/token.const.1tier";
 import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame";
 import { Text } from "../design-system/text/Text";
@@ -36,7 +37,7 @@ export function LandingApp() {
           align="center"
         >
           <Text.Prose.Title variant="sm">TMDK</Text.Prose.Title>
-          <Frame override={{ gap: 2 }} row>
+          <Frame override={{ gap: Space.n8 }} row>
             <Action label="Documentation" variant="ghost" />
             <Action label="Components" variant="ghost" />
             <Action label="Download" variant="primary" />
@@ -44,13 +45,13 @@ export function LandingApp() {
         </Frame>
 
         {/* Hero Section */}
-        <Frame override={{ p: "30 6", gap: 6 }} align="center">
+        <Frame override={{ p: "30 6", gap: Space.n24 }} align="center">
           <Frame
             override={{
               p: "1 3",
               rounded: "full",
               style: { border: "1px solid var(--border-color)" },
-              gap: 2,
+              gap: Space.n8,
             }}
             surface="sunken"
             row
@@ -84,7 +85,7 @@ export function LandingApp() {
             components crafted for modern web applications.
           </Text.Prose.Body>
 
-          <Frame override={{ gap: 3, p: "8 0 0 0" }} row justify="center">
+          <Frame override={{ gap: Space.n12, p: "8 0 0 0" }} row justify="center">
             {/* Main CTA */}
             <Action variant="primary" rounded="full" p="3 5" gap={2}>
               <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>
@@ -105,7 +106,7 @@ export function LandingApp() {
         </Frame>
 
         {/* Why Section */}
-        <Frame override={{ gap: 6, p: "24 6" }} align="center">
+        <Frame override={{ gap: Space.n24, p: "24 6" }} align="center">
           <Text.Prose.Title variant="lg" style={{ textAlign: "center" }}>
             왜 만들었는가?
           </Text.Prose.Title>
@@ -133,8 +134,8 @@ export function LandingApp() {
         </Frame>
 
         {/* Features Grid */}
-        <Frame override={{ p: "24 6", gap: 12 }}>
-          <Frame override={{ gap: 4, p: "0 0 8 0" }} align="center">
+        <Frame override={{ p: "24 6", gap: Space.n48 }}>
+          <Frame override={{ gap: Space.n16, p: "0 0 8 0" }} align="center">
             <Text.Prose.Title variant="lg">
               Everything you need
             </Text.Prose.Title>
@@ -145,7 +146,7 @@ export function LandingApp() {
 
           <Frame
             override={{
-              gap: 4,
+              gap: Space.n16,
               style: {
                 gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
                 maxWidth: 1200,
@@ -199,7 +200,7 @@ export function LandingApp() {
         </Frame>
 
         {/* Footer */}
-        <Frame override={{ p: "24 6", gap: 4 }}>
+        <Frame override={{ p: "24 6", gap: Space.n16 }}>
           <Frame override={{ h: "1px", w: "100%" }} surface="sunken" />
           <Frame
             override={{ p: "8 0 0 0" }}
@@ -210,7 +211,7 @@ export function LandingApp() {
             <Text.Card.Note>
               © 2026 Minimal Design Kit. All rights reserved.
             </Text.Card.Note>
-            <Frame override={{ gap: 4 }} row>
+            <Frame override={{ gap: Space.n16 }} row>
               <Text.Card.Note style={{ cursor: "pointer" }}>
                 Twitter
               </Text.Card.Note>
@@ -243,7 +244,7 @@ function FeatureCard({
         p: 6,
         rounded: "2xl",
         style: { border: "1px solid var(--border-color)" },
-        gap: 4,
+        gap: Space.n16,
       }}
       surface="sunken"
     >
@@ -260,7 +261,7 @@ function FeatureCard({
       >
         <Icon src={IconSrc} size={IconSize.n24} style={{ color: "var(--text-primary)" }} />
       </Frame>
-      <Frame override={{ gap: 2 }}>
+      <Frame override={{ gap: Space.n8 }}>
         <Text.Card.Title>{title}</Text.Card.Title>
         <Text.Card.Desc>{description}</Text.Card.Desc>
       </Frame>

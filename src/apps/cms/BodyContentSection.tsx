@@ -1,6 +1,7 @@
 import { Check, MessageSquare, Zap } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize } from "../../design-system/token/token.const.1tier";
 
@@ -16,7 +17,7 @@ export function BodyContentSection() {
     >
       <Frame
         override={{
-          gap: 6,
+          gap: Space.n24,
           w: "100%",
           maxWidth: 1280,
           style: { margin: "0 auto" },
@@ -24,8 +25,8 @@ export function BodyContentSection() {
         row
         align="center"
       >
-        <Frame override={{ w: "50%", gap: 2 }}>
-          <Frame override={{ gap: 1 }}>
+        <Frame override={{ w: "50%", gap: Space.n8 }}>
+          <Frame override={{ gap: Space.n4 }}>
             <Text.Card.Note
               style={{
                 fontSize: 14,
@@ -43,7 +44,7 @@ export function BodyContentSection() {
             Workflow shouldn't be a bottleneck. Our platform allows developers
             to focus on logic while designers handle the visuals.
           </Text.Prose.Body>
-          <Frame override={{ gap: 1 }}>
+          <Frame override={{ gap: Space.n4 }}>
             <CheckItem
               title="Pure Token-based design"
               desc="Align with your existing CSS/Tailwind system effortlessly."
@@ -77,12 +78,12 @@ export function BodyContentSection() {
                 rounded: "2xl",
                 shadow: "lg",
                 p: 6,
-                gap: 4,
+                gap: Space.n16,
               }}
               surface="raised"
             >
               <Icon src={Zap} size={IconSize.n32} style={{ color: "var(--color-warning)" }} />
-              <Frame override={{ gap: 2 }}>
+              <Frame override={{ gap: Space.n8 }}>
                 <Frame
                   override={{ h: 10, w: "100%", rounded: "full" }}
                   surface="overlay"
@@ -101,13 +102,13 @@ export function BodyContentSection() {
                 rounded: "2xl",
                 shadow: "lg",
                 p: 6,
-                gap: 4,
+                gap: Space.n16,
               }}
               surface="raised"
             >
               <Icon src={MessageSquare} size={IconSize.n32} style={{ color: "var(--color-primary)" }} />
-              <Frame override={{ gap: 2 }}>
-                <Frame override={{ gap: 0.5 }} row align="center">
+              <Frame override={{ gap: Space.n8 }}>
+                <Frame override={{ gap: Space.n2 }} row align="center">
                   <Frame
                     override={{ w: 6, h: 6, rounded: "full" }}
                     surface="overlay"
@@ -137,7 +138,7 @@ interface CheckItemProps {
 
 function CheckItem({ title, desc }: CheckItemProps) {
   return (
-    <Frame override={{ gap: 1 }} row align="start">
+    <Frame override={{ gap: Space.n4 }} row align="start">
       <Frame
         override={{ w: 6, h: 6, rounded: "full", style: { marginTop: 2 } }}
         surface="primary"
@@ -145,7 +146,7 @@ function CheckItem({ title, desc }: CheckItemProps) {
       >
         <Icon src={Check} size={IconSize.n14} color="#fff" />
       </Frame>
-      <Frame override={{ gap: 1 }}>
+      <Frame override={{ gap: Space.n4 }}>
         <Text.Card.Title style={{ fontSize: 16, fontWeight: "bold" }}>
           {title}
         </Text.Card.Title>

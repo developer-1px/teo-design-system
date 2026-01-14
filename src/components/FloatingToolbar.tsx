@@ -11,6 +11,7 @@ import {
   Type,
 } from "lucide-react";
 import { Action } from "../design-system/Action";
+import { Space } from "../design-system/token/token.const.1tier";
 import { Frame } from "../design-system/Frame";
 import { IconSize } from "../design-system/token/token.const.1tier";
 import { Overlay } from "../design-system/Overlay";
@@ -44,7 +45,7 @@ export function FloatingToolbar() {
     >
       <Frame
         override={{
-          gap: 1,
+          gap: Space.n4,
           p: 1,
           rounded: "full",
           shadow: "lg",

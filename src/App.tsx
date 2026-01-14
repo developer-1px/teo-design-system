@@ -7,6 +7,7 @@ import { SlideApp } from "./apps/SlideApp";
 import { TokensApp } from "./apps/TokensApp";
 import { Text } from "./design-system/text/Text.tsx";
 import { Frame } from "./design-system/Frame";
+import { Space } from "./design-system/token/token.const.1tier";
 
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
@@ -48,7 +49,7 @@ function Navigation() {
         rounded: "full",
         shadow: "xl",
         p: 1,
-        gap: 1,
+        gap: Space.n4,
         style: { position: "fixed", bottom: 20, left: 20, zIndex: 9999 },
       }}
       surface="raised"

@@ -1,6 +1,9 @@
 import { Frame } from "../design-system/Frame";
 
 import { ProseSection, ProseDocument } from "../design-system/ProseOld.tsx";
+import {
+  Space,
+} from "../design-system/token/token.const.1tier";
 import { Text } from "../design-system/text/Text";
 
 // --- Data Structures (No Hardcoding) ---
@@ -80,7 +83,7 @@ const TEXT_CONTEXTS = [
 
 const SURFACES = [
   { id: "base", hex: "#FFFFFF", desc: "Page Background" },
-  { id: "sunken", hex: "#F9F9FB", desc: "Sidebars / Wells" },
+  { id: "sunken", hex: "#F9F9FB", desc: `${Space}bars / Wells` },
   { id: "raised", hex: "#FFFFFF", desc: "Cards / Sheets" },
   { id: "overlay", hex: "#FFFFFF", desc: "Dialogs / Menus" },
   { id: "selected", hex: "#F4F4F5", desc: "Active States" },
@@ -98,7 +101,7 @@ export function TokensApp() {
       <ProseSection p="80 0" layout="full">
         <ProseDocument maxWidth="1000px" gap={12}>
           {/* Header */}
-          <Frame override={{ gap: 4 }}>
+          <Frame override={{ gap: Space.n16 }}>
             <Text.Prose.Title>Design Tokens & System</Text.Prose.Title>
             <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
               Reference for the Minimal Design Kit token system. Typography is
@@ -109,12 +112,12 @@ export function TokensApp() {
           <Frame override={{ w: "100%", h: "1px" }} surface="overlay" />
 
           {/* 1. Text System (Dynamic from Data) */}
-          <Frame override={{ gap: 8 }}>
+          <Frame override={{ gap: Space.n32 }}>
             <Text.Prose.Title>Text System (By Context)</Text.Prose.Title>
 
-            <Frame override={{ gap: 12 }}>
+            <Frame override={{ gap: Space.n48 }}>
               {TEXT_CONTEXTS.map((ctx) => (
-                <Frame override={{ gap: 4 }} key={ctx.name}>
+                <Frame override={{ gap: Space.n16 }} key={ctx.name}>
                   <Frame row justify="between" align="baseline">
                     <Text.Prose.Title
                       style={{ fontSize: "var(--font-size-2)" }}
@@ -129,7 +132,7 @@ export function TokensApp() {
                       rounded: "xl",
                       p: 6,
                       style: { border: "1px solid var(--border-color)" },
-                      gap: 0,
+                      gap: Space.n0,
                     }}
                     surface="sunken"
                   >
@@ -141,7 +144,7 @@ export function TokensApp() {
                       return (
                         <Frame
                           override={{
-                            gap: 4,
+                            gap: Space.n16,
                             p: "4 0",
                             style: {
                               borderBottom: "1px solid var(--border-color)",
@@ -152,7 +155,7 @@ export function TokensApp() {
                           align="center"
                         >
                           {/* Slot Name */}
-                          <Frame override={{ w: 120 }}>
+                          <Frame override={{ w: Space.n128 }}>
                             <Text.Card.Code
                               style={{ color: "var(--text-tertiary)" }}
                             >
@@ -166,7 +169,7 @@ export function TokensApp() {
                           </Frame>
 
                           {/* Role Description */}
-                          <Frame override={{ w: 120 }} justify="end">
+                          <Frame override={{ w: Space.n128 }} justify="end">
                             <Text.Card.Note>{slot.desc}</Text.Card.Note>
                           </Frame>
                         </Frame>
@@ -179,18 +182,18 @@ export function TokensApp() {
           </Frame>
 
           {/* 1.1 Prose Title Variants */}
-          <Frame override={{ gap: 8 }}>
+          <Frame override={{ gap: Space.n8 }}>
             <Text.Prose.Title>Prose Title Variants</Text.Prose.Title>
             <Frame
               override={{
-                p: 8,
+                p: Space.n8,
                 rounded: "xl",
-                gap: 4,
+                gap: Space.n16,
                 style: { border: "1px solid var(--border-color)" },
               }}
               surface="sunken"
             >
-              <Frame override={{ gap: 2 }}>
+              <Frame override={{ gap: Space.n2 }}>
                 <Text.Prose.Title variant="xl">
                   Display Title (xl)
                 </Text.Prose.Title>
@@ -199,7 +202,7 @@ export function TokensApp() {
                 </Text.Card.Code>
               </Frame>
               <Frame override={{ w: "100%", h: "1px" }} surface="base" />
-              <Frame override={{ gap: 2 }}>
+              <Frame override={{ gap: Space.n2 }}>
                 <Text.Prose.Title variant="lg">
                   Page Title (lg)
                 </Text.Prose.Title>
@@ -208,7 +211,7 @@ export function TokensApp() {
                 </Text.Card.Code>
               </Frame>
               <Frame override={{ w: "100%", h: "1px" }} surface="base" />
-              <Frame override={{ gap: 2 }}>
+              <Frame override={{ gap: Space.n2 }}>
                 <Text.Prose.Title variant="md">
                   Section Title (md)
                 </Text.Prose.Title>
@@ -217,7 +220,7 @@ export function TokensApp() {
                 </Text.Card.Code>
               </Frame>
               <Frame override={{ w: "100%", h: "1px" }} surface="base" />
-              <Frame override={{ gap: 2 }}>
+              <Frame override={{ gap: Space.n2 }}>
                 <Text.Prose.Title variant="sm">
                   Subsection Title (sm)
                 </Text.Prose.Title>
@@ -231,17 +234,17 @@ export function TokensApp() {
           <Frame override={{ w: "100%", h: "1px" }} surface="overlay" />
 
           {/* 2. Surfaces */}
-          <Frame override={{ gap: 8 }}>
+          <Frame override={{ gap: Space.n8 }}>
             <Text.Prose.Title>Surfaces</Text.Prose.Title>
-            <Frame override={{ gap: 6 }} row wrap="wrap">
+            <Frame override={{ gap: Space.n24 }} row wrap="wrap">
               {SURFACES.map((s) => (
                 <Frame
                   override={{
-                    w: 120,
-                    h: 120,
+                    w: Space.n128,
+                    h: Space.n128,
                     rounded: "2xl",
                     shadow: "sm",
-                    p: 4,
+                    p: Space.n4,
                     style: { border: "1px solid var(--border-color)" },
                   }}
                   key={s.id}
@@ -263,14 +266,14 @@ export function TokensApp() {
           </Frame>
 
           {/* 3. Spacing */}
-          <Frame override={{ gap: 8 }}>
+          <Frame override={{ gap: Space.n8 }}>
             <Text.Prose.Title>Spacing</Text.Prose.Title>
-            <Frame override={{ gap: 4 }} row wrap="wrap">
+            <Frame override={{ gap: Space.n24 }} row wrap="wrap">
               {SPACING.map((sp) => (
-                <Frame override={{ gap: 2 }} key={sp} align="center">
+                <Frame override={{ gap: Space.n8 }} key={sp} align="center">
                   <Frame
                     override={{
-                      h: 32,
+                      h: Space.n32,
                       rounded: "sm",
                       style: {
                         width: `var(--space-${String(sp).replace(".", "-")})`,
@@ -289,9 +292,9 @@ export function TokensApp() {
           </Frame>
 
           {/* 4. Radius */}
-          <Frame override={{ gap: 8 }}>
+          <Frame override={{ gap: Space.n32 }}>
             <Text.Prose.Title>Radius</Text.Prose.Title>
-            <Frame override={{ gap: 6 }} row wrap="wrap">
+            <Frame override={{ gap: Space.n24 }} row wrap="wrap">
               {RADIUS.map((r) => (
                 <Frame
                   override={{
@@ -316,10 +319,10 @@ export function TokensApp() {
           </Frame>
 
           {/* 5. Shadows */}
-          <Frame override={{ gap: 8 }}>
+          <Frame override={{ gap: Space.n32 }}>
             <Text.Prose.Title>Shadows</Text.Prose.Title>
             <Frame
-              override={{ gap: 12, p: 12, rounded: "3xl" }}
+              override={{ gap: Space.n48, p: 12, rounded: "3xl" }}
               row
               wrap="wrap"
               surface="sunken"

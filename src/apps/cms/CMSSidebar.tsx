@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Action } from "../../design-system/Action";
+import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize } from "../../design-system/token/token.const.1tier";
 
@@ -28,7 +29,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       override={{
         h: "100%",
         p: 1,
-        gap: 1,
+        gap: Space.n4,
         style: {
           borderRight: "1px solid var(--border-color)",
           width: isOpen ? 240 : 60,
@@ -41,7 +42,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       surface="raised"
     >
       {/* Header with Toggle */}
-      <Frame override={{ gap: 3, p: "0 4px" }} row align="center">
+      <Frame override={{ gap: Space.n12, p: "0 4px" }} row align="center">
         <Action
           icon={isOpen ? Layout : Menu}
           variant="ghost"
@@ -53,7 +54,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
         <Frame
           override={{
-            gap: 2,
+            gap: Space.n8,
             style: {
               opacity: isOpen ? 1 : 0,
               transition: "opacity 0.2s",
@@ -68,7 +69,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       {/* Content - Hidden when closed */}
       <Frame
         override={{
-          gap: "8px",
+          gap: Space.n8,
           style: {
             opacity: isOpen ? 1 : 0,
             transition: "opacity 0.2s",
@@ -80,12 +81,12 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         overflow="scroll"
       >
         <Frame
-          override={{ gap: 2, p: "0px 8px 8px 8px" }}
+          override={{ gap: Space.n8, p: "0px 8px 8px 8px" }}
           row
           align="center"
           justify="between"
         >
-          <Frame override={{ gap: 2 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} row align="center">
             <Text.Card.Note
               style={{
                 fontSize: 11,
@@ -105,7 +106,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
             />
           </Frame>
           <Frame
-            override={{ gap: 1, p: "2px", rounded: "md" }}
+            override={{ gap: Space.n4, p: "2px", rounded: "md" }}
             row
             surface="sunken"
           >
@@ -126,7 +127,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           </Frame>
         </Frame>
 
-        <Frame override={{ gap: viewMode === "thumbnail" ? "12px" : "4px" }}>
+        <Frame override={{ gap: viewMode === "thumbnail" ? Space.n12 : Space.n4 }}>
           <LayerItem label="Hero Section" active viewMode={viewMode} />
           <LayerItem label="Feature Grid" viewMode={viewMode} />
           <LayerItem label="Testimonials" viewMode={viewMode} />
@@ -137,7 +138,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       {/* Footer Settings */}
       <Frame
         override={{
-          gap: 3,
+          gap: Space.n12,
           p: 3,
           style: {
             borderTop: "1px solid var(--border-color)",
@@ -156,7 +157,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         >
           <Icon src={Settings} size={IconSize.n16} />
         </Frame>
-        <Frame override={{ gap: "2px" }}>
+        <Frame override={{ gap: Space.n2 }}>
           <Text.Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
             Site Settings
           </Text.Card.Title>
@@ -180,8 +181,8 @@ interface LayerItemProps {
 function LayerItem({ label, active, viewMode }: LayerItemProps) {
   if (viewMode === "thumbnail") {
     return (
-      <Frame override={{ gap: 1.5, p: "0 8px" }}>
-        <Frame override={{ gap: 2 }} row align="center">
+      <Frame override={{ gap: Space.n6, p: "0 8px" }}>
+        <Frame override={{ gap: Space.n8 }} row align="center">
           <Icon src={FileText} size={IconSize.n10} style={{ opacity: 0.5 }} />
           <Text.Card.Note
             style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}
@@ -226,7 +227,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
       surface={active ? "raised" : undefined}
       cursor="pointer"
     >
-      <Frame override={{ gap: "8px" }} row align="center">
+      <Frame override={{ gap: Space.n8 }} row align="center">
         <Icon src={FileText} size={IconSize.n14} style={{ opacity: 0.5 }} />
         <Text.Card.Title
           style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}

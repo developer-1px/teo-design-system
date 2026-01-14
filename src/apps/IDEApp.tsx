@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Action } from "../design-system/Action";
+import { Space } from "../design-system/token/token.const.1tier";
 import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
 import { Icon } from "../design-system/Icon";
@@ -38,7 +39,7 @@ function ActivityBar({
         w: 48,
         style: { borderRight: "1px solid var(--border-color)" },
         p: "2 0",
-        gap: 2,
+        gap: Space.n8,
       }}
       fill
       surface="sunken"
@@ -168,7 +169,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
             rounded="none"
             onClick={() => setOpenEditorsExpanded(!openEditorsExpanded)}
           >
-            <Frame override={{ gap: 1 }} row align="center">
+            <Frame override={{ gap: Space.n4 }} row align="center">
               {openEditorsExpanded ? (
                 <Icon src={ChevronDown} size={IconSize.n12} />
               ) : (
@@ -195,7 +196,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
             rounded="none"
             onClick={() => setProjectExpanded(!projectExpanded)}
           >
-            <Frame override={{ gap: 1 }} row align="center">
+            <Frame override={{ gap: Space.n4 }} row align="center">
               {projectExpanded ? (
                 <Icon src={ChevronDown} size={IconSize.n12} />
               ) : (
@@ -251,7 +252,7 @@ function FolderItem({
         rounded="none"
         onClick={() => setExpanded(!expanded)}
       >
-        <Frame override={{ gap: 2, p: "0 0 0 4" }} row align="center">
+        <Frame override={{ gap: Space.n8, p: "0 0 0 4" }} row align="center">
           {expanded ? (
             <Icon src={ChevronDown} size={IconSize.n12} style={{ opacity: 0.6 }} />
           ) : (
@@ -303,7 +304,7 @@ function FileItem({
       surface={active ? "raised" : undefined}
       rounded="none"
     >
-      <Frame override={{ gap: 2, p: "0 0 0 16", w: "100%" }} row align="center">
+      <Frame override={{ gap: Space.n8, p: "0 0 0 16", w: "100%" }} row align="center">
         <Frame override={{ style: { width: 12, height: 12 } }} pack>
           <Text size={FontSize.n10} style={{ color: getIconColor(), fontWeight: "bold" }}>
             {icon === "react" ? "TSX" : icon === "ts" ? "TS" : "{}"}
@@ -348,7 +349,7 @@ function EditorTabs() {
       <Tab title="IDEApp" icon="react" modified />
       <Tab title="useStore.ts" icon="ts" />
       <Frame flex />
-      <Frame override={{ p: "0 2", gap: 1 }} row align="center">
+      <Frame override={{ p: "0 2", gap: Space.n4 }} row align="center">
         <Action
           icon={Split}
           variant="ghost"
@@ -402,7 +403,7 @@ function Tab({
       align="center"
       justify="between"
     >
-      <Frame override={{ gap: 2 }} row align="center">
+      <Frame override={{ gap: Space.n8 }} row align="center">
         <Text size={FontSize.n10} style={{ color: getIconColor(), fontWeight: "bold" }}>
           {icon === "react" ? "TSX" : "TS"}
         </Text>
@@ -435,7 +436,7 @@ function Tab({
 function Breadcrumbs() {
   return (
     <Frame
-      override={{ style: { height: 22 }, p: "0 4", gap: 1 }}
+      override={{ style: { height: 22 }, p: "0 4", gap: Space.n4 }}
       row
       align="center"
       surface="base"
@@ -459,7 +460,7 @@ function CodeEditor() {
         override={{
           w: 50,
           p: "4 0",
-          gap: 0,
+          gap: Space.n0,
           opacity: 0.4,
           style: { userSelect: "none" },
         }}
@@ -554,7 +555,7 @@ function Panel() {
       surface="base"
     >
       <Frame
-        override={{ style: { height: 35 }, p: "0 4", gap: 4 }}
+        override={{ style: { height: 35 }, p: "0 4", gap: Space.n16 }}
         row
         align="center"
       >
@@ -580,7 +581,7 @@ function Panel() {
         flex
         fill
       >
-        <Frame override={{ gap: 2 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} row align="center">
           <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
@@ -597,7 +598,7 @@ function Panel() {
         <Text size={FontSize.n12} color="secondary">
           nothing to commit, working tree clean
         </Text>
-        <Frame override={{ gap: 2, p: "2 0 0 0" }} row align="center">
+        <Frame override={{ gap: Space.n8, p: "2 0 0 0" }} row align="center">
           <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
@@ -622,17 +623,17 @@ function StatusBar() {
       align="center"
       justify="between"
     >
-      <Frame override={{ gap: 3 }} row>
-        <Frame override={{ gap: 1 }} row align="center">
+      <Frame override={{ gap: Space.n12 }} row>
+        <Frame override={{ gap: Space.n4 }} row align="center">
           <Icon src={GitBranch} size={IconSize.n10} style={{ color: "white" }} />
           <Text size={FontSize.n11} color="white" weight="medium">
             main*
           </Text>
         </Frame>
-        <Frame override={{ gap: 1 }} row align="center">
+        <Frame override={{ gap: Space.n4 }} row align="center">
           <Icon src={RefreshCw} size={IconSize.n10} style={{ color: "white" }} />
         </Frame>
-        <Frame override={{ gap: 1, p: "0 0 0 2" }} row align="center">
+        <Frame override={{ gap: Space.n4, p: "0 0 0 2" }} row align="center">
           <Icon src={AlertCircle} size={IconSize.n10} style={{ color: "white" }} />
           <Text size={FontSize.n11} color="white">
             0
@@ -644,7 +645,7 @@ function StatusBar() {
         </Frame>
       </Frame>
 
-      <Frame override={{ gap: 4 }} row>
+      <Frame override={{ gap: Space.n16 }} row>
         <Text size={FontSize.n11} color="white">
           Ln 5, Col 24
         </Text>
@@ -657,7 +658,7 @@ function StatusBar() {
         <Text size={FontSize.n11} color="white">
           TypeScript JSX
         </Text>
-        <Frame override={{ gap: 1 }} row align="center">
+        <Frame override={{ gap: Space.n4 }} row align="center">
           <Text size={FontSize.n11} color="white">
             Prettier
           </Text>

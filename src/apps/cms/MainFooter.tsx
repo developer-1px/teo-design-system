@@ -1,6 +1,7 @@
 import { ArrowUpRight, Globe, MessageSquare, Sparkles } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize } from "../../design-system/token/token.const.1tier";
 
@@ -10,14 +11,14 @@ export function MainFooter() {
       override={{
         w: "100%",
         p: "64px 24px",
-        gap: "16px",
+        gap: Space.n16,
         style: { maxWidth: "1200px", margin: "0 auto" },
       }}
       surface="sunken"
     >
       <Frame override={{ w: "100%" }} row justify="between" align="start">
-        <Frame override={{ gap: "6px", w: "35%" }}>
-          <Frame override={{ gap: "3px" }} row align="center">
+        <Frame override={{ gap: Space.n6, w: "35%" }}>
+          <Frame override={{ gap: Space.n4 }} row align="center">
             <Frame
               override={{ style: { width: 40, height: 40 }, rounded: "xl" }}
               surface="primary"
@@ -46,14 +47,14 @@ export function MainFooter() {
             Building the future of the visual web. Join us in redefining how
             websites are crafted.
           </Text.Card.Desc>
-          <Frame override={{ gap: "4px" }} row>
+          <Frame override={{ gap: Space.n4 }} row>
             <Icon src={Globe} size={IconSize.n20} style={{ opacity: 0.4 }} />
             <Icon src={MessageSquare} size={IconSize.n20} style={{ opacity: 0.4 }} />
             <Icon src={ArrowUpRight} size={IconSize.n20} style={{ opacity: 0.4 }} />
           </Frame>
         </Frame>
 
-        <Frame override={{ gap: "16px" }} row>
+        <Frame override={{ gap: Space.n16 }} row>
           <FooterLinkColumn
             title="PRODUCT"
             links={["Features", "Design", "Automation", "Templates"]}
@@ -82,7 +83,7 @@ export function MainFooter() {
         <Text.Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
           © 2024 VisualEngine Inc. All rights reserved.
         </Text.Card.Note>
-        <Frame override={{ gap: "6px" }} row>
+        <Frame override={{ gap: Space.n6 }} row>
           <Text.Card.Note
             style={{ fontSize: 13, color: "var(--text-tertiary)" }}
           >
@@ -106,7 +107,7 @@ interface FooterLinkColumnProps {
 
 function FooterLinkColumn({ title, links }: FooterLinkColumnProps) {
   return (
-    <Frame override={{ gap: "4px" }}>
+    <Frame override={{ gap: Space.n4 }}>
       <Text.Card.Note
         style={{
           fontSize: 11,

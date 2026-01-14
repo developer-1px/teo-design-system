@@ -2,6 +2,7 @@ import { ArrowUpRight, Command, Sparkles } from "lucide-react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Space } from "../../design-system/token/token.const.1tier";
 import { EditableWrapper } from "./EditableWrapper";
 import { Icon } from "../../design-system/Icon";
 import { IconSize } from "../../design-system/token/token.const.1tier";
@@ -12,7 +13,7 @@ export function HeaderHero() {
       override={{
         w: "100%",
         p: "21 5",
-        gap: 3,
+        gap: Space.n12,
         style: {
           minHeight: "90vh",
           position: "relative",
@@ -54,12 +55,12 @@ export function HeaderHero() {
           w: "100%",
           maxWidth: 800,
           style: { margin: "0 auto" },
-          gap: 1.5,
+          gap: Space.n6,
         }}
         align="center"
       >
         <Frame
-          override={{ p: "1 3", rounded: "full", gap: 2 }}
+          override={{ p: "1 3", rounded: "full", gap: Space.n8 }}
           surface="raised"
           row
           align="center"
@@ -99,7 +100,7 @@ export function HeaderHero() {
           </Text.Prose.Body>
         </EditableWrapper>
 
-        <Frame override={{ gap: 3 }} row align="center">
+        <Frame override={{ gap: Space.n12 }} row align="center">
           <Action
             label="Start Creating"
             variant="primary"
@@ -144,7 +145,7 @@ export function HeaderHero() {
             h: 10,
             style: { borderBottom: "1px solid var(--border-color)" },
             p: "0 1",
-            gap: 0.5,
+            gap: Space.n2,
           }}
           surface="raised"
           row
@@ -171,7 +172,7 @@ export function HeaderHero() {
               w: 50,
               style: { borderRight: "1px solid var(--border-color)" },
               p: 1,
-              gap: 1,
+              gap: Space.n4,
             }}
             surface="sunken"
           >
@@ -189,7 +190,7 @@ export function HeaderHero() {
               surface="raised"
             />
           </Frame>
-          <Frame override={{ p: 3, gap: 1.5 }} flex surface="base" pack>
+          <Frame override={{ p: 3, gap: Space.n6 }} flex surface="base" pack>
             <Frame
               override={{ w: 20, h: 20, rounded: "2xl", shadow: "lg" }}
               surface="raised"
@@ -197,7 +198,7 @@ export function HeaderHero() {
             >
               <Sparkles size={32} color="var(--color-primary)" />
             </Frame>
-            <Frame override={{ gap: 0.5 }} align="center">
+            <Frame override={{ gap: Space.n2 }} align="center">
               <Frame
                 override={{ h: 5, w: 50, rounded: "full" }}
                 surface="overlay"

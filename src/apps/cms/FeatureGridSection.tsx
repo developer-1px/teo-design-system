@@ -1,6 +1,7 @@
 import { Cpu, MessageSquare, Shield, Zap } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Space } from "../../design-system/token/token.const.1tier";
 import { EditableWrapper } from "./EditableWrapper";
 import { Icon } from "../../design-system/Icon";
 import { IconSize } from "../../design-system/token/token.const.1tier";
@@ -11,7 +12,7 @@ export function FeatureGridSection() {
       override={{
         w: "100%",
         p: "24px 6px",
-        gap: 4,
+        gap: Space.n16,
         style: {
           borderBottom: "1px solid var(--border-color)",
           maxWidth: 1280,
@@ -21,7 +22,7 @@ export function FeatureGridSection() {
       surface="base"
     >
       <Frame
-        override={{ style: { maxWidth: 800, margin: "0 auto" }, gap: 1 }}
+        override={{ style: { maxWidth: 800, margin: "0 auto" }, gap: Space.n4 }}
         align="center"
       >
         <Text.Card.Note
@@ -41,9 +42,9 @@ export function FeatureGridSection() {
         </EditableWrapper>
       </Frame>
 
-      <Frame override={{ gap: 4, w: "100%" }}>
+      <Frame override={{ gap: Space.n16, w: "100%" }}>
         {/* Row 1 */}
-        <Frame override={{ gap: 4 }} row wrap="wrap">
+        <Frame override={{ gap: Space.n16 }} row wrap="wrap">
           <FeatureCardLarge
             icon={Zap}
             title="Lightning Fast"
@@ -60,7 +61,7 @@ export function FeatureGridSection() {
         </Frame>
 
         {/* Row 2 */}
-        <Frame override={{ gap: 4 }} row>
+        <Frame override={{ gap: Space.n16 }} row>
           <Frame override={{ style: { gridColumn: "span 2" } }}>
             <FeatureCardLarge
               icon={Shield}
@@ -95,7 +96,7 @@ function FeatureCardSmall({
 }: FeatureCardSmallProps) {
   return (
     <Frame
-      override={{ p: 6, rounded: "2xl", gap: 4 }}
+      override={{ p: 6, rounded: "2xl", gap: Space.n16 }}
       flex={flex}
       surface="raised"
     >
@@ -111,7 +112,7 @@ function FeatureCardSmall({
       >
         <Icon src={IconSrc} size={IconSize.n24} style={{ color: "var(--color-primary)" }} />
       </Frame>
-      <Frame override={{ gap: 2 }}>
+      <Frame override={{ gap: Space.n8 }}>
         <EditableWrapper>
           <Text.Card.Title>{title}</Text.Card.Title>
         </EditableWrapper>
@@ -144,7 +145,7 @@ function FeatureCardLarge({
       overflow="hidden"
       row
     >
-      <Frame override={{ p: 6, gap: 4 }} flex justify="center">
+      <Frame override={{ p: 6, gap: Space.n16 }} flex justify="center">
         <Frame
           override={{
             w: 12,
@@ -157,7 +158,7 @@ function FeatureCardLarge({
         >
           <Icon src={IconSrc} size={IconSize.n24} style={{ color: "var(--color-primary)" }} />
         </Frame>
-        <Frame override={{ gap: 2 }}>
+        <Frame override={{ gap: Space.n8 }}>
           <EditableWrapper>
             <Text.Card.Title>{title}</Text.Card.Title>
           </EditableWrapper>

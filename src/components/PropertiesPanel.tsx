@@ -18,6 +18,7 @@ import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame";
+import { Space } from "../design-system/token/token.const.1tier.ts";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
@@ -45,7 +46,7 @@ const PropertySection = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <Frame override={{ gap: 2 }}>
+  <Frame override={{ gap: Space.n8 }}>
     <Frame override={{ p: "0 2" }} row justify="between" align="center">
       <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
@@ -57,7 +58,7 @@ const PropertySection = ({
         opacity={0.4}
       />
     </Frame>
-    <Frame override={{ gap: 1, p: "0 2 2 2" }}>{children}</Frame>
+    <Frame override={{ gap: Space.n4, p: "0 2 2 2" }}>{children}</Frame>
     <Separator />
   </Frame>
 );
@@ -100,7 +101,7 @@ export function PropertiesPanel() {
       <Frame
         override={{
           p: 1,
-          gap: 1,
+          gap: Space.n4,
           style: {
             flexShrink: 0,
             height: "40px",
@@ -138,7 +139,7 @@ export function PropertiesPanel() {
       </Frame>
 
       <Frame
-        override={{ p: 2, gap: 2, style: { minHeight: 0 } }}
+        override={{ p: 2, gap: Space.n8, style: { minHeight: 0 } }}
         overflow="auto"
         flex
         fill
@@ -149,7 +150,7 @@ export function PropertiesPanel() {
             rounded: "md",
             style: { border: "1px solid var(--border-color)" },
             p: "1px",
-            gap: "1px",
+            gap: "1px" as any, // TODO: 1px token?
           }}
           row
           justify="between"
@@ -175,8 +176,8 @@ export function PropertiesPanel() {
         <Separator />
 
         {/* Transform */}
-        <Frame override={{ gap: 2 }}>
-          <Frame override={{ gap: 2 }} row align="center">
+        <Frame override={{ gap: Space.n8 }}>
+          <Frame override={{ gap: Space.n8 }} row align="center">
             <TransformField
               label="X"
               value={transform.x}
@@ -189,7 +190,7 @@ export function PropertiesPanel() {
             />
             <Frame override={{ style: { width: "24px" } }} />
           </Frame>
-          <Frame override={{ gap: 2 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} row align="center">
             <TransformField
               label="W"
               value={transform.w}
@@ -209,7 +210,7 @@ export function PropertiesPanel() {
               />
             </Frame>
           </Frame>
-          <Frame override={{ gap: 2 }} row align="center">
+          <Frame override={{ gap: Space.n8 }} row align="center">
             <TransformField
               label="°"
               value={transform.r}
@@ -227,7 +228,7 @@ export function PropertiesPanel() {
 
         {/* Properties */}
         <PropertySection title="LAYER">
-          <Frame override={{ gap: 3 }} row justify="between">
+          <Frame override={{ gap: Space.n12 }} row justify="between">
             <Field value="Normal" rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />} flex />
             <Field
               value="100%"
@@ -238,9 +239,9 @@ export function PropertiesPanel() {
         </PropertySection>
 
         <PropertySection title="TEXT">
-          <Frame override={{ gap: "6px" }}>
+          <Frame override={{ gap: Space.n6 }}>
             <Field value="Inter" rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />} />
-            <Frame override={{ gap: 2 }} row>
+            <Frame override={{ gap: Space.n8 }} row>
               <Field
                 value="Regular"
                 rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
@@ -248,7 +249,7 @@ export function PropertiesPanel() {
               />
               <Field value="42" style={{ width: "50px" }} />
             </Frame>
-            <Frame override={{ gap: 2 }} row>
+            <Frame override={{ gap: Space.n8 }} row>
               <Field label="LH" value="Auto" flex />
               <Field label="LS" value="0%" flex />
             </Frame>
@@ -257,7 +258,7 @@ export function PropertiesPanel() {
                 rounded: "md",
                 style: { border: "1px solid var(--border-color)" },
                 p: "1px",
-                gap: "1px",
+                gap: "1px" as any,
               }}
               row
               justify="between"
@@ -308,7 +309,7 @@ export function PropertiesPanel() {
         </PropertySection>
 
         <PropertySection title="STROKE">
-          <Frame override={{ gap: "6px" }}>
+          <Frame override={{ gap: Space.n6 }}>
             <Field
               value="000000"
               icon={
@@ -324,7 +325,7 @@ export function PropertiesPanel() {
                 />
               }
               rightIcon={
-                <Frame override={{ gap: 2 }} row>
+                <Frame override={{ gap: Space.n8 }} row>
                   <Text.Card.Note style={{ fontSize: "12px" }}>
                     100%
                   </Text.Card.Note>
@@ -342,7 +343,7 @@ export function PropertiesPanel() {
               }
               style={{ flexShrink: 0 }}
             />
-            <Frame override={{ gap: 2 }} row align="center">
+            <Frame override={{ gap: Space.n8 }} row align="center">
               <Field value="1.5" style={{ width: "50px" }} />
               <Field
                 value="Inside"

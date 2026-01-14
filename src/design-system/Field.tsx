@@ -1,7 +1,7 @@
 import type React from "react";
 import { Frame } from "./Frame";
 import { Text } from "./text/Text.tsx";
-import { FontSize } from "./token/token.const.1tier.ts";
+import { FontSize, Space } from "./token/token.const.1tier.ts";
 
 interface FieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -29,7 +29,7 @@ export function Field({
   return (
     <Frame
       override={{
-        gap: 1.5,
+        gap: Space.n6,
         p: `1.5 ${rightIcon ? 1.5 : 2} 1.5 2`,
         w: flex ? undefined : w,
         style: {

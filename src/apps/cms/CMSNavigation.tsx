@@ -11,6 +11,7 @@ import {
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Space } from "../../design-system/token/token.const.1tier";
 import { Overlay } from "../../design-system/Overlay";
 import { Icon } from "../../design-system/Icon";
 import { IconSize } from "../../design-system/token/token.const.1tier";
@@ -29,14 +30,14 @@ export function TopCenterBar() {
         <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
         <Frame override={{ w: 0.5, h: 4 }} surface="overlay" />
         <Frame
-          override={{ gap: 2, style: { padding: "0 8px" } }}
+          override={{ gap: Space.n8, style: { padding: "0 8px" } }}
           row
           align="center"
         >
           <Text.Card.Note style={{ fontSize: 13, fontWeight: "medium" }}>
             Page:
           </Text.Card.Note>
-          <Frame override={{ gap: 1 }} row align="center" cursor="pointer">
+          <Frame override={{ gap: Space.n4 }} row align="center" cursor="pointer">
             <Text.Card.Title style={{ fontSize: 13, fontWeight: "bold" }}>
               Marketing Home
             </Text.Card.Title>
@@ -60,9 +61,9 @@ export function TopRightBar() {
       clickOutsideToDismiss={false}
       style={{ pointerEvents: "auto" }}
     >
-      <Frame override={{ gap: 2 }} row align="center">
+      <Frame override={{ gap: Space.n8 }} row align="center">
         <Frame
-          override={{ gap: 1, p: 1, rounded: "full", shadow: "lg" }}
+          override={{ gap: Space.n4, p: 1, rounded: "full", shadow: "lg" }}
           row
           surface="raised"
         >

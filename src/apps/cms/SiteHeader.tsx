@@ -1,6 +1,7 @@
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
+import { Space } from "../../design-system/token/token.const.1tier";
 
 export interface SiteHeaderProps {
   isSidebarOpen?: boolean;
@@ -35,7 +36,7 @@ export function SiteHeader({
         justify="between"
         align="center"
       >
-        <Frame override={{ gap: 2 }} row align="center">
+        <Frame override={{ gap: Space.n8 }} row align="center">
           <Frame
             override={{
               w: 32,
@@ -52,14 +53,14 @@ export function SiteHeader({
           <Text.Card.Title>Minimal</Text.Card.Title>
         </Frame>
 
-        <Frame override={{ gap: 6 }} row>
-          <Frame override={{ gap: 2 }} row>
+        <Frame override={{ gap: Space.n24 }} row>
+          <Frame override={{ gap: Space.n8 }} row>
             <Action label="Features" variant="ghost" />
             <Action label="Pricing" variant="ghost" />
             <Action label="Resources" variant="ghost" />
           </Frame>
 
-          <Frame override={{ gap: 4 }} row align="center">
+          <Frame override={{ gap: Space.n16 }} row align="center">
             <Action
               label="Log in"
               variant="ghost"

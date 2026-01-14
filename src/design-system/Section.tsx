@@ -1,5 +1,6 @@
 import { Text } from "./text/Text.tsx";
 import { Frame } from "./Frame";
+import { Space } from "./token/token.const.1tier";
 
 
 import type { RoundedToken, SurfaceToken } from "./lib/types.ts";
@@ -68,7 +69,7 @@ export function Section({
       {(title || icon) && (
         <Frame
           override={{
-            gap: 2,
+            gap: Space.n8,
             p: 2,
             style: {
               borderBottom: "1px solid var(--border-color)",

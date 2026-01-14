@@ -81,7 +81,7 @@ export function ProseDocument({
       override={{
         w: "100%",
         maxWidth: maxWidth,
-        gap: gap,
+        gap: gap as any,
         p: "0 6",
         style: {
           marginLeft: "auto",
@@ -139,7 +139,7 @@ export function ProseActions({
 
   return (
     <Frame
-      override={{ gap: gap, style: { marginTop: "var(--space-6)" } }}
+      override={{ gap: gap as any, style: { marginTop: "var(--space-6)" } }}
       row
       justify={justify}
       {...props}

@@ -2,7 +2,7 @@ import React from "react";
 import { Frame } from "./Frame";
 import { Text } from "./text/Text.tsx";
 import { Icon } from "./Icon";
-import { IconSize, type IconSizeToken } from "./token/token.const.1tier";
+import { IconSize, Space, type IconSizeToken, type SpaceToken } from "./token/token.const.1tier";
 
 
 import type { ActionVariant, RoundedToken, SurfaceToken } from "./lib/types.ts";
@@ -18,7 +18,7 @@ interface ActionProps
   // Layout overrides
   rounded?: RoundedToken;
   p?: number | string;
-  gap?: number | string;
+  gap?: SpaceToken | number;
   border?: boolean;
   flex?: boolean | number;
   fill?: boolean;
@@ -108,7 +108,7 @@ export function Action({
         h: h ?? finalHeight,
         rounded: finalRounded,
         p: p ?? (label ? 2 : 0),
-        gap: gap ?? 2,
+        gap: (gap as SpaceToken) ?? Space.n4,
         opacity: opacity,
         style: {
           border: border ? "1px solid var(--border-color)" : undefined,

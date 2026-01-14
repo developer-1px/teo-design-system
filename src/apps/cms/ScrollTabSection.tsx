@@ -1,5 +1,6 @@
 import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame";
+import { Space } from "../../design-system/token/token.const.1tier";
 
 const TABS = [
   "Overview",
@@ -30,7 +31,7 @@ export function ScrollTabSection() {
     >
       <Frame
         override={{
-          gap: 2,
+          gap: Space.n8,
           w: "100%",
           style: {
             // Hide scrollbar for cleaner look but keep functionality

@@ -1,5 +1,38 @@
 :root {
-    /* Spacing Scale (4px base) */
+    /* Spacing Scale (Matching 1Tier Token) */
+    --space-n0: 0px;
+    --space-n2: 2px;
+    --space-n4: 4px;
+    --space-n6: 6px;
+    --space-n8: 8px;
+    --space-n10: 10px;
+    --space-n12: 12px;
+    --space-n14: 14px;
+    --space-n16: 16px;
+    --space-n18: 18px;
+    --space-n20: 20px;
+    --space-n22: 22px;
+    --space-n24: 24px;
+    --space-n26: 26px;
+    --space-n28: 28px;
+    --space-n30: 30px;
+    --space-n32: 32px;
+    --space-n36: 36px;
+    --space-n40: 40px;
+    --space-n44: 44px;
+    --space-n48: 48px;
+    --space-n56: 56px;
+    --space-n64: 64px;
+    --space-n72: 72px;
+    --space-n80: 80px;
+    --space-n88: 88px;
+    --space-n96: 96px;
+    --space-n112: 112px;
+    --space-n128: 128px;
+    --space-n144: 144px;
+    --space-n160: 160px;
+
+    /* Legacy Spacing (To be removed) */
     --space-0: 0px;
     --space-0-5: 2px;
     --space-1: 4px;

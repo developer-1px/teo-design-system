@@ -27,7 +27,7 @@ export interface FrameOverrides {
   pl?: SpaceToken | (string & {}) | number;
   pr?: SpaceToken | (string & {}) | number;
 
-  gap?: SpaceToken | (string & {}) | number;
+  gap?: SpaceToken;
   pack?: boolean;
 
   w?: SizeToken | (string & {}) | number;
