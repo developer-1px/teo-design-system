@@ -69,6 +69,13 @@ export interface FrameOverrides {
   className?: string;
 }
 
+import type {
+  WidthToken,
+  HeightToken,
+  MaxWidthToken,
+  MaxHeightToken
+} from "./types.ts";
+
 // --- 2. STRICT PROPS (Token Only) ---
 // Used as top-level props on <Frame ... />
 export interface FrameStrictProps {
@@ -84,18 +91,18 @@ export interface FrameStrictProps {
   gap?: SpaceToken;
   pack?: boolean;
 
-  w?: SizeToken;
-  h?: SizeToken;
+  w?: WidthToken;
+  h?: HeightToken;
 
   flex?: boolean | number;
   row?: boolean;
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
   fill?: boolean;
 
-  minWidth?: SizeToken;
-  minHeight?: SizeToken;
-  maxWidth?: SizeToken;
-  maxHeight?: SizeToken;
+  minWidth?: WidthToken;
+  minHeight?: HeightToken;
+  maxWidth?: MaxWidthToken;
+  maxHeight?: MaxHeightToken;
 
   // Grid
   grid?: boolean;
@@ -122,7 +129,7 @@ export interface FrameStrictProps {
 
 export interface FrameProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "style" | "title" | "color">,
-    FrameStrictProps {
+  FrameStrictProps {
   children?: React.ReactNode;
   as?: React.ElementType;
 

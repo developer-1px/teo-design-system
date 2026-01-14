@@ -17,14 +17,6 @@ import { Icon } from "./design-system/Icon";
 import { IconSize } from "./design-system/token/token.const.1tier";
 import { useTheme } from "./design-system/theme";
 
-import "./design-system/token/tokens.palette.css";
-import "./design-system/token/tokens.typography.css";
-import "./design-system/token/tokens.layout.css";
-import "./design-system/token/tokens.icons.css";
-import "./design-system/token/tokens.components.css";
-import "./design-system/token/tokens.themes.css";
-import "./design-system/token/tokens.experiences.css";
-
 function NavItem({ to, label }: { to: string; label: string }) {
   return (
     <NavLink to={to} style={{ textDecoration: "none" }}>

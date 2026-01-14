@@ -111,7 +111,7 @@ export type IconSizeToken = (typeof IconSize)[keyof typeof IconSize];
 // Size (container / layout)
 // ---------------------------------
 export const SizeScale = [
-  0, 24, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96, 112, 128, 144, 160, 176, 192, 208,
+  0, 4, 8, 12, 16, 20, 24, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96, 112, 128, 144, 160, 176, 192, 208,
   224, 240, 256, 288, 320, 384, 448, 512, 576, 640, 704, 768,
 ] as const;
 export type SizeScale = ScaleOf<typeof SizeScale>;
@@ -125,6 +125,11 @@ export type SizeValue = `size.n${SizeScale}` | `size.${SizeKeyword}`;
 
 export const Size = {
   n0: "size.n0",
+  n4: "size.n4",
+  n8: "size.n8",
+  n12: "size.n12",
+  n16: "size.n16",
+  n20: "size.n20",
   n24: "size.n24",
   n32: "size.n32",
   n36: "size.n36",
@@ -193,9 +198,12 @@ export type ContainerToken = (typeof Container)[keyof typeof Container];
 // ---------------------------------
 // Sizing unions (safe)
 // ---------------------------------
-export type LengthToken = SizeToken | SpaceToken;
+export type LengthToken = SizeToken; // Removed SpaceToken to enforce strict absolute sizing
 export type MaxWidthToken = ContainerToken;
-export type SizingToken = LengthToken | MaxWidthToken;
+export type MaxHeightToken = ContainerToken;
+export type WidthToken = SizeToken | ContainerToken;
+export type HeightToken = SizeToken | ContainerToken;
+export type SizingToken = WidthToken | MaxWidthToken | MaxHeightToken;
 
 // ---------------------------------
 // Radius

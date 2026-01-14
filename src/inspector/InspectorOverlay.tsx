@@ -131,7 +131,7 @@ export function InspectorOverlay() {
   const [componentStack, setComponentStack] = useState<ComponentStackItem[]>(
     [],
   );
-  const [targetProps, setTargetProps] = useState<Record<string, string>>({});
+  const [targetProps, setTargetProps] = useState<Record<string, any>>({});
   const [notification, setNotification] = useState<string | null>(null);
 
   const triggerLock = (el: HTMLElement) => {
@@ -344,7 +344,7 @@ export function InspectorOverlay() {
         const rawProps = targetFiber.memoizedProps || {};
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { children: _children, ...restProps } = rawProps;
-        const displayProps: Record<string, string> = {};
+        const displayProps: Record<string, any> = {};
 
         Object.entries(restProps).forEach(([key, value]) => {
           if (key.startsWith("_")) return; // internal props
@@ -352,14 +352,9 @@ export function InspectorOverlay() {
             displayProps[key] = "fn()";
           } else if (React.isValidElement(value)) {
             displayProps[key] = "<Element />";
-          } else if (typeof value === "object" && value !== null) {
-            displayProps[key] = Array.isArray(value)
-              ? `[${value.length}]`
-              : "{...}";
-          } else if (value === undefined || value === null) {
-            displayProps[key] = String(value);
           } else {
-            displayProps[key] = String(value);
+            // Pass raw value for object inspection
+            displayProps[key] = value;
           }
         });
         setTargetProps(displayProps);
@@ -725,7 +720,7 @@ function InspectorPanel({
   element: HTMLElement;
   name: string;
   stack: ComponentStackItem[];
-  props: Record<string, string>;
+  props: Record<string, any>;
   initialX: number;
   initialY: number;
   onClose: () => void;
@@ -742,7 +737,7 @@ function InspectorPanel({
   // DOM Properties Removed as per request
   const properties: {
     section: string;
-    items: { key: string; value: string }[];
+    items: { key: string; value: any }[];
   }[] = [];
 
   // Additional Section for Hierarchy
@@ -990,40 +985,12 @@ function InspectorPanel({
                   overflow="hidden"
                 >
                   {section.items.map((item, i) => (
-                    <Frame
-                      override={{
-                        p: "0.5 1.5",
-                        style: {
-                          borderBottom:
-                            i < section.items.length - 1
-                              ? "1px solid var(--border-color)"
-                              : undefined,
-                        },
-                      }}
+                    <PropertyTree
                       key={item.key}
-                      row
-                      justify="between"
-                      align="center"
-                      surface={i % 2 === 0 ? "base" : "sunken"}
-                    >
-                      <Text size={6} color="secondary">
-                        {item.key}
-                      </Text>
-                      <Text
-                        size={6}
-                        mono
-                        style={{
-                          maxWidth: "140px",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          textAlign: "right",
-                        }}
-                        title={item.value}
-                      >
-                        {item.value}
-                      </Text>
-                    </Frame>
+                      label={item.key}
+                      value={item.value}
+                      background={i % 2 === 0 ? "base" : "sunken"}
+                    />
                   ))}
                 </Frame>
               </Frame>
@@ -1032,5 +999,116 @@ function InspectorPanel({
         </Frame>
       </Frame>
     </Overlay>
+  );
+}
+
+// --- Property Tree Component ---
+
+function PropertyTree({
+  label,
+  value,
+  depth = 0,
+  background = "base",
+}: {
+  label: string;
+  value: any;
+  depth?: number;
+  background?: "base" | "sunken";
+}) {
+  const [isOpen, setIsOpen] = useState(true);
+  const isObject = value !== null && typeof value === "object" && !React.isValidElement(value);
+  const isEmpty = isObject && Object.keys(value).length === 0;
+  const isArray = Array.isArray(value);
+
+  // Primitive Render
+  if (!isObject) {
+    return (
+      <Frame
+        override={{
+          p: "0.5 1.5",
+          style: {
+            borderBottom: "1px solid var(--border-color)",
+            paddingLeft: `${depth * 12 + 8}px`,
+          },
+        }}
+        row
+        justify="between"
+        align="center"
+        surface={background}
+      >
+        <Text size={6} color="secondary">
+          {label}
+        </Text>
+        <Text
+          size={6}
+          mono
+          style={{
+            maxWidth: "140px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            textAlign: "right",
+          }}
+          title={String(value)}
+        >
+          {String(value)}
+        </Text>
+      </Frame>
+    );
+  }
+
+  // Nested Render
+  return (
+    <>
+      <Frame
+        override={{
+          p: "0.5 1.5",
+          style: {
+            borderBottom: "1px solid var(--border-color)",
+            paddingLeft: `${depth * 12 + 8}px`,
+            cursor: isEmpty ? "default" : "pointer",
+          },
+        }}
+        row
+        justify="between"
+        align="center"
+        surface={background}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (!isEmpty) setIsOpen(!isOpen);
+        }}
+      >
+        <Frame row align="center" override={{ gap: 4 }}>
+          {!isEmpty && (
+            <Icon
+              src={isOpen ? ChevronDown : ChevronRight}
+              size={IconSize.n10}
+              style={{ color: "var(--text-tertiary)" }}
+            />
+          )}
+          {isEmpty && <Frame override={{ w: 10, h: 10 }} />} {/* Spacer */}
+          <Text size={6} color="secondary">
+            {label}
+          </Text>
+        </Frame>
+        <Text size={6} color="tertiary" mono>
+          {isArray ? `Array(${value.length})` : "{...}"}
+        </Text>
+      </Frame>
+
+      {isOpen && !isEmpty && (
+        <Frame>
+          {Object.entries(value).map(([k, v]) => (
+            <PropertyTree
+              key={k}
+              label={k}
+              value={v}
+              depth={depth + 1}
+              background={background} // Inherit bg or toggle? Keep simple for now
+            />
+          ))}
+        </Frame>
+      )}
+    </>
   );
 }

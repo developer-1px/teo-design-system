@@ -25,6 +25,58 @@
     --space-40: 160px;
 
     /* Size Scale (Layout) */
+    --size-n0: 0px;
+    --size-n4: 4px;
+    --size-n8: 8px;
+    --size-n12: 12px;
+    --size-n16: 16px;
+    --size-n20: 20px;
+    --size-n24: 24px;
+    --size-n32: 32px;
+    --size-n36: 36px;
+    --size-n40: 40px;
+    --size-n44: 44px;
+    --size-n48: 48px;
+    --size-n56: 56px;
+    --size-n64: 64px;
+    --size-n72: 72px;
+    --size-n80: 80px;
+    --size-n88: 88px;
+    --size-n96: 96px;
+    --size-n112: 112px;
+    --size-n128: 128px;
+    --size-n144: 144px;
+    --size-n160: 160px;
+    --size-n176: 176px;
+    --size-n192: 192px;
+    --size-n208: 208px;
+    --size-n224: 224px;
+    --size-n240: 240px;
+    --size-n256: 256px;
+    --size-n288: 288px;
+    --size-n320: 320px;
+    --size-n384: 384px;
+    --size-n448: 448px;
+    --size-n512: 512px;
+    --size-n576: 576px;
+    --size-n640: 640px;
+    --size-n704: 704px;
+    --size-n768: 768px;
+
+    /* Container Scale */
+    --container-n0: 0px;
+    --container-n320: 320px;
+    --container-n480: 480px;
+    --container-n640: 640px;
+    --container-n768: 768px;
+    --container-n800: 800px;
+    --container-n1024: 1024px;
+    --container-n1280: 1280px;
+    --container-n1440: 1440px;
+    --container-n1536: 1536px;
+    --container-n1600: 1600px;
+
+    /* Legacy Scale (Deprecated) */
     --size-3: 12px;
     --size-4: 16px;
     --size-5: 24px;
@@ -32,9 +84,7 @@
     --size-7: 28px;
     --size-8: 48px;
     --size-action: 40px;
-    /* New Token */
     --size-header: 80px;
-    /* New Token */
     --size-10: 64px;
     --size-12: 80px;
     --size-13: 104px;

@@ -1,5 +1,4 @@
 import type React from "react";
-import "../token/tokens.css";
 import type { FontWeight, TypographyVariant } from "../lib/types.ts";
 import { toToken } from "../lib/utils.ts";
 
@@ -36,13 +35,13 @@ export interface TextProps
   opacity?: number;
   size?: number | string; // Override size (number for token, string for px)
   color?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "muted"
-    | "dim"
-    | "white"
-    | string;
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "muted"
+  | "dim"
+  | "white"
+  | string;
 
   className?: string;
   style?: React.CSSProperties;
