@@ -1,4 +1,4 @@
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text.tsx";

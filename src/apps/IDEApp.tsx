@@ -18,7 +18,7 @@ import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Space } from "../design-system/token/token.const.1tier";
 import { Text } from "../design-system/text/Text.tsx";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Icon } from "../design-system/Icon";
 import { IconSize, FontSize, Size } from "../design-system/token/token.const.1tier";
 

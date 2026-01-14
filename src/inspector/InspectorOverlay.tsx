@@ -7,7 +7,7 @@ import React, { useState } from "react";
 
 
 import { Text } from "../design-system/text/Text.tsx";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Overlay } from "../design-system/Overlay";
 import { Icon } from "../design-system/Icon";
 import {IconSize, FontSize, Space, Size} from "../design-system/token/token.const.1tier"

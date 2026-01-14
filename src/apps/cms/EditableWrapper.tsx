@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Space, Size } from "../../design-system/token/token.const.1tier";
 import { Text } from "../../design-system/text/Text";
-import { Frame } from "../../design-system/Frame";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Overlay } from "../../design-system/Overlay";
 
 export interface EditableWrapperProps {

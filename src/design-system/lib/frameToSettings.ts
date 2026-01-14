@@ -1,5 +1,5 @@
 import React from "react";
-import type { FrameOverrides } from "./props.ts";
+import type { FrameOverrides } from "../Frame/FrameProps.ts";
 
 
 export function frameToSettings(props: FrameOverrides): {

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Lock, Copy, X, ChevronRight, ChevronDown, RefreshCw } from "lucide-react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text";
-import { Frame } from "../../design-system/Frame";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { FontSize, Space } from "../../design-system/token/token.const.1tier";
 import { PropertyTree } from "./PropertyTree";
 import type { ComponentStackItem } from "../lib/fiber-utils";

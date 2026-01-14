@@ -1,4 +1,4 @@
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
 
 import { ProseSection, ProseDocument } from "../design-system/ProseOld.tsx";
 import {

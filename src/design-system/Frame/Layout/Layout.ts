@@ -32,7 +32,7 @@
  * ```
  */
 
-import type { FrameProps } from "../../lib/props.ts";
+import type { FrameProps } from "../FrameProps.ts";
 import { Size, Space } from "../../token/token.const.1tier.ts";
 
 export const Layout = {

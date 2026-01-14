@@ -17,7 +17,7 @@ import type React from "react";
 import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Field } from "../design-system/Field";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Space } from "../design-system/token/token.const.1tier.ts";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";

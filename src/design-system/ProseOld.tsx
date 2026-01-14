@@ -1,7 +1,7 @@
 import type React from "react";
-import { Frame } from "./Frame";
+import { Frame } from "./Frame/Frame.tsx";
 import { Space, Size } from "./token/token.const.1tier";
-import type { FrameProps } from "./lib/props.ts";
+import type { FrameProps } from "./Frame/FrameProps.ts";
 
 
 type ProseRole = "h1" | "h2" | "h3" | "h4" | "body" | "body-sm" | "caption";

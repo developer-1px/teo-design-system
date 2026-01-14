@@ -13,7 +13,7 @@ import { PropertiesPanel } from "../components/PropertiesPanel";
 import { SlidesPanel } from "../components/SlidesPanel";
 import { Action } from "../design-system/Action";
 import { Text } from "../design-system/text/Text";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Icon } from "../design-system/Icon";
 import { Space } from "../design-system/token/token.const.1tier";
 import { IconSize } from "../design-system/token/token.const.1tier";

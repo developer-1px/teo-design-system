@@ -1,5 +1,5 @@
 import React from "react";
-import { Frame } from "./Frame";
+import { Frame } from "./Frame/Frame.tsx";
 import { Size } from "./token/token.const.1tier";
 
 export type ExperienceType = "application" | "landing" | "document";

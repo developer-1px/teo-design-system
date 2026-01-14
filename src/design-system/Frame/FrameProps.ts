@@ -13,7 +13,7 @@ import type {
   SurfaceToken,
   RoundedToken,
   ShadowToken,
-} from "./types.ts";
+} from "../lib/types.ts";
 
 // --- 1. LOOSE OVERRIDES (Token | string | number) ---
 // Used inside 'override={{ ... }}' prop
@@ -74,7 +74,7 @@ import type {
   HeightToken,
   MaxWidthToken,
   MaxHeightToken
-} from "./types.ts";
+} from "../lib/types.ts";
 
 // --- 2. STRICT PROPS (Token Only) ---
 // Used as top-level props on <Frame ... />
@@ -136,7 +136,7 @@ export interface FrameProps
   /**
    * High-level layout preset.
    */
-  layout?: import("../Frame/Layout/Layout.ts").LayoutToken;
+  layout?: import("./Layout/Layout.ts").LayoutToken;
 
   /**
    * Ad-hoc overrides for specific instances.

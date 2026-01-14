@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Experience, type ExperienceType } from "../design-system/Experience";
 import { Action } from "../design-system/Action";
 import { Monitor, FileText, Globe } from "lucide-react";

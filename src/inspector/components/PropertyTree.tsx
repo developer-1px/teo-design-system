@@ -3,7 +3,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 import React from "react";
 import { Text } from "../../design-system/text/Text";
-import { Frame } from "../../design-system/Frame";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Icon } from "../../design-system/Icon";
 import { IconSize, FontSize, Space, Size } from "../../design-system/token/token.const.1tier";
 

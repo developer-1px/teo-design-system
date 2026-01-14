@@ -1,5 +1,5 @@
 import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Space, Size } from "../../design-system/token/token.const.1tier";
 
 const TABS = [

@@ -1,6 +1,6 @@
 import { Check, MessageSquare, Zap } from "lucide-react";
 import { Text } from "../../design-system/text/Text";
-import { Frame } from "../../design-system/Frame";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
 import { IconSize, Size } from "../../design-system/token/token.const.1tier";

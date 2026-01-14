@@ -12,7 +12,7 @@ import {
 import { Action } from "../design-system/Action";
 import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Experience } from "../design-system/Experience";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Text } from "../design-system/text/Text";
 import { Icon } from "../design-system/Icon";
 import { IconSize } from "../design-system/token/token.const.1tier";
