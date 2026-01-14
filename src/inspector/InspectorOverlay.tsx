@@ -14,7 +14,7 @@ import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
 import { Overlay } from "../design-system/Overlay";
 import { Icon } from "../design-system/Icon";
-import { IconSize } from "../design-system/token/token.const.1tier";
+import { IconSize, FontSize } from "../design-system/token/token.const.1tier";
 
 // --- React Fiber Helpers ---
 
@@ -519,7 +519,7 @@ export function InspectorOverlay() {
               <Icon src={Unlock} size={IconSize.n10} style={{ color: "var(--primary-fg)" }} />
             )}
             <Text
-              variant={6}
+              size={FontSize.n9}
               weight="bold"
               style={{ color: "var(--primary-fg)" }}
             >
@@ -578,10 +578,10 @@ export function InspectorOverlay() {
                 row
                 align="center"
               >
-                <Text size={6} weight="bold" style={{ color: "white" }}>
+                <Text size={FontSize.n9} weight="bold" style={{ color: "white" }}>
                   {targetName}
                 </Text>
-                <Text size={6} style={{ color: "white", opacity: 0.8 }}>
+                <Text size={FontSize.n9} style={{ color: "white", opacity: 0.8 }}>
                   {Math.round(targetRect.width)}×{Math.round(targetRect.height)}
                 </Text>
               </Frame>
@@ -629,7 +629,7 @@ export function InspectorOverlay() {
           >
             <Icon src={Copy} size={IconSize.n12} style={{ color: "var(--primary-fg)" }} />
             <Text
-              variant={6}
+              size={FontSize.n9}
               weight="medium"
               style={{ color: "var(--primary-fg)" }}
             >
@@ -867,7 +867,7 @@ function InspectorPanel({
         >
           <Frame override={{ gap: 1.5 }} row align="center">
             <Lock size={10} className="text-primary" />
-            <Text weight="bold" size={5}>
+            <Text weight="bold" size={FontSize.n10}>
               {title}
             </Text>
           </Frame>
@@ -901,7 +901,7 @@ function InspectorPanel({
         <Frame override={{ p: "2 0" }} overflow="auto">
           {/* File Path Subtitle */}
           <Frame override={{ p: "0 2 2 2" }}>
-            <Text size={7} color="tertiary" style={{ wordBreak: "break-all" }}>
+            <Text size={FontSize.n28} color="tertiary" style={{ wordBreak: "break-all" }}>
               {name}
             </Text>
           </Frame>
@@ -941,7 +941,7 @@ function InspectorPanel({
                 {randomPrompts.map((item) => (
                   <Action
                     key={item.label}
-                    size={5}
+                    size={FontSize.n9}
                     variant="ghost"
                     justify="start"
                     label={item.label}
@@ -967,7 +967,7 @@ function InspectorPanel({
               >
                 <Text
                   weight="bold"
-                  size={6}
+                  size={FontSize.n9}
                   color="tertiary"
                   style={{
                     textTransform: "uppercase",
@@ -1036,11 +1036,11 @@ function PropertyTree({
         align="center"
         surface={background}
       >
-        <Text size={6} color="secondary">
+        <Text size={FontSize.n9} color="secondary">
           {label}
         </Text>
         <Text
-          size={6}
+          size={FontSize.n9}
           mono
           style={{
             maxWidth: "140px",
@@ -1087,11 +1087,11 @@ function PropertyTree({
             />
           )}
           {isEmpty && <Frame override={{ w: 10, h: 10 }} />} {/* Spacer */}
-          <Text size={6} color="secondary">
+          <Text size={FontSize.n9} color="secondary">
             {label}
           </Text>
         </Frame>
-        <Text size={6} color="tertiary" mono>
+        <Text size={FontSize.n9} color="tertiary" mono>
           {isArray ? `Array(${value.length})` : "{...}"}
         </Text>
       </Frame>

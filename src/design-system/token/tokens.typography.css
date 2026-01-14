@@ -91,6 +91,29 @@
     --font-weight-medium: 500;
     --font-weight-bold: 600;
 
+    /* Font Size Scale (Absolute) */
+    --font-size-n9: 9px;
+    --font-size-n10: 10px;
+    --font-size-n11: 11px;
+    --font-size-n12: 12px;
+    --font-size-n13: 13px;
+    --font-size-n14: 14px;
+    --font-size-n15: 15px;
+    --font-size-n16: 16px;
+    --font-size-n18: 18px;
+    --font-size-n20: 20px;
+    --font-size-n22: 22px;
+    --font-size-n24: 24px;
+    --font-size-n26: 26px;
+    --font-size-n28: 28px;
+    --font-size-n32: 32px;
+    --font-size-n36: 36px;
+    --font-size-n40: 40px;
+    --font-size-n48: 48px;
+    --font-size-n56: 56px;
+    --font-size-n64: 64px;
+
+    /* Legacy Scale (Deprecated) */
     --font-size-1: 32px;
     --font-size-2: 20px;
     --font-size-3: 14px;

@@ -14,7 +14,7 @@ import { CRMApp } from "./apps/CRMApp";
 import { LoginApp } from "./apps/LoginApp";
 import { TextSystemApp } from "./apps/TextSystemApp";
 import { Icon } from "./design-system/Icon";
-import { IconSize } from "./design-system/token/token.const.1tier";
+import { IconSize, FontSize } from "./design-system/token/token.const.1tier.ts";
 import { useTheme } from "./design-system/theme";
 
 function NavItem({ to, label }: { to: string; label: string }) {
@@ -32,7 +32,7 @@ function NavItem({ to, label }: { to: string; label: string }) {
           surface={isActive ? "sunken" : undefined}
           cursor="pointer"
         >
-          <Text variant={4} weight={isActive ? "bold" : "medium"}>
+          <Text size={FontSize.n12} weight={isActive ? "bold" : "medium"}>
             {label}
           </Text>
         </Frame>

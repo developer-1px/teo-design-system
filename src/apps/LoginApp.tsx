@@ -6,7 +6,7 @@ import { Action } from "../design-system/Action";
 import { ProseOld, ProseDocument } from "../design-system/ProseOld.tsx";
 import { ArrowRight, Lock, Mail } from "lucide-react";
 import { Icon } from "../design-system/Icon";
-import { IconSize } from "../design-system/token/token.const.1tier";
+import { IconSize, FontSize } from "../design-system/token/token.const.1tier";
 
 export function LoginApp() {
   return (
@@ -21,7 +21,7 @@ export function LoginApp() {
       >
         <Frame override={{ w: "100%", maxWidth: "400px", gap: 8 }}>
           <Frame override={{ gap: 2 }}>
-            <Text size={7} weight="bold">
+            <Text size={FontSize.n28} weight="bold">
               Welcome back
             </Text>
             <Text color="secondary">
@@ -56,12 +56,12 @@ export function LoginApp() {
                   }}
                   surface="sunken"
                 />
-                <Text size={3} color="secondary">
+                <Text size={FontSize.n14} color="secondary">
                   Remember me
                 </Text>
               </Frame>
               <Text
-                size={3}
+                size={FontSize.n14}
                 color="tertiary"
                 style={{ textDecoration: "underline", cursor: "pointer" }}
               >
@@ -78,7 +78,7 @@ export function LoginApp() {
             />
           </Frame>
 
-          <Text size={3} color="tertiary" style={{ textAlign: "center" }}>
+          <Text size={FontSize.n14} color="tertiary" style={{ textAlign: "center" }}>
             Don't have an account?{" "}
             <span style={{ color: "var(--link-color)", cursor: "pointer" }}>
               Sign up
@@ -143,10 +143,10 @@ function FeatureRow({ title, desc }: { title: string; desc: string }) {
         flex={0}
       />
       <Frame>
-        <Text weight="bold" size={4}>
+        <Text weight="bold" size={FontSize.n12}>
           {title}
         </Text>
-        <Text color="secondary" size={3}>
+        <Text color="secondary" size={FontSize.n14}>
           {desc}
         </Text>
       </Frame>

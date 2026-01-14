@@ -1,5 +1,5 @@
 import type React from "react";
-import type { FontWeight, TypographyVariant } from "../lib/types.ts";
+import type { FontWeight, TypographyVariant, FontSizeToken } from "../lib/types.ts";
 import { toToken } from "../lib/utils.ts";
 
 import { Card } from "./context/Card.tsx";
@@ -33,7 +33,7 @@ export interface TextProps
   weight?: FontWeight | "regular" | "medium" | "bold";
   mono?: boolean;
   opacity?: number;
-  size?: number | string; // Override size (number for token, string for px)
+  size?: FontSizeToken; // Absolute scale only, strict
   color?:
   | "primary"
   | "secondary"
@@ -94,7 +94,12 @@ export function TextRoot({
 
   // Handle explicit size override
   if (size) {
-    mergedStyle.fontSize = toToken(size, "font-size");
+    if (size.startsWith("font-size.")) {
+      mergedStyle.fontSize = `var(--${size.replace(".", "-")})`;
+    } else {
+      // Fallback/Safety if somehow a bare string passed (though type forbids)
+      mergedStyle.fontSize = toToken(size, "font-size");
+    }
   }
 
   return (
@@ -158,12 +163,20 @@ function resolveColor(
 }
 
 function resolveTypography(variant: TextVariant): React.CSSProperties {
-  // If legacy numeric
+  // If legacy numeric -> Map to Tier 1 Absolute Scale (Migration Fallback)
+  // This should be removed once all call-sites are migrated.
   if (typeof variant === "number") {
+    const map: Record<number, string> = {
+      1: "var(--font-size-n32)", // 32px
+      2: "var(--font-size-n20)", // 20px
+      3: "var(--font-size-n14)", // 14px
+      4: "var(--font-size-n12)", // 12px
+      5: "var(--font-size-n10)", // 10px
+      6: "var(--font-size-n9)",  // 9px
+    };
     return {
-      fontSize: `var(--font-size-${variant})`,
-      fontWeight:
-        variant <= 2 ? "var(--font-weight-bold)" : "var(--font-weight-regular)",
+      fontSize: map[variant] || `var(--font-size-n14)`,
+      fontWeight: variant <= 2 ? "var(--font-weight-bold)" : "var(--font-weight-regular)",
       lineHeight: 1.5,
     };
   }

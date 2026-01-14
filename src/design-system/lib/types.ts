@@ -51,12 +51,14 @@ import type {
   WidthToken,
   HeightToken,
   MaxWidthToken,
-  MaxHeightToken
+  MaxHeightToken,
+  FontSizeToken,
 } from "../token/token.const.1tier";
 
 export type {
   WidthToken,
   HeightToken,
   MaxWidthToken,
-  MaxHeightToken
+  MaxHeightToken,
+  FontSizeToken,
 };

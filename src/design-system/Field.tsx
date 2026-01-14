@@ -1,6 +1,7 @@
 import type React from "react";
 import { Frame } from "./Frame";
 import { Text } from "./text/Text.tsx";
+import { FontSize } from "./token/token.const.1tier.ts";
 
 interface FieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -59,7 +60,7 @@ export function Field({
         <Text
           variant={4}
           className="field-label"
-          size={6}
+          size={FontSize.n9}
           weight="bold"
           style={{
             width: "var(--space-3-5)", // Approximately 14px if we added 3.5

@@ -19,7 +19,7 @@ import { Action } from "../design-system/Action";
 import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
 import { Icon } from "../design-system/Icon";
-import { IconSize } from "../design-system/token/token.const.1tier";
+import { IconSize, FontSize } from "../design-system/token/token.const.1tier";
 
 // --- Activity Bar ---
 
@@ -47,7 +47,7 @@ function ActivityBar({
       <Action
         icon={Files}
         variant="ghost"
-        size={48}
+        size={FontSize.n48}
         iconSize={IconSize.n24}
         opacity={isActive("explorer") ? 1 : 0.5}
         onClick={() => onTabChange("explorer")}
@@ -126,7 +126,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
         surface="sunken"
       >
         <Frame override={{ style: { height: 35 }, p: "0 4" }} justify="center">
-          <Text variant={4} size={6} weight="medium" opacity={0.6}>
+          <Text size={FontSize.n9} weight="medium" opacity={0.6}>
             {activeTab.toUpperCase()}
           </Text>
         </Frame>
@@ -148,12 +148,12 @@ function Sidebar({ activeTab }: { activeTab: string }) {
         justify="between"
         row
       >
-        <Text variant={4} size={6} weight="medium">
+        <Text size={FontSize.n9} weight="medium">
           EXPLORER
         </Text>
         <Action
           icon={MoreHorizontal}
-          size={20}
+          size={FontSize.n20}
           iconSize={IconSize.n14}
           variant="ghost"
           opacity={0.5}
@@ -174,7 +174,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
               ) : (
                 <Icon src={ChevronRight} size={IconSize.n12} />
               )}
-              <Text variant={4} size={6} weight="bold" opacity={0.8}>
+              <Text size={FontSize.n9} weight="bold" opacity={0.8}>
                 OPEN EDITORS
               </Text>
             </Frame>
@@ -201,7 +201,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
               ) : (
                 <Icon src={ChevronRight} size={IconSize.n12} />
               )}
-              <Text variant={4} size={6} weight="bold" opacity={0.8}>
+              <Text size={FontSize.n9} weight="bold" opacity={0.8}>
                 MINIMAL-DESIGN-KIT
               </Text>
             </Frame>
@@ -257,7 +257,7 @@ function FolderItem({
           ) : (
             <Icon src={ChevronRight} size={IconSize.n12} style={{ opacity: 0.6 }} />
           )}
-          <Text size={13} color="secondary">
+          <Text size={FontSize.n13} color="secondary">
             {name}
           </Text>
         </Frame>
@@ -305,11 +305,11 @@ function FileItem({
     >
       <Frame override={{ gap: 2, p: "0 0 0 16", w: "100%" }} row align="center">
         <Frame override={{ style: { width: 12, height: 12 } }} pack>
-          <Text size={5} style={{ color: getIconColor(), fontWeight: "bold" }}>
+          <Text size={FontSize.n10} style={{ color: getIconColor(), fontWeight: "bold" }}>
             {icon === "react" ? "TSX" : icon === "ts" ? "TS" : "{}"}
           </Text>
         </Frame>
-        <Text size={13} color={active ? "primary" : "secondary"}>
+        <Text size={FontSize.n13} color={active ? "primary" : "secondary"}>
           {name}
         </Text>
         {modified && (
@@ -403,10 +403,10 @@ function Tab({
       justify="between"
     >
       <Frame override={{ gap: 2 }} row align="center">
-        <Text size={5} style={{ color: getIconColor(), fontWeight: "bold" }}>
+        <Text size={FontSize.n10} style={{ color: getIconColor(), fontWeight: "bold" }}>
           {icon === "react" ? "TSX" : "TS"}
         </Text>
-        <Text size={13} color={active ? "primary" : "secondary"}>
+        <Text size={FontSize.n13} color={active ? "primary" : "secondary"}>
           {title}
         </Text>
       </Frame>
@@ -440,11 +440,11 @@ function Breadcrumbs() {
       align="center"
       surface="base"
     >
-      <Text size={12} color="tertiary">
+      <Text size={FontSize.n12} color="tertiary">
         src
       </Text>
       <Icon src={ChevronRight} size={IconSize.n12} style={{ color: "var(--text-tertiary)" }} />
-      <Text size={12} color="tertiary">
+      <Text size={FontSize.n12} color="tertiary">
         App
       </Text>
     </Frame>
@@ -468,7 +468,7 @@ function CodeEditor() {
         {Array.from({ length: 20 }).map((_, i) => (
           <Text
             key={i}
-            size={13}
+            size={FontSize.n13}
             mono
             style={{ lineHeight: "20px", paddingRight: 16 }}
           >
@@ -478,7 +478,7 @@ function CodeEditor() {
       </Frame>
       {/* Code */}
       <Frame override={{ p: "4 0", style: { position: "relative" } }} flex fill>
-        <Text size={13} mono style={{ lineHeight: "20px", whiteSpace: "pre" }}>
+        <Text size={FontSize.n13} mono style={{ lineHeight: "20px", whiteSpace: "pre" }}>
           <span style={{ color: "#C586C0" }}>import</span>{" "}
           <span style={{ color: "#9CDCFE" }}>{"{"}</span>{" "}
           <span style={{ color: "#9CDCFE" }}>Routes</span>,{" "}
@@ -558,18 +558,18 @@ function Panel() {
         row
         align="center"
       >
-        <Text variant={4} size={6} weight="medium" opacity={0.6}>
+        <Text size={FontSize.n9} weight="medium" opacity={0.6}>
           PROBLEMS
         </Text>
-        <Text variant={4} size={6} weight="medium" opacity={0.6}>
+        <Text size={FontSize.n9} weight="medium" opacity={0.6}>
           OUTPUT
         </Text>
-        <Text variant={4} size={6} weight="medium" opacity={0.6}>
+        <Text size={FontSize.n9} weight="medium" opacity={0.6}>
           DEBUG CONSOLE
         </Text>
         <Text
           variant={4}
-          size={6}
+          size={FontSize.n9}
           weight="medium"
           style={{ borderBottom: "1px solid var(--text-primary)" }}
         >
@@ -582,24 +582,24 @@ function Panel() {
         fill
       >
         <Frame override={{ gap: 2 }} row align="center">
-          <Text size={12} color="secondary">
+          <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
-          <Text size={12} color="primary">
+          <Text size={FontSize.n12} color="primary">
             git status
           </Text>
         </Frame>
-        <Text size={12} color="secondary">
+        <Text size={FontSize.n12} color="secondary">
           On branch main
         </Text>
-        <Text size={12} color="secondary">
+        <Text size={FontSize.n12} color="secondary">
           Your branch is up to date with 'origin/main'.
         </Text>
-        <Text size={12} color="secondary">
+        <Text size={FontSize.n12} color="secondary">
           nothing to commit, working tree clean
         </Text>
         <Frame override={{ gap: 2, p: "2 0 0 0" }} row align="center">
-          <Text size={4} color="secondary">
+          <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
           <Frame
@@ -626,7 +626,7 @@ function StatusBar() {
       <Frame override={{ gap: 3 }} row>
         <Frame override={{ gap: 1 }} row align="center">
           <Icon src={GitBranch} size={IconSize.n10} style={{ color: "white" }} />
-          <Text size={11} color="white" weight="medium">
+          <Text size={FontSize.n11} color="white" weight="medium">
             main*
           </Text>
         </Frame>
@@ -635,31 +635,31 @@ function StatusBar() {
         </Frame>
         <Frame override={{ gap: 1, p: "0 0 0 2" }} row align="center">
           <Icon src={AlertCircle} size={IconSize.n10} style={{ color: "white" }} />
-          <Text size={11} color="white">
+          <Text size={FontSize.n11} color="white">
             0
           </Text>
           <Icon src={AlertCircle} size={IconSize.n10} style={{ color: "white" }} />
-          <Text size={11} color="white">
+          <Text size={FontSize.n11} color="white">
             0
           </Text>
         </Frame>
       </Frame>
 
       <Frame override={{ gap: 4 }} row>
-        <Text size={11} color="white">
+        <Text size={FontSize.n11} color="white">
           Ln 5, Col 24
         </Text>
-        <Text size={11} color="white">
+        <Text size={FontSize.n11} color="white">
           Spaces: 2
         </Text>
-        <Text size={11} color="white">
+        <Text size={FontSize.n11} color="white">
           UTF-8
         </Text>
-        <Text size={11} color="white">
+        <Text size={FontSize.n11} color="white">
           TypeScript JSX
         </Text>
         <Frame override={{ gap: 1 }} row align="center">
-          <Text size={11} color="white">
+          <Text size={FontSize.n11} color="white">
             Prettier
           </Text>
         </Frame>
