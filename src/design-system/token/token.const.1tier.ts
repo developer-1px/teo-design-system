@@ -175,11 +175,11 @@ export type SizeToken = (typeof Size)[keyof typeof Size];
 // ---------------------------------
 // Container (max widths)
 // ---------------------------------
-export const ContainerScale = [0, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1536, 1600] as const;
-export type ContainerScale = ScaleOf<typeof ContainerScale>;
-export type ContainerKey = KeyOf<typeof ContainerScale>;
+export const ContainerSizeScale = [0, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1536, 1600] as const;
+export type ContainerSizeScale = ScaleOf<typeof ContainerSizeScale>;
+export type ContainerSizeKey = KeyOf<typeof ContainerSizeScale>;
 
-export const Container = {
+export const ContainerSize = {
   n0: "container.n0",
   n320: "container.n320",
   n480: "container.n480",
@@ -191,9 +191,9 @@ export const Container = {
   n1440: "container.n1440",
   n1536: "container.n1536",
   n1600: "container.n1600",
-} as const satisfies Record<ContainerKey, `container.n${ContainerScale}`>;
+} as const satisfies Record<ContainerSizeKey, `container.n${ContainerSizeScale}`>;
 
-export type ContainerToken = (typeof Container)[keyof typeof Container];
+export type ContainerToken = (typeof ContainerSize)[keyof typeof ContainerSize];
 
 // ---------------------------------
 // Sizing unions (safe)
