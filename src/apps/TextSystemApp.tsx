@@ -236,7 +236,8 @@ export function TextSystemApp() {
                 gateway.
               </Text.Card.Desc>
               <Frame
-                override={{ style: { marginTop: "var(--space-4)" } }}
+                style={{ marginTop: "var(--space-4)" }}
+                override={{}}
                 layout={Layout.RowTemp}
                 align="center"
                 justify="between"
@@ -276,7 +277,8 @@ export function TextSystemApp() {
                 Quarterly financial analysis and growth projections.
               </Text.Card.Desc>
               <Frame
-                override={{ style: { marginTop: "var(--space-4)" } }}
+                style={{ marginTop: "var(--space-4)" }}
+                override={{}}
                 layout={Layout.RowTemp}
                 align="center"
                 justify="between"

@@ -95,18 +95,18 @@ export function ProseDocument({
 
   return (
     <Frame
+      style={{
+        maxWidth: resolveSizingStyle(maxWidth),
+        marginLeft: "auto",
+        marginRight: "auto",
+        ...style,
+      }}
       override={{
         w: Size.full,
         maxWidth: resolveSizingProp(maxWidth),
         gap: gap as any,
         py: Space.n0,
         px: Space.n24,
-        style: {
-          maxWidth: resolveSizingStyle(maxWidth),
-          marginLeft: "auto",
-          marginRight: "auto",
-          ...style,
-        },
       }}
       className={`prose-document ${className}`}
       {...props}
@@ -158,7 +158,8 @@ export function ProseActions({
 
   return (
     <Frame
-      override={{ gap: gap as any, style: { marginTop: "var(--space-6)" } }}
+      style={{ marginTop: "var(--space-6)" }}
+      override={{ gap: gap as any }}
       layout={Layout.Row.Actions.Default}
       justify={justify}
       {...props}

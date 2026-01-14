@@ -111,7 +111,7 @@ export function TokensApp() {
             </Text.Prose.Body>
           </Frame>
 
-          <Frame override={{ w: Size.full, style: { height: "1px" } }} surface="overlay" />
+          <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="overlay" />
 
           {/* 1. Text System (Dynamic from Data) */}
           <Frame override={{ gap: Space.n32 }}>
@@ -130,10 +130,10 @@ export function TokensApp() {
                   </Frame>
 
                   <Frame
+                    style={{ border: "1px solid var(--border-color)" }}
                     override={{
                       rounded: "xl",
                       p: Space.n24,
-                      style: { border: "1px solid var(--border-color)" },
                       gap: Space.n0,
                     }}
                     surface="sunken"
@@ -145,13 +145,13 @@ export function TokensApp() {
 
                       return (
                         <Frame
+                          style={{
+                            borderBottom: "1px solid var(--border-color)",
+                          }}
                           override={{
                             // gap: Space.n16, // Removed in favor of semantic preset default (12px)
                             py: Space.n16,
                             px: Space.n0,
-                            style: {
-                              borderBottom: "1px solid var(--border-color)",
-                            },
                           }}
                           key={slot.name}
                           layout={Layout.Row.Item.Default}
@@ -203,7 +203,7 @@ export function TokensApp() {
                   variant="xl" (H1 Display)
                 </Text.Card.Code>
               </Frame>
-              <Frame override={{ w: Size.full, style: { height: "1px" } }} surface="base" />
+              <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="base" />
               <Frame override={{ gap: Space.n2 }}>
                 <Text.Prose.Title variant="lg">
                   Page Title (lg)
@@ -212,7 +212,7 @@ export function TokensApp() {
                   variant="lg" (H2)
                 </Text.Card.Code>
               </Frame>
-              <Frame override={{ w: Size.full, style: { height: "1px" } }} surface="base" />
+              <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="base" />
               <Frame override={{ gap: Space.n2 }}>
                 <Text.Prose.Title variant="md">
                   Section Title (md)
@@ -221,7 +221,7 @@ export function TokensApp() {
                   variant="md" (H3)
                 </Text.Card.Code>
               </Frame>
-              <Frame override={{ w: Size.full, style: { height: "1px" } }} surface="base" />
+              <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="base" />
               <Frame override={{ gap: Space.n2 }}>
                 <Text.Prose.Title variant="sm">
                   Subsection Title (sm)
@@ -233,7 +233,7 @@ export function TokensApp() {
             </Frame>
           </Frame>
 
-          <Frame override={{ w: Size.full, style: { height: "1px" } }} surface="overlay" />
+          <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="overlay" />
 
           {/* 2. Surfaces */}
           <Frame override={{ gap: Space.n8 }}>
@@ -241,13 +241,13 @@ export function TokensApp() {
             <Frame override={{ gap: Space.n24 }} layout={Layout.Wrap.Chips.Default}>
               {SURFACES.map((s) => (
                 <Frame
+                  style={{ border: "1px solid var(--border-color)" }}
                   override={{
                     w: Size.n128,
                     h: Size.n128,
                     rounded: "2xl",
                     shadow: "sm",
                     p: Space.n4,
-                    style: { border: "1px solid var(--border-color)" },
                   }}
                   key={s.id}
                   surface={s.id as any}
@@ -274,12 +274,12 @@ export function TokensApp() {
               {SPACING.map((sp) => (
                 <Frame override={{ gap: Space.n8 }} key={sp} align="center">
                   <Frame
+                    style={{
+                      width: `var(--space-${String(sp).replace(".", "-")})`,
+                    }}
                     override={{
                       h: Size.n32,
                       rounded: "sm",
-                      style: {
-                        width: `var(--space-${String(sp).replace(".", "-")})`,
-                      },
                     }}
                     surface="primary"
                   />
@@ -299,13 +299,13 @@ export function TokensApp() {
             <Frame override={{ gap: Space.n24 }} layout={Layout.Wrap.Chips.Default}>
               {RADIUS.map((r) => (
                 <Frame
+                  style={{
+                    borderRadius: `var(--radius-${r})`,
+                    border: "1px solid var(--border-color)",
+                  }}
                   override={{
                     w: Size.n64,
                     h: Size.n64,
-                    style: {
-                      borderRadius: `var(--radius-${r})`,
-                      border: "1px solid var(--border-color)",
-                    },
                   }}
                   key={r}
                   surface="sunken"
@@ -324,7 +324,6 @@ export function TokensApp() {
           <Frame override={{ gap: Space.n32 }}>
             <Text.Prose.Title>Shadows</Text.Prose.Title>
             <Frame
-              override={{ gap: Space.n48, p: Space.n48, rounded: "3xl" }}
               override={{ gap: Space.n48, p: Space.n48, rounded: "3xl" }}
               layout={Layout.Wrap.Chips.Default}
               surface="sunken"

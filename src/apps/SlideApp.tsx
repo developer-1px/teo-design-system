@@ -24,16 +24,16 @@ export function SlideApp() {
     <Frame fill surface="sunken" overflow="hidden">
       {/* 1. Global Header */}
       <Frame
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          height: "44px",
+        }}
         override={{
           p: Space.n8,
-          style: {
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 10,
-            height: "44px",
-          },
         }}
         layout={Layout.Row.Header.Default}
       >
@@ -63,8 +63,8 @@ export function SlideApp() {
             surface="overlay"
           >
             <Frame
+              style={{ width: "16px", height: "16px" }}
               override={{
-                style: { width: "16px", height: "16px" },
                 rounded: "round",
               }}
               surface="overlay"
@@ -100,7 +100,8 @@ export function SlideApp() {
 
       {/* Main Layout Area */}
       <Frame
-        override={{ p: Space.n8, gap: Space.n8, style: { paddingTop: "48px" } }}
+        style={{ paddingTop: "48px" }}
+        override={{ p: Space.n8, gap: Space.n8 }}
         flex
         layout={Layout.Row.Shell.Default}
         fill
@@ -110,7 +111,8 @@ export function SlideApp() {
 
         {/* 3. Central Canvas Area */}
         <Frame
-          override={{ style: { position: "relative" }, rounded: "round" }}
+          style={{ position: "relative" }}
+          override={{ rounded: "round" }}
           flex
           fill
           overflow="hidden"
@@ -118,9 +120,9 @@ export function SlideApp() {
         >
           <Frame fill pack overflow="auto">
             <Frame
+              style={{ width: "1000px", maxWidth: "100%" }}
               override={{
                 shadow: "lg",
-                style: { width: "1000px", maxWidth: "100%" },
               }}
               surface="base"
               pack
@@ -136,11 +138,11 @@ export function SlideApp() {
                 >
                   Refined & Polished UI.
                 </Text.Prose.Title>
-                <Frame override={{ style: { height: "4px" } }} />
+                <Frame style={{ height: "4px" }} override={{}} />
                 <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Actions.Center}>
                   <Frame
+                    style={{ width: "40px", height: "40px" }}
                     override={{
-                      style: { width: "40px", height: "40px" },
                       rounded: "round",
                     }}
                     surface="sunken"
@@ -149,8 +151,8 @@ export function SlideApp() {
                     <Icon src={Square} size={IconSize.n16} style={{ color: "var(--text-body)" }} />
                   </Frame>
                   <Frame
+                    style={{ width: "40px", height: "40px" }}
                     override={{
-                      style: { width: "40px", height: "40px" },
                       rounded: "round",
                     }}
                     surface="raised"
@@ -159,8 +161,8 @@ export function SlideApp() {
                     <Icon src={Circle} size={IconSize.n16} style={{ color: "var(--text-body)" }} />
                   </Frame>
                   <Frame
+                    style={{ width: "40px", height: "40px" }}
                     override={{
-                      style: { width: "40px", height: "40px" },
                       rounded: "round",
                     }}
                     surface="overlay"

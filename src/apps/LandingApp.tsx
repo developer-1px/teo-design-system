@@ -205,7 +205,6 @@ export function LandingApp() {
           <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="sunken" />
           <Frame
             override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
-            override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
             layout={Layout.Row.Header.Default}
           >
             <Text.Card.Note>

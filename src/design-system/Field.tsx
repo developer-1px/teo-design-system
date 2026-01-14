@@ -46,6 +46,11 @@ export function Field({
 
   return (
     <Frame
+      style={{
+        width: resolveSizingStyle(effW),
+        cursor: "text",
+        ...style,
+      }}
       override={{
         gap: Space.n6,
         py: Space.n6,
@@ -54,11 +59,6 @@ export function Field({
         w: resolveSizingProp(effW),
         row: true, // Ensure row layout
         align: "center",
-        style: {
-          width: resolveSizingStyle(effW),
-          cursor: "text",
-          ...style,
-        },
       }}
       flex={flex}
       as="label"
@@ -66,33 +66,35 @@ export function Field({
     >
       {icon && (
         <Frame
+          style={{
+            display: "flex",
+            flexShrink: 0,
+          }}
           override={{
-            style: {
-              display: "flex",
-              flexShrink: 0,
-            },
           }}
           className="field-icon"
         >
           {icon}
         </Frame>
       )}
-      {label && (
-        <Text
-          className="field-label"
-          size={FontSize.n9}
-          weight="bold"
-          style={{
-            width: "var(--space-3-5)", // Approximately 14px if we added 3.5
-            marginRight: "var(--space-0-5)",
-            flexShrink: 0,
-            whiteSpace: "nowrap",
-            textAlign: "center",
-          }}
-        >
-          {label}
-        </Text>
-      )}
+      {
+        label && (
+          <Text
+            className="field-label"
+            size={FontSize.n9}
+            weight="bold"
+            style={{
+              width: "var(--space-3-5)", // Approximately 14px if we added 3.5
+              marginRight: "var(--space-0-5)",
+              flexShrink: 0,
+              whiteSpace: "nowrap",
+              textAlign: "center",
+            }}
+          >
+            {label}
+          </Text>
+        )
+      }
       <input
         {...props}
         value={value}
@@ -107,19 +109,20 @@ export function Field({
           ...inputStyle,
         }}
       />
-      {rightIcon && (
-        <Frame
-          override={{
-            style: {
+      {
+        rightIcon && (
+          <Frame
+            style={{
               opacity: 0.4,
               display: "flex",
               flexShrink: 0,
-            },
-          }}
-        >
-          {rightIcon}
-        </Frame>
-      )}
+            }}
+            override={{
+            }}
+          >
+            {rightIcon}
+          </Frame>
+        )}
     </Frame>
   );
 }

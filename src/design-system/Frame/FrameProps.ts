@@ -67,7 +67,6 @@ export interface FrameOverrides {
   border?: boolean | string;
   borderColor?: string;
 
-  style?: React.CSSProperties;
   className?: string;
 }
 

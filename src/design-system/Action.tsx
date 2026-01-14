@@ -141,20 +141,20 @@ export function Action({
         row: true, // Ensure row layout
         // Default to center alignment (vertical)
         align: "center",
-        style: {
-          width: resolveSizingStyle(effW),
-          height: resolveSizingStyle(effH),
-          border: border ? "1px solid var(--border-color)" : undefined,
-          minWidth: !label && size ? (toToken(size, "size") as any) : undefined, // Ensure square for icons
-          cursor: "pointer", // Indicate interactivity
-          color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",
-          boxShadow: shadow
-            ? `var(--shadow-${shadow})`
-            : glow
-              ? "0 0 20px -5px var(--primary-bg)"
-              : undefined,
-          ...styleOverride,
-        },
+      }}
+      style={{
+        width: resolveSizingStyle(effW),
+        height: resolveSizingStyle(effH),
+        border: border ? "1px solid var(--border-color)" : undefined,
+        minWidth: !label && size ? (toToken(size, "size") as any) : undefined, // Ensure square for icons
+        cursor: "pointer", // Indicate interactivity
+        color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",
+        boxShadow: shadow
+          ? `var(--shadow-${shadow})`
+          : glow
+            ? "0 0 20px -5px var(--primary-bg)"
+            : undefined,
+        ...styleOverride,
       }}
       as="button"
       className={`action-base action-${finalVariant} ${className}`}

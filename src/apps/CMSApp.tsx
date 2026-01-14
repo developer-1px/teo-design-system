@@ -26,7 +26,8 @@ export function CMSApp() {
       <TopRightBar />
 
       <Frame
-        override={{ style: { position: "relative" } }}
+        style={{ position: "relative" }}
+        override={{}}
         layout={Layout.Row.Shell.Default}
         fill
         align="stretch"
@@ -45,7 +46,7 @@ export function CMSApp() {
           overflow="auto"
         >
           {/* The Canvas */}
-          <Frame override={{ w: Size.full, style: { minHeight: "100%" } }}>
+          <Frame style={{ minHeight: "100%" }} override={{ w: Size.full }}>
             <SiteHeader
               isSidebarOpen={isSidebarOpen}
               onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)}

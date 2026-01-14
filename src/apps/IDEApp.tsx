@@ -36,9 +36,9 @@ function ActivityBar({
 
   return (
     <Frame
+      style={{ borderRight: "1px solid var(--border-color)" }}
       override={{
         w: Size.n48,
-        style: { borderRight: "1px solid var(--border-color)" },
         py: Space.n8,
         px: Space.n0,
         gap: Space.n8,
@@ -122,13 +122,13 @@ function Sidebar({ activeTab }: { activeTab: string }) {
     // Placeholder for other tabs
     return (
       <Frame
+        style={{ width: 250, borderRight: "1px solid var(--border-color)" }}
         override={{
-          style: { width: 250, borderRight: "1px solid var(--border-color)" },
         }}
         fill
         surface="sunken"
       >
-        <Frame override={{ style: { height: 35 }, px: Space.n16 }} justify="center">
+        <Frame style={{ height: 35 }} override={{ px: Space.n16 }} justify="center">
           <Text size={FontSize.n9} weight="medium" opacity={0.6}>
             {activeTab.toUpperCase()}
           </Text>
@@ -139,14 +139,15 @@ function Sidebar({ activeTab }: { activeTab: string }) {
 
   return (
     <Frame
+      style={{ width: 250, borderRight: "1px solid var(--border-color)" }}
       override={{
-        style: { width: 250, borderRight: "1px solid var(--border-color)" },
       }}
       fill
       surface="sunken"
     >
       <Frame
-        override={{ style: { height: 35 }, px: Space.n20 }}
+        style={{ height: 35 }}
+        override={{ px: Space.n20 }}
         align="center"
         justify="between"
         layout={Layout.Row.Header.Default}
@@ -267,15 +268,15 @@ function FolderItem({
       </Action>
       {expanded && (
         <Frame
+          style={{
+            borderLeftColor: "transparent",
+            borderLeft: "1px solid var(--border-color)",
+          }}
           override={{
             pt: Space.n0,
             pr: Space.n0,
             pb: Space.n0,
             pl: Space.n12,
-            style: {
-              borderLeftColor: "transparent",
-              borderLeft: "1px solid var(--border-color)",
-            },
           }}
         >
           {children}
@@ -310,7 +311,7 @@ function FileItem({
       rounded="none"
     >
       <Frame override={{ gap: Space.n8, pl: Space.n64, w: Size.full }} layout={Layout.Row.Item.Compact} align="center">
-        <Frame override={{ style: { width: 12, height: 12 } }} pack>
+        <Frame style={{ width: 12, height: 12 }} override={{}} pack>
           <Text size={FontSize.n10} style={{ color: getIconColor(), fontWeight: "bold" }}>
             {icon === "react" ? "TSX" : icon === "ts" ? "TS" : "{}"}
           </Text>
@@ -322,12 +323,12 @@ function FileItem({
           <>
             <Frame flex />
             <Frame
+              style={{
+                width: 8,
+                height: 8,
+                backgroundColor: "var(--text-secondary)",
+              }}
               override={{
-                style: {
-                  width: 8,
-                  height: 8,
-                  backgroundColor: "var(--text-secondary)",
-                },
                 rounded: "full",
               }}
               surface="sunken"
@@ -344,8 +345,8 @@ function FileItem({
 function EditorTabs() {
   return (
     <Frame
+      style={{ height: 35, borderBottom: "1px solid var(--border-color)" }}
       override={{
-        style: { height: 35, borderBottom: "1px solid var(--border-color)" },
       }}
       layout={Layout.Row.Shell.Default}
       surface="sunken"
@@ -393,15 +394,15 @@ function Tab({
 
   return (
     <Frame
+      style={{
+        width: 120,
+        height: "100%",
+        cursor: "pointer",
+        borderTopColor: active ? "var(--text-primary)" : "transparent",
+        borderRight: "1px solid var(--border-color)",
+        borderTop: active ? "1px solid var(--border-color)" : undefined,
+      }}
       override={{
-        style: {
-          width: 120,
-          height: "100%",
-          cursor: "pointer",
-          borderTopColor: active ? "var(--text-primary)" : "transparent",
-          borderRight: "1px solid var(--border-color)",
-          borderTop: active ? "1px solid var(--border-color)" : undefined,
-        },
         py: Space.n0,
         px: Space.n12,
       }}
@@ -430,7 +431,8 @@ function Tab({
       >
         {modified ? (
           <Frame
-            override={{ style: { width: 8, height: 8 }, rounded: "full" }}
+            style={{ width: 8, height: 8 }}
+            override={{ rounded: "full" }}
             surface="overlay"
           />
         ) : undefined}
@@ -442,7 +444,8 @@ function Tab({
 function Breadcrumbs() {
   return (
     <Frame
-      override={{ style: { height: 22 }, px: Space.n16, gap: Space.n4 }}
+      style={{ height: 22 }}
+      override={{ px: Space.n16, gap: Space.n4 }}
       layout={Layout.Row.Meta.Default}
       align="center"
       surface="base"
@@ -463,13 +466,13 @@ function CodeEditor() {
     <Frame flex fill surface="base" layout={Layout.Row.Shell.Default} overflow="hidden">
       {/* Gutter */}
       <Frame
+        style={{ userSelect: "none" }}
         override={{
           w: Size.n48,
           py: Space.n16,
           px: Space.n0,
           gap: Space.n0,
           opacity: 0.4,
-          style: { userSelect: "none" },
         }}
         align="end"
       >
@@ -485,7 +488,7 @@ function CodeEditor() {
         ))}
       </Frame>
       {/* Code */}
-      <Frame override={{ py: Space.n16, style: { position: "relative" } }} flex fill>
+      <Frame style={{ position: "relative" }} override={{ py: Space.n16 }} flex fill>
         <Text size={FontSize.n13} mono style={{ lineHeight: "20px", whiteSpace: "pre" }}>
           <span style={{ color: "#C586C0" }}>import</span>{" "}
           <span style={{ color: "#9CDCFE" }}>{"{"}</span>{" "}
@@ -556,13 +559,14 @@ function CodeEditor() {
 function Panel() {
   return (
     <Frame
+      style={{ height: 150, borderTop: "1px solid var(--border-color)" }}
       override={{
-        style: { height: 150, borderTop: "1px solid var(--border-color)" },
       }}
       surface="base"
     >
       <Frame
-        override={{ style: { height: 35 }, px: Space.n16, gap: Space.n16 }}
+        style={{ height: 35 }}
+        override={{ px: Space.n16, gap: Space.n16 }}
         layout={Layout.Row.Toolbar.Default}
         align="center"
       >
@@ -584,7 +588,8 @@ function Panel() {
         </Text>
       </Frame>
       <Frame
-        override={{ py: Space.n8, px: Space.n16, style: { fontFamily: "monospace" } }}
+        style={{ fontFamily: "monospace" }}
+        override={{ py: Space.n8, px: Space.n16 }}
         flex
         fill
       >
@@ -610,7 +615,8 @@ function Panel() {
             ➜ minimal-design-kit
           </Text>
           <Frame
-            override={{ style: { width: 6, height: 14 }, opacity: 0.8 }}
+            style={{ width: 6, height: 14 }}
+            override={{ opacity: 0.8 }}
             surface="overlay"
           />
         </Frame>
@@ -624,7 +630,8 @@ function Panel() {
 function StatusBar() {
   return (
     <Frame
-      override={{ style: { height: 22 }, px: Space.n12 }}
+      style={{ height: 22 }}
+      override={{ px: Space.n12 }}
       surface="overlay"
       layout={Layout.Row.Toolbar.Compact}
       align="center"
@@ -697,17 +704,18 @@ export function IDEApp() {
       areas="'activity sidebar editor' 'status status status'"
     >
       {/* Main Layout Components placed via gridArea */}
-      <Frame override={{ style: { gridArea: "activity" } }}>
+      <Frame style={{ gridArea: "activity" }} override={{}}>
         <ActivityBar activeTab={activeTab} onTabChange={setActiveTab} />
       </Frame>
 
-      <Frame override={{ style: { gridArea: "sidebar" } }}>
+      <Frame style={{ gridArea: "sidebar" }} override={{}}>
         <Sidebar activeTab={activeTab} />
       </Frame>
 
       {/* Editor Area */}
       <Frame
-        override={{ style: { gridArea: "editor" } }}
+        style={{ gridArea: "editor" }}
+        override={{}}
         grid
         rows="35px 22px 1fr 150px"
       >
@@ -718,7 +726,7 @@ export function IDEApp() {
       </Frame>
 
       {/* Status Bar */}
-      <Frame override={{ style: { gridArea: "status" } }}>
+      <Frame style={{ gridArea: "status" }} override={{}}>
         <StatusBar />
       </Frame>
     </Frame>

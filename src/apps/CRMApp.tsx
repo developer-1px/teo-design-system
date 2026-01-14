@@ -121,8 +121,8 @@ function Avatar({
 }) {
   return (
     <Frame
+      style={{ width: size, height: size, backgroundColor: color }}
       override={{
-        style: { width: size, height: size, backgroundColor: color },
         rounded: "full",
       }}
       pack
@@ -165,11 +165,11 @@ function StageBadge({ stage }: { stage: DealStage }) {
 
   return (
     <Frame
+      style={{ backgroundColor: bg, border: "1px solid var(--border-color)" }}
       override={{
         py: Space.n4,
         px: Space.n8,
         rounded: "md",
-        style: { backgroundColor: bg, border: "1px solid var(--border-color)" },
       }}
     >
       <Text variant="caption-sm" weight="medium" style={{ color }}>
@@ -223,9 +223,9 @@ function SidebarItem({
 function Sidebar() {
   return (
     <Frame
+      style={{ width: "240px", minWidth: 240, borderRight: "1px solid var(--border-color)" }}
       override={{
         h: Size.full,
-        style: { width: "240px", minWidth: 240, borderRight: "1px solid var(--border-color)" },
       }}
       surface="sunken"
     >
@@ -294,7 +294,7 @@ function SectionLabel({ label }: { label: string }) {
 
 function SelectorIcon() {
   return (
-    <Frame override={{ style: { opacity: 0.4 } }}>
+    <Frame style={{ opacity: 0.4 }} override={{}}>
       <Icon src={ChevronDown} size={IconSize.n14} />
     </Frame>
   );
@@ -303,10 +303,10 @@ function SelectorIcon() {
 function Header() {
   return (
     <Frame
+      style={{ height: 60, borderBottom: "1px solid var(--border-color)" }}
       override={{
         py: Space.n12,
         px: Space.n20,
-        style: { height: 60, borderBottom: "1px solid var(--border-color)" },
       }}
     >
       <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Meta.Default} align="center">
@@ -326,12 +326,12 @@ function Header() {
 
       {/* Global Search */}
       <Frame
+        style={{ width: 320, border: "1px solid var(--border-color)" }}
         override={{
           rounded: "md",
           py: Space.n6,
           px: Space.n12,
           gap: Space.n8,
-          style: { width: 320, border: "1px solid var(--border-color)" },
         }}
         surface="sunken"
         layout={Layout.Row.Toolbar.Compact}
@@ -343,13 +343,13 @@ function Header() {
         </Text>
         <Frame flex />
         <Frame
+          style={{
+            borderColor: "var(--border-color)",
+            border: "1px solid var(--border-color)",
+          }}
           override={{
             rounded: "sm",
             p: Space.n0,
-            style: {
-              borderColor: "var(--border-color)",
-              border: "1px solid var(--border-color)",
-            },
           }}
           surface="raised"
         >
@@ -382,10 +382,10 @@ function ShareIcon(props: any) {
 function Toolbar() {
   return (
     <Frame
+      style={{ height: 48, borderBottom: "1px solid var(--border-color)" }}
       override={{
         py: Space.n8,
         px: Space.n20,
-        style: { height: 48, borderBottom: "1px solid var(--border-color)" },
         gap: Space.n8,
       }}
       layout={Layout.Row.Toolbar.Default}
@@ -411,15 +411,15 @@ const TABLE_COLS = "40px minmax(200px, 1.5fr) 1fr 140px 140px 120px 1fr";
 function TableHeader() {
   return (
     <Frame
+      style={{
+        height: 36,
+        backgroundColor: "var(--surface-base)",
+        borderBottom: "1px solid var(--border-color)",
+      }}
       override={{
         px: Space.n16,
         py: Space.n0,
         gap: Space.n16,
-        style: {
-          height: 36,
-          backgroundColor: "var(--surface-base)",
-          borderBottom: "1px solid var(--border-color)",
-        },
       }}
       grid
       columns={TABLE_COLS}
@@ -482,12 +482,12 @@ function TableRow({
       gap={0}
     >
       <Frame
+        style={{ height: 44, borderBottom: "1px solid var(--border-color)" }}
         override={{
           w: Size.full,
           px: Space.n16,
           py: Space.n0,
           gap: Space.n16,
-          style: { height: 44, borderBottom: "1px solid var(--border-color)" },
         }}
         grid
         columns={TABLE_COLS}
@@ -504,7 +504,8 @@ function TableRow({
         </Frame>
         <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Compact} align="center">
           <Frame
-            override={{ style: { width: 16, height: 16 }, rounded: "sm" }}
+            style={{ width: 16, height: 16 }}
+            override={{ rounded: "sm" }}
             surface="raised"
             align="center"
             justify="center"
@@ -521,7 +522,8 @@ function TableRow({
         </Text>
         <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Compact} align="center">
           <Frame
-            override={{ style: { width: 18, height: 18 }, rounded: "full" }}
+            style={{ width: 18, height: 18 }}
+            override={{ rounded: "full" }}
             surface="overlay"
             align="center"
             justify="center"
@@ -554,27 +556,27 @@ function Drawer({
 
   return (
     <Frame
+      style={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        width: 600,
+        backgroundColor: "var(--surface-base)",
+        boxShadow: "var(--shadow-lg)",
+        borderLeft: "1px solid var(--border-color)",
+        zIndex: 100,
+      }}
       override={{
-        style: {
-          position: "absolute",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          width: 600,
-          backgroundColor: "var(--surface-base)",
-          boxShadow: "var(--shadow-lg)",
-          borderLeft: "1px solid var(--border-color)",
-          zIndex: 100,
-        },
       }}
       flex
     >
       {/* Drawer Header */}
       <Frame
+        style={{ height: 60, borderBottom: "1px solid var(--border-color)" }}
         override={{
           py: Space.n16,
           px: Space.n24,
-          style: { height: 60, borderBottom: "1px solid var(--border-color)" },
         }}
         layout={Layout.Row.Header.Default}
         align="center"
@@ -649,10 +651,10 @@ function Drawer({
 
       {/* Drawer Footer */}
       <Frame
+        style={{ borderTop: "1px solid var(--border-color)" }}
         override={{
           py: Space.n16,
           px: Space.n24,
-          style: { borderTop: "1px solid var(--border-color)" },
           gap: Space.n8,
         }}
         layout={Layout.Row.Actions.Default}
@@ -679,7 +681,7 @@ function PropertyRow({
   empty?: boolean;
 }) {
   return (
-    <Frame override={{ style: { height: 32 }, gap: Space.n16 }} layout={Layout.Row.Item.Default} align="center">
+    <Frame style={{ height: 32 }} override={{ gap: Space.n16 }} layout={Layout.Row.Item.Default} align="center">
       <Frame override={{ gap: Space.n8, w: Size.n144 }} layout={Layout.Row.Meta.Default} align="center">
         <Icon src={IconSrc} size={IconSize.n14} style={{ color: "var(--text-tertiary)" }} />
         <Text variant="body-sm" color="tertiary">
@@ -709,7 +711,8 @@ function ActivityItem({
   return (
     <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default}>
       <Frame
-        override={{ style: { width: 24, height: 24 }, rounded: "full" }}
+        style={{ width: 24, height: 24 }}
+        override={{ rounded: "full" }}
         surface="raised"
         align="center"
         justify="center"
@@ -743,11 +746,11 @@ export function CRMApp() {
     <Frame fill layout={Layout.Row.Shell.Default} surface="base">
       <Sidebar />
       <Frame
+        style={{
+          position: "relative",
+          borderLeft: "1px solid var(--border-color)",
+        }}
         override={{
-          style: {
-            position: "relative",
-            borderLeft: "1px solid var(--border-color)",
-          },
         }}
         fill
         flex

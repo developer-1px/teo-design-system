@@ -61,6 +61,16 @@ export function Section({
 
   return (
     <Frame
+      style={{
+        width: resolveSizingStyle(w),
+        height: resolveSizingStyle(h),
+        ...computedBorder,
+        overflow: "hidden",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        ...style,
+      }}
       override={{
         p: Space.n0,
         w: resolveSizingProp(w),
@@ -68,16 +78,6 @@ export function Section({
         flex,
         rounded,
         shadow,
-        style: {
-          width: resolveSizingStyle(w),
-          height: resolveSizingStyle(h),
-          ...computedBorder,
-          overflow: "hidden",
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          ...style,
-        },
       }}
       as="section"
       surface="base"
@@ -86,34 +86,32 @@ export function Section({
     >
       {(title || icon) && (
         <Frame
+          style={{
+            borderBottom: "1px solid var(--border-color)",
+            flexShrink: 0,
+          }}
           override={{
             gap: Space.n8,
             p: Space.n8,
-            style: {
-              borderBottom: "1px solid var(--border-color)",
-              flexShrink: 0,
-            },
           }}
           layout={Layout.Row.Item.Tight}
           align="center"
         >
-          {icon && <span style={{ color: "var(--text-subtle)" }}>{icon}</span>}
-          {title && (
-            <Text.Card.Note
-              style={{
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                fontWeight: "bold",
-              }}
-            >
-              {title}
-            </Text.Card.Note>
-          )}
-        </Frame>
+          <Text.Card.Note
+            style={{
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+              fontWeight: "bold",
+            }}
+          >
+            {title}
+          </Text.Card.Note>
+          )
+        </Frame >
       )}
-      <Frame override={{ style: { overflow: "auto", minHeight: 0 } }} fill flex>
+      <Frame style={{ overflow: "auto", minHeight: 0 }} override={{}} fill flex>
         {children}
       </Frame>
-    </Frame>
+    </Frame >
   );
 }
