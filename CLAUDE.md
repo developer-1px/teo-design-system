@@ -267,3 +267,18 @@ The project uses TypeScript project references:
 - **Theme Switching**: Handled via `data-theme` attribute on document root with localStorage persistence
 - **Development Tools**: Use **Cmd+Shift** during dev to activate the React Inspector overlay for component debugging
 - **Known Limitations**: See `IDE_DESIGN_FEEDBACK.md` for design system enhancement suggestions (resizable layouts, tree components, syntax highlighting, custom scrollbars, tab management)
+
+## Documentation Standards
+
+### File Naming Convention
+Documentation files in `docs/claude/` use zero-padded number prefixes for sequential ordering:
+- Format: `00-filename.md`, `01-filename.md`, `02-filename.md`, etc.
+- Ensures logical reading order in file explorers
+- Examples:
+  - `00-layout-system-tree.md`
+  - `01-text-system-tree.md`
+  - `02-overlay-token-decision-tree.md`
+
+### Architecture Notes
+- **Frame vs Layout**: Frame is the primitive layout component. Layout (e.g., `Layout.Stack`, `Layout.Row`) is a sub-concept of Frame using preset tokens
+- **Action Context**: Action is not a top-level category. Actions belong to specific contexts (Frame's Button, Form's Submit, Navigation's Link, etc.)

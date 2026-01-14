@@ -82,6 +82,7 @@ export function Field({
           minWidth: 0,
           flex: 1,
           cursor: "text",
+          fontSize: "var(--font-size-n11)",
           ...inputStyle,
         }}
       />
