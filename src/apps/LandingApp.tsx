@@ -1,10 +1,8 @@
-import { ArrowRight, Box, Component, Grid, Layers, Zap, Type, Monitor, PanelTop, LayoutTemplate, PenTool, MousePointerClick } from "lucide-react";
+import { ArrowRight, Component, Layers, Zap, Type, PanelTop, LayoutTemplate, PenTool, MousePointerClick } from "lucide-react";
 import { Action } from "../design-system/Action";
 import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame";
-import { Prose } from "../design-system/text/Prose";
-import { Card } from "../design-system/text/Card";
-import { Menu } from "../design-system/text/Menu";
+import { Text } from "../design-system/text/Text";
 
 export function LandingApp() {
   return (
@@ -24,7 +22,7 @@ export function LandingApp() {
             borderBottom: "1px solid var(--border-subtle)",
           }}
         >
-          <Prose.Title variant="sm">TMDK</Prose.Title>
+          <Text.Prose.Title variant="sm">TMDK</Text.Prose.Title>
           <Frame row gap={2}>
             <Action label="Documentation" variant="ghost" />
             <Action label="Components" variant="ghost" />
@@ -45,16 +43,16 @@ export function LandingApp() {
             cursor="pointer"
           >
             <Zap size={12} fill="currentColor" color="var(--text-tertiary)" />
-            <Card.Note style={{ fontWeight: 600, color: "var(--text-secondary)" }}>
+            <Text.Card.Note style={{ fontWeight: 600, color: "var(--text-secondary)" }}>
               New: Layout Engine v2.0
-            </Card.Note>
+            </Text.Card.Note>
           </Frame>
 
-          <Prose.Title variant="xl" style={{ maxWidth: 800, textAlign: "center" }}>
+          <Text.Prose.Title variant="xl" style={{ maxWidth: 800, textAlign: "center" }}>
             Build faster with the Teo's Minimal Design Kit
-          </Prose.Title>
+          </Text.Prose.Title>
 
-          <Prose.Body
+          <Text.Prose.Body
             style={{
               maxWidth: 600,
               fontSize: "1.125rem",
@@ -64,28 +62,28 @@ export function LandingApp() {
           >
             A collection of high-quality, accessible, and performant React
             components crafted for modern web applications.
-          </Prose.Body>
+          </Text.Prose.Body>
 
           <Frame row gap={3} p="8 0 0 0" justify="center">
             {/* Main CTA */}
             <Action variant="primary" rounded="full" p="3 5" gap={2}>
-              <Menu.Item style={{ color: "white", fontWeight: 600 }}>Get Started</Menu.Item>
+              <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>Get Started</Text.Menu.Item>
               <ArrowRight size={16} color="white" />
             </Action>
 
             {/* Secondary CTA */}
             <Action variant="surface" rounded="full" p="3 5" gap={2} border>
-              <Menu.Item style={{ color: "var(--text-secondary)", fontWeight: 600 }}>View Components</Menu.Item>
+              <Text.Menu.Item style={{ color: "var(--text-secondary)", fontWeight: 600 }}>View Components</Text.Menu.Item>
             </Action>
           </Frame>
         </Frame>
 
         {/* Why Section */}
         <Frame align="center" gap={6} p="24 6">
-          <Prose.Title variant="lg" style={{ textAlign: "center" }}>
+          <Text.Prose.Title variant="lg" style={{ textAlign: "center" }}>
             왜 만들었는가?
-          </Prose.Title>
-          <Prose.Body
+          </Text.Prose.Title>
+          <Text.Prose.Body
             style={{
               maxWidth: 800,
               fontSize: "1.25rem",
@@ -105,16 +103,16 @@ export function LandingApp() {
             <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>
               이것이 바로 Minimal Design Kit가 추구하는 방향입니다.
             </span>
-          </Prose.Body>
+          </Text.Prose.Body>
         </Frame>
 
         {/* Features Grid */}
         <Frame p="24 6" gap={12}>
           <Frame gap={4} align="center" p="0 0 8 0">
-            <Prose.Title variant="lg">Everything you need</Prose.Title>
-            <Prose.Body style={{ color: "var(--text-secondary)" }}>
+            <Text.Prose.Title variant="lg">Everything you need</Text.Prose.Title>
+            <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
               Comprehensive primitives for any layout.
-            </Prose.Body>
+            </Text.Prose.Body>
           </Frame>
 
           <Frame
@@ -174,13 +172,13 @@ export function LandingApp() {
         <Frame p="24 6" gap={4}>
           <Frame h="1px" surface="sunken" w="100%" />
           <Frame row justify="between" p="8 0 0 0" align="center">
-            <Card.Note>
+            <Text.Card.Note>
               © 2026 Minimal Design Kit. All rights reserved.
-            </Card.Note>
+            </Text.Card.Note>
             <Frame row gap={4}>
-              <Card.Note style={{ cursor: "pointer" }}>Twitter</Card.Note>
-              <Card.Note style={{ cursor: "pointer" }}>GitHub</Card.Note>
-              <Card.Note style={{ cursor: "pointer" }}>Discord</Card.Note>
+              <Text.Card.Note style={{ cursor: "pointer" }}>Twitter</Text.Card.Note>
+              <Text.Card.Note style={{ cursor: "pointer" }}>GitHub</Text.Card.Note>
+              <Text.Card.Note style={{ cursor: "pointer" }}>Discord</Text.Card.Note>
             </Frame>
           </Frame>
         </Frame>
@@ -199,13 +197,13 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <Frame p={6} surface="sunken  " rounded="2xl" style={{ border: "1px solid var(--border-color)" }} gap={4}>
+    <Frame p={6} surface="sunken" rounded="2xl" style={{ border: "1px solid var(--border-color)" }} gap={4}>
       <Frame w={8} h={8} surface="base" rounded="xl" pack style={{ border: "1px solid var(--border-color)" }} shadow="sm">
         <Icon size={24} color="var(--text-primary)" />
       </Frame>
       <Frame gap={2}>
-        <Card.Title>{title}</Card.Title>
-        <Card.Desc>{description}</Card.Desc>
+        <Text.Card.Title>{title}</Text.Card.Title>
+        <Text.Card.Desc>{description}</Text.Card.Desc>
       </Frame>
     </Frame>
   );

@@ -1,6 +1,6 @@
 import type React from "react";
 import { Frame } from "./Frame";
-import { Text } from "./Text";
+import { Text } from "./text/Text.tsx";
 
 interface FieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {

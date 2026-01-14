@@ -1,9 +1,13 @@
 import type React from "react";
-import "./lib/tokens.css";
-import type { FontWeight, TypographyVariant } from "./lib/types.ts";
-import { toToken } from "./lib/utils.ts";
+import "../lib/tokens.css";
+import type { FontWeight, TypographyVariant } from "../lib/types.ts";
+import { toToken } from "../lib/utils.ts";
 
-
+import { Card } from "./context/Card.tsx";
+import { Prose } from "./context/Prose.tsx";
+import { Menu } from "./context/Menu.tsx";
+import { Field } from "./context/Field.tsx";
+import { Table } from "./context/Table.tsx";
 
 export type TextVariant =
   | "heading-lg"
@@ -37,7 +41,7 @@ export interface TextProps
   style?: React.CSSProperties;
 }
 
-export function Text({
+export function TextRoot({
   children,
   variant = "body-md", // New default
   as,
@@ -92,6 +96,14 @@ export function Text({
     </Tag>
   );
 }
+
+export const Text = Object.assign(TextRoot, {
+  Card,
+  Prose,
+  Menu,
+  Field,
+  Table,
+});
 
 // --- Helpers ---
 

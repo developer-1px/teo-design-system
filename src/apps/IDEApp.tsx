@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Action } from "../design-system/Action";
-import { Text } from "../design-system/Text";
+import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
 
 // --- Activity Bar ---

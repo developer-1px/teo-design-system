@@ -12,9 +12,8 @@ import { FloatingToolbar } from "../components/FloatingToolbar";
 import { PropertiesPanel } from "../components/PropertiesPanel";
 import { SlidesPanel } from "../components/SlidesPanel";
 import { Action } from "../design-system/Action";
-import { Menu } from "../design-system/text/Menu";
+import { Text } from "../design-system/text/Text";
 import { Frame } from "../design-system/Frame";
-import { Prose } from "../design-system/text/Prose";
 
 export function SlideApp() {
   return (
@@ -39,9 +38,9 @@ export function SlideApp() {
             style={{ width: "28px", height: "28px" }}
           />
           <Frame row gap={2} align="center">
-            <Menu.Item style={{ fontWeight: 600 }}>
+            <Text.Menu.Item style={{ fontWeight: 600 }}>
               Untitled Presentation
-            </Menu.Item>
+            </Text.Menu.Item>
             <Action
               icon={ChevronDown}
               iconSize={12}
@@ -115,12 +114,12 @@ export function SlideApp() {
               style={{ width: "1000px", maxWidth: "100%" }}
             >
               <Frame gap={4} align="center">
-                <Prose.Title variant="xl">
+                <Text.Prose.Title variant="xl">
                   Minimal Design Kit
-                </Prose.Title>
-                <Prose.Title variant="md" style={{ color: "var(--text-secondary)" }}>
+                </Text.Prose.Title>
+                <Text.Prose.Title variant="md" style={{ color: "var(--text-secondary)" }}>
                   Refined & Polished UI.
-                </Prose.Title>
+                </Text.Prose.Title>
                 <Frame style={{ height: "4px" }} />
                 <Frame row gap={3}>
                   <Frame

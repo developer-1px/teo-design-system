@@ -1,7 +1,6 @@
 import { Cpu, Globe, Shield, Zap } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Prose } from "../../design-system/text/Prose";
-import { Card } from "../../design-system/text/Card";
+import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 
 export function ImageFooterBanner() {
@@ -29,10 +28,10 @@ export function ImageFooterBanner() {
         />
 
         <Frame p={6} style={{ maxWidth: 640 }} gap={6} align="center" zIndex={10}>
-          <Prose.Title variant="xl" style={{ color: "white", textAlign: "center" }}>
+          <Text.Prose.Title variant="xl" style={{ color: "white", textAlign: "center" }}>
             Ready to elevate <br /> your web presence?
-          </Prose.Title>
-          <Prose.Body
+          </Text.Prose.Title>
+          <Text.Prose.Body
             style={{
               color: "white",
               textAlign: "center",
@@ -41,7 +40,7 @@ export function ImageFooterBanner() {
           >
             Join 2,000+ companies building high-performance marketing sites with
             our Visual Engine.
-          </Prose.Body>
+          </Text.Prose.Body>
           <Frame row gap={4}>
             <Action
               label="Start for Free"
@@ -66,33 +65,33 @@ export function ImageFooterBanner() {
 
       {/* Partner Logos */}
       <Frame style={{ paddingTop: 48, paddingBottom: 24 }} gap={6} align="center">
-        <Card.Note style={{ fontWeight: "bold", color: "var(--text-tertiary)", opacity: 0.5 }}>
+        <Text.Card.Note style={{ fontWeight: "bold", color: "var(--text-tertiary)", opacity: 0.5 }}>
           TRUSTED WORLDWIDE
-        </Card.Note>
+        </Text.Card.Note>
         <Frame row gap={12} p="0 6" justify="center" opacity={0.3} wrap="wrap">
           <Frame row gap={2} align="center">
             <Zap size={24} />
-            <Card.Title>
+            <Text.Card.Title>
               Bolt
-            </Card.Title>
+            </Text.Card.Title>
           </Frame>
           <Frame row gap={2} align="center">
             <Globe size={24} />
-            <Card.Title>
+            <Text.Card.Title>
               Stripe
-            </Card.Title>
+            </Text.Card.Title>
           </Frame>
           <Frame row gap={2} align="center">
             <Shield size={24} />
-            <Card.Title>
+            <Text.Card.Title>
               Linear
-            </Card.Title>
+            </Text.Card.Title>
           </Frame>
           <Frame row gap={2} align="center">
             <Cpu size={24} />
-            <Card.Title>
+            <Text.Card.Title>
               Vercel
-            </Card.Title>
+            </Text.Card.Title>
           </Frame>
         </Frame>
       </Frame>

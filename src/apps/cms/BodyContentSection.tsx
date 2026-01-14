@@ -1,6 +1,5 @@
 import { Check, MessageSquare, Zap } from "lucide-react";
-import { Prose } from "../../design-system/text/Prose";
-import { Card } from "../../design-system/text/Card";
+import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 
 export function BodyContentSection() {
@@ -21,17 +20,17 @@ export function BodyContentSection() {
       >
         <Frame w="50%" gap={2}>
           <Frame gap={1}>
-            <Card.Note style={{ fontSize: 14, fontWeight: "bold", color: "var(--text-primary)" }}>
+            <Text.Card.Note style={{ fontSize: 14, fontWeight: "bold", color: "var(--text-primary)" }}>
               THE PROCESS
-            </Card.Note>
-            <Prose.Title variant="lg">
+            </Text.Card.Note>
+            <Text.Prose.Title variant="lg">
               Unleash your <br /> internal creative.
-            </Prose.Title>
+            </Text.Prose.Title>
           </Frame>
-          <Prose.Body style={{ color: "var(--text-secondary)" }}>
+          <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
             Workflow shouldn't be a bottleneck. Our platform allows developers
             to focus on logic while designers handle the visuals.
-          </Prose.Body>
+          </Text.Prose.Body>
           <Frame gap={1}>
             <CheckItem
               title="Pure Token-based design"
@@ -121,12 +120,12 @@ function CheckItem({ title, desc }: CheckItemProps) {
         <Check size={14} color="#fff" />
       </Frame>
       <Frame gap={1}>
-        <Card.Title style={{ fontSize: 16, fontWeight: "bold" }}>
+        <Text.Card.Title style={{ fontSize: 16, fontWeight: "bold" }}>
           {title}
-        </Card.Title>
-        <Card.Desc style={{ fontSize: 14, color: "var(--text-secondary)", opacity: 0.7 }}>
+        </Text.Card.Title>
+        <Text.Card.Desc style={{ fontSize: 14, color: "var(--text-secondary)", opacity: 0.7 }}>
           {desc}
-        </Card.Desc>
+        </Text.Card.Desc>
       </Frame>
     </Frame>
   );

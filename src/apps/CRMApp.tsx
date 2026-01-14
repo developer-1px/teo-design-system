@@ -27,7 +27,7 @@ import { Action } from "../design-system/Action";
 import { Divider } from "../design-system/Divider";
 import { Frame } from "../design-system/Frame";
 import { Separator } from "../design-system/Separator";
-import { Text } from "../design-system/Text";
+import { Text } from "../design-system/text/Text.tsx";
 
 // --- Mock Data ---
 

@@ -9,7 +9,7 @@ import {
   Share,
 } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Card } from "../../design-system/text/Card";
+import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Overlay } from "../../design-system/Overlay";
 
@@ -17,7 +17,7 @@ export function TopCenterBar() {
   return (
     <Overlay
       position="fixed"
-      y="12px"
+      y="3px"
       x="50%"
       zIndex={200}
       style={{ transform: "translateX(-50%)", pointerEvents: "auto" }}
@@ -30,13 +30,13 @@ export function TopCenterBar() {
         <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
         <Frame w={0.5} h={4} surface="overlay" />
         <Frame row gap={2} align="center" style={{ padding: "0 8px" }}>
-          <Card.Note style={{ fontSize: 13, fontWeight: "medium" }}>
+          <Text.Card.Note style={{ fontSize: 13, fontWeight: "medium" }}>
             Page:
-          </Card.Note>
+          </Text.Card.Note>
           <Frame row gap={1} align="center" cursor="pointer">
-            <Card.Title style={{ fontSize: 13, fontWeight: "bold" }}>
+            <Text.Card.Title style={{ fontSize: 13, fontWeight: "bold" }}>
               Marketing Home
-            </Card.Title>
+            </Text.Card.Title>
             <ChevronDown size={12} opacity={0.5} />
           </Frame>
         </Frame>
@@ -51,8 +51,8 @@ export function TopRightBar() {
   return (
     <Overlay
       position="fixed"
-      y="12px"
-      right="12px"
+      y="3px"
+      right="3px"
       zIndex={200}
       clickOutsideToDismiss={false}
       style={{ pointerEvents: "auto" }}
@@ -92,8 +92,8 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
   return (
     <Overlay
       position="fixed"
-      y="12px"
-      x="12px"
+      y="3px"
+      x="3px"
       zIndex={200}
       clickOutsideToDismiss={false}
       style={{ pointerEvents: "auto" }}

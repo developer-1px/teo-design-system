@@ -20,8 +20,7 @@ import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
-import { Card } from "../design-system/text/Card";
-import { Menu } from "../design-system/text/Menu";
+import { Text } from "../design-system/text/Text";
 
 // --- Data ---
 
@@ -46,9 +45,9 @@ const PropertySection = ({
 }) => (
   <Frame gap={2}>
     <Frame row justify="between" align="center" p="0 2">
-      <Menu.Group style={{ padding: "8px 0 4px" }}>
+      <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
-      </Menu.Group>
+      </Text.Menu.Group>
       <Action
         icon={Plus}
         iconSize={12}
@@ -120,7 +119,7 @@ export function PropertiesPanel() {
                 activeTab === tab ? "var(--tab-bg-active)" : undefined,
             }}
           >
-            <Menu.Item
+            <Text.Menu.Item
               style={{
                 fontWeight: activeTab === tab ? "bold" : "medium",
                 fontSize: "12px",
@@ -131,7 +130,7 @@ export function PropertiesPanel() {
               }}
             >
               {tab}
-            </Menu.Item>
+            </Text.Menu.Item>
           </Action>
         ))}
       </Frame>
@@ -286,9 +285,9 @@ export function PropertiesPanel() {
               />
             }
             rightIcon={
-              <Card.Note style={{ fontSize: "12px" }}>
+              <Text.Card.Note style={{ fontSize: "12px" }}>
                 100%
-              </Card.Note>
+              </Text.Card.Note>
             }
           />
         </PropertySection>
@@ -309,9 +308,9 @@ export function PropertiesPanel() {
               }
               rightIcon={
                 <Frame row gap={2}>
-                  <Card.Note style={{ fontSize: "12px" }}>
+                  <Text.Card.Note style={{ fontSize: "12px" }}>
                     100%
-                  </Card.Note>
+                  </Text.Card.Note>
                   <Action
                     icon={Eye}
                     iconSize={10}

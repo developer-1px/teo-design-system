@@ -277,3 +277,25 @@ Every interactive element must use the `Action` component or `cursor="pointer"`.
 
 ### 5. Standardized Atoms
 Always prefer `Action`, `Text`, and `Frame` over raw HTML tags. This ensures that every part of the UI is connected to the IDDL token system.
+
+## 14. Text System Conventions
+
+### Unified Access
+- **ALWAYS** access text components via the main `Text` namespace: `Text.Card.Title`, `Text.Prose.Body`.
+- **NEVER** directly import from `text/context/*`.
+- **NEVER** use `<Card.Title>` or `<Prose.Body>` directly; they must be namespaced under `Text`.
+
+### Structure
+- `Text` component acts as the single entry point.
+- Contexts (`Card`, `Prose`, `Menu`, `Field`, `Table`) are attached as static properties.
+
+### Example
+```tsx
+// ❌ WRONG
+import { Card } from "../design-system/text/context/Card";
+return <Card.Title>Hello</Card.Title>;
+
+// ✅ CORRECT
+import { Text } from "../design-system/text/Text";
+return <Text.Card.Title>Hello</Text.Card.Title>;
+```

@@ -5,7 +5,7 @@ import { LandingApp } from "./apps/LandingApp";
 
 import { SlideApp } from "./apps/SlideApp";
 import { TokensApp } from "./apps/TokensApp";
-import { Text } from "./design-system/Text";
+import { Text } from "./design-system/text/Text.tsx";
 import { Frame } from "./design-system/Frame";
 
 import { InspectorOverlay } from "./inspector/InspectorOverlay";

@@ -1,6 +1,5 @@
 import { Cpu, MessageSquare, Shield, Zap } from "lucide-react";
-import { Prose } from "../../design-system/text/Prose";
-import { Card } from "../../design-system/text/Card";
+import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
 
@@ -14,7 +13,7 @@ export function FeatureGridSection() {
       style={{ borderBottom: "1px solid var(--border-color)", maxWidth: 1280, margin: "0 auto" }}
     >
       <Frame style={{ maxWidth: 800, margin: "0 auto" }} gap={1} align="center">
-        <Card.Note
+        <Text.Card.Note
           style={{
             fontWeight: "bold",
             color: "var(--text-primary)",
@@ -23,11 +22,11 @@ export function FeatureGridSection() {
           }}
         >
           FEATURES
-        </Card.Note>
+        </Text.Card.Note>
         <EditableWrapper>
-          <Prose.Title variant="md">
+          <Text.Prose.Title variant="md">
             Everything you need <br /> to scale.
-          </Prose.Title>
+          </Text.Prose.Title>
         </EditableWrapper>
       </Frame>
 
@@ -90,12 +89,12 @@ function FeatureCardSmall({
       </Frame>
       <Frame gap={2}>
         <EditableWrapper>
-          <Card.Title>{title}</Card.Title>
+          <Text.Card.Title>{title}</Text.Card.Title>
         </EditableWrapper>
         <EditableWrapper>
-          <Card.Desc style={{ color: "var(--text-secondary)" }}>
+          <Text.Card.Desc style={{ color: "var(--text-secondary)" }}>
             {desc}
-          </Card.Desc>
+          </Text.Card.Desc>
         </EditableWrapper>
       </Frame>
     </Frame>
@@ -127,12 +126,12 @@ function FeatureCardLarge({
         </Frame>
         <Frame gap={2}>
           <EditableWrapper>
-            <Card.Title>{title}</Card.Title>
+            <Text.Card.Title>{title}</Text.Card.Title>
           </EditableWrapper>
           <EditableWrapper>
-            <Card.Desc style={{ color: "var(--text-secondary)" }}>
+            <Text.Card.Desc style={{ color: "var(--text-secondary)" }}>
               {desc}
-            </Card.Desc>
+            </Text.Card.Desc>
           </EditableWrapper>
         </Frame>
       </Frame>

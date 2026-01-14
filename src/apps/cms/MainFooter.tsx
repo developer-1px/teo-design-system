@@ -1,5 +1,5 @@
 import { ArrowUpRight, Globe, MessageSquare, Sparkles } from "lucide-react";
-import { Card } from "../../design-system/text/Card";
+import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 
 export function MainFooter() {
@@ -22,18 +22,18 @@ export function MainFooter() {
             >
               <Sparkles size={20} color="#fff" />
             </Frame>
-            <Card.Title
+            <Text.Card.Title
               style={{ fontWeight: "bold", fontSize: "20px", letterSpacing: "-0.02em" }}
             >
               VisualEngine
-            </Card.Title>
+            </Text.Card.Title>
           </Frame>
-          <Card.Desc
+          <Text.Card.Desc
             style={{ fontSize: "16px", lineHeight: "1.6", opacity: 0.7, color: "var(--text-secondary)" }}
           >
             Building the future of the visual web. Join us in redefining how
             websites are crafted.
-          </Card.Desc>
+          </Text.Card.Desc>
           <Frame row gap="4px">
             <Globe size={20} opacity={0.4} />
             <MessageSquare size={20} opacity={0.4} />
@@ -65,16 +65,16 @@ export function MainFooter() {
         align="center"
         w="100%"
       >
-        <Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
+        <Text.Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
           © 2024 VisualEngine Inc. All rights reserved.
-        </Card.Note>
+        </Text.Card.Note>
         <Frame row gap="6px">
-          <Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
+          <Text.Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
             Privacy Policy
-          </Card.Note>
-          <Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
+          </Text.Card.Note>
+          <Text.Card.Note style={{ fontSize: 13, color: "var(--text-tertiary)" }}>
             Terms of Service
-          </Card.Note>
+          </Text.Card.Note>
         </Frame>
       </Frame>
     </Frame>
@@ -89,18 +89,18 @@ interface FooterLinkColumnProps {
 function FooterLinkColumn({ title, links }: FooterLinkColumnProps) {
   return (
     <Frame gap="4px">
-      <Card.Note
+      <Text.Card.Note
         style={{ fontSize: 11, letterSpacing: "0.05em", fontWeight: "bold", color: "var(--text-tertiary)" }}
       >
         {title}
-      </Card.Note>
+      </Text.Card.Note>
       {links.map((link: string) => (
-        <Card.Desc
+        <Text.Card.Desc
           key={link}
           style={{ fontSize: 15, color: "var(--text-secondary)", opacity: 0.6 }}
         >
           {link}
-        </Card.Desc>
+        </Text.Card.Desc>
       ))}
     </Frame>
   );

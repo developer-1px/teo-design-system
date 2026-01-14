@@ -1,6 +1,6 @@
 import { Frame } from "../design-system/Frame";
 import { Section } from "../design-system/Section";
-import { Text } from "../design-system/Text";
+import { Text } from "../design-system/text/Text.tsx";
 import { Field } from "../design-system/Field";
 import { Action } from "../design-system/Action";
 import { ProseOld, ProseDocument } from "../design-system/ProseOld.tsx";

@@ -1,6 +1,6 @@
-import {Frame} from "../design-system/Frame"
-import {Section} from "../design-system/Section"
-import {Card} from "../design-system/text/Card"
+import { Frame } from "../design-system/Frame"
+import { Section } from "../design-system/Section"
+import { Text } from "../design-system/text/Text";
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -22,14 +22,14 @@ export function SlidesPanel() {
             border={num === 1}
           >
             <Frame row justify="between" align="end" gap={1}>
-              <Card.Note
+              <Text.Card.Note
                 style={{
                   color:
                     num === 1 ? "var(--text-white)" : "var(--text-subtle)",
                 }}
               >
                 {num}
-              </Card.Note>
+              </Text.Card.Note>
               <Frame
                 w="100%"
                 ratio="16/9"

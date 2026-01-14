@@ -1,5 +1,5 @@
 
-import { Text } from "../Text";
+import { Text } from "../Text.tsx";
 
 /* 
   Context: Field

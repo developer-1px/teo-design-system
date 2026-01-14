@@ -1,8 +1,7 @@
 import { HelpCircle, Plus } from "lucide-react";
 import { useState } from "react";
 import { Action } from "../../design-system/Action";
-import { Prose } from "../../design-system/text/Prose";
-import { Card } from "../../design-system/text/Card";
+import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 
 export function FAQBoardFooter() {
@@ -15,10 +14,10 @@ export function FAQBoardFooter() {
       style={{ maxWidth: 680, margin: "0 auto" }}
     >
       <Frame gap={2} align="center" w="100%">
-        <Card.Note style={{ fontWeight: "bold", color: "var(--text-primary)" }}>
+        <Text.Card.Note style={{ fontWeight: "bold", color: "var(--text-primary)" }}>
           SUPPORT
-        </Card.Note>
-        <Prose.Title variant="lg">Common questions</Prose.Title>
+        </Text.Card.Note>
+        <Text.Prose.Title variant="lg">Common questions</Text.Prose.Title>
       </Frame>
 
       <Frame w="100%" gap={4}>
@@ -54,12 +53,12 @@ export function FAQBoardFooter() {
           <HelpCircle size={24} />
         </Frame>
         <Frame gap={1}>
-          <Card.Title>
+          <Text.Card.Title>
             Still have questions?
-          </Card.Title>
-          <Card.Desc>
+          </Text.Card.Title>
+          <Text.Card.Desc>
             We're here to help. Contact our support team 24/7.
-          </Card.Desc>
+          </Text.Card.Desc>
         </Frame>
         <Frame flex />
         <Action
@@ -91,9 +90,9 @@ function FAQRow({ q, a }: FAQRowProps) {
       cursor="pointer"
     >
       <Frame row justify="between" align="center" w="100%">
-        <Card.Title>
+        <Text.Card.Title>
           {q}
-        </Card.Title>
+        </Text.Card.Title>
         <Plus
           size={20}
           style={{
@@ -104,11 +103,11 @@ function FAQRow({ q, a }: FAQRowProps) {
       </Frame>
       {isOpen && (
         <Frame p="0 8 4 0">
-          <Prose.Body
+          <Text.Prose.Body
             style={{ opacity: 0.8 }}
           >
             {a}
-          </Prose.Body>
+          </Text.Prose.Body>
         </Frame>
       )}
     </Frame>

@@ -1,7 +1,6 @@
 import { ArrowUpRight, Command, Sparkles } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Prose } from "../../design-system/text/Prose";
-import { Card } from "../../design-system/text/Card";
+import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { EditableWrapper } from "./EditableWrapper";
 
@@ -58,7 +57,7 @@ export function HeaderHero() {
           align="center"
         >
           <Sparkles size={12} color="var(--color-primary)" />
-          <Card.Note
+          <Text.Card.Note
             style={{
               fontSize: "12px",
               fontWeight: "bold",
@@ -67,20 +66,20 @@ export function HeaderHero() {
             }}
           >
             NEXT GENERATION CMS IS HERE
-          </Card.Note>
+          </Text.Card.Note>
         </Frame>
 
         <EditableWrapper style={{ width: "100%" }}>
-          <Prose.Title variant="xl" style={{ textAlign: "center" }}>
+          <Text.Prose.Title variant="xl" style={{ textAlign: "center" }}>
             Build your dream site <br />
             <span style={{ color: "var(--color-primary)" }}>
               pixel by pixel.
             </span>
-          </Prose.Title>
+          </Text.Prose.Title>
         </EditableWrapper>
 
         <EditableWrapper style={{ maxWidth: 600 }}>
-          <Prose.Body
+          <Text.Prose.Body
             style={{
               color: "var(--text-secondary)",
               textAlign: "center",
@@ -89,7 +88,7 @@ export function HeaderHero() {
           >
             The visual engine for creators who demand perfection. No code, no
             constraints, just pure creativity.
-          </Prose.Body>
+          </Text.Prose.Body>
         </EditableWrapper>
 
         <Frame row gap={3} align="center">

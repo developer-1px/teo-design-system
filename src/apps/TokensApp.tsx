@@ -2,11 +2,7 @@
 import { Frame } from "../design-system/Frame";
 
 import { ProseSection, ProseDocument } from "../design-system/ProseOld.tsx";
-import {Prose} from "../design-system/text/Prose.tsx"
-import {Card} from "../design-system/text/Card.tsx"
-import {Field} from "../design-system/text/Field.tsx"
-import {Table} from "../design-system/text/Table.tsx"
-import {Menu} from "../design-system/text/Menu.tsx"
+import { Text } from "../design-system/text/Text";
 
 // --- Data Structures (No Hardcoding) ---
 
@@ -14,7 +10,7 @@ const TEXT_CONTEXTS = [
   {
     name: "Prose",
     desc: "Long-form content and document flow",
-    Component: Prose,
+    Component: Text.Prose,
     slots: [
       { name: "Title", sample: "Prose Title (H1-H4)", desc: "Headings" },
       { name: "Body", sample: "Prose Body - Optimized for readability in documentation.", desc: "Paragraphs" },
@@ -25,7 +21,7 @@ const TEXT_CONTEXTS = [
   {
     name: "Card",
     desc: "UI components and summarized content",
-    Component: Card,
+    Component: Text.Card,
     slots: [
       { name: "Title", sample: "Card Title", desc: "Component Heading" },
       { name: "Desc", sample: "Card Description - Short summary text.", desc: "Content" },
@@ -36,7 +32,7 @@ const TEXT_CONTEXTS = [
   {
     name: "Field",
     desc: "Form inputs and key-value pairs",
-    Component: Field,
+    Component: Text.Field,
     slots: [
       { name: "Label", sample: "Email Address", desc: "Input Label" },
       { name: "Value", sample: "user@example.com", desc: "Input Display" },
@@ -46,7 +42,7 @@ const TEXT_CONTEXTS = [
   {
     name: "Table",
     desc: "Tabular data",
-    Component: Table,
+    Component: Text.Table,
     slots: [
       { name: "Head", sample: "COLUMN NAME", desc: "Header Cell" },
       { name: "Cell", sample: "Table Cell Content", desc: "Body Cell" },
@@ -55,7 +51,7 @@ const TEXT_CONTEXTS = [
   {
     name: "Menu",
     desc: "Navigation and lists",
-    Component: Menu,
+    Component: Text.Menu,
     slots: [
       { name: "Group", sample: "SECTION", desc: "Group Label" },
       { name: "Item", sample: "Menu Item Label", desc: "Action Item" },
@@ -85,25 +81,25 @@ export function TokensApp() {
 
           {/* Header */}
           <Frame gap={4}>
-            <Prose.Title>Design Tokens & System</Prose.Title>
-            <Prose.Body style={{ color: "var(--text-secondary)" }}>
+            <Text.Prose.Title>Design Tokens & System</Text.Prose.Title>
+            <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
               Reference for the Minimal Design Kit token system.
               Typography is organized by <b>Context</b> rather than size.
-            </Prose.Body>
+            </Text.Prose.Body>
           </Frame>
 
           <Frame w="100%" h="1px" surface="overlay" />
 
           {/* 1. Text System (Dynamic from Data) */}
           <Frame gap={8}>
-            <Prose.Title>Text System (By Context)</Prose.Title>
+            <Text.Prose.Title>Text System (By Context)</Text.Prose.Title>
 
             <Frame gap={12}>
               {TEXT_CONTEXTS.map((ctx) => (
                 <Frame key={ctx.name} gap={4}>
                   <Frame row justify="between" align="baseline">
-                    <Prose.Title style={{ fontSize: "var(--font-size-2)" }}>{ctx.name}</Prose.Title>
-                    <Card.Note>{ctx.desc}</Card.Note>
+                    <Text.Prose.Title style={{ fontSize: "var(--font-size-2)" }}>{ctx.name}</Text.Prose.Title>
+                    <Text.Card.Note>{ctx.desc}</Text.Card.Note>
                   </Frame>
 
                   <Frame
@@ -129,9 +125,9 @@ export function TokensApp() {
                         >
                           {/* Slot Name */}
                           <Frame w={120}>
-                            <Card.Code style={{ color: "var(--text-tertiary)" }}>
+                            <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
                               {ctx.name}.{slot.name}
-                            </Card.Code>
+                            </Text.Card.Code>
                           </Frame>
 
                           {/* Sample Render */}
@@ -143,7 +139,7 @@ export function TokensApp() {
 
                           {/* Role Description */}
                           <Frame w={120} justify="end">
-                            <Card.Note>{slot.desc}</Card.Note>
+                            <Text.Card.Note>{slot.desc}</Text.Card.Note>
                           </Frame>
                         </Frame>
                       );
@@ -156,26 +152,26 @@ export function TokensApp() {
 
           {/* 1.1 Prose Title Variants */}
           <Frame gap={8}>
-            <Prose.Title>Prose Title Variants</Prose.Title>
+            <Text.Prose.Title>Prose Title Variants</Text.Prose.Title>
             <Frame surface="sunken" p={8} rounded="xl" gap={4} style={{ border: "1px solid var(--border-color)" }}>
               <Frame gap={2}>
-                <Prose.Title variant="xl">Display Title (xl)</Prose.Title>
-                <Card.Code style={{ color: "var(--text-tertiary)" }}>variant="xl" (H1 Display)</Card.Code>
+                <Text.Prose.Title variant="xl">Display Title (xl)</Text.Prose.Title>
+                <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>variant="xl" (H1 Display)</Text.Card.Code>
               </Frame>
               <Frame w="100%" h="1px" surface="base" />
               <Frame gap={2}>
-                <Prose.Title variant="lg">Page Title (lg)</Prose.Title>
-                <Card.Code style={{ color: "var(--text-tertiary)" }}>variant="lg" (H2)</Card.Code>
+                <Text.Prose.Title variant="lg">Page Title (lg)</Text.Prose.Title>
+                <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>variant="lg" (H2)</Text.Card.Code>
               </Frame>
               <Frame w="100%" h="1px" surface="base" />
               <Frame gap={2}>
-                <Prose.Title variant="md">Section Title (md)</Prose.Title>
-                <Card.Code style={{ color: "var(--text-tertiary)" }}>variant="md" (H3)</Card.Code>
+                <Text.Prose.Title variant="md">Section Title (md)</Text.Prose.Title>
+                <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>variant="md" (H3)</Text.Card.Code>
               </Frame>
               <Frame w="100%" h="1px" surface="base" />
               <Frame gap={2}>
-                <Prose.Title variant="sm">Subsection Title (sm)</Prose.Title>
-                <Card.Code style={{ color: "var(--text-tertiary)" }}>variant="sm" (H4)</Card.Code>
+                <Text.Prose.Title variant="sm">Subsection Title (sm)</Text.Prose.Title>
+                <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>variant="sm" (H4)</Text.Card.Code>
               </Frame>
             </Frame>
           </Frame>
@@ -184,7 +180,7 @@ export function TokensApp() {
 
           {/* 2. Surfaces */}
           <Frame gap={8}>
-            <Prose.Title>Surfaces</Prose.Title>
+            <Text.Prose.Title>Surfaces</Text.Prose.Title>
             <Frame row wrap="wrap" gap={6}>
               {SURFACES.map((s) => (
                 <Frame
@@ -198,10 +194,10 @@ export function TokensApp() {
                   justify="between"
                   style={{ border: "1px solid var(--border-color)" }}
                 >
-                  <Card.Title style={{ fontSize: "var(--font-size-3)" }}>{s.id}</Card.Title>
+                  <Text.Card.Title style={{ fontSize: "var(--font-size-3)" }}>{s.id}</Text.Card.Title>
                   <Frame>
-                    <Card.Desc>{s.desc}</Card.Desc>
-                    <Card.Code style={{ opacity: 0.5 }}>{s.hex}</Card.Code>
+                    <Text.Card.Desc>{s.desc}</Text.Card.Desc>
+                    <Text.Card.Code style={{ opacity: 0.5 }}>{s.hex}</Text.Card.Code>
                   </Frame>
                 </Frame>
               ))}
@@ -210,7 +206,7 @@ export function TokensApp() {
 
           {/* 3. Spacing */}
           <Frame gap={8}>
-            <Prose.Title>Spacing</Prose.Title>
+            <Text.Prose.Title>Spacing</Text.Prose.Title>
             <Frame row wrap="wrap" gap={4}>
               {SPACING.map((sp) => (
                 <Frame key={sp} align="center" gap={2}>
@@ -220,9 +216,9 @@ export function TokensApp() {
                     surface="primary"
                     rounded="sm"
                   />
-                  <Card.Code style={{ fontSize: "9px", color: "var(--text-tertiary)" }}>
+                  <Text.Card.Code style={{ fontSize: "9px", color: "var(--text-tertiary)" }}>
                     {sp}
-                  </Card.Code>
+                  </Text.Card.Code>
                 </Frame>
               ))}
             </Frame>
@@ -230,7 +226,7 @@ export function TokensApp() {
 
           {/* 4. Radius */}
           <Frame gap={8}>
-            <Prose.Title>Radius</Prose.Title>
+            <Text.Prose.Title>Radius</Text.Prose.Title>
             <Frame row wrap="wrap" gap={6}>
               {RADIUS.map((r) => (
                 <Frame
@@ -242,7 +238,7 @@ export function TokensApp() {
                   justify="center"
                   style={{ borderRadius: `var(--radius-${r})`, border: "1px solid var(--border-color)" }}
                 >
-                  <Card.Code style={{ fontSize: "10px" }}>{r}</Card.Code>
+                  <Text.Card.Code style={{ fontSize: "10px" }}>{r}</Text.Card.Code>
                 </Frame>
               ))}
             </Frame>
@@ -250,7 +246,7 @@ export function TokensApp() {
 
           {/* 5. Shadows */}
           <Frame gap={8}>
-            <Prose.Title>Shadows</Prose.Title>
+            <Text.Prose.Title>Shadows</Text.Prose.Title>
             <Frame row wrap="wrap" gap={12} surface="sunken" p={12} rounded="3xl">
               {SHADOWS.map((s) => (
                 <Frame
@@ -263,7 +259,7 @@ export function TokensApp() {
                   justify="center"
                   shadow={s as any}
                 >
-                  <Card.Title>{s}</Card.Title>
+                  <Text.Card.Title>{s}</Text.Card.Title>
                 </Frame>
               ))}
             </Frame>

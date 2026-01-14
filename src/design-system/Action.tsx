@@ -1,7 +1,7 @@
 import React from "react";
 import { Frame } from "./Frame";
-import { Text } from "./Text";
-import { Menu } from "./text/Menu";
+import { Text } from "./text/Text.tsx";
+
 import "./lib/tokens.css";
 import type { ActionVariant, RoundedToken, SurfaceToken } from "./lib/types.ts";
 import { toToken } from "./lib/utils.ts";
@@ -135,7 +135,7 @@ export function Action({
         </span>
       )}
       {label && (
-        <Menu.Item
+        <Text.Menu.Item
           style={{
             lineHeight: 1,
             whiteSpace: "nowrap",
@@ -144,7 +144,7 @@ export function Action({
           }}
         >
           {label}
-        </Menu.Item>
+        </Text.Menu.Item>
       )}
       {children}
     </Frame>

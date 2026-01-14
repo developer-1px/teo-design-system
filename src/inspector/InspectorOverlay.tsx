@@ -2,7 +2,7 @@ import { Copy, Lock, Unlock, X, ChevronRight, ChevronDown, Wand2, RefreshCw } fr
 import { useEffect, useRef, useState } from "react";
 
 import { Action } from "../design-system/Action";
-import { Text } from "../design-system/Text";
+import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame";
 import { Overlay } from "../design-system/Overlay";
 

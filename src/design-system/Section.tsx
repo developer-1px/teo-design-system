@@ -1,4 +1,4 @@
-import { Card } from "./text/Card";
+import { Text } from "./text/Text.tsx";
 import { Frame } from "./Frame";
 import "./lib/tokens.css";
 
@@ -67,7 +67,7 @@ export function Section({
         >
           {icon && <span style={{ color: "var(--text-subtle)" }}>{icon}</span>}
           {title && (
-            <Card.Note
+            <Text.Card.Note
               style={{
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
@@ -75,7 +75,7 @@ export function Section({
               }}
             >
               {title}
-            </Card.Note>
+            </Text.Card.Note>
           )}
         </Frame>
       )}

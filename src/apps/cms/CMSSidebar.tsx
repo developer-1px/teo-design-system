@@ -13,7 +13,7 @@ import {
   Type,
 } from "lucide-react";
 import { useState } from "react";
-import { Card } from "../../design-system/text/Card";
+import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame";
 import { Action } from "../../design-system/Action";
 import { Overlay } from "../../design-system/Overlay";
@@ -29,8 +29,8 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
   return (
     <Overlay
       position="absolute"
-      y="56px"
-      x="12px"
+      y="14px"
+      x="3px"
       zIndex={200}
       clickOutsideToDismiss={false}
       style={{ pointerEvents: "auto" }}
@@ -77,9 +77,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
             >
               <Layers size={14} color="#fff" />
             </Frame>
-            <Card.Title style={{ fontWeight: "bold", fontSize: 16 }}>
+            <Text.Card.Title style={{ fontWeight: "bold", fontSize: 16 }}>
               Visual Builder
-            </Card.Title>
+            </Text.Card.Title>
           </Frame>
         </Frame>
 
@@ -97,9 +97,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         >
           <Frame>
             <Frame p="0px 8px 8px 8px">
-              <Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
+              <Text.Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
                 ELEMENTS
-              </Card.Note>
+              </Text.Card.Note>
             </Frame>
             <Frame grid columns="1fr 1fr" gap="8px">
               <ElementButton icon={Type} label="Text" />
@@ -118,9 +118,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
           <Frame gap="8px">
             <Frame row align="center" justify="between" p="0px 8px 8px 8px">
-              <Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
+              <Text.Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
                 LAYERS
-              </Card.Note>
+              </Text.Card.Note>
               <Frame row gap={1} surface="sunken" p="2px" rounded="md">
                 <Action
                   icon={List}
@@ -149,6 +149,10 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
         {/* Footer Settings */}
         <Frame
+          row
+          align="center"
+          gap={3}
+          p={3}
           style={{
             borderTop: "1px solid var(--border-color)",
             opacity: isOpen ? 1 : 0,
@@ -165,12 +169,12 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
             <Settings size={16} />
           </Frame>
           <Frame gap="2px">
-            <Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
+            <Text.Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
               Site Settings
-            </Card.Title>
-            <Card.Note style={{ fontSize: 11, color: "var(--text-tertiary)" }}>
+            </Text.Card.Title>
+            <Text.Card.Note style={{ fontSize: 11, color: "var(--text-tertiary)" }}>
               General, SEO, Analytics
-            </Card.Note>
+            </Text.Card.Note>
           </Frame>
         </Frame>
       </Frame>
@@ -195,9 +199,9 @@ function ElementButton({ icon: Icon, label }: ElementButtonProps) {
       style={{ border: "1px solid var(--border-color)" }}
     >
       <Icon size={20} opacity={0.6} />
-      <Card.Title style={{ fontSize: 12, fontWeight: 500 }}>
+      <Text.Card.Title style={{ fontSize: 12, fontWeight: 500 }}>
         {label}
-      </Card.Title>
+      </Text.Card.Title>
     </Frame>
   );
 }
@@ -214,9 +218,9 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
       <Frame gap={1.5} p="0 8px">
         <Frame row gap={2} align="center">
           <FileText size={10} opacity={0.5} />
-          <Card.Note style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}>
+          <Text.Card.Note style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}>
             {label}
-          </Card.Note>
+          </Text.Card.Note>
         </Frame>
         <Frame
           w="100%"
@@ -251,9 +255,9 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
     >
       <Frame row gap="8px" align="center">
         <FileText size={14} opacity={0.5} />
-        <Card.Title style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}>
+        <Text.Card.Title style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}>
           {label}
-        </Card.Title>
+        </Text.Card.Title>
       </Frame>
       {active && <ChevronRight size={12} opacity={0.5} />}
     </Frame>

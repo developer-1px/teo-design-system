@@ -3,11 +3,7 @@ import { Frame } from "../design-system/Frame";
 import { Experience, type ExperienceType } from "../design-system/Experience";
 import { Action } from "../design-system/Action";
 import { Monitor, FileText, Globe } from "lucide-react";
-import { Prose } from "../design-system/text/Prose";
-import { Card } from "../design-system/text/Card";
-import { Field } from "../design-system/text/Field";
-import { Table } from "../design-system/text/Table";
-import { Menu } from "../design-system/text/Menu";
+import { Text } from "../design-system/text/Text";
 
 /* 
   Text System Showcase
@@ -72,7 +68,7 @@ export function TextSystemApp() {
                         <Frame
                             p={4}
                             rounded="3xl"
-                            surface="input"
+                            surface="sunken"
                             style={{
                                 background: "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
                                 border: "1px solid var(--border-color)",
@@ -83,12 +79,12 @@ export function TextSystemApp() {
                         </Frame>
 
                         <Frame align="center" gap={4}>
-                            <Prose.Title variant="xl" style={{ fontSize: "72px", letterSpacing: "-0.04em", lineHeight: 1 }}>
+                            <Text.Prose.Title variant="xl" style={{ fontSize: "72px", letterSpacing: "-0.04em", lineHeight: 1 }}>
                                 Text System
-                            </Prose.Title>
-                            <Prose.Body style={{ fontSize: "24px", textAlign: "center", opacity: 0.6, maxWidth: "600px" }}>
+                            </Text.Prose.Title>
+                            <Text.Prose.Body style={{ fontSize: "24px", textAlign: "center", opacity: 0.6, maxWidth: "600px" }}>
                                 A semantic, context-aware hierarchy engine.
-                            </Prose.Body>
+                            </Text.Prose.Body>
                         </Frame>
 
                         {/* Hierarchy Visualization */}
@@ -108,11 +104,11 @@ export function TextSystemApp() {
                                         gap={1}
                                         w="160px"
                                     >
-                                        <Card.Note style={{ opacity: 0.5, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Layer {i + 1}</Card.Note>
-                                        <Card.Title>{layer.title}</Card.Title>
-                                        <Card.Desc>{layer.desc}</Card.Desc>
+                                        <Text.Card.Note style={{ opacity: 0.5, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Layer {i + 1}</Text.Card.Note>
+                                        <Text.Card.Title>{layer.title}</Text.Card.Title>
+                                        <Text.Card.Desc>{layer.desc}</Text.Card.Desc>
                                     </Frame>
-                                    {i < 3 && <Frame h="2px" w="20px" surface="border" />}
+                                    {i < 3 && <Frame h="2px" w="20px" style={{ background: "var(--border-color)" }} />}
                                 </Frame>
                             ))}
                         </Frame>
@@ -123,23 +119,23 @@ export function TextSystemApp() {
                 <ShowcaseSection
                     title="Context: Prose"
                     description="Standard running text for documents and articles."
-                    code={`<Prose.Title>Context: Prose</Prose.Title>
-<Prose.Body>
+                    code={`<Text.Prose.Title>Context: Prose</Text.Prose.Title>
+<Text.Prose.Body>
   Optimized for readability and flow.
   Scales automatically with Experience.
-</Prose.Body>`}
+</Text.Prose.Body>`}
                 >
                     <Frame gap={6} maxWidth="600px">
-                        <Prose.Title>Context: Prose</Prose.Title>
-                        <Prose.Body>
+                        <Text.Prose.Title>Context: Prose</Text.Prose.Title>
+                        <Text.Prose.Body>
                             The <strong>Prose</strong> context is designed for continuous reading. It manages line height, spacing, and font weight to ensure comfortable legibility.
-                        </Prose.Body>
-                        <Prose.Body>
+                        </Text.Prose.Body>
+                        <Text.Prose.Body>
                             The <strong>Experience</strong> (Application, Landing, or Document) automatically adjusts the scale. For example, 'Landing' experience will render this text significantly larger than 'Application'.
-                        </Prose.Body>
-                        <Prose.Note>
+                        </Text.Prose.Body>
+                        <Text.Prose.Note>
                             Try switching the Experience mode at the top to see this text adapt live.
-                        </Prose.Note>
+                        </Text.Prose.Note>
                     </Frame>
                 </ShowcaseSection>
 
@@ -148,11 +144,11 @@ export function TextSystemApp() {
                     title="Context: Card"
                     description="Compact, summarized information blocks."
                     code={`<Frame surface="raised" p={6} rounded="xl" border>
-  <Card.Title>Project Alpha</Card.Title>
-  <Card.Desc>
+  <Text.Card.Title>Project Alpha</Text.Card.Title>
+  <Text.Card.Desc>
     High-priority infrastructure migration.
-  </Card.Desc>
-  <Card.Note>Updated 2h ago</Card.Note>
+  </Text.Card.Desc>
+  <Text.Card.Note>Updated 2h ago</Text.Card.Note>
 </Frame>`}
                 >
                     <Frame gap={8} row wrap="wrap" justify="center">
@@ -160,12 +156,12 @@ export function TextSystemApp() {
                             <Frame w="40px" h="40px" rounded="lg" surface="sunken" pack style={{ marginBottom: "var(--space-2)" }}>
                                 <Globe size={20} />
                             </Frame>
-                            <Card.Title>Project Alpha</Card.Title>
-                            <Card.Desc>
+                            <Text.Card.Title>Project Alpha</Text.Card.Title>
+                            <Text.Card.Desc>
                                 High-priority infrastructure migration for the core payment gateway.
-                            </Card.Desc>
+                            </Text.Card.Desc>
                             <Frame row align="center" justify="between" style={{ marginTop: "var(--space-4)" }}>
-                                <Card.Note style={{ opacity: 0.6 }}>Updated 2h ago</Card.Note>
+                                <Text.Card.Note style={{ opacity: 0.6 }}>Updated 2h ago</Text.Card.Note>
                                 <Action size="sm" variant="ghost" label="View" />
                             </Frame>
                         </Frame>
@@ -174,12 +170,12 @@ export function TextSystemApp() {
                             <Frame w="40px" h="40px" rounded="lg" surface="sunken" pack style={{ marginBottom: "var(--space-2)" }}>
                                 <FileText size={20} />
                             </Frame>
-                            <Card.Title>Q1 Report</Card.Title>
-                            <Card.Desc>
+                            <Text.Card.Title>Q1 Report</Text.Card.Title>
+                            <Text.Card.Desc>
                                 Quarterly financial analysis and growth projections.
-                            </Card.Desc>
+                            </Text.Card.Desc>
                             <Frame row align="center" justify="between" style={{ marginTop: "var(--space-4)" }}>
-                                <Card.Note style={{ opacity: 0.6 }}>Draft</Card.Note>
+                                <Text.Card.Note style={{ opacity: 0.6 }}>Draft</Text.Card.Note>
                                 <Action size="sm" variant="ghost" label="Edit" />
                             </Frame>
                         </Frame>
@@ -191,34 +187,34 @@ export function TextSystemApp() {
                     title="Context: Field"
                     description="Input labels, values, and hints optimized for forms."
                     code={`<Frame gap={1}>
-  <Field.Label>Email Address</Field.Label>
+  <Text.Field.Label>Email Address</Text.Field.Label>
   <Input placeholder="name@example.com" />
-  <Field.Note>We'll never share your email.</Field.Note>
+  <Text.Field.Note>We'll never share your email.</Text.Field.Note>
 </Frame>`}
                 >
                     <Frame surface="raised" p={8} rounded="2xl" gap={6} w="400px" shadow="md" style={{ border: "1px solid var(--border-color)" }}>
-                        <Prose.Title style={{ fontSize: "var(--prose-h3-size)" }}>Account Settings</Prose.Title>
+                        <Text.Prose.Title style={{ fontSize: "var(--prose-h3-size)" }}>Account Settings</Text.Prose.Title>
 
                         <Frame gap={4}>
                             <Frame gap={1.5}>
-                                <Field.Label>Display Name</Field.Label>
+                                <Text.Field.Label>Display Name</Text.Field.Label>
                                 <Frame h="32px" surface="sunken" rounded="md" align="center" style={{ paddingLeft: "var(--space-3)", paddingRight: "var(--space-3)", border: "1px solid var(--border-color)" }}>
-                                    <Field.Value style={{ opacity: 0.5 }}>Jane Doe</Field.Value>
+                                    <Text.Field.Value style={{ opacity: 0.5 }}>Jane Doe</Text.Field.Value>
                                 </Frame>
                             </Frame>
 
                             <Frame gap={1.5}>
-                                <Field.Label>Email Address</Field.Label>
+                                <Text.Field.Label>Email Address</Text.Field.Label>
                                 <Frame h="32px" surface="sunken" rounded="md" align="center" style={{ paddingLeft: "var(--space-3)", paddingRight: "var(--space-3)", border: "1px solid var(--border-color)" }}>
-                                    <Field.Value style={{ opacity: 0.5 }}>name@example.com</Field.Value>
+                                    <Text.Field.Value style={{ opacity: 0.5 }}>name@example.com</Text.Field.Value>
                                 </Frame>
-                                <Field.Note>Used for notifications and login.</Field.Note>
+                                <Text.Field.Note>Used for notifications and login.</Text.Field.Note>
                             </Frame>
 
                             <Frame gap={1.5}>
-                                <Field.Label>Bio</Field.Label>
+                                <Text.Field.Label>Bio</Text.Field.Label>
                                 <Frame h="80px" surface="sunken" rounded="md" p={3} style={{ border: "1px solid var(--border-color)" }}>
-                                    <Field.Value style={{ opacity: 0.5 }}>Product Designer based in Seoul.</Field.Value>
+                                    <Text.Field.Value style={{ opacity: 0.5 }}>Product Designer based in Seoul.</Text.Field.Value>
                                 </Frame>
                             </Frame>
                         </Frame>
@@ -235,20 +231,20 @@ export function TextSystemApp() {
                     title="Context: Table"
                     description="Tabular data with clear hierarchy between heads and cells."
                     code={`<Frame row border="bottom" p={3}>
-  <Table.Head>Name</Table.Head>
-  <Table.Head>Role</Table.Head>
+  <Text.Table.Head>Name</Text.Table.Head>
+  <Text.Table.Head>Role</Text.Table.Head>
 </Frame>
 <Frame row border="bottom" p={3}>
-  <Table.Cell>Alice</Table.Cell>
-  <Table.Cell>Admin</Table.Cell>
+  <Text.Table.Cell>Alice</Text.Table.Cell>
+  <Text.Table.Cell>Admin</Text.Table.Cell>
 </Frame>`}
                 >
                     <Frame surface="raised" rounded="xl" w="100%" maxWidth="800px" overflow="hidden" shadow="sm" style={{ border: "1px solid var(--border-color)" }}>
                         <Frame row surface="sunken" p="3 4" style={{ borderBottom: "1px solid var(--border-color)" }}>
-                            <Frame flex={2}><Table.Head>User</Table.Head></Frame>
-                            <Frame flex={1}><Table.Head>Role</Table.Head></Frame>
-                            <Frame flex={1}><Table.Head>Status</Table.Head></Frame>
-                            <Frame flex={1} align="end"><Table.Head>Activity</Table.Head></Frame>
+                            <Frame flex={2}><Text.Table.Head>User</Text.Table.Head></Frame>
+                            <Frame flex={1}><Text.Table.Head>Role</Text.Table.Head></Frame>
+                            <Frame flex={1}><Text.Table.Head>Status</Text.Table.Head></Frame>
+                            <Frame flex={1} align="end"><Text.Table.Head>Activity</Text.Table.Head></Frame>
                         </Frame>
                         {[
                             { name: "Alice Johnson", email: "alice@company.com", role: "Admin", status: "Active", date: "2h ago" },
@@ -258,10 +254,10 @@ export function TextSystemApp() {
                         ].map((user, i) => (
                             <Frame key={i} row p="3 4" align="center" surface="hover" style={{ borderBottom: "1px solid var(--border-color)" }}>
                                 <Frame flex={2} gap={0.5}>
-                                    <Table.Cell style={{ fontWeight: 500 }}>{user.name}</Table.Cell>
-                                    <Table.Cell style={{ opacity: 0.5, fontSize: "0.9em" }}>{user.email}</Table.Cell>
+                                    <Text.Table.Cell style={{ fontWeight: 500 }}>{user.name}</Text.Table.Cell>
+                                    <Text.Table.Cell style={{ opacity: 0.5, fontSize: "0.9em" }}>{user.email}</Text.Table.Cell>
                                 </Frame>
-                                <Frame flex={1}><Table.Cell>{user.role}</Table.Cell></Frame>
+                                <Frame flex={1}><Text.Table.Cell>{user.role}</Text.Table.Cell></Frame>
                                 <Frame flex={1}>
                                     <Frame
                                         p="0.5 2" rounded="full"
@@ -276,7 +272,7 @@ export function TextSystemApp() {
                                         {user.status}
                                     </Frame>
                                 </Frame>
-                                <Frame flex={1} align="end"><Table.Cell style={{ opacity: 0.5, fontFamily: "var(--font-family-mono)" }}>{user.date}</Table.Cell></Frame>
+                                <Frame flex={1} align="end"><Text.Table.Cell style={{ opacity: 0.5, fontFamily: "var(--font-family-mono)" }}>{user.date}</Text.Table.Cell></Frame>
                             </Frame>
                         ))}
                     </Frame>
@@ -287,22 +283,22 @@ export function TextSystemApp() {
                     title="Context: Menu"
                     description="Navigation lists and action groups."
                     code={`<Frame w="200px" surface="overlay" shadow="lg">
-  <Menu.Group>Account</Menu.Group>
-  <Menu.Item>Profile</Menu.Item>
-  <Menu.Item>Settings</Menu.Item>
+  <Text.Menu.Group>Account</Text.Menu.Group>
+  <Text.Menu.Item>Profile</Text.Menu.Item>
+  <Text.Menu.Item>Settings</Text.Menu.Item>
 </Frame>`}
                 >
                     <Frame row gap={12} align="start">
                         {/* Sidebar Menu Style */}
                         <Frame w="240px" surface="sunken" h="400px" rounded="2xl" p={4} gap={2} style={{ border: "1px solid var(--border-color)" }}>
-                            <Menu.Group>Platform</Menu.Group>
+                            <Text.Menu.Group>Platform</Text.Menu.Group>
                             <MenuItem active>Dashboard</MenuItem>
                             <MenuItem>Analytics</MenuItem>
                             <MenuItem>Projects</MenuItem>
 
                             <Frame h={4} />
 
-                            <Menu.Group>Settings</Menu.Group>
+                            <Text.Menu.Group>Settings</Text.Menu.Group>
                             <MenuItem>Team</MenuItem>
                             <MenuItem>Billing</MenuItem>
                             <MenuItem>API Keys</MenuItem>
@@ -344,7 +340,7 @@ function ExperienceButton({ active, onClick, icon: Icon, label }: any) {
             align="center"
         >
             <Icon size={14} />
-            <Menu.Item>{label}</Menu.Item>
+            <Text.Menu.Item>{label}</Text.Menu.Item>
         </Frame>
     )
 }
@@ -368,8 +364,8 @@ function ShowcaseSection({ title, description, code, children }: any) {
                 style={{ borderRight: "1px solid var(--border-color)" }}
             >
                 <Frame gap={4}>
-                    <Prose.Title style={{ fontSize: "32px" }}>{title}</Prose.Title>
-                    <Prose.Body style={{ opacity: 0.7 }}>{description}</Prose.Body>
+                    <Text.Prose.Title style={{ fontSize: "32px" }}>{title}</Text.Prose.Title>
+                    <Text.Prose.Body style={{ opacity: 0.7 }}>{description}</Text.Prose.Body>
                 </Frame>
 
                 <Frame
@@ -408,7 +404,7 @@ function MenuItem({ children, active, style, ...props }: any) {
             cursor="pointer"
             {...props}
         >
-            <Menu.Item style={{ fontWeight: active ? 600 : 400, ...style }}>{children}</Menu.Item>
+            <Text.Menu.Item style={{ fontWeight: active ? 600 : 400, ...style }}>{children}</Text.Menu.Item>
         </Frame>
     )
 }
