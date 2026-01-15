@@ -14,7 +14,9 @@ export function toToken(
     // If it's a negative number, it's likely a manual offset (e.g. -25 for positioning),
     // so we treat it as pixels instead of a token.
     if (value < 0) return `${value}px`;
-    return `var(--${prefix}-${String(value).replace(".", "-")})`;
+    // Branded Type numeric tokens need "n" prefix to match CSS variables
+    // e.g., FontSize.n12 (runtime: 12) → var(--font-size-n12)
+    return `var(--${prefix}-n${String(value).replace(".", "-")})`;
   }
 
   if (typeof value === "string") {
