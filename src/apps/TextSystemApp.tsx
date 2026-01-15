@@ -194,7 +194,10 @@ export function TextSystemApp() {
   Scales automatically with Experience.
 </Text.Prose.Body>`}
         >
-          <Frame style={{ maxWidth: "600px" }} override={{ gap: Space.n24 }}>
+          <Frame
+            style={{ maxWidth: "600px", textAlign: "left" }}
+            override={{ gap: Space.n24, w: Size.full }}
+          >
             <Text.Prose.Title>Context: Prose</Text.Prose.Title>
             <Text.Prose.Body>
               The <strong>Prose</strong> context is designed for continuous

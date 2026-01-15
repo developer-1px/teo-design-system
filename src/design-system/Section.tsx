@@ -109,7 +109,6 @@ export function Section({
           >
             {title}
           </Text.Card.Note>
-          )
         </Frame>
       )}
       <Frame style={{ minHeight: 0 }} scroll override={{}} fill flex>

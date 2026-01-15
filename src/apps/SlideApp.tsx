@@ -124,7 +124,6 @@ export function SlideApp() {
       <Frame
         style={{ paddingTop: "var(--space-n48)" }}
         override={{
-          w: Size.n320,
           gap: Space.n16,
         }}
         flex

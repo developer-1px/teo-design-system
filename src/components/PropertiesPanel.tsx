@@ -49,10 +49,8 @@ const PropertySection = ({
 }) => (
   <Frame override={{ gap: Space.n8 }}>
     <Frame
-      override={{ py: Space.n0, px: Space.n8 }}
-      layout={Layout.Row.Header.Default}
-      justify="between"
-      align="center"
+      override={{ px: Space.n8 }}
+      layout={Layout.Row.Actions.Between}
     >
       <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}

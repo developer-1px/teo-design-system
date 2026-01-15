@@ -243,7 +243,7 @@ export function frameToSettings(props: FrameOverrides): {
 
   // --- Clip ---
   if (props.clip === true) {
-    classes.push("overflow-clip");
+    classes.push("overflow-hidden");
   } else if (props.clip === false) {
     classes.push("overflow-visible"); // Explicit visible if clip is false
   }

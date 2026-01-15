@@ -56,11 +56,6 @@ a:hover {
   color: var(--link-hover-color);
 }
 
-h1 {
-  font-size: var(--font-size-1);
-  line-height: 1.1;
-}
-
 button {
   font-family: inherit;
   border: none;
@@ -177,4 +172,14 @@ input::placeholder {
 .field-base.is-scrubbing .field-input {
   color: var(--text-body);
   opacity: 0.5;
+}
+
+/* Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
