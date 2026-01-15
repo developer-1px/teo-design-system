@@ -23,7 +23,8 @@
       "Bash(npm run dev:*)",
       "Bash(node /Users/user/Desktop/minimal-design-kit/scripts/generate-tokens.js:*)",
       "Bash(npx ts-unused-exports:*)",
-      "Bash(npm run check:unused:*)"
+      "Bash(npm run check:unused:*)",
+      "Bash(npx @biomejs/biome format:*)"
     ],
     "deny": [],
     "ask": []

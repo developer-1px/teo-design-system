@@ -793,58 +793,59 @@ Context-aware typography components.
 </Text>
 ```
 
-**Prose**: Document typography with semantic roles
+**Prose**: Document typography namespace with 4 components
 ```tsx
-interface ProseProps {
-  role: 'h1' | 'h2' | 'h3' | 'h4' | 'body' | 'body-sm' | 'caption'
-  as?: string              // Override element
-  align?: 'left' | 'center' | 'right' | 'justify'
-  color?: 'primary' | 'secondary' | 'tertiary' | 'white' | string
+// Prose is a namespace object (NOT a component with props)
+export const Prose = {
+  Title: ({ children, style, variant, ...props }) => JSX.Element,
+  Body: ({ children, style, ...props }) => JSX.Element,
+  Note: ({ children, style, ...props }) => JSX.Element,
+  Code: ({ children, style, ...props }) => JSX.Element,
 }
+
+// Title variants map to heading levels
+variant="xl" → h1 (Display)
+variant="lg" → h2 (Heading 1)
+variant="md" → h3 (Heading 2)
+variant="sm" → h4 (Heading 3)
 ```
 
-**Context-Aware Text**:
+**Usage**:
 ```tsx
-// Card context
-<Card>
-  <Text.Card.Title>Card Title</Text.Card.Title>
-  <Text.Card.Description>Card description</Text.Card.Description>
-  <Text.Card.Note>Card note</Text.Card.Note>
-</Card>
+// Title with variant
+<Prose.Title variant="xl" style={{ textAlign: "center" }}>
+  Main Heading
+</Prose.Title>
 
-// Field context
-<Field>
-  <Text.Field.Label>Field Label</Text.Field.Label>
-  <Text.Field.Value>Field Value</Text.Field.Value>
-  <Text.Field.Note>Field note</Text.Field.Note>
-</Field>
+<Prose.Title variant="lg">
+  Section Heading
+</Prose.Title>
 
-// Table context
-<Table>
-  <Text.Table.Header>Column</Text.Table.Header>
-  <Text.Table.Cell>Value</Text.Table.Cell>
-</Table>
+// Body text
+<Prose.Body style={{ lineHeight: 1.6 }}>
+  Paragraph content with comfortable reading flow.
+</Prose.Body>
 
-// Menu context
-<Menu>
-  <Text.Menu.Label>Menu</Text.Menu.Label>
-  <Text.Menu.Item>Item</Text.Menu.Item>
-</Menu>
+// Note for secondary info
+<Prose.Note style={{ fontSize: "14px" }}>
+  Additional context
+</Prose.Note>
+
+// Code snippets
+<Prose.Code>
+  const example = "code";
+</Prose.Code>
 ```
 
-**ProseDocument & ProseSection**:
+**Context-Aware Text** (DEPRECATED - Use Prose instead):
 ```tsx
-// Document with max-width and centered
-<ProseDocument maxWidth={680} gap={4}>
-  <Prose role="h1">Article Title</Prose>
-  <Prose role="body">Article content...</Prose>
-</ProseDocument>
+// Old pattern (still works but prefer Prose)
+<Text.Card.Title>Card Title</Text.Card.Title>
+<Text.Card.Description>Card description</Text.Card.Description>
 
-// Full-width section with document inside
-<ProseSection maxWidth={680} p="96 24">
-  <Prose role="h2">Section Title</Prose>
-  <Prose role="body">Section content...</Prose>
-</ProseSection>
+// New pattern
+<Prose.Title variant="sm">Card Title</Prose.Title>
+<Prose.Body>Card description</Prose.Body>
 ```
 
 ---

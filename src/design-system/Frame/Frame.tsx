@@ -19,15 +19,12 @@ export function Frame({
   // Destructure Prop-Driven Styling to prevent DOM leakage
   gap,
   pack,
-
   w,
   h,
-
-                        flex,
+  flex,
   row,
   wrap,
   fill,
-
   grid,
   columns,
   rows,
@@ -124,8 +121,8 @@ export function Frame({
     flex: typeof input.flex === "number" ? input.flex : undefined,
     flexShrink:
       input.w !== undefined ||
-        input.h !== undefined ||
-        input.ratio !== undefined
+      input.h !== undefined ||
+      input.ratio !== undefined
         ? 0
         : undefined,
 

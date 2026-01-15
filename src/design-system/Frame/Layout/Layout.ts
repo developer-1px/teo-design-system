@@ -410,7 +410,12 @@ export function resolveLayout(
       return { row: true, align: "center", justify: "center", gap: Space.n8 };
 
     case Layout.Row.AppContainer.Default:
-      return { row: true, align: "stretch", gap: Space.n0, maxWidth: "100%" };
+      return {
+        row: true,
+        align: "stretch",
+        gap: Space.n0,
+        style: { maxWidth: "100%" },
+      };
 
     // --- Wrap ---
     case Layout.Wrap.Chips.Default:
