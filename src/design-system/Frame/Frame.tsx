@@ -25,10 +25,6 @@ export function Frame({
   row,
   wrap,
   fill,
-  grid,
-  columns,
-  rows,
-  areas,
   surface,
   rounded,
   clip,
@@ -71,10 +67,6 @@ export function Frame({
     fill,
     shrink,
 
-    grid,
-    columns,
-    rows,
-    areas,
     clip,
     scroll,
 

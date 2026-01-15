@@ -99,12 +99,6 @@ interface FrameStrictProps {
   flex?: boolean | number | string;
   pack?: boolean;
 
-  // Grid
-  grid?: boolean;
-  columns?: string;
-  rows?: string;
-  areas?: string;
-
   // Surface
   surface?: SurfaceToken;
   rounded?: Radius2Token | boolean;

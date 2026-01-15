@@ -14,9 +14,9 @@ export function TableHeader({ children, columns }: TableHeaderProps) {
         height: 40,
         backgroundColor: "var(--surface-sunken)",
       }}
-      grid
-      columns={columns}
       override={{
+        grid: true,
+        columns: columns,
         px: Space.n16,
         gap: Space.n16,
         borderBottom: true,

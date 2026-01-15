@@ -29,9 +29,9 @@ export function TableRow({
       >
         <Frame
           style={{ height }}
-          grid
-          columns={columns}
           override={{
+            grid: true,
+            columns: columns,
             w: Size.full,
             px: Space.n16,
             gap: Space.n16,
@@ -48,9 +48,9 @@ export function TableRow({
   return (
     <Frame
       style={{ height }}
-      grid
-      columns={columns}
       override={{
+        grid: true,
+        columns: columns,
         w: Size.full,
         px: Space.n16,
         gap: Space.n16,

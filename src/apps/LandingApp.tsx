@@ -213,8 +213,8 @@ export function LandingApp() {
             }}
             override={{
               gap: Space.n16,
+              grid: true,
             }}
-            grid
           >
             <FeatureCard
               icon={Type}
