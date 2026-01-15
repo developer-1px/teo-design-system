@@ -8,10 +8,13 @@ import type {
   SurfaceToken,
 } from "../lib/types.ts";
 import type {
+  HeightToken,
+  MaxHeightToken,
+  MaxWidthToken,
   OpacityToken,
   RadiusToken,
-  SizeToken,
   SpaceToken,
+  WidthToken,
 } from "../token/token.const.1tier.ts";
 
 // --- 1. LOOSE OVERRIDES (Token | string | number) ---
@@ -29,18 +32,19 @@ export interface FrameOverrides {
   gap?: SpaceToken;
   pack?: boolean;
 
-  w?: SizeToken;
-  h?: SizeToken;
+  w?: WidthToken;
+  h?: HeightToken;
 
-  flex?: boolean | number | string;
   row?: boolean; // Used internally by Layout presets
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
-  fill?: boolean;
 
-  minWidth?: SizeToken | WidthToken;
-  minHeight?: SizeToken | HeightToken;
-  maxWidth?: SizeToken | MaxWidthToken;
-  maxHeight?: SizeToken | MaxHeightToken;
+  fill?: boolean;
+  flex?: boolean | number | string;
+
+  minWidth?: WidthToken | (string & {});
+  minHeight?: HeightToken | (string & {});
+  maxWidth?: MaxWidthToken | (string & {});
+  maxHeight?: MaxHeightToken | (string & {});
 
   // Grid
   grid?: boolean;
@@ -80,13 +84,6 @@ export interface FrameOverrides {
   className?: string;
 }
 
-import type {
-  HeightToken,
-  MaxHeightToken,
-  MaxWidthToken,
-  WidthToken,
-} from "../lib/types.ts";
-
 // --- 2. STRICT PROPS (Token Only) ---
 // Used as top-level props on <Frame ... />
 export interface FrameStrictProps {
@@ -100,19 +97,19 @@ export interface FrameStrictProps {
   pr?: SpaceToken;
 
   gap?: SpaceToken;
-  pack?: boolean;
 
   w?: WidthToken;
   h?: HeightToken;
 
+  row?: boolean; // Flexbox direction (default: column)
   flex?: boolean | number;
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
   fill?: boolean;
 
-  minWidth?: WidthToken;
-  minHeight?: HeightToken;
-  maxWidth?: MaxWidthToken;
-  maxHeight?: MaxHeightToken;
+  minWidth?: WidthToken | (string & {});
+  minHeight?: HeightToken | (string & {});
+  maxWidth?: MaxWidthToken | (string & {});
+  maxHeight?: MaxHeightToken | (string & {});
 
   // Grid
   grid?: boolean;
@@ -122,12 +119,12 @@ export interface FrameStrictProps {
 
   align?: AlignToken;
   justify?: JustifyToken;
+  pack?: boolean;
 
   // Surface
   surface?: SurfaceToken;
   r?: RadiusToken;
   rounded?: RoundedToken;
-  // deprecated overflow removed
   clip?: boolean;
 
   cursor?: CursorToken;

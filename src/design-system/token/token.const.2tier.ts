@@ -1,10 +1,20 @@
 /**
- * TMDK 2-Tier Semantic Tokens
- * - Composed from 1-Tier tokens
+ * TMDK 2-Tier Semantic Tokens (Branded Type Compatible)
+ *
+ * - Composed from 1-Tier Branded tokens
  * - Component-specific or Semantic-specific
+ * - Values are automatically Branded (inherit from 1-Tier)
+ *
+ * @example
+ * ```typescript
+ * ActionSize.md.height  // 40 (SizeToken - Branded)
+ * ActionSize.md.padding // 8 (SpaceToken - Branded)
+ * ```
  */
 
+import type { CSSProperties } from "react";
 import { FontSize, IconSize, Size, Space } from "./token.const.1tier";
+import { px } from "./utils";
 
 // ---------------------------------
 // Action Size
@@ -47,3 +57,27 @@ export const ActionSize = {
 } as const;
 
 export type ActionSizeToken = keyof typeof ActionSize;
+
+/**
+ * Resolve ActionSize token to CSS properties with px conversion
+ *
+ * @param size - Action size key (xs, sm, md, lg, xl)
+ * @returns CSS properties object with px values
+ *
+ * @example
+ * ```typescript
+ * resolveActionSize("md")
+ * // Returns: { height: "40px", "--icon-size": "20px", padding: "8px", fontSize: "14px" }
+ * ```
+ */
+export function resolveActionSize(size: ActionSizeToken): CSSProperties & {
+  "--icon-size": string;
+} {
+  const token = ActionSize[size];
+  return {
+    height: px(token.height),
+    "--icon-size": px(token.icon),
+    padding: px(token.padding),
+    fontSize: px(token.fontSize),
+  };
+}

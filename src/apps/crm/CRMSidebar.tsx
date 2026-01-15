@@ -17,6 +17,7 @@ import { Text } from "../../design-system/text/Text.tsx";
 import {
   IconSize,
   Size,
+  type SizeToken,
   Space,
 } from "../../design-system/token/token.const.1tier";
 import { datasetsAtom, selectedDatasetAtom } from "./store";
@@ -38,7 +39,7 @@ function Avatar({
 }: {
   initial: string;
   color: string;
-  size?: string;
+  size?: SizeToken;
 }) {
   return (
     <Frame

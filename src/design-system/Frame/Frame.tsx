@@ -1,6 +1,6 @@
 import type React from "react";
 
-import "./frame.css";
+import "../../style/frame.css";
 
 import type { FrameOverrides, FrameProps } from "./FrameProps.ts";
 import { frameToSettings } from "./frameToSettings.ts";

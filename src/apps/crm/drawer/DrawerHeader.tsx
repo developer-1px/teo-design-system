@@ -4,7 +4,7 @@ import { Frame } from "../../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../../design-system/Icon";
 import { Text } from "../../../design-system/text/Text.tsx";
-import { FontSize, IconSize, Size, Space } from "../../../design-system/token/token.const.1tier";
+import { FontSize, IconSize, Size, type SizeToken, Space } from "../../../design-system/token/token.const.1tier";
 
 function Avatar({
   initial,
@@ -13,7 +13,7 @@ function Avatar({
 }: {
   initial: string;
   color: string;
-  size?: string;
+  size?: SizeToken;
 }) {
   return (
     <Frame

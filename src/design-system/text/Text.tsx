@@ -90,20 +90,17 @@ export function TextRoot({
             : toToken(weight, "font-weight");
   }
 
-  // Handle explicit size override
-  if (size) {
-    if (size.startsWith("font-size.")) {
-      mergedStyle.fontSize = `var(--${size.replace(".", "-")})`;
-    } else {
-      // Fallback/Safety if somehow a bare string passed (though type forbids)
-      mergedStyle.fontSize = toToken(size, "font-size");
-    }
+  // Handle explicit size override (Branded Type: numeric token)
+  if (size !== undefined) {
+    // FontSizeToken is a Branded Type number, toToken handles conversion
+    mergedStyle.fontSize = toToken(size, "font-size");
   }
 
-  // Handle Opacity Token
+  // Handle Opacity Token (Branded Type: numeric token 0-100)
   if (opacity !== undefined) {
-    if (typeof opacity === "string" && opacity.startsWith("opacity.")) {
-      mergedStyle.opacity = `var(--${opacity.replace(".", "-")})`;
+    // OpacityToken is a Branded Type number (0-100), convert to CSS (0-1)
+    if (typeof opacity === "number") {
+      mergedStyle.opacity = opacity / 100;
     } else {
       mergedStyle.opacity = opacity;
     }

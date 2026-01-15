@@ -1,5 +1,6 @@
 import type React from "react";
 import type { FrameOverrides } from "./FrameProps.ts";
+import { px } from "../token/utils";
 
 export function frameToSettings(props: FrameOverrides): {
   className: string;
@@ -14,91 +15,85 @@ export function frameToSettings(props: FrameOverrides): {
     ) as React.CSSProperties;
   };
 
-  // Function to resolve space tokens strictly
+  // Function to resolve space tokens (Branded Type)
   const resolveSpace = (val: string | number | undefined) => {
-    if (!val) return undefined;
-    if (typeof val === "string" && val.startsWith("space.")) {
-      return `var(--${val.replace(".", "-")})`;
+    if (val === undefined) return undefined;
+    // Branded Type: numeric token (e.g., Space.n12 is 12 at runtime)
+    if (typeof val === "number") {
+      return px(val as any); // Convert to "12px"
     }
-    // Fallback used to be toToken, effectively allow direct pixel numbers or string passthrough?
-    // User wants to avoid legacy. Strict tokens preferred.
-    // If number, convert to px? Or assume oldMultiplier?
-    // Old frame.css uses calc(var(--p) * 4px).
-    // If we want to support '0', it's space.n0.
-    if (val === 0) return "0px";
-    return val; // Allow explicit strings like "10px" or "auto" if typed that way, though types say SpaceToken
-  };
-
-  const resolveRadius = (val: string | number | undefined) => {
-    if (!val) return undefined;
-    if (typeof val === "string" && val.startsWith("radius.")) {
-      return `var(--${val.replace(".", "-")})`;
-    }
-    if (val === 0) return "0px";
+    // Allow explicit string overrides (e.g., "10px", "auto", "2rem")
     return val;
   };
 
+  // Function to resolve radius tokens (Branded Type)
+  const resolveRadius = (val: string | number | undefined) => {
+    if (val === undefined) return undefined;
+    // Branded Type: numeric token (e.g., Radius.n8 is 8 at runtime)
+    if (typeof val === "number") {
+      return px(val as any); // Convert to "8px"
+    }
+    // Allow explicit string overrides
+    return val;
+  };
+
+  // Function to resolve opacity tokens (Branded Type)
   const resolveOpacity = (val: string | number | undefined) => {
     if (val === undefined) return undefined;
-    if (typeof val === "string" && val.startsWith("opacity.")) {
-      return `var(--${val.replace(".", "-")})`;
+    // Branded Type: numeric token (e.g., Opacity.n50 is 50 at runtime)
+    // Opacity tokens are 0-100 scale, convert to 0-1 for CSS
+    if (typeof val === "number") {
+      return val / 100; // Convert to CSS opacity (0-1)
     }
-    // Allow raw numbers if passed (though types restricted it, overrides might still pass it?)
-    // But strict OpacityToken is preferred.
-    if (typeof val === "number") return val;
+    // Allow explicit string overrides
     return val;
   };
 
-  // Function to resolve size/container tokens strictly
-  // Supports size.n*, size.full, container.n*
+  // Function to resolve size/container tokens (Branded Type)
   const resolveSizing = (
     val: string | number | undefined,
     axis: "width" | "height",
   ) => {
-    if (!val) return undefined;
-    if (typeof val === "string") {
-      // Legacy Token Fixes
-      if (val === "size.full") return "100%";
-      if (val === "size.screen") return axis === "width" ? "100vw" : "100vh";
-      if (val === "size.min") return "min-content";
-      if (val === "size.max") return "max-content";
-      if (val === "size.fit") return "fit-content";
-      if (val === "size.auto") return "auto";
+    if (val === undefined) return undefined;
 
-      // Strict Token Mapping
-      if (val.startsWith("size.") || val.startsWith("container.")) {
-        return `var(--${val.replace(".", "-")})`;
+    // Branded Type: numeric token (e.g., Size.n40 is 40 at runtime)
+    if (typeof val === "number") {
+      return px(val as any); // Convert to "40px"
+    }
+
+    // String handling: Size keywords and explicit overrides
+    if (typeof val === "string") {
+      // Size.screen needs axis-specific handling
+      // Size.screen is "100vh" but should be "100vw" for width axis
+      if (val === "100vh") {
+        return axis === "width" ? "100vw" : "100vh";
       }
 
-      // Pass through known keywords (explicit styling)
-      // "full" and "screen" are handled by classes below, so we skip them here
-      // unless user passed "size.full" (handled above).
+      // Pass through Size keyword values (already CSS values)
+      // Size.full = "100%", Size.min = "min-content", etc.
       if (
         [
-          "auto",
-          "fit-content",
+          "100%",
+          "100vw",
           "min-content",
           "max-content",
-          "100%",
-          "50%",
-          "33%",
-          "66%",
+          "fit-content",
+          "auto",
         ].includes(val)
       ) {
         return val;
       }
 
-      // Allow explicit pixel values if string (e.g. "200px")?
-      // User wants to remove legacy "toToken" behavior which allowed numbers -> px.
-      // But explicit strings like "20px" might be useful overrides.
-      // For now, let's stick to tokens + keywords to be safe/strict as requested.
-      // Allow explicit pixel/unit values
+      // Allow explicit CSS unit values (e.g., "200px", "50%", "2rem")
       if (/^-?\d*\.?\d+(px|rem|em|%|vw|vh)$/.test(val)) {
         return val;
       }
+
+      // Allow other percentage values
+      if (["50%", "33%", "66%", "25%", "75%"].includes(val)) {
+        return val;
+      }
     }
-    // Allow numbers (React handles as px)
-    if (typeof val === "number") return val;
 
     return undefined;
   };
@@ -106,23 +101,31 @@ export function frameToSettings(props: FrameOverrides): {
   // --- Smart Logic Helpers ---
   const isFixedDimension = (
     val: string | number | undefined,
-    _: "width" | "height",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _axis: "width" | "height",
   ): boolean => {
     if (val === undefined) return false;
+    // Branded Type numeric token (e.g., Size.n40) → fixed dimension
     if (typeof val === "number") return true;
     // String checks
-    if (val.startsWith("size.n") || val.startsWith("container.n")) return true;
-    if (
-      val === "size.full" ||
-      val === "size.screen" ||
-      val === "size.auto" ||
-      val === "size.min" ||
-      val === "size.max" ||
-      val === "size.fit"
-    )
-      return false;
-    // Explicit px/rem
-    if (/^-?\d*\.?\d+(px|rem|em)$/.test(val)) return true;
+    if (typeof val === "string") {
+      // Keyword values (Size.full, Size.screen, etc.) → not fixed
+      if (
+        [
+          "100%",
+          "100vh",
+          "100vw",
+          "auto",
+          "min-content",
+          "max-content",
+          "fit-content",
+        ].includes(val)
+      ) {
+        return false;
+      }
+      // Explicit px/rem/em values → fixed dimension
+      if (/^-?\d*\.?\d+(px|rem|em)$/.test(val)) return true;
+    }
     return false;
   };
 
@@ -214,11 +217,12 @@ export function frameToSettings(props: FrameOverrides): {
   else if (props.flex === false) classes.push("flex-none");
 
   // --- Sizing Classes ---
-  if (props.w === "size.full") classes.push("w-full");
-  else if (props.w === "size.screen") classes.push("w-screen");
+  // Size.full is "100%" and Size.screen is "100vh" at runtime
+  if (props.w === "100%") classes.push("w-full");
+  else if (props.w === "100vh") classes.push("w-screen");
 
-  if (props.h === "size.full") classes.push("h-full");
-  else if (props.h === "size.screen") classes.push("h-screen");
+  if (props.h === "100%") classes.push("h-full");
+  else if (props.h === "100vh") classes.push("h-screen");
 
   // --- Radius Classes ---
   // Only apply rounded classes if 'r' is NOT defined
