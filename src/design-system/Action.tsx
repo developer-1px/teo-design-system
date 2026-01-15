@@ -4,7 +4,6 @@ import { Icon } from "./Icon";
 import type {
   ActionVariant,
   JustifyToken,
-  RoundedToken,
   SurfaceToken,
 } from "./lib/types.ts";
 import { Text } from "./text/Text.tsx";
@@ -14,7 +13,7 @@ import {
   Space,
   type SpaceToken,
 } from "./token/token.const.1tier";
-import { ActionSize, type ActionSizeToken } from "./token/token.const.2tier";
+import { ActionSize, type ActionSizeToken, type Radius2Token } from "./token/token.const.2tier";
 
 interface ActionProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
@@ -24,7 +23,7 @@ interface ActionProps
   variant?: ActionVariant;
 
   // Layout overrides
-  rounded?: RoundedToken;
+  rounded?: Radius2Token;
   p?: SpaceToken;
   px?: SpaceToken;
   py?: SpaceToken;

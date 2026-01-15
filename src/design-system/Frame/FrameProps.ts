@@ -3,7 +3,6 @@ import type {
   AlignToken,
   CursorToken,
   JustifyToken,
-  RoundedToken,
   ShadowToken,
   SurfaceToken,
 } from "../lib/types.ts";
@@ -16,6 +15,7 @@ import type {
   SpaceToken,
   WidthToken,
 } from "../token/token.const.1tier.ts";
+import type { Radius2Token } from "../token/token.const.2tier.ts";
 
 // --- 1. LOOSE OVERRIDES (Token | string | number) ---
 // Used inside 'override={{ ... }}' prop
@@ -46,6 +46,17 @@ export interface FrameOverrides {
   maxWidth?: MaxWidthToken | (string & {});
   maxHeight?: MaxHeightToken | (string & {});
 
+  // border
+  border?: boolean | string;
+  borderTop?: boolean | string;
+  borderRight?: boolean | string;
+  borderBottom?: boolean | string;
+  borderLeft?: boolean | string;
+  borderColor?: string;
+
+  // BorderRadius
+  r?: RadiusToken;
+
   // Grid
   grid?: boolean;
   columns?: string;
@@ -57,8 +68,7 @@ export interface FrameOverrides {
 
   // Surface
   surface?: SurfaceToken;
-  r?: RadiusToken;
-  rounded?: RoundedToken | (string & {}) | number;
+  rounded?: Radius2Token | boolean;
   // deprecated overflow removed
   clip?: boolean;
 
@@ -74,12 +84,6 @@ export interface FrameOverrides {
   shadow?: ShadowToken;
   opacity?: OpacityToken;
   ratio?: string;
-  border?: boolean | string;
-  borderTop?: boolean | string;
-  borderRight?: boolean | string;
-  borderBottom?: boolean | string;
-  borderLeft?: boolean | string;
-  borderColor?: string;
 
   className?: string;
 }
@@ -97,19 +101,29 @@ interface FrameStrictProps {
   pr?: SpaceToken;
 
   gap?: SpaceToken;
+  pack?: boolean;
 
   w?: WidthToken;
   h?: HeightToken;
 
-  row?: boolean; // Flexbox direction (default: column)
-  flex?: boolean | number;
+  row?: boolean;
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
+
   fill?: boolean;
+  flex?: boolean | number | string;
 
   minWidth?: WidthToken | (string & {});
   minHeight?: HeightToken | (string & {});
   maxWidth?: MaxWidthToken | (string & {});
   maxHeight?: MaxHeightToken | (string & {});
+
+  // border
+  border?: boolean | string;
+  borderTop?: boolean | string;
+  borderRight?: boolean | string;
+  borderBottom?: boolean | string;
+  borderLeft?: boolean | string;
+  borderColor?: string;
 
   // Grid
   grid?: boolean;
@@ -119,12 +133,11 @@ interface FrameStrictProps {
 
   align?: AlignToken;
   justify?: JustifyToken;
-  pack?: boolean;
 
   // Surface
   surface?: SurfaceToken;
   r?: RadiusToken;
-  rounded?: RoundedToken;
+  rounded?: Radius2Token | boolean;
   clip?: boolean;
 
   cursor?: CursorToken;
@@ -137,12 +150,6 @@ interface FrameStrictProps {
   shadow?: ShadowToken;
   opacity?: OpacityToken;
   ratio?: string;
-  border?: boolean | string;
-  borderTop?: boolean | string;
-  borderRight?: boolean | string;
-  borderBottom?: boolean | string;
-  borderLeft?: boolean | string;
-  borderColor?: string;
 }
 
 export interface FrameProps

@@ -12,8 +12,7 @@
  * ```
  */
 
-import type { CSSProperties } from "react";
-import { FontSize, IconSize, Radius, Size, Space } from "./token.const.1tier";
+import {FontSize, IconSize, Radius, Size, Space} from "./token.const.1tier"
 
 // ---------------------------------
 // Action Size
@@ -57,30 +56,6 @@ export const ActionSize = {
 
 export type ActionSizeToken = keyof typeof ActionSize;
 
-/**
- * Resolve ActionSize token to CSS properties (tokens are already CSS variables)
- *
- * @param size - Action size key (xs, sm, md, lg, xl)
- * @returns CSS properties object with CSS variable values
- *
- * @example
- * ```typescript
- * resolveActionSize("md")
- * // Returns: { height: "var(--size-n40)", "--icon-size": "var(--icon-size-n20)", padding: "var(--space-n8)", fontSize: "var(--font-size-n14)" }
- * ```
- */
-export function resolveActionSize(size: ActionSizeToken): CSSProperties & {
-  "--icon-size": string;
-} {
-  const token = ActionSize[size];
-  return {
-    height: token.height,
-    "--icon-size": token.icon,
-    padding: token.padding,
-    fontSize: token.fontSize,
-  };
-}
-
 // ---------------------------------
 // Radius2 (2-Tier: Semantic Aliases)
 // ---------------------------------
@@ -96,6 +71,7 @@ export const Radius2Scale = [
 ] as const;
 export type Radius2Scale = (typeof Radius2Scale)[number];
 export type Radius2Key = Radius2Scale;
+export type Radius2Token = Radius2Key;
 
 export const Radius2 = {
   none: Radius.n0,

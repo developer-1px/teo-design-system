@@ -1,8 +1,9 @@
 import { Frame } from "./Frame/Frame.tsx";
 import { Layout } from "./Frame/Layout/Layout.ts";
-import type { RoundedToken, SurfaceToken } from "./lib/types.ts";
+import type { SurfaceToken } from "./lib/types.ts";
 import { Text } from "./text/Text.tsx";
 import { Space } from "./token/token.const.1tier";
+import type { Radius2Token } from "./token/token.const.2tier";
 
 interface SectionProps {
   children?: React.ReactNode;
@@ -14,7 +15,7 @@ interface SectionProps {
   border?: boolean | "top" | "bottom" | "left" | "right";
   w?: string | number;
   h?: string | number;
-  rounded?: RoundedToken;
+  rounded?: Radius2Token;
   surface?: SurfaceToken;
   shadow?: "sm" | "md" | "lg";
   flex?: boolean | number;

@@ -153,11 +153,9 @@ export function frameToSettings(props: FrameOverrides): {
 
   // --- Radius: Convert rounded prop to Radius2 tokens (2-tier) ---
   if (props.r === undefined && props.rounded !== undefined) {
-    if (props.rounded === true) {
-      standardStyles.borderRadius = Radius2.md; // default md
-    } else if (props.rounded === false) {
-      standardStyles.borderRadius = Radius2.none;
-    } else if (typeof props.rounded === "string") {
+    if (typeof props.rounded === "boolean") {
+      standardStyles.borderRadius = props.rounded ? Radius2.md : Radius2.none;
+    } else {
       // Use Radius2 for semantic aliases, fallback to raw value for custom strings
       standardStyles.borderRadius = props.rounded in Radius2
         ? Radius2[props.rounded as keyof typeof Radius2]

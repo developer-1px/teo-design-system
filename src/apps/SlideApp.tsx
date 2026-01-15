@@ -77,7 +77,7 @@ export function SlideApp() {
             override={{
               gap: Space.n4,
               p: Space.n4,
-              rounded: "round",
+              rounded: "md",
               shadow: "sm",
             }}
             layout={Layout.Row.Item.Compact}
@@ -136,7 +136,7 @@ export function SlideApp() {
         {/* 3. Central Canvas Area */}
         <Frame
           style={{ position: "relative" }}
-          override={{ rounded: "round" }}
+          override={{ rounded: "md" }}
           flex
           fill
           clip
@@ -171,7 +171,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                      rounded: "round",
+                      rounded: "md",
                     }}
                     surface="sunken"
                     pack
@@ -185,7 +185,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                      rounded: "round",
+                      rounded: "md",
                     }}
                     surface="raised"
                     pack
@@ -199,7 +199,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                      rounded: "round",
+                      rounded: "md",
                     }}
                     surface="overlay"
                     pack

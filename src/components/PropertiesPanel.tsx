@@ -347,7 +347,7 @@ export function PropertiesPanel() {
             icon={
               <Frame
                 override={{
-                  rounded: "round",
+                  rounded: "full",
                 }}
                 style={{
                   width: "10px",
@@ -370,7 +370,7 @@ export function PropertiesPanel() {
               icon={
                 <Frame
                   override={{
-                    rounded: "round",
+                    rounded: "full",
                   }}
                   style={{
                     width: "10px",
