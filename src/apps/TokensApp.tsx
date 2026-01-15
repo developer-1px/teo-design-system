@@ -3,12 +3,16 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../design-system/text/Text";
 import {
   ContainerSize,
+  FontSize,
   FontSizeScale,
+  Opacity,
   OpacityScale,
+  Radius,
   RadiusScale,
   Size,
   SizeScale,
   Space,
+  type SpaceToken,
   SpaceScale,
   ZIndexScale,
 } from "../design-system/token/token.const.1tier";
@@ -56,8 +60,8 @@ function SectionHeader({ title, desc }: { title: string; desc: string }) {
         {desc}
       </Text.Prose.Body>
       <Frame
-        override={{ w: Size.full, h: "1px" as any }}
-        style={{ marginBlock: "var(--space-n16)" }}
+        override={{ w: Size.full }}
+        style={{ marginBlock: "var(--space-n16)", height: "1px" }}
         surface="overlay"
       />
     </Frame>
@@ -69,11 +73,11 @@ function TextColumn({
   gap = Space.n32,
 }: {
   children: React.ReactNode;
-  gap?: any;
+  gap?: SpaceToken;
 }) {
   return (
     <Frame
-      override={{ w: Size.full, maxWidth: ContainerSize.n800, gap: gap as any }}
+      override={{ w: Size.full, maxWidth: ContainerSize.n800, gap }}
       style={{ margin: "0 auto" }}
     >
       {children}
@@ -242,7 +246,7 @@ export function TokensApp() {
               {RadiusScale.map((val) => (
                 <Frame
                   key={val}
-                  r={`radius.n${val}` as any}
+                  r={Radius[`n${val}` as keyof typeof Radius]}
                   surface="raised"
                   layout={Layout.Center.Default}
                   override={{ w: Size.n96, h: Size.n96, minWidth: Size.n96 }}
@@ -311,7 +315,7 @@ export function TokensApp() {
                 <Frame key={val} align="center" override={{ gap: Space.n8 }}>
                   <Frame
                     surface="base"
-                    opacity={`opacity.n${val}` as any}
+                    opacity={Opacity[`n${val}` as keyof typeof Opacity]}
                     style={{
                       backgroundColor: "black",
                     }}
@@ -346,7 +350,7 @@ export function TokensApp() {
                     </Frame>
                     <Frame flex={1} minWidth={Size.n0}>
                       <Text
-                        size={`font-size.n${val}` as any}
+                        size={FontSize[`n${val}` as keyof typeof FontSize]}
                         style={{ color: "var(--text-primary)" }}
                       >
                         The quick brown fox.
