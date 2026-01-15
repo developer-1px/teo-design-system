@@ -43,8 +43,11 @@ export function Frame({
 
   // 2. Merge Overrides (Layout override < Direct override)
   // We extract style specifically to merge it last
-  // Filter out sizing/spacing properties to enforce token usage
+  // Filter out sizing/spacing/visual properties to enforce token usage
   // margin is blocked - use gap or Divider component instead
+  // opacity is blocked - use Opacity token
+  // borderRadius is blocked - use rounded prop with Radius2 token
+  // boxShadow is blocked - use shadow prop with Shadow token
   const {
     width,
     height,
@@ -67,6 +70,9 @@ export function Frame({
     marginRight,
     marginBlock,
     marginInline,
+    opacity: _opacityLayout,
+    borderRadius,
+    boxShadow,
     ...safeLayoutStyle
   } = (layoutSettings.style || {}) as React.CSSProperties;
 
@@ -92,6 +98,9 @@ export function Frame({
     marginRight: _marginRight2,
     marginBlock: _marginBlock2,
     marginInline: _marginInline2,
+    opacity: _opacityUser,
+    borderRadius: _borderRadius2,
+    boxShadow: _boxShadow2,
     ...safeUserStyle
   } = (style || {}) as React.CSSProperties;
 

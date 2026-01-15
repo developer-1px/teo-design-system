@@ -1,6 +1,7 @@
 import {
   Menu,
   Monitor,
+  PanelLeft,
   PanelRight,
   Play,
   Smartphone,
@@ -25,6 +26,7 @@ import { MainFooter } from "./cms/MainFooter";
 import { ScrollTabSection } from "./cms/ScrollTabSection";
 import { SiteHeader } from "./cms/SiteHeader";
 import { CMSRightPanel } from "./cms/CMSRightPanel";
+import { CMSDrawer } from "./cms/CMSDrawer";
 
 export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -32,6 +34,7 @@ export function CMSApp() {
     "desktop",
   );
   const [isRightPanelOpen, setRightPanelOpen] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <Frame
@@ -63,6 +66,23 @@ export function CMSApp() {
           position: "relative",
         }}
       >
+        {/* Sidebar Toggle Button - Top Right */}
+        <Overlay
+          position="absolute"
+          top="var(--space-n16)"
+          right="var(--space-n16)"
+          zIndex={100}
+        >
+          <Action
+            icon={PanelLeft}
+            variant={isSidebarOpen ? "primary" : "ghost"}
+            size="sm"
+            rounded={Radius2.full}
+            onClick={() => setSidebarOpen(!isSidebarOpen)}
+            tooltip={isSidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
+            shadow="lg"
+          />
+        </Overlay>
         {/* Viewport Container */}
         <Frame
           fill
@@ -116,11 +136,17 @@ export function CMSApp() {
           setViewport={setViewport}
           isRightPanelOpen={isRightPanelOpen}
           toggleRightPanel={() => setRightPanelOpen(!isRightPanelOpen)}
+          isDrawerOpen={isDrawerOpen}
+          toggleDrawer={() => setDrawerOpen(!isDrawerOpen)}
         />
       </Frame>
 
       {isRightPanelOpen && (
         <CMSRightPanel onClose={() => setRightPanelOpen(false)} />
+      )}
+
+      {isDrawerOpen && (
+        <CMSDrawer onClose={() => setDrawerOpen(false)} />
       )}
     </Frame>
   );
@@ -131,6 +157,8 @@ interface FloatingToolbarProps {
   setViewport: (v: "desktop" | "tablet" | "mobile") => void;
   isRightPanelOpen: boolean;
   toggleRightPanel: () => void;
+  isDrawerOpen: boolean;
+  toggleDrawer: () => void;
 }
 
 function FloatingToolbar({
@@ -138,6 +166,8 @@ function FloatingToolbar({
   setViewport,
   isRightPanelOpen,
   toggleRightPanel,
+  isDrawerOpen,
+  toggleDrawer,
 }: FloatingToolbarProps) {
   return (
     <Overlay
@@ -216,9 +246,10 @@ function FloatingToolbar({
 
         <Action
           icon={Menu}
-          variant="ghost"
+          variant={isDrawerOpen ? "primary" : "ghost"}
           size="sm"
           rounded={Radius2.full}
+          onClick={toggleDrawer}
           tooltip="Options"
         />
       </Frame>
