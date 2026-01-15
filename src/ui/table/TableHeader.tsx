@@ -15,13 +15,13 @@ export function TableHeader({ children, columns }: TableHeaderProps) {
         backgroundColor: "var(--surface-sunken)",
       }}
       override={{
+        grid: true,
+        columns: columns,
         px: Space.n16,
         gap: Space.n16,
+        borderBottom: true,
+        align: "center",
       }}
-      grid
-      columns={columns}
-      align="center"
-      borderBottom
     >
       {children}
     </Frame>

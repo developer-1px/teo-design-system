@@ -308,27 +308,32 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
 
 **Prose Components:**
 ```tsx
-// Individual prose element
-<Prose
-  role="h1"           // h1, h2, h3, h4, body, body-sm, caption
-  as="h1"             // Optional element override
-  align="center"      // left, center, right, justify
-  color="primary"     // primary, secondary, tertiary, white, or custom
->
-  Heading Text
-</Prose>
+// Prose is a namespace object with context-specific components
+// Available components: Title, Body, Note, Code
 
-// Document container with centered max-width
-<ProseDocument maxWidth={680} gap={4}>
-  <Prose role="h1">Title</Prose>
-  <Prose role="body">Content</Prose>
-</ProseDocument>
+// Title with variants (xl=h1, lg=h2, md=h3, sm=h4)
+<Prose.Title variant="xl" style={{ textAlign: "center" }}>
+  Main Heading
+</Prose.Title>
 
-// Full-width section with document inside
-<ProseSection maxWidth={680} p="96 24">
-  <Prose role="h2">Section Title</Prose>
-  <Prose role="body">Section content</Prose>
-</ProseSection>
+<Prose.Title variant="lg">
+  Section Heading
+</Prose.Title>
+
+// Body text for paragraphs
+<Prose.Body style={{ textAlign: "left", lineHeight: 1.6 }}>
+  Paragraph content with comfortable reading flow.
+</Prose.Body>
+
+// Note for secondary information
+<Prose.Note style={{ fontSize: "14px", color: "var(--text-subtle)" }}>
+  Additional context or metadata
+</Prose.Note>
+
+// Code for inline code snippets
+<Prose.Code>
+  const example = "code";
+</Prose.Code>
 ```
 
 ## Application Structure

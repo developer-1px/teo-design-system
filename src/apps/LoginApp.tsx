@@ -4,8 +4,8 @@ import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
-import { ProseDocument } from "../design-system/ProseOld.tsx";
 import { Section } from "../design-system/Section";
+import { Prose } from "../design-system/text/context/Prose";
 import { Text } from "../design-system/text/Text.tsx";
 import {
   FontSize,
@@ -13,17 +13,16 @@ import {
   Size,
   Space,
 } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LoginApp() {
   return (
     <Frame fill layout={Layout.Row.AppContainer.Default}>
       {/* Left: Login Form */}
       <Frame
-        override={{ p: Space.n32 }}
         flex={1}
         surface="base"
-        align="center"
-        justify="center"
+        override={{ p: Space.n32, align: "center" }}
       >
         <Frame
           override={{ w: Size.full, gap: Space.n32 }}
@@ -54,14 +53,14 @@ export function LoginApp() {
             </Frame>
 
             <Frame layout={Layout.Row.LabelValue.Default}>
-              <Frame layout={Layout.Row.Item.Tight} cursor="pointer">
+              <Frame
+                layout={Layout.Row.Item.Tight}
+                override={{ cursor: "pointer" }}
+              >
                 {/* Checkbox simulation */}
                 <Frame
-                  override={{
-                    w: Size.n4,
-                    h: Size.n4,
-                    rounded: "sm",
-                  }}
+                  override={{ w: Size.n4, h: Size.n4 }}
+                  rounded={Radius2.sm}
                   style={{ border: "1px solid var(--border-color)" }}
                   surface="sunken"
                 />
@@ -103,32 +102,40 @@ export function LoginApp() {
       {/* Right: Description / Hero */}
       {/* Right: Description / Hero */}
       <Section flex={1} surface="panel" border="left">
-        <Frame override={{ p: Space.n48 }} fill align="center" justify="center">
-          <ProseDocument maxWidth={120} gap={8}>
+        <Frame
+          override={{ p: Space.n48, align: "center", justify: "center" }}
+          fill
+        >
+          <Frame
+            override={{ gap: Space.n32 }}
+            style={{ maxWidth: "480px", width: "100%" }}
+          >
             <Frame
+              rounded={Radius2["2xl"]}
+              style={{ marginBottom: "var(--space-n16)" }}
+              surface="card"
               override={{
                 w: Size.n64,
                 h: Size.n64,
-                rounded: "2xl",
                 shadow: "lg",
+                align: "center",
               }}
-              style={{ marginBottom: 16 }}
-              surface="card"
-              align="center"
-              justify="center"
             >
               <Icon src={Lock} size={IconSize.n32} />
             </Frame>
 
-            <Text.Prose.Title variant="lg">
+            <Prose.Title variant="lg">
               Secure & Minimal Design System
-            </Text.Prose.Title>
-            <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
+            </Prose.Title>
+            <Prose.Body style={{ color: "var(--text-secondary)" }}>
               Experience the "Pure White" architecture. A design system built
               for data-dense interfaces where content is the hero.
-            </Text.Prose.Body>
+            </Prose.Body>
 
-            <Frame override={{ gap: Space.n16 }} style={{ marginTop: 16 }}>
+            <Frame
+              override={{ gap: Space.n16 }}
+              style={{ marginTop: "var(--space-n16)" }}
+            >
               <FeatureRow
                 title="Zero Decoration"
                 desc="Focus on content hierarchy and spacing."
@@ -142,7 +149,7 @@ export function LoginApp() {
                 desc="Built-in tools to debug design decisions."
               />
             </Frame>
-          </ProseDocument>
+          </Frame>
         </Frame>
       </Section>
     </Frame>
@@ -151,10 +158,11 @@ export function LoginApp() {
 
 function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame layout={Layout.Row.Item.Default} align="start">
+    <Frame layout={Layout.Row.Item.Default} override={{ align: "start" }}>
       <Frame
-        override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
-        style={{ marginTop: 4 }}
+        override={{ w: Size.n8, h: Size.n8 }}
+        rounded={Radius2.full}
+        style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
         flex={0}
       />

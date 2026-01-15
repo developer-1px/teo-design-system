@@ -1,0 +1,14 @@
+{
+  "excludePathsFromReport": [
+    "src/design-system/token/index.ts",
+    "src/design-system/token/token.const.1tier.ts",
+    "src/design-system/token/token.const.2tier.ts",
+    "src/design-system/token/lib/brand.ts",
+    "src/design-system/Icon.tsx",
+    "src/design-system/Overlay.tsx",
+    "src/design-system/text/Text.tsx",
+    "src/design-system/Frame/Layout/Layout.ts"
+  ],
+  "excludeDeclarationFiles": true,
+  "showLineNumber": true
+}

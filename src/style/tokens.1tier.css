@@ -130,6 +130,7 @@
   --radius-n24: 24px;
   --radius-n28: 28px;
   --radius-n32: 32px;
+  --radius-n9999: 9999px;
 
   /* BorderWidth */
   --border-width-n0: 0px;
@@ -252,6 +253,13 @@
   --aspect-ratio-n5_4: 5 / 4;
   --aspect-ratio-n4_5: 4 / 5;
 
+  /* Shadow */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
   /* Size Keywords */
   --size-full: 100%;
   --size-screen: 100vh;
@@ -259,15 +267,4 @@
   --size-max: max-content;
   --size-fit: fit-content;
   --size-auto: auto;
-
-  /* Radius Aliases */
-  --radius-none: var(--radius-n0);
-  --radius-sm: var(--radius-n4);
-  --radius-md: var(--radius-n6);
-  --radius-lg: var(--radius-n12);
-  --radius-xl: var(--radius-n16);
-  --radius-2xl: var(--radius-n20);
-  --radius-3xl: var(--radius-n24);
-  --radius-soft: var(--radius-n8);
-  --radius-full: var(--radius-n32);
 }

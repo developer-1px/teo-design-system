@@ -1,5 +1,4 @@
 import type React from "react";
-import { toToken } from "./lib/utils";
 import { IconSize, type IconSizeToken } from "./token/token.const.1tier";
 
 export interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "ref"> {
@@ -16,19 +15,8 @@ export function Icon({
   style,
   ...props
 }: IconProps) {
-  let sizeValue = size;
-  // If the user passes a token object value (e.g. IconSize.n32 which is "icon-size.n32"),
-  // we need to strip the prefix because toToken adds it again.
-  if (typeof size === "string" && size.startsWith("icon-size.")) {
-    sizeValue = size.split(".")[1];
-  }
-
-  const resolvedSize = toToken(sizeValue, "icon-size");
-
-  // If resolvedSize is a variable (string), we pass it as width/height style or prop?
-  // lucide-react 'size' prop expects number or string.
-  // toToken returns `var(--icon-size-n16)` string.
-  // Lucide accepts string for size.
+  // Tokens are already CSS variables (e.g., "var(--icon-size-n16)")
+  // Numbers and explicit strings are passed through
 
   return (
     <IconComponent
@@ -36,8 +24,8 @@ export function Icon({
       className={className}
       style={{
         ...style,
-        width: resolvedSize,
-        height: resolvedSize,
+        width: size,
+        height: size,
       }}
       {...props}
     />

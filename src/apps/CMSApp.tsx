@@ -1,17 +1,24 @@
 import {
+  Download,
+  Edit,
+  Eye,
   Menu,
   Monitor,
+  PanelLeft,
   PanelRight,
   Play,
+  Save,
   Smartphone,
   Tablet,
+  Upload,
 } from "lucide-react";
 import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Overlay } from "../design-system/Overlay";
-import { Space } from "../design-system/token/token.const.1tier";
+import { ContainerSize, Size, Space } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // CMS Sections
 import { BodyContentSection } from "./cms/BodyContentSection";
@@ -24,13 +31,16 @@ import { MainFooter } from "./cms/MainFooter";
 import { ScrollTabSection } from "./cms/ScrollTabSection";
 import { SiteHeader } from "./cms/SiteHeader";
 import { CMSRightPanel } from "./cms/CMSRightPanel";
+import { CMSDrawer } from "./cms/CMSDrawer";
 
 export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">(
-    "desktop"
+    "desktop",
   );
   const [isRightPanelOpen, setRightPanelOpen] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isEditMode, setEditMode] = useState(true);
 
   return (
     <Frame
@@ -50,10 +60,10 @@ export function CMSApp() {
         fill
         flex
         override={{
-          rounded: "2xl",
           shadow: "lg",
           clip: true,
         }}
+        rounded={Radius2["2xl"]}
         surface="raised"
         style={{
           margin: "var(--space-n4)",
@@ -62,29 +72,29 @@ export function CMSApp() {
           position: "relative",
         }}
       >
+        {/* Viewport Container */}
         <Frame
           fill
           scroll
-          align="center"
-          justify="start"
-          override={{ pb: Space.n96 }} // Extra padding at bottom for floating toolbar
-          style={{
-            perspective: "1000px",
+          override={{
+            align: "center",
+            pb: Space.n96,
           }}
         >
           {/* Viewport Frame */}
           <Frame
-            flex
-            style={{
-              width:
+            override={{
+              w:
                 viewport === "mobile"
                   ? "375px"
                   : viewport === "tablet"
-                    ? "768px"
-                    : "100%",
-              minHeight: "100%",
-              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-              margin: "0 auto",
+                    ? ContainerSize.n768
+                    : Size.full,
+            }}
+            surface="raised"
+            style={{
+              minHeight: "100vh",
+              transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               borderLeft:
                 viewport !== "desktop"
                   ? "1px solid var(--border-color)"
@@ -93,14 +103,15 @@ export function CMSApp() {
                 viewport !== "desktop"
                   ? "1px solid var(--border-color)"
                   : "none",
-              backgroundColor: "var(--surface-raised)",
               boxShadow:
-                viewport !== "desktop" ? "0 0 40px rgba(0,0,0,0.1)" : "none",
+                viewport !== "desktop"
+                  ? "var(--elevation-n4)"
+                  : "none",
             }}
           >
             <SiteHeader isSidebarOpen={isSidebarOpen} />
-            <ScrollTabSection />
             <HeaderHero />
+            <ScrollTabSection />
             <FeatureGridSection />
             <BodyContentSection />
             <ImageFooterBanner />
@@ -109,35 +120,100 @@ export function CMSApp() {
           </Frame>
         </Frame>
 
-        {/* Floating Toolbar */}
-        <FloatingToolbar
-          viewport={viewport}
-          setViewport={setViewport}
+        {/* Viewport Selector - Top Center */}
+        <ViewportSelector viewport={viewport} setViewport={setViewport} />
+
+        {/* Bottom Toolbar */}
+        <BottomToolbar
+          isEditMode={isEditMode}
+          toggleEditMode={() => setEditMode(!isEditMode)}
           isRightPanelOpen={isRightPanelOpen}
           toggleRightPanel={() => setRightPanelOpen(!isRightPanelOpen)}
+          isDrawerOpen={isDrawerOpen}
+          toggleDrawer={() => setDrawerOpen(!isDrawerOpen)}
         />
       </Frame>
 
       {isRightPanelOpen && (
         <CMSRightPanel onClose={() => setRightPanelOpen(false)} />
       )}
+
+      {isDrawerOpen && (
+        <CMSDrawer onClose={() => setDrawerOpen(false)} />
+      )}
     </Frame>
   );
 }
 
-interface FloatingToolbarProps {
+// Viewport Selector - Top Center
+interface ViewportSelectorProps {
   viewport: "desktop" | "tablet" | "mobile";
   setViewport: (v: "desktop" | "tablet" | "mobile") => void;
-  isRightPanelOpen: boolean;
-  toggleRightPanel: () => void;
 }
 
-function FloatingToolbar({
-  viewport,
-  setViewport,
+function ViewportSelector({ viewport, setViewport }: ViewportSelectorProps) {
+  return (
+    <Overlay
+      position="absolute"
+      x="50%"
+      top="var(--space-n16)"
+      zIndex={200}
+      style={{ transform: "translateX(-50%)" }}
+    >
+      <Frame
+        surface="raised"
+        rounded={Radius2.full}
+        layout={Layout.Row.Actions.Default}
+        style={{ border: "1px solid var(--border-color)" }}
+        override={{ p: Space.n6, gap: Space.n2, shadow: "xl", align: "center" }}
+      >
+        <Action
+          icon={Monitor}
+          variant={viewport === "desktop" ? "primary" : "ghost"}
+          size="sm"
+          rounded={Radius2.full}
+          onClick={() => setViewport("desktop")}
+          tooltip="Desktop"
+        />
+        <Action
+          icon={Tablet}
+          variant={viewport === "tablet" ? "primary" : "ghost"}
+          size="sm"
+          rounded={Radius2.full}
+          onClick={() => setViewport("tablet")}
+          tooltip="Tablet"
+        />
+        <Action
+          icon={Smartphone}
+          variant={viewport === "mobile" ? "primary" : "ghost"}
+          size="sm"
+          rounded={Radius2.full}
+          onClick={() => setViewport("mobile")}
+          tooltip="Mobile"
+        />
+      </Frame>
+    </Overlay>
+  );
+}
+
+// Bottom Toolbar
+interface BottomToolbarProps {
+  isEditMode: boolean;
+  toggleEditMode: () => void;
+  isRightPanelOpen: boolean;
+  toggleRightPanel: () => void;
+  isDrawerOpen: boolean;
+  toggleDrawer: () => void;
+}
+
+function BottomToolbar({
+  isEditMode,
+  toggleEditMode,
   isRightPanelOpen,
   toggleRightPanel,
-}: FloatingToolbarProps) {
+  isDrawerOpen,
+  toggleDrawer,
+}: BottomToolbarProps) {
   return (
     <Overlay
       position="absolute"
@@ -148,42 +224,28 @@ function FloatingToolbar({
     >
       <Frame
         surface="raised"
-        override={{
-          p: Space.n6,
-          rounded: "full",
-          gap: Space.n4,
-          shadow: "xl",
-        }}
+        rounded={Radius2.full}
         layout={Layout.Row.Actions.Default}
-        align="center"
         style={{ border: "1px solid var(--border-color)" }}
+        override={{ p: Space.n6, gap: Space.n4, shadow: "xl", align: "center" }}
       >
-        <Frame layout={Layout.Row.Item.Compact} override={{ gap: Space.n2 }}>
-          <Action
-            icon={Monitor}
-            variant={viewport === "desktop" ? "primary" : "ghost"}
-            size="sm"
-            rounded="full"
-            onClick={() => setViewport("desktop")}
-            tooltip="Desktop"
-          />
-          <Action
-            icon={Tablet}
-            variant={viewport === "tablet" ? "primary" : "ghost"}
-            size="sm"
-            rounded="full"
-            onClick={() => setViewport("tablet")}
-            tooltip="Tablet"
-          />
-          <Action
-            icon={Smartphone}
-            variant={viewport === "mobile" ? "primary" : "ghost"}
-            size="sm"
-            rounded="full"
-            onClick={() => setViewport("mobile")}
-            tooltip="Mobile"
-          />
-        </Frame>
+        {/* Edit Mode Toggle - Left */}
+        <Action
+          icon={isEditMode ? Edit : Eye}
+          variant={isEditMode ? "primary" : "ghost"}
+          size="sm"
+          rounded={Radius2.full}
+          onClick={toggleEditMode}
+          tooltip={isEditMode ? "Edit Mode" : "Preview Mode"}
+        />
+
+        <Action
+          icon={Save}
+          variant="ghost"
+          size="sm"
+          rounded={Radius2.full}
+          tooltip="Save"
+        />
 
         <Frame
           style={{
@@ -197,17 +259,32 @@ function FloatingToolbar({
           icon={Play}
           variant="ghost"
           size="sm"
-          rounded="full"
+          rounded={Radius2.full}
           tooltip="Preview"
         />
 
+        <Frame
+          style={{
+            width: "1px",
+            height: "16px",
+            backgroundColor: "var(--border-color)",
+          }}
+        />
+
         <Action
-          icon={PanelRight}
-          variant={isRightPanelOpen ? "primary" : "ghost"}
+          icon={Upload}
+          variant="ghost"
           size="sm"
-          rounded="full"
-          onClick={toggleRightPanel}
-          tooltip="Toggle Properties"
+          rounded={Radius2.full}
+          tooltip="Import"
+        />
+
+        <Action
+          icon={Download}
+          variant="ghost"
+          size="sm"
+          rounded={Radius2.full}
+          tooltip="Export"
         />
 
         <Frame
@@ -220,9 +297,10 @@ function FloatingToolbar({
 
         <Action
           icon={Menu}
-          variant="ghost"
+          variant={isDrawerOpen ? "primary" : "ghost"}
           size="sm"
-          rounded="full"
+          rounded={Radius2.full}
+          onClick={toggleDrawer}
           tooltip="Options"
         />
       </Frame>

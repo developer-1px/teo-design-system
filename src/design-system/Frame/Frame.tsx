@@ -1,6 +1,6 @@
 import type React from "react";
 
-import "./frame.css";
+import "../../style/frame.css";
 
 import type { FrameOverrides, FrameProps } from "./FrameProps.ts";
 import { frameToSettings } from "./frameToSettings.ts";
@@ -15,17 +15,115 @@ export function Frame({
   override,
   title,
   className = "",
-  // style is now a top-level prop.
-  ...props
+
+  // Destructure Prop-Driven Styling to prevent DOM leakage
+  gap,
+  pack,
+  w,
+  h,
+  flex,
+  row,
+  wrap,
+  fill,
+  surface,
+  rounded,
+  clip,
+  border,
+  scroll,
+  shrink,
+  shadow,
+  opacity,
+  ratio,
+
+  // Remaining props are passed to DOM
+  ...domProps
 }: FrameProps) {
   // 1. Resolve Layout
   const layoutSettings = layout ? resolveLayout(layout) : {};
 
   // 2. Merge Overrides (Layout override < Direct override)
   // We extract style specifically to merge it last
+  // Filter out sizing/spacing/visual/layout properties to enforce token usage
+  // margin is blocked - use gap or Divider component instead
+  // opacity is blocked - use Opacity token
+  // borderRadius is blocked - use rounded prop with Radius2 token
+  // boxShadow is blocked - use shadow prop with Shadow token
+  // flexbox is blocked - use row/wrap/align/justify/flex/pack props
+  const {
+    width,
+    height,
+    minWidth,
+    minHeight,
+    maxWidth,
+    maxHeight,
+    gap: _gap,
+    padding,
+    paddingTop,
+    paddingBottom,
+    paddingLeft,
+    paddingRight,
+    paddingBlock,
+    paddingInline,
+    margin,
+    marginTop,
+    marginBottom,
+    marginLeft,
+    marginRight,
+    marginBlock,
+    marginInline,
+    opacity: _opacityLayout,
+    borderRadius,
+    boxShadow,
+    flexDirection,
+    flexWrap,
+    alignItems,
+    justifyContent,
+    flex: _flexLayout,
+    flexShrink,
+    flexGrow,
+    flexBasis,
+    ...safeLayoutStyle
+  } = (layoutSettings.style || {}) as React.CSSProperties;
+
+  const {
+    width: _width2,
+    height: _height2,
+    minWidth: _minWidth2,
+    minHeight: _minHeight2,
+    maxWidth: _maxWidth2,
+    maxHeight: _maxHeight2,
+    gap: _gap2,
+    padding: _padding2,
+    paddingTop: _paddingTop2,
+    paddingBottom: _paddingBottom2,
+    paddingLeft: _paddingLeft2,
+    paddingRight: _paddingRight2,
+    paddingBlock: _paddingBlock2,
+    paddingInline: _paddingInline2,
+    margin: _margin2,
+    marginTop: _marginTop2,
+    marginBottom: _marginBottom2,
+    marginLeft: _marginLeft2,
+    marginRight: _marginRight2,
+    marginBlock: _marginBlock2,
+    marginInline: _marginInline2,
+    opacity: _opacityUser,
+    borderRadius: _borderRadius2,
+    boxShadow: _boxShadow2,
+    flexDirection: _flexDirection2,
+    flexWrap: _flexWrap2,
+    alignItems: _alignItems2,
+    justifyContent: _justifyContent2,
+    flex: _flexUser,
+    flexShrink: _flexShrink2,
+    flexGrow: _flexGrow2,
+    flexBasis: _flexBasis2,
+    ...safeUserStyle
+  } = (style || {}) as React.CSSProperties;
+
   const combinedOverrideStyle = {
-    ...layoutSettings.style,
-    ...style,
+    ...safeLayoutStyle,
+    ...safeUserStyle,
   };
 
   const combinedOverride: FrameOverrides = {
@@ -34,12 +132,44 @@ export function Frame({
   };
 
   // 3. Construct Settings Input (Layout < Props < Override)
+  // We reconstruct the props object for calculation
+  const explicitProps: FrameOverrides = {
+    gap,
+    pack,
+    w,
+    h,
+
+    flex,
+    row,
+    wrap,
+    fill,
+    shrink,
+
+    clip,
+    scroll,
+
+    shadow,
+    opacity,
+    ratio,
+  };
+
+  // Remove undefined keys so they don't overwrite layoutSettings
+  Object.keys(explicitProps).forEach(
+    (key) =>
+      explicitProps[key as keyof FrameOverrides] === undefined &&
+      delete explicitProps[key as keyof FrameOverrides],
+  );
+
   // This flattens strict props and loose overrides into one Loose object for calculation
-  const settingsInput: FrameOverrides = {
+  // surface, rounded, border are top-level only, added separately
+  const settingsInput = {
     ...layoutSettings,
-    ...props,
+    ...explicitProps,
     ...combinedOverride,
-  } as FrameOverrides;
+    ...(surface !== undefined && { surface }),
+    ...(rounded !== undefined && { rounded }),
+    ...(border !== undefined && { border }),
+  };
 
   // 4. Calculate Settings (Classes & CSS Vars)
   const { className: settingsClass, style: settingsStyle } =
@@ -47,30 +177,29 @@ export function Frame({
 
   // 5. Compute Final Style
   // Logic from previous Frame.tsx for specific computed props (grid, size logic)
-  // We need to access props from settingsInput to ensure consistency
-
-  const p = settingsInput; // Alias for brevity
+  const input = settingsInput; // Alias for brevity
 
   const computedStyle: React.CSSProperties = {
     // Grid Areas/Columns (Dynamic)
-    gridTemplateColumns: p.columns,
-    gridTemplateRows: p.rows,
-    gridTemplateAreas: p.areas,
+    gridTemplateColumns: input.columns,
+    gridTemplateRows: input.rows,
+    gridTemplateAreas: input.areas,
 
     // Flex
-    flex: typeof p.flex === "number" ? p.flex : undefined,
+    flex: typeof input.flex === "number" ? input.flex : undefined,
     flexShrink:
-      p.w !== undefined || p.h !== undefined || p.ratio !== undefined
+      input.w !== undefined ||
+      input.h !== undefined ||
+      input.ratio !== undefined
         ? 0
         : undefined,
 
     // Visual
-    opacity: p.opacity as any,
-    aspectRatio: p.ratio,
+    aspectRatio: input.ratio,
 
-    color: p.surface === "primary" ? "var(--primary-fg)" : "inherit",
+    color: input.surface === "primary" ? "var(--primary-fg)" : "inherit",
 
-    ...settingsStyle, // Injected variables & standard props (p, gap, w, h, etc)
+    ...settingsStyle, // Injected variables & standard props (p, gap, w, h, etc, opacity)
     ...combinedOverrideStyle, // User arbitrary style overrides
   };
 
@@ -78,17 +207,8 @@ export function Frame({
     <Component
       className={`frame ${settingsClass} ${className}`}
       style={computedStyle}
-      onClick={props.onClick}
       title={title}
-      // We pass ...props to DOM mostly for event handlers, aria, etc.
-      // But props contains strict styling props too (p, w).
-      // React ignores unknown props on DOM elements if they are not standard attributes.
-      // 'p', 'gap' etc are NOT valid HTML attributes.
-      // However, we should try to filter them out?
-      // Previous Frame didn't filter aggressively, just relied on React or Component being 'div'.
-      // If 'Component' is a styled component or custom, it might receive them.
-      // For now, we preserve behavior passing ...props.
-      {...props}
+      {...domProps}
     >
       {children}
     </Component>

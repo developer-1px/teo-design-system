@@ -21,7 +21,8 @@ import {
   Opacity,
   Size,
   Space,
-} from "../design-system/token/token.const.1tier";
+  Radius2,
+} from "../design-system/token";
 
 export function SlideApp() {
   return (
@@ -43,9 +44,8 @@ export function SlideApp() {
         layout={Layout.Row.Header.Default}
       >
         <Frame
-          override={{ gap: Space.n12 }}
           layout={Layout.Row.Item.Default}
-          align="center"
+          override={{ gap: Space.n12, align: "center" }}
         >
           <Action
             icon={Grid}
@@ -53,9 +53,8 @@ export function SlideApp() {
             style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
           />
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <Text.Menu.Item style={{ fontWeight: 600 }}>
               Untitled Presentation
@@ -69,26 +68,24 @@ export function SlideApp() {
           </Frame>
         </Frame>
         <Frame
-          override={{ gap: Space.n8 }}
           layout={Layout.Row.Actions.Default}
-          align="center"
+          override={{ gap: Space.n8, align: "center" }}
         >
           <Frame
+            rounded={Radius2.md}
+            layout={Layout.Row.Item.Compact}
+            surface="overlay"
             override={{
               gap: Space.n4,
               p: Space.n4,
-              rounded: "round",
               shadow: "sm",
+              align: "center",
             }}
-            layout={Layout.Row.Item.Compact}
-            align="center"
-            surface="overlay"
           >
             <Frame
               style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
-              override={{
-                rounded: "md",
-              }}
+              override={{}}
+              rounded={Radius2.md}
               surface="overlay"
             />
             <Action
@@ -102,8 +99,8 @@ export function SlideApp() {
             iconSize={IconSize.n14}
             label="Present"
             variant="primary"
-            rounded="md"
-            h="28px"
+            rounded={Radius2.md}
+            h={Size.n32}
             py={Space.n0}
             px={Space.n12}
           />
@@ -112,8 +109,8 @@ export function SlideApp() {
             iconSize={IconSize.n14}
             label="Share"
             variant="surface"
-            rounded="md"
-            h="28px"
+            rounded={Radius2.md}
+            h={Size.n32}
             py={Space.n0}
             px={Space.n12}
           />
@@ -122,9 +119,8 @@ export function SlideApp() {
 
       {/* Main Layout Area */}
       <Frame
-        style={{ paddingTop: "var(--space-n48)" }}
         override={{
-          w: Size.n320,
+          pt: Space.n48,
           gap: Space.n16,
         }}
         flex
@@ -137,7 +133,7 @@ export function SlideApp() {
         {/* 3. Central Canvas Area */}
         <Frame
           style={{ position: "relative" }}
-          override={{ rounded: "round" }}
+          rounded={Radius2.md}
           flex
           fill
           clip
@@ -146,15 +142,13 @@ export function SlideApp() {
           <Frame fill pack scroll>
             <Frame
               style={{ width: "80%", maxWidth: "var(--container-n1280)" }}
-              override={{
-                shadow: "lg",
-                rounded: "2xl",
-              }}
+              override={{ shadow: "lg" }}
+              rounded={Radius2["2xl"]}
               surface="base"
               pack
               ratio="16/9"
             >
-              <Frame override={{ gap: Space.n16 }} align="center">
+              <Frame override={{ gap: Space.n16, align: "center" }}>
                 <Text.Prose.Title variant="xl">
                   Minimal Design Kit
                 </Text.Prose.Title>
@@ -164,16 +158,14 @@ export function SlideApp() {
                 >
                   Refined & Polished UI.
                 </Text.Prose.Title>
-                <Frame style={{ height: "var(--size-n4)" }} override={{}} />
+                <Frame override={{ h: Size.n4 }} />
                 <Frame
                   override={{ gap: Space.n12 }}
                   layout={Layout.Row.Actions.Center}
                 >
                   <Frame
-                    style={{ width: "40px", height: "40px" }}
-                    override={{
-                      rounded: "round",
-                    }}
+                    override={{ w: Size.n40, h: Size.n40 }}
+                    rounded={Radius2.md}
                     surface="sunken"
                     pack
                   >
@@ -185,9 +177,8 @@ export function SlideApp() {
                   </Frame>
                   <Frame
                     style={{ width: "40px", height: "40px" }}
-                    override={{
-                      rounded: "round",
-                    }}
+                    override={{}}
+                    rounded={Radius2.md}
                     surface="raised"
                     pack
                   >
@@ -199,9 +190,8 @@ export function SlideApp() {
                   </Frame>
                   <Frame
                     style={{ width: "40px", height: "40px" }}
-                    override={{
-                      rounded: "round",
-                    }}
+                    override={{}}
+                    rounded={Radius2.md}
                     surface="overlay"
                     pack
                   >

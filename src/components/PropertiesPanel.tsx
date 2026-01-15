@@ -23,14 +23,32 @@ import { Icon } from "../design-system/Icon";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
-import { IconSize, Opacity } from "../design-system/token/token.const.1tier";
-import { Space } from "../design-system/token/token.const.1tier.ts";
+import {
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Data ---
 
-const ALIGNMENT_TOOLS = [
+type AlignmentToolItem = {
+  icon: any;
+  label: string;
+  surface?: "selected";
+  rotation?: number;
+};
+type AlignmentToolSeparator = { separator: true };
+type AlignmentTool = AlignmentToolItem | AlignmentToolSeparator;
+
+const isSeparator = (tool: AlignmentTool): tool is AlignmentToolSeparator => {
+  return "separator" in tool && tool.separator === true;
+};
+
+const ALIGNMENT_TOOLS: AlignmentTool[] = [
   { icon: AlignLeft, label: "Left" },
-  { icon: AlignCenter, label: "Center", surface: "selected" as const },
+  { icon: AlignCenter, label: "Center", surface: "selected" },
   { icon: AlignRight, label: "Right" },
   { separator: true },
   { icon: AlignJustify, label: "Justify" },
@@ -48,12 +66,7 @@ const PropertySection = ({
   children: React.ReactNode;
 }) => (
   <Frame override={{ gap: Space.n8 }}>
-    <Frame
-      override={{ py: Space.n0, px: Space.n8 }}
-      layout={Layout.Row.Header.Default}
-      justify="between"
-      align="center"
-    >
+    <Frame override={{ px: Space.n8 }} layout={Layout.Row.Actions.Between}>
       <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
       </Text.Menu.Group>
@@ -112,7 +125,12 @@ export function PropertiesPanel() {
     setTransform((prev) => ({ ...prev, [key]: value }));
 
   return (
-    <Section style={{ width: "260px" }} surface="base" rounded="lg" shadow="sm">
+    <Section
+      w={Size.n256}
+      surface="base"
+      rounded={Radius2.lg}
+      shadow="sm"
+    >
       {/* Tabs */}
       <Frame
         override={{
@@ -155,36 +173,33 @@ export function PropertiesPanel() {
       </Frame>
 
       <Frame
-        override={{ p: Space.n8, gap: Space.n8 }}
-        style={{ minHeight: 0 }}
+        override={{ p: Space.n8, gap: Space.n8, minHeight: Size.n0 }}
         scroll
         flex
         fill
       >
         {/* Alignment */}
         <Frame
-          override={{
-            rounded: "md",
-          }}
+          rounded={Radius2.md}
           style={{
             border: "1px solid var(--border-color)",
             padding: "1px",
             gap: "1px",
           }} // 1px style override
           layout={Layout.Row.Toolbar.Default}
-          justify="between"
           surface="sunken"
+          override={{ justify: "between" }}
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
-            tool.separator ? (
-              <Separator key={i} orientation="vertical" length="12px" />
+            isSeparator(tool) ? (
+              <Separator key={i} orientation="vertical" length={Space.n12} />
             ) : (
               <Action
                 key={i}
                 icon={tool.icon}
                 iconSize={IconSize.n12}
-                surface={(tool as any).surface}
-                rounded="round"
+                surface={tool.surface}
+                rounded={Radius2.md}
                 size="xs"
                 flex
                 iconRotation={tool.rotation}
@@ -197,9 +212,8 @@ export function PropertiesPanel() {
         {/* Transform */}
         <Frame override={{ gap: Space.n8 }}>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <TransformField
               label="X"
@@ -211,12 +225,11 @@ export function PropertiesPanel() {
               value={transform.y}
               onChange={(v) => updateTransform("y", v)}
             />
-            <Frame style={{ width: "24px" }} />
+            <Frame override={{ w: Size.n24 }} />
           </Frame>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <TransformField
               label="W"
@@ -228,7 +241,7 @@ export function PropertiesPanel() {
               value={transform.h}
               onChange={(v) => updateTransform("h", v)}
             />
-            <Frame style={{ width: "24px" }} pack>
+            <Frame override={{ w: Size.n24 }} pack>
               <Action
                 icon={Lock}
                 iconSize={IconSize.n10}
@@ -238,9 +251,8 @@ export function PropertiesPanel() {
             </Frame>
           </Frame>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <TransformField
               label="°"
@@ -252,7 +264,7 @@ export function PropertiesPanel() {
               value={transform.corner}
               onChange={(v) => updateTransform("corner", v)}
             />
-            <Frame style={{ width: "24px" }} />
+            <Frame override={{ w: Size.n24 }} />
           </Frame>
         </Frame>
         <Separator />
@@ -260,9 +272,8 @@ export function PropertiesPanel() {
         {/* Properties */}
         <PropertySection title="LAYER">
           <Frame
-            override={{ gap: Space.n12 }}
             layout={Layout.Row.Item.Default}
-            justify="between"
+            override={{ gap: Space.n12, justify: "between" }}
           >
             <Field
               value="Normal"
@@ -272,7 +283,7 @@ export function PropertiesPanel() {
             <Field
               value="100%"
               icon={<Icon src={Eye} size={IconSize.n10} />}
-              style={{ width: "70px" }}
+              w={Size.n72}
             />
           </Frame>
         </PropertySection>
@@ -292,7 +303,7 @@ export function PropertiesPanel() {
                 rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
                 flex
               />
-              <Field value="42" style={{ width: "50px" }} />
+              <Field value="42" w={Size.n48} />
             </Frame>
             <Frame
               override={{ gap: Space.n8 }}
@@ -302,18 +313,15 @@ export function PropertiesPanel() {
               <Field label="LS" value="0%" flex />
             </Frame>
             <Frame
-              override={{
-                rounded: "md",
-              }}
+              rounded={Radius2.md}
               style={{
                 border: "1px solid var(--border-color)",
                 padding: "1px",
                 gap: "1px",
               }}
               layout={Layout.Row.Toolbar.Compact}
-              justify="between"
-              align="center"
               surface="sunken"
+              override={{ justify: "between" }}
             >
               {[
                 AlignLeft,
@@ -327,7 +335,7 @@ export function PropertiesPanel() {
                   icon={Icon}
                   iconSize={IconSize.n12}
                   surface={i === 0 ? "selected" : undefined}
-                  rounded="round"
+                  rounded={Radius2.md}
                   size="xs"
                   flex
                 />
@@ -341,9 +349,8 @@ export function PropertiesPanel() {
             value="F4F4F5"
             icon={
               <Frame
-                override={{
-                  rounded: "round",
-                }}
+                override={{}}
+                rounded={Radius2.full}
                 style={{
                   width: "10px",
                   height: "10px",
@@ -364,9 +371,8 @@ export function PropertiesPanel() {
               value="000000"
               icon={
                 <Frame
-                  override={{
-                    rounded: "round",
-                  }}
+                  override={{}}
+                  rounded={Radius2.full}
                   style={{
                     width: "10px",
                     height: "10px",
@@ -397,11 +403,10 @@ export function PropertiesPanel() {
               style={{ flexShrink: 0 }}
             />
             <Frame
-              override={{ gap: Space.n8 }}
               layout={Layout.Row.Item.Default}
-              align="center"
+              override={{ gap: Space.n8, align: "center" }}
             >
-              <Field value="1.5" style={{ width: "50px" }} />
+              <Field value="1.5" w={Size.n48} />
               <Field
                 value="Inside"
                 rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
@@ -410,7 +415,7 @@ export function PropertiesPanel() {
               <Action
                 icon={Settings}
                 iconSize={IconSize.n10}
-                rounded="round"
+                rounded={Radius2.md}
                 style={{ height: "24px" }}
               />
             </Frame>

@@ -3,21 +3,48 @@ import type {
   AlignToken,
   CursorToken,
   JustifyToken,
-  RoundedToken,
   ShadowToken,
   SurfaceToken,
 } from "../lib/types.ts";
 import type {
+  HeightToken,
+  MaxHeightToken,
+  MaxWidthToken,
   OpacityToken,
   RadiusToken,
-  SizeToken,
   SpaceToken,
+  WidthToken,
 } from "../token/token.const.1tier.ts";
+import type { Radius2Token } from "../token";
 
 // --- 1. LOOSE OVERRIDES (Token | string | number) ---
 // Used inside 'override={{ ... }}' prop
 export interface FrameOverrides {
   // Layout
+  w?: WidthToken;
+  h?: HeightToken;
+
+  minWidth?: WidthToken;
+  minHeight?: HeightToken;
+  maxWidth?: MaxWidthToken;
+  maxHeight?: MaxHeightToken;
+
+  // Grid
+  grid?: boolean;
+  columns?: string;
+  rows?: string;
+  areas?: string;
+
+  // Flex
+  row?: boolean; // Used internally by Layout presets
+  wrap?: boolean | "wrap" | "nowrap" | "wrap-reverse";
+
+  fill?: boolean;
+  flex?: boolean | number | string;
+  align?: AlignToken;
+  justify?: JustifyToken;
+  pack?: boolean;
+
   p?: SpaceToken;
   px?: SpaceToken;
   py?: SpaceToken;
@@ -27,35 +54,17 @@ export interface FrameOverrides {
   pr?: SpaceToken;
 
   gap?: SpaceToken;
-  pack?: boolean;
 
-  w?: SizeToken;
-  h?: SizeToken;
+  // border (override: individual sides)
+  borderTop?: boolean;
+  borderRight?: boolean;
+  borderBottom?: boolean;
+  borderLeft?: boolean;
 
-  flex?: boolean | number | string;
-  row?: boolean; // Used internally by Layout presets
-  wrap?: "wrap" | "nowrap" | "wrap-reverse";
-  fill?: boolean;
-
-  minWidth?: SizeToken | WidthToken;
-  minHeight?: SizeToken | HeightToken;
-  maxWidth?: SizeToken | MaxWidthToken;
-  maxHeight?: SizeToken | MaxHeightToken;
-
-  // Grid
-  grid?: boolean;
-  columns?: string;
-  rows?: string;
-  areas?: string;
-
-  align?: AlignToken;
-  justify?: JustifyToken;
+  // BorderRadius
+  r?: RadiusToken;
 
   // Surface
-  surface?: SurfaceToken;
-  r?: RadiusToken;
-  rounded?: RoundedToken | (string & {}) | number;
-  // deprecated overflow removed
   clip?: boolean;
 
   cursor?: CursorToken;
@@ -70,67 +79,33 @@ export interface FrameOverrides {
   shadow?: ShadowToken;
   opacity?: OpacityToken;
   ratio?: string;
-  border?: boolean | string;
-  borderTop?: boolean | string;
-  borderRight?: boolean | string;
-  borderBottom?: boolean | string;
-  borderLeft?: boolean | string;
-  borderColor?: string;
 
   className?: string;
 }
 
-import type {
-  HeightToken,
-  MaxHeightToken,
-  MaxWidthToken,
-  WidthToken,
-} from "../lib/types.ts";
-
 // --- 2. STRICT PROPS (Token Only) ---
 // Used as top-level props on <Frame ... />
-export interface FrameStrictProps {
+interface FrameStrictProps {
   // Layout
-  p?: SpaceToken;
-  px?: SpaceToken;
-  py?: SpaceToken;
-  pt?: SpaceToken;
-  pb?: SpaceToken;
-  pl?: SpaceToken;
-  pr?: SpaceToken;
-
   gap?: SpaceToken;
-  pack?: boolean;
 
   w?: WidthToken;
   h?: HeightToken;
 
-  flex?: boolean | number;
-  wrap?: "wrap" | "nowrap" | "wrap-reverse";
+  row?: boolean;
+  wrap?: boolean;
+
   fill?: boolean;
-
-  minWidth?: WidthToken;
-  minHeight?: HeightToken;
-  maxWidth?: MaxWidthToken;
-  maxHeight?: MaxHeightToken;
-
-  // Grid
-  grid?: boolean;
-  columns?: string;
-  rows?: string;
-  areas?: string;
-
-  align?: AlignToken;
-  justify?: JustifyToken;
+  flex?: boolean | number | string;
+  pack?: boolean;
 
   // Surface
   surface?: SurfaceToken;
-  r?: RadiusToken;
-  rounded?: RoundedToken;
-  // deprecated overflow removed
+  rounded?: Radius2Token | boolean;
   clip?: boolean;
 
-  cursor?: CursorToken;
+  // Border
+  border?: boolean;
 
   // Smart Layout
   scroll?: boolean | "x" | "y";
@@ -140,12 +115,6 @@ export interface FrameStrictProps {
   shadow?: ShadowToken;
   opacity?: OpacityToken;
   ratio?: string;
-  border?: boolean | string;
-  borderTop?: boolean | string;
-  borderRight?: boolean | string;
-  borderBottom?: boolean | string;
-  borderLeft?: boolean | string;
-  borderColor?: string;
 }
 
 export interface FrameProps

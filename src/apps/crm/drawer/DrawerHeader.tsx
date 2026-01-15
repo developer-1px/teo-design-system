@@ -2,9 +2,14 @@ import { MoreHorizontal, X } from "lucide-react";
 import { Action } from "../../../design-system/Action";
 import { Frame } from "../../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../../design-system/Icon";
 import { Text } from "../../../design-system/text/Text.tsx";
-import { FontSize, IconSize, Size, Space } from "../../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  Size,
+  type SizeToken,
+  Space,
+} from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 function Avatar({
   initial,
@@ -13,21 +18,20 @@ function Avatar({
 }: {
   initial: string;
   color: string;
-  size?: string;
+  size?: SizeToken;
 }) {
   return (
     <Frame
-      override={{
-        w: size,
-        h: size,
-        rounded: "full",
-      }}
+      rounded={Radius2.full}
       style={{ backgroundColor: color }}
       pack
-      align="center"
-      justify="center"
+      override={{ w: size, h: size, align: "center" }}
     >
-      <Text.Card.Note size={FontSize.n12} weight="bold" style={{ color: "white" }}>
+      <Text.Card.Note
+        size={FontSize.n12}
+        weight="bold"
+        style={{ color: "white" }}
+      >
         {initial}
       </Text.Card.Note>
     </Frame>
@@ -47,20 +51,18 @@ export function DrawerHeader({
 }) {
   return (
     <Frame
+      layout={Layout.Row.Header.Default}
       override={{
         h: Size.n64,
         py: Space.n0,
         px: Space.n24,
+        borderBottom: true,
+        align: "center",
       }}
-      layout={Layout.Row.Header.Default}
-      align="center"
-      justify="between"
-      borderBottom
     >
       <Frame
-        override={{ gap: Space.n12 }}
         layout={Layout.Row.Item.Default}
-        align="center"
+        override={{ gap: Space.n12, align: "center" }}
       >
         <Avatar initial={title[0]} color={avatarColor} size={Size.n32} />
         <Frame>

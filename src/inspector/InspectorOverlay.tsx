@@ -12,6 +12,7 @@ import {
   Size,
   Space,
 } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 import { InspectorPanel } from "./components/InspectorPanel";
 import { useInspectorHotkeys } from "./hooks/useInspectorHotkeys";
 import { useInspectorTarget } from "./hooks/useInspectorTarget";
@@ -41,29 +42,26 @@ export function InspectorOverlay() {
     targetElement,
   );
 
-  const triggerLock = (el: HTMLElement) => {
+  const triggerLock = (_el: HTMLElement) => {
     setIsLocked(true);
 
-    // Create shell: outerHTML without innerHTML
-    const clone = el.cloneNode(true) as HTMLElement;
-    clone.innerHTML = "";
-    const shell = clone.outerHTML;
-    const jsx = generateJSX(targetName || "Component", targetProps);
+    // Copy only location
     const location = componentStack[0]
       ? `${componentStack[0].fileName}:${componentStack[0].lineNumber}`
       : "";
-    const text = `${location ? `${location}\n` : ""}${jsx}\n\n// HTML:\n// ${shell}`;
 
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        setNotification("Shell copied!");
-        setTimeout(() => setNotification(null), 2000);
-      })
-      .catch(() => {
-        setNotification("Copy failed");
-        setTimeout(() => setNotification(null), 2000);
-      });
+    if (location) {
+      navigator.clipboard
+        .writeText(location)
+        .then(() => {
+          setNotification("Location copied!");
+          setTimeout(() => setNotification(null), 2000);
+        })
+        .catch(() => {
+          setNotification("Copy failed");
+          setTimeout(() => setNotification(null), 2000);
+        });
+    }
   };
 
   // Click to lock (if not locked)
@@ -83,7 +81,7 @@ export function InspectorOverlay() {
   let initialY = 20;
 
   if (targetRect) {
-    const PANEL_WIDTH = 260; // size-65
+    const PANEL_WIDTH = 220;
     const GAP = 8;
     const spaceRight = window.innerWidth - targetRect.right;
 
@@ -120,7 +118,7 @@ export function InspectorOverlay() {
           pointerEvents: isLocked ? "none" : "auto", // Allow clicking through when locked (except panel)
         }}
         onClick={handleClick}
-        onKeyDown={() => { }}
+        onKeyDown={() => {}}
       >
         {/* Top Status Badge - Compact */}
         <Overlay
@@ -133,12 +131,12 @@ export function InspectorOverlay() {
         >
           <Frame
             override={{
-              rounded: "full",
               py: Space.n2,
               px: Space.n8,
               gap: Space.n6,
               shadow: "lg",
             }}
+            rounded={Radius2.full}
             surface="primary"
             layout={Layout.Row.Meta.Default}
           >
@@ -201,11 +199,11 @@ export function InspectorOverlay() {
                 override={{
                   py: Space.n0,
                   px: Space.n6,
-                  rounded: "sm",
                   h: Size.n16,
                   gap: Space.n4,
                   shadow: "sm",
                 }}
+                rounded={Radius2.sm}
                 style={{
                   backgroundColor: "var(--link-color)",
                   borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
@@ -267,12 +265,12 @@ export function InspectorOverlay() {
         >
           <Frame
             override={{
-              rounded: "md",
               py: Space.n4,
               px: Space.n12,
               gap: Space.n8,
               shadow: "lg",
             }}
+            rounded={Radius2.md}
             surface="primary"
             layout={Layout.Row.Meta.Default}
           >

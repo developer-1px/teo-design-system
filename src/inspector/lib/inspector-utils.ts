@@ -1,6 +1,6 @@
 import React from "react";
 
-export function formatPropValue(value: any): string {
+function formatPropValue(value: any): string {
   if (typeof value === "string") return `"${value}"`;
   if (typeof value === "number") return `{${value}}`;
   if (value === true) return ""; // implicit true

@@ -7,7 +7,7 @@ interface TableEmptyProps {
 
 export function TableEmpty({ message = "No data available" }: TableEmptyProps) {
   return (
-    <Frame fill pack align="center" justify="center">
+    <Frame fill pack override={{ align: "center", justify: "center" }}>
       <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
         {message}
       </Text.Card.Note>

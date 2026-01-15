@@ -3,15 +3,20 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../design-system/text/Text";
 import {
   ContainerSize,
+  FontSize,
   FontSizeScale,
+  Opacity,
   OpacityScale,
+  Radius,
   RadiusScale,
   Size,
   SizeScale,
   Space,
+  type SpaceToken,
   SpaceScale,
   ZIndexScale,
 } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Components ---
 
@@ -27,18 +32,17 @@ function ScaleVisualizer({
   return (
     <Frame
       layout={Layout.Row.Item.Default}
-      override={{ w: Size.full, gap: Space.n24 }}
-      align="center"
+      override={{ w: Size.full, gap: Space.n24, align: "center" }}
     >
       <Frame override={{ w: Size.n64 }}>
         <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
           {label}
         </Text.Card.Code>
       </Frame>
-      <Frame flex={1} minWidth={Size.n0}>
+      <Frame flex={1} override={{ minWidth: Size.n0 }}>
         {children}
       </Frame>
-      <Frame override={{ w: Size.n64 }} justify="end">
+      <Frame override={{ w: Size.n64, justify: "end" }}>
         <Text.Card.Code style={{ opacity: 0.3 }}>{value}</Text.Card.Code>
       </Frame>
     </Frame>
@@ -47,19 +51,18 @@ function ScaleVisualizer({
 
 function SectionHeader({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame
-      override={{ gap: Space.n8, w: Size.full, maxWidth: ContainerSize.n800 }}
-      style={{ margin: "0 auto" }}
-    >
-      <Text.Prose.Title variant="md">{title}</Text.Prose.Title>
-      <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
-        {desc}
-      </Text.Prose.Body>
+    <Frame pack>
       <Frame
-        override={{ w: Size.full, h: "1px" as any }}
-        style={{ marginBlock: "var(--space-n16)" }}
-        surface="overlay"
-      />
+        override={{ gap: Space.n8, w: Size.full, maxWidth: ContainerSize.n800 }}
+      >
+        <Text.Prose.Title variant="md">{title}</Text.Prose.Title>
+        <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
+          {desc}
+        </Text.Prose.Body>
+        <Frame override={{ h: Size.n16 }} />
+        <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="overlay" />
+        <Frame override={{ h: Size.n16 }} />
+      </Frame>
     </Frame>
   );
 }
@@ -69,14 +72,13 @@ function TextColumn({
   gap = Space.n32,
 }: {
   children: React.ReactNode;
-  gap?: any;
+  gap?: SpaceToken;
 }) {
   return (
-    <Frame
-      override={{ w: Size.full, maxWidth: ContainerSize.n800, gap: gap as any }}
-      style={{ margin: "0 auto" }}
-    >
-      {children}
+    <Frame pack>
+      <Frame override={{ w: Size.full, maxWidth: ContainerSize.n800, gap }}>
+        {children}
+      </Frame>
     </Frame>
   );
 }
@@ -102,8 +104,7 @@ function ScrollContainer({
     >
       <Frame
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n24 }}
-        minWidth={Size.max}
+        override={{ gap: Space.n24, minWidth: Size.max }}
         {...props}
       >
         {children}
@@ -114,7 +115,7 @@ function ScrollContainer({
 
 export function TokensApp() {
   return (
-    <Frame fill surface="base" scroll={"y"} align="center">
+    <Frame fill surface="base" scroll={"y"} override={{ align: "center" }}>
       <Frame
         override={{ w: Size.full, maxWidth: ContainerSize.n1024, p: Space.n0 }}
         layout={Layout.Row.AppContainer.Default}
@@ -125,8 +126,8 @@ export function TokensApp() {
             py: Space.n40,
             px: Space.n24,
             w: Size.full,
+            minWidth: Size.n0,
           }}
-          minWidth={Size.n0}
         >
           {/* Header & Philosophy - Centered Prose */}
           <TextColumn gap={Space.n32}>
@@ -150,7 +151,8 @@ export function TokensApp() {
               <Frame
                 flex={1}
                 surface="sunken"
-                override={{ p: Space.n32, rounded: "2xl", gap: Space.n12 }}
+                override={{ p: Space.n32, gap: Space.n12 }}
+                rounded={Radius2["2xl"]}
               >
                 <Text.Card.Title>The Whitelist Concept</Text.Card.Title>
                 <Text.Card.Desc>
@@ -162,7 +164,8 @@ export function TokensApp() {
               <Frame
                 flex={1}
                 surface="sunken"
-                override={{ p: Space.n32, rounded: "2xl", gap: Space.n12 }}
+                override={{ p: Space.n32, gap: Space.n12 }}
+                rounded={Radius2["2xl"]}
               >
                 <Text.Card.Title>The Meaning of 'n'</Text.Card.Title>
                 <Text.Card.Desc>
@@ -194,7 +197,8 @@ export function TokensApp() {
                         width: `var(--space-n${val})`,
                         transition: "width 0.3s ease",
                       }}
-                      override={{ h: Size.n24, rounded: "sm" }}
+                      override={{ h: Size.n24 }}
+                      rounded={Radius2.sm}
                     />
                   </ScaleVisualizer>
                 ))}
@@ -203,7 +207,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 2. Size Scale - Horizontal Scroll (Breakout) */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader
               title="Size"
               desc="Component widths and heights. Defines density."
@@ -221,9 +225,8 @@ export function TokensApp() {
                     minWidth: `var(--size-n${val})`, // Ensure it doesn't shrink
                     minHeight: `var(--size-n${val})`,
                   }}
-                  override={{ rounded: "xl" }}
-                  align="center"
-                  justify="center"
+                  rounded={Radius2.xl}
+                  override={{ align: "center", justify: "center" }}
                 >
                   <Text.Card.Code
                     style={{ fontSize: "var(--font-size-n10)", opacity: 0.5 }}
@@ -236,16 +239,20 @@ export function TokensApp() {
           </Frame>
 
           {/* 3. Radius Scale - Horizontal Scroll */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Radius" desc="Softness of shapes." />
             <ScrollContainer>
               {RadiusScale.map((val) => (
                 <Frame
                   key={val}
-                  r={`radius.n${val}` as any}
                   surface="raised"
                   layout={Layout.Center.Default}
-                  override={{ w: Size.n96, h: Size.n96, minWidth: Size.n96 }}
+                  override={{
+                    w: Size.n96,
+                    h: Size.n96,
+                    minWidth: Size.n96,
+                    r: Radius[`n${val}` as keyof typeof Radius],
+                  }}
                 >
                   <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>
@@ -258,15 +265,14 @@ export function TokensApp() {
             <SectionHeader title="Z-Index" desc="Elevation depth & Stacking." />
             <TextColumn>
               <Frame
+                rounded={Radius2["3xl"]}
+                surface="sunken"
                 override={{
                   h: Size.n256,
                   w: Size.full,
                   p: Space.n48,
-                  rounded: "3xl",
+                  align: "center",
                 }}
-                surface="sunken"
-                align="center"
-                justify="center"
               >
                 <Frame
                   style={{
@@ -288,12 +294,8 @@ export function TokensApp() {
                         border:
                           "var(--border-width-n1) solid var(--border-color)",
                       }}
-                      override={{
-                        w: Size.n160,
-                        h: Size.n128,
-                        rounded: "xl",
-                        p: Space.n16,
-                      }}
+                      override={{ w: Size.n160, h: Size.n128, p: Space.n16 }}
+                      rounded={Radius2.xl}
                     >
                       <Text.Card.Title>n{val}</Text.Card.Title>
                     </Frame>
@@ -304,23 +306,19 @@ export function TokensApp() {
           </Frame>
 
           {/* 5. Opacity Scale - Horizontal Scroll */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
               {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
-                <Frame key={val} align="center" override={{ gap: Space.n8 }}>
+                <Frame key={val} override={{ gap: Space.n8, align: "center" }}>
                   <Frame
                     surface="base"
-                    opacity={`opacity.n${val}` as any}
+                    opacity={Opacity[`n${val}` as keyof typeof Opacity]}
                     style={{
                       backgroundColor: "black",
                     }}
-                    override={{
-                      w: Size.n64,
-                      h: Size.n64,
-                      rounded: "lg",
-                      minWidth: Size.n64,
-                    }}
+                    override={{ w: Size.n64, h: Size.n64, minWidth: Size.n64 }}
+                    rounded={Radius2.lg}
                   />
                   <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>
@@ -329,7 +327,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 6. Font Size Scale - Prose Width */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Font Size" desc="Typography scale." />
             <TextColumn>
               <Frame override={{ gap: Space.n16, w: Size.full }}>
@@ -337,16 +335,16 @@ export function TokensApp() {
                   <Frame
                     key={val}
                     layout={Layout.Row.Item.Default}
-                    align="baseline"
+                    override={{ align: "baseline" }}
                   >
                     <Frame override={{ w: Size.n64 }}>
                       <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
                         n{val}
                       </Text.Card.Code>
                     </Frame>
-                    <Frame flex={1} minWidth={Size.n0}>
+                    <Frame flex={1} override={{ minWidth: Size.n0 }}>
                       <Text
-                        size={`font-size.n${val}` as any}
+                        size={FontSize[`n${val}` as keyof typeof FontSize]}
                         style={{ color: "var(--text-primary)" }}
                       >
                         The quick brown fox.

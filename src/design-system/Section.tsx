@@ -1,8 +1,9 @@
 import { Frame } from "./Frame/Frame.tsx";
 import { Layout } from "./Frame/Layout/Layout.ts";
-import type { RoundedToken, SurfaceToken } from "./lib/types.ts";
+import type { SurfaceToken } from "./lib/types.ts";
 import { Text } from "./text/Text.tsx";
-import { Space } from "./token/token.const.1tier";
+import { Size, Space } from "./token/token.const.1tier";
+import type { Radius2Token } from "./token/token.const.2tier";
 
 interface SectionProps {
   children?: React.ReactNode;
@@ -14,7 +15,7 @@ interface SectionProps {
   border?: boolean | "top" | "bottom" | "left" | "right";
   w?: string | number;
   h?: string | number;
-  rounded?: RoundedToken;
+  rounded?: Radius2Token;
   surface?: SurfaceToken;
   shadow?: "sm" | "md" | "lg";
   flex?: boolean | number;
@@ -42,31 +43,11 @@ export function Section({
     computedBorder[key] = "1px solid var(--border-color)";
   }
 
-  const resolveSizingProp = (val: string | number | undefined) => {
-    if (
-      typeof val === "string" &&
-      (val.startsWith("size.") || val.startsWith("container."))
-    ) {
-      return val as any;
-    }
-    return undefined;
-  };
-  const resolveSizingStyle = (val: string | number | undefined) => {
-    if (
-      typeof val === "string" &&
-      (val.startsWith("size.") || val.startsWith("container."))
-    ) {
-      return undefined;
-    }
-    if (typeof val === "number") return `${val}px`;
-    return val;
-  };
-
   return (
     <Frame
       style={{
-        width: resolveSizingStyle(w),
-        height: resolveSizingStyle(h),
+        width: w,
+        height: h,
         ...computedBorder,
         position: "relative",
         display: "flex",
@@ -76,12 +57,10 @@ export function Section({
       clip
       override={{
         p: Space.n0,
-        w: resolveSizingProp(w),
-        h: resolveSizingProp(h),
         flex,
-        rounded,
         shadow,
       }}
+      rounded={rounded}
       as="section"
       surface="base"
       fill={fill}
@@ -93,12 +72,8 @@ export function Section({
             borderBottom: "1px solid var(--border-color)",
             flexShrink: 0,
           }}
-          override={{
-            gap: Space.n8,
-            p: Space.n8,
-          }}
           layout={Layout.Row.Item.Tight}
-          align="center"
+          override={{ gap: Space.n8, p: Space.n8, align: "center" }}
         >
           <Text.Card.Note
             style={{
@@ -109,10 +84,9 @@ export function Section({
           >
             {title}
           </Text.Card.Note>
-          )
         </Frame>
       )}
-      <Frame style={{ minHeight: 0 }} scroll override={{}} fill flex>
+      <Frame override={{ minHeight: Size.n0 }} scroll fill flex>
         {children}
       </Frame>
     </Frame>

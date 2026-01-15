@@ -1,9 +1,48 @@
 /**
- * TMDK 1-Tier Numeric Tokens (scale-enforced)
- * - Enforce allowed scales via `type XScale = typeof XScale[number]`
- * - Enforce value format via template literals (e.g. `opacity.n${OpacityScale}`)
- * - Keep string token-key registry style (resolver-friendly)
+ * TMDK 1-Tier Numeric Tokens (Branded Type - Enum Enforced)
+ *
+ * - Branded Type으로 Enum 강제: AI가 직접 숫자 입력 불가
+ * - Dead code 추적 가능: TypeScript unused exports로 감지
+ * - Zero runtime overhead: 타입만 추가, 런타임 코드 동일
+ *
+ * @example
+ * ```typescript
+ * px(Space.n8);   // ✅ OK
+ * px(8);          // ❌ Error: number is not SpaceToken
+ * ```
+ *
+ * @see src/design-system/token/brand.ts
+ * @see docs/token-enum-enforcement-strategies.md
  */
+
+import type {
+  BorderWidthToken,
+  ContainerSizeToken,
+  ElevationToken,
+  FontSizeToken,
+  IconSizeToken,
+  LineHeightToken,
+  OpacityToken,
+  RadiusToken,
+  SizeToken,
+  SpaceToken,
+  ZIndexToken,
+} from "./lib/brand.ts";
+
+// Re-export branded types for consumer convenience
+export type {
+  BorderWidthToken,
+  ContainerSizeToken,
+  ElevationToken,
+  FontSizeToken,
+  IconSizeToken,
+  LineHeightToken,
+  OpacityToken,
+  RadiusToken,
+  SizeToken,
+  SpaceToken,
+  ZIndexToken,
+} from "./lib/brand.ts";
 
 // ---------------------------------
 // Helpers
@@ -22,40 +61,38 @@ export type SpaceScale = ScaleOf<typeof SpaceScale>;
 export type SpaceKey = KeyOf<typeof SpaceScale>;
 
 export const Space = {
-  n0: "space.n0",
-  n2: "space.n2",
-  n4: "space.n4",
-  n6: "space.n6",
-  n8: "space.n8",
-  n10: "space.n10",
-  n12: "space.n12",
-  n14: "space.n14",
-  n16: "space.n16",
-  n18: "space.n18",
-  n20: "space.n20",
-  n22: "space.n22",
-  n24: "space.n24",
-  n26: "space.n26",
-  n28: "space.n28",
-  n30: "space.n30",
-  n32: "space.n32",
-  n36: "space.n36",
-  n40: "space.n40",
-  n44: "space.n44",
-  n48: "space.n48",
-  n56: "space.n56",
-  n64: "space.n64",
-  n72: "space.n72",
-  n80: "space.n80",
-  n88: "space.n88",
-  n96: "space.n96",
-  n112: "space.n112",
-  n128: "space.n128",
-  n144: "space.n144",
-  n160: "space.n160",
-} as const satisfies Record<SpaceKey, `space.n${SpaceScale}`>;
-
-export type SpaceToken = (typeof Space)[keyof typeof Space];
+  n0: "var(--space-n0)" as SpaceToken,
+  n2: "var(--space-n2)" as SpaceToken,
+  n4: "var(--space-n4)" as SpaceToken,
+  n6: "var(--space-n6)" as SpaceToken,
+  n8: "var(--space-n8)" as SpaceToken,
+  n10: "var(--space-n10)" as SpaceToken,
+  n12: "var(--space-n12)" as SpaceToken,
+  n14: "var(--space-n14)" as SpaceToken,
+  n16: "var(--space-n16)" as SpaceToken,
+  n18: "var(--space-n18)" as SpaceToken,
+  n20: "var(--space-n20)" as SpaceToken,
+  n22: "var(--space-n22)" as SpaceToken,
+  n24: "var(--space-n24)" as SpaceToken,
+  n26: "var(--space-n26)" as SpaceToken,
+  n28: "var(--space-n28)" as SpaceToken,
+  n30: "var(--space-n30)" as SpaceToken,
+  n32: "var(--space-n32)" as SpaceToken,
+  n36: "var(--space-n36)" as SpaceToken,
+  n40: "var(--space-n40)" as SpaceToken,
+  n44: "var(--space-n44)" as SpaceToken,
+  n48: "var(--space-n48)" as SpaceToken,
+  n56: "var(--space-n56)" as SpaceToken,
+  n64: "var(--space-n64)" as SpaceToken,
+  n72: "var(--space-n72)" as SpaceToken,
+  n80: "var(--space-n80)" as SpaceToken,
+  n88: "var(--space-n88)" as SpaceToken,
+  n96: "var(--space-n96)" as SpaceToken,
+  n112: "var(--space-n112)" as SpaceToken,
+  n128: "var(--space-n128)" as SpaceToken,
+  n144: "var(--space-n144)" as SpaceToken,
+  n160: "var(--space-n160)" as SpaceToken,
+} as const satisfies Record<SpaceKey, SpaceToken>;
 
 // ---------------------------------
 // Icon Size
@@ -95,37 +132,35 @@ export type IconSizeScale = ScaleOf<typeof IconSizeScale>;
 export type IconSizeKey = KeyOf<typeof IconSizeScale>;
 
 export const IconSize = {
-  n10: "icon-size.n10",
-  n12: "icon-size.n12",
-  n14: "icon-size.n14",
-  n16: "icon-size.n16",
-  n18: "icon-size.n18",
-  n20: "icon-size.n20",
-  n22: "icon-size.n22",
-  n24: "icon-size.n24",
-  n28: "icon-size.n28",
-  n32: "icon-size.n32",
-  n36: "icon-size.n36",
-  n40: "icon-size.n40",
-  n44: "icon-size.n44",
-  n48: "icon-size.n48",
-  n56: "icon-size.n56",
-  n64: "icon-size.n64",
-  n72: "icon-size.n72",
-  n80: "icon-size.n80",
-  n88: "icon-size.n88",
-  n96: "icon-size.n96",
-  n112: "icon-size.n112",
-  n128: "icon-size.n128",
-  n144: "icon-size.n144",
-  n160: "icon-size.n160",
-  n192: "icon-size.n192",
-  n256: "icon-size.n256",
-  n384: "icon-size.n384",
-  n512: "icon-size.n512",
-} as const satisfies Record<IconSizeKey, `icon-size.n${IconSizeScale}`>;
-
-export type IconSizeToken = (typeof IconSize)[keyof typeof IconSize];
+  n10: "var(--icon-size-n10)" as IconSizeToken,
+  n12: "var(--icon-size-n12)" as IconSizeToken,
+  n14: "var(--icon-size-n14)" as IconSizeToken,
+  n16: "var(--icon-size-n16)" as IconSizeToken,
+  n18: "var(--icon-size-n18)" as IconSizeToken,
+  n20: "var(--icon-size-n20)" as IconSizeToken,
+  n22: "var(--icon-size-n22)" as IconSizeToken,
+  n24: "var(--icon-size-n24)" as IconSizeToken,
+  n28: "var(--icon-size-n28)" as IconSizeToken,
+  n32: "var(--icon-size-n32)" as IconSizeToken,
+  n36: "var(--icon-size-n36)" as IconSizeToken,
+  n40: "var(--icon-size-n40)" as IconSizeToken,
+  n44: "var(--icon-size-n44)" as IconSizeToken,
+  n48: "var(--icon-size-n48)" as IconSizeToken,
+  n56: "var(--icon-size-n56)" as IconSizeToken,
+  n64: "var(--icon-size-n64)" as IconSizeToken,
+  n72: "var(--icon-size-n72)" as IconSizeToken,
+  n80: "var(--icon-size-n80)" as IconSizeToken,
+  n88: "var(--icon-size-n88)" as IconSizeToken,
+  n96: "var(--icon-size-n96)" as IconSizeToken,
+  n112: "var(--icon-size-n112)" as IconSizeToken,
+  n128: "var(--icon-size-n128)" as IconSizeToken,
+  n144: "var(--icon-size-n144)" as IconSizeToken,
+  n160: "var(--icon-size-n160)" as IconSizeToken,
+  n192: "var(--icon-size-n192)" as IconSizeToken,
+  n256: "var(--icon-size-n256)" as IconSizeToken,
+  n384: "var(--icon-size-n384)" as IconSizeToken,
+  n512: "var(--icon-size-n512)" as IconSizeToken,
+} as const satisfies Record<IconSizeKey, IconSizeToken>;
 
 // ---------------------------------
 // Size (container / layout)
@@ -152,56 +187,54 @@ export const SizeKeywords = [
 export type SizeKeyword = (typeof SizeKeywords)[number];
 
 export type SizeKey = SizeNumericKey | SizeKeyword;
-export type SizeValue = `size.n${SizeScale}` | `size.${SizeKeyword}`;
 
 export const Size = {
-  n0: "size.n0",
-  n4: "size.n4",
-  n8: "size.n8",
-  n12: "size.n12",
-  n16: "size.n16",
-  n20: "size.n20",
-  n24: "size.n24",
-  n32: "size.n32",
-  n36: "size.n36",
-  n40: "size.n40",
-  n44: "size.n44",
-  n48: "size.n48",
-  n56: "size.n56",
-  n64: "size.n64",
-  n72: "size.n72",
-  n80: "size.n80",
-  n88: "size.n88",
-  n96: "size.n96",
-  n112: "size.n112",
-  n128: "size.n128",
-  n144: "size.n144",
-  n160: "size.n160",
-  n176: "size.n176",
-  n192: "size.n192",
-  n208: "size.n208",
-  n224: "size.n224",
-  n240: "size.n240",
-  n256: "size.n256",
-  n288: "size.n288",
-  n320: "size.n320",
-  n384: "size.n384",
-  n448: "size.n448",
-  n512: "size.n512",
-  n576: "size.n576",
-  n640: "size.n640",
-  n704: "size.n704",
-  n768: "size.n768",
+  n0: "var(--size-n0)" as SizeToken,
+  n4: "var(--size-n4)" as SizeToken,
+  n8: "var(--size-n8)" as SizeToken,
+  n12: "var(--size-n12)" as SizeToken,
+  n16: "var(--size-n16)" as SizeToken,
+  n20: "var(--size-n20)" as SizeToken,
+  n24: "var(--size-n24)" as SizeToken,
+  n32: "var(--size-n32)" as SizeToken,
+  n36: "var(--size-n36)" as SizeToken,
+  n40: "var(--size-n40)" as SizeToken,
+  n44: "var(--size-n44)" as SizeToken,
+  n48: "var(--size-n48)" as SizeToken,
+  n56: "var(--size-n56)" as SizeToken,
+  n64: "var(--size-n64)" as SizeToken,
+  n72: "var(--size-n72)" as SizeToken,
+  n80: "var(--size-n80)" as SizeToken,
+  n88: "var(--size-n88)" as SizeToken,
+  n96: "var(--size-n96)" as SizeToken,
+  n112: "var(--size-n112)" as SizeToken,
+  n128: "var(--size-n128)" as SizeToken,
+  n144: "var(--size-n144)" as SizeToken,
+  n160: "var(--size-n160)" as SizeToken,
+  n176: "var(--size-n176)" as SizeToken,
+  n192: "var(--size-n192)" as SizeToken,
+  n208: "var(--size-n208)" as SizeToken,
+  n224: "var(--size-n224)" as SizeToken,
+  n240: "var(--size-n240)" as SizeToken,
+  n256: "var(--size-n256)" as SizeToken,
+  n288: "var(--size-n288)" as SizeToken,
+  n320: "var(--size-n320)" as SizeToken,
+  n384: "var(--size-n384)" as SizeToken,
+  n448: "var(--size-n448)" as SizeToken,
+  n512: "var(--size-n512)" as SizeToken,
+  n576: "var(--size-n576)" as SizeToken,
+  n640: "var(--size-n640)" as SizeToken,
+  n704: "var(--size-n704)" as SizeToken,
+  n768: "var(--size-n768)" as SizeToken,
 
-  full: "size.full",
-  screen: "size.screen",
-  min: "size.min",
-  max: "size.max",
-  fit: "size.fit",
-  auto: "size.auto",
-} as const satisfies Record<SizeKey, SizeValue>;
-
-export type SizeToken = (typeof Size)[keyof typeof Size];
+  // Keywords (CSS values remain as-is)
+  full: "100%" as SizeToken,
+  screen: "100vh" as SizeToken,
+  min: "min-content" as SizeToken,
+  max: "max-content" as SizeToken,
+  fit: "fit-content" as SizeToken,
+  auto: "auto" as SizeToken,
+} as const satisfies Record<SizeKey, SizeToken>;
 
 // ---------------------------------
 // Container (max widths)
@@ -213,87 +246,52 @@ export type ContainerSizeScale = ScaleOf<typeof ContainerSizeScale>;
 export type ContainerSizeKey = KeyOf<typeof ContainerSizeScale>;
 
 export const ContainerSize = {
-  n0: "container.n0",
-  n320: "container.n320",
-  n480: "container.n480",
-  n640: "container.n640",
-  n768: "container.n768",
-  n800: "container.n800",
-  n1024: "container.n1024",
-  n1280: "container.n1280",
-  n1440: "container.n1440",
-  n1536: "container.n1536",
-  n1600: "container.n1600",
-} as const satisfies Record<
-  ContainerSizeKey,
-  `container.n${ContainerSizeScale}`
->;
-
-export type ContainerToken = (typeof ContainerSize)[keyof typeof ContainerSize];
+  n0: "var(--container-size-n0)" as ContainerSizeToken,
+  n320: "var(--container-size-n320)" as ContainerSizeToken,
+  n480: "var(--container-size-n480)" as ContainerSizeToken,
+  n640: "var(--container-size-n640)" as ContainerSizeToken,
+  n768: "var(--container-size-n768)" as ContainerSizeToken,
+  n800: "var(--container-size-n800)" as ContainerSizeToken,
+  n1024: "var(--container-size-n1024)" as ContainerSizeToken,
+  n1280: "var(--container-size-n1280)" as ContainerSizeToken,
+  n1440: "var(--container-size-n1440)" as ContainerSizeToken,
+  n1536: "var(--container-size-n1536)" as ContainerSizeToken,
+  n1600: "var(--container-size-n1600)" as ContainerSizeToken,
+} as const satisfies Record<ContainerSizeKey, ContainerSizeToken>;
 
 // ---------------------------------
 // Sizing unions (safe)
 // ---------------------------------
-export type LengthToken = SizeToken; // Removed SpaceToken to enforce strict absolute sizing
-export type MaxWidthToken = ContainerToken;
-export type MaxHeightToken = ContainerToken;
-export type WidthToken = SizeToken | ContainerToken;
-export type HeightToken = SizeToken | ContainerToken;
-export type SizingToken = WidthToken | MaxWidthToken | MaxHeightToken;
+export type MaxWidthToken = ContainerSizeToken;
+export type MaxHeightToken = ContainerSizeToken;
+export type WidthToken = SizeToken | ContainerSizeToken;
+export type HeightToken = SizeToken | ContainerSizeToken;
 
 // ---------------------------------
-// Radius
+// Radius (1-Tier: Numeric Only)
 // ---------------------------------
 export const RadiusScale = [
-  0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32,
+  0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 9999,
 ] as const;
 export type RadiusScale = ScaleOf<typeof RadiusScale>;
-export type RadiusNumericKey = KeyOf<typeof RadiusScale>;
-
-export const RadiusAliases = [
-  "none",
-  "sm",
-  "md",
-  "lg",
-  "xl",
-  "2xl",
-  "3xl",
-  "soft",
-  "full",
-] as const;
-export type RadiusAliasKey = (typeof RadiusAliases)[number];
-
-export type RadiusKey = RadiusNumericKey | RadiusAliasKey;
-export type RadiusValue = `radius.n${RadiusScale}`;
+export type RadiusKey = KeyOf<typeof RadiusScale>;
 
 export const Radius = {
-  n0: "radius.n0",
-  n2: "radius.n2",
-  n4: "radius.n4",
-  n6: "radius.n6",
-  n8: "radius.n8",
-  n10: "radius.n10",
-  n12: "radius.n12",
-  n14: "radius.n14",
-  n16: "radius.n16",
-  n20: "radius.n20",
-  n24: "radius.n24",
-  n28: "radius.n28",
-  n32: "radius.n32",
-
-  // aliases (compat)
-  none: "radius.n0",
-  sm: "radius.n4",
-  md: "radius.n6",
-  lg: "radius.n12",
-  xl: "radius.n16",
-  "2xl": "radius.n20",
-  "3xl": "radius.n24",
-  soft: "radius.n8",
-  full: "radius.n32",
-} as const satisfies Record<RadiusKey, RadiusValue>;
-
-export type RadiusToken = (typeof Radius)[keyof typeof Radius];
+  n0: "var(--radius-n0)" as RadiusToken,
+  n2: "var(--radius-n2)" as RadiusToken,
+  n4: "var(--radius-n4)" as RadiusToken,
+  n6: "var(--radius-n6)" as RadiusToken,
+  n8: "var(--radius-n8)" as RadiusToken,
+  n10: "var(--radius-n10)" as RadiusToken,
+  n12: "var(--radius-n12)" as RadiusToken,
+  n14: "var(--radius-n14)" as RadiusToken,
+  n16: "var(--radius-n16)" as RadiusToken,
+  n20: "var(--radius-n20)" as RadiusToken,
+  n24: "var(--radius-n24)" as RadiusToken,
+  n28: "var(--radius-n28)" as RadiusToken,
+  n32: "var(--radius-n32)" as RadiusToken,
+  n9999: "var(--radius-n9999)" as RadiusToken,
+} as const satisfies Record<RadiusKey, RadiusToken>;
 
 // ---------------------------------
 // BorderWidth
@@ -303,18 +301,13 @@ export type BorderWidthScale = ScaleOf<typeof BorderWidthScale>;
 export type BorderWidthKey = KeyOf<typeof BorderWidthScale>;
 
 export const BorderWidth = {
-  n0: "border-width.n0",
-  n1: "border-width.n1",
-  n2: "border-width.n2",
-  n3: "border-width.n3",
-  n4: "border-width.n4",
-  n6: "border-width.n6",
-} as const satisfies Record<
-  BorderWidthKey,
-  `border-width.n${BorderWidthScale}`
->;
-
-export type BorderWidthToken = (typeof BorderWidth)[keyof typeof BorderWidth];
+  n0: "var(--border-width-n0)" as BorderWidthToken,
+  n1: "var(--border-width-n1)" as BorderWidthToken,
+  n2: "var(--border-width-n2)" as BorderWidthToken,
+  n3: "var(--border-width-n3)" as BorderWidthToken,
+  n4: "var(--border-width-n4)" as BorderWidthToken,
+  n6: "var(--border-width-n6)" as BorderWidthToken,
+} as const satisfies Record<BorderWidthKey, BorderWidthToken>;
 
 // ---------------------------------
 // FontSize
@@ -327,34 +320,32 @@ export type FontSizeScale = ScaleOf<typeof FontSizeScale>;
 export type FontSizeKey = KeyOf<typeof FontSizeScale>;
 
 export const FontSize = {
-  n9: "font-size.n9",
-  n10: "font-size.n10",
-  n11: "font-size.n11",
-  n12: "font-size.n12",
-  n13: "font-size.n13",
-  n14: "font-size.n14",
-  n15: "font-size.n15",
-  n16: "font-size.n16",
-  n18: "font-size.n18",
-  n20: "font-size.n20",
-  n22: "font-size.n22",
-  n24: "font-size.n24",
-  n26: "font-size.n26",
-  n28: "font-size.n28",
-  n32: "font-size.n32",
-  n36: "font-size.n36",
-  n40: "font-size.n40",
-  n48: "font-size.n48",
-  n56: "font-size.n56",
-  n64: "font-size.n64",
-  n72: "font-size.n72",
-  n80: "font-size.n80",
-  n96: "font-size.n96",
-  n112: "font-size.n112",
-  n128: "font-size.n128",
-} as const satisfies Record<FontSizeKey, `font-size.n${FontSizeScale}`>;
-
-export type FontSizeToken = (typeof FontSize)[keyof typeof FontSize];
+  n9: "var(--font-size-n9)" as FontSizeToken,
+  n10: "var(--font-size-n10)" as FontSizeToken,
+  n11: "var(--font-size-n11)" as FontSizeToken,
+  n12: "var(--font-size-n12)" as FontSizeToken,
+  n13: "var(--font-size-n13)" as FontSizeToken,
+  n14: "var(--font-size-n14)" as FontSizeToken,
+  n15: "var(--font-size-n15)" as FontSizeToken,
+  n16: "var(--font-size-n16)" as FontSizeToken,
+  n18: "var(--font-size-n18)" as FontSizeToken,
+  n20: "var(--font-size-n20)" as FontSizeToken,
+  n22: "var(--font-size-n22)" as FontSizeToken,
+  n24: "var(--font-size-n24)" as FontSizeToken,
+  n26: "var(--font-size-n26)" as FontSizeToken,
+  n28: "var(--font-size-n28)" as FontSizeToken,
+  n32: "var(--font-size-n32)" as FontSizeToken,
+  n36: "var(--font-size-n36)" as FontSizeToken,
+  n40: "var(--font-size-n40)" as FontSizeToken,
+  n48: "var(--font-size-n48)" as FontSizeToken,
+  n56: "var(--font-size-n56)" as FontSizeToken,
+  n64: "var(--font-size-n64)" as FontSizeToken,
+  n72: "var(--font-size-n72)" as FontSizeToken,
+  n80: "var(--font-size-n80)" as FontSizeToken,
+  n96: "var(--font-size-n96)" as FontSizeToken,
+  n112: "var(--font-size-n112)" as FontSizeToken,
+  n128: "var(--font-size-n128)" as FontSizeToken,
+} as const satisfies Record<FontSizeKey, FontSizeToken>;
 
 // ---------------------------------
 // LineHeight
@@ -367,30 +358,28 @@ export type LineHeightScale = ScaleOf<typeof LineHeightScale>;
 export type LineHeightKey = KeyOf<typeof LineHeightScale>;
 
 export const LineHeight = {
-  n100: "line-height.n100",
-  n105: "line-height.n105",
-  n110: "line-height.n110",
-  n115: "line-height.n115",
-  n120: "line-height.n120",
-  n125: "line-height.n125",
-  n130: "line-height.n130",
-  n135: "line-height.n135",
-  n140: "line-height.n140",
-  n145: "line-height.n145",
-  n150: "line-height.n150",
-  n155: "line-height.n155",
-  n160: "line-height.n160",
-  n165: "line-height.n165",
-  n170: "line-height.n170",
-  n175: "line-height.n175",
-  n180: "line-height.n180",
-  n190: "line-height.n190",
-  n200: "line-height.n200",
-  n210: "line-height.n210",
-  n220: "line-height.n220",
-} as const satisfies Record<LineHeightKey, `line-height.n${LineHeightScale}`>;
-
-export type LineHeightToken = (typeof LineHeight)[keyof typeof LineHeight];
+  n100: "var(--line-height-n100)" as LineHeightToken,
+  n105: "var(--line-height-n105)" as LineHeightToken,
+  n110: "var(--line-height-n110)" as LineHeightToken,
+  n115: "var(--line-height-n115)" as LineHeightToken,
+  n120: "var(--line-height-n120)" as LineHeightToken,
+  n125: "var(--line-height-n125)" as LineHeightToken,
+  n130: "var(--line-height-n130)" as LineHeightToken,
+  n135: "var(--line-height-n135)" as LineHeightToken,
+  n140: "var(--line-height-n140)" as LineHeightToken,
+  n145: "var(--line-height-n145)" as LineHeightToken,
+  n150: "var(--line-height-n150)" as LineHeightToken,
+  n155: "var(--line-height-n155)" as LineHeightToken,
+  n160: "var(--line-height-n160)" as LineHeightToken,
+  n165: "var(--line-height-n165)" as LineHeightToken,
+  n170: "var(--line-height-n170)" as LineHeightToken,
+  n175: "var(--line-height-n175)" as LineHeightToken,
+  n180: "var(--line-height-n180)" as LineHeightToken,
+  n190: "var(--line-height-n190)" as LineHeightToken,
+  n200: "var(--line-height-n200)" as LineHeightToken,
+  n210: "var(--line-height-n210)" as LineHeightToken,
+  n220: "var(--line-height-n220)" as LineHeightToken,
+} as const satisfies Record<LineHeightKey, LineHeightToken>;
 
 // ---------------------------------
 // Opacity
@@ -403,30 +392,28 @@ export type OpacityScale = ScaleOf<typeof OpacityScale>;
 export type OpacityKey = KeyOf<typeof OpacityScale>;
 
 export const Opacity = {
-  n0: "opacity.n0",
-  n5: "opacity.n5",
-  n10: "opacity.n10",
-  n15: "opacity.n15",
-  n20: "opacity.n20",
-  n25: "opacity.n25",
-  n30: "opacity.n30",
-  n35: "opacity.n35",
-  n40: "opacity.n40",
-  n45: "opacity.n45",
-  n50: "opacity.n50",
-  n55: "opacity.n55",
-  n60: "opacity.n60",
-  n65: "opacity.n65",
-  n70: "opacity.n70",
-  n75: "opacity.n75",
-  n80: "opacity.n80",
-  n85: "opacity.n85",
-  n90: "opacity.n90",
-  n95: "opacity.n95",
-  n100: "opacity.n100",
-} as const satisfies Record<OpacityKey, `opacity.n${OpacityScale}`>;
-
-export type OpacityToken = (typeof Opacity)[keyof typeof Opacity];
+  n0: "var(--opacity-n0)" as OpacityToken,
+  n5: "var(--opacity-n5)" as OpacityToken,
+  n10: "var(--opacity-n10)" as OpacityToken,
+  n15: "var(--opacity-n15)" as OpacityToken,
+  n20: "var(--opacity-n20)" as OpacityToken,
+  n25: "var(--opacity-n25)" as OpacityToken,
+  n30: "var(--opacity-n30)" as OpacityToken,
+  n35: "var(--opacity-n35)" as OpacityToken,
+  n40: "var(--opacity-n40)" as OpacityToken,
+  n45: "var(--opacity-n45)" as OpacityToken,
+  n50: "var(--opacity-n50)" as OpacityToken,
+  n55: "var(--opacity-n55)" as OpacityToken,
+  n60: "var(--opacity-n60)" as OpacityToken,
+  n65: "var(--opacity-n65)" as OpacityToken,
+  n70: "var(--opacity-n70)" as OpacityToken,
+  n75: "var(--opacity-n75)" as OpacityToken,
+  n80: "var(--opacity-n80)" as OpacityToken,
+  n85: "var(--opacity-n85)" as OpacityToken,
+  n90: "var(--opacity-n90)" as OpacityToken,
+  n95: "var(--opacity-n95)" as OpacityToken,
+  n100: "var(--opacity-n100)" as OpacityToken,
+} as const satisfies Record<OpacityKey, OpacityToken>;
 
 // ---------------------------------
 // ZIndex
@@ -438,22 +425,20 @@ export type ZIndexScale = ScaleOf<typeof ZIndexScale>;
 export type ZIndexKey = KeyOf<typeof ZIndexScale>;
 
 export const ZIndex = {
-  n0: "z-index.n0",
-  n1: "z-index.n1",
-  n2: "z-index.n2",
-  n3: "z-index.n3",
-  n5: "z-index.n5",
-  n10: "z-index.n10",
-  n20: "z-index.n20",
-  n30: "z-index.n30",
-  n40: "z-index.n40",
-  n50: "z-index.n50",
-  n75: "z-index.n75",
-  n100: "z-index.n100",
-  n200: "z-index.n200",
-} as const satisfies Record<ZIndexKey, `z-index.n${ZIndexScale}`>;
-
-export type ZIndexToken = (typeof ZIndex)[keyof typeof ZIndex];
+  n0: "var(--z-index-n0)" as ZIndexToken,
+  n1: "var(--z-index-n1)" as ZIndexToken,
+  n2: "var(--z-index-n2)" as ZIndexToken,
+  n3: "var(--z-index-n3)" as ZIndexToken,
+  n5: "var(--z-index-n5)" as ZIndexToken,
+  n10: "var(--z-index-n10)" as ZIndexToken,
+  n20: "var(--z-index-n20)" as ZIndexToken,
+  n30: "var(--z-index-n30)" as ZIndexToken,
+  n40: "var(--z-index-n40)" as ZIndexToken,
+  n50: "var(--z-index-n50)" as ZIndexToken,
+  n75: "var(--z-index-n75)" as ZIndexToken,
+  n100: "var(--z-index-n100)" as ZIndexToken,
+  n200: "var(--z-index-n200)" as ZIndexToken,
+} as const satisfies Record<ZIndexKey, ZIndexToken>;
 
 // ---------------------------------
 // Elevation
@@ -463,19 +448,17 @@ export type ElevationScale = ScaleOf<typeof ElevationScale>;
 export type ElevationKey = KeyOf<typeof ElevationScale>;
 
 export const Elevation = {
-  n0: "elevation.n0",
-  n1: "elevation.n1",
-  n2: "elevation.n2",
-  n3: "elevation.n3",
-  n4: "elevation.n4",
-  n5: "elevation.n5",
-  n6: "elevation.n6",
-  n8: "elevation.n8",
-  n10: "elevation.n10",
-  n12: "elevation.n12",
-} as const satisfies Record<ElevationKey, `elevation.n${ElevationScale}`>;
-
-export type ElevationToken = (typeof Elevation)[keyof typeof Elevation];
+  n0: "var(--elevation-n0)" as ElevationToken,
+  n1: "var(--elevation-n1)" as ElevationToken,
+  n2: "var(--elevation-n2)" as ElevationToken,
+  n3: "var(--elevation-n3)" as ElevationToken,
+  n4: "var(--elevation-n4)" as ElevationToken,
+  n5: "var(--elevation-n5)" as ElevationToken,
+  n6: "var(--elevation-n6)" as ElevationToken,
+  n8: "var(--elevation-n8)" as ElevationToken,
+  n10: "var(--elevation-n10)" as ElevationToken,
+  n12: "var(--elevation-n12)" as ElevationToken,
+} as const satisfies Record<ElevationKey, ElevationToken>;
 
 // ---------------------------------
 // AspectRatio
@@ -513,8 +496,6 @@ export const AspectRatio = {
   `aspect-ratio.n${AspectRatioScale}`
 >;
 
-export type AspectRatioToken = (typeof AspectRatio)[keyof typeof AspectRatio];
-
 // ---------------------------------
 // Shadow (Legacy)
 // ---------------------------------
@@ -528,5 +509,3 @@ export const Shadow = {
   xl: "shadow.xl",
   "2xl": "shadow.2xl",
 } as const satisfies Record<ShadowScale, `shadow.${ShadowScale}`>;
-
-export type ShadowToken = (typeof Shadow)[keyof typeof Shadow];

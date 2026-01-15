@@ -2,7 +2,12 @@ import { useState } from "react";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Overlay } from "../../design-system/Overlay";
 import { Text } from "../../design-system/text/Text";
-import { FontSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export interface EditableWrapperProps {
   children: React.ReactNode;
@@ -18,18 +23,17 @@ export function EditableWrapper({
   const [isHovered, setIsHovered] = useState(false);
   return (
     <Frame
-      override={{}}
+      override={{ cursor: "text" }}
       style={{
         position: "relative",
         outline: isHovered
-          ? "var(--size-n2) solid var(--primary-bg)"
-          : "var(--size-n2) solid transparent",
-        outlineOffset: "var(--size-n2)",
+          ? "var(--space-n2) solid var(--primary-bg)"
+          : "var(--space-n2) solid transparent",
+        outlineOffset: "var(--space-n2)",
         ...style,
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      cursor="text"
       onClick={(e) => {
         e.stopPropagation();
         onEdit?.();
@@ -38,7 +42,8 @@ export function EditableWrapper({
       {isHovered && (
         <Overlay position="absolute" y={-10} x={-2} zIndex={50}>
           <Frame
-            override={{ py: Space.n0, px: Space.n6, rounded: "sm", h: Size.n4 }}
+            override={{ py: Space.n0, px: Space.n6, h: Size.n4 }}
+            rounded={Radius2.sm}
             surface="primary"
             pack
           >

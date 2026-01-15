@@ -9,6 +9,7 @@ import {
   Size,
   Space,
 } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { EditableWrapper } from "./EditableWrapper";
 
 export function FeatureGridSection() {
@@ -25,12 +26,11 @@ export function FeatureGridSection() {
           px: Space.n24,
           gap: Space.n48,
         }}
-        style={{ maxWidth: "var(--container-n1280)", margin: "0 auto" }}
+        style={{ maxWidth: "var(--container-n1280)" }}
       >
         <Frame
-          override={{ gap: Space.n12 }}
-          style={{ maxWidth: "var(--container-n800)", margin: "0 auto" }}
-          align="center"
+          style={{ maxWidth: "var(--container-n800)" }}
+          override={{ gap: Space.n12, align: "center" }}
         >
           <Text.Card.Note
             size={FontSize.n12}
@@ -54,7 +54,7 @@ export function FeatureGridSection() {
           <Frame
             override={{ gap: Space.n16 }}
             layout={Layout.Row.Item.Default}
-            wrap="wrap"
+            wrap
           >
             <FeatureCardLarge
               icon={Zap}
@@ -75,7 +75,7 @@ export function FeatureGridSection() {
           <Frame
             override={{ gap: Space.n16 }}
             layout={Layout.Row.Item.Default}
-            wrap="wrap"
+            wrap
           >
             <FeatureCardLarge
               icon={Shield}
@@ -111,16 +111,14 @@ function FeatureCardSmall({
 }: FeatureCardSmallProps) {
   return (
     <Frame
-      override={{ p: Space.n32, rounded: "2xl", gap: Space.n24 }}
+      override={{ p: Space.n32, gap: Space.n24 }}
+      rounded={Radius2["2xl"]}
       flex={flex}
       surface="raised"
     >
       <Frame
-        override={{
-          w: Size.n48,
-          h: Size.n48,
-          rounded: "xl",
-        }}
+        override={{ w: Size.n48, h: Size.n48 }}
+        rounded={Radius2.xl}
         style={{ border: "1px solid var(--border-color)" }}
         surface="sunken"
         pack
@@ -163,19 +161,19 @@ function FeatureCardLarge({
 }: FeatureCardLargeProps) {
   return (
     <Frame
-      override={{ rounded: "2xl" }}
+      rounded={Radius2["2xl"]}
       flex={flex}
       surface="raised"
       clip
       layout={Layout.Row.Item.Default}
     >
-      <Frame override={{ p: Space.n32, gap: Space.n24 }} flex justify="center">
+      <Frame
+        override={{ p: Space.n32, gap: Space.n24, justify: "center" }}
+        flex
+      >
         <Frame
-          override={{
-            w: Size.n48,
-            h: Size.n48,
-            rounded: "xl",
-          }}
+          override={{ w: Size.n48, h: Size.n48 }}
+          rounded={Radius2.xl}
           style={{ border: "1px solid var(--border-color)" }}
           surface="sunken"
           pack
@@ -213,12 +211,8 @@ function FeatureCardLarge({
           pack
         >
           <Frame
-            override={{
-              w: Size.n128,
-              h: Size.n160,
-              rounded: "lg",
-              shadow: "xl",
-            }}
+            override={{ w: Size.n128, h: Size.n160, shadow: "xl" }}
+            rounded={Radius2.lg}
             style={{ border: "1px solid var(--border-color)" }}
             surface="base"
           />

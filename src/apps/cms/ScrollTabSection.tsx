@@ -2,6 +2,7 @@ import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 const TABS = [
   "Overview",
@@ -25,7 +26,7 @@ export function ScrollTabSection() {
     <Frame
       override={{
         w: Size.full,
-        py: Space.n24,
+        py: Space.n12,
         px: Space.n0,
       }}
       style={{ borderBottom: "1px solid var(--border-color)" }}
@@ -37,6 +38,7 @@ export function ScrollTabSection() {
           w: Size.full,
           py: Space.n0,
           px: Space.n24,
+          justify: "center",
         }}
         style={{
           // Hide scrollbar for cleaner look but keep functionality
@@ -44,7 +46,7 @@ export function ScrollTabSection() {
           scrollbarWidth: "none",
           WebkitOverflowScrolling: "touch",
         }}
-        layout={Layout.Row.Item.Tight}
+        layout={Layout.Row.Item.Default}
         scroll
       >
         {TABS.map((tab, i) => (
@@ -52,7 +54,7 @@ export function ScrollTabSection() {
             key={tab}
             label={tab}
             variant={i === 0 ? "primary" : "ghost"}
-            rounded="full"
+            rounded={Radius2.full}
             h="action"
           />
         ))}

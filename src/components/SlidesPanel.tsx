@@ -2,7 +2,7 @@ import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text";
-import { Size, Space } from "../design-system/token/token.const.1tier";
+import { Size, Space, Radius2 } from "../design-system/token";
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -10,23 +10,21 @@ export function SlidesPanel() {
   return (
     <Section
       title="LAYERS"
-      style={{ width: "160px", minWidth: "160px" }}
+      w={Size.n160}
       surface="base"
-      rounded="round"
+      rounded={Radius2.md}
       shadow="sm"
     >
-      <Frame style={{ minHeight: 0 }} scroll surface="sunken" flex fill>
+      <Frame override={{ minHeight: Size.n0 }} scroll surface="sunken" flex fill>
         {slides.map((num) => (
           <Frame
             override={{ gap: Space.n4, p: Space.n8 }}
-            key={num}
             border={num === 1}
+            key={num}
           >
             <Frame
-              override={{ gap: Space.n4 }}
               layout={Layout.Row.LabelValue.Default}
-              justify="between"
-              align="end"
+              override={{ gap: Space.n4, justify: "between" }}
             >
               <Text.Card.Note
                 style={{
@@ -36,7 +34,8 @@ export function SlidesPanel() {
                 {num}
               </Text.Card.Note>
               <Frame
-                override={{ w: Size.full, rounded: "round" }}
+                override={{ w: Size.full }}
+                rounded={Radius2.md}
                 ratio="16/9"
                 surface="raised"
                 flex

@@ -17,8 +17,10 @@ import { Text } from "../../design-system/text/Text.tsx";
 import {
   IconSize,
   Size,
+  type SizeToken,
   Space,
 } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { datasetsAtom, selectedDatasetAtom } from "./store";
 
 // Icon mapping
@@ -38,19 +40,14 @@ function Avatar({
 }: {
   initial: string;
   color: string;
-  size?: string;
+  size?: SizeToken;
 }) {
   return (
     <Frame
-      override={{
-        w: size,
-        h: size,
-        rounded: "full",
-      }}
+      rounded={Radius2.full}
       style={{ backgroundColor: color }}
       pack
-      align="center"
-      justify="center"
+      override={{ w: size, h: size, align: "center" }}
     >
       <Text.Card.Note
         weight="bold"
@@ -63,13 +60,11 @@ function Avatar({
 }
 
 function DatasetItem({
-  name,
   label,
   icon: iconName,
   active,
   onClick,
 }: {
-  name: string;
   label: string;
   icon: string;
   active?: boolean;
@@ -80,15 +75,20 @@ function DatasetItem({
   return (
     <Action
       variant={active ? "surface" : "ghost"}
-      rounded="md"
+      rounded={Radius2.md}
       w="100%"
       justify="start"
       onClick={onClick}
     >
       <Frame
-        override={{ gap: Space.n12, w: Size.full, py: Space.n6, px: Space.n8 }}
         layout={Layout.Row.Item.Default}
-        align="center"
+        override={{
+          gap: Space.n12,
+          w: Size.full,
+          py: Space.n6,
+          px: Space.n8,
+          align: "center",
+        }}
       >
         <Icon
           src={IconComponent}
@@ -126,11 +126,10 @@ export function CRMSidebar() {
       surface="sunken"
     >
       {/* Workspace Switcher */}
-      <Action variant="ghost" rounded="md">
+      <Action variant="ghost" rounded={Radius2.md}>
         <Frame
-          override={{ gap: Space.n12, p: Space.n4 }}
           layout={Layout.Row.Item.Default}
-          align="center"
+          override={{ gap: Space.n12, p: Space.n4, align: "center" }}
         >
           <Avatar initial="D" color="black" size={Size.n20} />
           <Text.Menu.Item weight="bold">DataTable</Text.Menu.Item>
@@ -147,7 +146,6 @@ export function CRMSidebar() {
         {datasets.map((dataset) => (
           <DatasetItem
             key={dataset.name}
-            name={dataset.name}
             label={dataset.label}
             icon={dataset.icon}
             active={selectedDataset === dataset.name}
@@ -163,7 +161,7 @@ export function CRMSidebar() {
         <Frame
           override={{ py: Space.n6, px: Space.n8 }}
           surface="base"
-          rounded="md"
+          rounded={Radius2.md}
         >
           <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
             {datasets.length} datasets loaded

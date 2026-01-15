@@ -21,6 +21,7 @@ import {
   Size,
   Space,
 } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LandingApp() {
   return (
@@ -53,21 +54,25 @@ export function LandingApp() {
 
         {/* Hero Section */}
         <Frame
-          override={{ py: Space.n128, px: Space.n24, gap: Space.n24 }}
-          align="center"
+          override={{
+            py: Space.n128,
+            px: Space.n24,
+            gap: Space.n24,
+            align: "center",
+          }}
         >
           <Frame
             style={{ border: "1px solid var(--border-color)" }}
+            rounded={Radius2.full}
+            surface="sunken"
+            layout={Layout.Row.Item.Tight}
             override={{
               py: Space.n4,
               px: Space.n12,
-              rounded: "full",
               gap: Space.n8,
+              cursor: "pointer",
+              align: "center",
             }}
-            surface="sunken"
-            layout={Layout.Row.Item.Tight}
-            align="center"
-            cursor="pointer"
           >
             <Icon
               src={Zap}
@@ -112,7 +117,7 @@ export function LandingApp() {
             {/* Main CTA */}
             <Action
               variant="primary"
-              rounded="full"
+              rounded={Radius2.full}
               py={Space.n12}
               px={Space.n20}
               gap={Space.n8}
@@ -130,7 +135,7 @@ export function LandingApp() {
             {/* Secondary CTA */}
             <Action
               variant="surface"
-              rounded="full"
+              rounded={Radius2.full}
               py={Space.n12}
               px={Space.n20}
               gap={Space.n8}
@@ -147,8 +152,12 @@ export function LandingApp() {
 
         {/* Why Section */}
         <Frame
-          override={{ gap: Space.n24, py: Space.n96, px: Space.n24 }}
-          align="center"
+          override={{
+            gap: Space.n24,
+            py: Space.n96,
+            px: Space.n24,
+            align: "center",
+          }}
         >
           <Text.Prose.Title variant="lg" style={{ textAlign: "center" }}>
             왜 만들었는가?
@@ -184,8 +193,8 @@ export function LandingApp() {
               pb: Space.n32,
               pt: Space.n0,
               px: Space.n0,
+              align: "center",
             }}
-            align="center"
           >
             <Text.Prose.Title variant="lg">
               Everything you need
@@ -204,8 +213,8 @@ export function LandingApp() {
             }}
             override={{
               gap: Space.n16,
+              grid: true,
             }}
-            grid
           >
             <FeatureCard
               icon={Type}
@@ -297,22 +306,14 @@ function FeatureCard({
   return (
     <Frame
       style={{ border: "1px solid var(--border-color)" }}
-      override={{
-        p: Space.n24,
-        rounded: "2xl",
-        gap: Space.n16,
-      }}
+      override={{ p: Space.n24, gap: Space.n16 }}
+      rounded={Radius2["2xl"]}
       surface="sunken"
     >
       <Frame
         style={{ border: "1px solid var(--border-color)" }}
-        override={{
-          w: Size.n40,
-          h: Size.n40,
-          p: Space.n8,
-          rounded: "xl",
-          shadow: "sm",
-        }}
+        override={{ w: Size.n40, h: Size.n40, p: Space.n8, shadow: "sm" }}
+        rounded={Radius2.xl}
         surface="base"
         pack
       >

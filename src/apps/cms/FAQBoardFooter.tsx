@@ -11,6 +11,7 @@ import {
   Size,
   Space,
 } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function FAQBoardFooter() {
   return (
@@ -22,9 +23,9 @@ export function FAQBoardFooter() {
           px: Space.n24,
           gap: Space.n48,
         }}
-        style={{ maxWidth: "var(--container-n768)", margin: "0 auto" }}
+        style={{ maxWidth: "var(--container-n768)" }}
       >
-        <Frame override={{ gap: Space.n12, w: Size.full }} align="center">
+        <Frame override={{ gap: Space.n12, w: Size.full, align: "center" }}>
           <Text.Card.Note
             size={FontSize.n12}
             weight="bold"
@@ -55,18 +56,19 @@ export function FAQBoardFooter() {
         </Frame>
 
         <Frame
+          rounded={Radius2["2xl"]}
+          surface="raised"
+          layout={Layout.Slots.Media.Default}
           override={{
             p: Space.n32,
             w: Size.full,
-            rounded: "2xl",
             gap: Space.n24,
+            align: "center",
           }}
-          surface="raised"
-          layout={Layout.Slots.Media.Default}
-          align="center"
         >
           <Frame
-            override={{ w: Size.n56, h: Size.n56, rounded: "full" }}
+            override={{ w: Size.n56, h: Size.n56 }}
+            rounded={Radius2.full}
             surface="sunken"
             pack
           >
@@ -90,7 +92,7 @@ export function FAQBoardFooter() {
             variant="surface"
             h={Size.n44}
             px={Space.n24}
-            rounded="lg"
+            rounded={Radius2.lg}
           />
         </Frame>
       </Frame>
@@ -112,15 +114,14 @@ function FAQRow({ q, a }: FAQRowProps) {
         py: Space.n24,
         px: Space.n0,
         gap: Space.n16,
+        cursor: "pointer",
       }}
       style={{ borderBottom: "1px solid var(--border-color)" }}
       onClick={() => setIsOpen(!isOpen)}
-      cursor="pointer"
     >
       <Frame
-        override={{ w: Size.full }}
         layout={Layout.Row.LabelValue.Default}
-        align="center"
+        override={{ w: Size.full, align: "center" }}
       >
         <Text.Card.Title size={FontSize.n16} weight="medium">
           {q}

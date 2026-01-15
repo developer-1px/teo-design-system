@@ -11,7 +11,7 @@ const INPUT_FILE = path.resolve(
 );
 const OUTPUT_FILE = path.resolve(
   __dirname,
-  "../src/design-system/token/tokens.1tier.css",
+  "../src/style/tokens.1tier.css",
 );
 
 const content = fs.readFileSync(INPUT_FILE, "utf-8");
@@ -176,45 +176,8 @@ if (sizeKeywordsMatches) {
   });
 }
 
-// Add Radius Aliases
-// "none", "sm", "md", "lg", "xl", "2xl", "3xl", "soft", "full"
-// These map to specific numeric tokens according to the TS file object.
-// We need to parse the `Radius` object to get these mappings if we want them in CSS.
-// Or we just hardcode common ones based on reading the file?
-// The file has:
-// none: "radius.n0",
-// sm: "radius.n4",
-// md: "radius.n6",
-// lg: "radius.n12",
-// xl: "radius.n16",
-// "2xl": "radius.n20",
-// "3xl": "radius.n24",
-// soft: "radius.n8",
-// full: "radius.n32",
-
-// Let's parse the Radius object to automagically generate aliases
-const radiusObjMatch = content.match(
-  /export const Radius = \{([\s\S]*?)\} as const/,
-);
-if (radiusObjMatch) {
-  css += `\n  /* Radius Aliases */\n`;
-  const lines = radiusObjMatch[1].split("\n");
-  lines.forEach((line) => {
-    // match:  alias: "radius.nX"
-    const match = line.match(
-      /^\s*["']?([\w]+)["']?\s*:\s*["']radius\.n(\d+)["']/,
-    );
-    if (match) {
-      const [_, alias, val] = match;
-      // check if it's an numeric key (n0, n2...) - skip those as they are base tokens
-      if (alias.startsWith("n") && !Number.isNaN(parseInt(alias.slice(1), 10)))
-        return;
-
-      // It's an alias
-      css += `  --radius-${alias}: var(--radius-n${val});\n`;
-    }
-  });
-}
+// Radius Aliases are 2-tier tokens that reference 1-tier numeric tokens
+// No need to generate separate CSS variables - they're defined in TypeScript only
 
 css += `}\n`;
 

@@ -79,11 +79,11 @@ export function CRMTable() {
                 key={header.id}
                 sortable={header.column.getCanSort()}
                 sorted={sortState || false}
-                onSort={header.column.getToggleSortingHandler()}
+                onSort={() => header.column.toggleSorting()}
               >
                 {flexRender(
                   header.column.columnDef.header,
-                  header.getContext()
+                  header.getContext(),
                 )}
               </Table.Head>
             );

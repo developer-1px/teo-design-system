@@ -1,10 +1,4 @@
-import {
-  Calendar,
-  Globe,
-  Hash,
-  Mail,
-  User,
-} from "lucide-react";
+import { Calendar, Globe, Hash, Mail, User } from "lucide-react";
 import type { DataRow } from "../types";
 
 // Icon mapping for common field types

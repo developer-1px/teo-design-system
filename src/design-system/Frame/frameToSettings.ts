@@ -1,12 +1,22 @@
 import type React from "react";
 import type { FrameOverrides } from "./FrameProps.ts";
+import type { SurfaceToken } from "../lib/types.ts";
+import type { Radius2Token } from "../token";
+import { Radius2 } from "../token";
 
-export function frameToSettings(props: FrameOverrides): {
+// Internal type for frameToSettings - includes top-level only props
+type FrameSettingsInput = FrameOverrides & {
+  surface?: SurfaceToken;
+  rounded?: Radius2Token | boolean;
+  border?: boolean;
+};
+
+export function frameToSettings(props: FrameSettingsInput): {
   className: string;
   style: React.CSSProperties;
 } {
   const classes: string[] = [];
-  const vars: Record<string, any> = {};
+
   // Helper to remove undefined keys
   const cleanStyles = (styles: React.CSSProperties) => {
     return Object.fromEntries(
@@ -14,178 +24,88 @@ export function frameToSettings(props: FrameOverrides): {
     ) as React.CSSProperties;
   };
 
-  // Function to resolve space tokens strictly
-  const resolveSpace = (val: string | number | undefined) => {
-    if (!val) return undefined;
-    if (typeof val === "string" && val.startsWith("space.")) {
-      return `var(--${val.replace(".", "-")})`;
-    }
-    // Fallback used to be toToken, effectively allow direct pixel numbers or string passthrough?
-    // User wants to avoid legacy. Strict tokens preferred.
-    // If number, convert to px? Or assume oldMultiplier?
-    // Old frame.css uses calc(var(--p) * 4px).
-    // If we want to support '0', it's space.n0.
-    if (val === 0) return "0px";
-    return val; // Allow explicit strings like "10px" or "auto" if typed that way, though types say SpaceToken
-  };
-
-  const resolveRadius = (val: string | number | undefined) => {
-    if (!val) return undefined;
-    if (typeof val === "string" && val.startsWith("radius.")) {
-      return `var(--${val.replace(".", "-")})`;
-    }
-    if (val === 0) return "0px";
-    return val;
-  };
-
-  const resolveOpacity = (val: string | number | undefined) => {
-    if (val === undefined) return undefined;
-    if (typeof val === "string" && val.startsWith("opacity.")) {
-      return `var(--${val.replace(".", "-")})`;
-    }
-    // Allow raw numbers if passed (though types restricted it, overrides might still pass it?)
-    // But strict OpacityToken is preferred.
-    if (typeof val === "number") return val;
-    return val;
-  };
-
-  // Function to resolve size/container tokens strictly
-  // Supports size.n*, size.full, container.n*
+  // Helper to handle Size.screen axis-specific conversion
   const resolveSizing = (
     val: string | number | undefined,
     axis: "width" | "height",
   ) => {
-    if (!val) return undefined;
-    if (typeof val === "string") {
-      // Legacy Token Fixes
-      if (val === "size.full") return "100%";
-      if (val === "size.screen") return axis === "width" ? "100vw" : "100vh";
-      if (val === "size.min") return "min-content";
-      if (val === "size.max") return "max-content";
-      if (val === "size.fit") return "fit-content";
-      if (val === "size.auto") return "auto";
-
-      // Strict Token Mapping
-      if (val.startsWith("size.") || val.startsWith("container.")) {
-        return `var(--${val.replace(".", "-")})`;
-      }
-
-      // Pass through known keywords (explicit styling)
-      // "full" and "screen" are handled by classes below, so we skip them here
-      // unless user passed "size.full" (handled above).
-      if (
-        [
-          "auto",
-          "fit-content",
-          "min-content",
-          "max-content",
-          "100%",
-          "50%",
-          "33%",
-          "66%",
-        ].includes(val)
-      ) {
-        return val;
-      }
-
-      // Allow explicit pixel values if string (e.g. "200px")?
-      // User wants to remove legacy "toToken" behavior which allowed numbers -> px.
-      // But explicit strings like "20px" might be useful overrides.
-      // For now, let's stick to tokens + keywords to be safe/strict as requested.
-      // Allow explicit pixel/unit values
-      if (/^-?\d*\.?\d+(px|rem|em|%|vw|vh)$/.test(val)) {
-        return val;
-      }
-    }
-    // Allow numbers (React handles as px)
-    if (typeof val === "number") return val;
-
-    return undefined;
+    if (val === undefined) return undefined;
+    // Size.screen is "100vh" but should be "100vw" for width axis
+    if (val === "100vh" && axis === "width") return "100vw";
+    // All other values (CSS variables, keywords, units) pass through as-is
+    return val;
   };
 
   // --- Smart Logic Helpers ---
   const isFixedDimension = (
     val: string | number | undefined,
-    _: "width" | "height",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _axis: "width" | "height",
   ): boolean => {
     if (val === undefined) return false;
-    if (typeof val === "number") return true;
     // String checks
-    if (val.startsWith("size.n") || val.startsWith("container.n")) return true;
-    if (
-      val === "size.full" ||
-      val === "size.screen" ||
-      val === "size.auto" ||
-      val === "size.min" ||
-      val === "size.max" ||
-      val === "size.fit"
-    )
-      return false;
-    // Explicit px/rem
-    if (/^-?\d*\.?\d+(px|rem|em)$/.test(val)) return true;
+    if (typeof val === "string") {
+      // CSS variable tokens (e.g., "var(--size-n40)") → fixed dimension
+      if (
+        val.startsWith("var(--size-") ||
+        val.startsWith("var(--container-size-")
+      ) {
+        return true;
+      }
+      // Keyword values (Size.full, Size.screen, etc.) → not fixed
+      if (
+        [
+          "100%",
+          "100vh",
+          "100vw",
+          "auto",
+          "min-content",
+          "max-content",
+          "fit-content",
+        ].includes(val)
+      ) {
+        return false;
+      }
+      // Explicit px/rem/em values → fixed dimension
+      if (/^-?\d*\.?\d+(px|rem|em)$/.test(val)) return true;
+    }
     return false;
   };
 
   const standardStyles: React.CSSProperties = cleanStyles({
-    // Standard Padding
-    padding: resolveSpace(props.p) as any,
-    paddingTop:
-      (resolveSpace(props.pt) as any) ?? (resolveSpace(props.py) as any),
-    paddingBottom:
-      (resolveSpace(props.pb) as any) ?? (resolveSpace(props.py) as any),
-    paddingLeft:
-      (resolveSpace(props.pl) as any) ?? (resolveSpace(props.px) as any),
-    paddingRight:
-      (resolveSpace(props.pr) as any) ?? (resolveSpace(props.px) as any),
+    // Padding (tokens are already CSS variables)
+    padding: props.p,
+    paddingTop: props.pt ?? props.py,
+    paddingBottom: props.pb ?? props.py,
+    paddingLeft: props.pl ?? props.px,
+    paddingRight: props.pr ?? props.px,
 
-    gap: resolveSpace(props.gap) as any,
+    gap: props.gap,
 
-    // Sizing (Strict)
-    width: resolveSizing(props.w, "width") as any,
-    height: resolveSizing(props.h, "height") as any,
-    minWidth: resolveSizing(props.minWidth, "width") as any,
-    minHeight: resolveSizing(props.minHeight, "height") as any,
-    maxWidth: resolveSizing(props.maxWidth, "width") as any,
-    maxHeight: resolveSizing(props.maxHeight, "height") as any,
+    // Sizing (tokens are already CSS variables)
+    width: resolveSizing(props.w, "width"),
+    height: resolveSizing(props.h, "height"),
+    minWidth: resolveSizing(props.minWidth, "width"),
+    minHeight: resolveSizing(props.minHeight, "height"),
+    maxWidth: resolveSizing(props.maxWidth, "width"),
+    maxHeight: resolveSizing(props.maxHeight, "height"),
 
-    // Radius (Strict, 'r' prop takes precedence)
-    borderRadius: resolveRadius(props.r),
+    // Radius (tokens are already CSS variables)
+    borderRadius: props.r,
 
-    // Opacity
-    opacity: resolveOpacity(props.opacity),
+    // Opacity (tokens are already CSS variables)
+    opacity: props.opacity,
 
-    // Borders
-    border:
-      props.border === true
-        ? "1px solid var(--border-color)"
-        : typeof props.border === "string"
-          ? props.border
-          : undefined,
+    // Borders (boolean only)
+    border: props.border === true ? "1px solid var(--border-color)" : undefined,
     borderTop:
-      props.borderTop === true
-        ? "1px solid var(--border-color)"
-        : typeof props.borderTop === "string"
-          ? props.borderTop
-          : undefined,
+      props.borderTop === true ? "1px solid var(--border-color)" : undefined,
     borderRight:
-      props.borderRight === true
-        ? "1px solid var(--border-color)"
-        : typeof props.borderRight === "string"
-          ? props.borderRight
-          : undefined,
+      props.borderRight === true ? "1px solid var(--border-color)" : undefined,
     borderBottom:
-      props.borderBottom === true
-        ? "1px solid var(--border-color)"
-        : typeof props.borderBottom === "string"
-          ? props.borderBottom
-          : undefined,
+      props.borderBottom === true ? "1px solid var(--border-color)" : undefined,
     borderLeft:
-      props.borderLeft === true
-        ? "1px solid var(--border-color)"
-        : typeof props.borderLeft === "string"
-          ? props.borderLeft
-          : undefined,
-    borderColor: props.borderColor,
+      props.borderLeft === true ? "1px solid var(--border-color)" : undefined,
   });
 
   // --- Base Layout ---
@@ -199,9 +119,15 @@ export function frameToSettings(props: FrameOverrides): {
   if (props.pack) classes.push("pack");
 
   // Wrap
-  if (props.wrap === "wrap") classes.push("wrap");
-  else if (props.wrap === "nowrap") classes.push("nowrap");
-  else if (props.wrap === "wrap-reverse") classes.push("wrap-reverse");
+  if (typeof props.wrap === "boolean") {
+    if (props.wrap) classes.push("wrap");
+  } else if (props.wrap === "wrap") {
+    classes.push("wrap");
+  } else if (props.wrap === "nowrap") {
+    classes.push("nowrap");
+  } else if (props.wrap === "wrap-reverse") {
+    classes.push("wrap-reverse");
+  }
 
   // Align
   if (props.align) classes.push(`items-${props.align}`);
@@ -214,22 +140,23 @@ export function frameToSettings(props: FrameOverrides): {
   else if (props.flex === false) classes.push("flex-none");
 
   // --- Sizing Classes ---
-  if (props.w === "size.full") classes.push("w-full");
-  else if (props.w === "size.screen") classes.push("w-screen");
+  // Size.full is "100%" and Size.screen is "100vh" at runtime
+  if (props.w === "100%") classes.push("w-full");
+  else if (props.w === "100vh") classes.push("w-screen");
 
-  if (props.h === "size.full") classes.push("h-full");
-  else if (props.h === "size.screen") classes.push("h-screen");
+  if (props.h === "100%") classes.push("h-full");
+  else if (props.h === "100vh") classes.push("h-screen");
 
-  // --- Radius Classes ---
-  // Only apply rounded classes if 'r' is NOT defined
-  // 'r' prop sets generic style which overrides class, but we avoid conflicting classes for cleanliness
-  if (props.r === undefined) {
-    if (props.rounded === true) {
-      classes.push("r-md");
-    } else if (props.rounded === false || props.rounded === "none") {
-      classes.push("r-none");
-    } else if (typeof props.rounded === "string") {
-      classes.push(`r-${props.rounded}`);
+  // --- Radius: Convert rounded prop to Radius2 tokens (2-tier) ---
+  if (props.r === undefined && props.rounded !== undefined) {
+    if (typeof props.rounded === "boolean") {
+      standardStyles.borderRadius = props.rounded ? Radius2.md : Radius2.none;
+    } else {
+      // Use Radius2 for semantic aliases, fallback to raw value for custom strings
+      standardStyles.borderRadius =
+        props.rounded in Radius2
+          ? Radius2[props.rounded as keyof typeof Radius2]
+          : props.rounded;
     }
   }
 
@@ -243,7 +170,7 @@ export function frameToSettings(props: FrameOverrides): {
 
   // --- Clip ---
   if (props.clip === true) {
-    classes.push("overflow-clip");
+    classes.push("overflow-hidden");
   } else if (props.clip === false) {
     classes.push("overflow-visible"); // Explicit visible if clip is false
   }
@@ -251,11 +178,6 @@ export function frameToSettings(props: FrameOverrides): {
   // --- Cursor ---
   if (props.cursor) {
     classes.push(`cursor-${props.cursor}`);
-  }
-
-  // --- Shadow ---
-  if (props.shadow) {
-    classes.push(`shadow-${props.shadow}`);
   }
 
   // --- Shadow ---
@@ -315,15 +237,8 @@ export function frameToSettings(props: FrameOverrides): {
     }
   }
 
-  if (typeof props.gap === "number") {
-    vars["--gap"] = props.gap;
-  }
-
-  // --- Check for other numeric tokens if we want to support them via vars in future frame.css updates ---
-  // For now, only p and gap are scalar-variable driving.
-
   return {
     className: classes.join(" "),
-    style: { ...vars, ...standardStyles },
+    style: standardStyles,
   };
 }

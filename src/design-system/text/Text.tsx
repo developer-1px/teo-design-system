@@ -1,6 +1,5 @@
 import type React from "react";
 import type { FontSizeToken, FontWeight } from "../lib/types.ts";
-import { toToken } from "../lib/utils.ts";
 
 import { Card } from "./context/Card.tsx";
 import { Field } from "./context/Field.tsx";
@@ -60,8 +59,7 @@ export function TextRoot({
   ...props
 }: TextProps) {
   // 1. Resolve Tag
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Tag = (as || getTagForVariant(variant)) as any;
+  const Tag = (as || getTagForVariant(variant)) as React.ElementType;
 
   // 2. Resolve Color
   const colorValue = resolveColor(color);
@@ -87,26 +85,17 @@ export function TextRoot({
           ? "var(--font-weight-medium)"
           : weight === "bold"
             ? "var(--font-weight-bold)"
-            : toToken(weight, "font-weight");
+            : weight; // Tokens are already CSS variables
   }
 
-  // Handle explicit size override
-  if (size) {
-    if (size.startsWith("font-size.")) {
-      mergedStyle.fontSize = `var(--${size.replace(".", "-")})`;
-    } else {
-      // Fallback/Safety if somehow a bare string passed (though type forbids)
-      mergedStyle.fontSize = toToken(size, "font-size");
-    }
+  // Handle explicit size override (tokens are already CSS variables)
+  if (size !== undefined) {
+    mergedStyle.fontSize = size; // Already "var(--font-size-nX)"
   }
 
-  // Handle Opacity Token
+  // Handle Opacity Token (tokens are already CSS variables)
   if (opacity !== undefined) {
-    if (typeof opacity === "string" && opacity.startsWith("opacity.")) {
-      mergedStyle.opacity = `var(--${opacity.replace(".", "-")})`;
-    } else {
-      mergedStyle.opacity = opacity;
-    }
+    mergedStyle.opacity = opacity; // Already "var(--opacity-nX)" with 0-1 values
   }
 
   return (

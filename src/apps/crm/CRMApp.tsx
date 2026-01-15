@@ -3,17 +3,14 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { CRMDrawer } from "./CRMDrawer";
 import { CRMHeader } from "./CRMHeader";
 import { CRMSidebar } from "./CRMSidebar";
 import { CRMTable } from "./CRMTable";
 import { CRMToolbar } from "./CRMToolbar";
 import { loadDataset } from "./dataLoader";
-import {
-  currentDataAtom,
-  isLoadingAtom,
-  selectedDatasetAtom,
-} from "./store";
+import { currentDataAtom, isLoadingAtom, selectedDatasetAtom } from "./store";
 
 export function CRMApp() {
   const selectedDataset = useAtomValue(selectedDatasetAtom);
@@ -49,20 +46,21 @@ export function CRMApp() {
         }}
         override={{
           p: Space.n0,
+          borderLeft: true,
         }}
         fill
         flex
         clip
-        borderLeft
       >
         <CRMHeader />
         <CRMToolbar />
 
         <Frame flex fill scroll override={{ p: Space.n0 }}>
           {isLoading ? (
-            <Frame fill pack align="center" justify="center">
+            <Frame fill pack override={{ align: "center", justify: "center" }}>
               <Frame
-                override={{ w: Size.n24, h: Size.n24, rounded: "full" }}
+                override={{ w: Size.n24, h: Size.n24 }}
+                rounded={Radius2.full}
                 style={{
                   border: "2px solid var(--border-color)",
                   borderTopColor: "var(--text-primary)",

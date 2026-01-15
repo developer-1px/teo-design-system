@@ -16,10 +16,7 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Overlay } from "../design-system/Overlay";
 import { Separator } from "../design-system/Separator";
 import { useTheme } from "../design-system/theme";
-import {
-  IconSize,
-  Space,
-} from "../design-system/token/token.const.1tier";
+import { IconSize, Space, Radius2 } from "../design-system/token";
 
 const BOTTOM_TOOLS = [
   { icon: MousePointer2, tooltip: "Move", variant: "surface" as const },
@@ -47,27 +44,22 @@ export function FloatingToolbar() {
       style={{ transform: "translateX(-50%)" }}
     >
       <Frame
-        override={{
-          gap: Space.n4,
-          p: Space.n4,
-          rounded: "full",
-          shadow: "lg",
-        }}
+        rounded={Radius2.full}
         style={{ border: "1px solid var(--border-color)" }}
         layout={Layout.Row.Toolbar.Default}
         surface="base"
-        align="center"
+        override={{ gap: Space.n4, p: Space.n4, shadow: "lg", align: "center" }}
       >
         {BOTTOM_TOOLS.map((tool, i) =>
           tool.separator ? (
-            <Separator key={i} orientation="vertical" length="16px" />
+            <Separator key={i} orientation="vertical" length={Space.n16} />
           ) : (
             <Action
               key={i}
               icon={tool.icon}
               iconSize={IconSize.n18}
               variant={tool.variant}
-              rounded="full"
+              rounded={Radius2.full}
               tooltip={tool.tooltip}
               size="sm"
             />
@@ -76,7 +68,7 @@ export function FloatingToolbar() {
         <Action
           icon={theme === "light" ? Moon : Sun}
           iconSize={IconSize.n18}
-          rounded="full"
+          rounded={Radius2.full}
           onClick={toggleTheme}
           tooltip="Toggle Theme"
           w={6}
