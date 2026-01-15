@@ -28,9 +28,9 @@ function NavItem({ to, label }: { to: string; label: string }) {
             py: Space.n6,
             px: Space.n14,
             rounded: "full",
-            style: {
-              color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
-            },
+          }}
+          style={{
+            color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
           }}
           surface={isActive ? "sunken" : undefined}
           cursor="pointer"
@@ -52,8 +52,8 @@ function Navigation() {
         shadow: "xl",
         p: Space.n4,
         gap: Space.n4,
-        style: { position: "fixed", bottom: 20, left: 20, zIndex: 9999 },
       }}
+      style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
       surface="raised"
       layout={Layout.Row.Toolbar.Default}
     >
@@ -79,9 +79,9 @@ function ThemeToggleItem() {
       override={{
         p: Space.n8,
         rounded: "full",
-        style: {
-          color: "var(--text-secondary)",
-        },
+      }}
+      style={{
+        color: "var(--text-secondary)",
       }}
       onClick={toggleTheme}
       cursor="pointer"

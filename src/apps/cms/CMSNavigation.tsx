@@ -29,9 +29,10 @@ export function TopCenterBar() {
     >
       <Frame layout={Layout.Row.Toolbar.Default} align="center">
         <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
-        <Frame override={{ style: { width: "0.5px" }, h: Size.n4 }} surface="overlay" />
+        <Frame override={{ h: Size.n4 }} style={{ width: "0.5px" }} surface="overlay" />
         <Frame
-          override={{ gap: Space.n8, style: { padding: "0 8px" } }}
+          override={{ gap: Space.n8 }}
+          style={{ padding: "0 8px" }}
           layout={Layout.Row.Meta.Default}
           align="center"
         >
@@ -45,7 +46,7 @@ export function TopCenterBar() {
             <Icon src={ChevronDown} size={IconSize.n12} style={{ opacity: 0.5 }} />
           </Frame>
         </Frame>
-        <Frame override={{ style: { width: "0.5px" }, h: Size.n4 }} surface="overlay" />
+        <Frame override={{ h: Size.n4 }} style={{ width: "0.5px" }} surface="overlay" />
         <Action icon={Play} variant="ghost" size="sm" rounded="full" />
       </Frame>
     </Overlay>
@@ -107,9 +108,9 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
         override={{
           p: Space.n8,
           rounded: "full",
-          style: { border: "1px solid var(--border-color)" },
           shadow: "lg",
         }}
+        style={{ border: "1px solid var(--border-color)" }}
         surface="base"
         cursor="pointer"
         className=""

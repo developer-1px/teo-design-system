@@ -1,6 +1,6 @@
 import React from "react";
 import { Frame } from "./Frame/Frame.tsx";
-import { Layout } from "./Frame/Layout/Layout.ts";
+
 import { Text } from "./text/Text.tsx";
 import { Icon } from "./Icon";
 import { IconSize, Space, type IconSizeToken, type SpaceToken } from "./token/token.const.1tier";

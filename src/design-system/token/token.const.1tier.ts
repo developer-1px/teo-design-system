@@ -268,7 +268,7 @@ export type BorderWidthToken = (typeof BorderWidth)[keyof typeof BorderWidth];
 // ---------------------------------
 // FontSize
 // ---------------------------------
-export const FontSizeScale = [9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 48, 56, 64] as const;
+export const FontSizeScale = [9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 48, 56, 64, 72, 80, 96, 112, 128] as const;
 export type FontSizeScale = ScaleOf<typeof FontSizeScale>;
 export type FontSizeKey = KeyOf<typeof FontSizeScale>;
 
@@ -293,6 +293,11 @@ export const FontSize = {
   n48: "font-size.n48",
   n56: "font-size.n56",
   n64: "font-size.n64",
+  n72: "font-size.n72",
+  n80: "font-size.n80",
+  n96: "font-size.n96",
+  n112: "font-size.n112",
+  n128: "font-size.n128",
 } as const satisfies Record<FontSizeKey, `font-size.n${FontSizeScale}`>;
 
 export type FontSizeToken = (typeof FontSize)[keyof typeof FontSize];

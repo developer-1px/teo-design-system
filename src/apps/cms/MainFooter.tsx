@@ -14,15 +14,16 @@ export function MainFooter() {
         py: Space.n64,
         px: Space.n24,
         gap: Space.n16,
-        style: { maxWidth: "1200px", margin: "0 auto" },
       }}
+      style={{ maxWidth: "1200px", margin: "0 auto" }}
       surface="sunken"
     >
       <Frame override={{ w: Size.full }} layout={Layout.Row.Header.Default} justify="between" align="start">
-        <Frame override={{ gap: Space.n6, style: { width: "35%" } }}>
+        <Frame override={{ gap: Space.n6 }} style={{ width: "35%" }}>
           <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Tight} align="center">
             <Frame
-              override={{ style: { width: 40, height: 40 }, rounded: "xl" }}
+              override={{ rounded: "xl" }}
+              style={{ width: 40, height: 40 }}
               surface="primary"
               pack
             >
@@ -74,13 +75,13 @@ export function MainFooter() {
 
       <Frame
         override={{
-          style: { borderTop: "1px solid var(--border-color)" },
           pt: Space.n8,
           pr: Space.n0,
           pb: Space.n0,
           pl: Space.n0,
           w: Size.full,
         }}
+        style={{ borderTop: "1px solid var(--border-color)" }}
         layout={Layout.Row.Header.Default}
         justify="between"
         align="center"

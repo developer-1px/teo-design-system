@@ -103,12 +103,12 @@ export function PropertiesPanel() {
         override={{
           p: Space.n4,
           gap: Space.n4,
-          style: {
-            flexShrink: 0,
-            height: "40px",
-            borderBottom: "1px solid var(--border-color)",
-            borderColor: "var(--border-color)",
-          },
+        }}
+        style={{
+          flexShrink: 0,
+          height: "40px",
+          borderBottom: "1px solid var(--border-color)",
+          borderColor: "var(--border-color)",
         }}
         layout={Layout.Row.Toolbar.Compact}
       >
@@ -140,8 +140,9 @@ export function PropertiesPanel() {
       </Frame>
 
       <Frame
-        override={{ p: Space.n8, gap: Space.n8, style: { minHeight: 0 } }}
-        overflow="auto"
+        override={{ p: Space.n8, gap: Space.n8 }}
+        style={{ minHeight: 0 }}
+        scroll
         flex
         fill
       >
@@ -149,8 +150,8 @@ export function PropertiesPanel() {
         <Frame
           override={{
             rounded: "md",
-            style: { border: "1px solid var(--border-color)", padding: "1px", gap: "1px" }, // 1px style override
           }}
+          style={{ border: "1px solid var(--border-color)", padding: "1px", gap: "1px" }} // 1px style override
           layout={Layout.Row.Toolbar.Default}
           justify="between"
           surface="sunken"
@@ -187,7 +188,7 @@ export function PropertiesPanel() {
               value={transform.y}
               onChange={(v) => updateTransform("y", v)}
             />
-            <Frame override={{ style: { width: "24px" } }} />
+            <Frame style={{ width: "24px" }} />
           </Frame>
           <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
             <TransformField
@@ -200,7 +201,7 @@ export function PropertiesPanel() {
               value={transform.h}
               onChange={(v) => updateTransform("h", v)}
             />
-            <Frame override={{ style: { width: "24px" } }} pack>
+            <Frame style={{ width: "24px" }} pack>
               <Action
                 icon={Lock}
                 iconSize={IconSize.n10}
@@ -220,7 +221,7 @@ export function PropertiesPanel() {
               value={transform.corner}
               onChange={(v) => updateTransform("corner", v)}
             />
-            <Frame override={{ style: { width: "24px" } }} />
+            <Frame style={{ width: "24px" }} />
           </Frame>
         </Frame>
         <Separator />
@@ -255,8 +256,8 @@ export function PropertiesPanel() {
             <Frame
               override={{
                 rounded: "md",
-                style: { border: "1px solid var(--border-color)", padding: "1px", gap: "1px" },
               }}
+              style={{ border: "1px solid var(--border-color)", padding: "1px", gap: "1px" }}
               layout={Layout.Row.Toolbar.Compact}
               justify="between"
               align="center"
@@ -289,12 +290,12 @@ export function PropertiesPanel() {
             icon={
               <Frame
                 override={{
-                  style: {
-                    width: "10px",
-                    height: "10px",
-                    border: "1px solid var(--border-color)",
-                  },
                   rounded: "round",
+                }}
+                style={{
+                  width: "10px",
+                  height: "10px",
+                  border: "1px solid var(--border-color)",
                 }}
                 surface="base"
               />
@@ -312,12 +313,12 @@ export function PropertiesPanel() {
               icon={
                 <Frame
                   override={{
-                    style: {
-                      width: "10px",
-                      height: "10px",
-                      border: "1px solid var(--text-primary)",
-                    },
                     rounded: "round",
+                  }}
+                  style={{
+                    width: "10px",
+                    height: "10px",
+                    border: "1px solid var(--text-primary)",
                   }}
                 />
               }
@@ -384,7 +385,7 @@ export function PropertiesPanel() {
           />
         </PropertySection>
 
-        <Frame override={{ style: { height: "100px" } }} />
+        <Frame style={{ height: "100px" }} />
       </Frame>
     </Section>
   );

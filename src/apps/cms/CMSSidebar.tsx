@@ -31,14 +31,13 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         h: Size.full,
         p: Space.n4,
         gap: Space.n4,
-        style: {
-          borderRight: "1px solid var(--border-color)",
-          width: isOpen ? 240 : 60,
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          transformOrigin: "top left",
-          transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-        },
+        clip: true,
+      }}
+      style={{
+        width: isOpen ? 240 : 60,
+        whiteSpace: "nowrap",
+        transformOrigin: "top left",
+        transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
       surface="raised"
     >
@@ -56,11 +55,11 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         <Frame
           override={{
             gap: Space.n8,
-            style: {
-              opacity: isOpen ? 1 : 0,
-              transition: "opacity 0.2s",
-              pointerEvents: isOpen ? "auto" : "none",
-            },
+          }}
+          style={{
+            opacity: isOpen ? 1 : 0,
+            transition: "opacity 0.2s",
+            pointerEvents: isOpen ? "auto" : "none",
           }}
           layout={Layout.Row.Actions.Default}
           align="center"
@@ -71,15 +70,16 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       <Frame
         override={{
           gap: Space.n8,
-          style: {
-            opacity: isOpen ? 1 : 0,
-            transition: "opacity 0.2s",
-            pointerEvents: isOpen ? "auto" : "none",
-            display: isOpen ? "flex" : "none", // Fully hide to prevent layout issues
-          },
         }}
+        style={{
+          opacity: isOpen ? 1 : 0,
+          transition: "opacity 0.2s",
+          pointerEvents: isOpen ? "auto" : "none",
+          display: isOpen ? "flex" : "none", // Fully hide to prevent layout issues
+        }}
+
         flex
-        overflow="scroll"
+        scroll
       >
         <Frame
           override={{ gap: Space.n8, pt: Space.n0, pr: Space.n8, pb: Space.n8, pl: Space.n8 }}
@@ -141,18 +141,19 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         override={{
           gap: Space.n12,
           p: Space.n12,
-          style: {
-            borderTop: "1px solid var(--border-color)",
-            opacity: isOpen ? 1 : 0,
-            transition: "opacity 0.2s",
-            display: isOpen ? "flex" : "none",
-          },
+        }}
+        style={{
+          borderTop: "1px solid var(--border-color)",
+          opacity: isOpen ? 1 : 0,
+          transition: "opacity 0.2s",
+          display: isOpen ? "flex" : "none",
         }}
         layout={Layout.Row.Item.Default}
         align="center"
       >
         <Frame
-          override={{ style: { width: 32, height: 32 }, rounded: "full" }}
+          override={{ rounded: "full" }}
+          style={{ width: 32, height: 32 }}
           surface="sunken"
           pack
         >
@@ -169,7 +170,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           </Text.Card.Note>
         </Frame>
       </Frame>
-    </Frame>
+    </Frame >
   );
 }
 
@@ -195,13 +196,13 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
           override={{
             w: Size.full,
             rounded: "md",
-            style: {
-              border: "1px solid var(--border-color)",
-              boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
-              borderColor: active
-                ? "var(--text-primary)"
-                : "var(--border-color)",
-            },
+          }}
+          style={{
+            border: "1px solid var(--border-color)",
+            boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
+            borderColor: active
+              ? "var(--text-primary)"
+              : "var(--border-color)",
           }}
           ratio="16/9"
           surface={active ? "base" : "sunken"}

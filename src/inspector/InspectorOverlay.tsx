@@ -183,18 +183,18 @@ export function InspectorOverlay() {
             >
               <Frame
                 override={{
-                  style: {
-                    backgroundColor: "var(--link-color)",
-                    borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
-                    borderBottomRightRadius:
-                      targetRect.top < 30 ? "4px" : undefined,
-                  },
                   py: Space.n0,
                   px: Space.n6,
                   rounded: "sm",
                   h: Size.n16,
                   gap: Space.n4,
                   shadow: "sm",
+                }}
+                style={{
+                  backgroundColor: "var(--link-color)",
+                  borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
+                  borderBottomRightRadius:
+                    targetRect.top < 30 ? "4px" : undefined,
                 }}
                 // 24px
                 layout={Layout.Row.Meta.Default}

@@ -15,16 +15,17 @@ export function FeatureGridSection() {
         py: Space.n24,
         px: Space.n6,
         gap: Space.n16,
-        style: {
-          borderBottom: "1px solid var(--border-color)",
-          maxWidth: 1280,
-          margin: "0 auto",
-        },
+      }}
+      style={{
+        borderBottom: "1px solid var(--border-color)",
+        maxWidth: 1280,
+        margin: "0 auto",
       }}
       surface="base"
     >
       <Frame
-        override={{ style: { maxWidth: 800, margin: "0 auto" }, gap: Space.n4 }}
+        override={{ gap: Space.n4 }}
+        style={{ maxWidth: 800, margin: "0 auto" }}
         align="center"
       >
         <Text.Card.Note
@@ -64,7 +65,7 @@ export function FeatureGridSection() {
 
         {/* Row 2 */}
         <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Item.Default}>
-          <Frame override={{ style: { gridColumn: "span 2" } }}>
+          <Frame style={{ gridColumn: "span 2" }}>
             <FeatureCardLarge
               icon={Shield}
               title="Enterprise Security"
@@ -107,8 +108,8 @@ function FeatureCardSmall({
           w: Size.n48,
           h: Size.n48,
           rounded: "xl",
-          style: { border: "1px solid var(--border-color)" },
         }}
+        style={{ border: "1px solid var(--border-color)" }}
         surface="sunken"
         pack
       >
@@ -144,7 +145,7 @@ function FeatureCardLarge({
       override={{ rounded: "2xl" }}
       flex={flex}
       surface="raised"
-      overflow="hidden"
+      clip
       layout={Layout.Row.Item.Default}
     >
       <Frame override={{ p: Space.n24, gap: Space.n16 }} flex justify="center">
@@ -153,8 +154,8 @@ function FeatureCardLarge({
             w: Size.n12,
             h: Size.n12,
             rounded: "xl",
-            style: { border: "1px solid var(--border-color)" },
           }}
+          style={{ border: "1px solid var(--border-color)" }}
           surface="sunken"
           pack
         >
@@ -173,12 +174,11 @@ function FeatureCardLarge({
       </Frame>
       {image && (
         <Frame
-          override={{
-            style: {
-              width: "40%",
-              background:
-                "linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
-            },
+          override={{}}
+          style={{
+            width: "40%",
+            background:
+              "linear-gradient(45deg, var(--surface-sunken), var(--surface-overlay))",
           }}
           surface="raised"
           pack
@@ -189,8 +189,8 @@ function FeatureCardLarge({
               h: Size.n40,
               rounded: "lg",
               shadow: "xl",
-              style: { border: "1px solid var(--border-color)" },
             }}
+            style={{ border: "1px solid var(--border-color)" }}
             surface="base"
           />
         </Frame>

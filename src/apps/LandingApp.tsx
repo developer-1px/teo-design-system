@@ -21,7 +21,7 @@ import { IconSize } from "../design-system/token/token.const.1tier";
 export function LandingApp() {
   return (
     <Experience value="landing">
-      <Frame override={{ p: Space.n0 }} fill surface="base" overflow="auto">
+      <Frame override={{ p: Space.n0 }} fill surface="base" scroll>
         {/* Navigation */}
         <Frame
           style={{

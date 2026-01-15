@@ -65,12 +65,12 @@ export function Section({
         width: resolveSizingStyle(w),
         height: resolveSizingStyle(h),
         ...computedBorder,
-        overflow: "hidden",
         position: "relative",
         display: "flex",
         flexDirection: "column",
         ...style,
       }}
+      clip
       override={{
         p: Space.n0,
         w: resolveSizingProp(w),
@@ -109,7 +109,7 @@ export function Section({
           )
         </Frame >
       )}
-      <Frame style={{ overflow: "auto", minHeight: 0 }} override={{}} fill flex>
+      <Frame style={{ minHeight: 0 }} scroll override={{}} fill flex>
         {children}
       </Frame>
     </Frame >

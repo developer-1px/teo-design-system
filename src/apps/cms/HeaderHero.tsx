@@ -16,48 +16,46 @@ export function HeaderHero() {
         py: Space.n88,
         px: Space.n20,
         gap: Space.n12,
-        style: {
-          minHeight: "90vh",
-          position: "relative",
-          overflow: "hidden",
-          maxWidth: 1280,
-          margin: "0 auto",
-        },
+        clip: true,
+      }}
+      style={{
+        minHeight: "90vh",
+        position: "relative",
+        maxWidth: 1280,
+        margin: "0 auto",
       }}
       surface="base"
     >
       {/* Background Decoration */}
-      <Frame
-        override={{
-          style: {
-            position: "absolute",
-            top: -25,
-            right: -25,
-            background: "var(--color-primary)",
-            filter: "blur(150px)",
-            opacity: 0.1,
-          },
+      < Frame
+        override={{}}
+        style={{
+          position: "absolute",
+          top: -25,
+          right: -25,
+          background: "var(--color-primary)",
+          filter: "blur(150px)",
+          opacity: 0.1,
         }}
       />
-      <Frame
-        override={{
-          style: {
-            position: "absolute",
-            bottom: -25,
-            left: -25,
-            background: "var(--color-warning)",
-            filter: "blur(150px)",
-            opacity: 0.15,
-          },
+      < Frame
+        override={{}}
+        style={{
+          position: "absolute",
+          bottom: -25,
+          left: -25,
+          background: "var(--color-warning)",
+          filter: "blur(150px)",
+          opacity: 0.15,
         }}
       />
 
-      <Frame
+      < Frame
         override={{
           w: Size.full,
-          style: { maxWidth: "var(--container-n800)", margin: "0 auto" },
           gap: Space.n6,
         }}
+        style={{ maxWidth: "var(--container-n800)", margin: "0 auto" }}
         align="center"
       >
         <Frame
@@ -124,31 +122,31 @@ export function HeaderHero() {
             rounded="full"
           />
         </Frame>
-      </Frame>
+      </Frame >
 
       {/* Hero Visual: Mockup UI */}
-      <Frame
+      < Frame
         override={{
           w: Size.full,
-          style: {
-            maxWidth: "250px",
-            position: "relative",
-            marginTop: "var(--space-n64)",
-            transform: "perspective(1000px) rotateX(5deg)",
-            margin: "0 auto",
-          },
+        }}
+        style={{
+          maxWidth: "250px",
+          position: "relative",
+          marginTop: "var(--space-n64)",
+          transform: "perspective(1000px) rotateX(5deg)",
+          margin: "0 auto",
         }}
         surface="raised"
-        overflow="hidden"
+        clip
       >
         <Frame
           override={{
             h: Size.n12,
-            style: { borderBottom: "1px solid var(--border-color)" },
             py: Space.n0,
             px: Space.n4,
             gap: Space.n2,
           }}
+          style={{ borderBottom: "1px solid var(--border-color)" }}
           surface="raised"
           layout={Layout.Row.Item.Tight}
           align="center"
@@ -172,18 +170,20 @@ export function HeaderHero() {
           <Frame
             override={{
               w: Size.n48,
-              style: { borderRight: "1px solid var(--border-color)" },
               p: Space.n4,
               gap: Space.n4,
             }}
+            style={{ borderRight: "1px solid var(--border-color)" }}
             surface="sunken"
           >
             <Frame
-              override={{ style: { height: 3, width: "80%" }, rounded: "full" }}
+              override={{ rounded: "full" }}
+              style={{ height: 3, width: "80%" }}
               surface="overlay"
             />
             <Frame
-              override={{ h: Size.n4, style: { width: "60%" }, rounded: "full" }}
+              override={{ h: Size.n4, rounded: "full" }}
+              style={{ width: "60%" }}
               surface="overlay"
             />
             <Frame flex />
@@ -212,7 +212,7 @@ export function HeaderHero() {
             </Frame>
           </Frame>
         </Frame>
-      </Frame>
-    </Frame>
+      </Frame >
+    </Frame >
   );
 }

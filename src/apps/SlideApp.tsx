@@ -16,12 +16,12 @@ import { Text } from "../design-system/text/Text";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
-import { Space } from "../design-system/token/token.const.1tier";
+import { Space, Size } from "../design-system/token/token.const.1tier";
 import { IconSize } from "../design-system/token/token.const.1tier";
 
 export function SlideApp() {
   return (
-    <Frame fill surface="sunken" overflow="hidden">
+    <Frame fill surface="sunken" clip>
       {/* 1. Global Header */}
       <Frame
         style={{
@@ -119,10 +119,10 @@ export function SlideApp() {
           override={{ rounded: "round" }}
           flex
           fill
-          overflow="hidden"
+          clip
           as="main"
         >
-          <Frame fill pack overflow="auto">
+          <Frame fill pack scroll>
             <Frame
               style={{ width: "1000px", maxWidth: "100%" }}
               override={{

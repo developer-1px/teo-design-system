@@ -21,7 +21,7 @@ export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <Frame override={{ p: Space.n0 }} fill surface="raised" overflow="hidden">
+    <Frame override={{ p: Space.n0 }} fill surface="raised" clip>
       <TopCenterBar />
       <TopRightBar />
 
@@ -43,7 +43,7 @@ export function CMSApp() {
           surface="overlay"
           align="center"
           justify="start"
-          overflow="auto"
+          scroll
         >
           {/* The Canvas */}
           <Frame style={{ minHeight: "100%" }} override={{ w: Size.full }}>

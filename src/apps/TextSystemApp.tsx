@@ -19,7 +19,8 @@ export function TextSystemApp() {
   return (
     <Experience value={experience}>
       <Frame
-        style={{ scrollSnapType: "y mandatory", overflowY: "scroll" }}
+        style={{ scrollSnapType: "y mandatory" }}
+        scroll="y"
         override={{
         }}
         fill
@@ -214,8 +215,8 @@ export function TextSystemApp() {
                 gap: Space.n12,
                 w: Size.n320,
                 shadow: "sm",
-                style: { border: "1px solid var(--border-color)" },
               }}
+              style={{ border: "1px solid var(--border-color)" }}
               surface="raised"
             >
               <Frame
@@ -223,8 +224,8 @@ export function TextSystemApp() {
                   w: Size.n40,
                   h: Size.n40,
                   rounded: "lg",
-                  style: { marginBottom: "var(--space-2)" },
                 }}
+                style={{ marginBottom: "var(--space-2)" }}
                 surface="sunken"
                 pack
               >
@@ -256,8 +257,8 @@ export function TextSystemApp() {
                 gap: Space.n12,
                 w: Size.n320,
                 shadow: "sm",
-                style: { border: "1px solid var(--border-color)" },
               }}
+              style={{ border: "1px solid var(--border-color)" }}
               surface="raised"
             >
               <Frame
@@ -265,8 +266,8 @@ export function TextSystemApp() {
                   w: Size.n40,
                   h: Size.n40,
                   rounded: "lg",
-                  style: { marginBottom: "var(--space-2)" },
                 }}
+                style={{ marginBottom: "var(--space-2)" }}
                 surface="sunken"
                 pack
               >
@@ -286,12 +287,12 @@ export function TextSystemApp() {
                 <Text.Card.Note style={{ opacity: 0.6 }}>Draft</Text.Card.Note>
                 <Action size="sm" variant="ghost" label="Edit" />
               </Frame>
-            </Frame>
-          </Frame>
-        </ShowcaseSection>
+            </Frame >
+          </Frame >
+        </ShowcaseSection >
 
         {/* Section 3: Field Context */}
-        <ShowcaseSection
+        < ShowcaseSection
           title="Context: Field"
           description="Input labels, values, and hints optimized for forms."
           code={`<Frame override={{ gap: 1 }} >
@@ -387,10 +388,10 @@ export function TextSystemApp() {
               <Action variant="primary" label="Save Changes" />
             </Frame>
           </Frame>
-        </ShowcaseSection>
+        </ShowcaseSection >
 
         {/* Section 4: Table Context */}
-        <ShowcaseSection
+        < ShowcaseSection
           title="Context: Table"
           description="Tabular data with clear hierarchy between heads and cells."
           code={`<Frame override={{ p: Space.n12 }} row border="bottom" >
@@ -409,7 +410,7 @@ export function TextSystemApp() {
               w: Size.full,
             }}
             surface="raised"
-            overflow="hidden"
+            clip
           >
             <Frame
               style={{ borderBottom: "1px solid var(--border-color)" }}
@@ -519,10 +520,10 @@ export function TextSystemApp() {
               </Frame>
             ))}
           </Frame>
-        </ShowcaseSection>
+        </ShowcaseSection >
 
         {/* Section 5: Menu Context */}
-        <ShowcaseSection
+        < ShowcaseSection
           title="Context: Menu"
           description="Navigation lists and action groups."
           code={`<Frame override={{ w: "200px", shadow: "lg" }}  surface="overlay" >
@@ -581,8 +582,8 @@ export function TextSystemApp() {
               <MenuItem style={{ color: "#ef4444" }}>Delete</MenuItem>
             </Frame>
           </Frame>
-        </ShowcaseSection>
-      </Frame>
+        </ShowcaseSection >
+      </Frame >
     </Experience >
   );
 }
@@ -593,15 +594,15 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
   return (
     <Frame
       override={{
-        style: {
-          color: active ? "var(--primary-fg)" : "var(--text-secondary)",
-          cursor: "pointer",
-          transition: "all 0.2s",
-        },
         py: Space.n8,
         px: Space.n16,
         rounded: "full",
         gap: Space.n8,
+      }}
+      style={{
+        color: active ? "var(--primary-fg)" : "var(--text-secondary)",
+        cursor: "pointer",
+        transition: "all 0.2s",
       }}
       onClick={onClick}
       surface={active ? "primary" : "hover"}
@@ -620,7 +621,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
       style={{ scrollSnapAlign: "start" }}
       override={{ w: Size.full, h: Size.screen }}
       layout={Layout.Row.AppContainer.Default}
-      overflow="hidden"
+      clip
     >
       {/* Left: Code & Context */}
       <Frame
@@ -644,8 +645,8 @@ function ShowcaseSection({ title, description, code, children }: any) {
             fontFamily: "var(--font-family-mono)",
             fontSize: "var(--font-size-n13)",
             lineHeight: "1.6",
-            overflowX: "auto",
           }}
+          scroll="x"
           override={{
             p: Space.n24,
             rounded: "xl",

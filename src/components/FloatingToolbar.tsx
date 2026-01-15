@@ -50,8 +50,8 @@ export function FloatingToolbar() {
           p: Space.n4,
           rounded: "full",
           shadow: "lg",
-          style: { border: "1px solid var(--border-color)" },
         }}
+        style={{ border: "1px solid var(--border-color)" }}
         layout={Layout.Row.Toolbar.Default}
         surface="base"
         align="center"
@@ -80,6 +80,6 @@ export function FloatingToolbar() {
           size={6}
         />
       </Frame>
-    </Overlay>
+    </Overlay >
   );
 }

@@ -17,13 +17,13 @@ export function SiteHeader({
     <Frame
       override={{
         w: Size.full,
-        style: {
-          height: "var(--header-height)",
-          position: "sticky",
-          top: 0,
-          zIndex: 100,
-          borderBottom: "1px solid var(--border-color)",
-        },
+      }}
+      style={{
+        height: "var(--header-height)",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        borderBottom: "1px solid var(--border-color)",
       }}
       layout={Layout.Row.Header.Default}
       align="center"
@@ -31,7 +31,8 @@ export function SiteHeader({
       surface="base"
     >
       <Frame
-        override={{ w: Size.full, style: { maxWidth: "300px" } }}
+        override={{ w: Size.full }}
+        style={{ maxWidth: "300px" }}
         layout={Layout.Row.Header.Default}
         justify="between"
         align="center"
@@ -42,9 +43,9 @@ export function SiteHeader({
               w: Size.n32,
               h: Size.n32,
               rounded: "lg",
-              style: { border: "1px solid var(--border-color)" },
               shadow: "sm",
             }}
+            style={{ border: "1px solid var(--border-color)" }}
             surface="primary"
             pack
           >

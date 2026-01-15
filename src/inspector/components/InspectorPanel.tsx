@@ -205,13 +205,13 @@ export function InspectorPanel({
         >
             <Frame
                 override={{
-                    style: {
-                        maxHeight: "80vh",
-                        border: "1px solid var(--border-color)",
-                        width: 260, // Enforce width as per original code logic usually IMPLIED or specific
-                    },
                     rounded: "lg",
                     shadow: "2xl",
+                }}
+                style={{
+                    maxHeight: "80vh",
+                    border: "1px solid var(--border-color)",
+                    width: 260, // Enforce width as per original code logic usually IMPLIED or specific
                 }}
                 surface="base"
             >
@@ -220,11 +220,11 @@ export function InspectorPanel({
                     override={{
                         py: Space.n0,
                         px: Space.n8,
-                        style: {
-                            cursor: "grab",
-                            userSelect: "none",
-                            borderBottom: "1px solid var(--border-color)",
-                        },
+                    }}
+                    style={{
+                        cursor: "grab",
+                        userSelect: "none",
+                        borderBottom: "1px solid var(--border-color)",
                     }}
                     surface="sunken"
                     layout={Layout.Row.Header.Default}
@@ -264,7 +264,7 @@ export function InspectorPanel({
                 </Frame>
 
                 {/* Content - Compact */}
-                <Frame override={{ py: Space.n8, px: Space.n0 }} overflow="auto">
+                <Frame override={{ py: Space.n8, px: Space.n0 }} scroll>
                     {/* File Path Subtitle */}
                     <Frame override={{ pt: Space.n0, pr: Space.n8, pb: Space.n8, pl: Space.n8 }}>
                         <Text size={FontSize.n28} color="tertiary" style={{ wordBreak: "break-all" }}>
@@ -345,10 +345,10 @@ export function InspectorPanel({
                                 <Frame
                                     override={{
                                         gap: Space.n0,
-                                        style: { border: "1px solid var(--border-color)" },
                                         rounded: "sm",
                                     }}
-                                    overflow="hidden"
+                                    style={{ border: "1px solid var(--border-color)" }}
+                                    clip
                                 >
                                     {section.items.map((item, i) => (
                                         <PropertyTree
@@ -364,6 +364,6 @@ export function InspectorPanel({
                     })}
                 </Frame>
             </Frame>
-        </div>
+        </div >
     );
 }

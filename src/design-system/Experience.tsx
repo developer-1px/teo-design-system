@@ -19,7 +19,8 @@ export function Experience({
 }: ExperienceProps) {
   return (
     <Frame
-      override={{ style: style, w: Size.full, h: Size.full }}
+      override={{ w: Size.full, h: Size.full }}
+      style={style}
       className={className}
       // @ts-ignore - Custom attribute for CSS tokens
       data-experience={value}

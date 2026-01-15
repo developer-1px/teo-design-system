@@ -31,10 +31,10 @@ export function PropertyTree({
                 override={{
                     py: Space.n2,
                     px: Space.n6,
-                    style: {
-                        borderBottom: "1px solid var(--border-color)",
-                        paddingLeft: `${depth * 12 + 8}px`,
-                    },
+                }}
+                style={{
+                    borderBottom: "1px solid var(--border-color)",
+                    paddingLeft: `${depth * 12 + 8}px`,
                 }}
                 layout={Layout.Row.LabelValue.Default}
                 surface={background}
@@ -67,11 +67,11 @@ export function PropertyTree({
                 override={{
                     py: Space.n2,
                     px: Space.n6,
-                    style: {
-                        borderBottom: "1px solid var(--border-color)",
-                        paddingLeft: `${depth * 12 + 8}px`,
-                        cursor: isEmpty ? "default" : "pointer",
-                    },
+                }}
+                style={{
+                    borderBottom: "1px solid var(--border-color)",
+                    paddingLeft: `${depth * 12 + 8}px`,
+                    cursor: isEmpty ? "default" : "pointer",
                 }}
                 layout={Layout.Row.LabelValue.Default}
                 surface={background}

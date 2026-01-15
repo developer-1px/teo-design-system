@@ -600,7 +600,7 @@ function Drawer({
       </Frame>
 
       {/* Drawer Body */}
-      <Frame flex fill overflow="auto">
+      <Frame flex fill scroll>
         <Frame override={{ p: Space.n24, gap: Space.n24 }}>
           {/* Properties Section */}
           <Frame override={{ gap: Space.n16 }}>
@@ -754,11 +754,11 @@ export function CRMApp() {
         }}
         fill
         flex
-        overflow="hidden"
+        clip
       >
         <Header />
         <Toolbar />
-        <Frame flex fill overflow="auto">
+        <Frame flex fill scroll>
           <TableHeader />
           {DEALS.map((deal) => (
             <TableRow

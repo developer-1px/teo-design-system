@@ -27,25 +27,25 @@ export function ScrollTabSection() {
         w: Size.full,
         py: Space.n24,
         px: Space.n0,
-        style: { borderBottom: "1px solid var(--border-color)" },
       }}
+      style={{ borderBottom: "1px solid var(--border-color)" }}
       surface="base"
     >
       <Frame
         override={{
           gap: Space.n8,
           w: Size.full,
-          style: {
-            // Hide scrollbar for cleaner look but keep functionality
-            msOverflowStyle: "none",
-            scrollbarWidth: "none",
-            WebkitOverflowScrolling: "touch",
-          },
           py: Space.n0,
           px: Space.n24,
         }}
+        style={{
+          // Hide scrollbar for cleaner look but keep functionality
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
+          WebkitOverflowScrolling: "touch",
+        }}
         layout={Layout.Row.Item.Tight}
-        overflow="auto"
+        scroll
       >
         {TABS.map((tab, i) => (
           <Action

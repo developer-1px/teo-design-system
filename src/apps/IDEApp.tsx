@@ -164,7 +164,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
         />
       </Frame>
 
-      <Frame flex fill overflow="auto">
+      <Frame flex fill scroll>
         {/* Section: Open Editors */}
         <Frame>
           <Action
@@ -355,7 +355,7 @@ function EditorTabs() {
       <Tab title="IDEApp" icon="react" modified />
       <Tab title="useStore.ts" icon="ts" />
       <Frame flex />
-      <Frame override={{ px: Space.n8, gap: Space.n4 }} layout={Layout.Row.Actions.Compact} align="center">
+      <Frame override={{ px: Space.n8, gap: Space.n4 }} layout={Layout.Row.Actions.Default} align="center">
         <Action
           icon={Split}
           variant="ghost"
@@ -463,7 +463,7 @@ function Breadcrumbs() {
 
 function CodeEditor() {
   return (
-    <Frame flex fill surface="base" layout={Layout.Row.AppContainer.Default} overflow="hidden">
+    <Frame flex fill surface="base" layout={Layout.Row.AppContainer.Default} clip>
       {/* Gutter */}
       <Frame
         style={{ userSelect: "none" }}
@@ -697,7 +697,7 @@ export function IDEApp() {
     <Frame
       fill
       surface="base"
-      overflow="hidden"
+      clip
       grid
       columns="48px 250px 1fr"
       rows="1fr 22px"

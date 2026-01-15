@@ -21,7 +21,7 @@ export function LoginApp() {
         align="center"
         justify="center"
       >
-        <Frame override={{ w: Size.full, style: { maxWidth: "400px" }, gap: Space.n32 }}>
+        <Frame override={{ w: Size.full, gap: Space.n32 }} style={{ maxWidth: "400px" }}>
           <Frame override={{ gap: Space.n8 }}>
             <Text size={FontSize.n28} weight="bold">
               Welcome back
@@ -54,8 +54,8 @@ export function LoginApp() {
                     w: Size.n4,
                     h: Size.n4,
                     rounded: "sm",
-                    style: { border: "1px solid var(--border-color)" },
                   }}
+                  style={{ border: "1px solid var(--border-color)" }}
                   surface="sunken"
                 />
                 <Text size={FontSize.n14} color="secondary">
@@ -100,8 +100,8 @@ export function LoginApp() {
                 h: Size.n64,
                 rounded: "2xl",
                 shadow: "lg",
-                style: { marginBottom: 16 },
               }}
+              style={{ marginBottom: 16 }}
               surface="card"
               align="center"
               justify="center"
@@ -115,7 +115,7 @@ export function LoginApp() {
               for data-dense interfaces where content is the hero.
             </ProseOld>
 
-            <Frame override={{ gap: Space.n16, style: { marginTop: 16 } }}>
+            <Frame override={{ gap: Space.n16 }} style={{ marginTop: 16 }}>
               <FeatureRow
                 title="Zero Decoration"
                 desc="Focus on content hierarchy and spacing."
@@ -131,8 +131,8 @@ export function LoginApp() {
             </Frame>
           </ProseDocument>
         </Frame>
-      </Section>
-    </Frame>
+      </Section >
+    </Frame >
   );
 }
 
@@ -140,7 +140,8 @@ function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
     <Frame layout={Layout.Row.Item.Default} align="start">
       <Frame
-        override={{ w: Size.n8, h: Size.n8, rounded: "full", style: { marginTop: 4 } }}
+        override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
+        style={{ marginTop: 4 }}
         surface="primary"
         flex={0}
       />

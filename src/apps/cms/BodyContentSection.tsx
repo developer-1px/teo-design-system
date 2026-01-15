@@ -13,20 +13,20 @@ export function BodyContentSection() {
         w: Size.full,
         py: Space.n96,
         px: Space.n24,
-        style: { borderBottom: "1px solid var(--border-color)" },
       }}
+      style={{ borderBottom: "1px solid var(--border-color)" }}
       surface="sunken"
     >
       <Frame
         override={{
           gap: Space.n24,
           w: Size.full,
-          style: { maxWidth: 1280, margin: "0 auto" },
         }}
+        style={{ maxWidth: 1280, margin: "0 auto" }}
         layout={Layout.Row.Item.Default}
         align="center"
       >
-        <Frame override={{ style: { width: "50%" }, gap: Space.n8 }}>
+        <Frame override={{ gap: Space.n8 }} style={{ width: "50%" }}>
           <Frame override={{ gap: Space.n4 }}>
             <Text.Card.Note
               style={{
@@ -67,13 +67,12 @@ export function BodyContentSection() {
               h: Size.n128,
               rounded: "3xl",
               shadow: "2xl",
-              style: { position: "relative" },
             }}
+            style={{ position: "relative" }}
             surface="raised"
           >
             <Frame
               override={{
-                style: { position: "absolute", top: "40px", left: "-40px" },
                 w: Size.n44,
                 h: Size.n44,
                 rounded: "2xl",
@@ -81,6 +80,7 @@ export function BodyContentSection() {
                 p: Space.n24,
                 gap: Space.n16,
               }}
+              style={{ position: "absolute", top: "40px", left: "-40px" }}
               surface="raised"
             >
               <Icon src={Zap} size={IconSize.n32} style={{ color: "var(--color-warning)" }} />
@@ -90,14 +90,14 @@ export function BodyContentSection() {
                   surface="overlay"
                 />
                 <Frame
-                  override={{ h: Size.n12, style: { width: "60%" }, rounded: "full" }}
+                  override={{ h: Size.n12, rounded: "full" }}
+                  style={{ width: "60%" }}
                   surface="overlay"
                 />
               </Frame>
             </Frame>
             <Frame
               override={{
-                style: { position: "absolute", bottom: "40px", right: "-40px" },
                 w: Size.n56,
                 h: Size.n56,
                 rounded: "2xl",
@@ -105,6 +105,7 @@ export function BodyContentSection() {
                 p: Space.n24,
                 gap: Space.n16,
               }}
+              style={{ position: "absolute", bottom: "40px", right: "-40px" }}
               surface="raised"
             >
               <Icon src={MessageSquare} size={IconSize.n32} style={{ color: "var(--color-primary)" }} />
@@ -115,12 +116,14 @@ export function BodyContentSection() {
                     surface="overlay"
                   />
                   <Frame
-                    override={{ h: Size.n2, w: Size.n24, rounded: "full" }}
+                    override={{ w: Size.n24, rounded: "full" }}
+                    style={{ height: "var(--space-n2)" }}
                     surface="overlay"
                   />
                 </Frame>
                 <Frame
-                  override={{ h: Size.n2, w: Size.full, rounded: "full" }}
+                  override={{ w: Size.full, rounded: "full" }}
+                  style={{ height: "var(--space-n2)" }}
                   surface="raised"
                 />
               </Frame>
@@ -141,7 +144,8 @@ function CheckItem({ title, desc }: CheckItemProps) {
   return (
     <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Default} align="start">
       <Frame
-        override={{ w: Size.n8, h: Size.n8, rounded: "full", style: { marginTop: 2 } }}
+        override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
+        style={{ marginTop: 2 }}
         surface="primary"
         pack
       >

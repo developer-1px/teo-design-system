@@ -1,5 +1,5 @@
 import React from "react";
-import type { FrameOverrides } from "../Frame/FrameProps.ts";
+import type { FrameOverrides } from "./FrameProps.ts";
 
 
 export function frameToSettings(props: FrameOverrides): {
@@ -75,7 +75,7 @@ export function frameToSettings(props: FrameOverrides): {
   // --- Smart Logic Helpers ---
   const isFixedDimension = (
     val: string | number | undefined,
-    axis: "width" | "height"
+    _: "width" | "height"
   ): boolean => {
     if (val === undefined) return false;
     if (typeof val === "number") return true;
@@ -161,9 +161,14 @@ export function frameToSettings(props: FrameOverrides): {
     classes.push(`surface-${props.surface}`);
   }
 
-  // --- Overflow ---
-  if (props.overflow) {
-    classes.push(`overflow-${props.overflow}`);
+  // --- Overflow (Legacy removed, ensure clean) ---
+  // if (props.overflow) ... removed
+
+  // --- Clip ---
+  if (props.clip === true) {
+    classes.push("overflow-clip");
+  } else if (props.clip === false) {
+    classes.push("overflow-visible"); // Explicit visible if clip is false
   }
 
   // --- Cursor ---
@@ -192,17 +197,22 @@ export function frameToSettings(props: FrameOverrides): {
 
     // We apply standard overflow classes
     if (props.scroll === true) {
-      if (!props.overflow) classes.push("overflow-auto");
+      // if (!props.overflow) classes.push("overflow-auto"); // Overflow prop removed.
+      // Auto scroll implies overflow-auto.
+      classes.push("overflow-auto");
+
       // Safety:
       if (props.minWidth === undefined) standardStyles.minWidth = 0;
       if (props.minHeight === undefined) standardStyles.minHeight = 0;
     } else if (props.scroll === "x") {
       classes.push("overflow-x-auto");
-      if (!props.overflow) classes.push("overflow-y-hidden");
+      classes.push("overflow-y-hidden");
+
       if (props.minWidth === undefined) standardStyles.minWidth = 0;
     } else if (props.scroll === "y") {
       classes.push("overflow-y-auto");
-      if (!props.overflow) classes.push("overflow-x-hidden");
+      classes.push("overflow-x-hidden");
+
       if (props.minHeight === undefined) standardStyles.minHeight = 0;
     }
   }

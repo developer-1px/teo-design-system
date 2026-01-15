@@ -18,15 +18,14 @@ export function EditableWrapper({
   const [isHovered, setIsHovered] = useState(false);
   return (
     <Frame
-      override={{
-        style: {
-          position: "relative",
-          outline: isHovered
-            ? "2px solid var(--primary-bg)"
-            : "2px solid transparent",
-          outlineOffset: "2px",
-          ...style,
-        },
+      override={{}}
+      style={{
+        position: "relative",
+        outline: isHovered
+          ? "2px solid var(--primary-bg)"
+          : "2px solid transparent",
+        outlineOffset: "2px",
+        ...style,
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

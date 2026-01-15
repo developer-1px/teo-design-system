@@ -6,13 +6,9 @@ import {
   SpaceScale,
   Size,
   SizeScale,
-  Radius,
   RadiusScale,
-  FontSize,
   FontSizeScale,
-  ZIndex,
   ZIndexScale,
-  Opacity,
   OpacityScale,
   ContainerSize,
 } from "../design-system/token/token.const.1tier";
@@ -47,8 +43,7 @@ function SectionHeader({ title, desc }: { title: string; desc: string }) {
         {desc}
       </Text.Prose.Body>
       <Frame
-        style={{ height: "1px", marginBlock: "var(--space-n16)" }}
-        override={{ w: Size.full }}
+        override={{ w: Size.full, h: Size.n1, my: Space.n16 }}
         surface="overlay"
       />
     </Frame>
@@ -69,14 +64,21 @@ function ScrollContainer({ children }: any) {
       scroll="x"
       override={{ w: Size.full }}
       style={{
-        paddingBottom: "16px", // Space for scrollbar
+        paddingBottom: "var(--space-n16)", // Space for scrollbar
         // Hide scrollbar but allow scroll behavior if desired, or keep it. 
         // Apple often hides it until scroll.
         // We'll keep standard behavior for accessibility but maybe style it later.
-        maskImage: "linear-gradient(to right, black 95%, transparent 100%)" // Fade out effect
+        // Apple often hides it until scroll.
+        // We'll keep standard behavior for accessibility but maybe style it later.
+        maskImage: "linear-gradient(to right, black 95%, transparent 100%)", // Fade out effect
+        maxWidth: "100%", // Prevent parent blowout
       }}
     >
-      <Frame layout={Layout.Row.Item.Default} override={{ gap: Space.n24 }}>
+      <Frame
+        layout={Layout.Row.Item.Default}
+        override={{ gap: Space.n24 }}
+        minWidth={Size.max}
+      >
         {children}
       </Frame>
     </Frame>
@@ -85,12 +87,15 @@ function ScrollContainer({ children }: any) {
 
 export function TokensApp() {
   return (
-    <Frame fill surface="base" overflow="auto" align="center">
+    <Frame fill surface="base" scroll={"y"} align="center">
       <Frame
         override={{ w: Size.full, maxWidth: ContainerSize.n1024, p: Space.n0 }}
         layout={Layout.Row.AppContainer.Default}
       >
-        <Frame override={{ gap: Space.n40, py: Space.n40, px: Space.n24, w: Size.full }} scroll>
+        <Frame
+          override={{ gap: Space.n40, py: Space.n40, px: Space.n24, w: Size.full }}
+          minWidth={Size.n0}
+        >
 
           {/* Header & Philosophy - Centered Prose */}
           <TextColumn gap={Space.n32}>
@@ -157,7 +162,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 2. Size Scale - Horizontal Scroll (Breakout) */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }}>
+          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
             <SectionHeader
               title="Size"
               desc="Component widths and heights. Defines density."
@@ -169,7 +174,7 @@ export function TokensApp() {
                   key={val}
                   surface="overlay"
                   style={{
-                    border: "1px solid var(--border-color)",
+                    border: "var(--border-width-n1) solid var(--border-color)",
                     width: `var(--size-n${val})`,
                     height: `var(--size-n${val})`,
                     minWidth: `var(--size-n${val})`, // Ensure it doesn't shrink
@@ -179,7 +184,7 @@ export function TokensApp() {
                   align="center"
                   justify="center"
                 >
-                  <Text.Card.Code style={{ fontSize: "10px", opacity: 0.5 }}>
+                  <Text.Card.Code style={{ fontSize: "var(--font-size-n10)", opacity: 0.5 }}>
                     n{val}
                   </Text.Card.Code>
                 </Frame>
@@ -188,7 +193,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 3. Radius Scale - Horizontal Scroll */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }}>
+          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
             <SectionHeader
               title="Radius"
               desc="Softness of shapes."
@@ -200,7 +205,7 @@ export function TokensApp() {
                   surface="hover"
                   style={{
                     borderRadius: `var(--radius-n${val})`,
-                    border: "2px solid var(--border-color)",
+                    border: "var(--border-width-n2) solid var(--border-color)",
                   }}
                   override={{ w: Size.n96, h: Size.n96, minWidth: Size.n96 }}
                   align="center"
@@ -241,7 +246,7 @@ export function TokensApp() {
                         top: `${i * 20}px`,
                         left: `${i * 40}px`,
                         boxShadow: "var(--shadow-lg)",
-                        border: "1px solid var(--border-color)",
+                        border: "var(--border-width-n1) solid var(--border-color)",
                       }}
                       override={{ w: Size.n160, h: Size.n128, rounded: "xl", p: Space.n16 }}
                     >
@@ -254,13 +259,13 @@ export function TokensApp() {
           </Frame>
 
           {/* 5. Opacity Scale - Horizontal Scroll */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }}>
+          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
               {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
                 <Frame key={val} align="center" override={{ gap: Space.n8 }}>
                   <Frame
-                    surface="to-dv-black"
+                    surface="base"
                     style={{
                       opacity: `var(--opacity-n${val})`,
                       backgroundColor: "black",
@@ -286,14 +291,9 @@ export function TokensApp() {
                     <Frame override={{ w: Size.n64 }}>
                       <Text.Card.Code style={{ color: 'var(--text-tertiary)' }}>n{val}</Text.Card.Code>
                     </Frame>
-                    <p style={{
-                      fontSize: `var(--font-size-n${val})`,
-                      margin: 0,
-                      fontFamily: 'var(--font-family-body)',
-                      color: 'var(--text-primary)'
-                    }}>
+                    <Text size={`font-size.n${val}` as any} style={{ color: 'var(--text-primary)' }}>
                       The quick brown fox.
-                    </p>
+                    </Text>
                   </Frame>
                 ))}
               </Frame>

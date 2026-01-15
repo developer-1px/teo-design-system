@@ -9,7 +9,6 @@ import type {
   AlignToken,
   CursorToken,
   JustifyToken,
-  OverflowToken,
   SurfaceToken,
   RoundedToken,
   ShadowToken,
@@ -38,10 +37,10 @@ export interface FrameOverrides {
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
   fill?: boolean;
 
-  minWidth?: SizeToken
-  minHeight?: SizeToken
-  maxWidth?: SizeToken
-  maxHeight?: SizeToken
+  minWidth?: SizeToken | WidthToken
+  minHeight?: SizeToken | HeightToken
+  maxWidth?: SizeToken | MaxWidthToken
+  maxHeight?: SizeToken | MaxHeightToken
 
   // Grid
   grid?: boolean;
@@ -55,8 +54,9 @@ export interface FrameOverrides {
   // Surface
   surface?: SurfaceToken;
   rounded?: RoundedToken | (string & {}) | number;
-  overflow?: OverflowToken;
-  overflow?: OverflowToken;
+  // deprecated overflow removed
+  clip?: boolean;
+
   cursor?: CursorToken;
 
   // Smart Layout
@@ -121,7 +121,9 @@ export interface FrameStrictProps {
   // Surface
   surface?: SurfaceToken;
   rounded?: RoundedToken;
-  overflow?: OverflowToken;
+  // deprecated overflow removed
+  clip?: boolean;
+
   cursor?: CursorToken;
 
   // Smart Layout

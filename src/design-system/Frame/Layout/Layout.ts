@@ -310,7 +310,7 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
       return {
         align: "start",
         gap: Space.n12,
-        overflow: "scroll",
+        scroll: true,
         minHeight: Size.n0,
       };
 
@@ -340,16 +340,15 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
         gap: Space.n12,
         px: Space.n16, // 16px horizontal padding
         h: Size.n44, // Minimal standard
-        overflow: "hidden",
+        clip: true,
       };
     case Layout.Row.Header.Sticky:
       return {
         row: true,
         align: "center",
-        justify: "between",
         gap: Space.n12,
         h: Size.n44,
-        overflow: "hidden",
+        clip: true,
         style: { position: "sticky", top: 0, zIndex: 10 },
       };
 
@@ -360,7 +359,7 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
         justify: "between",
         gap: Space.n12,
         h: Size.n40, // Standard toolbar
-        overflow: "hidden",
+        clip: true,
       };
     case Layout.Row.Toolbar.Compact:
       return {
@@ -369,7 +368,7 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
         justify: "between",
         gap: Space.n8,
         h: Size.n36, // Compact toolbar
-        overflow: "hidden",
+        clip: true,
       };
     case Layout.Row.Toolbar.Sticky:
       return {
@@ -378,7 +377,7 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
         justify: "between",
         gap: Space.n12,
         h: Size.n44, // Match header
-        overflow: "hidden",
+        clip: true,
         style: { position: "sticky", top: 0, zIndex: 10 },
       };
 
@@ -398,7 +397,7 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
         align: "baseline",
         justify: "start",
         gap: Space.n8,
-        overflow: "hidden",
+        clip: true,
       };
 
     case Layout.Row.Actions.Default:
@@ -467,7 +466,7 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
         grid: true,
         align: "start",
         gap: Space.n12, // was 3 -> 12px
-        overflow: "scroll",
+        scroll: true,
         minHeight: Size.n0,
         // UPDATED: Use --size-n240 (240px)
         columns: "repeat(auto-fit, minmax(var(--size-n240, 240px), 1fr))",

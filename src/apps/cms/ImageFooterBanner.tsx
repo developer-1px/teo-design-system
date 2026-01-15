@@ -14,8 +14,8 @@ export function ImageFooterBanner() {
         w: Size.full,
         py: Space.n96,
         px: Space.n0,
-        style: { borderBottom: "1px solid var(--border-color)" },
       }}
+      style={{ borderBottom: "1px solid var(--border-color)" }}
       surface="base"
     >
       <Frame
@@ -23,32 +23,32 @@ export function ImageFooterBanner() {
           w: Size.full,
           h: Size.n128,
           rounded: "3xl",
-          style: {
-            position: "relative",
-            background: "linear-gradient(225deg, #1a1a1a, #000)",
-          },
         }}
-        overflow="hidden"
+        style={{
+          position: "relative",
+          background: "linear-gradient(225deg, #1a1a1a, #000)",
+        }}
+        clip
       >
         {/* Visual texture */}
         <Frame
           override={{
-            style: {
-              position: "absolute",
-              opacity: 0.1,
-              backgroundImage:
-                "radial-gradient(circle at center, #fff 1px, transparent 1px)",
-              backgroundSize: "32px 32px",
-            },
+          }}
+          style={{
+            position: "absolute",
+            opacity: 0.1,
+            backgroundImage:
+              "radial-gradient(circle at center, #fff 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
           }}
         />
 
         <Frame
           override={{
             p: Space.n24,
-            style: { maxWidth: 640, position: "relative", zIndex: 10 },
             gap: Space.n24,
           }}
+          style={{ maxWidth: 640, position: "relative", zIndex: 10 }}
           align="center"
         >
           <Text.Prose.Title
@@ -93,7 +93,8 @@ export function ImageFooterBanner() {
 
       {/* Partner Logos */}
       <Frame
-        override={{ style: { paddingTop: 48, paddingBottom: 24 }, gap: Space.n24 }}
+        override={{ gap: Space.n24 }}
+        style={{ paddingTop: 48, paddingBottom: 24 }}
         align="center"
       >
         <Text.Card.Note

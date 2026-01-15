@@ -16,8 +16,8 @@ export function SlidesPanel() {
       shadow="sm"
     >
       <Frame
-        override={{ style: { minHeight: 0 } }}
-        overflow="auto"
+        style={{ minHeight: 0 }}
+        scroll
         surface="sunken"
         flex
         fill
@@ -38,7 +38,7 @@ export function SlidesPanel() {
                 surface="raised"
                 flex
                 pack
-                overflow="hidden"
+                clip
               />
             </Frame>
           </Frame>

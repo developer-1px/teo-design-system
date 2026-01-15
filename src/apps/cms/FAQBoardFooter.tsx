@@ -16,8 +16,8 @@ export function FAQBoardFooter() {
         py: Space.n96,
         px: Space.n24,
         gap: Space.n48,
-        style: { maxWidth: 680, margin: "0 auto" },
       }}
+      style={{ maxWidth: 680, margin: "0 auto" }}
       surface="base"
     >
       <Frame override={{ gap: Space.n8, w: Size.full }} align="center">
@@ -54,8 +54,8 @@ export function FAQBoardFooter() {
           w: Size.full,
           rounded: "2xl",
           gap: Space.n24,
-          style: { marginTop: 24 },
         }}
+        style={{ marginTop: 24 }}
         surface="raised"
         layout={Layout.Slots.Media.Default}
         align="center"
@@ -100,9 +100,9 @@ function FAQRow({ q, a }: FAQRowProps) {
         w: Size.full,
         py: Space.n24,
         px: Space.n0,
-        style: { borderBottom: "1px solid var(--border-color)" },
         gap: Space.n16,
       }}
+      style={{ borderBottom: "1px solid var(--border-color)" }}
       onClick={() => setIsOpen(!isOpen)}
       cursor="pointer"
     >

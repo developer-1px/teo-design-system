@@ -1,9 +1,9 @@
 import type React from "react";
 
-import "../lib/frame.css";
+import "./frame.css";
 
 import type { FrameOverrides, FrameProps } from "./FrameProps.ts";
-import { frameToSettings } from "../lib/frameToSettings.ts";
+import { frameToSettings } from "./frameToSettings.ts";
 
 import { resolveLayout } from "./Layout/Layout.ts"
 
@@ -24,10 +24,8 @@ export function Frame({
   // 2. Merge Overrides (Layout override < Direct override)
   // We extract style specifically to merge it last
   const combinedOverrideStyle = {
-    ...layoutSettings.override?.style,
     // @ts-ignore - layoutSettings might have top-level style if we updated Layout.ts
     ...layoutSettings.style,
-    ...override?.style,
     ...style,
   };
 
