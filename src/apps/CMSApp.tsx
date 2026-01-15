@@ -100,8 +100,8 @@ export function CMSApp() {
             }}
           >
             <SiteHeader isSidebarOpen={isSidebarOpen} />
-            <ScrollTabSection />
             <HeaderHero />
+            <ScrollTabSection />
             <FeatureGridSection />
             <BodyContentSection />
             <ImageFooterBanner />

@@ -26,7 +26,7 @@ export function ScrollTabSection() {
     <Frame
       override={{
         w: Size.full,
-        py: Space.n24,
+        py: Space.n12,
         px: Space.n0,
       }}
       style={{ borderBottom: "1px solid var(--border-color)" }}
@@ -38,6 +38,7 @@ export function ScrollTabSection() {
           w: Size.full,
           py: Space.n0,
           px: Space.n24,
+          justify: "center",
         }}
         style={{
           // Hide scrollbar for cleaner look but keep functionality
@@ -45,7 +46,7 @@ export function ScrollTabSection() {
           scrollbarWidth: "none",
           WebkitOverflowScrolling: "touch",
         }}
-        layout={Layout.Row.Item.Tight}
+        layout={Layout.Row.Item.Default}
         scroll
       >
         {TABS.map((tab, i) => (

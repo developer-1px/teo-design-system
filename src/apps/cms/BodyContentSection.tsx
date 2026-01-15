@@ -21,9 +21,10 @@ export function BodyContentSection() {
       }}
       style={{ borderBottom: "1px solid var(--border-color)" }}
       surface="sunken"
+      pack
     >
       <Frame
-        style={{ maxWidth: "var(--container-n1280)", margin: "0 auto" }}
+        style={{ maxWidth: "var(--container-n1280)" }}
         layout={Layout.Row.Item.Default}
         override={{ gap: Space.n48, w: Size.full, align: "center" }}
       >

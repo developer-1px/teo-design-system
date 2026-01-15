@@ -51,19 +51,18 @@ function ScaleVisualizer({
 
 function SectionHeader({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame
-      override={{ gap: Space.n8, w: Size.full, maxWidth: ContainerSize.n800 }}
-      style={{ margin: "0 auto" }}
-    >
-      <Text.Prose.Title variant="md">{title}</Text.Prose.Title>
-      <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
-        {desc}
-      </Text.Prose.Body>
+    <Frame pack>
       <Frame
-        override={{ w: Size.full }}
-        style={{ marginBlock: "var(--space-n16)", height: "1px" }}
-        surface="overlay"
-      />
+        override={{ gap: Space.n8, w: Size.full, maxWidth: ContainerSize.n800 }}
+      >
+        <Text.Prose.Title variant="md">{title}</Text.Prose.Title>
+        <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
+          {desc}
+        </Text.Prose.Body>
+        <Frame override={{ h: Size.n16 }} />
+        <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="overlay" />
+        <Frame override={{ h: Size.n16 }} />
+      </Frame>
     </Frame>
   );
 }
@@ -76,11 +75,10 @@ function TextColumn({
   gap?: SpaceToken;
 }) {
   return (
-    <Frame
-      override={{ w: Size.full, maxWidth: ContainerSize.n800, gap }}
-      style={{ margin: "0 auto" }}
-    >
-      {children}
+    <Frame pack>
+      <Frame override={{ w: Size.full, maxWidth: ContainerSize.n800, gap }}>
+        {children}
+      </Frame>
     </Frame>
   );
 }

@@ -44,6 +44,7 @@ export function Frame({
   // 2. Merge Overrides (Layout override < Direct override)
   // We extract style specifically to merge it last
   // Filter out sizing/spacing properties to enforce token usage
+  // margin is blocked - use gap or Divider component instead
   const {
     width,
     height,
@@ -59,6 +60,13 @@ export function Frame({
     paddingRight,
     paddingBlock,
     paddingInline,
+    margin,
+    marginTop,
+    marginBottom,
+    marginLeft,
+    marginRight,
+    marginBlock,
+    marginInline,
     ...safeLayoutStyle
   } = (layoutSettings.style || {}) as React.CSSProperties;
 
@@ -77,6 +85,13 @@ export function Frame({
     paddingRight: _paddingRight2,
     paddingBlock: _paddingBlock2,
     paddingInline: _paddingInline2,
+    margin: _margin2,
+    marginTop: _marginTop2,
+    marginBottom: _marginBottom2,
+    marginLeft: _marginLeft2,
+    marginRight: _marginRight2,
+    marginBlock: _marginBlock2,
+    marginInline: _marginInline2,
     ...safeUserStyle
   } = (style || {}) as React.CSSProperties;
 

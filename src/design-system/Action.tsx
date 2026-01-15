@@ -148,7 +148,7 @@ export function Action({
         boxShadow: shadow
           ? `var(--shadow-${shadow})`
           : glow
-            ? "0 0 20px -5px var(--primary-bg)"
+            ? "0 0 12px -4px var(--primary-bg)"
             : undefined,
         ...styleOverride,
       }}

@@ -23,7 +23,7 @@ export function FAQBoardFooter() {
           px: Space.n24,
           gap: Space.n48,
         }}
-        style={{ maxWidth: "var(--container-n768)", margin: "0 auto" }}
+        style={{ maxWidth: "var(--container-n768)" }}
       >
         <Frame override={{ gap: Space.n12, w: Size.full, align: "center" }}>
           <Text.Card.Note

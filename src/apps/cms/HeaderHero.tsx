@@ -58,7 +58,7 @@ export function HeaderHero() {
         />
 
         <Frame
-          style={{ maxWidth: "var(--container-n800)", margin: "0 auto" }}
+          style={{ maxWidth: "var(--container-n800)" }}
           override={{ w: Size.full, gap: Space.n24, align: "center" }}
         >
           <Frame

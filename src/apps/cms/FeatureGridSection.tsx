@@ -26,10 +26,10 @@ export function FeatureGridSection() {
           px: Space.n24,
           gap: Space.n48,
         }}
-        style={{ maxWidth: "var(--container-n1280)", margin: "0 auto" }}
+        style={{ maxWidth: "var(--container-n1280)" }}
       >
         <Frame
-          style={{ maxWidth: "var(--container-n800)", margin: "0 auto" }}
+          style={{ maxWidth: "var(--container-n800)" }}
           override={{ gap: Space.n12, align: "center" }}
         >
           <Text.Card.Note

@@ -42,29 +42,26 @@ export function InspectorOverlay() {
     targetElement,
   );
 
-  const triggerLock = (el: HTMLElement) => {
+  const triggerLock = (_el: HTMLElement) => {
     setIsLocked(true);
 
-    // Create shell: outerHTML without innerHTML
-    const clone = el.cloneNode(true) as HTMLElement;
-    clone.innerHTML = "";
-    const shell = clone.outerHTML;
-    const jsx = generateJSX(targetName || "Component", targetProps);
+    // Copy only location
     const location = componentStack[0]
       ? `${componentStack[0].fileName}:${componentStack[0].lineNumber}`
       : "";
-    const text = `${location ? `${location}\n` : ""}${jsx}\n\n// HTML:\n// ${shell}`;
 
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        setNotification("Shell copied!");
-        setTimeout(() => setNotification(null), 2000);
-      })
-      .catch(() => {
-        setNotification("Copy failed");
-        setTimeout(() => setNotification(null), 2000);
-      });
+    if (location) {
+      navigator.clipboard
+        .writeText(location)
+        .then(() => {
+          setNotification("Location copied!");
+          setTimeout(() => setNotification(null), 2000);
+        })
+        .catch(() => {
+          setNotification("Copy failed");
+          setTimeout(() => setNotification(null), 2000);
+        });
+    }
   };
 
   // Click to lock (if not locked)

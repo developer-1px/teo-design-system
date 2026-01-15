@@ -158,15 +158,19 @@ export function InspectorPanel({
   const hasFlex =
     getProp("display").includes("flex") || getProp("display").includes("grid");
 
+  // Copy full info (location + JSX + HTML)
   const handleCopy = () => {
+    const clone = element.cloneNode(true) as HTMLElement;
+    clone.innerHTML = "";
+    const shell = clone.outerHTML;
     const jsx = generateJSX(name, props);
     const location = stack[0]
       ? `${stack[0].fileName}:${stack[0].lineNumber}`
       : "";
-    const textToCopy = location ? `${location}\n${jsx}` : jsx;
+    const textToCopy = `${location ? `${location}\n` : ""}${jsx}\n\n// HTML:\n// ${shell}`;
 
     navigator.clipboard.writeText(textToCopy).then(() => {
-      onCopy("Component shell copied!");
+      onCopy("Full component info copied!");
     });
   };
 
@@ -192,13 +196,22 @@ export function InspectorPanel({
       isDragging.current = false;
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "c") {
+        e.preventDefault();
+        handleCopy();
+      }
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [element, name, props, stack]);
 
   // Determine Title
   const title = stack.length > 0 ? stack[0].name : "Element";
