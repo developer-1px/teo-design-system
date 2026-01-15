@@ -35,10 +35,10 @@ export interface FrameOverrides {
   fill?: boolean;
   flex?: boolean | number | string;
 
-  minWidth?: WidthToken | (string & {});
-  minHeight?: HeightToken | (string & {});
-  maxWidth?: MaxWidthToken | (string & {});
-  maxHeight?: MaxHeightToken | (string & {});
+  minWidth?: WidthToken;
+  minHeight?: HeightToken;
+  maxWidth?: MaxWidthToken;
+  maxHeight?: MaxHeightToken;
 
   // border
   border?: boolean | string;
@@ -94,11 +94,6 @@ interface FrameStrictProps {
 
   fill?: boolean;
   flex?: boolean | number | string;
-
-  minWidth?: WidthToken | (string & {});
-  minHeight?: HeightToken | (string & {});
-  maxWidth?: MaxWidthToken | (string & {});
-  maxHeight?: MaxHeightToken | (string & {});
 
   // Grid
   grid?: boolean;

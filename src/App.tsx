@@ -6,6 +6,7 @@ import { LandingApp } from "./apps/LandingApp";
 import { LoginApp } from "./apps/LoginApp";
 import { MailApp } from "./apps/MailApp";
 import { SlideApp } from "./apps/SlideApp";
+import { SurfaceApp } from "./apps/SurfaceApp";
 import { TextSystemApp } from "./apps/TextSystemApp";
 import { TokensApp } from "./apps/TokensApp";
 import { Frame } from "./design-system/Frame/Frame.tsx";
@@ -54,6 +55,7 @@ function Navigation() {
       <NavItem to="/" label="Home" />
       <NavItem to="/text" label="Text" />
       <NavItem to="/tokens" label="Tokens" />
+      <NavItem to="/surface" label="Surface" />
 
       <NavItem to="/slide" label="Slide" />
       <NavItem to="/cms" label="CMS" />
@@ -99,6 +101,7 @@ function App() {
           <Route path="/" element={<LandingApp />} />
           <Route path="/text" element={<TextSystemApp />} />
           <Route path="/tokens" element={<TokensApp />} />
+          <Route path="/surface" element={<SurfaceApp />} />
           <Route path="/slide" element={<SlideApp />} />
 
           <Route path="/cms" element={<CMSApp />} />

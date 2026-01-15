@@ -39,7 +39,7 @@ function ScaleVisualizer({
           {label}
         </Text.Card.Code>
       </Frame>
-      <Frame flex={1} minWidth={Size.n0}>
+      <Frame flex={1} override={{ minWidth: Size.n0 }}>
         {children}
       </Frame>
       <Frame override={{ w: Size.n64 }} justify="end">
@@ -106,8 +106,7 @@ function ScrollContainer({
     >
       <Frame
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n24 }}
-        minWidth={Size.max}
+        override={{ gap: Space.n24, minWidth: Size.max }}
         {...props}
       >
         {children}
@@ -129,8 +128,8 @@ export function TokensApp() {
             py: Space.n40,
             px: Space.n24,
             w: Size.full,
+            minWidth: Size.n0,
           }}
-          minWidth={Size.n0}
         >
           {/* Header & Philosophy - Centered Prose */}
           <TextColumn gap={Space.n32}>
@@ -207,7 +206,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 2. Size Scale - Horizontal Scroll (Breakout) */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader
               title="Size"
               desc="Component widths and heights. Defines density."
@@ -240,7 +239,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 3. Radius Scale - Horizontal Scroll */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Radius" desc="Softness of shapes." />
             <ScrollContainer>
               {RadiusScale.map((val) => (
@@ -306,7 +305,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 5. Opacity Scale - Horizontal Scroll */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
               {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
@@ -328,7 +327,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 6. Font Size Scale - Prose Width */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Font Size" desc="Typography scale." />
             <TextColumn>
               <Frame override={{ gap: Space.n16, w: Size.full }}>
@@ -343,7 +342,7 @@ export function TokensApp() {
                         n{val}
                       </Text.Card.Code>
                     </Frame>
-                    <Frame flex={1} minWidth={Size.n0}>
+                    <Frame flex={1} override={{ minWidth: Size.n0 }}>
                       <Text
                         size={FontSize[`n${val}` as keyof typeof FontSize]}
                         style={{ color: "var(--text-primary)" }}

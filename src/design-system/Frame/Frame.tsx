@@ -23,11 +23,6 @@ export function Frame({
   w,
   h,
 
-                        minWidth,
-                        minHeight,
-                        maxWidth,
-                        maxHeight,
-
                         flex,
   row,
   wrap,
@@ -80,10 +75,6 @@ export function Frame({
     fill,
     shrink,
 
-    minWidth,
-    minHeight,
-    maxWidth,
-    maxHeight,
     grid,
     columns,
     rows,
