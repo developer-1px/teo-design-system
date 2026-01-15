@@ -11,7 +11,7 @@ import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Overlay } from "../design-system/Overlay";
-import { Space } from "../design-system/token/token.const.1tier";
+import { ContainerSize, Space } from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // CMS Sections
@@ -63,27 +63,28 @@ export function CMSApp() {
           position: "relative",
         }}
       >
+        {/* Viewport Container */}
         <Frame
           fill
-          scroll // Extra padding at bottom for floating toolbar
-          style={{
-            perspective: "1000px",
+          scroll
+          override={{
+            align: "center",
+            pb: Space.n96,
           }}
-          override={{ align: "center", justify: "start" }}
         >
           {/* Viewport Frame */}
           <Frame
-            flex
-            style={{
-              width:
+            override={{
+              w:
                 viewport === "mobile"
-                  ? "375px"
+                  ? ContainerSize.n320
                   : viewport === "tablet"
-                    ? "768px"
-                    : "100%",
-              minHeight: "100%",
-              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-              margin: "0 auto",
+                    ? ContainerSize.n768
+                    : "full",
+            }}
+            surface="raised"
+            style={{
+              transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               borderLeft:
                 viewport !== "desktop"
                   ? "1px solid var(--border-color)"
@@ -92,9 +93,10 @@ export function CMSApp() {
                 viewport !== "desktop"
                   ? "1px solid var(--border-color)"
                   : "none",
-              backgroundColor: "var(--surface-raised)",
               boxShadow:
-                viewport !== "desktop" ? "0 0 40px rgba(0,0,0,0.1)" : "none",
+                viewport !== "desktop"
+                  ? "var(--elevation-n4)"
+                  : "none",
             }}
           >
             <SiteHeader isSidebarOpen={isSidebarOpen} />

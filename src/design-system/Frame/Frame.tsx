@@ -43,10 +43,14 @@ export function Frame({
 
   // 2. Merge Overrides (Layout override < Direct override)
   // We extract style specifically to merge it last
-  // Filter out width/height/gap/padding to enforce token usage
+  // Filter out sizing/spacing properties to enforce token usage
   const {
     width,
     height,
+    minWidth,
+    minHeight,
+    maxWidth,
+    maxHeight,
     gap: _gap,
     padding,
     paddingTop,
@@ -61,6 +65,10 @@ export function Frame({
   const {
     width: _width2,
     height: _height2,
+    minWidth: _minWidth2,
+    minHeight: _minHeight2,
+    maxWidth: _maxWidth2,
+    maxHeight: _maxHeight2,
     gap: _gap2,
     padding: _padding2,
     paddingTop: _paddingTop2,

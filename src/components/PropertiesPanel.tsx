@@ -173,8 +173,7 @@ export function PropertiesPanel() {
       </Frame>
 
       <Frame
-        override={{ p: Space.n8, gap: Space.n8 }}
-        style={{ minHeight: 0 }}
+        override={{ p: Space.n8, gap: Space.n8, minHeight: Size.n0 }}
         scroll
         flex
         fill

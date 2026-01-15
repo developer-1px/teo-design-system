@@ -2,7 +2,7 @@ import { Frame } from "./Frame/Frame.tsx";
 import { Layout } from "./Frame/Layout/Layout.ts";
 import type { SurfaceToken } from "./lib/types.ts";
 import { Text } from "./text/Text.tsx";
-import { Space } from "./token/token.const.1tier";
+import { Size, Space } from "./token/token.const.1tier";
 import type { Radius2Token } from "./token/token.const.2tier";
 
 interface SectionProps {
@@ -86,7 +86,7 @@ export function Section({
           </Text.Card.Note>
         </Frame>
       )}
-      <Frame style={{ minHeight: 0 }} scroll override={{}} fill flex>
+      <Frame override={{ minHeight: Size.n0 }} scroll fill flex>
         {children}
       </Frame>
     </Frame>
