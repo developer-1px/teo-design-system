@@ -49,11 +49,11 @@ export function CRMApp() {
         }}
         override={{
           p: Space.n0,
+          borderLeft: true,
         }}
         fill
         flex
         clip
-        borderLeft
       >
         <CRMHeader />
         <CRMToolbar />

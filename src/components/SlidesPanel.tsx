@@ -18,9 +18,8 @@ export function SlidesPanel() {
       <Frame style={{ minHeight: 0 }} scroll surface="sunken" flex fill>
         {slides.map((num) => (
           <Frame
-            override={{ gap: Space.n4, p: Space.n8 }}
+            override={{ gap: Space.n4, p: Space.n8, border: num === 1 }}
             key={num}
-            border={num === 1}
           >
             <Frame
               override={{ gap: Space.n4 }}

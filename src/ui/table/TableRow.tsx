@@ -32,11 +32,11 @@ export function TableRow({
             w: Size.full,
             px: Space.n16,
             gap: Space.n16,
+            borderBottom: true,
           }}
           grid
           columns={columns}
           align="center"
-          borderBottom
         >
           {children}
         </Frame>
@@ -51,11 +51,11 @@ export function TableRow({
         w: Size.full,
         px: Space.n16,
         gap: Space.n16,
+        borderBottom: true,
       }}
       grid
       columns={columns}
       align="center"
-      borderBottom
     >
       {children}
     </Frame>

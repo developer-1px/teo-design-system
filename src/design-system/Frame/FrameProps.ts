@@ -117,14 +117,6 @@ interface FrameStrictProps {
   maxWidth?: MaxWidthToken | (string & {});
   maxHeight?: MaxHeightToken | (string & {});
 
-  // border
-  border?: boolean | string;
-  borderTop?: boolean | string;
-  borderRight?: boolean | string;
-  borderBottom?: boolean | string;
-  borderLeft?: boolean | string;
-  borderColor?: string;
-
   // Grid
   grid?: boolean;
   columns?: string;

@@ -17,11 +17,11 @@ export function TableHeader({ children, columns }: TableHeaderProps) {
       override={{
         px: Space.n16,
         gap: Space.n16,
+        borderBottom: true,
       }}
       grid
       columns={columns}
       align="center"
-      borderBottom
     >
       {children}
     </Frame>

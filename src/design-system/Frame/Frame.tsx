@@ -56,12 +56,6 @@ export function Frame({
   shadow,
   opacity,
   ratio,
-  border,
-  borderTop,
-  borderRight,
-  borderBottom,
-  borderLeft,
-  borderColor,
 
   // Remaining props are passed to DOM
   ...domProps
@@ -121,13 +115,6 @@ export function Frame({
     shadow,
     opacity,
     ratio,
-
-    border,
-    borderTop,
-    borderRight,
-    borderBottom,
-    borderLeft,
-    borderColor,
   };
 
   // Remove undefined keys so they don't overwrite layoutSettings

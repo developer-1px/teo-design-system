@@ -50,11 +50,11 @@ export function DrawerHeader({
         h: Size.n64,
         py: Space.n0,
         px: Space.n24,
+        borderBottom: true,
       }}
       layout={Layout.Row.Header.Default}
       align="center"
       justify="between"
-      borderBottom
     >
       <Frame
         override={{ gap: Space.n12 }}

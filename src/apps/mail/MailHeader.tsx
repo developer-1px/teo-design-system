@@ -13,10 +13,9 @@ export function MailHeader() {
 
   return (
     <Frame
-      override={{ h: Size.n64, py: Space.n0, px: Space.n20 }}
+      override={{ h: Size.n64, py: Space.n0, px: Space.n20, borderBottom: true }}
       layout={Layout.Row.Header.Default}
       surface="base"
-      borderBottom
     >
       {/* Left: Logo and Menu */}
       <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default}>

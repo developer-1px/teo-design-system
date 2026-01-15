@@ -10,11 +10,11 @@ export function DrawerFooter({ onClose }: { onClose: () => void }) {
         h: Size.n56,
         py: Space.n12,
         px: Space.n24,
+        borderTop: true,
       }}
       layout={Layout.Row.Actions.Default}
       justify="end"
       surface="sunken"
-      borderTop
     >
       <Action label="Close" variant="ghost" onClick={onClose} />
       <Action label="Edit" variant="surface" border />

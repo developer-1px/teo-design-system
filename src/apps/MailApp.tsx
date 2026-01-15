@@ -25,7 +25,7 @@ export function MailApp() {
         {/* Mail List and Detail split view */}
         <Frame fill flex layout={Layout.Row.AppContainer.Default}>
           {/* Mail List - Middle column */}
-          <Frame override={{ w: Size.n384, minWidth: Size.n320 }} borderRight>
+          <Frame override={{ w: Size.n384, minWidth: Size.n320, borderRight: true }}>
             <MailList />
           </Frame>
 

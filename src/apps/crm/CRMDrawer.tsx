@@ -38,6 +38,7 @@ export function CRMDrawer() {
       override={{
         w: Size.n512,
         shadow: "lg",
+        borderLeft: true,
       }}
       style={{
         position: "absolute",
@@ -47,7 +48,6 @@ export function CRMDrawer() {
         zIndex: 100,
       }}
       surface="overlay"
-      borderLeft
     >
       {hasSelection && selectedRow ? (
         <>

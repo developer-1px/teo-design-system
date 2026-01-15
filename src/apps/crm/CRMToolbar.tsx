@@ -15,11 +15,11 @@ export function CRMToolbar() {
         py: Space.n0,
         px: Space.n20,
         gap: Space.n8,
+        borderBottom: true,
       }}
       layout={Layout.Row.Toolbar.Default}
       align="center"
       surface="base"
-      borderBottom
     >
       <Action variant="surface" icon={List} label="Table" />
       <Action

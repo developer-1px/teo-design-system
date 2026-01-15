@@ -43,9 +43,8 @@ export function MailDetail() {
     <Frame fill override={{ p: Space.n0 }}>
       {/* Toolbar */}
       <Frame
-        override={{ h: Size.n48, py: Space.n0, px: Space.n16, gap: Space.n8 }}
+        override={{ h: Size.n48, py: Space.n0, px: Space.n16, gap: Space.n8, borderBottom: true }}
         layout={Layout.Row.Toolbar.Default}
-        borderBottom
       >
         <Action variant="ghost" icon={ArrowLeft} />
         <Action variant="ghost" icon={Archive} />
