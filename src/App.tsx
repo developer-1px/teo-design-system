@@ -4,6 +4,7 @@ import { CMSApp } from "./apps/CMSApp";
 import { CRMApp } from "./apps/crm/CRMApp.tsx";
 import { LandingApp } from "./apps/LandingApp";
 import { LoginApp } from "./apps/LoginApp";
+import { MailApp } from "./apps/MailApp";
 import { SlideApp } from "./apps/SlideApp";
 import { TextSystemApp } from "./apps/TextSystemApp";
 import { TokensApp } from "./apps/TokensApp";
@@ -61,6 +62,7 @@ function Navigation() {
       <NavItem to="/slide" label="Slide" />
       <NavItem to="/cms" label="CMS" />
       <NavItem to="/crm" label="CRM" />
+      <NavItem to="/mail" label="Mail" />
       <NavItem to="/login" label="Login" />
       <ThemeToggleItem />
     </Frame>
@@ -108,6 +110,7 @@ function App() {
 
           <Route path="/cms" element={<CMSApp />} />
           <Route path="/crm" element={<CRMApp />} />
+          <Route path="/mail" element={<MailApp />} />
           <Route path="/login" element={<LoginApp />} />
         </Routes>
         <Navigation />
