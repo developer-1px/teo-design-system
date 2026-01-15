@@ -43,11 +43,12 @@ export function Frame({
 
   // 2. Merge Overrides (Layout override < Direct override)
   // We extract style specifically to merge it last
-  // Filter out sizing/spacing/visual properties to enforce token usage
+  // Filter out sizing/spacing/visual/layout properties to enforce token usage
   // margin is blocked - use gap or Divider component instead
   // opacity is blocked - use Opacity token
   // borderRadius is blocked - use rounded prop with Radius2 token
   // boxShadow is blocked - use shadow prop with Shadow token
+  // flexbox is blocked - use row/wrap/align/justify/flex/pack props
   const {
     width,
     height,
@@ -73,6 +74,14 @@ export function Frame({
     opacity: _opacityLayout,
     borderRadius,
     boxShadow,
+    flexDirection,
+    flexWrap,
+    alignItems,
+    justifyContent,
+    flex: _flexLayout,
+    flexShrink,
+    flexGrow,
+    flexBasis,
     ...safeLayoutStyle
   } = (layoutSettings.style || {}) as React.CSSProperties;
 
@@ -101,6 +110,14 @@ export function Frame({
     opacity: _opacityUser,
     borderRadius: _borderRadius2,
     boxShadow: _boxShadow2,
+    flexDirection: _flexDirection2,
+    flexWrap: _flexWrap2,
+    alignItems: _alignItems2,
+    justifyContent: _justifyContent2,
+    flex: _flexUser,
+    flexShrink: _flexShrink2,
+    flexGrow: _flexGrow2,
+    flexBasis: _flexBasis2,
     ...safeUserStyle
   } = (style || {}) as React.CSSProperties;
 
