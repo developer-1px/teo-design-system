@@ -310,8 +310,8 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
-            style={{ width: "400px", border: "1px solid var(--border-color)" }}
-            override={{ p: Space.n32, gap: Space.n24 }}
+            style={{ border: "1px solid var(--border-color)" }}
+            override={{ w: Size.n384, p: Space.n32, gap: Space.n24 }}
             rounded={Radius2["2xl"]}
             surface="raised"
           >
@@ -568,7 +568,7 @@ export function TextSystemApp() {
               <MenuItem>Edit</MenuItem>
               <MenuItem>Duplicate</MenuItem>
               <Frame
-                style={{ height: "1px", marginBlock: "var(--space-1)" }}
+                style={{ marginBlock: "var(--space-1)", height: "1px" }}
                 override={{}}
                 surface="base"
               />

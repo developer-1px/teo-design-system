@@ -43,9 +43,38 @@ export function Frame({
 
   // 2. Merge Overrides (Layout override < Direct override)
   // We extract style specifically to merge it last
+  // Filter out width/height/gap/padding to enforce token usage
+  const {
+    width,
+    height,
+    gap: _gap,
+    padding,
+    paddingTop,
+    paddingBottom,
+    paddingLeft,
+    paddingRight,
+    paddingBlock,
+    paddingInline,
+    ...safeLayoutStyle
+  } = (layoutSettings.style || {}) as React.CSSProperties;
+
+  const {
+    width: _width2,
+    height: _height2,
+    gap: _gap2,
+    padding: _padding2,
+    paddingTop: _paddingTop2,
+    paddingBottom: _paddingBottom2,
+    paddingLeft: _paddingLeft2,
+    paddingRight: _paddingRight2,
+    paddingBlock: _paddingBlock2,
+    paddingInline: _paddingInline2,
+    ...safeUserStyle
+  } = (style || {}) as React.CSSProperties;
+
   const combinedOverrideStyle = {
-    ...layoutSettings.style,
-    ...style,
+    ...safeLayoutStyle,
+    ...safeUserStyle,
   };
 
   const combinedOverride: FrameOverrides = {

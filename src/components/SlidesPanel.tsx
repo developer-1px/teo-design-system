@@ -10,12 +10,12 @@ export function SlidesPanel() {
   return (
     <Section
       title="LAYERS"
-      style={{ width: "160px", minWidth: "160px" }}
+      w={Size.n160}
       surface="base"
       rounded={Radius2.md}
       shadow="sm"
     >
-      <Frame style={{ minHeight: 0 }} scroll surface="sunken" flex fill>
+      <Frame override={{ minHeight: Size.n0 }} scroll surface="sunken" flex fill>
         {slides.map((num) => (
           <Frame
             override={{ gap: Space.n4, p: Space.n8 }}

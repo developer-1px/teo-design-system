@@ -199,7 +199,8 @@ export function HeaderHero() {
             >
               <Frame
                 rounded={Radius2.full}
-                style={{ height: "var(--space-n4)", width: "80%" }}
+                override={{ h: Size.n16 }}
+                style={{ width: "80%" }}
                 surface="overlay"
               />
               <Frame

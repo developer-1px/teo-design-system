@@ -26,6 +26,7 @@ import { Text } from "../design-system/text/Text";
 import {
   IconSize,
   Opacity,
+  Size,
   Space,
 } from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
@@ -125,7 +126,7 @@ export function PropertiesPanel() {
 
   return (
     <Section
-      style={{ width: "260px" }}
+      w={Size.n256}
       surface="base"
       rounded={Radius2.lg}
       shadow="sm"
@@ -225,7 +226,7 @@ export function PropertiesPanel() {
               value={transform.y}
               onChange={(v) => updateTransform("y", v)}
             />
-            <Frame style={{ width: "24px" }} />
+            <Frame override={{ w: Size.n24 }} />
           </Frame>
           <Frame
             layout={Layout.Row.Item.Default}
@@ -241,7 +242,7 @@ export function PropertiesPanel() {
               value={transform.h}
               onChange={(v) => updateTransform("h", v)}
             />
-            <Frame style={{ width: "24px" }} pack>
+            <Frame override={{ w: Size.n24 }} pack>
               <Action
                 icon={Lock}
                 iconSize={IconSize.n10}
@@ -264,7 +265,7 @@ export function PropertiesPanel() {
               value={transform.corner}
               onChange={(v) => updateTransform("corner", v)}
             />
-            <Frame style={{ width: "24px" }} />
+            <Frame override={{ w: Size.n24 }} />
           </Frame>
         </Frame>
         <Separator />
@@ -283,7 +284,7 @@ export function PropertiesPanel() {
             <Field
               value="100%"
               icon={<Icon src={Eye} size={IconSize.n10} />}
-              style={{ width: "70px" }}
+              w={Size.n72}
             />
           </Frame>
         </PropertySection>
@@ -303,7 +304,7 @@ export function PropertiesPanel() {
                 rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
                 flex
               />
-              <Field value="42" style={{ width: "50px" }} />
+              <Field value="42" w={Size.n48} />
             </Frame>
             <Frame
               override={{ gap: Space.n8 }}
@@ -406,7 +407,7 @@ export function PropertiesPanel() {
               layout={Layout.Row.Item.Default}
               override={{ gap: Space.n8, align: "center" }}
             >
-              <Field value="1.5" style={{ width: "50px" }} />
+              <Field value="1.5" w={Size.n48} />
               <Field
                 value="Inside"
                 rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}

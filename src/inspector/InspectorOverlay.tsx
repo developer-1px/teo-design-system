@@ -84,7 +84,7 @@ export function InspectorOverlay() {
   let initialY = 20;
 
   if (targetRect) {
-    const PANEL_WIDTH = 260; // size-65
+    const PANEL_WIDTH = 220;
     const GAP = 8;
     const spaceRight = window.innerWidth - targetRect.right;
 

@@ -139,16 +139,14 @@ export function BodyContentSection() {
                     surface="overlay"
                   />
                   <Frame
-                    override={{ w: Size.n24 }}
+                    override={{ w: Size.n24, h: Size.n16 }}
                     rounded={Radius2.full}
-                    style={{ height: "var(--space-n4)" }}
                     surface="overlay"
                   />
                 </Frame>
                 <Frame
-                  override={{ w: Size.full }}
+                  override={{ w: Size.full, h: Size.n16 }}
                   rounded={Radius2.full}
-                  style={{ height: "var(--space-n4)" }}
                   surface="raised"
                 />
               </Frame>

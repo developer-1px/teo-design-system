@@ -119,8 +119,8 @@ export function SlideApp() {
 
       {/* Main Layout Area */}
       <Frame
-        style={{ paddingTop: "var(--space-n48)" }}
         override={{
+          pt: Space.n48,
           gap: Space.n16,
         }}
         flex
@@ -158,14 +158,13 @@ export function SlideApp() {
                 >
                   Refined & Polished UI.
                 </Text.Prose.Title>
-                <Frame style={{ height: "var(--size-n4)" }} override={{}} />
+                <Frame override={{ h: Size.n4 }} />
                 <Frame
                   override={{ gap: Space.n12 }}
                   layout={Layout.Row.Actions.Center}
                 >
                   <Frame
-                    style={{ width: "40px", height: "40px" }}
-                    override={{}}
+                    override={{ w: Size.n40, h: Size.n40 }}
                     rounded={Radius2.md}
                     surface="sunken"
                     pack
