@@ -1,7 +1,7 @@
 import { Moon, Sun } from "lucide-react";
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { CMSApp } from "./apps/CMSApp";
-import { CRMApp } from "./apps/CRMApp";
+import { CRMApp } from "./apps/crm/CRMApp.tsx";
 import { LandingApp } from "./apps/LandingApp";
 import { LoginApp } from "./apps/LoginApp";
 import { SlideApp } from "./apps/SlideApp";

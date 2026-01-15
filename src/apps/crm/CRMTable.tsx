@@ -1,215 +1,116 @@
-import { Globe, User } from "lucide-react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
 import {
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import type { Deal, DealStage } from "./CRMConstants";
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  type SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
+import { useMemo, useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
 
-const TABLE_COLS = "40px minmax(200px, 1.5fr) 1fr 140px 140px 120px 1fr";
+import { Table } from "../../ui/table/Table";
+import { formatColumnLabel } from "./dataLoader";
+import { currentDataAtom, selectedRowIdAtom } from "./store";
+import type { DataRow } from "./types";
 
-function StageBadge({ stage }: { stage: DealStage }) {
-  let color = "var(--text-secondary)";
-  let bg = "var(--surface-sunken)";
+function formatCellValue(value: unknown): string {
+  if (value === null || value === undefined) return "-";
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (typeof value === "number") {
+    // Format currency if the value is large
+    if (value > 1000) {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0,
+      }).format(value);
+    }
+    return value.toString();
+  }
+  return String(value);
+}
 
-  switch (stage) {
-    case "Lead":
-      color = "#64748B";
-      bg = "#F1F5F9";
-      break;
-    case "Qualified":
-      color = "#0369A1";
-      bg = "#E0F2FE";
-      break;
-    case "Proposal":
-      color = "#7C3AED";
-      bg = "#F3E8FF";
-      break;
-    case "Negotiation":
-      color = "#B45309";
-      bg = "#FEF3C7";
-      break;
-    case "Closed":
-      color = "#15803D";
-      bg = "#DCFCE7";
-      break;
+export function CRMTable() {
+  const data = useAtomValue(currentDataAtom);
+  const [selectedRowId, setSelectedRowId] = useAtom(selectedRowIdAtom);
+  const [sorting, setSorting] = useState<SortingState>([]);
+
+  // Generate columns dynamically from data (exclude internal __rowId field)
+  const columns = useMemo<ColumnDef<DataRow>[]>(() => {
+    if (data.length === 0) return [];
+
+    const firstRow = data[0];
+    const keys = Object.keys(firstRow).filter((key) => key !== "__rowId");
+
+    return keys.map((key) => ({
+      accessorKey: key,
+      header: formatColumnLabel(key),
+      cell: (info) => formatCellValue(info.getValue()),
+    }));
+  }, [data]);
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  });
+
+  if (data.length === 0) {
+    return <Table.Empty message="No data available" />;
   }
 
-  return (
-    <Frame
-      style={{ backgroundColor: bg, border: "1px solid var(--border-color)" }}
-      override={{
-        py: Space.n2,
-        px: Space.n8,
-        rounded: "md",
-      }}
-    >
-      <Text.Card.Note weight="medium" style={{ color }}>
-        {stage}
-      </Text.Card.Note>
-    </Frame>
-  );
-}
+  const columnTemplate = `repeat(${columns.length}, minmax(120px, 1fr))`;
 
-function Avatar({
-  initial,
-  color,
-  size = 20,
-}: {
-  initial: string;
-  color: string;
-  size?: number;
-}) {
   return (
-    <Frame
-      style={{ width: size, height: size, backgroundColor: color }}
-      override={{
-        rounded: "full",
-      }}
-      pack
-      align="center"
-      justify="center"
-    >
-      <Text.Card.Note
-        weight="bold"
-        style={{ color: "white", fontSize: "10px" }}
-      >
-        {initial}
-      </Text.Card.Note>
-    </Frame>
-  );
-}
-
-export function CRMTable({
-  deals,
-  selectedId,
-  onSelect,
-}: {
-  deals: Deal[];
-  selectedId: string | null;
-  onSelect: (id: string) => void;
-}) {
-  return (
-    <Frame flex fill scroll>
+    <Table.Root>
       {/* Header */}
-      <Frame
-        style={{
-          height: 40,
-          backgroundColor: "var(--surface-sunken)",
-        }}
-        override={{
-          px: Space.n16,
-          gap: Space.n16,
-        }}
-        grid
-        columns={TABLE_COLS}
-        align="center"
-        borderBottom
-      >
-        <Text.Table.Head>#</Text.Table.Head>
-        <Text.Table.Head>Name</Text.Table.Head>
-        <Text.Table.Head>Company</Text.Table.Head>
-        <Text.Table.Head>Stage</Text.Table.Head>
-        <Text.Table.Head>Value</Text.Table.Head>
-        <Text.Table.Head>Owner</Text.Table.Head>
-        <Text.Table.Head>Close Date</Text.Table.Head>
-      </Frame>
+      {table.getHeaderGroups().map((headerGroup) => (
+        <Table.Header key={headerGroup.id} columns={columnTemplate}>
+          {headerGroup.headers.map((header) => {
+            const sortState = header.column.getIsSorted();
+            return (
+              <Table.Head
+                key={header.id}
+                sortable={header.column.getCanSort()}
+                sorted={sortState || false}
+                onSort={header.column.getToggleSortingHandler()}
+              >
+                {flexRender(
+                  header.column.columnDef.header,
+                  header.getContext()
+                )}
+              </Table.Head>
+            );
+          })}
+        </Table.Header>
+      ))}
 
       {/* Rows */}
-      {deals.map((deal) => (
-        <Action
-          key={deal.id}
-          variant={selectedId === deal.id ? "surface" : "ghost"}
-          rounded="none"
-          onClick={() => onSelect(deal.id)}
-          w="100%"
-        >
-          <Frame
-            style={{ height: 48 }}
-            override={{
-              w: Size.full,
-              px: Space.n16,
-              gap: Space.n16,
-            }}
-            grid
-            columns={TABLE_COLS}
-            align="center"
-            borderBottom
+      {table.getRowModel().rows.map((row) => {
+        const rowData = row.original as DataRow & { __rowId: string };
+        const isSelected = selectedRowId === rowData.__rowId;
+
+        return (
+          <Table.Row
+            key={row.id}
+            columns={columnTemplate}
+            selected={isSelected}
+            onClick={() => setSelectedRowId(rowData.__rowId)}
           >
-            <Text.Table.Cell style={{ color: "var(--text-tertiary)" }}>
-              {deal.id}
-            </Text.Table.Cell>
-            <Frame
-              override={{ gap: Space.n12 }}
-              layout={Layout.Row.Item.Tight}
-              align="center"
-            >
-              <Avatar initial={deal.name[0]} color={deal.avatarColor} />
-              <Text.Table.Cell
-                weight="medium"
-                style={{ color: "var(--text-primary)" }}
-              >
-                {deal.name}
-              </Text.Table.Cell>
-            </Frame>
-            <Frame
-              override={{ gap: Space.n8 }}
-              layout={Layout.Row.Item.Compact}
-              align="center"
-            >
-              <Frame
-                override={{ w: Size.n16, h: Size.n16, rounded: "sm" }}
-                surface="raised"
-                pack
-              >
-                <Icon
-                  src={Globe}
-                  size={IconSize.n10}
-                  style={{ color: "var(--text-tertiary)" }}
-                />
-              </Frame>
-              <Text.Table.Cell style={{ color: "var(--text-secondary)" }}>
-                {deal.company}
-              </Text.Table.Cell>
-            </Frame>
-            <Frame>
-              <StageBadge stage={deal.stage} />
-            </Frame>
-            <Text.Card.Note
-              style={{
-                fontFamily: "var(--font-mono)",
-                color: "var(--text-secondary)",
-              }}
-            >
-              {deal.value}
-            </Text.Card.Note>
-            <Frame
-              override={{ gap: Space.n8 }}
-              layout={Layout.Row.Item.Compact}
-              align="center"
-            >
-              <Frame
-                override={{ w: Size.n16, h: Size.n16, rounded: "full" }}
-                surface="overlay"
-                pack
-              >
-                <Icon src={User} size={IconSize.n10} />
-              </Frame>
-              <Text.Table.Cell style={{ color: "var(--text-secondary)" }}>
-                {deal.owner}
-              </Text.Table.Cell>
-            </Frame>
-            <Text.Table.Cell style={{ color: "var(--text-tertiary)" }}>
-              {deal.closeDate}
-            </Text.Table.Cell>
-          </Frame>
-        </Action>
-      ))}
-    </Frame>
+            {row.getVisibleCells().map((cell) => (
+              <Table.Cell key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </Table.Cell>
+            ))}
+          </Table.Row>
+        );
+      })}
+    </Table.Root>
   );
 }

@@ -1,14 +1,13 @@
 import {
-  Archive,
+  Building2,
+  CheckSquare,
   ChevronDown,
-  Home,
-  Inbox,
+  Database,
+  FolderKanban,
   LayoutGrid,
-  List,
-  Settings,
-  User,
   Users,
 } from "lucide-react";
+import { useAtom, useAtomValue } from "jotai";
 
 import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
@@ -20,22 +19,35 @@ import {
   Size,
   Space,
 } from "../../design-system/token/token.const.1tier";
+import { datasetsAtom, selectedDatasetAtom } from "./store";
+
+// Icon mapping
+const iconMap: Record<string, React.ElementType> = {
+  LayoutGrid,
+  Building2,
+  Users,
+  FolderKanban,
+  CheckSquare,
+  Database,
+};
 
 function Avatar({
   initial,
   color,
-  size = 20,
+  size = Size.n20,
 }: {
   initial: string;
   color: string;
-  size?: number;
+  size?: string;
 }) {
   return (
     <Frame
-      style={{ width: size, height: size, backgroundColor: color }}
       override={{
+        w: size,
+        h: size,
         rounded: "full",
       }}
+      style={{ backgroundColor: color }}
       pack
       align="center"
       justify="center"
@@ -50,23 +62,28 @@ function Avatar({
   );
 }
 
-function SidebarItem({
-  icon: IconSrc,
+function DatasetItem({
+  name,
   label,
+  icon: iconName,
   active,
-  count,
+  onClick,
 }: {
-  icon: React.ElementType;
+  name: string;
   label: string;
+  icon: string;
   active?: boolean;
-  count?: number;
+  onClick: () => void;
 }) {
+  const IconComponent = iconMap[iconName] || Database;
+
   return (
     <Action
       variant={active ? "surface" : "ghost"}
       rounded="md"
       w="100%"
       justify="start"
+      onClick={onClick}
     >
       <Frame
         override={{ gap: Space.n12, w: Size.full, py: Space.n6, px: Space.n8 }}
@@ -74,7 +91,7 @@ function SidebarItem({
         align="center"
       >
         <Icon
-          src={IconSrc}
+          src={IconComponent}
           size={IconSize.n16}
           style={{
             color: active ? "var(--text-primary)" : "var(--text-secondary)",
@@ -88,24 +105,20 @@ function SidebarItem({
         >
           {label}
         </Text.Menu.Item>
-        {count !== undefined && (
-          <>
-            <Frame flex />
-            <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
-              {count}
-            </Text.Card.Note>
-          </>
-        )}
       </Frame>
     </Action>
   );
 }
 
 export function CRMSidebar() {
+  const datasets = useAtomValue(datasetsAtom);
+  const [selectedDataset, setSelectedDataset] = useAtom(selectedDatasetAtom);
+
   return (
     <Frame
-      style={{ width: "240px", minWidth: 240 }}
       override={{
+        w: Size.n240,
+        minWidth: Size.n240,
         h: Size.full,
         p: Space.n8,
         gap: Space.n4,
@@ -119,8 +132,8 @@ export function CRMSidebar() {
           layout={Layout.Row.Item.Default}
           align="center"
         >
-          <Avatar initial="O" color="black" size={20} />
-          <Text.Menu.Item weight="bold">Orbit Inc.</Text.Menu.Item>
+          <Avatar initial="D" color="black" size={Size.n20} />
+          <Text.Menu.Item weight="bold">DataTable</Text.Menu.Item>
           <Frame flex />
           <Icon src={ChevronDown} size={IconSize.n14} opacity={0.4} />
         </Frame>
@@ -128,41 +141,34 @@ export function CRMSidebar() {
 
       <Frame override={{ h: Size.n8 }} />
 
-      {/* Main Nav */}
+      {/* Datasets Section */}
       <Frame override={{ gap: Space.n4 }}>
-        <SidebarItem icon={Home} label="Home" />
-        <SidebarItem icon={Inbox} label="Inbox" count={4} />
-      </Frame>
-
-      {/* Sections */}
-      <Frame override={{ pt: Space.n16, gap: Space.n4 }}>
-        <SectionLabel label="Records" />
-        <SidebarItem icon={Users} label="Companies" />
-        <SidebarItem icon={User} label="People" />
-        <SidebarItem icon={LayoutGrid} label="Deals" active />
-      </Frame>
-
-      <Frame override={{ pt: Space.n16, gap: Space.n4 }}>
-        <SectionLabel label="Views" />
-        <SidebarItem icon={List} label="All Deals" />
-        <SidebarItem icon={Archive} label="Archived" />
+        <SectionLabel label="Datasets" />
+        {datasets.map((dataset) => (
+          <DatasetItem
+            key={dataset.name}
+            name={dataset.name}
+            label={dataset.label}
+            icon={dataset.icon}
+            active={selectedDataset === dataset.name}
+            onClick={() => setSelectedDataset(dataset.name)}
+          />
+        ))}
       </Frame>
 
       <Frame flex />
 
-      {/* Bottom Actions */}
+      {/* Bottom Info */}
       <Frame override={{ gap: Space.n4 }}>
-        <SidebarItem icon={Settings} label="Settings" />
-        <Action variant="ghost" rounded="md" w="100%">
-          <Frame
-            override={{ gap: Space.n12, py: Space.n6, px: Space.n8 }}
-            layout={Layout.Row.Item.Default}
-            align="center"
-          >
-            <Avatar initial="M" color="#4F46E5" size={20} />
-            <Text.Menu.Item weight="medium">Mike R.</Text.Menu.Item>
-          </Frame>
-        </Action>
+        <Frame
+          override={{ py: Space.n6, px: Space.n8 }}
+          surface="base"
+          rounded="md"
+        >
+          <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
+            {datasets.length} datasets loaded
+          </Text.Card.Note>
+        </Frame>
       </Frame>
     </Frame>
   );

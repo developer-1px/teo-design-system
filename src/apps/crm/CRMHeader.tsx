@@ -5,13 +5,13 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
-import { IconSize, Space } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
 
 export function CRMHeader() {
   return (
     <Frame
-      style={{ height: 64 }}
       override={{
+        h: Size.n64,
         py: Space.n0,
         px: Space.n20,
       }}
@@ -43,8 +43,8 @@ export function CRMHeader() {
 
       {/* Global Search */}
       <Frame
-        style={{ width: 400 }}
         override={{
+          w: Size.n384,
           rounded: "md",
           py: Space.n6,
           px: Space.n12,
