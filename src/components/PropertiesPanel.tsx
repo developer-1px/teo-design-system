@@ -24,7 +24,7 @@ import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
 import { Icon } from "../design-system/Icon";
-import { IconSize } from "../design-system/token/token.const.1tier";
+import { IconSize, Opacity } from "../design-system/token/token.const.1tier";
 
 // --- Data ---
 
@@ -56,7 +56,7 @@ const PropertySection = ({
         icon={Plus}
         iconSize={IconSize.n12}
         style={{ width: "20px", height: "20px" }}
-        opacity={0.4}
+        opacity={Opacity.n40}
       />
     </Frame>
     <Frame override={{ gap: Space.n4, pt: Space.n0, pr: Space.n8, pb: Space.n8, pl: Space.n8 }}>{children}</Frame>
@@ -206,7 +206,7 @@ export function PropertiesPanel() {
                 icon={Lock}
                 iconSize={IconSize.n10}
                 style={{ width: "20px", height: "20px" }}
-                opacity={0.3}
+                opacity={Opacity.n30}
               />
             </Frame>
           </Frame>

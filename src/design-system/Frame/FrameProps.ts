@@ -3,6 +3,7 @@ import type {
   OpacityToken,
   SizeToken,
   SpaceToken,
+  RadiusToken,
 } from "../token/token.const.1tier.ts";
 
 import type {
@@ -53,6 +54,7 @@ export interface FrameOverrides {
 
   // Surface
   surface?: SurfaceToken;
+  r?: RadiusToken;
   rounded?: RoundedToken | (string & {}) | number;
   // deprecated overflow removed
   clip?: boolean;
@@ -67,7 +69,7 @@ export interface FrameOverrides {
 
   // Visual
   shadow?: ShadowToken;
-  opacity?: OpacityToken | number;
+  opacity?: OpacityToken;
   ratio?: string;
   border?: boolean | string;
   borderColor?: string;
@@ -120,6 +122,7 @@ export interface FrameStrictProps {
 
   // Surface
   surface?: SurfaceToken;
+  r?: RadiusToken;
   rounded?: RoundedToken;
   // deprecated overflow removed
   clip?: boolean;

@@ -31,7 +31,7 @@ export interface TextProps
   // Overrides
   weight?: FontWeight | "regular" | "medium" | "bold";
   mono?: boolean;
-  opacity?: number;
+  opacity?: number | import("../token/token.const.1tier").OpacityToken;
   size?: FontSizeToken; // Absolute scale only, strict
   color?:
   | "primary"
@@ -74,7 +74,6 @@ export function TextRoot({
     ...typoStyle,
     color: colorValue,
     fontFamily: mono ? "var(--font-family-mono)" : undefined,
-    opacity,
     margin: 0,
     ...styleProp,
   };
@@ -98,6 +97,15 @@ export function TextRoot({
     } else {
       // Fallback/Safety if somehow a bare string passed (though type forbids)
       mergedStyle.fontSize = toToken(size, "font-size");
+    }
+  }
+
+  // Handle Opacity Token
+  if (opacity !== undefined) {
+    if (typeof opacity === "string" && opacity.startsWith("opacity.")) {
+      mergedStyle.opacity = `var(--${opacity.replace(".", "-")})`;
+    } else {
+      mergedStyle.opacity = opacity;
     }
   }
 

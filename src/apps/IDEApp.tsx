@@ -21,7 +21,7 @@ import { Text } from "../design-system/text/Text.tsx";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
-import { IconSize, FontSize, Size } from "../design-system/token/token.const.1tier";
+import { IconSize, FontSize, Size, Opacity } from "../design-system/token/token.const.1tier";
 
 // --- Activity Bar ---
 
@@ -52,7 +52,7 @@ function ActivityBar({
         variant="ghost"
         size={FontSize.n48}
         iconSize={IconSize.n24}
-        opacity={isActive("explorer") ? 1 : 0.5}
+        opacity={isActive("explorer") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("explorer")}
         style={{
           borderLeftWidth: isActive("explorer") ? 2 : 0,
@@ -64,7 +64,7 @@ function ActivityBar({
         variant="ghost"
         size={48}
         iconSize={IconSize.n24}
-        opacity={isActive("search") ? 1 : 0.5}
+        opacity={isActive("search") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("search")}
       />
       <Action
@@ -72,7 +72,7 @@ function ActivityBar({
         variant="ghost"
         size={48}
         iconSize={IconSize.n24}
-        opacity={isActive("source-control") ? 1 : 0.5}
+        opacity={isActive("source-control") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("source-control")}
       />
       <Action
@@ -80,7 +80,7 @@ function ActivityBar({
         variant="ghost"
         size={48}
         iconSize={IconSize.n24}
-        opacity={isActive("debug") ? 1 : 0.5}
+        opacity={isActive("debug") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("debug")}
       />
       <Action
@@ -88,7 +88,7 @@ function ActivityBar({
         variant="ghost"
         size={48}
         iconSize={IconSize.n24}
-        opacity={isActive("extensions") ? 1 : 0.5}
+        opacity={isActive("extensions") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("extensions")}
       />
 
@@ -99,14 +99,14 @@ function ActivityBar({
         variant="ghost"
         size={48}
         iconSize={IconSize.n24}
-        opacity={0.5}
+        opacity={Opacity.n50}
       />
       <Action
         icon={Settings}
         variant="ghost"
         size={48}
         iconSize={IconSize.n24}
-        opacity={0.5}
+        opacity={Opacity.n50}
       />
     </Frame>
   );
@@ -129,7 +129,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
         surface="sunken"
       >
         <Frame style={{ height: 35 }} override={{ px: Space.n16 }} justify="center">
-          <Text size={FontSize.n9} weight="medium" opacity={0.6}>
+          <Text size={FontSize.n9} weight="medium" opacity={Opacity.n60}>
             {activeTab.toUpperCase()}
           </Text>
         </Frame>
@@ -160,7 +160,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
           size={FontSize.n20}
           iconSize={IconSize.n14}
           variant="ghost"
-          opacity={0.5}
+          opacity={Opacity.n50}
         />
       </Frame>
 
@@ -178,7 +178,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
               ) : (
                 <Icon src={ChevronRight} size={IconSize.n12} />
               )}
-              <Text size={FontSize.n9} weight="bold" opacity={0.8}>
+              <Text size={FontSize.n9} weight="bold" opacity={Opacity.n80}>
                 OPEN EDITORS
               </Text>
             </Frame>
@@ -205,7 +205,7 @@ function Sidebar({ activeTab }: { activeTab: string }) {
               ) : (
                 <Icon src={ChevronRight} size={IconSize.n12} />
               )}
-              <Text size={FontSize.n9} weight="bold" opacity={0.8}>
+              <Text size={FontSize.n9} weight="bold" opacity={Opacity.n80}>
                 MINIMAL-DESIGN-KIT
               </Text>
             </Frame>
@@ -361,14 +361,14 @@ function EditorTabs() {
           variant="ghost"
           style={{ width: 28, height: 28 }}
           iconSize={IconSize.n14}
-          opacity={0.6}
+          opacity={Opacity.n60}
         />
         <Action
           icon={MoreHorizontal}
           variant="ghost"
           style={{ width: 28, height: 28 }}
           iconSize={IconSize.n14}
-          opacity={0.6}
+          opacity={Opacity.n60}
         />
       </Frame>
     </Frame>
@@ -423,7 +423,7 @@ function Tab({
         style={{ width: 20, height: 20 }}
         iconSize={IconSize.n12}
         variant="ghost"
-        opacity={0.5}
+        opacity={Opacity.n50}
         onClick={(e) => {
           e.stopPropagation();
           // onClose(file.id);
@@ -472,7 +472,7 @@ function CodeEditor() {
           py: Space.n16,
           px: Space.n0,
           gap: Space.n0,
-          opacity: 0.4,
+          opacity: Opacity.n40,
         }}
         align="end"
       >
@@ -570,13 +570,13 @@ function Panel() {
         layout={Layout.Row.Toolbar.Default}
         align="center"
       >
-        <Text size={FontSize.n9} weight="medium" opacity={0.6}>
+        <Text size={FontSize.n9} weight="medium" opacity={Opacity.n60}>
           PROBLEMS
         </Text>
-        <Text size={FontSize.n9} weight="medium" opacity={0.6}>
+        <Text size={FontSize.n9} weight="medium" opacity={Opacity.n60}>
           OUTPUT
         </Text>
-        <Text size={FontSize.n9} weight="medium" opacity={0.6}>
+        <Text size={FontSize.n9} weight="medium" opacity={Opacity.n60}>
           DEBUG CONSOLE
         </Text>
         <Text
@@ -616,7 +616,7 @@ function Panel() {
           </Text>
           <Frame
             style={{ width: 6, height: 14 }}
-            override={{ opacity: 0.8 }}
+            override={{ opacity: Opacity.n80 }}
             surface="overlay"
           />
         </Frame>

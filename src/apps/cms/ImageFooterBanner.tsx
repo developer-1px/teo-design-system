@@ -5,7 +5,7 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
-import { IconSize, Size } from "../../design-system/token/token.const.1tier";
+import { IconSize, Size, Opacity } from "../../design-system/token/token.const.1tier";
 
 export function ImageFooterBanner() {
   return (
@@ -33,10 +33,10 @@ export function ImageFooterBanner() {
         {/* Visual texture */}
         <Frame
           override={{
+            opacity: Opacity.n10
           }}
           style={{
             position: "absolute",
-            opacity: 0.1,
             backgroundImage:
               "radial-gradient(circle at center, #fff 1px, transparent 1px)",
             backgroundSize: "32px 32px",
@@ -61,7 +61,7 @@ export function ImageFooterBanner() {
             style={{
               color: "white",
               textAlign: "center",
-              opacity: 0.6,
+              opacity: Opacity.n60,
             }}
           >
             Join 2,000+ companies building high-performance marketing sites with
@@ -101,13 +101,13 @@ export function ImageFooterBanner() {
           style={{
             fontWeight: "bold",
             color: "var(--text-tertiary)",
-            opacity: 0.5,
+            opacity: Opacity.n50,
           }}
         >
           TRUSTED WORLDWIDE
         </Text.Card.Note>
         <Frame
-          override={{ gap: Space.n48, py: Space.n0, px: Space.n24, opacity: 0.3 }}
+          override={{ gap: Space.n48, py: Space.n0, px: Space.n24, opacity: Opacity.n30 }}
           layout={Layout.Wrap.Chips.Loose}
           justify="center"
           wrap="wrap"

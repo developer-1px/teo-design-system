@@ -30,6 +30,28 @@ export function frameToSettings(props: FrameOverrides): {
     return val; // Allow explicit strings like "10px" or "auto" if typed that way, though types say SpaceToken
   };
 
+  const resolveRadius = (val: string | number | undefined) => {
+    if (!val) return undefined;
+    if (typeof val === "string" && val.startsWith("radius.")) {
+      return `var(--${val.replace(".", "-")})`;
+    }
+    if (val === 0) return "0px";
+    return val;
+  };
+
+  const resolveOpacity = (val: string | number | undefined) => {
+    if (val === undefined) return undefined;
+    if (typeof val === "string" && val.startsWith("opacity.")) {
+      return `var(--${val.replace(".", "-")})`;
+    }
+    // Allow raw numbers if passed (though types restricted it, overrides might still pass it?)
+    // But strict OpacityToken is preferred.
+    if (typeof val === "number") return val;
+    return val;
+  };
+
+
+
 
 
   // Function to resolve size/container tokens strictly
@@ -113,6 +135,12 @@ export function frameToSettings(props: FrameOverrides): {
     minHeight: resolveSizing(props.minHeight, "height") as any,
     maxWidth: resolveSizing(props.maxWidth, "width") as any,
     maxHeight: resolveSizing(props.maxHeight, "height") as any,
+
+    // Radius (Strict, 'r' prop takes precedence)
+    borderRadius: resolveRadius(props.r),
+
+    // Opacity
+    opacity: resolveOpacity(props.opacity),
   });
 
   // --- Base Layout ---
@@ -148,12 +176,16 @@ export function frameToSettings(props: FrameOverrides): {
   else if (props.h === "size.screen") classes.push("h-screen");
 
   // --- Radius Classes ---
-  if (props.rounded === true) {
-    classes.push("r-md");
-  } else if (props.rounded === false || props.rounded === "none") {
-    classes.push("r-none");
-  } else if (typeof props.rounded === "string") {
-    classes.push(`r-${props.rounded}`);
+  // Only apply rounded classes if 'r' is NOT defined
+  // 'r' prop sets generic style which overrides class, but we avoid conflicting classes for cleanliness
+  if (props.r === undefined) {
+    if (props.rounded === true) {
+      classes.push("r-md");
+    } else if (props.rounded === false || props.rounded === "none") {
+      classes.push("r-none");
+    } else if (typeof props.rounded === "string") {
+      classes.push(`r-${props.rounded}`);
+    }
   }
 
   // --- Surface Classes ---

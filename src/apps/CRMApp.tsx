@@ -28,7 +28,7 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text.tsx";
 import { Icon } from "../design-system/Icon";
-import { IconSize, Space, Size } from "../design-system/token/token.const.1tier";
+import { IconSize, Space, Size, Opacity } from "../design-system/token/token.const.1tier";
 
 // --- Mock Data ---
 
@@ -393,7 +393,7 @@ function Toolbar() {
       surface="base"
     >
       <Action variant="ghost" icon={List} label="Table" />
-      <Action variant="ghost" icon={LayoutGrid} label="Kanban" opacity={0.5} />
+      <Action variant="ghost" icon={LayoutGrid} label="Kanban" opacity={Opacity.n50} />
       <Separator orientation="vertical" style={{ height: 16 }} />
       <Action variant="ghost" icon={Filter} label="Filter" />
       <Action variant="ghost" icon={SlidersHorizontal} label="Sort" />

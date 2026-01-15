@@ -3,7 +3,7 @@ import { Frame } from "./Frame/Frame.tsx";
 
 import { Text } from "./text/Text.tsx";
 import { Icon } from "./Icon";
-import { IconSize, Space, type IconSizeToken, type SpaceToken } from "./token/token.const.1tier";
+import { IconSize, Space, type IconSizeToken, type SpaceToken, type OpacityToken } from "./token/token.const.1tier";
 
 
 import type { ActionVariant, RoundedToken, SurfaceToken } from "./lib/types.ts";
@@ -38,7 +38,7 @@ interface ActionProps
   iconRotation?: number; // Internalized rotation
 
   // Visual
-  opacity?: number;
+  opacity?: OpacityToken;
   surface?: SurfaceToken; // Explicit surface control
   tooltip?: string;
   glow?: boolean;

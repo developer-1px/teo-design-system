@@ -43,7 +43,8 @@ function SectionHeader({ title, desc }: { title: string; desc: string }) {
         {desc}
       </Text.Prose.Body>
       <Frame
-        override={{ w: Size.full, h: Size.n1, my: Space.n16 }}
+        override={{ w: Size.full, h: "1px" as any }}
+        style={{ marginBlock: "var(--space-n16)" }}
         surface="overlay"
       />
     </Frame>
@@ -58,7 +59,7 @@ function TextColumn({ children, gap = Space.n32 }: any) {
   );
 }
 
-function ScrollContainer({ children }: any) {
+function ScrollContainer({ children, ...props }: any) {
   return (
     <Frame
       scroll="x"
@@ -78,6 +79,7 @@ function ScrollContainer({ children }: any) {
         layout={Layout.Row.Item.Default}
         override={{ gap: Space.n24 }}
         minWidth={Size.max}
+        {...props}
       >
         {children}
       </Frame>
@@ -202,14 +204,10 @@ export function TokensApp() {
               {RadiusScale.map((val) => (
                 <Frame
                   key={val}
-                  surface="hover"
-                  style={{
-                    borderRadius: `var(--radius-n${val})`,
-                    border: "var(--border-width-n2) solid var(--border-color)",
-                  }}
+                  r={`radius.n${val}` as any}
+                  surface="raised"
+                  layout={Layout.Center.Default}
                   override={{ w: Size.n96, h: Size.n96, minWidth: Size.n96 }}
-                  align="center"
-                  justify="center"
                 >
                   <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>
@@ -266,8 +264,8 @@ export function TokensApp() {
                 <Frame key={val} align="center" override={{ gap: Space.n8 }}>
                   <Frame
                     surface="base"
+                    opacity={`opacity.n${val}` as any}
                     style={{
-                      opacity: `var(--opacity-n${val})`,
                       backgroundColor: "black",
                     }}
                     override={{ w: Size.n64, h: Size.n64, rounded: "lg", minWidth: Size.n64 }}
@@ -301,7 +299,7 @@ export function TokensApp() {
           </Frame>
 
         </Frame>
-      </Frame>
-    </Frame>
+      </Frame >
+    </Frame >
   );
 }

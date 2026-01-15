@@ -5,7 +5,8 @@
       "WebFetch(domain:www.radix-ui.com)",
       "WebFetch(domain:react-hook-form.com)",
       "WebFetch(domain:zod.dev)",
-      "Read(//Users/user/Desktop/**)"
+      "Read(//Users/user/Desktop/**)",
+      "WebFetch(domain:panda-css.com)"
     ],
     "deny": [],
     "ask": []
