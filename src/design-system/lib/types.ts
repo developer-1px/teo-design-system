@@ -7,8 +7,8 @@ export type RoundedToken =
   | "xl"
   | "2xl"
   | "3xl"
-  | "full"
-  | "round";
+  | "full";
+
 export type SurfaceToken =
   | "base"
   | "raised"
@@ -34,7 +34,6 @@ export type JustifyToken =
   | "around"
   | "evenly";
 
-export type OverflowToken = "hidden" | "auto" | "scroll" | "visible";
 export type CursorToken =
   | "pointer"
   | "default"

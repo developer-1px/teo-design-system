@@ -96,33 +96,6 @@ export async function loadDataset(datasetName: string): Promise<DataRow[]> {
 }
 
 /**
- * Get list of available datasets from the data/crm directory
- * @returns Array of dataset names
- */
-export function getAvailableDatasets(): string[] {
-  return Object.keys(dataFiles)
-    .map((path) => {
-      // Extract filename without path and extension
-      // "/src/data/crm/deals.json" -> "deals"
-      const match = path.match(/\/([^/]+)\.json$/);
-      return match ? match[1] : "";
-    })
-    .filter(Boolean);
-}
-
-/**
- * Extract column keys from data array
- * @param data - Array of data rows
- * @returns Array of column keys
- */
-export function extractColumns(data: DataRow[]): string[] {
-  if (data.length === 0) return [];
-
-  const firstRow = data[0];
-  return Object.keys(firstRow);
-}
-
-/**
  * Format column name for display
  * @param key - Column key (e.g., "closeDate")
  * @returns Formatted label (e.g., "Close Date")

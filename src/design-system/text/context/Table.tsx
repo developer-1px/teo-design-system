@@ -14,7 +14,7 @@ export const Table = {
         fontWeight: "var(--table-head-weight)",
         lineHeight: "var(--table-head-height)",
         letterSpacing: "var(--table-head-spacing)",
-        textTransform: "var(--table-head-caps)" as any,
+        textTransform: "var(--table-head-caps)" as React.CSSProperties["textTransform"],
         textAlign: "left",
         ...style,
       }}

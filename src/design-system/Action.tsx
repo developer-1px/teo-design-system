@@ -67,7 +67,7 @@ export function Action({
   icon,
   label,
   variant,
-  rounded = "round",
+  rounded = "md",
   p,
   gap,
   border,
@@ -128,31 +128,9 @@ export function Action({
 
   const finalRounded = rounded ?? "round";
 
-  const resolveSizingProp = (val: string | number | undefined) => {
-    if (
-      typeof val === "string" &&
-      (val.startsWith("size.") || val.startsWith("container."))
-    ) {
-      return val as any;
-    }
-    return undefined;
-  };
-  const resolveSizingStyle = (val: string | number | undefined) => {
-    if (
-      typeof val === "string" &&
-      (val.startsWith("size.") || val.startsWith("container."))
-    ) {
-      return undefined;
-    }
-    if (typeof val === "number") return `${val}px`;
-    return val;
-  };
-
   return (
     <Frame
       override={{
-        w: resolveSizingProp(finalWidth),
-        h: resolveSizingProp(finalHeight),
         rounded: finalRounded,
         p: finalP,
         gap: gap ?? Space.n4,
@@ -161,8 +139,8 @@ export function Action({
         align: "center",
       }}
       style={{
-        width: resolveSizingStyle(finalWidth),
-        height: resolveSizingStyle(finalHeight),
+        width: typeof finalWidth === "number" ? `${finalWidth}px` : finalWidth,
+        height: typeof finalHeight === "number" ? `${finalHeight}px` : finalHeight,
         border: border ? "1px solid var(--border-color)" : undefined,
         cursor: "pointer",
         color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",

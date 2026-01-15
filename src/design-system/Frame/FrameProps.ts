@@ -86,7 +86,7 @@ export interface FrameOverrides {
 
 // --- 2. STRICT PROPS (Token Only) ---
 // Used as top-level props on <Frame ... />
-export interface FrameStrictProps {
+interface FrameStrictProps {
   // Layout
   p?: SpaceToken;
   px?: SpaceToken;

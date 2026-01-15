@@ -4,7 +4,7 @@
 
 import type { Mail, MailThread } from "./types";
 
-export const mockMails: Mail[] = [
+const mockMails: Mail[] = [
   {
     id: "m1",
     threadId: "t1",

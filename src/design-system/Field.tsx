@@ -27,32 +27,12 @@ export function Field({
   onChange,
   ...props
 }: FieldProps) {
-  const resolveSizingProp = (val: string | number | undefined) => {
-    if (
-      typeof val === "string" &&
-      (val.startsWith("size.") || val.startsWith("container."))
-    ) {
-      return val as any;
-    }
-    return undefined;
-  };
-  const resolveSizingStyle = (val: string | number | undefined) => {
-    if (
-      typeof val === "string" &&
-      (val.startsWith("size.") || val.startsWith("container."))
-    ) {
-      return undefined;
-    }
-    // Tokens are already CSS variables, no conversion needed
-    return val;
-  };
-
   const effW = flex ? undefined : w;
 
   return (
     <Frame
       style={{
-        width: resolveSizingStyle(effW),
+        width: effW,
         cursor: "text",
         ...style,
       }}
@@ -61,7 +41,6 @@ export function Field({
         py: Space.n6,
         pl: Space.n8,
         pr: rightIcon ? Space.n6 : Space.n8,
-        w: resolveSizingProp(effW),
         row: true, // Ensure row layout
         align: "center",
       }}

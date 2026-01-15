@@ -23,14 +23,21 @@ import { Icon } from "../design-system/Icon";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
-import { IconSize, Opacity } from "../design-system/token/token.const.1tier";
-import { Space } from "../design-system/token/token.const.1tier.ts";
+import { IconSize, Opacity, Space } from "../design-system/token/token.const.1tier";
 
 // --- Data ---
 
-const ALIGNMENT_TOOLS = [
+type AlignmentToolItem = { icon: any; label: string; surface?: "selected"; rotation?: number };
+type AlignmentToolSeparator = { separator: true };
+type AlignmentTool = AlignmentToolItem | AlignmentToolSeparator;
+
+const isSeparator = (tool: AlignmentTool): tool is AlignmentToolSeparator => {
+  return "separator" in tool && tool.separator === true;
+};
+
+const ALIGNMENT_TOOLS: AlignmentTool[] = [
   { icon: AlignLeft, label: "Left" },
-  { icon: AlignCenter, label: "Center", surface: "selected" as const },
+  { icon: AlignCenter, label: "Center", surface: "selected" },
   { icon: AlignRight, label: "Right" },
   { separator: true },
   { icon: AlignJustify, label: "Justify" },
@@ -174,15 +181,15 @@ export function PropertiesPanel() {
           surface="sunken"
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
-            tool.separator ? (
-              <Separator key={i} orientation="vertical" length="12px" />
+            isSeparator(tool) ? (
+              <Separator key={i} orientation="vertical" length={Space.n12} />
             ) : (
               <Action
                 key={i}
                 icon={tool.icon}
                 iconSize={IconSize.n12}
-                surface={(tool as any).surface}
-                rounded="round"
+                surface={tool.surface}
+                rounded="md"
                 size="xs"
                 flex
                 iconRotation={tool.rotation}
@@ -325,7 +332,7 @@ export function PropertiesPanel() {
                   icon={Icon}
                   iconSize={IconSize.n12}
                   surface={i === 0 ? "selected" : undefined}
-                  rounded="round"
+                  rounded="md"
                   size="xs"
                   flex
                 />
@@ -408,7 +415,7 @@ export function PropertiesPanel() {
               <Action
                 icon={Settings}
                 iconSize={IconSize.n10}
-                rounded="round"
+                rounded="md"
                 style={{ height: "24px" }}
               />
             </Frame>

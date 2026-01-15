@@ -2,7 +2,7 @@ import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text";
-import { Size, Space } from "../design-system/token/token.const.1tier";
+import { Size, Space } from "../design-system/token";
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -12,7 +12,7 @@ export function SlidesPanel() {
       title="LAYERS"
       style={{ width: "160px", minWidth: "160px" }}
       surface="base"
-      rounded="round"
+      rounded="md"
       shadow="sm"
     >
       <Frame style={{ minHeight: 0 }} scroll surface="sunken" flex fill>

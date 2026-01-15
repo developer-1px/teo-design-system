@@ -29,7 +29,7 @@ export const Menu = {
         fontWeight: "var(--menu-group-weight)",
         lineHeight: "var(--menu-group-height)",
         letterSpacing: "var(--menu-group-spacing)",
-        textTransform: "var(--menu-group-caps)" as any,
+        textTransform: "var(--menu-group-caps)" as React.CSSProperties["textTransform"],
         color: "var(--text-subtle)",
         display: "block",
         padding: "8px 12px 4px",

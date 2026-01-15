@@ -59,8 +59,7 @@ export function TextRoot({
   ...props
 }: TextProps) {
   // 1. Resolve Tag
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Tag = (as || getTagForVariant(variant)) as any;
+  const Tag = (as || getTagForVariant(variant)) as React.ElementType;
 
   // 2. Resolve Color
   const colorValue = resolveColor(color);

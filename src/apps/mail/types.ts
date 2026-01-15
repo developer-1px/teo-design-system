@@ -11,8 +11,6 @@ export type MailFolder =
   | "spam"
   | "archive";
 
-export type MailLabel = "work" | "personal" | "important" | "social" | "promotions";
-
 export interface Mail {
   id: string;
   threadId: string;
@@ -29,7 +27,7 @@ export interface Mail {
   date: Date;
   isRead: boolean;
   isStarred: boolean;
-  labels: MailLabel[];
+  labels: string[];
   folder: MailFolder;
   hasAttachments: boolean;
   attachmentCount?: number;
@@ -43,13 +41,6 @@ export interface MailThread {
   participants: string[];
   isRead: boolean;
   isStarred: boolean;
-  labels: MailLabel[];
+  labels: string[];
   messageCount: number;
-}
-
-export interface FolderInfo {
-  id: MailFolder;
-  label: string;
-  icon: string; // Lucide icon name
-  count: number;
 }

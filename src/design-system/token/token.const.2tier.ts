@@ -92,7 +92,6 @@ export const Radius2Scale = [
   "xl",
   "2xl",
   "3xl",
-  "soft",
   "full",
 ] as const;
 export type Radius2Scale = (typeof Radius2Scale)[number];
@@ -106,6 +105,5 @@ export const Radius2 = {
   xl: Radius.n16,
   "2xl": Radius.n20,
   "3xl": Radius.n24,
-  soft: Radius.n8,
   full: Radius.n9999,
 } as const;

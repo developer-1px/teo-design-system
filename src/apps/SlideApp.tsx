@@ -19,8 +19,9 @@ import { Text } from "../design-system/text/Text";
 import {
   IconSize,
   Opacity,
+  Size,
   Space,
-} from "../design-system/token/token.const.1tier";
+} from "../design-system/token";
 
 export function SlideApp() {
   return (
@@ -102,7 +103,7 @@ export function SlideApp() {
             label="Present"
             variant="primary"
             rounded="md"
-            h="28px"
+            h={Size.n32}
             py={Space.n0}
             px={Space.n12}
           />
@@ -112,7 +113,7 @@ export function SlideApp() {
             label="Share"
             variant="surface"
             rounded="md"
-            h="28px"
+            h={Size.n32}
             py={Space.n0}
             px={Space.n12}
           />

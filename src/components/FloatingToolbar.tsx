@@ -19,7 +19,7 @@ import { useTheme } from "../design-system/theme";
 import {
   IconSize,
   Space,
-} from "../design-system/token/token.const.1tier";
+} from "../design-system/token";
 
 const BOTTOM_TOOLS = [
   { icon: MousePointer2, tooltip: "Move", variant: "surface" as const },
@@ -60,7 +60,7 @@ export function FloatingToolbar() {
       >
         {BOTTOM_TOOLS.map((tool, i) =>
           tool.separator ? (
-            <Separator key={i} orientation="vertical" length="16px" />
+            <Separator key={i} orientation="vertical" length={Space.n16} />
           ) : (
             <Action
               key={i}

@@ -21,7 +21,7 @@ import {
   Space,
 } from "../../design-system/token/token.const.1tier";
 
-export interface CMSSidebarProps {
+interface CMSSidebarProps {
   isOpen: boolean;
   onToggle: () => void;
 }

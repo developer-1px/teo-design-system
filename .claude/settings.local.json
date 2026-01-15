@@ -21,7 +21,9 @@
       "Bash(npm run typecheck:*)",
       "Bash(node -e:*)",
       "Bash(npm run dev:*)",
-      "Bash(node /Users/user/Desktop/minimal-design-kit/scripts/generate-tokens.js:*)"
+      "Bash(node /Users/user/Desktop/minimal-design-kit/scripts/generate-tokens.js:*)",
+      "Bash(npx ts-unused-exports:*)",
+      "Bash(npm run check:unused:*)"
     ],
     "deny": [],
     "ask": []

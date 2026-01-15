@@ -42,31 +42,11 @@ export function Section({
     computedBorder[key] = "1px solid var(--border-color)";
   }
 
-  const resolveSizingProp = (val: string | number | undefined) => {
-    if (
-      typeof val === "string" &&
-      (val.startsWith("size.") || val.startsWith("container."))
-    ) {
-      return val as any;
-    }
-    return undefined;
-  };
-  const resolveSizingStyle = (val: string | number | undefined) => {
-    if (
-      typeof val === "string" &&
-      (val.startsWith("size.") || val.startsWith("container."))
-    ) {
-      return undefined;
-    }
-    // Tokens are already CSS variables, no conversion needed
-    return val;
-  };
-
   return (
     <Frame
       style={{
-        width: resolveSizingStyle(w),
-        height: resolveSizingStyle(h),
+        width: w,
+        height: h,
         ...computedBorder,
         position: "relative",
         display: "flex",
@@ -76,8 +56,6 @@ export function Section({
       clip
       override={{
         p: Space.n0,
-        w: resolveSizingProp(w),
-        h: resolveSizingProp(h),
         flex,
         rounded,
         shadow,

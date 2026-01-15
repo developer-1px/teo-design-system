@@ -12,7 +12,7 @@ export const selectedThreadIdAtom = atom<string | null>(null);
 export const searchQueryAtom = atom<string>("");
 
 // All threads (mock data)
-export const allThreadsAtom = atom<MailThread[]>(mockThreads);
+const allThreadsAtom = atom<MailThread[]>(mockThreads);
 
 // Filtered threads based on selected folder
 export const filteredThreadsAtom = atom((get) => {

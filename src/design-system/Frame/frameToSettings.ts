@@ -62,21 +62,21 @@ export function frameToSettings(props: FrameOverrides): {
 
   const standardStyles: React.CSSProperties = cleanStyles({
     // Padding (tokens are already CSS variables)
-    padding: props.p as any,
-    paddingTop: (props.pt as any) ?? (props.py as any),
-    paddingBottom: (props.pb as any) ?? (props.py as any),
-    paddingLeft: (props.pl as any) ?? (props.px as any),
-    paddingRight: (props.pr as any) ?? (props.px as any),
+    padding: props.p,
+    paddingTop: props.pt ?? props.py,
+    paddingBottom: props.pb ?? props.py,
+    paddingLeft: props.pl ?? props.px,
+    paddingRight: props.pr ?? props.px,
 
-    gap: props.gap as any,
+    gap: props.gap,
 
     // Sizing (tokens are already CSS variables)
-    width: resolveSizing(props.w, "width") as any,
-    height: resolveSizing(props.h, "height") as any,
-    minWidth: resolveSizing(props.minWidth, "width") as any,
-    minHeight: resolveSizing(props.minHeight, "height") as any,
-    maxWidth: resolveSizing(props.maxWidth, "width") as any,
-    maxHeight: resolveSizing(props.maxHeight, "height") as any,
+    width: resolveSizing(props.w, "width"),
+    height: resolveSizing(props.h, "height"),
+    minWidth: resolveSizing(props.minWidth, "width"),
+    minHeight: resolveSizing(props.minHeight, "height"),
+    maxWidth: resolveSizing(props.maxWidth, "width"),
+    maxHeight: resolveSizing(props.maxHeight, "height"),
 
     // Radius (tokens are already CSS variables)
     borderRadius: props.r,
@@ -159,7 +159,9 @@ export function frameToSettings(props: FrameOverrides): {
       standardStyles.borderRadius = Radius2.none;
     } else if (typeof props.rounded === "string") {
       // Use Radius2 for semantic aliases, fallback to raw value for custom strings
-      standardStyles.borderRadius = (Radius2 as any)[props.rounded] || props.rounded;
+      standardStyles.borderRadius = props.rounded in Radius2
+        ? Radius2[props.rounded as keyof typeof Radius2]
+        : props.rounded;
     }
   }
 

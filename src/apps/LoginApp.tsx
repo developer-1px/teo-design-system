@@ -4,11 +4,10 @@ import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
-import { ProseDocument } from "../design-system/ProseOld.tsx";
 import { Section } from "../design-system/Section";
+import { Prose } from "../design-system/text/context/Prose";
 import { Text } from "../design-system/text/Text.tsx";
 import {
-  ContainerSize,
   FontSize,
   IconSize,
   Size,
@@ -105,7 +104,10 @@ export function LoginApp() {
       {/* Right: Description / Hero */}
       <Section flex={1} surface="panel" border="left">
         <Frame override={{ p: Space.n48 }} fill align="center" justify="center">
-          <ProseDocument maxWidth={ContainerSize.n480} gap={Space.n32}>
+          <Frame
+            override={{ gap: Space.n32 }}
+            style={{ maxWidth: "480px", width: "100%" }}
+          >
             <Frame
               override={{
                 w: Size.n64,
@@ -121,13 +123,13 @@ export function LoginApp() {
               <Icon src={Lock} size={IconSize.n32} />
             </Frame>
 
-            <Text.Prose.Title variant="lg">
+            <Prose.Title variant="lg">
               Secure & Minimal Design System
-            </Text.Prose.Title>
-            <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
+            </Prose.Title>
+            <Prose.Body style={{ color: "var(--text-secondary)" }}>
               Experience the "Pure White" architecture. A design system built
               for data-dense interfaces where content is the hero.
-            </Text.Prose.Body>
+            </Prose.Body>
 
             <Frame override={{ gap: Space.n16 }} style={{ marginTop: "var(--space-n16)" }}>
               <FeatureRow
@@ -143,7 +145,7 @@ export function LoginApp() {
                 desc="Built-in tools to debug design decisions."
               />
             </Frame>
-          </ProseDocument>
+          </Frame>
         </Frame>
       </Section>
     </Frame>
