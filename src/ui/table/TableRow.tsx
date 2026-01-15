@@ -29,15 +29,15 @@ export function TableRow({
       >
         <Frame
           style={{ height }}
+          grid
+          columns={columns}
           override={{
             w: Size.full,
             px: Space.n16,
             gap: Space.n16,
             borderBottom: true,
+            align: "center",
           }}
-          grid
-          columns={columns}
-          align="center"
         >
           {children}
         </Frame>
@@ -48,15 +48,15 @@ export function TableRow({
   return (
     <Frame
       style={{ height }}
+      grid
+      columns={columns}
       override={{
         w: Size.full,
         px: Space.n16,
         gap: Space.n16,
         borderBottom: true,
+        align: "center",
       }}
-      grid
-      columns={columns}
-      align="center"
     >
       {children}
     </Frame>

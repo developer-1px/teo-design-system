@@ -10,7 +10,7 @@ export const datasetsAtom = atom<DatasetMeta[]>(availableDatasets);
 
 // Selected dataset name (default to first available dataset)
 export const selectedDatasetAtom = atom<string>(
-  availableDatasets[0]?.name || "deals"
+  availableDatasets[0]?.name || "deals",
 );
 
 // Current data loaded from selected dataset

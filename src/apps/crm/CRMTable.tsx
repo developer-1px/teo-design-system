@@ -83,7 +83,7 @@ export function CRMTable() {
               >
                 {flexRender(
                   header.column.columnDef.header,
-                  header.getContext()
+                  header.getContext(),
                 )}
               </Table.Head>
             );

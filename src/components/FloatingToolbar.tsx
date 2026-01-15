@@ -44,13 +44,11 @@ export function FloatingToolbar() {
       style={{ transform: "translateX(-50%)" }}
     >
       <Frame
-        override={{gap: Space.n4,
-          p: Space.n4,
-          shadow: "lg"}} rounded={Radius2.full}
+        rounded={Radius2.full}
         style={{ border: "1px solid var(--border-color)" }}
         layout={Layout.Row.Toolbar.Default}
         surface="base"
-        align="center"
+        override={{ gap: Space.n4, p: Space.n4, shadow: "lg", align: "center" }}
       >
         {BOTTOM_TOOLS.map((tool, i) =>
           tool.separator ? (

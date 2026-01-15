@@ -1,11 +1,7 @@
 import React from "react";
 import { Frame } from "./Frame/Frame.tsx";
 import { Icon } from "./Icon";
-import type {
-  ActionVariant,
-  JustifyToken,
-  SurfaceToken,
-} from "./lib/types.ts";
+import type { ActionVariant, JustifyToken, SurfaceToken } from "./lib/types.ts";
 import { Text } from "./text/Text.tsx";
 import {
   type IconSizeToken,
@@ -13,7 +9,12 @@ import {
   Space,
   type SpaceToken,
 } from "./token/token.const.1tier";
-import { ActionSize, type ActionSizeToken, Radius2, type Radius2Token } from "./token/token.const.2tier";
+import {
+  ActionSize,
+  type ActionSizeToken,
+  Radius2,
+  type Radius2Token,
+} from "./token/token.const.2tier";
 
 interface ActionProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
@@ -85,7 +86,6 @@ export function Action({
   style: styleOverride,
   ...props
 }: ActionProps) {
-
   // Resolve 2-Tier Token
   const sizeConfig = ActionSize[size] || ActionSize.sm;
 
@@ -121,7 +121,7 @@ export function Action({
 
   // Padding: Use explicit 'p' if provided, otherwise use token's padding
   // NOTE: If label is present, we might want lateral padding.
-  // The token 'padding' is likely for the Icon-only case or the gap? 
+  // The token 'padding' is likely for the Icon-only case or the gap?
   // Let's assume the token.padding is for general padding.
   const finalP = p ?? sizeConfig.padding;
 
@@ -135,11 +135,13 @@ export function Action({
         opacity: opacity,
         row: true,
         align: "center",
+        ...(justify && { justify }),
       }}
       rounded={finalRounded}
       style={{
         width: typeof finalWidth === "number" ? `${finalWidth}px` : finalWidth,
-        height: typeof finalHeight === "number" ? `${finalHeight}px` : finalHeight,
+        height:
+          typeof finalHeight === "number" ? `${finalHeight}px` : finalHeight,
         border: border ? "1px solid var(--border-color)" : undefined,
         cursor: "pointer",
         color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",
@@ -155,7 +157,6 @@ export function Action({
       title={tooltip}
       surface={surface}
       pack
-      justify={justify}
       {...props}
     >
       {icon && (

@@ -72,12 +72,8 @@ export function Section({
             borderBottom: "1px solid var(--border-color)",
             flexShrink: 0,
           }}
-          override={{
-            gap: Space.n8,
-            p: Space.n8,
-          }}
           layout={Layout.Row.Item.Tight}
-          align="center"
+          override={{ gap: Space.n8, p: Space.n8, align: "center" }}
         >
           <Text.Card.Note
             style={{

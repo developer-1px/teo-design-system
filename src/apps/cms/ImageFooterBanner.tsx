@@ -4,7 +4,13 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import { FontSize, IconSize, Opacity, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function ImageFooterBanner() {
@@ -19,8 +25,8 @@ export function ImageFooterBanner() {
       surface="base"
     >
       <Frame
-        override={{w: Size.full,
-          h: Size.n128}} rounded={Radius2["3xl"]}
+        override={{ w: Size.full, h: Size.n128 }}
+        rounded={Radius2["3xl"]}
         style={{
           position: "relative",
           background: "linear-gradient(225deg, #1a1a1a, #000)",
@@ -45,19 +51,14 @@ export function ImageFooterBanner() {
         />
 
         <Frame
-          override={{
-            p: Space.n24,
-            gap: Space.n24,
-          }}
           style={{
             maxWidth: "var(--container-n640)",
             position: "relative",
             zIndex: 10,
             margin: "0 auto",
           }}
-          align="center"
-          justify="center"
           fill
+          override={{ p: Space.n24, gap: Space.n24, align: "center" }}
         >
           <Text.Prose.Title
             variant="xl"
@@ -103,8 +104,12 @@ export function ImageFooterBanner() {
 
       {/* Partner Logos */}
       <Frame
-        override={{ gap: Space.n32, pt: Space.n48, pb: Space.n24 }}
-        align="center"
+        override={{
+          gap: Space.n32,
+          pt: Space.n48,
+          pb: Space.n24,
+          align: "center",
+        }}
       >
         <Text.Card.Note
           size={FontSize.n12}
@@ -118,20 +123,19 @@ export function ImageFooterBanner() {
           TRUSTED WORLDWIDE
         </Text.Card.Note>
         <Frame
+          layout={Layout.Wrap.Chips.Loose}
+          wrap="wrap"
           override={{
             gap: Space.n48,
             py: Space.n0,
             px: Space.n24,
             opacity: Opacity.n40,
+            justify: "center",
           }}
-          layout={Layout.Wrap.Chips.Loose}
-          justify="center"
-          wrap="wrap"
         >
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Tight}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <Icon src={Zap} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -139,9 +143,8 @@ export function ImageFooterBanner() {
             </Text.Card.Title>
           </Frame>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Tight}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <Icon src={Globe} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -149,9 +152,8 @@ export function ImageFooterBanner() {
             </Text.Card.Title>
           </Frame>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Tight}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <Icon src={Shield} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -159,9 +161,8 @@ export function ImageFooterBanner() {
             </Text.Card.Title>
           </Frame>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Tight}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <Icon src={Cpu} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">

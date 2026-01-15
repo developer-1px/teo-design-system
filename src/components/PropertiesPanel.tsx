@@ -23,12 +23,21 @@ import { Icon } from "../design-system/Icon";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
-import { IconSize, Opacity, Space } from "../design-system/token/token.const.1tier";
+import {
+  IconSize,
+  Opacity,
+  Space,
+} from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Data ---
 
-type AlignmentToolItem = { icon: any; label: string; surface?: "selected"; rotation?: number };
+type AlignmentToolItem = {
+  icon: any;
+  label: string;
+  surface?: "selected";
+  rotation?: number;
+};
 type AlignmentToolSeparator = { separator: true };
 type AlignmentTool = AlignmentToolItem | AlignmentToolSeparator;
 
@@ -56,10 +65,7 @@ const PropertySection = ({
   children: React.ReactNode;
 }) => (
   <Frame override={{ gap: Space.n8 }}>
-    <Frame
-      override={{ px: Space.n8 }}
-      layout={Layout.Row.Actions.Between}
-    >
+    <Frame override={{ px: Space.n8 }} layout={Layout.Row.Actions.Between}>
       <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
       </Text.Menu.Group>
@@ -118,7 +124,12 @@ export function PropertiesPanel() {
     setTransform((prev) => ({ ...prev, [key]: value }));
 
   return (
-    <Section style={{ width: "260px" }} surface="base" rounded={Radius2.lg} shadow="sm">
+    <Section
+      style={{ width: "260px" }}
+      surface="base"
+      rounded={Radius2.lg}
+      shadow="sm"
+    >
       {/* Tabs */}
       <Frame
         override={{
@@ -169,16 +180,15 @@ export function PropertiesPanel() {
       >
         {/* Alignment */}
         <Frame
-          override={{
-          }} rounded={Radius2.md}
+          rounded={Radius2.md}
           style={{
             border: "1px solid var(--border-color)",
             padding: "1px",
             gap: "1px",
           }} // 1px style override
           layout={Layout.Row.Toolbar.Default}
-          justify="between"
           surface="sunken"
+          override={{ justify: "between" }}
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
             isSeparator(tool) ? (
@@ -202,9 +212,8 @@ export function PropertiesPanel() {
         {/* Transform */}
         <Frame override={{ gap: Space.n8 }}>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <TransformField
               label="X"
@@ -219,9 +228,8 @@ export function PropertiesPanel() {
             <Frame style={{ width: "24px" }} />
           </Frame>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <TransformField
               label="W"
@@ -243,9 +251,8 @@ export function PropertiesPanel() {
             </Frame>
           </Frame>
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <TransformField
               label="°"
@@ -265,9 +272,8 @@ export function PropertiesPanel() {
         {/* Properties */}
         <PropertySection title="LAYER">
           <Frame
-            override={{ gap: Space.n12 }}
             layout={Layout.Row.Item.Default}
-            justify="between"
+            override={{ gap: Space.n12, justify: "between" }}
           >
             <Field
               value="Normal"
@@ -307,17 +313,15 @@ export function PropertiesPanel() {
               <Field label="LS" value="0%" flex />
             </Frame>
             <Frame
-              override={{
-              }} rounded={Radius2.md}
+              rounded={Radius2.md}
               style={{
                 border: "1px solid var(--border-color)",
                 padding: "1px",
                 gap: "1px",
               }}
               layout={Layout.Row.Toolbar.Compact}
-              justify="between"
-              align="center"
               surface="sunken"
+              override={{ justify: "between" }}
             >
               {[
                 AlignLeft,
@@ -345,8 +349,8 @@ export function PropertiesPanel() {
             value="F4F4F5"
             icon={
               <Frame
-                override={{
-                }} rounded={Radius2.full}
+                override={{}}
+                rounded={Radius2.full}
                 style={{
                   width: "10px",
                   height: "10px",
@@ -367,8 +371,8 @@ export function PropertiesPanel() {
               value="000000"
               icon={
                 <Frame
-                  override={{
-                  }} rounded={Radius2.full}
+                  override={{}}
+                  rounded={Radius2.full}
                   style={{
                     width: "10px",
                     height: "10px",
@@ -399,9 +403,8 @@ export function PropertiesPanel() {
               style={{ flexShrink: 0 }}
             />
             <Frame
-              override={{ gap: Space.n8 }}
               layout={Layout.Row.Item.Default}
-              align="center"
+              override={{ gap: Space.n8, align: "center" }}
             >
               <Field value="1.5" style={{ width: "50px" }} />
               <Field

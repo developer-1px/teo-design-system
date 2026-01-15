@@ -1,5 +1,11 @@
-import type React from "react"
-import type {AlignToken, CursorToken, JustifyToken, ShadowToken, SurfaceToken,} from "../lib/types.ts"
+import type React from "react";
+import type {
+  AlignToken,
+  CursorToken,
+  JustifyToken,
+  ShadowToken,
+  SurfaceToken,
+} from "../lib/types.ts";
 import type {
   HeightToken,
   MaxHeightToken,
@@ -8,13 +14,37 @@ import type {
   RadiusToken,
   SpaceToken,
   WidthToken,
-} from "../token/token.const.1tier.ts"
-import type {Radius2Token} from "../token"
+} from "../token/token.const.1tier.ts";
+import type { Radius2Token } from "../token";
 
 // --- 1. LOOSE OVERRIDES (Token | string | number) ---
 // Used inside 'override={{ ... }}' prop
 export interface FrameOverrides {
   // Layout
+  w?: WidthToken;
+  h?: HeightToken;
+
+  minWidth?: WidthToken;
+  minHeight?: HeightToken;
+  maxWidth?: MaxWidthToken;
+  maxHeight?: MaxHeightToken;
+
+  // Grid
+  grid?: boolean;
+  columns?: string;
+  rows?: string;
+  areas?: string;
+
+  // Flex
+  row?: boolean; // Used internally by Layout presets
+  wrap?: "wrap" | "nowrap" | "wrap-reverse";
+
+  fill?: boolean;
+  flex?: boolean | number | string;
+  align?: AlignToken;
+  justify?: JustifyToken;
+  pack?: boolean;
+
   p?: SpaceToken;
   px?: SpaceToken;
   py?: SpaceToken;
@@ -24,21 +54,6 @@ export interface FrameOverrides {
   pr?: SpaceToken;
 
   gap?: SpaceToken;
-  pack?: boolean;
-
-  w?: WidthToken;
-  h?: HeightToken;
-
-  row?: boolean; // Used internally by Layout presets
-  wrap?: "wrap" | "nowrap" | "wrap-reverse";
-
-  fill?: boolean;
-  flex?: boolean | number | string;
-
-  minWidth?: WidthToken;
-  minHeight?: HeightToken;
-  maxWidth?: MaxWidthToken;
-  maxHeight?: MaxHeightToken;
 
   // border (override: individual sides)
   borderTop?: boolean;
@@ -48,15 +63,6 @@ export interface FrameOverrides {
 
   // BorderRadius
   r?: RadiusToken;
-
-  // Grid
-  grid?: boolean;
-  columns?: string;
-  rows?: string;
-  areas?: string;
-
-  align?: AlignToken;
-  justify?: JustifyToken;
 
   // Surface
   clip?: boolean;
@@ -99,15 +105,12 @@ interface FrameStrictProps {
   rows?: string;
   areas?: string;
 
-  align?: AlignToken;
-  justify?: JustifyToken;
-
   // Surface
   surface?: SurfaceToken;
   rounded?: Radius2Token | boolean;
   clip?: boolean;
 
-  // Border (1-tier: all sides)
+  // Border
   border?: boolean;
 
   // Smart Layout

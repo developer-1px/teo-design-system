@@ -7,7 +7,12 @@ import { Icon } from "../design-system/Icon";
 import { Section } from "../design-system/Section";
 import { Prose } from "../design-system/text/context/Prose";
 import { Text } from "../design-system/text/Text.tsx";
-import { FontSize, IconSize, Size, Space } from "../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LoginApp() {
@@ -15,11 +20,9 @@ export function LoginApp() {
     <Frame fill layout={Layout.Row.AppContainer.Default}>
       {/* Left: Login Form */}
       <Frame
-        override={{ p: Space.n32 }}
         flex={1}
         surface="base"
-        align="center"
-        justify="center"
+        override={{ p: Space.n32, align: "center" }}
       >
         <Frame
           override={{ w: Size.full, gap: Space.n32 }}
@@ -50,11 +53,14 @@ export function LoginApp() {
             </Frame>
 
             <Frame layout={Layout.Row.LabelValue.Default}>
-              <Frame layout={Layout.Row.Item.Tight} override={{ cursor: "pointer" }}>
+              <Frame
+                layout={Layout.Row.Item.Tight}
+                override={{ cursor: "pointer" }}
+              >
                 {/* Checkbox simulation */}
                 <Frame
-                  override={{w: Size.n4,
-                    h: Size.n4}} rounded={Radius2.sm}
+                  override={{ w: Size.n4, h: Size.n4 }}
+                  rounded={Radius2.sm}
                   style={{ border: "1px solid var(--border-color)" }}
                   surface="sunken"
                 />
@@ -96,19 +102,24 @@ export function LoginApp() {
       {/* Right: Description / Hero */}
       {/* Right: Description / Hero */}
       <Section flex={1} surface="panel" border="left">
-        <Frame override={{ p: Space.n48 }} fill align="center" justify="center">
+        <Frame
+          override={{ p: Space.n48, align: "center", justify: "center" }}
+          fill
+        >
           <Frame
             override={{ gap: Space.n32 }}
             style={{ maxWidth: "480px", width: "100%" }}
           >
             <Frame
-              override={{w: Size.n64,
-                h: Size.n64,
-                shadow: "lg"}} rounded={Radius2["2xl"]}
+              rounded={Radius2["2xl"]}
               style={{ marginBottom: "var(--space-n16)" }}
               surface="card"
-              align="center"
-              justify="center"
+              override={{
+                w: Size.n64,
+                h: Size.n64,
+                shadow: "lg",
+                align: "center",
+              }}
             >
               <Icon src={Lock} size={IconSize.n32} />
             </Frame>
@@ -121,7 +132,10 @@ export function LoginApp() {
               for data-dense interfaces where content is the hero.
             </Prose.Body>
 
-            <Frame override={{ gap: Space.n16 }} style={{ marginTop: "var(--space-n16)" }}>
+            <Frame
+              override={{ gap: Space.n16 }}
+              style={{ marginTop: "var(--space-n16)" }}
+            >
               <FeatureRow
                 title="Zero Decoration"
                 desc="Focus on content hierarchy and spacing."
@@ -144,9 +158,10 @@ export function LoginApp() {
 
 function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame layout={Layout.Row.Item.Default} align="start">
+    <Frame layout={Layout.Row.Item.Default} override={{ align: "start" }}>
       <Frame
-        override={{ w: Size.n8, h: Size.n8}} rounded={Radius2.full}
+        override={{ w: Size.n8, h: Size.n8 }}
+        rounded={Radius2.full}
         style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
         flex={0}

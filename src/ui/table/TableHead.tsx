@@ -35,9 +35,5 @@ export function TableHead({
     );
   }
 
-  return (
-    <Text.Table.Head>
-      {children}
-    </Text.Table.Head>
-  );
+  return <Text.Table.Head>{children}</Text.Table.Head>;
 }

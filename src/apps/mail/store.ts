@@ -34,8 +34,12 @@ export const filteredThreadsAtom = atom((get) => {
     filtered = filtered.filter(
       (thread) =>
         thread.subject.toLowerCase().includes(searchQuery) ||
-        thread.participants.some((p) => p.toLowerCase().includes(searchQuery)) ||
-        thread.mails.some((mail) => mail.snippet.toLowerCase().includes(searchQuery))
+        thread.participants.some((p) =>
+          p.toLowerCase().includes(searchQuery),
+        ) ||
+        thread.mails.some((mail) =>
+          mail.snippet.toLowerCase().includes(searchQuery),
+        ),
     );
   }
 

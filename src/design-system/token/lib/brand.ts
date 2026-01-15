@@ -29,10 +29,7 @@ export type Brand<T, TBrand extends string> = T & { [__brand]: TBrand };
 export type SpaceToken = Brand<string, "Space">;
 
 /** Size token (layout/container dimensions) - CSS variable string or CSS keywords */
-export type SizeToken = Brand<
-  string,
-  "Size"
->;
+export type SizeToken = Brand<string, "Size">;
 
 /** FontSize token (typography scale) - CSS variable string */
 export type FontSizeToken = Brand<string, "FontSize">;

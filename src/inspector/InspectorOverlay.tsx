@@ -6,7 +6,12 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
 import { Overlay } from "../design-system/Overlay";
 import { Text } from "../design-system/text/Text.tsx";
-import { FontSize, IconSize, Size, Space } from "../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 import { InspectorPanel } from "./components/InspectorPanel";
 import { useInspectorHotkeys } from "./hooks/useInspectorHotkeys";
@@ -116,7 +121,7 @@ export function InspectorOverlay() {
           pointerEvents: isLocked ? "none" : "auto", // Allow clicking through when locked (except panel)
         }}
         onClick={handleClick}
-        onKeyDown={() => { }}
+        onKeyDown={() => {}}
       >
         {/* Top Status Badge - Compact */}
         <Overlay
@@ -133,7 +138,8 @@ export function InspectorOverlay() {
               px: Space.n8,
               gap: Space.n6,
               shadow: "lg",
-            }} rounded={Radius2.full}
+            }}
+            rounded={Radius2.full}
             surface="primary"
             layout={Layout.Row.Meta.Default}
           >
@@ -193,11 +199,14 @@ export function InspectorOverlay() {
               }}
             >
               <Frame
-                override={{py: Space.n0,
+                override={{
+                  py: Space.n0,
                   px: Space.n6,
                   h: Size.n16,
                   gap: Space.n4,
-                  shadow: "sm"}} rounded={Radius2.sm}
+                  shadow: "sm",
+                }}
+                rounded={Radius2.sm}
                 style={{
                   backgroundColor: "var(--link-color)",
                   borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
@@ -263,7 +272,8 @@ export function InspectorOverlay() {
               px: Space.n12,
               gap: Space.n8,
               shadow: "lg",
-            }} rounded={Radius2.md}
+            }}
+            rounded={Radius2.md}
             surface="primary"
             layout={Layout.Row.Meta.Default}
           >

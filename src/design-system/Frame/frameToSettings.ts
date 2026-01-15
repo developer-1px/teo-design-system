@@ -46,7 +46,10 @@ export function frameToSettings(props: FrameSettingsInput): {
     // String checks
     if (typeof val === "string") {
       // CSS variable tokens (e.g., "var(--size-n40)") → fixed dimension
-      if (val.startsWith("var(--size-") || val.startsWith("var(--container-size-")) {
+      if (
+        val.startsWith("var(--size-") ||
+        val.startsWith("var(--container-size-")
+      ) {
         return true;
       }
       // Keyword values (Size.full, Size.screen, etc.) → not fixed
@@ -144,9 +147,10 @@ export function frameToSettings(props: FrameSettingsInput): {
       standardStyles.borderRadius = props.rounded ? Radius2.md : Radius2.none;
     } else {
       // Use Radius2 for semantic aliases, fallback to raw value for custom strings
-      standardStyles.borderRadius = props.rounded in Radius2
-        ? Radius2[props.rounded as keyof typeof Radius2]
-        : props.rounded;
+      standardStyles.borderRadius =
+        props.rounded in Radius2
+          ? Radius2[props.rounded as keyof typeof Radius2]
+          : props.rounded;
     }
   }
 

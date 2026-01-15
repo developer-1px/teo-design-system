@@ -10,11 +10,7 @@ import { CRMSidebar } from "./CRMSidebar";
 import { CRMTable } from "./CRMTable";
 import { CRMToolbar } from "./CRMToolbar";
 import { loadDataset } from "./dataLoader";
-import {
-  currentDataAtom,
-  isLoadingAtom,
-  selectedDatasetAtom,
-} from "./store";
+import { currentDataAtom, isLoadingAtom, selectedDatasetAtom } from "./store";
 
 export function CRMApp() {
   const selectedDataset = useAtomValue(selectedDatasetAtom);
@@ -61,9 +57,10 @@ export function CRMApp() {
 
         <Frame flex fill scroll override={{ p: Space.n0 }}>
           {isLoading ? (
-            <Frame fill pack align="center" justify="center">
+            <Frame fill pack override={{ align: "center", justify: "center" }}>
               <Frame
-                override={{ w: Size.n24, h: Size.n24}} rounded={Radius2.full}
+                override={{ w: Size.n24, h: Size.n24 }}
+                rounded={Radius2.full}
                 style={{
                   border: "2px solid var(--border-color)",
                   borderTopColor: "var(--text-primary)",

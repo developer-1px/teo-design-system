@@ -216,7 +216,8 @@ export function InspectorPanel({
       <Frame
         override={{
           shadow: "2xl",
-        }} rounded={Radius2.lg}
+        }}
+        rounded={Radius2.lg}
         style={{
           maxHeight: "80vh",
           border: "1px solid var(--border-color)",
@@ -229,6 +230,7 @@ export function InspectorPanel({
           override={{
             py: Space.n0,
             px: Space.n8,
+            justify: "between",
           }}
           style={{
             cursor: "grab",
@@ -237,10 +239,13 @@ export function InspectorPanel({
           }}
           surface="sunken"
           layout={Layout.Row.Header.Default}
-          justify="between"
           onMouseDown={handleMouseDown}
         >
-          <Frame override={{ gap: Space.n6 }} layout={Layout.Row.Item.Tight} flex>
+          <Frame
+            override={{ gap: Space.n6 }}
+            layout={Layout.Row.Item.Tight}
+            flex
+          >
             <Lock size={12} className="text-primary" />
             <Text weight="bold" size={FontSize.n10}>
               {title}
@@ -305,7 +310,11 @@ export function InspectorPanel({
               pl: Space.n8,
             }}
           >
-            <Frame layout={Layout.Row.Header.Default} justify="between" flex>
+            <Frame
+              layout={Layout.Row.Header.Default}
+              flex
+              override={{ justify: "between" }}
+            >
               <Action
                 variant="ghost"
                 w={20}
@@ -391,7 +400,8 @@ export function InspectorPanel({
                   {section.section}
                 </Text>
                 <Frame
-                  override={{gap: Space.n0}} rounded={Radius2.sm}
+                  override={{ gap: Space.n0 }}
+                  rounded={Radius2.sm}
                   style={{ border: "1px solid var(--border-color)" }}
                   clip
                 >

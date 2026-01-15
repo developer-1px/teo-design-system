@@ -14,7 +14,12 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 interface CMSSidebarProps {
@@ -43,9 +48,13 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
     >
       {/* Header with Toggle */}
       <Frame
-        override={{ gap: Space.n12, py: Space.n0, px: Space.n4 }}
         layout={Layout.Row.Header.Default}
-        align="center"
+        override={{
+          gap: Space.n12,
+          py: Space.n0,
+          px: Space.n4,
+          align: "center",
+        }}
       >
         <Action
           icon={isOpen ? LayoutIcon : Menu}
@@ -57,16 +66,13 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         />
 
         <Frame
-          override={{
-            gap: Space.n8,
-          }}
           style={{
             opacity: isOpen ? 1 : 0,
             transition: "opacity 0.2s",
             pointerEvents: isOpen ? "auto" : "none",
           }}
           layout={Layout.Row.Actions.Default}
-          align="center"
+          override={{ gap: Space.n8, align: "center" }}
         ></Frame>
       </Frame>
 
@@ -85,21 +91,19 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         scroll
       >
         <Frame
+          layout={Layout.Row.Header.Default}
           override={{
             gap: Space.n8,
             pt: Space.n0,
             pr: Space.n8,
             pb: Space.n8,
             pl: Space.n8,
+            align: "center",
           }}
-          layout={Layout.Row.Header.Default}
-          align="center"
-          justify="between"
         >
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <Text.Card.Note
               weight="bold"
@@ -118,7 +122,8 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
             />
           </Frame>
           <Frame
-            override={{ gap: Space.n4, p: Space.n4}} rounded={Radius2.md}
+            override={{ gap: Space.n4, p: Space.n4 }}
+            rounded={Radius2.md}
             layout={Layout.Row.Actions.Default}
             surface="sunken"
           >
@@ -151,10 +156,6 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
       {/* Footer Settings */}
       <Frame
-        override={{
-          gap: Space.n12,
-          p: Space.n12,
-        }}
         style={{
           borderTop: "1px solid var(--border-color)",
           opacity: isOpen ? 1 : 0,
@@ -162,10 +163,11 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           display: isOpen ? "flex" : "none",
         }}
         layout={Layout.Row.Item.Default}
-        align="center"
+        override={{ gap: Space.n12, p: Space.n12, align: "center" }}
       >
         <Frame
-          override={{ w: Size.n32, h: Size.n32}} rounded={Radius2.full}
+          override={{ w: Size.n32, h: Size.n32 }}
+          rounded={Radius2.full}
           surface="sunken"
           pack
         >
@@ -198,9 +200,8 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
     return (
       <Frame override={{ gap: Space.n6, py: Space.n0, px: Space.n8 }}>
         <Frame
-          override={{ gap: Space.n8 }}
           layout={Layout.Row.Meta.Default}
-          align="center"
+          override={{ gap: Space.n8, align: "center" }}
         >
           <Icon src={FileText} size={IconSize.n10} style={{ opacity: 0.5 }} />
           <Text.Card.Note
@@ -211,8 +212,8 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
           </Text.Card.Note>
         </Frame>
         <Frame
-          override={{w: Size.full,
-            cursor: "pointer"}} rounded={Radius2.md}
+          override={{ w: Size.full, cursor: "pointer" }}
+          rounded={Radius2.md}
           style={{
             border: "1px solid var(--border-color)",
             boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
@@ -224,9 +225,8 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
         >
           {active && (
             <Frame
-              override={{w: Size.n8,
-                h: Size.n8,
-                shadow: "sm"}} rounded={Radius2.full}
+              override={{ w: Size.n8, h: Size.n8, shadow: "sm" }}
+              rounded={Radius2.full}
               surface="primary"
             />
           )}
@@ -237,16 +237,19 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
 
   return (
     <Frame
-      override={{py: Space.n8, px: Space.n12, cursor: "pointer"}} rounded={Radius2.md}
+      rounded={Radius2.md}
       layout={Layout.Row.Item.Default}
-      align="center"
-      justify="between"
       surface={active ? "raised" : undefined}
+      override={{
+        py: Space.n8,
+        px: Space.n12,
+        cursor: "pointer",
+        align: "center",
+      }}
     >
       <Frame
-        override={{ gap: Space.n8 }}
         layout={Layout.Row.Item.Tight}
-        align="center"
+        override={{ gap: Space.n8, align: "center" }}
       >
         <Icon src={FileText} size={IconSize.n14} style={{ opacity: 0.5 }} />
         <Text.Card.Title

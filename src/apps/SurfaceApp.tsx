@@ -5,6 +5,57 @@ import { Space } from "../design-system/token/token.const.1tier.ts";
 import { Radius2 } from "../design-system/token/token.const.2tier.ts";
 import type { SurfaceToken } from "../design-system/lib/types.ts";
 
+const SURFACES: Array<{
+  token: SurfaceToken;
+  name: string;
+  description: string;
+  usage: string;
+  icon: string;
+}> = [
+  {
+    token: "base",
+    name: "Base",
+    description: "기본 배경 레이어",
+    usage: "카드, 패널, 다이얼로그 등 주요 컨텐츠 영역",
+    icon: "□",
+  },
+  {
+    token: "sunken",
+    name: "Sunken",
+    description: "음각 효과의 낮은 레이어",
+    usage: "앱 전체 배경, Well 영역, 입력 필드",
+    icon: "⊡",
+  },
+  {
+    token: "raised",
+    name: "Raised",
+    description: "부각된 높은 레이어",
+    usage: "플로팅 툴바, 드롭다운 메뉴",
+    icon: "▣",
+  },
+  {
+    token: "overlay",
+    name: "Overlay",
+    description: "최상단 오버레이",
+    usage: "모달, 토스트, 팝오버",
+    icon: "▦",
+  },
+  {
+    token: "primary",
+    name: "Primary",
+    description: "강조 액센트 레이어",
+    usage: "주요 액션 버튼, 선택된 상태",
+    icon: "◆",
+  },
+  {
+    token: "selected",
+    name: "Selected",
+    description: "선택/활성 상태",
+    usage: "선택된 리스트 아이템, 활성 탭",
+    icon: "●",
+  },
+];
+
 export function SurfaceApp() {
   return (
     <Frame
@@ -20,8 +71,14 @@ export function SurfaceApp() {
       {/* Page 2: Surface Showcase - Simple squares */}
       <ShowcasePage />
 
-      {/* Page 3: Surface Detail - Bar layout */}
-      <DetailPage />
+      {/* Pages 3-8: Each Surface Detail (1 page per surface) */}
+      {SURFACES.map((surface, index) => (
+        <SurfaceDetailPage
+          key={surface.token}
+          {...surface}
+          pageNumber={index + 3}
+        />
+      ))}
     </Frame>
   );
 }
@@ -82,12 +139,10 @@ function IntroductionPage() {
             >
               What is Surface?
             </Prose.Title>
-            <Prose.Body
-              style={{ fontSize: "18px", lineHeight: 1.7 }}
-            >
+            <Prose.Body style={{ fontSize: "18px", lineHeight: 1.7 }}>
               Surface는 디자인 시스템의 <strong>배경 레이어 체계</strong>입니다.
-              컴포넌트가 위치하는 깊이감(elevation)과 문맥(context)을 시각적으로 전달하며,
-              명확한 정보 계층 구조를 만듭니다.
+              컴포넌트가 위치하는 깊이감(elevation)과 문맥(context)을 시각적으로
+              전달하며, 명확한 정보 계층 구조를 만듭니다.
             </Prose.Body>
           </Frame>
 
@@ -98,12 +153,10 @@ function IntroductionPage() {
             >
               Why Surface Matters
             </Prose.Title>
-            <Prose.Body
-              style={{ fontSize: "18px", lineHeight: 1.7 }}
-            >
-              색상이나 테두리 없이도 <strong>레이어 분리</strong>를 표현할 수 있어,
-              깔끔하고 모던한 인터페이스를 구축할 수 있습니다.
-              다크 모드와 라이트 모드에서 자동으로 적절한 대비를 유지합니다.
+            <Prose.Body style={{ fontSize: "18px", lineHeight: 1.7 }}>
+              색상이나 테두리 없이도 <strong>레이어 분리</strong>를 표현할 수
+              있어, 깔끔하고 모던한 인터페이스를 구축할 수 있습니다. 다크 모드와
+              라이트 모드에서 자동으로 적절한 대비를 유지합니다.
             </Prose.Body>
           </Frame>
         </Frame>
@@ -123,9 +176,7 @@ function IntroductionPage() {
             <Prose.Note style={{ textAlign: "center" }}>
               Scroll to explore
             </Prose.Note>
-            <Prose.Body
-              style={{ textAlign: "center", fontSize: "24px" }}
-            >
+            <Prose.Body style={{ textAlign: "center", fontSize: "24px" }}>
               ↓
             </Prose.Body>
           </Frame>
@@ -155,18 +206,6 @@ function IntroductionPage() {
 }
 
 function ShowcasePage() {
-  const surfaces: Array<{
-    token: SurfaceToken;
-    name: string;
-  }> = [
-    { token: "base", name: "Base" },
-    { token: "sunken", name: "Sunken" },
-    { token: "raised", name: "Raised" },
-    { token: "overlay", name: "Overlay" },
-    { token: "primary", name: "Primary" },
-    { token: "selected", name: "Selected" },
-  ];
-
   return (
     <Frame
       style={{
@@ -220,7 +259,7 @@ function ShowcasePage() {
             flexWrap: "wrap",
           }}
         >
-          {surfaces.map((item) => (
+          {SURFACES.map((item) => (
             <Frame
               key={item.token}
               surface={item.token}
@@ -256,7 +295,9 @@ function ShowcasePage() {
 
         {/* Scroll Hint */}
         <Frame layout={Layout.Center.Default}>
-          <Prose.Note style={{ textAlign: "center", fontSize: "14px", opacity: 0.6 }}>
+          <Prose.Note
+            style={{ textAlign: "center", fontSize: "14px", opacity: 0.6 }}
+          >
             Scroll for details ↓
           </Prose.Note>
         </Frame>
@@ -265,257 +306,196 @@ function ShowcasePage() {
   );
 }
 
-function DetailPage() {
-  const surfaces: Array<{
-    token: SurfaceToken;
-    name: string;
-    description: string;
-    usage: string;
-    icon: string;
-  }> = [
-    {
-      token: "base",
-      name: "Base",
-      description: "기본 배경 레이어",
-      usage: "카드, 패널, 다이얼로그 등 주요 컨텐츠 영역",
-      icon: "□",
-    },
-    {
-      token: "sunken",
-      name: "Sunken",
-      description: "음각 효과의 낮은 레이어",
-      usage: "앱 전체 배경, Well 영역, 입력 필드",
-      icon: "⊡",
-    },
-    {
-      token: "raised",
-      name: "Raised",
-      description: "부각된 높은 레이어",
-      usage: "플로팅 툴바, 드롭다운 메뉴",
-      icon: "▣",
-    },
-    {
-      token: "overlay",
-      name: "Overlay",
-      description: "최상단 오버레이",
-      usage: "모달, 토스트, 팝오버",
-      icon: "▦",
-    },
-    {
-      token: "primary",
-      name: "Primary",
-      description: "강조 액센트 레이어",
-      usage: "주요 액션 버튼, 선택된 상태",
-      icon: "◆",
-    },
-    {
-      token: "selected",
-      name: "Selected",
-      description: "선택/활성 상태",
-      usage: "선택된 리스트 아이템, 활성 탭",
-      icon: "●",
-    },
-  ];
-
-  return (
-    <Frame
-      style={{
-        minHeight: "100vh",
-        scrollSnapAlign: "start",
-        scrollSnapStop: "always",
-        background: "linear-gradient(180deg, var(--surface-sunken) 0%, var(--surface-base) 100%)",
-      }}
-      override={{
-        py: Space.n64,
-        px: Space.n24,
-        gap: Space.n48,
-      }}
-    >
-      {/* Title Section */}
-      <Frame
-        override={{
-          gap: Space.n16,
-        }}
-        layout={Layout.Stack.Content.Default}
-        style={{
-          maxWidth: "800px",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
-      >
-        <Prose.Title
-          variant="lg"
-          style={{
-            fontSize: "clamp(36px, 6vw, 64px)",
-            letterSpacing: "-0.03em",
-            background: "linear-gradient(135deg, var(--text-primary) 0%, var(--text-subtle) 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
-          Surface Details
-        </Prose.Title>
-        <Prose.Body
-          style={{
-            fontSize: "18px",
-            lineHeight: 1.7,
-            maxWidth: "600px",
-            margin: "0 auto",
-          }}
-        >
-          각 Surface 토큰의 의미와 사용 시나리오를 살펴보세요
-        </Prose.Body>
-      </Frame>
-
-      {/* Surface Grid (2 columns) */}
-      <Frame
-        override={{
-          gap: Space.n20,
-        }}
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          width: "100%",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
-        }}
-      >
-        {surfaces.map((item, index) => (
-          <SurfaceDetailCard key={item.token} {...item} index={index} />
-        ))}
-      </Frame>
-    </Frame>
-  );
-}
-
-function SurfaceDetailCard({
+function SurfaceDetailPage({
   token,
   name,
   description,
   usage,
   icon,
-  index,
+  pageNumber,
 }: {
   token: SurfaceToken;
   name: string;
   description: string;
   usage: string;
   icon: string;
-  index: number;
+  pageNumber: number;
 }) {
   return (
     <Frame
-      override={{
-        gap: Space.n20,
-        p: Space.n32,
-      }}
-      rounded={Radius2["2xl"]}
-      surface="base"
       style={{
-        transition: "all 0.3s ease",
-        animation: `fadeInUp 0.6s ease ${index * 0.1}s both`,
-        boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
+        minHeight: "100vh",
+        scrollSnapAlign: "start",
+        scrollSnapStop: "always",
+        background: `linear-gradient(135deg, var(--surface-sunken) 0%, var(--surface-base) 100%)`,
       }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-8px)";
-        e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.12)";
+      override={{
+        py: Space.n64,
+        px: Space.n64,
       }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.04)";
-      }}
+      layout={Layout.Center.Default}
     >
-      {/* Icon + Name Header */}
       <Frame
-        override={{ gap: Space.n16 }}
-        layout={Layout.Row.Item.Default}
-        align="center"
+        override={{
+          gap: Space.n64,
+        }}
+        style={{
+          maxWidth: "1200px",
+          width: "100%",
+        }}
       >
-        {/* Icon */}
-        <Frame
-          surface={token}
-          rounded={Radius2.lg}
-          style={{
-            width: "64px",
-            height: "64px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "32px",
-            flexShrink: 0,
-            border: "1px solid var(--border-color)",
-          }}
-        >
-          {icon}
-        </Frame>
-
-        {/* Name + Token */}
-        <Frame override={{ gap: Space.n4 }} style={{ flex: 1 }}>
-          <Prose.Title
-            variant="sm"
-            style={{
-              fontSize: "28px",
-              fontWeight: 700,
-              letterSpacing: "-0.01em",
-            }}
-          >
-            {name}
-          </Prose.Title>
+        {/* Page Number */}
+        <Frame layout={Layout.Center.Default}>
           <Prose.Code
             style={{
-              fontSize: "13px",
-              opacity: 0.5,
+              fontSize: "12px",
+              opacity: 0.3,
+              letterSpacing: "0.15em",
             }}
           >
-            {token}
+            {String(pageNumber).padStart(2, "0")} / 08
           </Prose.Code>
         </Frame>
-      </Frame>
 
-      {/* Description */}
-      <Prose.Body
-        style={{
-          fontSize: "17px",
-          fontWeight: 500,
-          lineHeight: 1.6,
-          color: "var(--text-body)",
-        }}
-      >
-        {description}
-      </Prose.Body>
-
-      {/* Divider */}
-      <Frame
-        style={{
-          height: "1px",
-          background: "var(--border-color)",
-          opacity: 0.3,
-        }}
-      />
-
-      {/* Usage */}
-      <Frame override={{ gap: Space.n8 }}>
-        <Prose.Note
+        {/* 2-Column Layout */}
+        <Frame
+          layout={Layout.Row.Item.Default}
           style={{
-            fontSize: "13px",
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-            opacity: 0.6,
+            animation: `fadeInUp 0.8s ease both`,
           }}
+          override={{ gap: Space.n64, align: "center" }}
         >
-          Usage
-        </Prose.Note>
-        <Prose.Body
-          style={{
-            fontSize: "15px",
-            lineHeight: 1.7,
-            color: "var(--text-subtle)",
-          }}
-        >
-          {usage}
-        </Prose.Body>
+          {/* Left: Visual Sample */}
+          <Frame flex={1} override={{ gap: Space.n32, align: "center" }}>
+            {/* Large Surface Preview */}
+            <Frame
+              surface={token}
+              rounded={Radius2["3xl"]}
+              style={{
+                width: "100%",
+                aspectRatio: "1",
+                maxWidth: "400px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "120px",
+                border: "2px solid var(--border-color)",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.12)",
+              }}
+            >
+              {icon}
+            </Frame>
+
+            {/* Token Code */}
+            <Frame
+              override={{ p: Space.n16, gap: Space.n8 }}
+              rounded={Radius2.lg}
+              surface="overlay"
+              style={{
+                border: "1px solid var(--border-color)",
+              }}
+            >
+              <Prose.Code
+                style={{
+                  fontSize: "14px",
+                  opacity: 0.6,
+                }}
+              >
+                surface="{token}"
+              </Prose.Code>
+            </Frame>
+          </Frame>
+
+          {/* Right: Description */}
+          <Frame flex={1} override={{ gap: Space.n40 }}>
+            {/* Title */}
+            <Frame override={{ gap: Space.n12 }}>
+              <Prose.Title
+                variant="xl"
+                style={{
+                  fontSize: "clamp(48px, 6vw, 72px)",
+                  fontWeight: 700,
+                  letterSpacing: "-0.03em",
+                  lineHeight: 1.1,
+                }}
+              >
+                {name}
+              </Prose.Title>
+              <Frame
+                style={{
+                  width: "80px",
+                  height: "4px",
+                  background: `var(--surface-${token})`,
+                  borderRadius: "2px",
+                }}
+              />
+            </Frame>
+
+            {/* Description */}
+            <Frame override={{ gap: Space.n16 }}>
+              <Prose.Note
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.15em",
+                  opacity: 0.5,
+                }}
+              >
+                Description
+              </Prose.Note>
+              <Prose.Body
+                style={{
+                  fontSize: "22px",
+                  fontWeight: 500,
+                  lineHeight: 1.6,
+                  color: "var(--text-body)",
+                }}
+              >
+                {description}
+              </Prose.Body>
+            </Frame>
+
+            {/* Usage */}
+            <Frame override={{ gap: Space.n16 }}>
+              <Prose.Note
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.15em",
+                  opacity: 0.5,
+                }}
+              >
+                Use Cases
+              </Prose.Note>
+              <Prose.Body
+                style={{
+                  fontSize: "18px",
+                  lineHeight: 1.8,
+                  color: "var(--text-subtle)",
+                }}
+              >
+                {usage}
+              </Prose.Body>
+            </Frame>
+          </Frame>
+        </Frame>
+
+        {/* Scroll Hint */}
+        {pageNumber < 8 && (
+          <Frame layout={Layout.Center.Default}>
+            <Prose.Note
+              style={{
+                textAlign: "center",
+                fontSize: "12px",
+                opacity: 0.3,
+              }}
+            >
+              Scroll for next surface ↓
+            </Prose.Note>
+          </Frame>
+        )}
       </Frame>
     </Frame>
   );

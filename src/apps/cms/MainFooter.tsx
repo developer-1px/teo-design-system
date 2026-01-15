@@ -3,7 +3,12 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function MainFooter() {
@@ -22,19 +27,17 @@ export function MainFooter() {
         }}
       >
         <Frame
-          override={{ w: Size.full }}
           layout={Layout.Row.Header.Default}
-          justify="between"
-          align="start"
+          override={{ w: Size.full, justify: "between" }}
         >
           <Frame override={{ gap: Space.n24 }} style={{ width: "35%" }}>
             <Frame
-              override={{ gap: Space.n12 }}
               layout={Layout.Row.Item.Tight}
-              align="center"
+              override={{ gap: Space.n12, align: "center" }}
             >
               <Frame
-                override={{ w: Size.n40, h: Size.n40}} rounded={Radius2.xl}
+                override={{ w: Size.n40, h: Size.n40 }}
+                rounded={Radius2.xl}
                 surface="primary"
                 pack
               >
@@ -82,9 +85,8 @@ export function MainFooter() {
           </Frame>
 
           <Frame
-            override={{ gap: Space.n48 }}
             layout={Layout.Row.Actions.Default}
-            align="start"
+            override={{ gap: Space.n48, align: "start" }}
           >
             <FooterLinkColumn
               title="PRODUCT"
@@ -102,14 +104,9 @@ export function MainFooter() {
         </Frame>
 
         <Frame
-          override={{
-            pt: Space.n32,
-            w: Size.full,
-          }}
           style={{ borderTop: "1px solid var(--border-color)" }}
           layout={Layout.Row.Header.Default}
-          justify="between"
-          align="center"
+          override={{ pt: Space.n32, w: Size.full, justify: "between" }}
         >
           <Text.Card.Note
             size={FontSize.n13}

@@ -5,26 +5,23 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
-import { IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function CRMHeader() {
   return (
     <Frame
-      override={{
-        h: Size.n64,
-        py: Space.n0,
-        px: Space.n20,
-      }}
       layout={Layout.Row.Header.Default}
-      align="center"
-      justify="between"
       surface="base"
+      override={{ h: Size.n64, py: Space.n0, px: Space.n20, align: "center" }}
     >
       <Frame
-        override={{ gap: Space.n8 }}
         layout={Layout.Row.Meta.Default}
-        align="center"
+        override={{ gap: Space.n8, align: "center" }}
       >
         <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
           Records
@@ -33,9 +30,8 @@ export function CRMHeader() {
           /
         </Text.Card.Note>
         <Frame
-          override={{ gap: Space.n8 }}
           layout={Layout.Row.Meta.Default}
-          align="center"
+          override={{ gap: Space.n8, align: "center" }}
         >
           <Icon src={LayoutGrid} size={IconSize.n16} />
           <Text.Card.Title weight="bold">Deals</Text.Card.Title>
@@ -44,13 +40,16 @@ export function CRMHeader() {
 
       {/* Global Search */}
       <Frame
-        override={{w: Size.n384,
-          py: Space.n6,
-          px: Space.n12,
-          gap: Space.n8}} rounded={Radius2.md}
+        rounded={Radius2.md}
         surface="sunken"
         layout={Layout.Row.Toolbar.Compact}
-        align="center"
+        override={{
+          w: Size.n384,
+          py: Space.n6,
+          px: Space.n12,
+          gap: Space.n8,
+          align: "center",
+        }}
       >
         <Icon
           src={Search}
@@ -72,7 +71,8 @@ export function CRMHeader() {
           override={{
             px: Space.n4,
             py: Space.n2,
-          }} rounded={Radius2.sm}
+          }}
+          rounded={Radius2.sm}
           surface="raised"
         >
           <Text.Card.Note

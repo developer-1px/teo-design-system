@@ -14,14 +14,14 @@ export function TableHeader({ children, columns }: TableHeaderProps) {
         height: 40,
         backgroundColor: "var(--surface-sunken)",
       }}
+      grid
+      columns={columns}
       override={{
         px: Space.n16,
         gap: Space.n16,
         borderBottom: true,
+        align: "center",
       }}
-      grid
-      columns={columns}
-      align="center"
     >
       {children}
     </Frame>

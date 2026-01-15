@@ -162,7 +162,6 @@ export const IconSize = {
   n512: "var(--icon-size-n512)" as IconSizeToken,
 } as const satisfies Record<IconSizeKey, IconSizeToken>;
 
-
 // ---------------------------------
 // Size (container / layout)
 // ---------------------------------
@@ -237,7 +236,6 @@ export const Size = {
   auto: "auto" as SizeToken,
 } as const satisfies Record<SizeKey, SizeToken>;
 
-
 // ---------------------------------
 // Container (max widths)
 // ---------------------------------
@@ -295,7 +293,6 @@ export const Radius = {
   n9999: "var(--radius-n9999)" as RadiusToken,
 } as const satisfies Record<RadiusKey, RadiusToken>;
 
-
 // ---------------------------------
 // BorderWidth
 // ---------------------------------
@@ -350,7 +347,6 @@ export const FontSize = {
   n128: "var(--font-size-n128)" as FontSizeToken,
 } as const satisfies Record<FontSizeKey, FontSizeToken>;
 
-
 // ---------------------------------
 // LineHeight
 // ---------------------------------
@@ -384,7 +380,6 @@ export const LineHeight = {
   n210: "var(--line-height-n210)" as LineHeightToken,
   n220: "var(--line-height-n220)" as LineHeightToken,
 } as const satisfies Record<LineHeightKey, LineHeightToken>;
-
 
 // ---------------------------------
 // Opacity
@@ -420,7 +415,6 @@ export const Opacity = {
   n100: "var(--opacity-n100)" as OpacityToken,
 } as const satisfies Record<OpacityKey, OpacityToken>;
 
-
 // ---------------------------------
 // ZIndex
 // ---------------------------------
@@ -446,7 +440,6 @@ export const ZIndex = {
   n200: "var(--z-index-n200)" as ZIndexToken,
 } as const satisfies Record<ZIndexKey, ZIndexToken>;
 
-
 // ---------------------------------
 // Elevation
 // ---------------------------------
@@ -466,7 +459,6 @@ export const Elevation = {
   n10: "var(--elevation-n10)" as ElevationToken,
   n12: "var(--elevation-n12)" as ElevationToken,
 } as const satisfies Record<ElevationKey, ElevationToken>;
-
 
 // ---------------------------------
 // AspectRatio

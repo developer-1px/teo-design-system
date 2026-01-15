@@ -99,7 +99,8 @@ export function Overlay({
             left: 0,
             width: "100vw",
             height: "100vh",
-            zIndex: typeof zIndex === "number" ? zIndex - 1 : `calc(${zIndex} - 1)`,
+            zIndex:
+              typeof zIndex === "number" ? zIndex - 1 : `calc(${zIndex} - 1)`,
             // Transparent backdrop by default, or could accept a color prop
           }}
         />

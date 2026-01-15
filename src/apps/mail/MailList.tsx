@@ -4,7 +4,11 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
-import { FontSize, IconSize, Space } from "../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { filteredThreadsAtom, selectedThreadIdAtom } from "./store";
 
@@ -15,8 +19,10 @@ export function MailList() {
   if (threads.length === 0) {
     return (
       <Frame fill pack layout={Layout.Center.Default}>
-        <Frame override={{ gap: Space.n8 }} align="center">
-          <Text.Card.Title style={{ color: "var(--text-secondary)" }}>No mail</Text.Card.Title>
+        <Frame override={{ gap: Space.n8, align: "center" }}>
+          <Text.Card.Title style={{ color: "var(--text-secondary)" }}>
+            No mail
+          </Text.Card.Title>
           <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
             Your mailbox is empty
           </Text.Card.Note>
@@ -43,7 +49,10 @@ export function MailList() {
             onClick={() => setSelectedThreadId(thread.id)}
           >
             {/* Header Row */}
-            <Frame layout={Layout.Row.Item.Default} align="center">
+            <Frame
+              layout={Layout.Row.Item.Default}
+              override={{ align: "center" }}
+            >
               <Icon
                 src={Star}
                 size={IconSize.n16}
@@ -56,13 +65,18 @@ export function MailList() {
                 weight={thread.isRead ? "regular" : "bold"}
                 size={FontSize.n13}
                 style={{
-                  color: thread.isRead ? "var(--text-secondary)" : "var(--text-primary)",
+                  color: thread.isRead
+                    ? "var(--text-secondary)"
+                    : "var(--text-primary)",
                   flex: 1,
                 }}
               >
                 {thread.participants.join(", ")}
               </Text.Card.Title>
-              <Text.Card.Note size={FontSize.n11} style={{ color: "var(--text-tertiary)" }}>
+              <Text.Card.Note
+                size={FontSize.n11}
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 {formatDate(thread.lastMailDate)}
               </Text.Card.Note>
             </Frame>
@@ -72,14 +86,19 @@ export function MailList() {
               weight={thread.isRead ? "regular" : "bold"}
               size={FontSize.n13}
               style={{
-                color: thread.isRead ? "var(--text-secondary)" : "var(--text-primary)",
+                color: thread.isRead
+                  ? "var(--text-secondary)"
+                  : "var(--text-primary)",
               }}
             >
               {thread.subject}
             </Text.Card.Title>
 
             {/* Snippet */}
-            <Frame layout={Layout.Row.Item.Default} align="center">
+            <Frame
+              layout={Layout.Row.Item.Default}
+              override={{ align: "center" }}
+            >
               <Text.Card.Note
                 size={FontSize.n12}
                 style={{
@@ -93,7 +112,11 @@ export function MailList() {
                 {firstMail.snippet}
               </Text.Card.Note>
               {firstMail.hasAttachments && (
-                <Icon src={Paperclip} size={IconSize.n14} style={{ color: "var(--text-tertiary)" }} />
+                <Icon
+                  src={Paperclip}
+                  size={IconSize.n14}
+                  style={{ color: "var(--text-tertiary)" }}
+                />
               )}
             </Frame>
 
@@ -103,10 +126,14 @@ export function MailList() {
                 {thread.labels.map((label) => (
                   <Frame
                     key={label}
-                    override={{ py: Space.n2, px: Space.n6}} rounded={Radius2.sm}
+                    override={{ py: Space.n2, px: Space.n6 }}
+                    rounded={Radius2.sm}
                     surface="raised"
                   >
-                    <Text.Card.Note size={FontSize.n10} style={{ color: "var(--text-tertiary)" }}>
+                    <Text.Card.Note
+                      size={FontSize.n10}
+                      style={{ color: "var(--text-tertiary)" }}
+                    >
                       {label}
                     </Text.Card.Note>
                   </Frame>
@@ -126,7 +153,10 @@ function formatDate(date: Date): string {
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
   if (days === 0) {
-    return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    });
   }
   if (days < 7) {
     return date.toLocaleDateString("en-US", { weekday: "short" });

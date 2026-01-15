@@ -13,7 +13,12 @@ import { MailSidebar } from "./mail/MailSidebar";
 
 export function MailApp() {
   return (
-    <Frame fill layout={Layout.Row.AppContainer.Default} surface="base" override={{ p: Space.n0 }}>
+    <Frame
+      fill
+      layout={Layout.Row.AppContainer.Default}
+      surface="base"
+      override={{ p: Space.n0 }}
+    >
       {/* Left Sidebar */}
       <MailSidebar />
 
@@ -25,7 +30,9 @@ export function MailApp() {
         {/* Mail List and Detail split view */}
         <Frame fill flex layout={Layout.Row.AppContainer.Default}>
           {/* Mail List - Middle column */}
-          <Frame override={{ w: Size.n384, minWidth: Size.n320, borderRight: true }}>
+          <Frame
+            override={{ w: Size.n384, minWidth: Size.n320, borderRight: true }}
+          >
             <MailList />
           </Frame>
 

@@ -5,21 +5,25 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Separator } from "../../design-system/Separator";
 import { Text } from "../../design-system/text/Text.tsx";
-import { Opacity, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  Opacity,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 
 export function CRMToolbar() {
   return (
     <Frame
+      layout={Layout.Row.Toolbar.Default}
+      surface="base"
       override={{
         h: Size.n48,
         py: Space.n0,
         px: Space.n20,
         gap: Space.n8,
         borderBottom: true,
+        align: "center",
       }}
-      layout={Layout.Row.Toolbar.Default}
-      align="center"
-      surface="base"
     >
       <Action variant="surface" icon={List} label="Table" />
       <Action

@@ -23,10 +23,8 @@ export function SlidesPanel() {
             key={num}
           >
             <Frame
-              override={{ gap: Space.n4 }}
               layout={Layout.Row.LabelValue.Default}
-              justify="between"
-              align="end"
+              override={{ gap: Space.n4, justify: "between" }}
             >
               <Text.Card.Note
                 style={{
@@ -36,7 +34,8 @@ export function SlidesPanel() {
                 {num}
               </Text.Card.Note>
               <Frame
-                override={{ w: Size.full}} rounded={Radius2.md}
+                override={{ w: Size.full }}
+                rounded={Radius2.md}
                 ratio="16/9"
                 surface="raised"
                 flex

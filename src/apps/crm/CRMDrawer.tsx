@@ -6,7 +6,11 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
-import { IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { formatColumnLabel } from "./dataLoader";
 import { DrawerActivity } from "./drawer/DrawerActivity";
 import { DrawerFooter } from "./drawer/DrawerFooter";
@@ -26,7 +30,7 @@ export function CRMDrawer() {
   const [selectedRowId, setSelectedRowId] = useAtom(selectedRowIdAtom);
 
   const selectedRow = data.find(
-    (row) => (row as DataRow & { __rowId: string }).__rowId === selectedRowId
+    (row) => (row as DataRow & { __rowId: string }).__rowId === selectedRowId,
   );
 
   const hasSelection = !!selectedRowId && !!selectedRow;
@@ -65,7 +69,7 @@ export function CRMDrawer() {
             >
               <DrawerProperties
                 entries={Object.entries(selectedRow).filter(
-                  ([key]) => !key.startsWith("_") && key !== "avatarColor"
+                  ([key]) => !key.startsWith("_") && key !== "avatarColor",
                 )}
                 getFieldIcon={getFieldIcon}
                 formatColumnLabel={formatColumnLabel}
@@ -82,7 +86,7 @@ export function CRMDrawer() {
         </>
       ) : (
         <Frame flex fill layout={Layout.Center.Default}>
-          <Frame override={{ gap: Space.n16 }} align="center">
+          <Frame override={{ gap: Space.n16, align: "center" }}>
             <Icon
               src={FileText}
               size={IconSize.n48}

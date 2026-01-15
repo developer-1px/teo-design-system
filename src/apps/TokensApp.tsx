@@ -1,7 +1,21 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../design-system/text/Text";
-import { ContainerSize, FontSize, FontSizeScale, Opacity, OpacityScale, Radius, RadiusScale, Size, SizeScale, Space, type SpaceToken, SpaceScale, ZIndexScale } from "../design-system/token/token.const.1tier";
+import {
+  ContainerSize,
+  FontSize,
+  FontSizeScale,
+  Opacity,
+  OpacityScale,
+  Radius,
+  RadiusScale,
+  Size,
+  SizeScale,
+  Space,
+  type SpaceToken,
+  SpaceScale,
+  ZIndexScale,
+} from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Components ---
@@ -18,8 +32,7 @@ function ScaleVisualizer({
   return (
     <Frame
       layout={Layout.Row.Item.Default}
-      override={{ w: Size.full, gap: Space.n24 }}
-      align="center"
+      override={{ w: Size.full, gap: Space.n24, align: "center" }}
     >
       <Frame override={{ w: Size.n64 }}>
         <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
@@ -29,7 +42,7 @@ function ScaleVisualizer({
       <Frame flex={1} override={{ minWidth: Size.n0 }}>
         {children}
       </Frame>
-      <Frame override={{ w: Size.n64 }} justify="end">
+      <Frame override={{ w: Size.n64, justify: "end" }}>
         <Text.Card.Code style={{ opacity: 0.3 }}>{value}</Text.Card.Code>
       </Frame>
     </Frame>
@@ -104,7 +117,7 @@ function ScrollContainer({
 
 export function TokensApp() {
   return (
-    <Frame fill surface="base" scroll={"y"} align="center">
+    <Frame fill surface="base" scroll={"y"} override={{ align: "center" }}>
       <Frame
         override={{ w: Size.full, maxWidth: ContainerSize.n1024, p: Space.n0 }}
         layout={Layout.Row.AppContainer.Default}
@@ -140,7 +153,8 @@ export function TokensApp() {
               <Frame
                 flex={1}
                 surface="sunken"
-                override={{p: Space.n32, gap: Space.n12}} rounded={Radius2["2xl"]}
+                override={{ p: Space.n32, gap: Space.n12 }}
+                rounded={Radius2["2xl"]}
               >
                 <Text.Card.Title>The Whitelist Concept</Text.Card.Title>
                 <Text.Card.Desc>
@@ -152,7 +166,8 @@ export function TokensApp() {
               <Frame
                 flex={1}
                 surface="sunken"
-                override={{p: Space.n32, gap: Space.n12}} rounded={Radius2["2xl"]}
+                override={{ p: Space.n32, gap: Space.n12 }}
+                rounded={Radius2["2xl"]}
               >
                 <Text.Card.Title>The Meaning of 'n'</Text.Card.Title>
                 <Text.Card.Desc>
@@ -184,7 +199,8 @@ export function TokensApp() {
                         width: `var(--space-n${val})`,
                         transition: "width 0.3s ease",
                       }}
-                      override={{ h: Size.n24}} rounded={Radius2.sm}
+                      override={{ h: Size.n24 }}
+                      rounded={Radius2.sm}
                     />
                   </ScaleVisualizer>
                 ))}
@@ -212,8 +228,7 @@ export function TokensApp() {
                     minHeight: `var(--size-n${val})`,
                   }}
                   rounded={Radius2.xl}
-                  align="center"
-                  justify="center"
+                  override={{ align: "center", justify: "center" }}
                 >
                   <Text.Card.Code
                     style={{ fontSize: "var(--font-size-n10)", opacity: 0.5 }}
@@ -238,7 +253,7 @@ export function TokensApp() {
                     w: Size.n96,
                     h: Size.n96,
                     minWidth: Size.n96,
-                    r: Radius[`n${val}` as keyof typeof Radius]
+                    r: Radius[`n${val}` as keyof typeof Radius],
                   }}
                 >
                   <Text.Card.Code>n{val}</Text.Card.Code>
@@ -252,12 +267,14 @@ export function TokensApp() {
             <SectionHeader title="Z-Index" desc="Elevation depth & Stacking." />
             <TextColumn>
               <Frame
-                override={{h: Size.n256,
-                  w: Size.full,
-                  p: Space.n48}} rounded={Radius2["3xl"]}
+                rounded={Radius2["3xl"]}
                 surface="sunken"
-                align="center"
-                justify="center"
+                override={{
+                  h: Size.n256,
+                  w: Size.full,
+                  p: Space.n48,
+                  align: "center",
+                }}
               >
                 <Frame
                   style={{
@@ -279,9 +296,8 @@ export function TokensApp() {
                         border:
                           "var(--border-width-n1) solid var(--border-color)",
                       }}
-                      override={{w: Size.n160,
-                        h: Size.n128,
-                        p: Space.n16}} rounded={Radius2.xl}
+                      override={{ w: Size.n160, h: Size.n128, p: Space.n16 }}
+                      rounded={Radius2.xl}
                     >
                       <Text.Card.Title>n{val}</Text.Card.Title>
                     </Frame>
@@ -296,16 +312,15 @@ export function TokensApp() {
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
               {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
-                <Frame key={val} align="center" override={{ gap: Space.n8 }}>
+                <Frame key={val} override={{ gap: Space.n8, align: "center" }}>
                   <Frame
                     surface="base"
                     opacity={Opacity[`n${val}` as keyof typeof Opacity]}
                     style={{
                       backgroundColor: "black",
                     }}
-                    override={{w: Size.n64,
-                      h: Size.n64,
-                      minWidth: Size.n64}} rounded={Radius2.lg}
+                    override={{ w: Size.n64, h: Size.n64, minWidth: Size.n64 }}
+                    rounded={Radius2.lg}
                   />
                   <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>
@@ -322,7 +337,7 @@ export function TokensApp() {
                   <Frame
                     key={val}
                     layout={Layout.Row.Item.Default}
-                    align="baseline"
+                    override={{ align: "baseline" }}
                   >
                     <Frame override={{ w: Size.n64 }}>
                       <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>

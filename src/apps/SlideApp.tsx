@@ -16,7 +16,13 @@ import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
 import { Text } from "../design-system/text/Text";
-import { IconSize, Opacity, Size, Space, Radius2 } from "../design-system/token";
+import {
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+  Radius2,
+} from "../design-system/token";
 
 export function SlideApp() {
   return (
@@ -38,9 +44,8 @@ export function SlideApp() {
         layout={Layout.Row.Header.Default}
       >
         <Frame
-          override={{ gap: Space.n12 }}
           layout={Layout.Row.Item.Default}
-          align="center"
+          override={{ gap: Space.n12, align: "center" }}
         >
           <Action
             icon={Grid}
@@ -48,9 +53,8 @@ export function SlideApp() {
             style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
           />
           <Frame
-            override={{ gap: Space.n8 }}
             layout={Layout.Row.Item.Default}
-            align="center"
+            override={{ gap: Space.n8, align: "center" }}
           >
             <Text.Menu.Item style={{ fontWeight: 600 }}>
               Untitled Presentation
@@ -64,22 +68,24 @@ export function SlideApp() {
           </Frame>
         </Frame>
         <Frame
-          override={{ gap: Space.n8 }}
           layout={Layout.Row.Actions.Default}
-          align="center"
+          override={{ gap: Space.n8, align: "center" }}
         >
           <Frame
-            override={{gap: Space.n4,
-              p: Space.n4,
-              shadow: "sm"}} rounded={Radius2.md}
+            rounded={Radius2.md}
             layout={Layout.Row.Item.Compact}
-            align="center"
             surface="overlay"
+            override={{
+              gap: Space.n4,
+              p: Space.n4,
+              shadow: "sm",
+              align: "center",
+            }}
           >
             <Frame
               style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
-              override={{
-              }} rounded={Radius2.md}
+              override={{}}
+              rounded={Radius2.md}
               surface="overlay"
             />
             <Action
@@ -136,12 +142,13 @@ export function SlideApp() {
           <Frame fill pack scroll>
             <Frame
               style={{ width: "80%", maxWidth: "var(--container-n1280)" }}
-              override={{shadow: "lg"}} rounded={Radius2["2xl"]}
+              override={{ shadow: "lg" }}
+              rounded={Radius2["2xl"]}
               surface="base"
               pack
               ratio="16/9"
             >
-              <Frame override={{ gap: Space.n16 }} align="center">
+              <Frame override={{ gap: Space.n16, align: "center" }}>
                 <Text.Prose.Title variant="xl">
                   Minimal Design Kit
                 </Text.Prose.Title>
@@ -158,8 +165,8 @@ export function SlideApp() {
                 >
                   <Frame
                     style={{ width: "40px", height: "40px" }}
-                    override={{
-                    }} rounded={Radius2.md}
+                    override={{}}
+                    rounded={Radius2.md}
                     surface="sunken"
                     pack
                   >
@@ -171,8 +178,8 @@ export function SlideApp() {
                   </Frame>
                   <Frame
                     style={{ width: "40px", height: "40px" }}
-                    override={{
-                    }} rounded={Radius2.md}
+                    override={{}}
+                    rounded={Radius2.md}
                     surface="raised"
                     pack
                   >
@@ -184,8 +191,8 @@ export function SlideApp() {
                   </Frame>
                   <Frame
                     style={{ width: "40px", height: "40px" }}
-                    override={{
-                    }} rounded={Radius2.md}
+                    override={{}}
+                    rounded={Radius2.md}
                     surface="overlay"
                     pack
                   >

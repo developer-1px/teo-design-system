@@ -2,7 +2,11 @@ import { Frame } from "../../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../../design-system/Icon";
 import { Text } from "../../../design-system/text/Text.tsx";
-import { IconSize, Size, Space } from "../../../design-system/token/token.const.1tier";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 export function DrawerProperties({
@@ -32,7 +36,9 @@ export function DrawerProperties({
             empty={value === null || value === undefined || value === ""}
             isColor={typeof value === "string" && value.startsWith("#")}
             colorValue={
-              typeof value === "string" && value.startsWith("#") ? value : undefined
+              typeof value === "string" && value.startsWith("#")
+                ? value
+                : undefined
             }
           />
         ))}
@@ -60,14 +66,12 @@ function PropertyRow({
 }) {
   return (
     <Frame
-      override={{ minHeight: Size.n32, gap: Space.n16 }}
       layout={Layout.Row.Item.Default}
-      align="center"
+      override={{ minHeight: Size.n32, gap: Space.n16, align: "center" }}
     >
       <Frame
-        override={{ gap: Space.n8, w: Size.n128 }}
         layout={Layout.Row.Meta.Default}
-        align="center"
+        override={{ gap: Space.n8, w: Size.n128, align: "center" }}
       >
         <Icon
           src={IconSrc}
@@ -79,14 +83,13 @@ function PropertyRow({
         </Text.Field.Label>
       </Frame>
       <Frame
-        override={{ gap: Space.n8 }}
         layout={Layout.Row.Item.Default}
-        align="center"
+        override={{ gap: Space.n8, align: "center" }}
       >
         {isColor && colorValue && (
           <Frame
-            override={{w: Size.n16,
-              h: Size.n16}} rounded={Radius2.sm}
+            override={{ w: Size.n16, h: Size.n16 }}
+            rounded={Radius2.sm}
             style={{
               backgroundColor: colorValue,
               border: "1px solid var(--border-color)",

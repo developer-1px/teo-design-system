@@ -5,7 +5,7 @@ const dataFiles = import.meta.glob<{ default: DataRow[] }>(
   "/src/data/crm/*.json",
   {
     eager: false,
-  }
+  },
 );
 
 // Icon mapping for different dataset types
@@ -101,10 +101,12 @@ export async function loadDataset(datasetName: string): Promise<DataRow[]> {
  * @returns Formatted label (e.g., "Close Date")
  */
 export function formatColumnLabel(key: string): string {
-  return key
-    // Insert space before capital letters
-    .replace(/([A-Z])/g, " $1")
-    // Capitalize first letter
-    .replace(/^./, (str) => str.toUpperCase())
-    .trim();
+  return (
+    key
+      // Insert space before capital letters
+      .replace(/([A-Z])/g, " $1")
+      // Capitalize first letter
+      .replace(/^./, (str) => str.toUpperCase())
+      .trim()
+  );
 }

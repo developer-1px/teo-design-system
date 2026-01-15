@@ -14,7 +14,8 @@ const mockMails: Mail[] = [
     },
     to: ["me@example.com"],
     subject: "Q4 Design System Review",
-    snippet: "Hi team, I've reviewed the latest design system updates and have some feedback...",
+    snippet:
+      "Hi team, I've reviewed the latest design system updates and have some feedback...",
     body: `Hi team,
 
 I've reviewed the latest design system updates and have some feedback on the token structure. The new Layout presets are working great, but I think we should discuss the spacing scale.
@@ -40,7 +41,8 @@ Sarah`,
     },
     to: ["me@example.com"],
     subject: "[developer-1px/teo-design-system] Pull Request #18",
-    snippet: "feat: implement CRM app with Tanstack Table and MDK design system...",
+    snippet:
+      "feat: implement CRM app with Tanstack Table and MDK design system...",
     body: `Pull Request #18 has been created
 
 feat: implement CRM app with Tanstack Table and MDK design system
@@ -91,7 +93,8 @@ See you soon!`,
     },
     to: ["me@example.com"],
     subject: "Design Systems Weekly - Issue #247",
-    snippet: "This week: New component patterns, accessibility best practices, and more...",
+    snippet:
+      "This week: New component patterns, accessibility best practices, and more...",
     body: `Design Systems Weekly - Issue #247
 
 📚 This week's highlights:
@@ -117,7 +120,8 @@ Read more: designsystems.com/weekly/247`,
     },
     to: ["me@example.com"],
     subject: "Re: MDK Layout System",
-    snippet: "Thanks for the explanation! The 3-tier intent system makes so much sense now...",
+    snippet:
+      "Thanks for the explanation! The 3-tier intent system makes so much sense now...",
     body: `Thanks for the explanation!
 
 The 3-tier intent system makes so much sense now. I can see how it helps maintain consistency across components.
@@ -141,7 +145,8 @@ Alex`,
     },
     to: ["draft@"],
     subject: "Draft: Component API Proposal",
-    snippet: "I've been thinking about how we can improve the Table component API...",
+    snippet:
+      "I've been thinking about how we can improve the Table component API...",
     body: `I've been thinking about how we can improve the Table component API...
 
 [Draft in progress]`,

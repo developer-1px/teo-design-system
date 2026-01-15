@@ -29,8 +29,6 @@ export function Frame({
   columns,
   rows,
   areas,
-  align,
-  justify,
   surface,
   rounded,
   clip,
@@ -77,8 +75,6 @@ export function Frame({
     columns,
     rows,
     areas,
-    align,
-    justify,
     clip,
     scroll,
 

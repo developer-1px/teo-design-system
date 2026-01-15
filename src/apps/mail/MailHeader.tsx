@@ -5,7 +5,12 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
-import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { searchQueryAtom } from "./store";
 
@@ -14,27 +19,49 @@ export function MailHeader() {
 
   return (
     <Frame
-      override={{ h: Size.n64, py: Space.n0, px: Space.n20, borderBottom: true }}
+      override={{
+        h: Size.n64,
+        py: Space.n0,
+        px: Space.n20,
+        borderBottom: true,
+      }}
       layout={Layout.Row.Header.Default}
       surface="base"
     >
       {/* Left: Logo and Menu */}
       <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default}>
         <Action variant="ghost" icon={Menu} />
-        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
-          <Icon src={Mail} size={IconSize.n20} style={{ color: "var(--text-primary)" }} />
+        <Frame
+          override={{ gap: Space.n8, align: "center" }}
+          layout={Layout.Row.Item.Default}
+        >
+          <Icon
+            src={Mail}
+            size={IconSize.n20}
+            style={{ color: "var(--text-primary)" }}
+          />
           <Text.Card.Title weight="bold">Mail</Text.Card.Title>
         </Frame>
       </Frame>
 
       {/* Center: Search */}
       <Frame
-        override={{w: Size.n448, py: Space.n6, px: Space.n12, gap: Space.n8}} rounded={Radius2.md}
+        rounded={Radius2.md}
         surface="sunken"
         layout={Layout.Row.Toolbar.Compact}
-        align="center"
+        override={{
+          w: Size.n448,
+          py: Space.n6,
+          px: Space.n12,
+          gap: Space.n8,
+          align: "center",
+        }}
       >
-        <Icon src={Search} size={IconSize.n14} style={{ color: "var(--text-tertiary)" }} />
+        <Icon
+          src={Search}
+          size={IconSize.n14}
+          style={{ color: "var(--text-tertiary)" }}
+        />
         <input
           type="text"
           placeholder="Search mail"

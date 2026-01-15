@@ -17,7 +17,12 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
-import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { selectedThreadAtom } from "./store";
 
@@ -27,9 +32,15 @@ export function MailDetail() {
   if (!selectedThread) {
     return (
       <Frame fill pack layout={Layout.Center.Default}>
-        <Frame override={{ gap: Space.n8 }} align="center">
-          <Icon src={Inbox} size={IconSize.n64} style={{ color: "var(--text-tertiary)" }} />
-          <Text.Card.Title style={{ color: "var(--text-secondary)" }}>No mail selected</Text.Card.Title>
+        <Frame override={{ gap: Space.n8, align: "center" }}>
+          <Icon
+            src={Inbox}
+            size={IconSize.n64}
+            style={{ color: "var(--text-tertiary)" }}
+          />
+          <Text.Card.Title style={{ color: "var(--text-secondary)" }}>
+            No mail selected
+          </Text.Card.Title>
           <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
             Select a mail to view
           </Text.Card.Note>
@@ -44,7 +55,13 @@ export function MailDetail() {
     <Frame fill override={{ p: Space.n0 }}>
       {/* Toolbar */}
       <Frame
-        override={{ h: Size.n48, py: Space.n0, px: Space.n16, gap: Space.n8, borderBottom: true }}
+        override={{
+          h: Size.n48,
+          py: Space.n0,
+          px: Space.n16,
+          gap: Space.n8,
+          borderBottom: true,
+        }}
         layout={Layout.Row.Toolbar.Default}
       >
         <Action variant="ghost" icon={ArrowLeft} />
@@ -57,10 +74,18 @@ export function MailDetail() {
       </Frame>
 
       {/* Mail Content */}
-      <Frame fill scroll override={{ p: Space.n24, gap: Space.n24 }} layout={Layout.Stack.Content.Default}>
+      <Frame
+        fill
+        scroll
+        override={{ p: Space.n24, gap: Space.n24 }}
+        layout={Layout.Stack.Content.Default}
+      >
         {/* Subject */}
         <Frame override={{ gap: Space.n12 }}>
-          <Frame layout={Layout.Row.Item.Default} align="center">
+          <Frame
+            layout={Layout.Row.Item.Default}
+            override={{ align: "center" }}
+          >
             <Text.Card.Title
               size={FontSize.n20}
               weight="bold"
@@ -72,7 +97,9 @@ export function MailDetail() {
               src={Star}
               size={IconSize.n20}
               style={{
-                color: selectedThread.isStarred ? "#f59e0b" : "var(--text-tertiary)",
+                color: selectedThread.isStarred
+                  ? "#f59e0b"
+                  : "var(--text-tertiary)",
                 fill: selectedThread.isStarred ? "#f59e0b" : "none",
                 cursor: "pointer",
               }}
@@ -85,7 +112,8 @@ export function MailDetail() {
               {selectedThread.labels.map((label) => (
                 <Frame
                   key={label}
-                  override={{ py: Space.n4, px: Space.n8}} rounded={Radius2.sm}
+                  override={{ py: Space.n4, px: Space.n8 }}
+                  rounded={Radius2.sm}
                   surface="raised"
                 >
                   <Text.Card.Note size={FontSize.n11}>{label}</Text.Card.Note>
@@ -96,23 +124,41 @@ export function MailDetail() {
         </Frame>
 
         {/* Sender Info */}
-        <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default} align="start">
+        <Frame
+          override={{ gap: Space.n12, align: "start" }}
+          layout={Layout.Row.Item.Default}
+        >
           <Frame
-            override={{ w: Size.n40, h: Size.n40}} rounded={Radius2.full}
+            override={{ w: Size.n40, h: Size.n40 }}
+            rounded={Radius2.full}
             surface="raised"
             pack
           >
-            <Text.Card.Title weight="bold" size={FontSize.n16} style={{ color: "var(--text-primary)" }}>
+            <Text.Card.Title
+              weight="bold"
+              size={FontSize.n16}
+              style={{ color: "var(--text-primary)" }}
+            >
               {mail.from.name[0]}
             </Text.Card.Title>
           </Frame>
 
           <Frame override={{ gap: Space.n4 }} flex>
-            <Frame layout={Layout.Row.Item.Default} align="center">
-              <Text.Card.Title weight="bold" size={FontSize.n14} style={{ flex: 1 }}>
+            <Frame
+              layout={Layout.Row.Item.Default}
+              override={{ align: "center" }}
+            >
+              <Text.Card.Title
+                weight="bold"
+                size={FontSize.n14}
+                style={{ flex: 1 }}
+              >
                 {mail.from.name}
               </Text.Card.Title>
-              <Text.Card.Note size={FontSize.n12} style={{ color: "var(--text-tertiary)" }}>
+              <Text.Card.Note
+                size={FontSize.n12}
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 {mail.date.toLocaleString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -121,10 +167,16 @@ export function MailDetail() {
                 })}
               </Text.Card.Note>
             </Frame>
-            <Text.Card.Note size={FontSize.n12} style={{ color: "var(--text-secondary)" }}>
+            <Text.Card.Note
+              size={FontSize.n12}
+              style={{ color: "var(--text-secondary)" }}
+            >
               {mail.from.email}
             </Text.Card.Note>
-            <Text.Card.Note size={FontSize.n12} style={{ color: "var(--text-tertiary)" }}>
+            <Text.Card.Note
+              size={FontSize.n12}
+              style={{ color: "var(--text-tertiary)" }}
+            >
               to {mail.to.join(", ")}
             </Text.Card.Note>
           </Frame>
@@ -148,18 +200,29 @@ export function MailDetail() {
         {mail.hasAttachments && (
           <Frame override={{ gap: Space.n8 }}>
             <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
-              {mail.attachmentCount} Attachment{mail.attachmentCount !== 1 ? "s" : ""}
+              {mail.attachmentCount} Attachment
+              {mail.attachmentCount !== 1 ? "s" : ""}
             </Text.Card.Note>
             <Frame
-              override={{py: Space.n12, px: Space.n12, gap: Space.n12}} rounded={Radius2.md}
+              rounded={Radius2.md}
               surface="raised"
               layout={Layout.Row.Item.Default}
-              align="center"
+              override={{
+                py: Space.n12,
+                px: Space.n12,
+                gap: Space.n12,
+                align: "center",
+              }}
             >
               <Icon src={Paperclip} size={IconSize.n16} />
-              <Text.Card.Note size={FontSize.n13}>design-system-review.pdf</Text.Card.Note>
+              <Text.Card.Note size={FontSize.n13}>
+                design-system-review.pdf
+              </Text.Card.Note>
               <Frame flex />
-              <Text.Card.Note size={FontSize.n11} style={{ color: "var(--text-tertiary)" }}>
+              <Text.Card.Note
+                size={FontSize.n11}
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 2.4 MB
               </Text.Card.Note>
             </Frame>

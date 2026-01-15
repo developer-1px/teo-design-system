@@ -29,7 +29,7 @@ import { CMSRightPanel } from "./cms/CMSRightPanel";
 export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">(
-    "desktop"
+    "desktop",
   );
   const [isRightPanelOpen, setRightPanelOpen] = useState(false);
 
@@ -53,7 +53,8 @@ export function CMSApp() {
         override={{
           shadow: "lg",
           clip: true,
-        }} rounded={Radius2["2xl"]}
+        }}
+        rounded={Radius2["2xl"]}
         surface="raised"
         style={{
           margin: "var(--space-n4)",
@@ -64,13 +65,11 @@ export function CMSApp() {
       >
         <Frame
           fill
-          scroll
-          align="center"
-          justify="start"
-          override={{ pb: Space.n96 }} // Extra padding at bottom for floating toolbar
+          scroll // Extra padding at bottom for floating toolbar
           style={{
             perspective: "1000px",
           }}
+          override={{ align: "center", justify: "start" }}
         >
           {/* Viewport Frame */}
           <Frame
@@ -148,12 +147,10 @@ function FloatingToolbar({
     >
       <Frame
         surface="raised"
-        override={{p: Space.n6,
-          gap: Space.n4,
-          shadow: "xl"}} rounded={Radius2.full}
+        rounded={Radius2.full}
         layout={Layout.Row.Actions.Default}
-        align="center"
         style={{ border: "1px solid var(--border-color)" }}
+        override={{ p: Space.n6, gap: Space.n4, shadow: "xl", align: "center" }}
       >
         <Frame layout={Layout.Row.Item.Compact} override={{ gap: Space.n2 }}>
           <Action
