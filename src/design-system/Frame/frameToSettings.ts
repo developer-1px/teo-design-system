@@ -1,13 +1,13 @@
 import type React from "react";
 import type { FrameOverrides } from "./FrameProps.ts";
-import { px } from "../token/lib/utils.ts";
+import { Radius2 } from "../token";
 
 export function frameToSettings(props: FrameOverrides): {
   className: string;
   style: React.CSSProperties;
 } {
   const classes: string[] = [];
-  const vars: Record<string, any> = {};
+
   // Helper to remove undefined keys
   const cleanStyles = (styles: React.CSSProperties) => {
     return Object.fromEntries(
@@ -15,87 +15,16 @@ export function frameToSettings(props: FrameOverrides): {
     ) as React.CSSProperties;
   };
 
-  // Function to resolve space tokens (Branded Type)
-  const resolveSpace = (val: string | number | undefined) => {
-    if (val === undefined) return undefined;
-    // Branded Type: numeric token (e.g., Space.n12 is 12 at runtime)
-    if (typeof val === "number") {
-      return px(val as any); // Convert to "12px"
-    }
-    // Allow explicit string overrides (e.g., "10px", "auto", "2rem")
-    return val;
-  };
-
-  // Function to resolve radius tokens (Branded Type)
-  const resolveRadius = (val: string | number | undefined) => {
-    if (val === undefined) return undefined;
-    // Branded Type: numeric token (e.g., Radius.n8 is 8 at runtime)
-    if (typeof val === "number") {
-      return px(val as any); // Convert to "8px"
-    }
-    // Allow explicit string overrides
-    return val;
-  };
-
-  // Function to resolve opacity tokens (Branded Type)
-  const resolveOpacity = (val: string | number | undefined) => {
-    if (val === undefined) return undefined;
-    // Branded Type: numeric token (e.g., Opacity.n50 is 50 at runtime)
-    // Opacity tokens are 0-100 scale, convert to 0-1 for CSS
-    if (typeof val === "number") {
-      return val / 100; // Convert to CSS opacity (0-1)
-    }
-    // Allow explicit string overrides
-    return val;
-  };
-
-  // Function to resolve size/container tokens (Branded Type)
+  // Helper to handle Size.screen axis-specific conversion
   const resolveSizing = (
     val: string | number | undefined,
     axis: "width" | "height",
   ) => {
     if (val === undefined) return undefined;
-
-    // Branded Type: numeric token (e.g., Size.n40 is 40 at runtime)
-    if (typeof val === "number") {
-      return px(val as any); // Convert to "40px"
-    }
-
-    // String handling: Size keywords and explicit overrides
-    if (typeof val === "string") {
-      // Size.screen needs axis-specific handling
-      // Size.screen is "100vh" but should be "100vw" for width axis
-      if (val === "100vh") {
-        return axis === "width" ? "100vw" : "100vh";
-      }
-
-      // Pass through Size keyword values (already CSS values)
-      // Size.full = "100%", Size.min = "min-content", etc.
-      if (
-        [
-          "100%",
-          "100vw",
-          "min-content",
-          "max-content",
-          "fit-content",
-          "auto",
-        ].includes(val)
-      ) {
-        return val;
-      }
-
-      // Allow explicit CSS unit values (e.g., "200px", "50%", "2rem")
-      if (/^-?\d*\.?\d+(px|rem|em|%|vw|vh)$/.test(val)) {
-        return val;
-      }
-
-      // Allow other percentage values
-      if (["50%", "33%", "66%", "25%", "75%"].includes(val)) {
-        return val;
-      }
-    }
-
-    return undefined;
+    // Size.screen is "100vh" but should be "100vw" for width axis
+    if (val === "100vh" && axis === "width") return "100vw";
+    // All other values (CSS variables, keywords, units) pass through as-is
+    return val;
   };
 
   // --- Smart Logic Helpers ---
@@ -105,10 +34,12 @@ export function frameToSettings(props: FrameOverrides): {
     _axis: "width" | "height",
   ): boolean => {
     if (val === undefined) return false;
-    // Branded Type numeric token (e.g., Size.n40) → fixed dimension
-    if (typeof val === "number") return true;
     // String checks
     if (typeof val === "string") {
+      // CSS variable tokens (e.g., "var(--size-n40)") → fixed dimension
+      if (val.startsWith("var(--size-") || val.startsWith("var(--container-size-")) {
+        return true;
+      }
       // Keyword values (Size.full, Size.screen, etc.) → not fixed
       if (
         [
@@ -130,20 +61,16 @@ export function frameToSettings(props: FrameOverrides): {
   };
 
   const standardStyles: React.CSSProperties = cleanStyles({
-    // Standard Padding
-    padding: resolveSpace(props.p) as any,
-    paddingTop:
-      (resolveSpace(props.pt) as any) ?? (resolveSpace(props.py) as any),
-    paddingBottom:
-      (resolveSpace(props.pb) as any) ?? (resolveSpace(props.py) as any),
-    paddingLeft:
-      (resolveSpace(props.pl) as any) ?? (resolveSpace(props.px) as any),
-    paddingRight:
-      (resolveSpace(props.pr) as any) ?? (resolveSpace(props.px) as any),
+    // Padding (tokens are already CSS variables)
+    padding: props.p as any,
+    paddingTop: (props.pt as any) ?? (props.py as any),
+    paddingBottom: (props.pb as any) ?? (props.py as any),
+    paddingLeft: (props.pl as any) ?? (props.px as any),
+    paddingRight: (props.pr as any) ?? (props.px as any),
 
-    gap: resolveSpace(props.gap) as any,
+    gap: props.gap as any,
 
-    // Sizing (Strict)
+    // Sizing (tokens are already CSS variables)
     width: resolveSizing(props.w, "width") as any,
     height: resolveSizing(props.h, "height") as any,
     minWidth: resolveSizing(props.minWidth, "width") as any,
@@ -151,11 +78,11 @@ export function frameToSettings(props: FrameOverrides): {
     maxWidth: resolveSizing(props.maxWidth, "width") as any,
     maxHeight: resolveSizing(props.maxHeight, "height") as any,
 
-    // Radius (Strict, 'r' prop takes precedence)
-    borderRadius: resolveRadius(props.r),
+    // Radius (tokens are already CSS variables)
+    borderRadius: props.r,
 
-    // Opacity
-    opacity: resolveOpacity(props.opacity),
+    // Opacity (tokens are already CSS variables)
+    opacity: props.opacity,
 
     // Borders
     border:
@@ -224,16 +151,15 @@ export function frameToSettings(props: FrameOverrides): {
   if (props.h === "100%") classes.push("h-full");
   else if (props.h === "100vh") classes.push("h-screen");
 
-  // --- Radius Classes ---
-  // Only apply rounded classes if 'r' is NOT defined
-  // 'r' prop sets generic style which overrides class, but we avoid conflicting classes for cleanliness
-  if (props.r === undefined) {
+  // --- Radius: Convert rounded prop to Radius2 tokens (2-tier) ---
+  if (props.r === undefined && props.rounded !== undefined) {
     if (props.rounded === true) {
-      classes.push("r-md");
-    } else if (props.rounded === false || props.rounded === "none") {
-      classes.push("r-none");
+      standardStyles.borderRadius = Radius2.md; // default md
+    } else if (props.rounded === false) {
+      standardStyles.borderRadius = Radius2.none;
     } else if (typeof props.rounded === "string") {
-      classes.push(`r-${props.rounded}`);
+      // Use Radius2 for semantic aliases, fallback to raw value for custom strings
+      standardStyles.borderRadius = (Radius2 as any)[props.rounded] || props.rounded;
     }
   }
 
@@ -255,11 +181,6 @@ export function frameToSettings(props: FrameOverrides): {
   // --- Cursor ---
   if (props.cursor) {
     classes.push(`cursor-${props.cursor}`);
-  }
-
-  // --- Shadow ---
-  if (props.shadow) {
-    classes.push(`shadow-${props.shadow}`);
   }
 
   // --- Shadow ---
@@ -319,15 +240,8 @@ export function frameToSettings(props: FrameOverrides): {
     }
   }
 
-  if (typeof props.gap === "number") {
-    vars["--gap"] = props.gap;
-  }
-
-  // --- Check for other numeric tokens if we want to support them via vars in future frame.css updates ---
-  // For now, only p and gap are scalar-variable driving.
-
   return {
     className: classes.join(" "),
-    style: { ...vars, ...standardStyles },
+    style: standardStyles,
   };
 }

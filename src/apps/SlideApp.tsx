@@ -19,7 +19,6 @@ import { Text } from "../design-system/text/Text";
 import {
   IconSize,
   Opacity,
-  Size,
   Space,
 } from "../design-system/token/token.const.1tier";
 

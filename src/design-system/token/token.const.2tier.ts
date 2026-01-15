@@ -13,8 +13,7 @@
  */
 
 import type { CSSProperties } from "react";
-import { FontSize, IconSize, Size, Space } from "./token.const.1tier";
-import { px } from "./lib/utils.ts";
+import { FontSize, IconSize, Radius, Size, Space } from "./token.const.1tier";
 
 // ---------------------------------
 // Action Size
@@ -59,15 +58,15 @@ export const ActionSize = {
 export type ActionSizeToken = keyof typeof ActionSize;
 
 /**
- * Resolve ActionSize token to CSS properties with px conversion
+ * Resolve ActionSize token to CSS properties (tokens are already CSS variables)
  *
  * @param size - Action size key (xs, sm, md, lg, xl)
- * @returns CSS properties object with px values
+ * @returns CSS properties object with CSS variable values
  *
  * @example
  * ```typescript
  * resolveActionSize("md")
- * // Returns: { height: "40px", "--icon-size": "20px", padding: "8px", fontSize: "14px" }
+ * // Returns: { height: "var(--size-n40)", "--icon-size": "var(--icon-size-n20)", padding: "var(--space-n8)", fontSize: "var(--font-size-n14)" }
  * ```
  */
 export function resolveActionSize(size: ActionSizeToken): CSSProperties & {
@@ -75,9 +74,38 @@ export function resolveActionSize(size: ActionSizeToken): CSSProperties & {
 } {
   const token = ActionSize[size];
   return {
-    height: px(token.height),
-    "--icon-size": px(token.icon),
-    padding: px(token.padding),
-    fontSize: px(token.fontSize),
+    height: token.height,
+    "--icon-size": token.icon,
+    padding: token.padding,
+    fontSize: token.fontSize,
   };
 }
+
+// ---------------------------------
+// Radius2 (2-Tier: Semantic Aliases)
+// ---------------------------------
+export const Radius2Scale = [
+  "none",
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "2xl",
+  "3xl",
+  "soft",
+  "full",
+] as const;
+export type Radius2Scale = (typeof Radius2Scale)[number];
+export type Radius2Key = Radius2Scale;
+
+export const Radius2 = {
+  none: Radius.n0,
+  sm: Radius.n4,
+  md: Radius.n6,
+  lg: Radius.n12,
+  xl: Radius.n16,
+  "2xl": Radius.n20,
+  "3xl": Radius.n24,
+  soft: Radius.n8,
+  full: Radius.n9999,
+} as const;

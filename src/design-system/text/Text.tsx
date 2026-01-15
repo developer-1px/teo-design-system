@@ -1,6 +1,5 @@
 import type React from "react";
 import type { FontSizeToken, FontWeight } from "../lib/types.ts";
-import { toToken } from "../lib/utils.ts";
 
 import { Card } from "./context/Card.tsx";
 import { Field } from "./context/Field.tsx";
@@ -87,23 +86,17 @@ export function TextRoot({
           ? "var(--font-weight-medium)"
           : weight === "bold"
             ? "var(--font-weight-bold)"
-            : toToken(weight, "font-weight");
+            : weight; // Tokens are already CSS variables
   }
 
-  // Handle explicit size override (Branded Type: numeric token)
+  // Handle explicit size override (tokens are already CSS variables)
   if (size !== undefined) {
-    // FontSizeToken is a Branded Type number, toToken handles conversion
-    mergedStyle.fontSize = toToken(size, "font-size");
+    mergedStyle.fontSize = size; // Already "var(--font-size-nX)"
   }
 
-  // Handle Opacity Token (Branded Type: numeric token 0-100)
+  // Handle Opacity Token (tokens are already CSS variables)
   if (opacity !== undefined) {
-    // OpacityToken is a Branded Type number (0-100), convert to CSS (0-1)
-    if (typeof opacity === "number") {
-      mergedStyle.opacity = opacity / 100;
-    } else {
-      mergedStyle.opacity = opacity;
-    }
+    mergedStyle.opacity = opacity; // Already "var(--opacity-nX)" with 0-1 values
   }
 
   return (

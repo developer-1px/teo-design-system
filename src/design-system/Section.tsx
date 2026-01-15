@@ -58,7 +58,7 @@ export function Section({
     ) {
       return undefined;
     }
-    if (typeof val === "number") return `${val}px`;
+    // Tokens are already CSS variables, no conversion needed
     return val;
   };
 

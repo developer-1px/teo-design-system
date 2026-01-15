@@ -64,13 +64,11 @@ function Avatar({
 }
 
 function DatasetItem({
-  name,
   label,
   icon: iconName,
   active,
   onClick,
 }: {
-  name: string;
   label: string;
   icon: string;
   active?: boolean;
@@ -148,7 +146,6 @@ export function CRMSidebar() {
         {datasets.map((dataset) => (
           <DatasetItem
             key={dataset.name}
-            name={dataset.name}
             label={dataset.label}
             icon={dataset.icon}
             active={selectedDataset === dataset.name}

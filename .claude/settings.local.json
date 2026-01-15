@@ -19,7 +19,9 @@
       "Bash(tree:*)",
       "Bash(awk:*)",
       "Bash(npm run typecheck:*)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "Bash(npm run dev:*)",
+      "Bash(node /Users/user/Desktop/minimal-design-kit/scripts/generate-tokens.js:*)"
     ],
     "deny": [],
     "ask": []

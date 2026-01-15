@@ -25,41 +25,41 @@ export type Brand<T, TBrand extends string> = T & { [__brand]: TBrand };
 // Token Brands (1-Tier Primitive Tokens)
 // ---------------------------------
 
-/** Space token (spacing scale) */
-export type SpaceToken = Brand<number, "Space">;
+/** Space token (spacing scale) - CSS variable string */
+export type SpaceToken = Brand<string, "Space">;
 
-/** Size token (layout/container dimensions) - includes numeric scale and CSS keywords */
+/** Size token (layout/container dimensions) - CSS variable string or CSS keywords */
 export type SizeToken = Brand<
-  number | "100%" | "100vh" | "min-content" | "max-content" | "fit-content" | "auto",
+  string,
   "Size"
 >;
 
-/** FontSize token (typography scale) */
-export type FontSizeToken = Brand<number, "FontSize">;
+/** FontSize token (typography scale) - CSS variable string */
+export type FontSizeToken = Brand<string, "FontSize">;
 
-/** IconSize token (icon dimensions) */
-export type IconSizeToken = Brand<number, "IconSize">;
+/** IconSize token (icon dimensions) - CSS variable string */
+export type IconSizeToken = Brand<string, "IconSize">;
 
-/** Radius token (border radius) */
-export type RadiusToken = Brand<number, "Radius">;
+/** Radius token (border radius) - CSS variable string */
+export type RadiusToken = Brand<string, "Radius">;
 
-/** BorderWidth token (border thickness) */
-export type BorderWidthToken = Brand<number, "BorderWidth">;
+/** BorderWidth token (border thickness) - CSS variable string */
+export type BorderWidthToken = Brand<string, "BorderWidth">;
 
-/** LineHeight token (typography line-height, percentage) */
-export type LineHeightToken = Brand<number, "LineHeight">;
+/** LineHeight token (typography line-height) - CSS variable string */
+export type LineHeightToken = Brand<string, "LineHeight">;
 
-/** Opacity token (transparency, 0-100) */
-export type OpacityToken = Brand<number, "Opacity">;
+/** Opacity token (transparency) - CSS variable string */
+export type OpacityToken = Brand<string, "Opacity">;
 
-/** ZIndex token (stacking order) */
-export type ZIndexToken = Brand<number, "ZIndex">;
+/** ZIndex token (stacking order) - CSS variable string */
+export type ZIndexToken = Brand<string, "ZIndex">;
 
-/** Elevation token (shadow depth) */
-export type ElevationToken = Brand<number, "Elevation">;
+/** Elevation token (shadow depth) - CSS variable string */
+export type ElevationToken = Brand<string, "Elevation">;
 
-/** ContainerSize token (max-width breakpoints) */
-export type ContainerSizeToken = Brand<number, "ContainerSize">;
+/** ContainerSize token (max-width breakpoints) - CSS variable string */
+export type ContainerSizeToken = Brand<string, "ContainerSize">;
 
 // ---------------------------------
 // Union Types (for utility functions)

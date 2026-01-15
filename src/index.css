@@ -32,8 +32,6 @@ body,
   width: 100%;
   padding: 0;
   background-color: var(--surface-base);
-  overflow: hidden;
-  /* Prevent global scrollbar */
 }
 
 body {

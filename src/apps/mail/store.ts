@@ -3,7 +3,7 @@
  */
 
 import { atom } from "jotai";
-import { mockMails, mockThreads } from "./mockData";
+import { mockThreads } from "./mockData";
 import type { MailFolder, MailThread } from "./types";
 
 // Base atoms
