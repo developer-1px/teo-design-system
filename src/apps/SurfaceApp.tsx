@@ -213,9 +213,7 @@ function ShowcasePage() {
             <Frame
               key={item.token}
               surface={item.token}
-              override={{
-                rounded: "xl",
-              }}
+              rounded="xl"
               style={{
                 width: "200px",
                 height: "200px",
@@ -374,8 +372,8 @@ function SurfaceBar({
       override={{
         gap: Space.n20,
         p: Space.n24,
-        rounded: "lg",
       }}
+      rounded="lg"
       surface="base"
       style={{
         display: "flex",
@@ -395,9 +393,7 @@ function SurfaceBar({
       {/* Left: Surface Preview (Square) */}
       <Frame
         surface={token}
-        override={{
-          rounded: "md",
-        }}
+        rounded="md"
         style={{
           width: "120px",
           height: "120px",
