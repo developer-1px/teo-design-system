@@ -152,7 +152,10 @@ export function InspectorPanel({
 
     const handleCopy = () => {
         const jsx = generateJSX(name, props);
-        navigator.clipboard.writeText(jsx).then(() => {
+        const location = stack[0] ? `${stack[0].fileName}:${stack[0].lineNumber}` : "";
+        const textToCopy = location ? `${location}\n${jsx}` : jsx;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
             onCopy("Component shell copied!");
         });
     };

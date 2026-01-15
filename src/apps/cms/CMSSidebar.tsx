@@ -107,7 +107,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
             />
           </Frame>
           <Frame
-            override={{ gap: Space.n4, style: { padding: "2px" }, rounded: "md" }}
+            override={{ gap: Space.n4, p: Space.n4, rounded: "md" }}
             layout={Layout.Row.Actions.Default}
             surface="sunken"
           >

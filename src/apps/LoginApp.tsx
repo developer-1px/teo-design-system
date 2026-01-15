@@ -12,7 +12,7 @@ import { IconSize, FontSize } from "../design-system/token/token.const.1tier";
 
 export function LoginApp() {
   return (
-    <Frame fill layout={Layout.Row.Shell.Default}>
+    <Frame fill layout={Layout.Row.AppContainer.Default}>
       {/* Left: Login Form */}
       <Frame
         override={{ p: Space.n32 }}
@@ -46,7 +46,7 @@ export function LoginApp() {
               />
             </Frame>
 
-            <Frame layout={Layout.Row.Item.Between}>
+            <Frame layout={Layout.Row.LabelValue.Default}>
               <Frame layout={Layout.Row.Item.Tight} cursor="pointer">
                 {/* Checkbox simulation */}
                 <Frame

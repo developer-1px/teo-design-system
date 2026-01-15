@@ -115,12 +115,12 @@ export function BodyContentSection() {
                     surface="overlay"
                   />
                   <Frame
-                    override={{ style: { height: "2px" }, w: Size.n24, rounded: "full" }}
+                    override={{ h: Size.n2, w: Size.n24, rounded: "full" }}
                     surface="overlay"
                   />
                 </Frame>
                 <Frame
-                  override={{ style: { height: "2px" }, w: Size.full, rounded: "full" }}
+                  override={{ h: Size.n2, w: Size.full, rounded: "full" }}
                   surface="raised"
                 />
               </Frame>

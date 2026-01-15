@@ -36,7 +36,7 @@ export function PropertyTree({
                         paddingLeft: `${depth * 12 + 8}px`,
                     },
                 }}
-                layout={Layout.Row.Item.Between}
+                layout={Layout.Row.LabelValue.Default}
                 surface={background}
             >
                 <Text size={FontSize.n9} color="secondary">
@@ -73,7 +73,7 @@ export function PropertyTree({
                         cursor: isEmpty ? "default" : "pointer",
                     },
                 }}
-                layout={Layout.Row.Item.Between}
+                layout={Layout.Row.LabelValue.Default}
                 surface={background}
                 onClick={(e) => {
                     e.stopPropagation();

@@ -135,8 +135,15 @@ export const Layout = {
       Tight: "row.item.tight",
       /** Compact: `Space.n4` gap. High density. */
       Compact: "row.item.compact",
-      /** Between: `justify: between`. Use for 'Label ... Value' rows. */
-      Between: "row.item.between",
+    },
+
+    /**
+     * **Label-Value Pair**
+     * - Layout: Horizontal, `justify: between`.
+     * - Use for: 'Label ... Value' rows, Property inspectors.
+     */
+    LabelValue: {
+      Default: "row.labelvalue",
     },
 
     /**
@@ -165,13 +172,13 @@ export const Layout = {
     },
 
     /**
-     * **App Shell**
+     * **App Container**
      * - Layout: Horizontal, `align: stretch`.
      * - Spacing: `Space.n0`.
      * - Use for: Top-level App container (Sidebar + Content).
      */
-    Shell: {
-      Default: "row.shell",
+    AppContainer: {
+      Default: "row.appcontainer",
     },
   },
 
@@ -381,7 +388,8 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
       return { row: true, align: "center", justify: "start", gap: Space.n8 };
     case Layout.Row.Item.Compact:
       return { row: true, align: "center", justify: "start", gap: Space.n4 };
-    case Layout.Row.Item.Between:
+
+    case Layout.Row.LabelValue.Default:
       return { row: true, align: "center", justify: "between", gap: Space.n12 };
 
     case Layout.Row.Meta.Default:
@@ -400,7 +408,7 @@ export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: R
     case Layout.Row.Actions.Center:
       return { row: true, align: "center", justify: "center", gap: Space.n8 };
 
-    case Layout.Row.Shell.Default:
+    case Layout.Row.AppContainer.Default:
       return { row: true, align: "stretch", gap: Space.n0 };
 
     // --- Wrap ---

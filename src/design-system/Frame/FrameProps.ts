@@ -56,7 +56,12 @@ export interface FrameOverrides {
   surface?: SurfaceToken;
   rounded?: RoundedToken | (string & {}) | number;
   overflow?: OverflowToken;
+  overflow?: OverflowToken;
   cursor?: CursorToken;
+
+  // Smart Layout
+  scroll?: boolean | "x" | "y";
+  shrink?: boolean | number;
 
   override?: FrameOverrides;
 
@@ -118,6 +123,10 @@ export interface FrameStrictProps {
   rounded?: RoundedToken;
   overflow?: OverflowToken;
   cursor?: CursorToken;
+
+  // Smart Layout
+  scroll?: boolean | "x" | "y";
+  shrink?: boolean | number;
 
   // Visual
   shadow?: ShadowToken;

@@ -30,10 +30,11 @@ export function SlideApp() {
           left: 0,
           right: 0,
           zIndex: 10,
-          height: "44px",
+          height: "var(--size-n44)",
+          borderBottom: "1px solid var(--border-color)",
         }}
         override={{
-          p: Space.n8,
+          px: Space.n16,
         }}
         layout={Layout.Row.Header.Default}
       >
@@ -41,7 +42,7 @@ export function SlideApp() {
           <Action
             icon={Grid}
             iconSize={IconSize.n16}
-            style={{ width: "28px", height: "28px" }}
+            style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
           />
           <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
             <Text.Menu.Item style={{ fontWeight: 600 }}>
@@ -63,9 +64,9 @@ export function SlideApp() {
             surface="overlay"
           >
             <Frame
-              style={{ width: "16px", height: "16px" }}
+              style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
               override={{
-                rounded: "round",
+                rounded: "md",
               }}
               surface="overlay"
             />
@@ -100,10 +101,13 @@ export function SlideApp() {
 
       {/* Main Layout Area */}
       <Frame
-        style={{ paddingTop: "48px" }}
-        override={{ p: Space.n8, gap: Space.n8 }}
+        style={{ paddingTop: "var(--space-n48)" }}
+        override={{
+          w: Size.n320,
+          gap: Space.n16,
+        }}
         flex
-        layout={Layout.Row.Shell.Default}
+        layout={Layout.Row.AppContainer.Default}
         fill
       >
         {/* 2. Left Sidebar (Slides Strip) */}
@@ -138,7 +142,7 @@ export function SlideApp() {
                 >
                   Refined & Polished UI.
                 </Text.Prose.Title>
-                <Frame style={{ height: "4px" }} override={{}} />
+                <Frame style={{ height: "var(--size-n4)" }} override={{}} />
                 <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Actions.Center}>
                   <Frame
                     style={{ width: "40px", height: "40px" }}

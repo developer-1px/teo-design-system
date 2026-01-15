@@ -72,6 +72,22 @@ export function frameToSettings(props: FrameOverrides): {
     return undefined;
   };
 
+  // --- Smart Logic Helpers ---
+  const isFixedDimension = (
+    val: string | number | undefined,
+    axis: "width" | "height"
+  ): boolean => {
+    if (val === undefined) return false;
+    if (typeof val === "number") return true;
+    // String checks
+    if (val.startsWith("size.n") || val.startsWith("container.n")) return true;
+    if (val === "size.full" || val === "size.screen" || val === "size.auto" || val === "size.min" || val === "size.max" || val === "size.fit") return false;
+    // Explicit px/rem
+    if (/^-?\d*\.?\d+(px|rem|em)$/.test(val)) return true;
+    return false;
+  };
+
+
   const standardStyles: React.CSSProperties = cleanStyles({
     // Standard Padding
     padding: resolveSpace(props.p) as any,
@@ -160,9 +176,57 @@ export function frameToSettings(props: FrameOverrides): {
     classes.push(`shadow-${props.shadow}`);
   }
 
-  // --- Scalar Variables (p, gap) ---
-  // Note: We keep support for numeric --p/--gap variables for frame.css
-  // but standardStyles will override if toToken returns a var() or explicit value.
+  // --- Shadow ---
+  if (props.shadow) {
+    classes.push(`shadow-${props.shadow}`);
+  }
+
+  // --- Smart Layout Logic ---
+
+  // 1. Scroll & Min-Size Safety
+  if (props.scroll) {
+    // If scroll is enabled, we MUST ensure min-size is 0 to allow shrinking
+    // unless user explicitly overwrote minWidth/minHeight (which standardStyles handles, 
+    // but the class generation for automatic safety happens here or via vars?)
+    // Actually, standardStyles.minWidth takes precedence. 
+
+    // We apply standard overflow classes
+    if (props.scroll === true) {
+      if (!props.overflow) classes.push("overflow-auto");
+      // Safety:
+      if (props.minWidth === undefined) standardStyles.minWidth = 0;
+      if (props.minHeight === undefined) standardStyles.minHeight = 0;
+    } else if (props.scroll === "x") {
+      classes.push("overflow-x-auto");
+      if (!props.overflow) classes.push("overflow-y-hidden");
+      if (props.minWidth === undefined) standardStyles.minWidth = 0;
+    } else if (props.scroll === "y") {
+      classes.push("overflow-y-auto");
+      if (!props.overflow) classes.push("overflow-x-hidden");
+      if (props.minHeight === undefined) standardStyles.minHeight = 0;
+    }
+  }
+
+  // 2. Smart Shrink
+  // If shrink is explicitly set, use it
+  if (props.shrink !== undefined) {
+    if (props.shrink === true) standardStyles.flexShrink = 1;
+    else if (props.shrink === false) standardStyles.flexShrink = 0;
+    else standardStyles.flexShrink = props.shrink;
+  } else {
+    // Heuristic: If fixed dim exists => shrink=0
+    // We check raw props before resolution
+    const hasFixedWidth = isFixedDimension(props.w, "width");
+    // const hasFixedHeight = isFixedDimension(props.h, "height"); 
+
+    // We only enforce shrink=0 if width is fixed, as flex-row is default context usually.
+    // If flex-col, height matters. But defaulting to 0 for any fixed dim is safe?
+    // If I set h=40px, I usually don't want it compressed.
+    // Let's be aggressive: Fixed geometry resists compression.
+    if (hasFixedWidth || isFixedDimension(props.h, "height")) {
+      standardStyles.flexShrink = 0;
+    }
+  }
 
 
   if (typeof props.gap === "number") {

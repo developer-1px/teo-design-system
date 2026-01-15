@@ -52,7 +52,8 @@ export function InspectorOverlay() {
     clone.innerHTML = "";
     const shell = clone.outerHTML;
     const jsx = generateJSX(targetName || "Component", targetProps);
-    const text = `${jsx}\n\n// HTML:\n// ${shell}`;
+    const location = componentStack[0] ? `${componentStack[0].fileName}:${componentStack[0].lineNumber}` : "";
+    const text = `${location ? location + "\n" : ""}${jsx}\n\n// HTML:\n// ${shell}`;
 
     navigator.clipboard
       .writeText(text)

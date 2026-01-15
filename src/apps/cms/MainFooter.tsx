@@ -40,7 +40,7 @@ export function MainFooter() {
           </Frame>
           <Text.Card.Desc
             style={{
-              fontSize: "16px",
+              fontSize: "var(--font-size-n16)",
               lineHeight: "1.6",
               opacity: 0.7,
               color: "var(--text-secondary)",

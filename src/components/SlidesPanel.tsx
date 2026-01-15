@@ -24,7 +24,7 @@ export function SlidesPanel() {
       >
         {slides.map((num) => (
           <Frame override={{ gap: Space.n4, p: Space.n8 }} key={num} border={num === 1}>
-            <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Between} justify="between" align="end">
+            <Frame override={{ gap: Space.n4 }} layout={Layout.Row.LabelValue.Default} justify="between" align="end">
               <Text.Card.Note
                 style={{
                   color: num === 1 ? "var(--text-white)" : "var(--text-subtle)",

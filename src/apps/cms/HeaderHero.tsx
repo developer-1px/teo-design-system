@@ -69,7 +69,7 @@ export function HeaderHero() {
           <Icon src={Sparkles} size={IconSize.n12} style={{ color: "var(--color-primary)" }} />
           <Text.Card.Note
             style={{
-              fontSize: "12px",
+              fontSize: "var(--font-size-n12)",
               fontWeight: "bold",
               color: "var(--text-secondary)",
               letterSpacing: "0.02em",
@@ -91,8 +91,10 @@ export function HeaderHero() {
         <EditableWrapper style={{ maxWidth: 600 }}>
           <Text.Prose.Body
             style={{
-              color: "var(--text-secondary)",
-              textAlign: "center",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              fontSize: "var(--font-size-n12)",
+              fontWeight: 600,
               opacity: 0.8,
             }}
           >
@@ -131,7 +133,7 @@ export function HeaderHero() {
           style: {
             maxWidth: "250px",
             position: "relative",
-            marginTop: "64px",
+            marginTop: "var(--space-n64)",
             transform: "perspective(1000px) rotateX(5deg)",
             margin: "0 auto",
           },
@@ -166,7 +168,7 @@ export function HeaderHero() {
           <Frame flex />
           <Command size={14} opacity={0.3} />
         </Frame>
-        <Frame layout={Layout.Row.Shell.Default} fill justify="start">
+        <Frame layout={Layout.Row.AppContainer.Default} fill justify="start">
           <Frame
             override={{
               w: Size.n48,

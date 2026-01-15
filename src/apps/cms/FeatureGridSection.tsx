@@ -32,7 +32,7 @@ export function FeatureGridSection() {
             fontWeight: "bold",
             color: "var(--text-primary)",
             letterSpacing: "0.05em",
-            fontSize: "12px",
+            fontSize: "var(--font-size-n12)",
           }}
         >
           FEATURES

@@ -348,7 +348,7 @@ function EditorTabs() {
       style={{ height: 35, borderBottom: "1px solid var(--border-color)" }}
       override={{
       }}
-      layout={Layout.Row.Shell.Default}
+      layout={Layout.Row.AppContainer.Default}
       surface="sunken"
     >
       <Tab title="App" icon="react" active />
@@ -463,7 +463,7 @@ function Breadcrumbs() {
 
 function CodeEditor() {
   return (
-    <Frame flex fill surface="base" layout={Layout.Row.Shell.Default} overflow="hidden">
+    <Frame flex fill surface="base" layout={Layout.Row.AppContainer.Default} overflow="hidden">
       {/* Gutter */}
       <Frame
         style={{ userSelect: "none" }}

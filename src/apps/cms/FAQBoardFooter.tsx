@@ -106,7 +106,7 @@ function FAQRow({ q, a }: FAQRowProps) {
       onClick={() => setIsOpen(!isOpen)}
       cursor="pointer"
     >
-      <Frame override={{ w: Size.full }} layout={Layout.Row.Item.Between} align="center">
+      <Frame override={{ w: Size.full }} layout={Layout.Row.LabelValue.Default} align="center">
         <Text.Card.Title>{q}</Text.Card.Title>
         <Icon
           src={Plus}

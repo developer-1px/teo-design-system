@@ -28,7 +28,7 @@ export function CMSApp() {
       <Frame
         style={{ position: "relative" }}
         override={{}}
-        layout={Layout.Row.Shell.Default}
+        layout={Layout.Row.AppContainer.Default}
         fill
         align="stretch"
       >

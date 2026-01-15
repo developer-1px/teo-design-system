@@ -743,7 +743,7 @@ export function CRMApp() {
   const selectedDeal = DEALS.find((d) => d.id === selectedDealId) || null;
 
   return (
-    <Frame fill layout={Layout.Row.Shell.Default} surface="base">
+    <Frame fill layout={Layout.Row.AppContainer.Default} surface="base">
       <Sidebar />
       <Frame
         style={{

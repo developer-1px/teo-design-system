@@ -87,14 +87,14 @@ export function TextSystemApp() {
               }}
               surface="sunken"
             >
-              <Icon src={FileText} size={80} style={{ strokeWidth: 1, opacity: 0.8 }} />
+              <Icon src={FileText} size={Size.n80} style={{ strokeWidth: 1, opacity: 0.8 }} />
             </Frame>
 
             <Frame override={{ gap: Space.n16 }} align="center">
               <Text.Prose.Title
                 variant="xl"
                 style={{
-                  fontSize: "72px",
+                  fontSize: "var(--font-size-7xl)", // 72px
                   letterSpacing: "-0.04em",
                   lineHeight: 1,
                 }}
@@ -103,7 +103,7 @@ export function TextSystemApp() {
               </Text.Prose.Title>
               <Text.Prose.Body
                 style={{
-                  fontSize: "24px",
+                  fontSize: "var(--font-size-2xl)", // 24px
                   textAlign: "center",
                   opacity: 0.6,
                   maxWidth: "600px",
@@ -152,7 +152,7 @@ export function TextSystemApp() {
                   </Frame>
                   {i < 3 && (
                     <Frame
-                      style={{ height: "2px", background: "var(--border-color)" }}
+                      style={{ height: "var(--size-n2)", background: "var(--border-color)" }}
                       override={{
                         w: Size.n32,
                       }}
@@ -537,6 +537,7 @@ export function TextSystemApp() {
               style={{ height: "400px", border: "1px solid var(--border-color)" }}
               override={{
                 w: Size.n240,
+                gap: Space.n4,
               }}
               surface="sunken"
             >
@@ -560,6 +561,7 @@ export function TextSystemApp() {
                 w: Size.n224,
                 rounded: "xl",
                 p: Space.n4,
+                gap: Space.n4,
                 shadow: "lg",
               }}
               surface="raised"
@@ -617,7 +619,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
     <Frame
       style={{ scrollSnapAlign: "start" }}
       override={{ w: Size.full, h: Size.screen }}
-      layout={Layout.Row.Shell.Default}
+      layout={Layout.Row.AppContainer.Default}
       overflow="hidden"
     >
       {/* Left: Code & Context */}
@@ -628,7 +630,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
         justify="center"
       >
         <Frame override={{ gap: Space.n16 }}>
-          <Text.Prose.Title style={{ fontSize: "32px" }}>
+          <Text.Prose.Title style={{ fontSize: "var(--font-size-4xl)" }}>
             {title}
           </Text.Prose.Title>
           <Text.Prose.Body style={{ opacity: 0.7 }}>
@@ -640,7 +642,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
           style={{
             border: "1px solid var(--border-color)",
             fontFamily: "var(--font-family-mono)",
-            fontSize: "13px",
+            fontSize: "var(--font-size-n13)",
             lineHeight: "1.6",
             overflowX: "auto",
           }}
