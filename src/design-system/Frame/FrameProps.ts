@@ -40,13 +40,11 @@ export interface FrameOverrides {
   maxWidth?: MaxWidthToken;
   maxHeight?: MaxHeightToken;
 
-  // border
-  border?: boolean | string;
-  borderTop?: boolean | string;
-  borderRight?: boolean | string;
-  borderBottom?: boolean | string;
-  borderLeft?: boolean | string;
-  borderColor?: string;
+  // border (override: individual sides)
+  borderTop?: boolean;
+  borderRight?: boolean;
+  borderBottom?: boolean;
+  borderLeft?: boolean;
 
   // BorderRadius
   r?: RadiusToken;
@@ -108,6 +106,9 @@ interface FrameStrictProps {
   surface?: SurfaceToken;
   rounded?: Radius2Token | boolean;
   clip?: boolean;
+
+  // Border (1-tier: all sides)
+  border?: boolean;
 
   // Smart Layout
   scroll?: boolean | "x" | "y";

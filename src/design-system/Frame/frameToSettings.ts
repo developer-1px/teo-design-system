@@ -8,6 +8,7 @@ import { Radius2 } from "../token";
 type FrameSettingsInput = FrameOverrides & {
   surface?: SurfaceToken;
   rounded?: Radius2Token | boolean;
+  border?: boolean;
 };
 
 export function frameToSettings(props: FrameSettingsInput): {
@@ -92,38 +93,16 @@ export function frameToSettings(props: FrameSettingsInput): {
     // Opacity (tokens are already CSS variables)
     opacity: props.opacity,
 
-    // Borders
-    border:
-      props.border === true
-        ? "1px solid var(--border-color)"
-        : typeof props.border === "string"
-          ? props.border
-          : undefined,
+    // Borders (boolean only)
+    border: props.border === true ? "1px solid var(--border-color)" : undefined,
     borderTop:
-      props.borderTop === true
-        ? "1px solid var(--border-color)"
-        : typeof props.borderTop === "string"
-          ? props.borderTop
-          : undefined,
+      props.borderTop === true ? "1px solid var(--border-color)" : undefined,
     borderRight:
-      props.borderRight === true
-        ? "1px solid var(--border-color)"
-        : typeof props.borderRight === "string"
-          ? props.borderRight
-          : undefined,
+      props.borderRight === true ? "1px solid var(--border-color)" : undefined,
     borderBottom:
-      props.borderBottom === true
-        ? "1px solid var(--border-color)"
-        : typeof props.borderBottom === "string"
-          ? props.borderBottom
-          : undefined,
+      props.borderBottom === true ? "1px solid var(--border-color)" : undefined,
     borderLeft:
-      props.borderLeft === true
-        ? "1px solid var(--border-color)"
-        : typeof props.borderLeft === "string"
-          ? props.borderLeft
-          : undefined,
-    borderColor: props.borderColor,
+      props.borderLeft === true ? "1px solid var(--border-color)" : undefined,
   });
 
   // --- Base Layout ---

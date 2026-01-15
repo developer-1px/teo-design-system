@@ -217,8 +217,8 @@ function ShowcasePage() {
                 rounded: "xl",
               }}
               style={{
-                width: "160px",
-                height: "160px",
+                width: "200px",
+                height: "200px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
