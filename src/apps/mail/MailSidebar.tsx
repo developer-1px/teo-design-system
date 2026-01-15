@@ -15,6 +15,7 @@ import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
 import { IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { folderCountsAtom, selectedFolderAtom } from "./store";
 import type { MailFolder } from "./types";
 
@@ -42,7 +43,7 @@ export function MailSidebar() {
       surface="sunken"
     >
       {/* Compose Button */}
-      <Action variant="primary" icon={Edit} label="Compose" rounded="md" w="100%" />
+      <Action variant="primary" icon={Edit} label="Compose" rounded={Radius2.md} w="100%" />
 
       <Frame override={{ h: Size.n8 }} />
 
@@ -56,7 +57,7 @@ export function MailSidebar() {
             <Action
               key={folder.id}
               variant={isActive ? "surface" : "ghost"}
-              rounded="md"
+              rounded={Radius2.md}
               w="100%"
               justify="start"
               onClick={() => setSelectedFolder(folder.id)}

@@ -14,8 +14,8 @@ import { Layout } from "./design-system/Frame/Layout/Layout.ts";
 import { Icon } from "./design-system/Icon";
 import { Text } from "./design-system/text/Text.tsx";
 import { useTheme } from "./design-system/theme";
-import { Space } from "./design-system/token/token.const.1tier";
-import { FontSize, IconSize } from "./design-system/token/token.const.1tier.ts";
+import { FontSize, IconSize, Space } from "./design-system/token/token.const.1tier";
+import { Radius2 } from "./design-system/token/token.const.2tier";
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
 function NavItem({ to, label }: { to: string; label: string }) {
@@ -25,7 +25,7 @@ function NavItem({ to, label }: { to: string; label: string }) {
         <Frame
           override={{py: Space.n6,
             px: Space.n14,
-            cursor: "pointer"}} rounded="full"
+            cursor: "pointer"}} rounded={Radius2.full}
           style={{
             color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
           }}
@@ -47,7 +47,7 @@ function Navigation() {
         shadow: "xl",
         p: Space.n4,
         gap: Space.n4,
-      }} rounded="full"
+      }} rounded={Radius2.full}
       style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
       surface="raised"
       layout={Layout.Row.Toolbar.Default}
@@ -74,7 +74,7 @@ function ThemeToggleItem() {
   return (
     <Frame
       override={{p: Space.n8,
-        cursor: "pointer"}} rounded="full"
+        cursor: "pointer"}} rounded={Radius2.full}
       style={{
         color: "var(--text-secondary)",
       }}

@@ -3,12 +3,8 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function BodyContentSection() {
   return (
@@ -69,7 +65,7 @@ export function BodyContentSection() {
           <Frame
             override={{w: Size.n160,
               h: Size.n208,
-              shadow: "2xl"}} rounded="3xl"
+              shadow: "2xl"}} rounded={Radius2["3xl"]}
             style={{ position: "relative" }}
             surface="raised"
           >
@@ -79,7 +75,7 @@ export function BodyContentSection() {
                 h: Size.n64,
                 shadow: "lg",
                 p: Space.n24,
-                gap: Space.n16}} rounded="2xl"
+                gap: Space.n16}} rounded={Radius2["2xl"]}
               style={{
                 position: "absolute",
                 top: "var(--space-n40)",
@@ -94,11 +90,11 @@ export function BodyContentSection() {
               />
               <Frame override={{ gap: Space.n8 }}>
                 <Frame
-                  override={{ h: Size.n12, w: Size.full}} rounded="full"
+                  override={{ h: Size.n12, w: Size.full}} rounded={Radius2.full}
                   surface="overlay"
                 />
                 <Frame
-                  override={{ h: Size.n12}} rounded="full"
+                  override={{ h: Size.n12}} rounded={Radius2.full}
                   style={{ width: "60%" }}
                   surface="overlay"
                 />
@@ -111,7 +107,7 @@ export function BodyContentSection() {
                 h: Size.n80,
                 shadow: "lg",
                 p: Space.n24,
-                gap: Space.n16}} rounded="2xl"
+                gap: Space.n16}} rounded={Radius2["2xl"]}
               style={{
                 position: "absolute",
                 bottom: "var(--space-n40)",
@@ -131,17 +127,17 @@ export function BodyContentSection() {
                   align="center"
                 >
                   <Frame
-                    override={{ w: Size.n8, h: Size.n8}} rounded="full"
+                    override={{ w: Size.n8, h: Size.n8}} rounded={Radius2.full}
                     surface="overlay"
                   />
                   <Frame
-                    override={{ w: Size.n24}} rounded="full"
+                    override={{ w: Size.n24}} rounded={Radius2.full}
                     style={{ height: "var(--space-n4)" }}
                     surface="overlay"
                   />
                 </Frame>
                 <Frame
-                  override={{ w: Size.full}} rounded="full"
+                  override={{ w: Size.full}} rounded={Radius2.full}
                   style={{ height: "var(--space-n4)" }}
                   surface="raised"
                 />
@@ -167,7 +163,7 @@ function CheckItem({ title, desc }: CheckItemProps) {
       align="start"
     >
       <Frame
-        override={{ w: Size.n20, h: Size.n20}} rounded="full"
+        override={{ w: Size.n20, h: Size.n20}} rounded={Radius2.full}
         style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
         pack

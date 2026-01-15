@@ -18,6 +18,7 @@ import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
 import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { selectedThreadAtom } from "./store";
 
 export function MailDetail() {
@@ -84,7 +85,7 @@ export function MailDetail() {
               {selectedThread.labels.map((label) => (
                 <Frame
                   key={label}
-                  override={{ py: Space.n4, px: Space.n8}} rounded="sm"
+                  override={{ py: Space.n4, px: Space.n8}} rounded={Radius2.sm}
                   surface="raised"
                 >
                   <Text.Card.Note size={FontSize.n11}>{label}</Text.Card.Note>
@@ -97,7 +98,7 @@ export function MailDetail() {
         {/* Sender Info */}
         <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default} align="start">
           <Frame
-            override={{ w: Size.n40, h: Size.n40}} rounded="full"
+            override={{ w: Size.n40, h: Size.n40}} rounded={Radius2.full}
             surface="raised"
             pack
           >
@@ -150,7 +151,7 @@ export function MailDetail() {
               {mail.attachmentCount} Attachment{mail.attachmentCount !== 1 ? "s" : ""}
             </Text.Card.Note>
             <Frame
-              override={{py: Space.n12, px: Space.n12, gap: Space.n12}} rounded="md"
+              override={{py: Space.n12, px: Space.n12, gap: Space.n12}} rounded={Radius2.md}
               surface="raised"
               layout={Layout.Row.Item.Default}
               align="center"

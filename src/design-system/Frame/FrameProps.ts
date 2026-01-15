@@ -82,7 +82,6 @@ export interface FrameOverrides {
 interface FrameStrictProps {
   // Layout
   gap?: SpaceToken;
-  pack?: boolean;
 
   w?: WidthToken;
   h?: HeightToken;
@@ -92,6 +91,7 @@ interface FrameStrictProps {
 
   fill?: boolean;
   flex?: boolean | number | string;
+  pack?: boolean;
 
   // Grid
   grid?: boolean;

@@ -12,6 +12,7 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../../design-system/text/Text";
 import { FontSize, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 import type { ComponentStackItem } from "../lib/fiber-utils";
 import { generateJSX } from "../lib/inspector-utils";
 import { PropertyTree } from "./PropertyTree";
@@ -215,7 +216,7 @@ export function InspectorPanel({
       <Frame
         override={{
           shadow: "2xl",
-        }} rounded="lg"
+        }} rounded={Radius2.lg}
         style={{
           maxHeight: "80vh",
           border: "1px solid var(--border-color)",
@@ -390,7 +391,7 @@ export function InspectorPanel({
                   {section.section}
                 </Text>
                 <Frame
-                  override={{gap: Space.n0}} rounded="sm"
+                  override={{gap: Space.n0}} rounded={Radius2.sm}
                   style={{ border: "1px solid var(--border-color)" }}
                   clip
                 >

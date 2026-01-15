@@ -7,12 +7,8 @@ import { Icon } from "../design-system/Icon";
 import { Section } from "../design-system/Section";
 import { Prose } from "../design-system/text/context/Prose";
 import { Text } from "../design-system/text/Text.tsx";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
+import { FontSize, IconSize, Size, Space } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LoginApp() {
   return (
@@ -58,7 +54,7 @@ export function LoginApp() {
                 {/* Checkbox simulation */}
                 <Frame
                   override={{w: Size.n4,
-                    h: Size.n4}} rounded="sm"
+                    h: Size.n4}} rounded={Radius2.sm}
                   style={{ border: "1px solid var(--border-color)" }}
                   surface="sunken"
                 />
@@ -108,7 +104,7 @@ export function LoginApp() {
             <Frame
               override={{w: Size.n64,
                 h: Size.n64,
-                shadow: "lg"}} rounded="2xl"
+                shadow: "lg"}} rounded={Radius2["2xl"]}
               style={{ marginBottom: "var(--space-n16)" }}
               surface="card"
               align="center"
@@ -150,7 +146,7 @@ function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
     <Frame layout={Layout.Row.Item.Default} align="start">
       <Frame
-        override={{ w: Size.n8, h: Size.n8}} rounded="full"
+        override={{ w: Size.n8, h: Size.n8}} rounded={Radius2.full}
         style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
         flex={0}

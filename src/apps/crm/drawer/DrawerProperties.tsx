@@ -3,6 +3,7 @@ import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../../design-system/Icon";
 import { Text } from "../../../design-system/text/Text.tsx";
 import { IconSize, Size, Space } from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 export function DrawerProperties({
   entries,
@@ -85,7 +86,7 @@ function PropertyRow({
         {isColor && colorValue && (
           <Frame
             override={{w: Size.n16,
-              h: Size.n16}} rounded="sm"
+              h: Size.n16}} rounded={Radius2.sm}
             style={{
               backgroundColor: colorValue,
               border: "1px solid var(--border-color)",

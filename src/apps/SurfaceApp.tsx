@@ -2,6 +2,7 @@ import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Prose } from "../design-system/text/context/Prose.tsx";
 import { Space } from "../design-system/token/token.const.1tier.ts";
+import { Radius2 } from "../design-system/token/token.const.2tier.ts";
 import type { SurfaceToken } from "../design-system/lib/types.ts";
 
 export function SurfaceApp() {
@@ -71,7 +72,7 @@ function IntroductionPage() {
             gap: Space.n20,
             p: Space.n40,
           }}
-          rounded="xl"
+          rounded={Radius2.xl}
           surface="base"
         >
           <Frame layout={Layout.Stack.Content.Default}>
@@ -136,6 +137,16 @@ function IntroductionPage() {
           @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
+          }
+          @keyframes fadeInUp {
+            0% {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
           }
         `}
       </style>
@@ -213,7 +224,7 @@ function ShowcasePage() {
             <Frame
               key={item.token}
               surface={item.token}
-              rounded="xl"
+              rounded={Radius2.xl}
               style={{
                 width: "200px",
                 height: "200px",
@@ -260,42 +271,49 @@ function DetailPage() {
     name: string;
     description: string;
     usage: string;
+    icon: string;
   }> = [
     {
       token: "base",
       name: "Base",
       description: "기본 배경 레이어",
       usage: "카드, 패널, 다이얼로그 등 주요 컨텐츠 영역",
+      icon: "□",
     },
     {
       token: "sunken",
       name: "Sunken",
       description: "음각 효과의 낮은 레이어",
       usage: "앱 전체 배경, Well 영역, 입력 필드",
+      icon: "⊡",
     },
     {
       token: "raised",
       name: "Raised",
       description: "부각된 높은 레이어",
       usage: "플로팅 툴바, 드롭다운 메뉴",
+      icon: "▣",
     },
     {
       token: "overlay",
       name: "Overlay",
       description: "최상단 오버레이",
       usage: "모달, 토스트, 팝오버",
+      icon: "▦",
     },
     {
       token: "primary",
       name: "Primary",
       description: "강조 액센트 레이어",
       usage: "주요 액션 버튼, 선택된 상태",
+      icon: "◆",
     },
     {
       token: "selected",
       name: "Selected",
       description: "선택/활성 상태",
       usage: "선택된 리스트 아이템, 활성 탭",
+      icon: "●",
     },
   ];
 
@@ -305,154 +323,199 @@ function DetailPage() {
         minHeight: "100vh",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
+        background: "linear-gradient(180deg, var(--surface-sunken) 0%, var(--surface-base) 100%)",
       }}
-      surface="sunken"
       override={{
-        p: Space.n40,
-        gap: Space.n40,
+        py: Space.n64,
+        px: Space.n24,
+        gap: Space.n48,
       }}
     >
-      {/* Title */}
-      <Frame layout={Layout.Center.Default}>
-        <Frame layout={Layout.Stack.Content.Tight}>
-          <Prose.Title
-            variant="lg"
-            style={{
-              textAlign: "center",
-              fontSize: "clamp(32px, 5vw, 56px)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Surface Details
-          </Prose.Title>
-          <Prose.Note
-            style={{
-              textAlign: "center",
-              fontSize: "16px",
-            }}
-          >
-            Complete usage guide
-          </Prose.Note>
-        </Frame>
-      </Frame>
-
-      {/* Surface Bars */}
+      {/* Title Section */}
       <Frame
         override={{
-          gap: Space.n24,
-        }}
-        style={{
-          maxWidth: "1000px",
-          margin: "0 auto",
-          width: "100%",
+          gap: Space.n16,
         }}
         layout={Layout.Stack.Content.Default}
+        style={{
+          maxWidth: "800px",
+          margin: "0 auto",
+          textAlign: "center",
+        }}
       >
-        {surfaces.map((item) => (
-          <SurfaceBar key={item.token} {...item} />
+        <Prose.Title
+          variant="lg"
+          style={{
+            fontSize: "clamp(36px, 6vw, 64px)",
+            letterSpacing: "-0.03em",
+            background: "linear-gradient(135deg, var(--text-primary) 0%, var(--text-subtle) 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          Surface Details
+        </Prose.Title>
+        <Prose.Body
+          style={{
+            fontSize: "18px",
+            lineHeight: 1.7,
+            maxWidth: "600px",
+            margin: "0 auto",
+          }}
+        >
+          각 Surface 토큰의 의미와 사용 시나리오를 살펴보세요
+        </Prose.Body>
+      </Frame>
+
+      {/* Surface Grid (2 columns) */}
+      <Frame
+        override={{
+          gap: Space.n20,
+        }}
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
+        }}
+      >
+        {surfaces.map((item, index) => (
+          <SurfaceDetailCard key={item.token} {...item} index={index} />
         ))}
       </Frame>
     </Frame>
   );
 }
 
-function SurfaceBar({
+function SurfaceDetailCard({
   token,
   name,
   description,
   usage,
+  icon,
+  index,
 }: {
   token: SurfaceToken;
   name: string;
   description: string;
   usage: string;
+  icon: string;
+  index: number;
 }) {
   return (
     <Frame
       override={{
         gap: Space.n20,
-        p: Space.n24,
+        p: Space.n32,
       }}
-      rounded="lg"
+      rounded={Radius2["2xl"]}
       surface="base"
       style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        transition: "all 0.3s ease",
+        animation: `fadeInUp 0.6s ease ${index * 0.1}s both`,
+        boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateX(4px)";
-        e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)";
+        e.currentTarget.style.transform = "translateY(-8px)";
+        e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.12)";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateX(0)";
-        e.currentTarget.style.boxShadow = "none";
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.04)";
       }}
     >
-      {/* Left: Surface Preview (Square) */}
+      {/* Icon + Name Header */}
       <Frame
-        surface={token}
-        rounded="md"
+        override={{ gap: Space.n16 }}
+        layout={Layout.Row.Item.Default}
+        align="center"
+      >
+        {/* Icon */}
+        <Frame
+          surface={token}
+          rounded={Radius2.lg}
+          style={{
+            width: "64px",
+            height: "64px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "32px",
+            flexShrink: 0,
+            border: "1px solid var(--border-color)",
+          }}
+        >
+          {icon}
+        </Frame>
+
+        {/* Name + Token */}
+        <Frame override={{ gap: Space.n4 }} style={{ flex: 1 }}>
+          <Prose.Title
+            variant="sm"
+            style={{
+              fontSize: "28px",
+              fontWeight: 700,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {name}
+          </Prose.Title>
+          <Prose.Code
+            style={{
+              fontSize: "13px",
+              opacity: 0.5,
+            }}
+          >
+            {token}
+          </Prose.Code>
+        </Frame>
+      </Frame>
+
+      {/* Description */}
+      <Prose.Body
         style={{
-          width: "120px",
-          height: "120px",
-          flexShrink: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          border: "1px solid var(--border-color)",
+          fontSize: "17px",
+          fontWeight: 500,
+          lineHeight: 1.6,
+          color: "var(--text-body)",
         }}
       >
-        <Prose.Code
+        {description}
+      </Prose.Body>
+
+      {/* Divider */}
+      <Frame
+        style={{
+          height: "1px",
+          background: "var(--border-color)",
+          opacity: 0.3,
+        }}
+      />
+
+      {/* Usage */}
+      <Frame override={{ gap: Space.n8 }}>
+        <Prose.Note
           style={{
-            fontSize: "12px",
+            fontSize: "13px",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
             opacity: 0.6,
           }}
         >
-          {token}
-        </Prose.Code>
-      </Frame>
-
-      {/* Right: Details */}
-      <Frame
-        override={{
-          gap: Space.n12,
-        }}
-        layout={Layout.Stack.Content.Default}
-        style={{ flex: 1 }}
-      >
-        {/* Name */}
-        <Prose.Title
-          variant="sm"
-          style={{
-            fontSize: "24px",
-            fontWeight: 600,
-          }}
-        >
-          {name}
-        </Prose.Title>
-
-        {/* Description */}
+          Usage
+        </Prose.Note>
         <Prose.Body
           style={{
-            fontSize: "16px",
-            fontWeight: 500,
-            lineHeight: 1.5,
+            fontSize: "15px",
+            lineHeight: 1.7,
+            color: "var(--text-subtle)",
           }}
         >
-          {description}
+          {usage}
         </Prose.Body>
-
-        {/* Usage */}
-        <Prose.Note
-          style={{
-            fontSize: "14px",
-            lineHeight: 1.6,
-          }}
-        >
-          <strong>사용처:</strong> {usage}
-        </Prose.Note>
       </Frame>
     </Frame>
   );

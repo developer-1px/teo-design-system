@@ -1,21 +1,8 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../design-system/text/Text";
-import {
-  ContainerSize,
-  FontSize,
-  FontSizeScale,
-  Opacity,
-  OpacityScale,
-  Radius,
-  RadiusScale,
-  Size,
-  SizeScale,
-  Space,
-  type SpaceToken,
-  SpaceScale,
-  ZIndexScale,
-} from "../design-system/token/token.const.1tier";
+import { ContainerSize, FontSize, FontSizeScale, Opacity, OpacityScale, Radius, RadiusScale, Size, SizeScale, Space, type SpaceToken, SpaceScale, ZIndexScale } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Components ---
 
@@ -153,7 +140,7 @@ export function TokensApp() {
               <Frame
                 flex={1}
                 surface="sunken"
-                override={{p: Space.n32, gap: Space.n12}} rounded="2xl"
+                override={{p: Space.n32, gap: Space.n12}} rounded={Radius2["2xl"]}
               >
                 <Text.Card.Title>The Whitelist Concept</Text.Card.Title>
                 <Text.Card.Desc>
@@ -165,7 +152,7 @@ export function TokensApp() {
               <Frame
                 flex={1}
                 surface="sunken"
-                override={{p: Space.n32, gap: Space.n12}} rounded="2xl"
+                override={{p: Space.n32, gap: Space.n12}} rounded={Radius2["2xl"]}
               >
                 <Text.Card.Title>The Meaning of 'n'</Text.Card.Title>
                 <Text.Card.Desc>
@@ -197,7 +184,7 @@ export function TokensApp() {
                         width: `var(--space-n${val})`,
                         transition: "width 0.3s ease",
                       }}
-                      override={{ h: Size.n24}} rounded="sm"
+                      override={{ h: Size.n24}} rounded={Radius2.sm}
                     />
                   </ScaleVisualizer>
                 ))}
@@ -224,7 +211,7 @@ export function TokensApp() {
                     minWidth: `var(--size-n${val})`, // Ensure it doesn't shrink
                     minHeight: `var(--size-n${val})`,
                   }}
-                  rounded="xl"
+                  rounded={Radius2.xl}
                   align="center"
                   justify="center"
                 >
@@ -267,7 +254,7 @@ export function TokensApp() {
               <Frame
                 override={{h: Size.n256,
                   w: Size.full,
-                  p: Space.n48}} rounded="3xl"
+                  p: Space.n48}} rounded={Radius2["3xl"]}
                 surface="sunken"
                 align="center"
                 justify="center"
@@ -294,7 +281,7 @@ export function TokensApp() {
                       }}
                       override={{w: Size.n160,
                         h: Size.n128,
-                        p: Space.n16}} rounded="xl"
+                        p: Space.n16}} rounded={Radius2.xl}
                     >
                       <Text.Card.Title>n{val}</Text.Card.Title>
                     </Frame>
@@ -318,7 +305,7 @@ export function TokensApp() {
                     }}
                     override={{w: Size.n64,
                       h: Size.n64,
-                      minWidth: Size.n64}} rounded="lg"
+                      minWidth: Size.n64}} rounded={Radius2.lg}
                   />
                   <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>

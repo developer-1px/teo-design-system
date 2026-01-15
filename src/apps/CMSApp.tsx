@@ -12,6 +12,7 @@ import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Overlay } from "../design-system/Overlay";
 import { Space } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // CMS Sections
 import { BodyContentSection } from "./cms/BodyContentSection";
@@ -52,7 +53,7 @@ export function CMSApp() {
         override={{
           shadow: "lg",
           clip: true,
-        }} rounded="2xl"
+        }} rounded={Radius2["2xl"]}
         surface="raised"
         style={{
           margin: "var(--space-n4)",
@@ -149,7 +150,7 @@ function FloatingToolbar({
         surface="raised"
         override={{p: Space.n6,
           gap: Space.n4,
-          shadow: "xl"}} rounded="full"
+          shadow: "xl"}} rounded={Radius2.full}
         layout={Layout.Row.Actions.Default}
         align="center"
         style={{ border: "1px solid var(--border-color)" }}
@@ -159,7 +160,7 @@ function FloatingToolbar({
             icon={Monitor}
             variant={viewport === "desktop" ? "primary" : "ghost"}
             size="sm"
-            rounded="full"
+            rounded={Radius2.full}
             onClick={() => setViewport("desktop")}
             tooltip="Desktop"
           />
@@ -167,7 +168,7 @@ function FloatingToolbar({
             icon={Tablet}
             variant={viewport === "tablet" ? "primary" : "ghost"}
             size="sm"
-            rounded="full"
+            rounded={Radius2.full}
             onClick={() => setViewport("tablet")}
             tooltip="Tablet"
           />
@@ -175,7 +176,7 @@ function FloatingToolbar({
             icon={Smartphone}
             variant={viewport === "mobile" ? "primary" : "ghost"}
             size="sm"
-            rounded="full"
+            rounded={Radius2.full}
             onClick={() => setViewport("mobile")}
             tooltip="Mobile"
           />
@@ -193,7 +194,7 @@ function FloatingToolbar({
           icon={Play}
           variant="ghost"
           size="sm"
-          rounded="full"
+          rounded={Radius2.full}
           tooltip="Preview"
         />
 
@@ -201,7 +202,7 @@ function FloatingToolbar({
           icon={PanelRight}
           variant={isRightPanelOpen ? "primary" : "ghost"}
           size="sm"
-          rounded="full"
+          rounded={Radius2.full}
           onClick={toggleRightPanel}
           tooltip="Toggle Properties"
         />
@@ -218,7 +219,7 @@ function FloatingToolbar({
           icon={Menu}
           variant="ghost"
           size="sm"
-          rounded="full"
+          rounded={Radius2.full}
           tooltip="Options"
         />
       </Frame>

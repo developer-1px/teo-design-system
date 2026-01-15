@@ -16,12 +16,7 @@ import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
 import { Text } from "../design-system/text/Text";
-import {
-  IconSize,
-  Opacity,
-  Size,
-  Space,
-} from "../design-system/token";
+import { IconSize, Opacity, Size, Space, Radius2 } from "../design-system/token";
 
 export function SlideApp() {
   return (
@@ -76,7 +71,7 @@ export function SlideApp() {
           <Frame
             override={{gap: Space.n4,
               p: Space.n4,
-              shadow: "sm"}} rounded="md"
+              shadow: "sm"}} rounded={Radius2.md}
             layout={Layout.Row.Item.Compact}
             align="center"
             surface="overlay"
@@ -84,7 +79,7 @@ export function SlideApp() {
             <Frame
               style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
               override={{
-              }} rounded="md"
+              }} rounded={Radius2.md}
               surface="overlay"
             />
             <Action
@@ -98,7 +93,7 @@ export function SlideApp() {
             iconSize={IconSize.n14}
             label="Present"
             variant="primary"
-            rounded="md"
+            rounded={Radius2.md}
             h={Size.n32}
             py={Space.n0}
             px={Space.n12}
@@ -108,7 +103,7 @@ export function SlideApp() {
             iconSize={IconSize.n14}
             label="Share"
             variant="surface"
-            rounded="md"
+            rounded={Radius2.md}
             h={Size.n32}
             py={Space.n0}
             px={Space.n12}
@@ -132,7 +127,7 @@ export function SlideApp() {
         {/* 3. Central Canvas Area */}
         <Frame
           style={{ position: "relative" }}
-          rounded="md"
+          rounded={Radius2.md}
           flex
           fill
           clip
@@ -141,7 +136,7 @@ export function SlideApp() {
           <Frame fill pack scroll>
             <Frame
               style={{ width: "80%", maxWidth: "var(--container-n1280)" }}
-              override={{shadow: "lg"}} rounded="2xl"
+              override={{shadow: "lg"}} rounded={Radius2["2xl"]}
               surface="base"
               pack
               ratio="16/9"
@@ -164,7 +159,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                    }} rounded="md"
+                    }} rounded={Radius2.md}
                     surface="sunken"
                     pack
                   >
@@ -177,7 +172,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                    }} rounded="md"
+                    }} rounded={Radius2.md}
                     surface="raised"
                     pack
                   >
@@ -190,7 +185,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                    }} rounded="md"
+                    }} rounded={Radius2.md}
                     surface="overlay"
                     pack
                   >

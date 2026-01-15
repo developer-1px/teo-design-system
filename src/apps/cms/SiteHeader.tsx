@@ -2,11 +2,8 @@ import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import { FontSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export interface SiteHeaderProps {
   isSidebarOpen?: boolean;
@@ -52,7 +49,7 @@ export function SiteHeader({
           <Frame
             override={{w: Size.n32,
               h: Size.n32,
-              shadow: "sm"}} rounded="lg"
+              shadow: "sm"}} rounded={Radius2.lg}
             style={{ border: "1px solid var(--border-color)" }}
             surface="primary"
             pack
@@ -80,9 +77,9 @@ export function SiteHeader({
             override={{ gap: Space.n8 }}
             layout={Layout.Row.Actions.Default}
           >
-            <Action label="Features" variant="ghost" rounded="md" />
-            <Action label="Pricing" variant="ghost" rounded="md" />
-            <Action label="Resources" variant="ghost" rounded="md" />
+            <Action label="Features" variant="ghost" rounded={Radius2.md} />
+            <Action label="Pricing" variant="ghost" rounded={Radius2.md} />
+            <Action label="Resources" variant="ghost" rounded={Radius2.md} />
           </Frame>
 
           <Frame
@@ -95,14 +92,14 @@ export function SiteHeader({
               variant="ghost"
               h={Size.n36}
               px={Space.n16}
-              rounded="md"
+              rounded={Radius2.md}
             />
             <Action
               label="Get Started"
               variant="primary"
               h={Size.n36}
               px={Space.n20}
-              rounded="full"
+              rounded={Radius2.full}
               glow
             />
           </Frame>

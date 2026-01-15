@@ -5,12 +5,8 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function FAQBoardFooter() {
   return (
@@ -57,13 +53,13 @@ export function FAQBoardFooter() {
         <Frame
           override={{p: Space.n32,
             w: Size.full,
-            gap: Space.n24}} rounded="2xl"
+            gap: Space.n24}} rounded={Radius2["2xl"]}
           surface="raised"
           layout={Layout.Slots.Media.Default}
           align="center"
         >
           <Frame
-            override={{ w: Size.n56, h: Size.n56}} rounded="full"
+            override={{ w: Size.n56, h: Size.n56}} rounded={Radius2.full}
             surface="sunken"
             pack
           >
@@ -87,7 +83,7 @@ export function FAQBoardFooter() {
             variant="surface"
             h={Size.n44}
             px={Space.n24}
-            rounded="lg"
+            rounded={Radius2.lg}
           />
         </Frame>
       </Frame>

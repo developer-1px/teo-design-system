@@ -4,6 +4,7 @@ import { Frame } from "../../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../../../design-system/text/Text.tsx";
 import { FontSize, Size, type SizeToken, Space } from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 function Avatar({
   initial,
@@ -17,7 +18,7 @@ function Avatar({
   return (
     <Frame
       override={{w: size,
-        h: size}} rounded="full"
+        h: size}} rounded={Radius2.full}
       style={{ backgroundColor: color }}
       pack
       align="center"

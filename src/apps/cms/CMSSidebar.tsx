@@ -14,12 +14,8 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 interface CMSSidebarProps {
   isOpen: boolean;
@@ -55,7 +51,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           icon={isOpen ? LayoutIcon : Menu}
           variant="ghost"
           size="sm"
-          rounded="md"
+          rounded={Radius2.md}
           onClick={onToggle}
           tooltip={isOpen ? "Collapse" : "Expand"}
         />
@@ -116,13 +112,13 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
               icon={Plus}
               size="xs"
               variant="ghost"
-              rounded="full"
+              rounded={Radius2.full}
               tooltip="Add Section"
               onClick={() => console.log("Add Section")}
             />
           </Frame>
           <Frame
-            override={{ gap: Space.n4, p: Space.n4}} rounded="md"
+            override={{ gap: Space.n4, p: Space.n4}} rounded={Radius2.md}
             layout={Layout.Row.Actions.Default}
             surface="sunken"
           >
@@ -130,14 +126,14 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
               icon={Grid2X2}
               size="xs"
               variant={viewMode === "thumbnail" ? "surface" : "ghost"}
-              rounded="sm"
+              rounded={Radius2.sm}
               onClick={() => setViewMode("thumbnail")}
             />
             <Action
               icon={List}
               size="xs"
               variant={viewMode === "bar" ? "surface" : "ghost"}
-              rounded="sm"
+              rounded={Radius2.sm}
               onClick={() => setViewMode("bar")}
             />
           </Frame>
@@ -169,7 +165,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         align="center"
       >
         <Frame
-          override={{ w: Size.n32, h: Size.n32}} rounded="full"
+          override={{ w: Size.n32, h: Size.n32}} rounded={Radius2.full}
           surface="sunken"
           pack
         >
@@ -216,7 +212,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
         </Frame>
         <Frame
           override={{w: Size.full,
-            cursor: "pointer"}} rounded="md"
+            cursor: "pointer"}} rounded={Radius2.md}
           style={{
             border: "1px solid var(--border-color)",
             boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
@@ -230,7 +226,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
             <Frame
               override={{w: Size.n8,
                 h: Size.n8,
-                shadow: "sm"}} rounded="full"
+                shadow: "sm"}} rounded={Radius2.full}
               surface="primary"
             />
           )}
@@ -241,7 +237,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
 
   return (
     <Frame
-      override={{py: Space.n8, px: Space.n12, cursor: "pointer"}} rounded="md"
+      override={{py: Space.n8, px: Space.n12, cursor: "pointer"}} rounded={Radius2.md}
       layout={Layout.Row.Item.Default}
       align="center"
       justify="between"

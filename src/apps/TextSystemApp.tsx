@@ -6,11 +6,8 @@ import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
 import { Text } from "../design-system/text/Text";
-import {
-  IconSize,
-  Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
+import { IconSize, Size, Space } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 /* 
   Text System Showcase
@@ -39,7 +36,7 @@ export function TextSystemApp() {
             zIndex: 100,
           }}
           override={{shadow: "lg",
-            p: Space.n4}} rounded="full"
+            p: Space.n4}} rounded={Radius2.full}
           layout={Layout.Row.Actions.Center}
         >
           <ExperienceButton
@@ -86,7 +83,7 @@ export function TextSystemApp() {
                 border: "1px solid var(--border-color)",
                 boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
               }}
-              override={{p: Space.n16}} rounded="3xl"
+              override={{p: Space.n16}} rounded={Radius2["3xl"]}
               surface="sunken"
             >
               <Icon
@@ -142,7 +139,7 @@ export function TextSystemApp() {
                       px: Space.n24,
                       shadow: "sm",
                       gap: Space.n4,
-                      w: Size.n160}} rounded="xl"
+                      w: Size.n160}} rounded={Radius2.xl}
                     surface="raised"
                   >
                     <Text.Card.Note
@@ -212,7 +209,7 @@ export function TextSystemApp() {
         <ShowcaseSection
           title="Context: Card"
           description="Compact, summarized information blocks."
-          code={`<Frame override={{ p: Space.n24}} rounded="xl" surface="raised"   border>
+          code={`<Frame override={{ p: Space.n24}} rounded={Radius2.xl} surface="raised"   border>
   <Text.Card.Title>Project Alpha</Text.Card.Title>
   <Text.Card.Desc>
     High-priority infrastructure migration.
@@ -229,13 +226,13 @@ export function TextSystemApp() {
               override={{p: Space.n24,
                 gap: Space.n12,
                 w: Size.n320,
-                shadow: "sm"}} rounded="xl"
+                shadow: "sm"}} rounded={Radius2.xl}
               style={{ border: "1px solid var(--border-color)" }}
               surface="raised"
             >
               <Frame
                 override={{w: Size.n40,
-                  h: Size.n40}} rounded="lg"
+                  h: Size.n40}} rounded={Radius2.lg}
                 style={{ marginBottom: "var(--space-2)" }}
                 surface="sunken"
                 pack
@@ -265,13 +262,13 @@ export function TextSystemApp() {
               override={{p: Space.n24,
                 gap: Space.n12,
                 w: Size.n320,
-                shadow: "sm"}} rounded="xl"
+                shadow: "sm"}} rounded={Radius2.xl}
               style={{ border: "1px solid var(--border-color)" }}
               surface="raised"
             >
               <Frame
                 override={{w: Size.n40,
-                  h: Size.n40}} rounded="lg"
+                  h: Size.n40}} rounded={Radius2.lg}
                 style={{ marginBottom: "var(--space-2)" }}
                 surface="sunken"
                 pack
@@ -309,7 +306,7 @@ export function TextSystemApp() {
           <Frame
             style={{ width: "400px", border: "1px solid var(--border-color)" }}
             override={{p: Space.n32,
-              gap: Space.n24}} rounded="2xl"
+              gap: Space.n24}} rounded={Radius2["2xl"]}
             surface="raised"
           >
             <Text.Prose.Title style={{ fontSize: "var(--prose-h3-size)" }}>
@@ -325,7 +322,7 @@ export function TextSystemApp() {
                     paddingRight: "var(--space-3)",
                     border: "1px solid var(--border-color)",
                   }}
-                  override={{h: Size.n32}} rounded="md"
+                  override={{h: Size.n32}} rounded={Radius2.md}
                   surface="sunken"
                   align="center"
                 >
@@ -343,7 +340,7 @@ export function TextSystemApp() {
                     paddingRight: "var(--space-3)",
                     border: "1px solid var(--border-color)",
                   }}
-                  override={{h: Size.n32}} rounded="md"
+                  override={{h: Size.n32}} rounded={Radius2.md}
                   surface="sunken"
                   align="center"
                 >
@@ -361,7 +358,7 @@ export function TextSystemApp() {
                 <Frame
                   style={{ border: "1px solid var(--border-color)" }}
                   override={{h: Size.n80,
-                    p: Space.n12}} rounded="md"
+                    p: Space.n12}} rounded={Radius2.md}
                   surface="sunken"
                 >
                   <Text.Field.Value style={{ opacity: 0.5 }}>
@@ -403,7 +400,7 @@ export function TextSystemApp() {
             }}
             override={{
               w: Size.full,
-            }} rounded="xl"
+            }} rounded={Radius2.xl}
             surface="raised"
             clip
           >
@@ -493,7 +490,7 @@ export function TextSystemApp() {
                           : "var(--text-muted)",
                     }}
                     override={{py: Space.n2,
-                      px: Space.n8}} rounded="full"
+                      px: Space.n8}} rounded={Radius2.full}
                     surface={user.status === "Active" ? "sunken" : undefined}
                   >
                     {user.status}
@@ -560,7 +557,7 @@ export function TextSystemApp() {
               override={{w: Size.n224,
                 p: Space.n4,
                 gap: Space.n4,
-                shadow: "lg"}} rounded="xl"
+                shadow: "lg"}} rounded={Radius2.xl}
               surface="raised"
             >
               <MenuItem>View Details</MenuItem>
@@ -590,7 +587,7 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
     <Frame
       override={{py: Space.n8,
         px: Space.n16,
-        gap: Space.n8}} rounded="full"
+        gap: Space.n8}} rounded={Radius2.full}
       style={{
         color: active ? "var(--primary-fg)" : "var(--text-secondary)",
         cursor: "pointer",
@@ -639,7 +636,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
             lineHeight: "1.6",
           }}
           scroll="x"
-          override={{p: Space.n24}} rounded="xl"
+          override={{p: Space.n24}} rounded={Radius2.xl}
           surface="base"
         >
           <pre style={{ margin: 0 }}>{code}</pre>
@@ -667,7 +664,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
 function MenuItem({ children, active, style, ...props }: any) {
   return (
     <Frame
-      override={{ py: Space.n8, px: Space.n12}} rounded="lg"
+      override={{ py: Space.n8, px: Space.n12}} rounded={Radius2.lg}
       surface={active ? "selected" : "hover"}
       cursor="pointer"
       {...props}

@@ -24,6 +24,7 @@ import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
 import { IconSize, Opacity, Space } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Data ---
 
@@ -117,7 +118,7 @@ export function PropertiesPanel() {
     setTransform((prev) => ({ ...prev, [key]: value }));
 
   return (
-    <Section style={{ width: "260px" }} surface="base" rounded="lg" shadow="sm">
+    <Section style={{ width: "260px" }} surface="base" rounded={Radius2.lg} shadow="sm">
       {/* Tabs */}
       <Frame
         override={{
@@ -169,7 +170,7 @@ export function PropertiesPanel() {
         {/* Alignment */}
         <Frame
           override={{
-          }} rounded="md"
+          }} rounded={Radius2.md}
           style={{
             border: "1px solid var(--border-color)",
             padding: "1px",
@@ -188,7 +189,7 @@ export function PropertiesPanel() {
                 icon={tool.icon}
                 iconSize={IconSize.n12}
                 surface={tool.surface}
-                rounded="md"
+                rounded={Radius2.md}
                 size="xs"
                 flex
                 iconRotation={tool.rotation}
@@ -307,7 +308,7 @@ export function PropertiesPanel() {
             </Frame>
             <Frame
               override={{
-              }} rounded="md"
+              }} rounded={Radius2.md}
               style={{
                 border: "1px solid var(--border-color)",
                 padding: "1px",
@@ -330,7 +331,7 @@ export function PropertiesPanel() {
                   icon={Icon}
                   iconSize={IconSize.n12}
                   surface={i === 0 ? "selected" : undefined}
-                  rounded="md"
+                  rounded={Radius2.md}
                   size="xs"
                   flex
                 />
@@ -345,7 +346,7 @@ export function PropertiesPanel() {
             icon={
               <Frame
                 override={{
-                }} rounded="full"
+                }} rounded={Radius2.full}
                 style={{
                   width: "10px",
                   height: "10px",
@@ -367,7 +368,7 @@ export function PropertiesPanel() {
               icon={
                 <Frame
                   override={{
-                  }} rounded="full"
+                  }} rounded={Radius2.full}
                   style={{
                     width: "10px",
                     height: "10px",
@@ -411,7 +412,7 @@ export function PropertiesPanel() {
               <Action
                 icon={Settings}
                 iconSize={IconSize.n10}
-                rounded="md"
+                rounded={Radius2.md}
                 style={{ height: "24px" }}
               />
             </Frame>

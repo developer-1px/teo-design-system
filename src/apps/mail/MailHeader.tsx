@@ -6,6 +6,7 @@ import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text.tsx";
 import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { searchQueryAtom } from "./store";
 
 export function MailHeader() {
@@ -28,7 +29,7 @@ export function MailHeader() {
 
       {/* Center: Search */}
       <Frame
-        override={{w: Size.n448, py: Space.n6, px: Space.n12, gap: Space.n8}} rounded="md"
+        override={{w: Size.n448, py: Space.n6, px: Space.n12, gap: Space.n8}} rounded={Radius2.md}
         surface="sunken"
         layout={Layout.Row.Toolbar.Compact}
         align="center"

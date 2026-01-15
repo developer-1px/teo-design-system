@@ -13,6 +13,7 @@
  */
 
 import {FontSize, IconSize, Radius, Size, Space} from "./token.const.1tier"
+import type {Brand} from "./lib/brand"
 
 // ---------------------------------
 // Action Size
@@ -71,15 +72,15 @@ export const Radius2Scale = [
 ] as const;
 export type Radius2Scale = (typeof Radius2Scale)[number];
 export type Radius2Key = Radius2Scale;
-export type Radius2Token = Radius2Key;
+export type Radius2Token = Brand<string, "Radius2">;
 
 export const Radius2 = {
-  none: Radius.n0,
-  sm: Radius.n4,
-  md: Radius.n6,
-  lg: Radius.n12,
-  xl: Radius.n16,
-  "2xl": Radius.n20,
-  "3xl": Radius.n24,
-  full: Radius.n9999,
+  none: Radius.n0 as unknown as Radius2Token,
+  sm: Radius.n4 as unknown as Radius2Token,
+  md: Radius.n6 as unknown as Radius2Token,
+  lg: Radius.n12 as unknown as Radius2Token,
+  xl: Radius.n16 as unknown as Radius2Token,
+  "2xl": Radius.n20 as unknown as Radius2Token,
+  "3xl": Radius.n24 as unknown as Radius2Token,
+  full: Radius.n9999 as unknown as Radius2Token,
 } as const;

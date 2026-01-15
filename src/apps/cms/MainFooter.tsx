@@ -3,12 +3,8 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function MainFooter() {
   return (
@@ -38,7 +34,7 @@ export function MainFooter() {
               align="center"
             >
               <Frame
-                override={{ w: Size.n40, h: Size.n40}} rounded="xl"
+                override={{ w: Size.n40, h: Size.n40}} rounded={Radius2.xl}
                 surface="primary"
                 pack
               >

@@ -1,6 +1,7 @@
 import type React from "react";
 import { Action } from "../../design-system/Action";
 import { Text } from "../../design-system/text/Text.tsx";
+import { Radius2 } from "../../design-system/token";
 
 interface TableHeadProps {
   children: React.ReactNode;
@@ -19,7 +20,7 @@ export function TableHead({
     return (
       <Action
         variant="ghost"
-        rounded="none"
+        rounded={Radius2.none}
         onClick={onSort}
         w="100%"
         justify="start"

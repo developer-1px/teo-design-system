@@ -4,6 +4,7 @@ import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../../design-system/Icon";
 import { Text } from "../../../design-system/text/Text.tsx";
 import { FontSize, IconSize, Size } from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 export function DrawerActivity() {
   return (
@@ -30,7 +31,7 @@ function ActivityItem({
   return (
     <Frame layout={Layout.Row.Item.Default}>
       <Frame
-        override={{ w: Size.n24, h: Size.n24}} rounded="full"
+        override={{ w: Size.n24, h: Size.n24}} rounded={Radius2.full}
         surface="raised"
         pack
       >

@@ -2,6 +2,7 @@ import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 const TABS = [
   "Overview",
@@ -52,7 +53,7 @@ export function ScrollTabSection() {
             key={tab}
             label={tab}
             variant={i === 0 ? "primary" : "ghost"}
-            rounded="full"
+            rounded={Radius2.full}
             h="action"
           />
         ))}

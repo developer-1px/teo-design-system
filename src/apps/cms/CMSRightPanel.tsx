@@ -4,6 +4,7 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../../design-system/text/Text";
 import { FontSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function CMSRightPanel({ onClose }: { onClose: () => void }) {
     return (
@@ -31,7 +32,7 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
                     icon={X}
                     variant="ghost"
                     size="sm"
-                    rounded="full"
+                    rounded={Radius2.full}
                     onClick={onClose}
                 />
             </Frame>
@@ -40,21 +41,21 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
                 {/* Placeholder Content */}
                 <Frame override={{ gap: Space.n4 }}>
                     <Text.Card.Note>Title</Text.Card.Note>
-                    <Frame override={{h: Size.n32, p: Space.n8}} rounded="md" style={{ background: "var(--surface-base)" }}>
+                    <Frame override={{h: Size.n32, p: Space.n8}} rounded={Radius2.md} style={{ background: "var(--surface-base)" }}>
                         <Text.Prose.Body>Marketing Home</Text.Prose.Body>
                     </Frame>
                 </Frame>
 
                 <Frame override={{ gap: Space.n4 }}>
                     <Text.Card.Note>Slug</Text.Card.Note>
-                    <Frame override={{h: Size.n32, p: Space.n8}} rounded="md" style={{ background: "var(--surface-base)" }}>
+                    <Frame override={{h: Size.n32, p: Space.n8}} rounded={Radius2.md} style={{ background: "var(--surface-base)" }}>
                         <Text.Prose.Body>/</Text.Prose.Body>
                     </Frame>
                 </Frame>
 
                 <Frame override={{ gap: Space.n4 }}>
                     <Text.Card.Note>Description</Text.Card.Note>
-                    <Frame override={{h: Size.n64, p: Space.n8}} rounded="md" style={{ background: "var(--surface-base)" }}>
+                    <Frame override={{h: Size.n64, p: Space.n8}} rounded={Radius2.md} style={{ background: "var(--surface-base)" }}>
                         <Text.Prose.Body>Main landing page...</Text.Prose.Body>
                     </Frame>
                 </Frame>

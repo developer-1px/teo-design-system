@@ -13,7 +13,7 @@ import {
   Space,
   type SpaceToken,
 } from "./token/token.const.1tier";
-import { ActionSize, type ActionSizeToken, type Radius2Token } from "./token/token.const.2tier";
+import { ActionSize, type ActionSizeToken, Radius2, type Radius2Token } from "./token/token.const.2tier";
 
 interface ActionProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
@@ -66,7 +66,7 @@ export function Action({
   icon,
   label,
   variant,
-  rounded = "md",
+  rounded = Radius2.md,
   p,
   gap,
   border,

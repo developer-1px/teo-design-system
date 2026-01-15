@@ -4,13 +4,8 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Opacity,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import { FontSize, IconSize, Opacity, Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function ImageFooterBanner() {
   return (
@@ -25,7 +20,7 @@ export function ImageFooterBanner() {
     >
       <Frame
         override={{w: Size.full,
-          h: Size.n128}} rounded="3xl"
+          h: Size.n128}} rounded={Radius2["3xl"]}
         style={{
           position: "relative",
           background: "linear-gradient(225deg, #1a1a1a, #000)",
@@ -92,7 +87,7 @@ export function ImageFooterBanner() {
               glow
               h={Size.n56}
               px={Space.n32}
-              rounded="full"
+              rounded={Radius2.full}
             />
             <Action
               label="Browse Templates"
@@ -100,7 +95,7 @@ export function ImageFooterBanner() {
               size="lg"
               h={Size.n56}
               px={Space.n32}
-              rounded="full"
+              rounded={Radius2.full}
             />
           </Frame>
         </Frame>

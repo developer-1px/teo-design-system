@@ -2,6 +2,7 @@ import type React from "react";
 import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 interface TableRowProps {
   children: React.ReactNode;
@@ -22,7 +23,7 @@ export function TableRow({
     return (
       <Action
         variant={selected ? "surface" : "ghost"}
-        rounded="none"
+        rounded={Radius2.none}
         onClick={onClick}
         w="100%"
       >

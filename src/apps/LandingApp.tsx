@@ -16,11 +16,8 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
 import { Text } from "../design-system/text/Text";
 import { TeoLogo } from "../design-system/TeoLogo";
-import {
-  IconSize,
-  Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
+import { IconSize, Size, Space } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LandingApp() {
   return (
@@ -61,7 +58,7 @@ export function LandingApp() {
             override={{py: Space.n4,
               px: Space.n12,
               gap: Space.n8,
-              cursor: "pointer"}} rounded="full"
+              cursor: "pointer"}} rounded={Radius2.full}
             surface="sunken"
             layout={Layout.Row.Item.Tight}
             align="center"
@@ -109,7 +106,7 @@ export function LandingApp() {
             {/* Main CTA */}
             <Action
               variant="primary"
-              rounded="full"
+              rounded={Radius2.full}
               py={Space.n12}
               px={Space.n20}
               gap={Space.n8}
@@ -127,7 +124,7 @@ export function LandingApp() {
             {/* Secondary CTA */}
             <Action
               variant="surface"
-              rounded="full"
+              rounded={Radius2.full}
               py={Space.n12}
               px={Space.n20}
               gap={Space.n8}
@@ -295,7 +292,7 @@ function FeatureCard({
     <Frame
       style={{ border: "1px solid var(--border-color)" }}
       override={{p: Space.n24,
-        gap: Space.n16}} rounded="2xl"
+        gap: Space.n16}} rounded={Radius2["2xl"]}
       surface="sunken"
     >
       <Frame
@@ -303,7 +300,7 @@ function FeatureCard({
         override={{w: Size.n40,
           h: Size.n40,
           p: Space.n8,
-          shadow: "sm"}} rounded="xl"
+          shadow: "sm"}} rounded={Radius2.xl}
         surface="base"
         pack
       >
