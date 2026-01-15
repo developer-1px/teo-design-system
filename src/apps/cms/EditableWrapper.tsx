@@ -27,9 +27,9 @@ export function EditableWrapper({
       style={{
         position: "relative",
         outline: isHovered
-          ? "var(--size-n2) solid var(--primary-bg)"
-          : "var(--size-n2) solid transparent",
-        outlineOffset: "var(--size-n2)",
+          ? "var(--space-n2) solid var(--primary-bg)"
+          : "var(--space-n2) solid transparent",
+        outlineOffset: "var(--space-n2)",
         ...style,
       }}
       onMouseEnter={() => setIsHovered(true)}

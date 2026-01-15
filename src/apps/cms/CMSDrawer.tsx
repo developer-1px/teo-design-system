@@ -10,21 +10,6 @@ import { Radius2 } from "../../design-system/token/token.const.2tier";
 export function CMSDrawer({ onClose }: { onClose: () => void }) {
   return (
     <>
-      {/* Backdrop */}
-      <Overlay
-        position="fixed"
-        x="0"
-        y="0"
-        zIndex={300}
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
-          backdropFilter: "blur(2px)",
-        }}
-        onClick={onClose}
-      />
-
       {/* Drawer */}
       <Overlay
         position="fixed"
@@ -38,7 +23,7 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
       >
         <Frame
           override={{
-            w: Size.n320,
+            w: Size.n512,
             h: Size.screen,
             shadow: "2xl",
           }}
@@ -50,8 +35,8 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
           {/* Header */}
           <Frame
             override={{
-              py: Space.n12,
-              px: Space.n16,
+              py: Space.n16,
+              px: Space.n24,
               justify: "between",
             }}
             layout={Layout.Row.Header.Default}
@@ -59,14 +44,14 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
               borderBottom: "1px solid var(--border-color)",
             }}
           >
-            <Text size={FontSize.n16} weight="bold">
+            <Text size={FontSize.n20} weight="bold">
               Options
             </Text>
             <Action
               icon={X}
               variant="ghost"
-              size="xs"
-              iconSize={IconSize.n16}
+              size="sm"
+              iconSize={IconSize.n20}
               onClick={onClose}
             />
           </Frame>
@@ -74,12 +59,12 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
           {/* Content */}
           <Frame
             override={{
-              p: Space.n16,
-              gap: Space.n16,
+              p: Space.n24,
+              gap: Space.n24,
             }}
             scroll
           >
-            <Text size={FontSize.n14}>Drawer content goes here</Text>
+            <Text size={FontSize.n16}>Drawer content goes here</Text>
           </Frame>
         </Frame>
       </Overlay>

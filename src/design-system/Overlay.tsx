@@ -10,6 +10,8 @@ export interface OverlayProps {
   position?: "absolute" | "fixed";
   x?: number | string | SpaceToken;
   y?: number | string | SpaceToken;
+  top?: number | string | SpaceToken;
+  left?: number | string | SpaceToken;
   right?: number | string | SpaceToken;
   bottom?: number | string | SpaceToken;
   zIndex?: number | ZIndexToken;
@@ -31,6 +33,8 @@ export function Overlay({
   position = "absolute",
   x,
   y,
+  top,
+  left,
   right,
   bottom,
   zIndex = 100, // Default high z-index
@@ -79,8 +83,8 @@ export function Overlay({
   const style: React.CSSProperties = {
     position,
     zIndex: zIndex,
-    top: y,
-    left: x,
+    top: top ?? y,
+    left: left ?? x,
     right: right,
     bottom: bottom,
     // If not blocking interaction, let clicks pass through the container (if we had a full screen container)

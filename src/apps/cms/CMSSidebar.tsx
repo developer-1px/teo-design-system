@@ -2,9 +2,9 @@ import {
   ChevronRight,
   FileText,
   Grid2X2,
-  Layout as LayoutIcon,
   List,
   Menu,
+  PanelLeft,
   Plus,
   Settings,
 } from "lucide-react";
@@ -43,37 +43,27 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         whiteSpace: "nowrap",
         transformOrigin: "top left",
         transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        position: "relative",
       }}
       surface="sunken"
     >
-      {/* Header with Toggle */}
+      {/* Toggle Button - Top Right */}
       <Frame
-        layout={Layout.Row.Header.Default}
         override={{
-          gap: Space.n12,
           py: Space.n0,
           px: Space.n4,
-          align: "center",
+          justify: "end",
         }}
+        layout={Layout.Row.Header.Default}
       >
         <Action
-          icon={isOpen ? LayoutIcon : Menu}
+          icon={PanelLeft}
           variant="ghost"
           size="sm"
           rounded={Radius2.md}
           onClick={onToggle}
           tooltip={isOpen ? "Collapse" : "Expand"}
         />
-
-        <Frame
-          style={{
-            opacity: isOpen ? 1 : 0,
-            transition: "opacity 0.2s",
-            pointerEvents: isOpen ? "auto" : "none",
-          }}
-          layout={Layout.Row.Actions.Default}
-          override={{ gap: Space.n8, align: "center" }}
-        ></Frame>
       </Frame>
 
       {/* Content - Hidden when closed */}

@@ -60,6 +60,7 @@ button {
   background: none;
   padding: 0;
   cursor: pointer;
+  outline: none;
 }
 
 /* Action Component Styles (Token Driven) */

@@ -32,10 +32,6 @@
   --link-color: #818cf8;
   --link-hover-color: #a5b4fc;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-
   /* Semantic Controls - Dark Mode */
   --control-bg-default: var(--surface-sunken);
   --control-bg-hover: var(--surface-raised);
