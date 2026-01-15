@@ -1,37 +1,55 @@
 import { Check, MessageSquare, Zap } from "lucide-react";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
-import { Frame } from "../../design-system/Frame";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 
 export function BodyContentSection() {
   return (
     <Frame
-      w="100%"
-      p="24 6"
-      surface="sunken"
+      override={{
+        w: Size.full,
+        py: Space.n96,
+        px: Space.n24,
+      }}
       style={{ borderBottom: "1px solid var(--border-color)" }}
+      surface="sunken"
     >
       <Frame
-        row
-        gap={6}
+        override={{
+          gap: Space.n48,
+          w: Size.full,
+        }}
+        style={{ maxWidth: "var(--container-n1280)", margin: "0 auto" }}
+        layout={Layout.Row.Item.Default}
         align="center"
-        w="100%"
-        maxWidth={1280}
-        style={{ margin: "0 auto" }}
       >
-        <Frame w="50%" gap={2}>
-          <Frame gap={1}>
-            <Text.Card.Note style={{ fontSize: 14, fontWeight: "bold", color: "var(--text-primary)" }}>
+        <Frame override={{ gap: Space.n24 }} style={{ width: "50%" }}>
+          <Frame override={{ gap: Space.n8 }}>
+            <Text.Card.Note
+              size={FontSize.n14}
+              weight="bold"
+              style={{ color: "var(--text-primary)" }}
+            >
               THE PROCESS
             </Text.Card.Note>
             <Text.Prose.Title variant="lg">
               Unleash your <br /> internal creative.
             </Text.Prose.Title>
           </Frame>
+
           <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
             Workflow shouldn't be a bottleneck. Our platform allows developers
             to focus on logic while designers handle the visuals.
           </Text.Prose.Body>
-          <Frame gap={1}>
+
+          <Frame override={{ gap: Space.n12 }}>
             <CheckItem
               title="Pure Token-based design"
               desc="Align with your existing CSS/Tailwind system effortlessly."
@@ -46,48 +64,96 @@ export function BodyContentSection() {
             />
           </Frame>
         </Frame>
+
         <Frame flex pack>
           <Frame
-            w={100}
-            h={125}
-            surface="raised"
-            rounded="3xl"
-            shadow="2xl"
+            override={{
+              w: Size.n160,
+              h: Size.n208,
+              rounded: "3xl",
+              shadow: "2xl",
+            }}
             style={{ position: "relative" }}
+            surface="raised"
           >
+            {/* Floating Card 1 */}
             <Frame
-              style={{ position: "absolute", top: "40px", left: "-40px" }}
-              w={45}
-              h={45}
+              override={{
+                w: Size.n64,
+                h: Size.n64,
+                rounded: "2xl",
+                shadow: "lg",
+                p: Space.n24,
+                gap: Space.n16,
+              }}
+              style={{
+                position: "absolute",
+                top: "var(--space-n40)",
+                left: "calc(-1 * var(--space-n40))",
+              }}
               surface="raised"
-              rounded="2xl"
-              shadow="lg"
-              p={6}
-              gap={4}
             >
-              <Zap size={32} color="var(--color-warning)" />
-              <Frame gap={2}>
-                <Frame h={10} w="100%" surface="overlay" rounded="full" />
-                <Frame h={10} w="60%" surface="overlay" rounded="full" />
+              <Icon
+                src={Zap}
+                size={IconSize.n32}
+                style={{ color: "var(--color-warning)" }}
+              />
+              <Frame override={{ gap: Space.n8 }}>
+                <Frame
+                  override={{ h: Size.n12, w: Size.full, rounded: "full" }}
+                  surface="overlay"
+                />
+                <Frame
+                  override={{ h: Size.n12, rounded: "full" }}
+                  style={{ width: "60%" }}
+                  surface="overlay"
+                />
               </Frame>
             </Frame>
+
+            {/* Floating Card 2 */}
             <Frame
-              style={{ position: "absolute", bottom: "40px", right: "-40px" }}
-              w={55}
-              h={55}
+              override={{
+                w: Size.n80,
+                h: Size.n80,
+                rounded: "2xl",
+                shadow: "lg",
+                p: Space.n24,
+                gap: Space.n16,
+              }}
+              style={{
+                position: "absolute",
+                bottom: "var(--space-n40)",
+                right: "calc(-1 * var(--space-n40))",
+              }}
               surface="raised"
-              rounded="2xl"
-              shadow="lg"
-              p={6}
-              gap={4}
             >
-              <MessageSquare size={32} color="var(--color-primary)" />
-              <Frame gap={2}>
-                <Frame row gap={0.5} align="center">
-                  <Frame w={6} h={6} rounded="full" surface="overlay" />
-                  <Frame h={2} w={25} surface="overlay" rounded="full" />
+              <Icon
+                src={MessageSquare}
+                size={IconSize.n32}
+                style={{ color: "var(--color-primary)" }}
+              />
+              <Frame override={{ gap: Space.n12 }}>
+                <Frame
+                  override={{ gap: Space.n4 }}
+                  layout={Layout.Row.Item.Compact}
+                  align="center"
+                >
+                  <Frame
+                    override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
+                    surface="overlay"
+                  />
+                  <Frame
+                    override={{ w: Size.n24, rounded: "full" }}
+                    style={{ height: "var(--space-n4)" }}
+                    surface="overlay"
+                  />
                 </Frame>
-                <Frame h={2} w="100%" surface="raised" rounded="full" />
+                <Frame
+                  override={{ w: Size.full, rounded: "full" }}
+                  style={{ height: "var(--space-n4)" }}
+                  surface="raised"
+                />
               </Frame>
             </Frame>
           </Frame>
@@ -104,22 +170,27 @@ interface CheckItemProps {
 
 function CheckItem({ title, desc }: CheckItemProps) {
   return (
-    <Frame row gap={1} align="start">
+    <Frame
+      override={{ gap: Space.n12 }}
+      layout={Layout.Row.Item.Default}
+      align="start"
+    >
       <Frame
-        w={6}
-        h={6}
-        rounded="full"
+        override={{ w: Size.n20, h: Size.n20, rounded: "full" }}
+        style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
         pack
-        style={{ marginTop: 2 }}
       >
-        <Check size={14} color="#fff" />
+        <Icon src={Check} size={IconSize.n12} style={{ color: "white" }} />
       </Frame>
-      <Frame gap={1}>
-        <Text.Card.Title style={{ fontSize: 16, fontWeight: "bold" }}>
+      <Frame override={{ gap: Space.n4 }}>
+        <Text.Card.Title size={FontSize.n16} weight="bold">
           {title}
         </Text.Card.Title>
-        <Text.Card.Desc style={{ fontSize: 14, color: "var(--text-secondary)", opacity: 0.7 }}>
+        <Text.Card.Desc
+          size={FontSize.n14}
+          style={{ color: "var(--text-secondary)", opacity: 0.7 }}
+        >
           {desc}
         </Text.Card.Desc>
       </Frame>

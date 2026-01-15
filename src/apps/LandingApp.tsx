@@ -1,28 +1,50 @@
-import { ArrowRight, Component, Layers, Zap, Type, PanelTop, LayoutTemplate, PenTool, MousePointerClick } from "lucide-react";
+import {
+  ArrowRight,
+  Component,
+  Layers,
+  LayoutTemplate,
+  MousePointerClick,
+  PanelTop,
+  PenTool,
+  Type,
+  Zap,
+} from "lucide-react";
 import { Action } from "../design-system/Action";
 import { Experience } from "../design-system/Experience";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../design-system/Icon";
 import { Text } from "../design-system/text/Text";
+import { TeoLogo } from "../design-system/TeoLogo";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 
 export function LandingApp() {
   return (
     <Experience value="landing">
-      <Frame fill surface="base" overflow="auto" p={0}>
+      <Frame override={{ p: Space.n0 }} fill surface="base" scroll>
         {/* Navigation */}
         <Frame
-          row
-          justify="between"
-          align="center"
-          p="5 6"
           style={{
             position: "sticky",
             top: 0,
             zIndex: 100,
             borderBottom: "1px solid var(--border-subtle)",
           }}
+          override={{
+            py: Space.n20,
+            px: Space.n24,
+          }}
+          layout={Layout.Row.Header.Sticky}
         >
-          <Text.Prose.Title variant="sm">TMDK</Text.Prose.Title>
-          <Frame row gap={2}>
+          <TeoLogo height={24} />
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Actions.Default}
+          >
             <Action label="Documentation" variant="ghost" />
             <Action label="Components" variant="ghost" />
             <Action label="Download" variant="primary" />
@@ -30,24 +52,39 @@ export function LandingApp() {
         </Frame>
 
         {/* Hero Section */}
-        <Frame p="30 6" align="center" gap={6}>
+        <Frame
+          override={{ py: Space.n128, px: Space.n24, gap: Space.n24 }}
+          align="center"
+        >
           <Frame
-            p="1 3"
-            surface="sunken"
-            rounded="full"
             style={{ border: "1px solid var(--border-color)" }}
-            row
-            gap={2}
+            override={{
+              py: Space.n4,
+              px: Space.n12,
+              rounded: "full",
+              gap: Space.n8,
+            }}
+            surface="sunken"
+            layout={Layout.Row.Item.Tight}
             align="center"
             cursor="pointer"
           >
-            <Zap size={12} fill="currentColor" color="var(--text-tertiary)" />
-            <Text.Card.Note style={{ fontWeight: 600, color: "var(--text-secondary)" }}>
+            <Icon
+              src={Zap}
+              size={IconSize.n12}
+              style={{ fill: "currentColor", color: "var(--text-tertiary)" }}
+            />
+            <Text.Card.Note
+              style={{ fontWeight: 600, color: "var(--text-secondary)" }}
+            >
               New: Layout Engine v2.0
             </Text.Card.Note>
           </Frame>
 
-          <Text.Prose.Title variant="xl" style={{ maxWidth: 800, textAlign: "center" }}>
+          <Text.Prose.Title
+            variant="xl"
+            style={{ maxWidth: 800, textAlign: "center" }}
+          >
             Build faster with the Teo's Minimal Design Kit
           </Text.Prose.Title>
 
@@ -56,29 +93,63 @@ export function LandingApp() {
               maxWidth: 600,
               fontSize: "1.125rem",
               textAlign: "center",
-              color: "var(--text-secondary)"
+              color: "var(--text-secondary)",
             }}
           >
             A collection of high-quality, accessible, and performant React
             components crafted for modern web applications.
           </Text.Prose.Body>
 
-          <Frame row gap={3} p="8 0 0 0" justify="center">
+          <Frame
+            override={{
+              gap: Space.n12,
+              pt: Space.n32,
+              px: Space.n0,
+              pb: Space.n0,
+            }}
+            layout={Layout.Row.Actions.Center}
+          >
             {/* Main CTA */}
-            <Action variant="primary" rounded="full" p="3 5" gap={2}>
-              <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>Get Started</Text.Menu.Item>
-              <ArrowRight size={16} color="white" />
+            <Action
+              variant="primary"
+              rounded="full"
+              py={Space.n12}
+              px={Space.n20}
+              gap={Space.n8}
+            >
+              <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>
+                Get Started
+              </Text.Menu.Item>
+              <Icon
+                src={ArrowRight}
+                size={IconSize.n16}
+                style={{ color: "white" }}
+              />
             </Action>
 
             {/* Secondary CTA */}
-            <Action variant="surface" rounded="full" p="3 5" gap={2} border>
-              <Text.Menu.Item style={{ color: "var(--text-secondary)", fontWeight: 600 }}>View Components</Text.Menu.Item>
+            <Action
+              variant="surface"
+              rounded="full"
+              py={Space.n12}
+              px={Space.n20}
+              gap={Space.n8}
+              border
+            >
+              <Text.Menu.Item
+                style={{ color: "var(--text-secondary)", fontWeight: 600 }}
+              >
+                View Components
+              </Text.Menu.Item>
             </Action>
           </Frame>
         </Frame>
 
         {/* Why Section */}
-        <Frame align="center" gap={6} p="24 6">
+        <Frame
+          override={{ gap: Space.n24, py: Space.n96, px: Space.n24 }}
+          align="center"
+        >
           <Text.Prose.Title variant="lg" style={{ textAlign: "center" }}>
             왜 만들었는가?
           </Text.Prose.Title>
@@ -87,7 +158,7 @@ export function LandingApp() {
               maxWidth: 800,
               fontSize: "1.25rem",
               textAlign: "center",
-              color: "var(--text-secondary)"
+              color: "var(--text-secondary)",
             }}
           >
             프론트엔드 디자인은 결국 '수렴진화'하고 있으며, 그 최종 형태는
@@ -106,23 +177,35 @@ export function LandingApp() {
         </Frame>
 
         {/* Features Grid */}
-        <Frame p="24 6" gap={12}>
-          <Frame gap={4} align="center" p="0 0 8 0">
-            <Text.Prose.Title variant="lg">Everything you need</Text.Prose.Title>
+        <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n48 }}>
+          <Frame
+            override={{
+              gap: Space.n16,
+              pb: Space.n32,
+              pt: Space.n0,
+              px: Space.n0,
+            }}
+            align="center"
+          >
+            <Text.Prose.Title variant="lg">
+              Everything you need
+            </Text.Prose.Title>
             <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
               Comprehensive primitives for any layout.
             </Text.Prose.Body>
           </Frame>
 
           <Frame
-            grid
-            gap={4}
             style={{
               gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
               maxWidth: 1200,
               margin: "0 auto",
-              width: "100%"
+              width: "100%",
             }}
+            override={{
+              gap: Space.n16,
+            }}
+            grid
           >
             <FeatureCard
               icon={Type}
@@ -168,16 +251,32 @@ export function LandingApp() {
         </Frame>
 
         {/* Footer */}
-        <Frame p="24 6" gap={4}>
-          <Frame h="1px" surface="sunken" w="100%" />
-          <Frame row justify="between" p="8 0 0 0" align="center">
+        <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n16 }}>
+          <Frame
+            style={{ height: "1px" }}
+            override={{ w: Size.full }}
+            surface="sunken"
+          />
+          <Frame
+            override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
+            layout={Layout.Row.Header.Default}
+          >
             <Text.Card.Note>
               © 2026 Minimal Design Kit. All rights reserved.
             </Text.Card.Note>
-            <Frame row gap={4}>
-              <Text.Card.Note style={{ cursor: "pointer" }}>Twitter</Text.Card.Note>
-              <Text.Card.Note style={{ cursor: "pointer" }}>GitHub</Text.Card.Note>
-              <Text.Card.Note style={{ cursor: "pointer" }}>Discord</Text.Card.Note>
+            <Frame
+              override={{ gap: Space.n16 }}
+              layout={Layout.Row.Actions.Default}
+            >
+              <Text.Card.Note style={{ cursor: "pointer" }}>
+                Twitter
+              </Text.Card.Note>
+              <Text.Card.Note style={{ cursor: "pointer" }}>
+                GitHub
+              </Text.Card.Note>
+              <Text.Card.Note style={{ cursor: "pointer" }}>
+                Discord
+              </Text.Card.Note>
             </Frame>
           </Frame>
         </Frame>
@@ -187,20 +286,43 @@ export function LandingApp() {
 }
 
 function FeatureCard({
-  icon: Icon,
+  icon: IconSrc,
   title,
   description,
 }: {
-  icon: any;
+  icon: React.ElementType;
   title: string;
   description: string;
 }) {
   return (
-    <Frame p={6} surface="sunken" rounded="2xl" style={{ border: "1px solid var(--border-color)" }} gap={4}>
-      <Frame w={8} h={8} surface="base" rounded="xl" pack style={{ border: "1px solid var(--border-color)" }} shadow="sm">
-        <Icon size={24} color="var(--text-primary)" />
+    <Frame
+      style={{ border: "1px solid var(--border-color)" }}
+      override={{
+        p: Space.n24,
+        rounded: "2xl",
+        gap: Space.n16,
+      }}
+      surface="sunken"
+    >
+      <Frame
+        style={{ border: "1px solid var(--border-color)" }}
+        override={{
+          w: Size.n40,
+          h: Size.n40,
+          p: Space.n8,
+          rounded: "xl",
+          shadow: "sm",
+        }}
+        surface="base"
+        pack
+      >
+        <Icon
+          src={IconSrc}
+          size={IconSize.n24}
+          style={{ color: "var(--text-primary)" }}
+        />
       </Frame>
-      <Frame gap={2}>
+      <Frame override={{ gap: Space.n8 }}>
         <Text.Card.Title>{title}</Text.Card.Title>
         <Text.Card.Desc>{description}</Text.Card.Desc>
       </Frame>

@@ -1,272 +1,364 @@
-
-import { Frame } from "../design-system/Frame";
-
-import { ProseSection, ProseDocument } from "../design-system/ProseOld.tsx";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../design-system/text/Text";
-
-// --- Data Structures (No Hardcoding) ---
-
-const TEXT_CONTEXTS = [
-  {
-    name: "Prose",
-    desc: "Long-form content and document flow",
-    Component: Text.Prose,
-    slots: [
-      { name: "Title", sample: "Prose Title (H1-H4)", desc: "Headings" },
-      { name: "Body", sample: "Prose Body - Optimized for readability in documentation.", desc: "Paragraphs" },
-      { name: "Note", sample: "Prose Note - Asides and annotations.", desc: "Metadata" },
-      { name: "Code", sample: "console.log('Prose Code')", desc: "Inline Code" },
-    ],
-  },
-  {
-    name: "Card",
-    desc: "UI components and summarized content",
-    Component: Text.Card,
-    slots: [
-      { name: "Title", sample: "Card Title", desc: "Component Heading" },
-      { name: "Desc", sample: "Card Description - Short summary text.", desc: "Content" },
-      { name: "Note", sample: "Card Note - 12m ago", desc: "Metadata" },
-      { name: "Code", sample: "git commit", desc: "Technical Data" },
-    ],
-  },
-  {
-    name: "Field",
-    desc: "Form inputs and key-value pairs",
-    Component: Text.Field,
-    slots: [
-      { name: "Label", sample: "Email Address", desc: "Input Label" },
-      { name: "Value", sample: "user@example.com", desc: "Input Display" },
-      { name: "Note", sample: "We'll never share your email.", desc: "Helper Text" },
-    ],
-  },
-  {
-    name: "Table",
-    desc: "Tabular data",
-    Component: Text.Table,
-    slots: [
-      { name: "Head", sample: "COLUMN NAME", desc: "Header Cell" },
-      { name: "Cell", sample: "Table Cell Content", desc: "Body Cell" },
-    ],
-  },
-  {
-    name: "Menu",
-    desc: "Navigation and lists",
-    Component: Text.Menu,
-    slots: [
-      { name: "Group", sample: "SECTION", desc: "Group Label" },
-      { name: "Item", sample: "Menu Item Label", desc: "Action Item" },
-    ],
-  },
-];
-
-const SURFACES = [
-  { id: "base", hex: "#FFFFFF", desc: "Page Background" },
-  { id: "sunken", hex: "#F9F9FB", desc: "Sidebars / Wells" },
-  { id: "raised", hex: "#FFFFFF", desc: "Cards / Sheets" },
-  { id: "overlay", hex: "#FFFFFF", desc: "Dialogs / Menus" },
-  { id: "selected", hex: "#F4F4F5", desc: "Active States" },
-];
-
-const SPACING = [0, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32];
-const RADIUS = ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"];
-const SHADOWS = ["sm", "md", "lg"];
+import {
+  ContainerSize,
+  FontSizeScale,
+  OpacityScale,
+  RadiusScale,
+  Size,
+  SizeScale,
+  Space,
+  SpaceScale,
+  ZIndexScale,
+} from "../design-system/token/token.const.1tier";
 
 // --- Components ---
 
+function ScaleVisualizer({
+  label,
+  value,
+  children,
+}: {
+  label: string;
+  value: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Frame
+      layout={Layout.Row.Item.Default}
+      override={{ w: Size.full, gap: Space.n24 }}
+      align="center"
+    >
+      <Frame override={{ w: Size.n64 }}>
+        <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
+          {label}
+        </Text.Card.Code>
+      </Frame>
+      <Frame flex={1} minWidth={Size.n0}>
+        {children}
+      </Frame>
+      <Frame override={{ w: Size.n64 }} justify="end">
+        <Text.Card.Code style={{ opacity: 0.3 }}>{value}</Text.Card.Code>
+      </Frame>
+    </Frame>
+  );
+}
+
+function SectionHeader({ title, desc }: { title: string; desc: string }) {
+  return (
+    <Frame
+      override={{ gap: Space.n8, w: Size.full, maxWidth: ContainerSize.n800 }}
+      style={{ margin: "0 auto" }}
+    >
+      <Text.Prose.Title variant="md">{title}</Text.Prose.Title>
+      <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
+        {desc}
+      </Text.Prose.Body>
+      <Frame
+        override={{ w: Size.full, h: "1px" as any }}
+        style={{ marginBlock: "var(--space-n16)" }}
+        surface="overlay"
+      />
+    </Frame>
+  );
+}
+
+function TextColumn({
+  children,
+  gap = Space.n32,
+}: {
+  children: React.ReactNode;
+  gap?: any;
+}) {
+  return (
+    <Frame
+      override={{ w: Size.full, maxWidth: ContainerSize.n800, gap: gap as any }}
+      style={{ margin: "0 auto" }}
+    >
+      {children}
+    </Frame>
+  );
+}
+
+function ScrollContainer({
+  children,
+  ...props
+}: React.ComponentProps<typeof Frame>) {
+  return (
+    <Frame
+      scroll="x"
+      override={{ w: Size.full }}
+      style={{
+        paddingBottom: "var(--space-n16)", // Space for scrollbar
+        // Hide scrollbar but allow scroll behavior if desired, or keep it.
+        // Apple often hides it until scroll.
+        // We'll keep standard behavior for accessibility but maybe style it later.
+        // Apple often hides it until scroll.
+        // We'll keep standard behavior for accessibility but maybe style it later.
+        maskImage: "linear-gradient(to right, black 95%, transparent 100%)", // Fade out effect
+        maxWidth: "100%", // Prevent parent blowout
+      }}
+    >
+      <Frame
+        layout={Layout.Row.Item.Default}
+        override={{ gap: Space.n24 }}
+        minWidth={Size.max}
+        {...props}
+      >
+        {children}
+      </Frame>
+    </Frame>
+  );
+}
+
 export function TokensApp() {
   return (
-    <Frame fill surface="base" overflow="auto">
-      <ProseSection p="80 0" layout="full">
-        <ProseDocument maxWidth="1000px" gap={12}>
+    <Frame fill surface="base" scroll={"y"} align="center">
+      <Frame
+        override={{ w: Size.full, maxWidth: ContainerSize.n1024, p: Space.n0 }}
+        layout={Layout.Row.AppContainer.Default}
+      >
+        <Frame
+          override={{
+            gap: Space.n40,
+            py: Space.n40,
+            px: Space.n24,
+            w: Size.full,
+          }}
+          minWidth={Size.n0}
+        >
+          {/* Header & Philosophy - Centered Prose */}
+          <TextColumn gap={Space.n32}>
+            <Frame override={{ gap: Space.n8 }}>
+              <Text.Prose.Title variant="xl">
+                Design System Metrics
+              </Text.Prose.Title>
+              <Text.Prose.Body
+                variant="lg"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                The physics and constraints of our digital universe.
+              </Text.Prose.Body>
+            </Frame>
 
-          {/* Header */}
-          <Frame gap={4}>
-            <Text.Prose.Title>Design Tokens & System</Text.Prose.Title>
-            <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
-              Reference for the Minimal Design Kit token system.
-              Typography is organized by <b>Context</b> rather than size.
-            </Text.Prose.Body>
-          </Frame>
+            {/* Philosophy Cards - Stacked or Grid within Prose Width */}
+            <Frame
+              layout={Layout.Row.Item.Default}
+              override={{ gap: Space.n24, w: Size.full }}
+            >
+              <Frame
+                flex={1}
+                surface="sunken"
+                override={{ p: Space.n32, rounded: "2xl", gap: Space.n12 }}
+              >
+                <Text.Card.Title>The Whitelist Concept</Text.Card.Title>
+                <Text.Card.Desc>
+                  We explicitly <b>whitelist</b> allowed values to enforce
+                  rhythm. No magic numbers allowed.
+                </Text.Card.Desc>
+              </Frame>
 
-          <Frame w="100%" h="1px" surface="overlay" />
+              <Frame
+                flex={1}
+                surface="sunken"
+                override={{ p: Space.n32, rounded: "2xl", gap: Space.n12 }}
+              >
+                <Text.Card.Title>The Meaning of 'n'</Text.Card.Title>
+                <Text.Card.Desc>
+                  <b>'n'</b> represents an abstract numeric scale, decoupling
+                  logic from raw pixels.
+                </Text.Card.Desc>
+              </Frame>
+            </Frame>
+          </TextColumn>
 
-          {/* 1. Text System (Dynamic from Data) */}
-          <Frame gap={8}>
-            <Text.Prose.Title>Text System (By Context)</Text.Prose.Title>
-
-            <Frame gap={12}>
-              {TEXT_CONTEXTS.map((ctx) => (
-                <Frame key={ctx.name} gap={4}>
-                  <Frame row justify="between" align="baseline">
-                    <Text.Prose.Title style={{ fontSize: "var(--font-size-2)" }}>{ctx.name}</Text.Prose.Title>
-                    <Text.Card.Note>{ctx.desc}</Text.Card.Note>
-                  </Frame>
-
-                  <Frame
-                    surface="sunken"
-                    rounded="xl"
-                    p={6}
-                    style={{ border: "1px solid var(--border-color)" }}
-                    gap={0}
+          {/* 1. Spacing Scale - Centered Prose List */}
+          <Frame override={{ w: Size.full, gap: Space.n32 }}>
+            <SectionHeader
+              title="Space"
+              desc="The rhythm of the page. Margins, paddings, gaps."
+            />
+            {/* Spacing is vertical list, fits well in prose width */}
+            <TextColumn>
+              <Frame override={{ gap: Space.n12, w: Size.full }}>
+                {SpaceScale.map((val) => (
+                  <ScaleVisualizer
+                    key={val}
+                    label={`n${val}`}
+                    value={`${val}px`}
                   >
-                    {ctx.slots.map((slot) => {
-                      // Dynamically access the slot component
-                      // @ts-ignore - We know these components exist in the MDK imports
-                      const SlotComponent = ctx.Component[slot.name];
-
-                      return (
-                        <Frame
-                          key={slot.name}
-                          row
-                          align="center"
-                          gap={4}
-                          p="4 0"
-                          style={{ borderBottom: "1px solid var(--border-color)" }}
-                        >
-                          {/* Slot Name */}
-                          <Frame w={120}>
-                            <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
-                              {ctx.name}.{slot.name}
-                            </Text.Card.Code>
-                          </Frame>
-
-                          {/* Sample Render */}
-                          <Frame flex={1}>
-                            <SlotComponent>
-                              {slot.sample}
-                            </SlotComponent>
-                          </Frame>
-
-                          {/* Role Description */}
-                          <Frame w={120} justify="end">
-                            <Text.Card.Note>{slot.desc}</Text.Card.Note>
-                          </Frame>
-                        </Frame>
-                      );
-                    })}
-                  </Frame>
-                </Frame>
-              ))}
-            </Frame>
+                    <Frame
+                      surface="primary"
+                      style={{
+                        width: `var(--space-n${val})`,
+                        transition: "width 0.3s ease",
+                      }}
+                      override={{ h: Size.n24, rounded: "sm" }}
+                    />
+                  </ScaleVisualizer>
+                ))}
+              </Frame>
+            </TextColumn>
           </Frame>
 
-          {/* 1.1 Prose Title Variants */}
-          <Frame gap={8}>
-            <Text.Prose.Title>Prose Title Variants</Text.Prose.Title>
-            <Frame surface="sunken" p={8} rounded="xl" gap={4} style={{ border: "1px solid var(--border-color)" }}>
-              <Frame gap={2}>
-                <Text.Prose.Title variant="xl">Display Title (xl)</Text.Prose.Title>
-                <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>variant="xl" (H1 Display)</Text.Card.Code>
-              </Frame>
-              <Frame w="100%" h="1px" surface="base" />
-              <Frame gap={2}>
-                <Text.Prose.Title variant="lg">Page Title (lg)</Text.Prose.Title>
-                <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>variant="lg" (H2)</Text.Card.Code>
-              </Frame>
-              <Frame w="100%" h="1px" surface="base" />
-              <Frame gap={2}>
-                <Text.Prose.Title variant="md">Section Title (md)</Text.Prose.Title>
-                <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>variant="md" (H3)</Text.Card.Code>
-              </Frame>
-              <Frame w="100%" h="1px" surface="base" />
-              <Frame gap={2}>
-                <Text.Prose.Title variant="sm">Subsection Title (sm)</Text.Prose.Title>
-                <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>variant="sm" (H4)</Text.Card.Code>
-              </Frame>
-            </Frame>
-          </Frame>
-
-          <Frame w="100%" h="1px" surface="overlay" />
-
-          {/* 2. Surfaces */}
-          <Frame gap={8}>
-            <Text.Prose.Title>Surfaces</Text.Prose.Title>
-            <Frame row wrap="wrap" gap={6}>
-              {SURFACES.map((s) => (
+          {/* 2. Size Scale - Horizontal Scroll (Breakout) */}
+          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+            <SectionHeader
+              title="Size"
+              desc="Component widths and heights. Defines density."
+            />
+            {/* Scrollable Container breaking prose width constraints */}
+            <ScrollContainer>
+              {SizeScale.map((val) => (
                 <Frame
-                  key={s.id}
-                  surface={s.id as any}
-                  w={120}
-                  h={120}
-                  rounded="2xl"
-                  shadow="sm"
-                  p={4}
-                  justify="between"
-                  style={{ border: "1px solid var(--border-color)" }}
+                  key={val}
+                  surface="overlay"
+                  style={{
+                    border: "var(--border-width-n1) solid var(--border-color)",
+                    width: `var(--size-n${val})`,
+                    height: `var(--size-n${val})`,
+                    minWidth: `var(--size-n${val})`, // Ensure it doesn't shrink
+                    minHeight: `var(--size-n${val})`,
+                  }}
+                  override={{ rounded: "xl" }}
+                  align="center"
+                  justify="center"
                 >
-                  <Text.Card.Title style={{ fontSize: "var(--font-size-3)" }}>{s.id}</Text.Card.Title>
-                  <Frame>
-                    <Text.Card.Desc>{s.desc}</Text.Card.Desc>
-                    <Text.Card.Code style={{ opacity: 0.5 }}>{s.hex}</Text.Card.Code>
-                  </Frame>
-                </Frame>
-              ))}
-            </Frame>
-          </Frame>
-
-          {/* 3. Spacing */}
-          <Frame gap={8}>
-            <Text.Prose.Title>Spacing</Text.Prose.Title>
-            <Frame row wrap="wrap" gap={4}>
-              {SPACING.map((sp) => (
-                <Frame key={sp} align="center" gap={2}>
-                  <Frame
-                    h={32}
-                    style={{ width: `var(--space-${String(sp).replace(".", "-")})` }}
-                    surface="primary"
-                    rounded="sm"
-                  />
-                  <Text.Card.Code style={{ fontSize: "9px", color: "var(--text-tertiary)" }}>
-                    {sp}
+                  <Text.Card.Code
+                    style={{ fontSize: "var(--font-size-n10)", opacity: 0.5 }}
+                  >
+                    n{val}
                   </Text.Card.Code>
                 </Frame>
               ))}
-            </Frame>
+            </ScrollContainer>
           </Frame>
 
-          {/* 4. Radius */}
-          <Frame gap={8}>
-            <Text.Prose.Title>Radius</Text.Prose.Title>
-            <Frame row wrap="wrap" gap={6}>
-              {RADIUS.map((r) => (
+          {/* 3. Radius Scale - Horizontal Scroll */}
+          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+            <SectionHeader title="Radius" desc="Softness of shapes." />
+            <ScrollContainer>
+              {RadiusScale.map((val) => (
                 <Frame
-                  key={r}
-                  w={64}
-                  h={64}
-                  surface="sunken"
-                  align="center"
-                  justify="center"
-                  style={{ borderRadius: `var(--radius-${r})`, border: "1px solid var(--border-color)" }}
+                  key={val}
+                  r={`radius.n${val}` as any}
+                  surface="raised"
+                  layout={Layout.Center.Default}
+                  override={{ w: Size.n96, h: Size.n96, minWidth: Size.n96 }}
                 >
-                  <Text.Card.Code style={{ fontSize: "10px" }}>{r}</Text.Card.Code>
+                  <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>
               ))}
-            </Frame>
+            </ScrollContainer>
           </Frame>
 
-          {/* 5. Shadows */}
-          <Frame gap={8}>
-            <Text.Prose.Title>Shadows</Text.Prose.Title>
-            <Frame row wrap="wrap" gap={12} surface="sunken" p={12} rounded="3xl">
-              {SHADOWS.map((s) => (
+          {/* 4. Z-Index Scale - Visual Stack (Prose Width) */}
+          <Frame override={{ w: Size.full, gap: Space.n32 }}>
+            <SectionHeader title="Z-Index" desc="Elevation depth & Stacking." />
+            <TextColumn>
+              <Frame
+                override={{
+                  h: Size.n256,
+                  w: Size.full,
+                  p: Space.n48,
+                  rounded: "3xl",
+                }}
+                surface="sunken"
+                align="center"
+                justify="center"
+              >
                 <Frame
-                  key={s}
-                  w={80}
-                  h={80}
-                  surface="base"
-                  rounded="2xl"
-                  align="center"
-                  justify="center"
-                  shadow={s as any}
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                  }}
                 >
-                  <Text.Card.Title>{s}</Text.Card.Title>
+                  {ZIndexScale.filter((_, i) => i % 2 === 0).map((val, i) => (
+                    <Frame
+                      key={val}
+                      surface="base"
+                      style={{
+                        position: "absolute",
+                        zIndex: `var(--z-index-n${val})`,
+                        top: `${i * 20}px`,
+                        left: `${i * 40}px`,
+                        boxShadow: "var(--shadow-lg)",
+                        border:
+                          "var(--border-width-n1) solid var(--border-color)",
+                      }}
+                      override={{
+                        w: Size.n160,
+                        h: Size.n128,
+                        rounded: "xl",
+                        p: Space.n16,
+                      }}
+                    >
+                      <Text.Card.Title>n{val}</Text.Card.Title>
+                    </Frame>
+                  ))}
+                </Frame>
+              </Frame>
+            </TextColumn>
+          </Frame>
+
+          {/* 5. Opacity Scale - Horizontal Scroll */}
+          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+            <SectionHeader title="Opacity" desc="Transparency levels." />
+            <ScrollContainer>
+              {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
+                <Frame key={val} align="center" override={{ gap: Space.n8 }}>
+                  <Frame
+                    surface="base"
+                    opacity={`opacity.n${val}` as any}
+                    style={{
+                      backgroundColor: "black",
+                    }}
+                    override={{
+                      w: Size.n64,
+                      h: Size.n64,
+                      rounded: "lg",
+                      minWidth: Size.n64,
+                    }}
+                  />
+                  <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>
               ))}
-            </Frame>
+            </ScrollContainer>
           </Frame>
 
-        </ProseDocument>
-      </ProseSection>
+          {/* 6. Font Size Scale - Prose Width */}
+          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+            <SectionHeader title="Font Size" desc="Typography scale." />
+            <TextColumn>
+              <Frame override={{ gap: Space.n16, w: Size.full }}>
+                {FontSizeScale.map((val) => (
+                  <Frame
+                    key={val}
+                    layout={Layout.Row.Item.Default}
+                    align="baseline"
+                  >
+                    <Frame override={{ w: Size.n64 }}>
+                      <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
+                        n{val}
+                      </Text.Card.Code>
+                    </Frame>
+                    <Frame flex={1} minWidth={Size.n0}>
+                      <Text
+                        size={`font-size.n${val}` as any}
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        The quick brown fox.
+                      </Text>
+                    </Frame>
+                  </Frame>
+                ))}
+              </Frame>
+            </TextColumn>
+          </Frame>
+        </Frame>
+      </Frame>
     </Frame>
   );
 }

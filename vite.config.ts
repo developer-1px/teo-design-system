@@ -4,5 +4,5 @@ import Inspector from "vite-plugin-react-inspector";
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [react(), Inspector()],
+  plugins: [react(), Inspector()],
 });

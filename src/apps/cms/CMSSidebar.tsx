@@ -2,16 +2,24 @@ import {
   ChevronRight,
   FileText,
   Grid2X2,
-  Layout,
+  Layout as LayoutIcon,
   List,
   Menu,
   Plus,
   Settings,
 } from "lucide-react";
 import { useState } from "react";
-import { Text } from "../../design-system/text/Text";
-import { Frame } from "../../design-system/Frame";
 import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 
 export interface CMSSidebarProps {
   isOpen: boolean;
@@ -23,23 +31,28 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
   return (
     <Frame
-      h="100%"
-      surface="raised"
-      p={1}
-      gap={1}
+      override={{
+        h: Size.full,
+        p: Space.n4,
+        gap: Space.n4,
+        clip: true,
+      }}
       style={{
-        borderRight: "1px solid var(--border-color)",
-        width: isOpen ? 240 : 60,
-        overflow: "hidden",
+        width: isOpen ? "var(--size-n240)" : "var(--size-n64)",
         whiteSpace: "nowrap",
         transformOrigin: "top left",
         transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
+      surface="sunken"
     >
       {/* Header with Toggle */}
-      <Frame row align="center" gap={3} p="0 4px">
+      <Frame
+        override={{ gap: Space.n12, py: Space.n0, px: Space.n4 }}
+        layout={Layout.Row.Header.Default}
+        align="center"
+      >
         <Action
-          icon={isOpen ? Layout : Menu}
+          icon={isOpen ? LayoutIcon : Menu}
           variant="ghost"
           size="sm"
           rounded="md"
@@ -48,55 +61,81 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         />
 
         <Frame
-          row
-          align="center"
-          gap={2}
+          override={{
+            gap: Space.n8,
+          }}
           style={{
             opacity: isOpen ? 1 : 0,
             transition: "opacity 0.2s",
-            pointerEvents: isOpen ? "auto" : "none"
+            pointerEvents: isOpen ? "auto" : "none",
           }}
-        >
-        </Frame>
+          layout={Layout.Row.Actions.Default}
+          align="center"
+        ></Frame>
       </Frame>
 
       {/* Content - Hidden when closed */}
       <Frame
-        flex
-        gap="8px"
-        overflow="scroll"
+        override={{
+          gap: Space.n8,
+        }}
         style={{
           opacity: isOpen ? 1 : 0,
           transition: "opacity 0.2s",
           pointerEvents: isOpen ? "auto" : "none",
-          display: isOpen ? "flex" : "none" // Fully hide to prevent layout issues
+          display: isOpen ? "flex" : "none",
         }}
+        flex
+        scroll
       >
-        <Frame gap={2} p="0px 8px 8px 8px" row align="center" justify="between">
-          <Frame row gap={2} align="center">
-            <Text.Card.Note style={{ fontSize: 11, fontWeight: "bold", color: "var(--text-tertiary)" }}>
+        <Frame
+          override={{
+            gap: Space.n8,
+            pt: Space.n0,
+            pr: Space.n8,
+            pb: Space.n8,
+            pl: Space.n8,
+          }}
+          layout={Layout.Row.Header.Default}
+          align="center"
+          justify="between"
+        >
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Default}
+            align="center"
+          >
+            <Text.Card.Note
+              weight="bold"
+              size={FontSize.n11}
+              style={{ color: "var(--text-tertiary)" }}
+            >
               SECTIONS
             </Text.Card.Note>
             <Action
               icon={Plus}
-              size="xs" // smallest size
+              size="xs"
               variant="ghost"
               rounded="full"
               tooltip="Add Section"
               onClick={() => console.log("Add Section")}
             />
           </Frame>
-          <Frame row gap={1} surface="sunken" p="2px" rounded="md">
+          <Frame
+            override={{ gap: Space.n4, p: Space.n4, rounded: "md" }}
+            layout={Layout.Row.Actions.Default}
+            surface="sunken"
+          >
             <Action
               icon={Grid2X2}
-              size={5}
+              size="xs"
               variant={viewMode === "thumbnail" ? "surface" : "ghost"}
               rounded="sm"
               onClick={() => setViewMode("thumbnail")}
             />
             <Action
               icon={List}
-              size={5}
+              size="xs"
               variant={viewMode === "bar" ? "surface" : "ghost"}
               rounded="sm"
               onClick={() => setViewMode("bar")}
@@ -104,7 +143,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           </Frame>
         </Frame>
 
-        <Frame gap={viewMode === "thumbnail" ? "12px" : "4px"}>
+        <Frame
+          override={{ gap: viewMode === "thumbnail" ? Space.n12 : Space.n4 }}
+        >
           <LayerItem label="Hero Section" active viewMode={viewMode} />
           <LayerItem label="Feature Grid" viewMode={viewMode} />
           <LayerItem label="Testimonials" viewMode={viewMode} />
@@ -114,30 +155,34 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
       {/* Footer Settings */}
       <Frame
-        row
-        align="center"
-        gap={3}
-        p={3}
+        override={{
+          gap: Space.n12,
+          p: Space.n12,
+        }}
         style={{
           borderTop: "1px solid var(--border-color)",
           opacity: isOpen ? 1 : 0,
           transition: "opacity 0.2s",
-          display: isOpen ? "flex" : "none"
+          display: isOpen ? "flex" : "none",
         }}
+        layout={Layout.Row.Item.Default}
+        align="center"
       >
         <Frame
-          style={{ width: 32, height: 32 }}
-          rounded="full"
+          override={{ w: Size.n32, h: Size.n32, rounded: "full" }}
           surface="sunken"
           pack
         >
-          <Settings size={16} />
+          <Icon src={Settings} size={IconSize.n16} />
         </Frame>
-        <Frame gap="2px">
-          <Text.Card.Title style={{ fontSize: 13, fontWeight: 500 }}>
+        <Frame override={{ gap: Space.n0 }}>
+          <Text.Card.Title size={FontSize.n13} weight="medium">
             Site Settings
           </Text.Card.Title>
-          <Text.Card.Note style={{ fontSize: 11, color: "var(--text-tertiary)" }}>
+          <Text.Card.Note
+            size={FontSize.n11}
+            style={{ color: "var(--text-tertiary)" }}
+          >
             General, SEO, Analytics
           </Text.Card.Note>
         </Frame>
@@ -145,8 +190,6 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
     </Frame>
   );
 }
-
-
 
 interface LayerItemProps {
   label: string;
@@ -157,28 +200,45 @@ interface LayerItemProps {
 function LayerItem({ label, active, viewMode }: LayerItemProps) {
   if (viewMode === "thumbnail") {
     return (
-      <Frame gap={1.5} p="0 8px">
-        <Frame row gap={2} align="center">
-          <FileText size={10} opacity={0.5} />
-          <Text.Card.Note style={{ fontSize: 11, fontWeight: active ? "bold" : "medium" }}>
+      <Frame override={{ gap: Space.n6, py: Space.n0, px: Space.n8 }}>
+        <Frame
+          override={{ gap: Space.n8 }}
+          layout={Layout.Row.Meta.Default}
+          align="center"
+        >
+          <Icon src={FileText} size={IconSize.n10} style={{ opacity: 0.5 }} />
+          <Text.Card.Note
+            size={FontSize.n11}
+            weight={active ? "bold" : "medium"}
+          >
             {label}
           </Text.Card.Note>
         </Frame>
         <Frame
-          w="100%"
-          ratio="16/9"
-          surface={active ? "base" : "sunken"}
-          rounded="md"
-          pack
-          cursor="pointer"
+          override={{
+            w: Size.full,
+            rounded: "md",
+          }}
           style={{
             border: "1px solid var(--border-color)",
             boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
             borderColor: active ? "var(--text-primary)" : "var(--border-color)",
           }}
+          ratio="16/9"
+          surface={active ? "base" : "sunken"}
+          pack
+          cursor="pointer"
         >
           {active && (
-            <Frame w={8} h={8} rounded="full" surface="primary" shadow="sm" />
+            <Frame
+              override={{
+                w: Size.n8,
+                h: Size.n8,
+                rounded: "full",
+                shadow: "sm",
+              }}
+              surface="primary"
+            />
           )}
         </Frame>
       </Frame>
@@ -187,21 +247,29 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
 
   return (
     <Frame
-      row
+      override={{ py: Space.n8, px: Space.n12, rounded: "md" }}
+      layout={Layout.Row.Item.Default}
       align="center"
       justify="between"
-      p="8px 12px"
-      rounded="md"
       surface={active ? "raised" : undefined}
       cursor="pointer"
     >
-      <Frame row gap="8px" align="center">
-        <FileText size={14} opacity={0.5} />
-        <Text.Card.Title style={{ fontSize: 13, fontWeight: active ? "bold" : "medium" }}>
+      <Frame
+        override={{ gap: Space.n8 }}
+        layout={Layout.Row.Item.Tight}
+        align="center"
+      >
+        <Icon src={FileText} size={IconSize.n14} style={{ opacity: 0.5 }} />
+        <Text.Card.Title
+          size={FontSize.n13}
+          weight={active ? "bold" : "medium"}
+        >
           {label}
         </Text.Card.Title>
       </Frame>
-      {active && <ChevronRight size={12} opacity={0.5} />}
+      {active && (
+        <Icon src={ChevronRight} size={IconSize.n12} style={{ opacity: 0.5 }} />
+      )}
     </Frame>
   );
 }

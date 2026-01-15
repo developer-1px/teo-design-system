@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Text } from "../../design-system/text/Text";
-import { Frame } from "../../design-system/Frame";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Overlay } from "../../design-system/Overlay";
+import { Text } from "../../design-system/text/Text";
+import { FontSize, Size, Space } from "../../design-system/token/token.const.1tier";
 
 export interface EditableWrapperProps {
   children: React.ReactNode;
@@ -17,12 +18,13 @@ export function EditableWrapper({
   const [isHovered, setIsHovered] = useState(false);
   return (
     <Frame
+      override={{}}
       style={{
-        position: 'relative',
+        position: "relative",
         outline: isHovered
-          ? "2px solid var(--primary-bg)"
-          : "2px solid transparent",
-        outlineOffset: "2px",
+          ? "var(--size-n2) solid var(--primary-bg)"
+          : "var(--size-n2) solid transparent",
+        outlineOffset: "var(--size-n2)",
         ...style,
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -34,20 +36,20 @@ export function EditableWrapper({
       }}
     >
       {isHovered && (
-        <Overlay
-          position="absolute"
-          y={-10}
-          x={-2}
-          zIndex={50}
-        >
+        <Overlay position="absolute" y={-10} x={-2} zIndex={50}>
           <Frame
+            override={{ py: Space.n0, px: Space.n6, rounded: "sm", h: Size.n4 }}
             surface="primary"
-            p="0 1.5"
-            rounded="sm"
-            h={4}
             pack
           >
-            <Text.Card.Note style={{ fontSize: "10px", fontWeight: "bold", color: "inherit", lineHeight: 1 }}>
+            <Text.Card.Note
+              size={FontSize.n10}
+              weight="bold"
+              style={{
+                color: "inherit",
+                lineHeight: 1,
+              }}
+            >
               EDIT
             </Text.Card.Note>
           </Frame>

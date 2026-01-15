@@ -1,12 +1,11 @@
 import type React from "react";
-import "../lib/tokens.css";
-import type { FontWeight, TypographyVariant } from "../lib/types.ts";
+import type { FontSizeToken, FontWeight } from "../lib/types.ts";
 import { toToken } from "../lib/utils.ts";
 
 import { Card } from "./context/Card.tsx";
-import { Prose } from "./context/Prose.tsx";
-import { Menu } from "./context/Menu.tsx";
 import { Field } from "./context/Field.tsx";
+import { Menu } from "./context/Menu.tsx";
+import { Prose } from "./context/Prose.tsx";
 import { Table } from "./context/Table.tsx";
 
 export type TextVariant =
@@ -18,8 +17,7 @@ export type TextVariant =
   | "body-sm"
   | "caption"
   | "caption-sm"
-  | "code"
-  | TypographyVariant; // Keep numeric for compat
+  | "code";
 
 export interface TextProps
   extends Omit<
@@ -33,9 +31,16 @@ export interface TextProps
   // Overrides
   weight?: FontWeight | "regular" | "medium" | "bold";
   mono?: boolean;
-  opacity?: number;
-  size?: number | string; // Override size (number for token, string for px)
-  color?: "primary" | "secondary" | "tertiary" | "muted" | "dim" | "white" | string;
+  opacity?: number | import("../token/token.const.1tier").OpacityToken;
+  size?: FontSizeToken; // Absolute scale only, strict
+  color?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "muted"
+    | "dim"
+    | "white"
+    | string;
 
   className?: string;
   style?: React.CSSProperties;
@@ -59,7 +64,7 @@ export function TextRoot({
   const Tag = (as || getTagForVariant(variant)) as any;
 
   // 2. Resolve Color
-  const colorValue = resolveColor(color, variant);
+  const colorValue = resolveColor(color);
 
   // 3. Resolve Typography Styles
   const typoStyle = resolveTypography(variant);
@@ -69,7 +74,6 @@ export function TextRoot({
     ...typoStyle,
     color: colorValue,
     fontFamily: mono ? "var(--font-family-mono)" : undefined,
-    opacity,
     margin: 0,
     ...styleProp,
   };
@@ -88,7 +92,21 @@ export function TextRoot({
 
   // Handle explicit size override
   if (size) {
-    mergedStyle.fontSize = toToken(size, "font-size");
+    if (size.startsWith("font-size.")) {
+      mergedStyle.fontSize = `var(--${size.replace(".", "-")})`;
+    } else {
+      // Fallback/Safety if somehow a bare string passed (though type forbids)
+      mergedStyle.fontSize = toToken(size, "font-size");
+    }
+  }
+
+  // Handle Opacity Token
+  if (opacity !== undefined) {
+    if (typeof opacity === "string" && opacity.startsWith("opacity.")) {
+      mergedStyle.opacity = `var(--${opacity.replace(".", "-")})`;
+    } else {
+      mergedStyle.opacity = opacity;
+    }
   }
 
   return (
@@ -109,12 +127,6 @@ export const Text = Object.assign(TextRoot, {
 // --- Helpers ---
 
 function getTagForVariant(variant: TextVariant): React.ElementType {
-  if (typeof variant === "number") {
-    if (variant === 1) return "h1";
-    if (variant === 2) return "h2";
-    if (variant === 3) return "p";
-    return "span";
-  }
   if (variant.startsWith("heading")) {
     if (variant === "heading-lg") return "h2";
     if (variant === "heading-md") return "h3";
@@ -124,10 +136,7 @@ function getTagForVariant(variant: TextVariant): React.ElementType {
   return "p";
 }
 
-function resolveColor(
-  color: TextProps["color"],
-  variant: TextVariant
-): string | undefined {
+function resolveColor(color: TextProps["color"]): string | undefined {
   if (color) {
     if (["primary", "secondary", "tertiary", "muted", "dim"].includes(color)) {
       return `var(--text-${color})`;
@@ -138,29 +147,10 @@ function resolveColor(
 
   // Defaults based on hierarchy if no color specified
   // (Optional: could enforce specific defaults per role, but usually inherits or defaults to body)
-  if (typeof variant === "number") {
-    // Legacy fallback
-    const map: Record<number, string> = {
-      1: "var(--text-primary)",
-      2: "var(--text-body)",
-      3: "var(--text-subtle)",
-    };
-    return map[variant] || "var(--text-body)";
-  }
-
   return "var(--text-body)";
 }
 
 function resolveTypography(variant: TextVariant): React.CSSProperties {
-  // If legacy numeric
-  if (typeof variant === "number") {
-    return {
-      fontSize: `var(--font-size-${variant})`,
-      fontWeight: variant <= 2 ? "var(--font-weight-bold)" : "var(--font-weight-regular)",
-      lineHeight: 1.5,
-    };
-  }
-
   // New Semantic System
   return {
     fontSize: `var(--text-${variant}-size)`,

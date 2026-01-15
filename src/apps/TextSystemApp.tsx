@@ -1,9 +1,16 @@
+import { FileText, Globe, Monitor } from "lucide-react";
 import { useState } from "react";
-import { Frame } from "../design-system/Frame";
-import { Experience, type ExperienceType } from "../design-system/Experience";
 import { Action } from "../design-system/Action";
-import { Monitor, FileText, Globe } from "lucide-react";
+import { Experience, type ExperienceType } from "../design-system/Experience";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../design-system/Icon";
 import { Text } from "../design-system/text/Text";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 
 /* 
   Text System Showcase
@@ -11,403 +18,706 @@ import { Text } from "../design-system/text/Text";
 */
 
 export function TextSystemApp() {
-    const [experience, setExperience] = useState<ExperienceType>("application");
+  const [experience, setExperience] = useState<ExperienceType>("application");
 
-    return (
-        <Experience value={experience}>
-            <Frame fill surface="base" style={{ scrollSnapType: "y mandatory", overflowY: "scroll" }}>
+  return (
+    <Experience value={experience}>
+      <Frame
+        style={{ scrollSnapType: "y mandatory" }}
+        scroll="y"
+        override={{}}
+        fill
+        surface="base"
+      >
+        {/* Floating Experience Switcher */}
+        <Frame
+          style={{
+            position: "fixed",
+            top: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 100,
+          }}
+          override={{
+            shadow: "lg",
+            rounded: "full",
+            p: Space.n4,
+          }}
+          layout={Layout.Row.Actions.Center}
+        >
+          <ExperienceButton
+            active={experience === "landing"}
+            onClick={() => setExperience("landing")}
+            icon={Globe}
+            label="Landing"
+          />
+          <ExperienceButton
+            active={experience === "document"}
+            onClick={() => setExperience("document")}
+            icon={FileText}
+            label="Document"
+          />
+          <ExperienceButton
+            active={experience === "application"}
+            onClick={() => setExperience("application")}
+            icon={Monitor}
+            label="Application"
+          />
+        </Frame>
 
-                {/* Floating Experience Switcher */}
+        {/* Section 0: Text System Intro (1-Column Layout) */}
+        <Frame
+          style={{ scrollSnapAlign: "start" }}
+          override={{
+            w: Size.full,
+            h: Size.screen,
+            p: Space.n40,
+          }}
+          align="center"
+          justify="center"
+          surface="base"
+        >
+          <Frame
+            style={{ maxWidth: "var(--container-n800)" }}
+            override={{ gap: Space.n32 }}
+            align="center"
+          >
+            <Frame
+              style={{
+                background:
+                  "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
+                border: "1px solid var(--border-color)",
+                boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
+              }}
+              override={{
+                p: Space.n16,
+                rounded: "3xl",
+              }}
+              surface="sunken"
+            >
+              <Icon
+                src={FileText}
+                size={Size.n80}
+                style={{ strokeWidth: 1, opacity: 0.8 }}
+              />
+            </Frame>
+
+            <Frame override={{ gap: Space.n16 }} align="center">
+              <Text.Prose.Title
+                variant="xl"
+                style={{
+                  fontSize: "var(--font-size-7xl)", // 72px
+                  letterSpacing: "-0.04em",
+                  lineHeight: 1,
+                }}
+              >
+                Text System
+              </Text.Prose.Title>
+              <Text.Prose.Body
+                style={{
+                  fontSize: "var(--font-size-2xl)", // 24px
+                  textAlign: "center",
+                  opacity: 0.6,
+                  maxWidth: "600px",
+                }}
+              >
+                A semantic, context-aware hierarchy engine.
+              </Text.Prose.Body>
+            </Frame>
+
+            {/* Hierarchy Visualization */}
+            <Frame
+              style={{ marginTop: "var(--space-8)" }}
+              layout={Layout.Row.Item.Default}
+              override={{ gap: Space.n0 }}
+            >
+              {[
+                { title: "Experience", desc: "Global Scale", icon: Globe },
+                { title: "Context", desc: "Semantic Role", icon: FileText },
+                { title: "Slot", desc: "Content Area", icon: Monitor }, // Placeholder icon for slot
+                { title: "Variant", desc: "Visual Style", icon: Monitor }, // Placeholder
+              ].map((layer, i) => (
                 <Frame
-                    style={{
-                        position: "fixed",
-                        top: 24,
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        zIndex: 100
+                  override={{ gap: Space.n0 }}
+                  key={i}
+                  layout={Layout.Row.Item.Default}
+                  align="center"
+                >
+                  <Frame
+                    override={{
+                      py: Space.n16,
+                      px: Space.n24,
+                      rounded: "xl",
+                      shadow: "sm",
+                      gap: Space.n4,
+                      w: Size.n160,
                     }}
                     surface="raised"
-                    shadow="lg"
-                    rounded="full"
-                    p={1}
-                    row
-                    gap={1}
-                >
-                    <ExperienceButton
-                        active={experience === "landing"}
-                        onClick={() => setExperience("landing")}
-                        icon={Globe}
-                        label="Landing"
-                    />
-                    <ExperienceButton
-                        active={experience === "document"}
-                        onClick={() => setExperience("document")}
-                        icon={FileText}
-                        label="Document"
-                    />
-                    <ExperienceButton
-                        active={experience === "application"}
-                        onClick={() => setExperience("application")}
-                        icon={Monitor}
-                        label="Application"
-                    />
-                </Frame>
-
-                {/* Section 0: Text System Intro (1-Column Layout) */}
-                <Frame
-                    w="100%"
-                    h="100vh"
-                    style={{ scrollSnapAlign: "start" }}
-                    align="center"
-                    justify="center"
-                    surface="base"
-                    p={10}
-                >
-                    <Frame
-                        align="center"
-                        gap={8}
-                        maxWidth="800px"
+                  >
+                    <Text.Card.Note
+                      style={{
+                        opacity: 0.5,
+                        fontSize: "11px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                      }}
                     >
-                        <Frame
-                            p={4}
-                            rounded="3xl"
-                            surface="sunken"
-                            style={{
-                                background: "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
-                                border: "1px solid var(--border-color)",
-                                boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)"
-                            }}
-                        >
-                            <FileText size={80} strokeWidth={1} style={{ opacity: 0.8 }} />
-                        </Frame>
-
-                        <Frame align="center" gap={4}>
-                            <Text.Prose.Title variant="xl" style={{ fontSize: "72px", letterSpacing: "-0.04em", lineHeight: 1 }}>
-                                Text System
-                            </Text.Prose.Title>
-                            <Text.Prose.Body style={{ fontSize: "24px", textAlign: "center", opacity: 0.6, maxWidth: "600px" }}>
-                                A semantic, context-aware hierarchy engine.
-                            </Text.Prose.Body>
-                        </Frame>
-
-                        {/* Hierarchy Visualization */}
-                        <Frame row gap={4} style={{ marginTop: "var(--space-8)" }}>
-                            {[
-                                { title: "Experience", desc: "Global Scale", icon: Globe },
-                                { title: "Context", desc: "Semantic Role", icon: FileText },
-                                { title: "Slot", desc: "Content Area", icon: Monitor }, // Placeholder icon for slot
-                                { title: "Variant", desc: "Visual Style", icon: Monitor }, // Placeholder
-                            ].map((layer, i) => (
-                                <Frame key={i} row align="center" gap={2}>
-                                    <Frame
-                                        surface="raised"
-                                        p="4 6"
-                                        rounded="xl"
-                                        shadow="sm"
-                                        gap={1}
-                                        w="160px"
-                                    >
-                                        <Text.Card.Note style={{ opacity: 0.5, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Layer {i + 1}</Text.Card.Note>
-                                        <Text.Card.Title>{layer.title}</Text.Card.Title>
-                                        <Text.Card.Desc>{layer.desc}</Text.Card.Desc>
-                                    </Frame>
-                                    {i < 3 && <Frame h="2px" w="20px" style={{ background: "var(--border-color)" }} />}
-                                </Frame>
-                            ))}
-                        </Frame>
-                    </Frame>
+                      Layer {i + 1}
+                    </Text.Card.Note>
+                    <Text.Card.Title>{layer.title}</Text.Card.Title>
+                    <Text.Card.Desc>{layer.desc}</Text.Card.Desc>
+                  </Frame>
+                  {i < 3 && (
+                    <Frame
+                      style={{
+                        height: "var(--size-n2)",
+                        background: "var(--border-color)",
+                      }}
+                      override={{
+                        w: Size.n32,
+                      }}
+                    />
+                  )}
                 </Frame>
+              ))}
+            </Frame>
+          </Frame>
+        </Frame>
 
-                {/* Section 1: Context: Prose */}
-                <ShowcaseSection
-                    title="Context: Prose"
-                    description="Standard running text for documents and articles."
-                    code={`<Text.Prose.Title>Context: Prose</Text.Prose.Title>
+        {/* Section 1: Context: Prose */}
+        <ShowcaseSection
+          title="Context: Prose"
+          description="Standard running text for documents and articles."
+          code={`<Text.Prose.Title>Context: Prose</Text.Prose.Title>
 <Text.Prose.Body>
   Optimized for readability and flow.
   Scales automatically with Experience.
 </Text.Prose.Body>`}
-                >
-                    <Frame gap={6} maxWidth="600px">
-                        <Text.Prose.Title>Context: Prose</Text.Prose.Title>
-                        <Text.Prose.Body>
-                            The <strong>Prose</strong> context is designed for continuous reading. It manages line height, spacing, and font weight to ensure comfortable legibility.
-                        </Text.Prose.Body>
-                        <Text.Prose.Body>
-                            The <strong>Experience</strong> (Application, Landing, or Document) automatically adjusts the scale. For example, 'Landing' experience will render this text significantly larger than 'Application'.
-                        </Text.Prose.Body>
-                        <Text.Prose.Note>
-                            Try switching the Experience mode at the top to see this text adapt live.
-                        </Text.Prose.Note>
-                    </Frame>
-                </ShowcaseSection>
+        >
+          <Frame style={{ maxWidth: "600px" }} override={{ gap: Space.n24 }}>
+            <Text.Prose.Title>Context: Prose</Text.Prose.Title>
+            <Text.Prose.Body>
+              The <strong>Prose</strong> context is designed for continuous
+              reading. It manages line height, spacing, and font weight to
+              ensure comfortable legibility.
+            </Text.Prose.Body>
+            <Text.Prose.Body>
+              The <strong>Experience</strong> (Application, Landing, or
+              Document) automatically adjusts the scale. For example, 'Landing'
+              experience will render this text significantly larger than
+              'Application'.
+            </Text.Prose.Body>
+            <Text.Prose.Note>
+              Try switching the Experience mode at the top to see this text
+              adapt live.
+            </Text.Prose.Note>
+          </Frame>
+        </ShowcaseSection>
 
-                {/* Section 2: Card Context */}
-                <ShowcaseSection
-                    title="Context: Card"
-                    description="Compact, summarized information blocks."
-                    code={`<Frame surface="raised" p={6} rounded="xl" border>
+        {/* Section 2: Card Context */}
+        <ShowcaseSection
+          title="Context: Card"
+          description="Compact, summarized information blocks."
+          code={`<Frame override={{ p: Space.n24, rounded: "xl" }} surface="raised"   border>
   <Text.Card.Title>Project Alpha</Text.Card.Title>
   <Text.Card.Desc>
     High-priority infrastructure migration.
   </Text.Card.Desc>
   <Text.Card.Note>Updated 2h ago</Text.Card.Note>
 </Frame>`}
-                >
-                    <Frame gap={8} row wrap="wrap" justify="center">
-                        <Frame surface="raised" p={6} rounded="xl" gap={3} w="320px" shadow="sm" style={{ border: "1px solid var(--border-color)" }}>
-                            <Frame w="40px" h="40px" rounded="lg" surface="sunken" pack style={{ marginBottom: "var(--space-2)" }}>
-                                <Globe size={20} />
-                            </Frame>
-                            <Text.Card.Title>Project Alpha</Text.Card.Title>
-                            <Text.Card.Desc>
-                                High-priority infrastructure migration for the core payment gateway.
-                            </Text.Card.Desc>
-                            <Frame row align="center" justify="between" style={{ marginTop: "var(--space-4)" }}>
-                                <Text.Card.Note style={{ opacity: 0.6 }}>Updated 2h ago</Text.Card.Note>
-                                <Action size="sm" variant="ghost" label="View" />
-                            </Frame>
-                        </Frame>
+        >
+          <Frame
+            override={{ gap: Space.n32 }}
+            layout={Layout.Wrap.Chips.Default}
+            justify="center"
+          >
+            <Frame
+              override={{
+                p: Space.n24,
+                rounded: "xl",
+                gap: Space.n12,
+                w: Size.n320,
+                shadow: "sm",
+              }}
+              style={{ border: "1px solid var(--border-color)" }}
+              surface="raised"
+            >
+              <Frame
+                override={{
+                  w: Size.n40,
+                  h: Size.n40,
+                  rounded: "lg",
+                }}
+                style={{ marginBottom: "var(--space-2)" }}
+                surface="sunken"
+                pack
+              >
+                <Icon src={Globe} size={IconSize.n20} />
+              </Frame>
+              <Text.Card.Title>Project Alpha</Text.Card.Title>
+              <Text.Card.Desc>
+                High-priority infrastructure migration for the core payment
+                gateway.
+              </Text.Card.Desc>
+              <Frame
+                style={{ marginTop: "var(--space-4)" }}
+                override={{}}
+                layout={Layout.RowTemp}
+                align="center"
+                justify="between"
+              >
+                <Text.Card.Note style={{ opacity: 0.6 }}>
+                  Updated 2h ago
+                </Text.Card.Note>
+                <Action size="sm" variant="ghost" label="View" />
+              </Frame>
+            </Frame>
 
-                        <Frame surface="raised" p={6} rounded="xl" gap={3} w="320px" shadow="sm" style={{ border: "1px solid var(--border-color)" }}>
-                            <Frame w="40px" h="40px" rounded="lg" surface="sunken" pack style={{ marginBottom: "var(--space-2)" }}>
-                                <FileText size={20} />
-                            </Frame>
-                            <Text.Card.Title>Q1 Report</Text.Card.Title>
-                            <Text.Card.Desc>
-                                Quarterly financial analysis and growth projections.
-                            </Text.Card.Desc>
-                            <Frame row align="center" justify="between" style={{ marginTop: "var(--space-4)" }}>
-                                <Text.Card.Note style={{ opacity: 0.6 }}>Draft</Text.Card.Note>
-                                <Action size="sm" variant="ghost" label="Edit" />
-                            </Frame>
-                        </Frame>
-                    </Frame>
-                </ShowcaseSection>
+            <Frame
+              override={{
+                p: Space.n24,
+                rounded: "xl",
+                gap: Space.n12,
+                w: Size.n320,
+                shadow: "sm",
+              }}
+              style={{ border: "1px solid var(--border-color)" }}
+              surface="raised"
+            >
+              <Frame
+                override={{
+                  w: Size.n40,
+                  h: Size.n40,
+                  rounded: "lg",
+                }}
+                style={{ marginBottom: "var(--space-2)" }}
+                surface="sunken"
+                pack
+              >
+                <Icon src={FileText} size={IconSize.n20} />
+              </Frame>
+              <Text.Card.Title>Q1 Report</Text.Card.Title>
+              <Text.Card.Desc>
+                Quarterly financial analysis and growth projections.
+              </Text.Card.Desc>
+              <Frame
+                style={{ marginTop: "var(--space-4)" }}
+                override={{}}
+                layout={Layout.RowTemp}
+                align="center"
+                justify="between"
+              >
+                <Text.Card.Note style={{ opacity: 0.6 }}>Draft</Text.Card.Note>
+                <Action size="sm" variant="ghost" label="Edit" />
+              </Frame>
+            </Frame>
+          </Frame>
+        </ShowcaseSection>
 
-                {/* Section 3: Field Context */}
-                <ShowcaseSection
-                    title="Context: Field"
-                    description="Input labels, values, and hints optimized for forms."
-                    code={`<Frame gap={1}>
+        {/* Section 3: Field Context */}
+        <ShowcaseSection
+          title="Context: Field"
+          description="Input labels, values, and hints optimized for forms."
+          code={`<Frame override={{ gap: 1 }} >
   <Text.Field.Label>Email Address</Text.Field.Label>
   <Input placeholder="name@example.com" />
   <Text.Field.Note>We'll never share your email.</Text.Field.Note>
 </Frame>`}
+        >
+          <Frame
+            style={{ width: "400px", border: "1px solid var(--border-color)" }}
+            override={{
+              p: Space.n32,
+              rounded: "2xl",
+              gap: Space.n24,
+            }}
+            surface="raised"
+          >
+            <Text.Prose.Title style={{ fontSize: "var(--prose-h3-size)" }}>
+              Account Settings
+            </Text.Prose.Title>
+
+            <Frame override={{ gap: Space.n16 }}>
+              <Frame override={{ gap: Space.n6 }}>
+                <Text.Field.Label>Display Name</Text.Field.Label>
+                <Frame
+                  style={{
+                    paddingLeft: "var(--space-3)",
+                    paddingRight: "var(--space-3)",
+                    border: "1px solid var(--border-color)",
+                  }}
+                  override={{
+                    h: Size.n32,
+                    rounded: "md",
+                  }}
+                  surface="sunken"
+                  align="center"
                 >
-                    <Frame surface="raised" p={8} rounded="2xl" gap={6} w="400px" shadow="md" style={{ border: "1px solid var(--border-color)" }}>
-                        <Text.Prose.Title style={{ fontSize: "var(--prose-h3-size)" }}>Account Settings</Text.Prose.Title>
+                  <Text.Field.Value style={{ opacity: 0.5 }}>
+                    Jane Doe
+                  </Text.Field.Value>
+                </Frame>
+              </Frame>
 
-                        <Frame gap={4}>
-                            <Frame gap={1.5}>
-                                <Text.Field.Label>Display Name</Text.Field.Label>
-                                <Frame h="32px" surface="sunken" rounded="md" align="center" style={{ paddingLeft: "var(--space-3)", paddingRight: "var(--space-3)", border: "1px solid var(--border-color)" }}>
-                                    <Text.Field.Value style={{ opacity: 0.5 }}>Jane Doe</Text.Field.Value>
-                                </Frame>
-                            </Frame>
+              <Frame override={{ gap: Space.n6 }}>
+                <Text.Field.Label>Email Address</Text.Field.Label>
+                <Frame
+                  style={{
+                    paddingLeft: "var(--space-3)",
+                    paddingRight: "var(--space-3)",
+                    border: "1px solid var(--border-color)",
+                  }}
+                  override={{
+                    h: Size.n32,
+                    rounded: "md",
+                  }}
+                  surface="sunken"
+                  align="center"
+                >
+                  <Text.Field.Value style={{ opacity: 0.5 }}>
+                    name@example.com
+                  </Text.Field.Value>
+                </Frame>
+                <Text.Field.Note>
+                  Used for notifications and login.
+                </Text.Field.Note>
+              </Frame>
 
-                            <Frame gap={1.5}>
-                                <Text.Field.Label>Email Address</Text.Field.Label>
-                                <Frame h="32px" surface="sunken" rounded="md" align="center" style={{ paddingLeft: "var(--space-3)", paddingRight: "var(--space-3)", border: "1px solid var(--border-color)" }}>
-                                    <Text.Field.Value style={{ opacity: 0.5 }}>name@example.com</Text.Field.Value>
-                                </Frame>
-                                <Text.Field.Note>Used for notifications and login.</Text.Field.Note>
-                            </Frame>
+              <Frame override={{ gap: Space.n6 }}>
+                <Text.Field.Label>Bio</Text.Field.Label>
+                <Frame
+                  style={{ border: "1px solid var(--border-color)" }}
+                  override={{
+                    h: Size.n80,
+                    rounded: "md",
+                    p: Space.n12,
+                  }}
+                  surface="sunken"
+                >
+                  <Text.Field.Value style={{ opacity: 0.5 }}>
+                    Product Designer based in Seoul.
+                  </Text.Field.Value>
+                </Frame>
+              </Frame>
+            </Frame>
 
-                            <Frame gap={1.5}>
-                                <Text.Field.Label>Bio</Text.Field.Label>
-                                <Frame h="80px" surface="sunken" rounded="md" p={3} style={{ border: "1px solid var(--border-color)" }}>
-                                    <Text.Field.Value style={{ opacity: 0.5 }}>Product Designer based in Seoul.</Text.Field.Value>
-                                </Frame>
-                            </Frame>
-                        </Frame>
+            <Frame
+              style={{ marginTop: "var(--space-4)" }}
+              override={{ gap: Space.n12 }}
+              layout={Layout.Row.Actions.Default}
+              justify="end"
+            >
+              <Action variant="ghost" label="Cancel" />
+              <Action variant="primary" label="Save Changes" />
+            </Frame>
+          </Frame>
+        </ShowcaseSection>
 
-                        <Frame row justify="end" gap={3} style={{ marginTop: "var(--space-4)" }}>
-                            <Action variant="ghost" label="Cancel" />
-                            <Action variant="primary" label="Save Changes" />
-                        </Frame>
-                    </Frame>
-                </ShowcaseSection>
-
-                {/* Section 4: Table Context */}
-                <ShowcaseSection
-                    title="Context: Table"
-                    description="Tabular data with clear hierarchy between heads and cells."
-                    code={`<Frame row border="bottom" p={3}>
+        {/* Section 4: Table Context */}
+        <ShowcaseSection
+          title="Context: Table"
+          description="Tabular data with clear hierarchy between heads and cells."
+          code={`<Frame override={{ p: Space.n12 }} row border="bottom" >
   <Text.Table.Head>Name</Text.Table.Head>
   <Text.Table.Head>Role</Text.Table.Head>
 </Frame>
-<Frame row border="bottom" p={3}>
+<Frame override={{ p: 3 }} row border="bottom" >
   <Text.Table.Cell>Alice</Text.Table.Cell>
   <Text.Table.Cell>Admin</Text.Table.Cell>
 </Frame>`}
-                >
-                    <Frame surface="raised" rounded="xl" w="100%" maxWidth="800px" overflow="hidden" shadow="sm" style={{ border: "1px solid var(--border-color)" }}>
-                        <Frame row surface="sunken" p="3 4" style={{ borderBottom: "1px solid var(--border-color)" }}>
-                            <Frame flex={2}><Text.Table.Head>User</Text.Table.Head></Frame>
-                            <Frame flex={1}><Text.Table.Head>Role</Text.Table.Head></Frame>
-                            <Frame flex={1}><Text.Table.Head>Status</Text.Table.Head></Frame>
-                            <Frame flex={1} align="end"><Text.Table.Head>Activity</Text.Table.Head></Frame>
-                        </Frame>
-                        {[
-                            { name: "Alice Johnson", email: "alice@company.com", role: "Admin", status: "Active", date: "2h ago" },
-                            { name: "Bob Smith", email: "bob@company.com", role: "Editor", status: "Offline", date: "1d ago" },
-                            { name: "Charlie Kim", email: "charlie@company.com", role: "Viewer", status: "Active", date: "5m ago" },
-                            { name: "David Park", email: "david@company.com", role: "Viewer", status: "Inactive", date: "1w ago" },
-                        ].map((user, i) => (
-                            <Frame key={i} row p="3 4" align="center" surface="hover" style={{ borderBottom: "1px solid var(--border-color)" }}>
-                                <Frame flex={2} gap={0.5}>
-                                    <Text.Table.Cell style={{ fontWeight: 500 }}>{user.name}</Text.Table.Cell>
-                                    <Text.Table.Cell style={{ opacity: 0.5, fontSize: "0.9em" }}>{user.email}</Text.Table.Cell>
-                                </Frame>
-                                <Frame flex={1}><Text.Table.Cell>{user.role}</Text.Table.Cell></Frame>
-                                <Frame flex={1}>
-                                    <Frame
-                                        p="0.5 2" rounded="full"
-                                        surface={user.status === "Active" ? "sunken" : undefined}
-                                        style={{
-                                            display: "inline-flex",
-                                            border: "1px solid var(--border-color)",
-                                            fontSize: "11px",
-                                            color: user.status === "Active" ? "var(--text-primary)" : "var(--text-muted)"
-                                        }}
-                                    >
-                                        {user.status}
-                                    </Frame>
-                                </Frame>
-                                <Frame flex={1} align="end"><Text.Table.Cell style={{ opacity: 0.5, fontFamily: "var(--font-family-mono)" }}>{user.date}</Text.Table.Cell></Frame>
-                            </Frame>
-                        ))}
-                    </Frame>
-                </ShowcaseSection>
+        >
+          <Frame
+            style={{
+              maxWidth: "var(--container-n800)",
+              border: "1px solid var(--border-color)",
+            }}
+            override={{
+              rounded: "xl",
+              w: Size.full,
+            }}
+            surface="raised"
+            clip
+          >
+            <Frame
+              style={{ borderBottom: "1px solid var(--border-color)" }}
+              override={{
+                py: Space.n12,
+                px: Space.n16,
+              }}
+              layout={Layout.Row.Item.Default}
+              surface="sunken"
+            >
+              <Frame flex={2}>
+                <Text.Table.Head>User</Text.Table.Head>
+              </Frame>
+              <Frame flex={1}>
+                <Text.Table.Head>Role</Text.Table.Head>
+              </Frame>
+              <Frame flex={1}>
+                <Text.Table.Head>Status</Text.Table.Head>
+              </Frame>
+              <Frame flex={1} align="end">
+                <Text.Table.Head>Activity</Text.Table.Head>
+              </Frame>
+            </Frame>
+            {[
+              {
+                name: "Alice Johnson",
+                email: "alice@company.com",
+                role: "Admin",
+                status: "Active",
+                date: "2h ago",
+              },
+              {
+                name: "Bob Smith",
+                email: "bob@company.com",
+                role: "Editor",
+                status: "Offline",
+                date: "1d ago",
+              },
+              {
+                name: "Charlie Kim",
+                email: "charlie@company.com",
+                role: "Viewer",
+                status: "Active",
+                date: "5m ago",
+              },
+              {
+                name: "David Park",
+                email: "david@company.com",
+                role: "Viewer",
+                status: "Inactive",
+                date: "1w ago",
+              },
+            ].map((user, i) => (
+              <Frame
+                style={{ borderBottom: "1px solid var(--border-color)" }}
+                override={{
+                  py: Space.n12,
+                  px: Space.n16,
+                }}
+                key={i}
+                layout={Layout.Row.Item.Default}
+                align="center"
+                surface="hover"
+              >
+                <Frame override={{ gap: Space.n2 }} flex={2}>
+                  <Text.Table.Cell style={{ fontWeight: 500 }}>
+                    {user.name}
+                  </Text.Table.Cell>
+                  <Text.Table.Cell style={{ opacity: 0.5, fontSize: "0.9em" }}>
+                    {user.email}
+                  </Text.Table.Cell>
+                </Frame>
+                <Frame flex={1}>
+                  <Text.Table.Cell>{user.role}</Text.Table.Cell>
+                </Frame>
+                <Frame flex={1}>
+                  <Frame
+                    style={{
+                      display: "inline-flex",
+                      border: "1px solid var(--border-color)",
+                      fontSize: "11px",
+                      color:
+                        user.status === "Active"
+                          ? "var(--text-primary)"
+                          : "var(--text-muted)",
+                    }}
+                    override={{
+                      py: Space.n2,
+                      px: Space.n8,
+                      rounded: "full",
+                    }}
+                    surface={user.status === "Active" ? "sunken" : undefined}
+                  >
+                    {user.status}
+                  </Frame>
+                </Frame>
+                <Frame flex={1} align="end">
+                  <Text.Table.Cell
+                    style={{
+                      opacity: 0.5,
+                      fontFamily: "var(--font-family-mono)",
+                    }}
+                  >
+                    {user.date}
+                  </Text.Table.Cell>
+                </Frame>
+              </Frame>
+            ))}
+          </Frame>
+        </ShowcaseSection>
 
-                {/* Section 5: Menu Context */}
-                <ShowcaseSection
-                    title="Context: Menu"
-                    description="Navigation lists and action groups."
-                    code={`<Frame w="200px" surface="overlay" shadow="lg">
+        {/* Section 5: Menu Context */}
+        <ShowcaseSection
+          title="Context: Menu"
+          description="Navigation lists and action groups."
+          code={`<Frame override={{ w: "200px", shadow: "lg" }}  surface="overlay" >
   <Text.Menu.Group>Account</Text.Menu.Group>
   <Text.Menu.Item>Profile</Text.Menu.Item>
   <Text.Menu.Item>Settings</Text.Menu.Item>
 </Frame>`}
-                >
-                    <Frame row gap={12} align="start">
-                        {/* Sidebar Menu Style */}
-                        <Frame w="240px" surface="sunken" h="400px" rounded="2xl" p={4} gap={2} style={{ border: "1px solid var(--border-color)" }}>
-                            <Text.Menu.Group>Platform</Text.Menu.Group>
-                            <MenuItem active>Dashboard</MenuItem>
-                            <MenuItem>Analytics</MenuItem>
-                            <MenuItem>Projects</MenuItem>
+        >
+          <Frame
+            override={{ gap: Space.n48 }}
+            layout={Layout.Row.Item.Default}
+            align="start"
+          >
+            {/* Sidebar Menu Style */}
+            <Frame
+              style={{
+                height: "400px",
+                border: "1px solid var(--border-color)",
+              }}
+              override={{
+                w: Size.n240,
+                gap: Space.n4,
+              }}
+              surface="sunken"
+            >
+              <Text.Menu.Group>Platform</Text.Menu.Group>
+              <MenuItem active>Dashboard</MenuItem>
+              <MenuItem>Analytics</MenuItem>
+              <MenuItem>Projects</MenuItem>
 
-                            <Frame h={4} />
+              <Frame override={{ h: Size.n4 }} />
 
-                            <Text.Menu.Group>Settings</Text.Menu.Group>
-                            <MenuItem>Team</MenuItem>
-                            <MenuItem>Billing</MenuItem>
-                            <MenuItem>API Keys</MenuItem>
-                        </Frame>
-
-                        {/* Context Menu Style */}
-                        <Frame w="220px" surface="raised" rounded="xl" p={1} shadow="lg" style={{ border: "1px solid var(--border-color)" }}>
-                            <MenuItem>View Details</MenuItem>
-                            <MenuItem>Edit</MenuItem>
-                            <MenuItem>Duplicate</MenuItem>
-                            <Frame h="1px" surface="base" style={{ marginBlock: "var(--space-1)" }} />
-                            <MenuItem style={{ color: "var(--text-muted)" }}>Archive</MenuItem>
-                            <MenuItem style={{ color: "#ef4444" }}>Delete</MenuItem>
-                        </Frame>
-                    </Frame>
-                </ShowcaseSection>
-
+              <Text.Menu.Group>Settings</Text.Menu.Group>
+              <MenuItem>Team</MenuItem>
+              <MenuItem>Billing</MenuItem>
+              <MenuItem>API Keys</MenuItem>
             </Frame>
-        </Experience>
-    );
+
+            {/* Context Menu Style */}
+            <Frame
+              style={{ border: "1px solid var(--border-color)" }}
+              override={{
+                w: Size.n224,
+                rounded: "xl",
+                p: Space.n4,
+                gap: Space.n4,
+                shadow: "lg",
+              }}
+              surface="raised"
+            >
+              <MenuItem>View Details</MenuItem>
+              <MenuItem>Edit</MenuItem>
+              <MenuItem>Duplicate</MenuItem>
+              <Frame
+                style={{ height: "1px", marginBlock: "var(--space-1)" }}
+                override={{}}
+                surface="base"
+              />
+              <MenuItem style={{ color: "var(--text-muted)" }}>
+                Archive
+              </MenuItem>
+              <MenuItem style={{ color: "#ef4444" }}>Delete</MenuItem>
+            </Frame>
+          </Frame>
+        </ShowcaseSection>
+      </Frame>
+    </Experience>
+  );
 }
 
 // --- Components ---
 
-function ExperienceButton({ active, onClick, icon: Icon, label }: any) {
-    return (
-        <Frame
-            onClick={onClick}
-            surface={active ? "primary" : "hover"}
-            style={{
-                color: active ? "var(--primary-fg)" : "var(--text-secondary)",
-                cursor: "pointer",
-                transition: "all 0.2s"
-            }}
-            p="2 4"
-            rounded="full"
-            row
-            gap={2}
-            align="center"
-        >
-            <Icon size={14} />
-            <Text.Menu.Item>{label}</Text.Menu.Item>
-        </Frame>
-    )
+function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
+  return (
+    <Frame
+      override={{
+        py: Space.n8,
+        px: Space.n16,
+        rounded: "full",
+        gap: Space.n8,
+      }}
+      style={{
+        color: active ? "var(--primary-fg)" : "var(--text-secondary)",
+        cursor: "pointer",
+        transition: "all 0.2s",
+      }}
+      onClick={onClick}
+      surface={active ? "primary" : "hover"}
+      layout={Layout.Row.Item.Tight}
+      align="center"
+    >
+      <Icon src={IconSrc} size={IconSize.n14} />
+      <Text.Menu.Item>{label}</Text.Menu.Item>
+    </Frame>
+  );
 }
 
 function ShowcaseSection({ title, description, code, children }: any) {
-    return (
-        <Frame
-            w="100%"
-            h="100vh"
-            style={{ scrollSnapAlign: "start" }}
-            row
-            overflow="hidden"
-        >
-            {/* Left: Code & Context */}
-            <Frame
-                w="35%"
-                surface="sunken"
-                p={10}
-                justify="center"
-                gap={8}
-                style={{ borderRight: "1px solid var(--border-color)" }}
-            >
-                <Frame gap={4}>
-                    <Text.Prose.Title style={{ fontSize: "32px" }}>{title}</Text.Prose.Title>
-                    <Text.Prose.Body style={{ opacity: 0.7 }}>{description}</Text.Prose.Body>
-                </Frame>
-
-                <Frame
-                    surface="base"
-                    p={6}
-                    rounded="xl"
-                    style={{ border: "1px solid var(--border-color)", fontFamily: "var(--font-family-mono)", fontSize: "13px", lineHeight: "1.6", overflowX: "auto" }}
-                    shadow="sm"
-                >
-                    <pre style={{ margin: 0 }}>{code}</pre>
-                </Frame>
-            </Frame>
-
-            {/* Right: Preview */}
-            <Frame
-                flex={1}
-                align="center"
-                justify="center"
-                surface="base"
-                style={{
-                    background: "radial-gradient(circle at center, var(--surface-base) 0%, var(--surface-sunken) 100%)"
-                }}
-            >
-                {children}
-            </Frame>
+  return (
+    <Frame
+      style={{ scrollSnapAlign: "start" }}
+      override={{ w: Size.full, h: Size.screen }}
+      layout={Layout.Row.AppContainer.Default}
+      clip
+    >
+      {/* Left: Code & Context */}
+      <Frame
+        style={{ width: "35%", borderRight: "1px solid var(--border-color)" }}
+        p={Space.n24}
+        surface="sunken"
+        justify="center"
+      >
+        <Frame override={{ gap: Space.n16 }}>
+          <Text.Prose.Title style={{ fontSize: "var(--font-size-4xl)" }}>
+            {title}
+          </Text.Prose.Title>
+          <Text.Prose.Body style={{ opacity: 0.7 }}>
+            {description}
+          </Text.Prose.Body>
         </Frame>
-    )
+
+        <Frame
+          style={{
+            border: "1px solid var(--border-color)",
+            fontFamily: "var(--font-family-mono)",
+            fontSize: "var(--font-size-n13)",
+            lineHeight: "1.6",
+          }}
+          scroll="x"
+          override={{
+            p: Space.n24,
+            rounded: "xl",
+          }}
+          surface="base"
+        >
+          <pre style={{ margin: 0 }}>{code}</pre>
+        </Frame>
+      </Frame>
+
+      {/* Right: Preview */}
+      <Frame
+        style={{
+          background:
+            "radial-gradient(circle at center, var(--surface-base) 0%, var(--surface-sunken) 100%)",
+        }}
+        override={{}}
+        flex={1}
+        align="center"
+        justify="center"
+        surface="base"
+      >
+        {children}
+      </Frame>
+    </Frame>
+  );
 }
 
 function MenuItem({ children, active, style, ...props }: any) {
-    return (
-        <Frame
-            p="2 3"
-            rounded="lg"
-            surface={active ? "selected" : "hover"}
-            cursor="pointer"
-            {...props}
-        >
-            <Text.Menu.Item style={{ fontWeight: active ? 600 : 400, ...style }}>{children}</Text.Menu.Item>
-        </Frame>
-    )
+  return (
+    <Frame
+      override={{ py: Space.n8, px: Space.n12, rounded: "lg" }}
+      surface={active ? "selected" : "hover"}
+      cursor="pointer"
+      {...props}
+    >
+      <Text.Menu.Item style={{ fontWeight: active ? 600 : 400, ...style }}>
+        {children}
+      </Text.Menu.Item>
+    </Frame>
+  );
 }

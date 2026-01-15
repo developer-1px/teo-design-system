@@ -17,10 +17,14 @@ import type React from "react";
 import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Field } from "../design-system/Field";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../design-system/Icon";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
+import { IconSize, Opacity } from "../design-system/token/token.const.1tier";
+import { Space } from "../design-system/token/token.const.1tier.ts";
 
 // --- Data ---
 
@@ -43,19 +47,32 @@ const PropertySection = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <Frame gap={2}>
-    <Frame row justify="between" align="center" p="0 2">
+  <Frame override={{ gap: Space.n8 }}>
+    <Frame
+      override={{ py: Space.n0, px: Space.n8 }}
+      layout={Layout.Row.Header.Default}
+      justify="between"
+      align="center"
+    >
       <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
       </Text.Menu.Group>
       <Action
         icon={Plus}
-        iconSize={12}
+        iconSize={IconSize.n12}
         style={{ width: "20px", height: "20px" }}
-        opacity={0.4}
+        opacity={Opacity.n40}
       />
     </Frame>
-    <Frame gap={1} p="0 2 2 2">
+    <Frame
+      override={{
+        gap: Space.n4,
+        pt: Space.n0,
+        pr: Space.n8,
+        pb: Space.n8,
+        pl: Space.n8,
+      }}
+    >
       {children}
     </Frame>
     <Separator />
@@ -98,15 +115,17 @@ export function PropertiesPanel() {
     <Section style={{ width: "260px" }} surface="base" rounded="lg" shadow="sm">
       {/* Tabs */}
       <Frame
-        row
-        p={1}
-        gap={1}
+        override={{
+          p: Space.n4,
+          gap: Space.n4,
+        }}
         style={{
           flexShrink: 0,
           height: "40px",
           borderBottom: "1px solid var(--border-color)",
-          borderColor: "var(--border-color)"
+          borderColor: "var(--border-color)",
         }}
+        layout={Layout.Row.Toolbar.Compact}
       >
         {["DESIGN", "ANIMATE"].map((tab) => (
           <Action
@@ -135,16 +154,26 @@ export function PropertiesPanel() {
         ))}
       </Frame>
 
-      <Frame p={2} gap={2} overflow="auto" flex fill style={{ minHeight: 0 }}>
+      <Frame
+        override={{ p: Space.n8, gap: Space.n8 }}
+        style={{ minHeight: 0 }}
+        scroll
+        flex
+        fill
+      >
         {/* Alignment */}
         <Frame
-          row
+          override={{
+            rounded: "md",
+          }}
+          style={{
+            border: "1px solid var(--border-color)",
+            padding: "1px",
+            gap: "1px",
+          }} // 1px style override
+          layout={Layout.Row.Toolbar.Default}
           justify="between"
           surface="sunken"
-          rounded="md"
-          style={{ border: "1px solid var(--border-color)" }}
-          p="1px"
-          gap="1px"
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
             tool.separator ? (
@@ -153,10 +182,10 @@ export function PropertiesPanel() {
               <Action
                 key={i}
                 icon={tool.icon}
-                iconSize={12}
+                iconSize={IconSize.n12}
                 surface={(tool as any).surface}
                 rounded="round"
-                size="24px"
+                size="xs"
                 flex
                 iconRotation={tool.rotation}
               />
@@ -166,8 +195,12 @@ export function PropertiesPanel() {
         <Separator />
 
         {/* Transform */}
-        <Frame gap={2}>
-          <Frame row gap={2} align="center">
+        <Frame override={{ gap: Space.n8 }}>
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Default}
+            align="center"
+          >
             <TransformField
               label="X"
               value={transform.x}
@@ -180,7 +213,11 @@ export function PropertiesPanel() {
             />
             <Frame style={{ width: "24px" }} />
           </Frame>
-          <Frame row gap={2} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Default}
+            align="center"
+          >
             <TransformField
               label="W"
               value={transform.w}
@@ -194,13 +231,17 @@ export function PropertiesPanel() {
             <Frame style={{ width: "24px" }} pack>
               <Action
                 icon={Lock}
-                iconSize={10}
+                iconSize={IconSize.n10}
                 style={{ width: "20px", height: "20px" }}
-                opacity={0.3}
+                opacity={Opacity.n30}
               />
             </Frame>
           </Frame>
-          <Frame row gap={2} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Default}
+            align="center"
+          >
             <TransformField
               label="°"
               value={transform.r}
@@ -218,40 +259,61 @@ export function PropertiesPanel() {
 
         {/* Properties */}
         <PropertySection title="LAYER">
-          <Frame row justify="between" gap={3}>
-            <Field value="Normal" rightIcon={<ChevronDown size={10} />} flex />
+          <Frame
+            override={{ gap: Space.n12 }}
+            layout={Layout.Row.Item.Default}
+            justify="between"
+          >
+            <Field
+              value="Normal"
+              rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
+              flex
+            />
             <Field
               value="100%"
-              icon={<Eye size={10} />}
+              icon={<Icon src={Eye} size={IconSize.n10} />}
               style={{ width: "70px" }}
             />
           </Frame>
         </PropertySection>
 
         <PropertySection title="TEXT">
-          <Frame gap="6px">
-            <Field value="Inter" rightIcon={<ChevronDown size={10} />} />
-            <Frame row gap={2}>
+          <Frame override={{ gap: Space.n6 }}>
+            <Field
+              value="Inter"
+              rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
+            />
+            <Frame
+              override={{ gap: Space.n8 }}
+              layout={Layout.Row.Item.Default}
+            >
               <Field
                 value="Regular"
-                rightIcon={<ChevronDown size={10} />}
+                rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
                 flex
               />
               <Field value="42" style={{ width: "50px" }} />
             </Frame>
-            <Frame row gap={2}>
+            <Frame
+              override={{ gap: Space.n8 }}
+              layout={Layout.Row.Item.Default}
+            >
               <Field label="LH" value="Auto" flex />
               <Field label="LS" value="0%" flex />
             </Frame>
             <Frame
-              row
+              override={{
+                rounded: "md",
+              }}
+              style={{
+                border: "1px solid var(--border-color)",
+                padding: "1px",
+                gap: "1px",
+              }}
+              layout={Layout.Row.Toolbar.Compact}
               justify="between"
               align="center"
               surface="sunken"
-              rounded="md"
-              style={{ border: "1px solid var(--border-color)" }}
-              p="1px"
-              gap="1px"
             >
               {[
                 AlignLeft,
@@ -263,10 +325,10 @@ export function PropertiesPanel() {
                 <Action
                   key={i}
                   icon={Icon}
-                  iconSize={12}
+                  iconSize={IconSize.n12}
                   surface={i === 0 ? "selected" : undefined}
                   rounded="round"
-                  size="24px"
+                  size="xs"
                   flex
                 />
               ))}
@@ -279,62 +341,75 @@ export function PropertiesPanel() {
             value="F4F4F5"
             icon={
               <Frame
-                style={{ width: "10px", height: "10px", border: "1px solid var(--border-color)" }}
+                override={{
+                  rounded: "round",
+                }}
+                style={{
+                  width: "10px",
+                  height: "10px",
+                  border: "1px solid var(--border-color)",
+                }}
                 surface="base"
-                rounded="round"
               />
             }
             rightIcon={
-              <Text.Card.Note style={{ fontSize: "12px" }}>
-                100%
-              </Text.Card.Note>
+              <Text.Card.Note style={{ fontSize: "12px" }}>100%</Text.Card.Note>
             }
           />
         </PropertySection>
 
         <PropertySection title="STROKE">
-          <Frame gap="6px">
+          <Frame override={{ gap: Space.n6 }}>
             <Field
               value="000000"
               icon={
                 <Frame
+                  override={{
+                    rounded: "round",
+                  }}
                   style={{
                     width: "10px",
                     height: "10px",
-                    border: "1px solid var(--text-primary)"
+                    border: "1px solid var(--text-primary)",
                   }}
-                  rounded="round"
                 />
               }
               rightIcon={
-                <Frame row gap={2}>
+                <Frame
+                  override={{ gap: Space.n8 }}
+                  layout={Layout.Row.Item.Default}
+                >
                   <Text.Card.Note style={{ fontSize: "12px" }}>
                     100%
                   </Text.Card.Note>
                   <Action
                     icon={Eye}
-                    iconSize={10}
+                    iconSize={IconSize.n10}
                     style={{ width: "16px", height: "16px" }}
                   />
                   <Action
                     icon={Minus}
-                    iconSize={10}
+                    iconSize={IconSize.n10}
                     style={{ width: "16px", height: "16px" }}
                   />
                 </Frame>
               }
               style={{ flexShrink: 0 }}
             />
-            <Frame row gap={2} align="center">
+            <Frame
+              override={{ gap: Space.n8 }}
+              layout={Layout.Row.Item.Default}
+              align="center"
+            >
               <Field value="1.5" style={{ width: "50px" }} />
               <Field
                 value="Inside"
-                rightIcon={<ChevronDown size={10} />}
+                rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
                 flex
               />
               <Action
                 icon={Settings}
-                iconSize={10}
+                iconSize={IconSize.n10}
                 rounded="round"
                 style={{ height: "24px" }}
               />
@@ -345,11 +420,11 @@ export function PropertiesPanel() {
         <PropertySection title="EFFECTS">
           <Field
             value="Drop Shadow"
-            icon={<Sun size={10} />}
+            icon={<Icon src={Sun} size={IconSize.n10} />}
             rightIcon={
               <Action
                 icon={Settings}
-                iconSize={10}
+                iconSize={IconSize.n10}
                 style={{ width: "16px", height: "16px" }}
               />
             }
@@ -362,7 +437,7 @@ export function PropertiesPanel() {
             rightIcon={
               <Action
                 icon={Plus}
-                iconSize={10}
+                iconSize={IconSize.n10}
                 style={{ width: "16px", height: "16px" }}
               />
             }

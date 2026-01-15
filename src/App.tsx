@@ -1,34 +1,38 @@
-import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
+import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { CMSApp } from "./apps/CMSApp";
+import { CRMApp } from "./apps/crm/CRMApp.tsx";
 import { LandingApp } from "./apps/LandingApp";
-
-import { SlideApp } from "./apps/SlideApp";
-import { TokensApp } from "./apps/TokensApp";
-import { Text } from "./design-system/text/Text.tsx";
-import { Frame } from "./design-system/Frame";
-
-import { InspectorOverlay } from "./inspector/InspectorOverlay";
-
-import { CRMApp } from "./apps/CRMApp";
 import { LoginApp } from "./apps/LoginApp";
+import { SlideApp } from "./apps/SlideApp";
 import { TextSystemApp } from "./apps/TextSystemApp";
+import { TokensApp } from "./apps/TokensApp";
+import { Frame } from "./design-system/Frame/Frame.tsx";
+import { Layout } from "./design-system/Frame/Layout/Layout.ts";
+import { Icon } from "./design-system/Icon";
+import { Text } from "./design-system/text/Text.tsx";
 import { useTheme } from "./design-system/theme";
+import { Space } from "./design-system/token/token.const.1tier";
+import { FontSize, IconSize } from "./design-system/token/token.const.1tier.ts";
+import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
 function NavItem({ to, label }: { to: string; label: string }) {
   return (
     <NavLink to={to} style={{ textDecoration: "none" }}>
       {({ isActive }) => (
         <Frame
-          p="1.5 3.5"
-          rounded="full"
-          surface={isActive ? "sunken" : undefined}
+          override={{
+            py: Space.n6,
+            px: Space.n14,
+            rounded: "full",
+          }}
           style={{
             color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
           }}
+          surface={isActive ? "sunken" : undefined}
           cursor="pointer"
         >
-          <Text variant={4} weight={isActive ? "bold" : "medium"}>
+          <Text size={FontSize.n12} weight={isActive ? "bold" : "medium"}>
             {label}
           </Text>
         </Frame>
@@ -40,14 +44,15 @@ function NavItem({ to, label }: { to: string; label: string }) {
 function Navigation() {
   return (
     <Frame
-
-      surface="raised"
-      rounded="full"
-      shadow="xl"
-      p={1}
-      row
-      gap={1}
+      override={{
+        rounded: "full",
+        shadow: "xl",
+        p: Space.n4,
+        gap: Space.n4,
+      }}
       style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
+      surface="raised"
+      layout={Layout.Row.Toolbar.Default}
     >
       <NavItem to="/" label="Home" />
       <NavItem to="/text" label="Text" />
@@ -68,18 +73,24 @@ function ThemeToggleItem() {
 
   return (
     <Frame
-      onClick={toggleTheme}
-      p={2}
-      rounded="full"
+      override={{
+        p: Space.n8,
+        rounded: "full",
+      }}
       style={{
         color: "var(--text-secondary)",
       }}
+      onClick={toggleTheme}
       cursor="pointer"
       surface="hover"
       align="center"
       justify="center"
     >
-      {isDark ? <Sun size={16} /> : <Moon size={16} />}
+      {isDark ? (
+        <Icon src={Sun} size={IconSize.n16} />
+      ) : (
+        <Icon src={Moon} size={IconSize.n16} />
+      )}
     </Frame>
   );
 }
@@ -88,8 +99,7 @@ function App() {
   return (
     <HashRouter>
       <InspectorOverlay />
-      <Frame fill overflow="hidden">
-
+      <Frame fill>
         <Routes>
           <Route path="/" element={<LandingApp />} />
           <Route path="/text" element={<TextSystemApp />} />

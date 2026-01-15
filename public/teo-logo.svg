@@ -1,0 +1,15 @@
+<svg width="200" height="64" viewBox="0 0 200 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <desc>teo.v Wordmark: Geometric, mono-weight construction.</desc>
+  <g stroke="currentColor" stroke-width="8" stroke-linecap="square" fill="none">
+    <!-- t -->
+    <path d="M24 12V52M12 24H36" />
+    <!-- e -->
+    <path d="M76 38H56V24H76M56 38V52H76" />
+    <!-- o -->
+    <rect x="96" y="24" width="28" height="28" rx="8" />
+    <!-- . (filled square) -->
+    <rect x="136" y="44" width="8" height="8" fill="currentColor" stroke="none" />
+    <!-- v -->
+    <path d="M156 24L170 52L184 24" stroke-linejoin="round"/>
+  </g>
+</svg>

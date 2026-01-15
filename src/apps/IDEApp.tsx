@@ -16,8 +16,17 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Action } from "../design-system/Action";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../design-system/Icon";
 import { Text } from "../design-system/text/Text.tsx";
-import { Frame } from "../design-system/Frame";
+import {
+  FontSize,
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 
 // --- Activity Bar ---
 
@@ -32,20 +41,23 @@ function ActivityBar({
 
   return (
     <Frame
-      w={48}
+      style={{ borderRight: "1px solid var(--border-color)" }}
+      override={{
+        w: Size.n48,
+        py: Space.n8,
+        px: Space.n0,
+        gap: Space.n8,
+      }}
       fill
       surface="sunken"
-      style={{ borderRight: "1px solid var(--border-color)" }}
       align="center"
-      p="2 0"
-      gap={2}
     >
       <Action
         icon={Files}
         variant="ghost"
-        size={48}
-        iconSize={24}
-        opacity={isActive("explorer") ? 1 : 0.5}
+        size="lg"
+        iconSize={IconSize.n24}
+        opacity={isActive("explorer") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("explorer")}
         style={{
           borderLeftWidth: isActive("explorer") ? 2 : 0,
@@ -55,33 +67,33 @@ function ActivityBar({
       <Action
         icon={Search}
         variant="ghost"
-        size={48}
-        iconSize={24}
-        opacity={isActive("search") ? 1 : 0.5}
+        size="lg"
+        iconSize={IconSize.n24}
+        opacity={isActive("search") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("search")}
       />
       <Action
         icon={GitBranch}
         variant="ghost"
-        size={48}
-        iconSize={24}
-        opacity={isActive("source-control") ? 1 : 0.5}
+        size="lg"
+        iconSize={IconSize.n24}
+        opacity={isActive("source-control") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("source-control")}
       />
       <Action
         icon={Bug}
         variant="ghost"
-        size={48}
-        iconSize={24}
-        opacity={isActive("debug") ? 1 : 0.5}
+        size="lg"
+        iconSize={IconSize.n24}
+        opacity={isActive("debug") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("debug")}
       />
       <Action
         icon={LayoutGrid}
         variant="ghost"
-        size={48}
-        iconSize={24}
-        opacity={isActive("extensions") ? 1 : 0.5}
+        size="lg"
+        iconSize={IconSize.n24}
+        opacity={isActive("extensions") ? Opacity.n100 : Opacity.n50}
         onClick={() => onTabChange("extensions")}
       />
 
@@ -90,16 +102,16 @@ function ActivityBar({
       <Action
         icon={UserCircle}
         variant="ghost"
-        size={48}
-        iconSize={24}
-        opacity={0.5}
+        size="lg"
+        iconSize={IconSize.n24}
+        opacity={Opacity.n50}
       />
       <Action
         icon={Settings}
         variant="ghost"
-        size={48}
-        iconSize={24}
-        opacity={0.5}
+        size="lg"
+        iconSize={IconSize.n24}
+        opacity={Opacity.n50}
       />
     </Frame>
   );
@@ -114,9 +126,18 @@ function Sidebar({ activeTab }: { activeTab: string }) {
   if (activeTab !== "explorer") {
     // Placeholder for other tabs
     return (
-      <Frame style={{ width: 250, borderRight: "1px solid var(--border-color)" }} fill surface="sunken">
-        <Frame style={{ height: 35 }} p="0 4" justify="center">
-          <Text variant={4} size={6} weight="medium" opacity={0.6}>
+      <Frame
+        style={{ width: 250, borderRight: "1px solid var(--border-color)" }}
+        override={{}}
+        fill
+        surface="sunken"
+      >
+        <Frame
+          style={{ height: 35 }}
+          override={{ px: Space.n16 }}
+          justify="center"
+        >
+          <Text size={FontSize.n9} weight="medium" opacity={Opacity.n60}>
             {activeTab.toUpperCase()}
           </Text>
         </Frame>
@@ -125,27 +146,33 @@ function Sidebar({ activeTab }: { activeTab: string }) {
   }
 
   return (
-    <Frame style={{ width: 250, borderRight: "1px solid var(--border-color)" }} fill surface="sunken">
+    <Frame
+      style={{ width: 250, borderRight: "1px solid var(--border-color)" }}
+      override={{}}
+      fill
+      surface="sunken"
+    >
       <Frame
         style={{ height: 35 }}
-        p="0 5"
+        override={{ px: Space.n20 }}
         align="center"
         justify="between"
-        row
+        layout={Layout.Row.Header.Default}
       >
-        <Text variant={4} size={6} weight="medium">
+        <Text size={FontSize.n9} weight="medium">
           EXPLORER
         </Text>
         <Action
           icon={MoreHorizontal}
-          size={20}
-          iconSize={14}
+          w={FontSize.n20}
+          h={FontSize.n20}
+          iconSize={IconSize.n14}
           variant="ghost"
-          opacity={0.5}
+          opacity={Opacity.n50}
         />
       </Frame>
 
-      <Frame flex fill overflow="auto">
+      <Frame flex fill scroll>
         {/* Section: Open Editors */}
         <Frame>
           <Action
@@ -153,13 +180,17 @@ function Sidebar({ activeTab }: { activeTab: string }) {
             rounded="none"
             onClick={() => setOpenEditorsExpanded(!openEditorsExpanded)}
           >
-            <Frame row align="center" gap={1}>
+            <Frame
+              override={{ gap: Space.n4 }}
+              layout={Layout.Row.Item.Tight}
+              align="center"
+            >
               {openEditorsExpanded ? (
-                <ChevronDown size={12} />
+                <Icon src={ChevronDown} size={IconSize.n12} />
               ) : (
-                <ChevronRight size={12} />
+                <Icon src={ChevronRight} size={IconSize.n12} />
               )}
-              <Text variant={4} size={6} weight="bold" opacity={0.8}>
+              <Text size={FontSize.n9} weight="bold" opacity={Opacity.n80}>
                 OPEN EDITORS
               </Text>
             </Frame>
@@ -180,13 +211,17 @@ function Sidebar({ activeTab }: { activeTab: string }) {
             rounded="none"
             onClick={() => setProjectExpanded(!projectExpanded)}
           >
-            <Frame row align="center" gap={1}>
+            <Frame
+              override={{ gap: Space.n4 }}
+              layout={Layout.Row.Item.Tight}
+              align="center"
+            >
               {projectExpanded ? (
-                <ChevronDown size={12} />
+                <Icon src={ChevronDown} size={IconSize.n12} />
               ) : (
-                <ChevronRight size={12} />
+                <Icon src={ChevronRight} size={IconSize.n12} />
               )}
-              <Text variant={4} size={6} weight="bold" opacity={0.8}>
+              <Text size={FontSize.n9} weight="bold" opacity={Opacity.n80}>
                 MINIMAL-DESIGN-KIT
               </Text>
             </Frame>
@@ -236,21 +271,41 @@ function FolderItem({
         rounded="none"
         onClick={() => setExpanded(!expanded)}
       >
-        <Frame row align="center" gap={2} p="0 0 0 4">
+        <Frame
+          override={{ gap: Space.n8, pl: Space.n16 }}
+          layout={Layout.Row.Item.Compact}
+          align="center"
+        >
           {expanded ? (
-            <ChevronDown size={12} opacity={0.6} />
+            <Icon
+              src={ChevronDown}
+              size={IconSize.n12}
+              style={{ opacity: 0.6 }}
+            />
           ) : (
-            <ChevronRight size={12} opacity={0.6} />
+            <Icon
+              src={ChevronRight}
+              size={IconSize.n12}
+              style={{ opacity: 0.6 }}
+            />
           )}
-          <Text size={13} color="secondary">
+          <Text size={FontSize.n13} color="secondary">
             {name}
           </Text>
         </Frame>
       </Action>
       {expanded && (
         <Frame
-          p="0 0 0 12"
-          style={{ borderLeftColor: "transparent", borderLeft: "1px solid var(--border-color)" }}
+          style={{
+            borderLeftColor: "transparent",
+            borderLeft: "1px solid var(--border-color)",
+          }}
+          override={{
+            pt: Space.n0,
+            pr: Space.n0,
+            pb: Space.n0,
+            pl: Space.n12,
+          }}
         >
           {children}
         </Frame>
@@ -283,13 +338,20 @@ function FileItem({
       surface={active ? "raised" : undefined}
       rounded="none"
     >
-      <Frame row align="center" gap={2} p="0 0 0 16" w="100%">
-        <Frame style={{ width: 12, height: 12 }} pack>
-          <Text size={5} style={{ color: getIconColor(), fontWeight: "bold" }}>
+      <Frame
+        override={{ gap: Space.n8, pl: Space.n64, w: Size.full }}
+        layout={Layout.Row.Item.Compact}
+        align="center"
+      >
+        <Frame style={{ width: 12, height: 12 }} override={{}} pack>
+          <Text
+            size={FontSize.n10}
+            style={{ color: getIconColor(), fontWeight: "bold" }}
+          >
             {icon === "react" ? "TSX" : icon === "ts" ? "TS" : "{}"}
           </Text>
         </Frame>
-        <Text size={13} color={active ? "primary" : "secondary"}>
+        <Text size={FontSize.n13} color={active ? "primary" : "secondary"}>
           {name}
         </Text>
         {modified && (
@@ -301,7 +363,9 @@ function FileItem({
                 height: 8,
                 backgroundColor: "var(--text-secondary)",
               }}
-              rounded="full"
+              override={{
+                rounded: "full",
+              }}
               surface="sunken"
             />
           </>
@@ -315,25 +379,34 @@ function FileItem({
 
 function EditorTabs() {
   return (
-    <Frame row style={{ height: 35, borderBottom: "1px solid var(--border-color)" }} surface="sunken">
+    <Frame
+      style={{ height: 35, borderBottom: "1px solid var(--border-color)" }}
+      override={{}}
+      layout={Layout.Row.AppContainer.Default}
+      surface="sunken"
+    >
       <Tab title="App" icon="react" active />
       <Tab title="IDEApp" icon="react" modified />
       <Tab title="useStore.ts" icon="ts" />
       <Frame flex />
-      <Frame row align="center" p="0 2" gap={1}>
+      <Frame
+        override={{ px: Space.n8, gap: Space.n4 }}
+        layout={Layout.Row.Actions.Default}
+        align="center"
+      >
         <Action
           icon={Split}
           variant="ghost"
           style={{ width: 28, height: 28 }}
-          iconSize={14}
-          opacity={0.6}
+          iconSize={IconSize.n14}
+          opacity={Opacity.n60}
         />
         <Action
           icon={MoreHorizontal}
           variant="ghost"
           style={{ width: 28, height: 28 }}
-          iconSize={14}
-          opacity={0.6}
+          iconSize={IconSize.n14}
+          opacity={Opacity.n60}
         />
       </Frame>
     </Frame>
@@ -367,25 +440,36 @@ function Tab({
         borderRight: "1px solid var(--border-color)",
         borderTop: active ? "1px solid var(--border-color)" : undefined,
       }}
-      p="0 3"
-      row
+      override={{
+        py: Space.n0,
+        px: Space.n12,
+      }}
+      layout={Layout.Row.Item.Default}
       align="center"
       justify="between"
     >
-      <Frame row align="center" gap={2}>
-        <Text size={5} style={{ color: getIconColor(), fontWeight: "bold" }}>
+      <Frame
+        override={{ gap: Space.n8 }}
+        layout={Layout.Row.Meta.Default}
+        align="center"
+        flex
+      >
+        <Text
+          size={FontSize.n10}
+          style={{ color: getIconColor(), fontWeight: "bold" }}
+        >
           {icon === "react" ? "TSX" : "TS"}
         </Text>
-        <Text size={13} color={active ? "primary" : "secondary"}>
+        <Text size={FontSize.n13} color={active ? "primary" : "secondary"}>
           {title}
         </Text>
       </Frame>
       <Action
         icon={modified ? undefined : X}
         style={{ width: 20, height: 20 }}
-        iconSize={12}
+        iconSize={IconSize.n12}
         variant="ghost"
-        opacity={0.5}
+        opacity={Opacity.n50}
         onClick={(e) => {
           e.stopPropagation();
           // onClose(file.id);
@@ -394,7 +478,7 @@ function Tab({
         {modified ? (
           <Frame
             style={{ width: 8, height: 8 }}
-            rounded="full"
+            override={{ rounded: "full" }}
             surface="overlay"
           />
         ) : undefined}
@@ -406,18 +490,21 @@ function Tab({
 function Breadcrumbs() {
   return (
     <Frame
-      row
       style={{ height: 22 }}
+      override={{ px: Space.n16, gap: Space.n4 }}
+      layout={Layout.Row.Meta.Default}
       align="center"
-      p="0 4"
-      gap={1}
       surface="base"
     >
-      <Text size={12} color="tertiary">
+      <Text size={FontSize.n12} color="tertiary">
         src
       </Text>
-      <ChevronRight size={12} color="var(--text-tertiary)" />
-      <Text size={12} color="tertiary">
+      <Icon
+        src={ChevronRight}
+        size={IconSize.n12}
+        style={{ color: "var(--text-tertiary)" }}
+      />
+      <Text size={FontSize.n12} color="tertiary">
         App
       </Text>
     </Frame>
@@ -426,20 +513,29 @@ function Breadcrumbs() {
 
 function CodeEditor() {
   return (
-    <Frame flex fill surface="base" row overflow="hidden">
+    <Frame
+      flex
+      fill
+      surface="base"
+      layout={Layout.Row.AppContainer.Default}
+      clip
+    >
       {/* Gutter */}
       <Frame
-        w={50}
-        p="4 0"
-        align="end"
-        gap={0}
-        opacity={0.4}
         style={{ userSelect: "none" }}
+        override={{
+          w: Size.n48,
+          py: Space.n16,
+          px: Space.n0,
+          gap: Space.n0,
+          opacity: Opacity.n40,
+        }}
+        align="end"
       >
         {Array.from({ length: 20 }).map((_, i) => (
           <Text
             key={i}
-            size={13}
+            size={FontSize.n13}
             mono
             style={{ lineHeight: "20px", paddingRight: 16 }}
           >
@@ -448,8 +544,17 @@ function CodeEditor() {
         ))}
       </Frame>
       {/* Code */}
-      <Frame flex fill p="4 0" style={{ position: "relative" }}>
-        <Text size={13} mono style={{ lineHeight: "20px", whiteSpace: "pre" }}>
+      <Frame
+        style={{ position: "relative" }}
+        override={{ py: Space.n16 }}
+        flex
+        fill
+      >
+        <Text
+          size={FontSize.n13}
+          mono
+          style={{ lineHeight: "20px", whiteSpace: "pre" }}
+        >
           <span style={{ color: "#C586C0" }}>import</span>{" "}
           <span style={{ color: "#9CDCFE" }}>{"{"}</span>{" "}
           <span style={{ color: "#9CDCFE" }}>Routes</span>,{" "}
@@ -518,52 +623,73 @@ function CodeEditor() {
 
 function Panel() {
   return (
-    <Frame style={{ height: 150, borderTop: "1px solid var(--border-color)" }} surface="base">
-      <Frame row style={{ height: 35 }} p="0 4" gap={4} align="center">
-        <Text variant={4} size={6} weight="medium" opacity={0.6}>
+    <Frame
+      style={{ height: 150, borderTop: "1px solid var(--border-color)" }}
+      override={{}}
+      surface="base"
+    >
+      <Frame
+        style={{ height: 35 }}
+        override={{ px: Space.n16, gap: Space.n16 }}
+        layout={Layout.Row.Toolbar.Default}
+        align="center"
+      >
+        <Text size={FontSize.n9} weight="medium" opacity={Opacity.n60}>
           PROBLEMS
         </Text>
-        <Text variant={4} size={6} weight="medium" opacity={0.6}>
+        <Text size={FontSize.n9} weight="medium" opacity={Opacity.n60}>
           OUTPUT
         </Text>
-        <Text variant={4} size={6} weight="medium" opacity={0.6}>
+        <Text size={FontSize.n9} weight="medium" opacity={Opacity.n60}>
           DEBUG CONSOLE
         </Text>
         <Text
-          variant={4}
-          size={6}
+          size={FontSize.n9}
           weight="medium"
           style={{ borderBottom: "1px solid var(--text-primary)" }}
         >
           TERMINAL
         </Text>
       </Frame>
-      <Frame flex fill p="2 4" style={{ fontFamily: "monospace" }}>
-        <Frame row align="center" gap={2}>
-          <Text size={12} color="secondary">
+      <Frame
+        style={{ fontFamily: "monospace" }}
+        override={{ py: Space.n8, px: Space.n16 }}
+        flex
+        fill
+      >
+        <Frame
+          override={{ gap: Space.n8 }}
+          layout={Layout.Row.Item.Compact}
+          align="center"
+        >
+          <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
-          <Text size={12} color="primary">
+          <Text size={FontSize.n12} color="primary">
             git status
           </Text>
         </Frame>
-        <Text size={12} color="secondary">
+        <Text size={FontSize.n12} color="secondary">
           On branch main
         </Text>
-        <Text size={12} color="secondary">
+        <Text size={FontSize.n12} color="secondary">
           Your branch is up to date with 'origin/main'.
         </Text>
-        <Text size={12} color="secondary">
+        <Text size={FontSize.n12} color="secondary">
           nothing to commit, working tree clean
         </Text>
-        <Frame row align="center" gap={2} p="2 0 0 0">
-          <Text size={4} color="secondary">
+        <Frame
+          override={{ gap: Space.n8, pt: Space.n8 }}
+          layout={Layout.Row.Item.Compact}
+          align="center"
+        >
+          <Text size={FontSize.n12} color="secondary">
             ➜ minimal-design-kit
           </Text>
           <Frame
             style={{ width: 6, height: 14 }}
+            override={{ opacity: Opacity.n80 }}
             surface="overlay"
-            opacity={0.8}
           />
         </Frame>
       </Frame>
@@ -577,56 +703,88 @@ function StatusBar() {
   return (
     <Frame
       style={{ height: 22 }}
+      override={{ px: Space.n12 }}
       surface="overlay"
-      row
+      layout={Layout.Row.Toolbar.Compact}
       align="center"
       justify="between"
-      p="0 3"
     >
-      <Frame row gap={3}>
-        <Frame row gap={1} align="center">
-          <GitBranch size={10} color="white" />
-          <Text size={11} color="white" weight="medium">
+      <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Tight}>
+        <Frame
+          override={{ gap: Space.n4 }}
+          layout={Layout.Row.Item.Tight}
+          align="center"
+        >
+          <Icon
+            src={GitBranch}
+            size={IconSize.n10}
+            style={{ color: "white" }}
+          />
+          <Text size={FontSize.n11} color="white" weight="medium">
             main*
           </Text>
         </Frame>
-        <Frame row gap={1} align="center">
-          <RefreshCw size={10} color="white" />
+        <Frame
+          override={{ gap: Space.n4 }}
+          layout={Layout.Row.Item.Tight}
+          align="center"
+        >
+          <Icon
+            src={RefreshCw}
+            size={IconSize.n10}
+            style={{ color: "white" }}
+          />
         </Frame>
-        <Frame row gap={1} align="center" p="0 0 0 2">
-          <AlertCircle size={10} color="white" />
-          <Text size={11} color="white">
+        <Frame
+          override={{ gap: Space.n4, pl: Space.n8 }}
+          layout={Layout.Row.Item.Tight}
+          align="center"
+        >
+          <Icon
+            src={AlertCircle}
+            size={IconSize.n10}
+            style={{ color: "white" }}
+          />
+          <Text size={FontSize.n11} color="white">
             0
           </Text>
-          <AlertCircle size={10} color="white" />
-          <Text size={11} color="white">
+          <Icon
+            src={AlertCircle}
+            size={IconSize.n10}
+            style={{ color: "white" }}
+          />
+          <Text size={FontSize.n11} color="white">
             0
           </Text>
         </Frame>
       </Frame>
 
-      <Frame row gap={4}>
-        <Text size={11} color="white">
+      <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Meta.Default}>
+        <Text size={FontSize.n11} color="white">
           Ln 5, Col 24
         </Text>
-        <Text size={11} color="white">
+        <Text size={FontSize.n11} color="white">
           Spaces: 2
         </Text>
-        <Text size={11} color="white">
+        <Text size={FontSize.n11} color="white">
           UTF-8
         </Text>
-        <Text size={11} color="white">
+        <Text size={FontSize.n11} color="white">
           TypeScript JSX
         </Text>
-        <Frame row gap={1} align="center">
-          <Text size={11} color="white">
+        <Frame
+          override={{ gap: Space.n4 }}
+          layout={Layout.Row.Meta.Default}
+          align="center"
+        >
+          <Text size={FontSize.n11} color="white">
             Prettier
           </Text>
         </Frame>
         <Action
           icon={UserCircle}
-          style={{ width: 14, height: 14, color: "white" }}
-          iconSize={10}
+          style={{ width: 22, height: 22, color: "white" }}
+          iconSize={IconSize.n12}
           variant="ghost"
         />
       </Frame>
@@ -643,23 +801,28 @@ export function IDEApp() {
     <Frame
       fill
       surface="base"
-      overflow="hidden"
+      clip
       grid
       columns="48px 250px 1fr"
       rows="1fr 22px"
       areas="'activity sidebar editor' 'status status status'"
     >
       {/* Main Layout Components placed via gridArea */}
-      <Frame style={{ gridArea: "activity" }}>
+      <Frame style={{ gridArea: "activity" }} override={{}}>
         <ActivityBar activeTab={activeTab} onTabChange={setActiveTab} />
       </Frame>
 
-      <Frame style={{ gridArea: "sidebar" }}>
+      <Frame style={{ gridArea: "sidebar" }} override={{}}>
         <Sidebar activeTab={activeTab} />
       </Frame>
 
       {/* Editor Area */}
-      <Frame style={{ gridArea: "editor" }} grid rows="35px 22px 1fr 150px">
+      <Frame
+        style={{ gridArea: "editor" }}
+        override={{}}
+        grid
+        rows="35px 22px 1fr 150px"
+      >
         <EditorTabs />
         <Breadcrumbs />
         <CodeEditor />
@@ -667,7 +830,7 @@ export function IDEApp() {
       </Frame>
 
       {/* Status Bar */}
-      <Frame style={{ gridArea: "status" }}>
+      <Frame style={{ gridArea: "status" }} override={{}}>
         <StatusBar />
       </Frame>
     </Frame>

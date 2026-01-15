@@ -1,7 +1,8 @@
 import type React from "react";
-import { Frame } from "./Frame";
-import type { FrameProps } from "./lib/props.ts";
-import "./lib/tokens.css";
+import { Frame } from "./Frame/Frame.tsx";
+import type { FrameProps } from "./Frame/FrameProps.ts";
+import { Layout } from "./Frame/Layout/Layout.ts";
+import { Size, Space } from "./token/token.const.1tier";
 
 type ProseRole = "h1" | "h2" | "h3" | "h4" | "body" | "body-sm" | "caption";
 
@@ -60,11 +61,12 @@ export function ProseOld({
   );
 }
 
-interface ProseDocumentProps extends FrameProps {
+interface ProseDocumentProps extends Omit<FrameProps, "gap" | "maxWidth"> {
   children: React.ReactNode;
   maxWidth?: number | string;
   className?: string;
   gap?: number | string;
+  style?: React.CSSProperties;
 }
 
 export function ProseDocument({
@@ -75,16 +77,40 @@ export function ProseDocument({
   gap = 4,
   ...props
 }: ProseDocumentProps) {
+  const resolveSizingProp = (val: string | number | undefined) => {
+    if (
+      typeof val === "string" &&
+      (val.startsWith("size.") || val.startsWith("container."))
+    ) {
+      return val as any;
+    }
+    return undefined;
+  };
+  const resolveSizingStyle = (val: string | number | undefined) => {
+    if (
+      typeof val === "string" &&
+      (val.startsWith("size.") || val.startsWith("container."))
+    ) {
+      return undefined;
+    }
+    if (typeof val === "number") return `${val}px`;
+    return val;
+  };
+
   return (
     <Frame
-      w="100%"
-      maxWidth={maxWidth}
-      gap={gap}
-      p="0 6"
       style={{
+        maxWidth: resolveSizingStyle(maxWidth),
         marginLeft: "auto",
         marginRight: "auto",
         ...style,
+      }}
+      override={{
+        w: Size.full,
+        maxWidth: resolveSizingProp(maxWidth),
+        gap: gap as any,
+        py: Space.n0,
+        px: Space.n24,
       }}
       className={`prose-document ${className}`}
       {...props}
@@ -100,15 +126,17 @@ export function ProseSection({
   contentGap,
   layout = "centered",
   p = "24 0",
-  w = "100%",
+  w = Size.full,
   ...props
-}: React.ComponentProps<typeof Frame> & {
+}: Omit<React.ComponentProps<typeof Frame>, "layout" | "p" | "w"> & {
   maxWidth?: number | string;
   contentGap?: number | string;
   layout?: "centered" | "full";
+  p?: any; // Allow loose
+  w?: any; // Allow loose
 }) {
   return (
-    <Frame w={w} p={p} {...props}>
+    <Frame override={{ w: w, p: p }} {...props}>
       {layout === "centered" ? (
         <ProseDocument maxWidth={maxWidth} gap={contentGap}>
           {children}
@@ -125,18 +153,19 @@ export function ProseActions({
   align = "left",
   gap = 2,
   ...props
-}: Omit<React.ComponentProps<typeof Frame>, "align"> & {
+}: Omit<React.ComponentProps<typeof Frame>, "align" | "gap"> & {
   align?: "left" | "center" | "right";
+  gap?: number | string;
 }) {
   const justify =
     align === "center" ? "center" : align === "right" ? "end" : "start";
 
   return (
     <Frame
-      row
-      gap={gap}
-      justify={justify}
       style={{ marginTop: "var(--space-6)" }}
+      override={{ gap: gap as any }}
+      layout={Layout.Row.Actions.Default}
+      justify={justify}
       {...props}
     >
       {children}

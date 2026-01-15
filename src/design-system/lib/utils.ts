@@ -20,6 +20,16 @@ export function toToken(
   if (typeof value === "string") {
     const trimmed = value.trim();
 
+    // If it is already a token reference (e.g. "size.n24", "container.n1024")
+    // Resolve it directly to a variable: var(--size-n24), var(--container-n1024)
+    if (trimmed.includes(".")) {
+      const parts = trimmed.split(".");
+      // Basic validation: if 2 parts, treat as [scale, key]
+      if (parts.length === 2) {
+        return `var(--${parts[0]}-${parts[1]})`;
+      }
+    }
+
     // Special semantic mappings
     if (prefix === "radius" && trimmed === "round") {
       return `var(--radius-round-md)`;
@@ -58,7 +68,11 @@ export function toToken(
         .split(/\s+/)
         .map((v) => {
           const cleanV = v.replace(".", "-");
-          if (!isNaN(parseFloat(v)) && !v.includes("px") && !v.includes("%")) {
+          if (
+            !Number.isNaN(parseFloat(v)) &&
+            !v.includes("px") &&
+            !v.includes("%")
+          ) {
             return `var(--${prefix}-${cleanV})`;
           }
           return v;

@@ -1,0 +1,87 @@
+
+> minimal-design-kit@0.0.0 lint:design
+> node scripts/design-audit.cjs
+
+🔍 Starting Design System Audit...
+
+📄 src/apps/IDEApp.tsx
+   L129 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L149 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L359 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L477 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L433 [Rigid Row]: Fixed-width Row must have at least one flexible child
+      Code: <Frame
+   L687 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L782 [Tiny Action]: Interactive element too small (14px). Minimum safe size is 20px.
+      Code: <Action
+
+📄 src/apps/SlideApp.tsx
+   L87 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L200 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L186 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L172 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L147 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+
+📄 src/apps/TextSystemApp.tsx
+   L659 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+
+📄 src/apps/TokensApp.tsx
+   L191 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L214 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L312 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+
+📄 src/apps/cms/BodyContentSection.tsx
+   L106 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+
+📄 src/apps/cms/CMSNavigation.tsx
+   L42 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L76 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+
+📄 src/apps/cms/FeatureGridSection.tsx
+   L206 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+
+📄 src/apps/cms/HeaderHero.tsx
+   L199 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L204 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+   L147 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+
+📄 src/apps/cms/ScrollTabSection.tsx
+   L34 [Rigid Row]: Fixed-width Row must have at least one flexible child
+      Code: <Frame
+
+📄 src/apps/cms/SiteHeader.tsx
+   L37 [Rigid Row]: Fixed-width Row must have at least one flexible child
+      Code: <Frame
+
+📄 src/apps/crm/CRMHeader.tsx
+   L45 [Rigid Row]: Fixed-width Row must have at least one flexible child
+      Code: <Frame
+   L45 [Floating Flat Surface]: Surface with no radius must touch container edges
+      Code: <Frame
+
+📄 src/inspector/InspectorOverlay.tsx
+   L185 [Hardcoded Pixel]: : "3px"
+      Code: borderRadius: "3px",
+
+✅ Audit Complete. Found 28 potential anomalies.

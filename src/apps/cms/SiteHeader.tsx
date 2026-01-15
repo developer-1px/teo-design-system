@@ -1,75 +1,110 @@
 import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../../design-system/text/Text";
-import { Frame } from "../../design-system/Frame";
+import {
+  FontSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 
 export interface SiteHeaderProps {
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
 }
 
-export function SiteHeader({ isSidebarOpen: _isSidebarOpen, onToggleSidebar: _onToggleSidebar }: SiteHeaderProps) {
+export function SiteHeader({
+  isSidebarOpen: _isSidebarOpen,
+  onToggleSidebar: _onToggleSidebar,
+}: SiteHeaderProps) {
   return (
     <Frame
-      w="100%"
-      h="header"
-      p="0 6"
-      row
-      align="center"
-      justify="center"
-      surface="base"
+      override={{
+        w: Size.full,
+      }}
       style={{
+        height: "var(--header-height)",
         position: "sticky",
         top: 0,
         zIndex: 100,
-        borderBottom: "1px solid var(--border-color)"
+        borderBottom: "1px solid var(--border-color)",
       }}
+      layout={Layout.Row.Header.Default}
+      align="center"
+      justify="center"
+      surface="base"
     >
       <Frame
-        w="100%"
-        maxWidth={300}
-        row
+        override={{ w: Size.full }}
+        style={{
+          maxWidth: "var(--container-n1280)",
+          padding: "0 var(--space-n24)",
+        }}
+        layout={Layout.Row.Header.Default}
         justify="between"
         align="center"
       >
-        <Frame row gap={2} align="center">
+        <Frame
+          override={{ gap: Space.n8 }}
+          layout={Layout.Row.Item.Default}
+          align="center"
+        >
           <Frame
-            w={32}
-            h={32}
-            rounded="lg"
-            surface="primary"
+            override={{
+              w: Size.n32,
+              h: Size.n32,
+              rounded: "lg",
+              shadow: "sm",
+            }}
             style={{ border: "1px solid var(--border-color)" }}
+            surface="primary"
             pack
-            shadow="sm"
           >
-            <Text.Card.Title style={{ color: "white" }}>
+            <Text.Card.Title
+              size={FontSize.n16}
+              weight="bold"
+              style={{ color: "white" }}
+            >
               M
             </Text.Card.Title>
           </Frame>
-          <Text.Card.Title>
+          <Text.Card.Title size={FontSize.n18} weight="bold">
             Minimal
           </Text.Card.Title>
         </Frame>
 
-        <Frame row gap={6}>
-          <Frame row gap={2}>
-            <Action label="Features" variant="ghost" />
-            <Action label="Pricing" variant="ghost" />
-            <Action label="Resources" variant="ghost" />
+        <Frame
+          override={{ gap: Space.n32 }}
+          layout={Layout.Row.Actions.Default}
+          align="center"
+          flex
+        >
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Actions.Default}
+          >
+            <Action label="Features" variant="ghost" rounded="md" />
+            <Action label="Pricing" variant="ghost" rounded="md" />
+            <Action label="Resources" variant="ghost" rounded="md" />
           </Frame>
 
-          <Frame row gap={4} align="center">
+          <Frame
+            override={{ gap: Space.n12 }}
+            layout={Layout.Row.Actions.Between}
+            align="center"
+          >
             <Action
               label="Log in"
               variant="ghost"
-              h="action"
-              p="0 4"
-              rounded="lg"
+              h={Size.n36}
+              px={Space.n16}
+              rounded="md"
             />
             <Action
               label="Get Started"
               variant="primary"
-              h="action"
-              p="0 6"
+              h={Size.n36}
+              px={Space.n20}
               rounded="full"
               glow
             />

@@ -1,0 +1,1838 @@
+# Minimal Design Kit (MDK) - Complete Documentation
+
+> **Mission**: Enable AI to design consistently by transforming infinite CSS choices into reason-driven decisions
+> **Core Principle**: "No CSS Without Reason" - Every design decision must answer WHY before HOW
+
+---
+
+## Table of Contents
+
+1. [Philosophy & Purpose](#philosophy--purpose)
+2. [The Problem MDK Solves](#the-problem-mdk-solves)
+3. [3-Tier Intent System](#3-tier-intent-system)
+4. [13 CSS Abstraction Categories](#13-css-abstraction-categories)
+5. [Core Components](#core-components)
+6. [Design Token System](#design-token-system)
+7. [API Patterns & Usage](#api-patterns--usage)
+8. [Component Examples](#component-examples)
+9. [Decision Trees](#decision-trees)
+10. [Architecture](#architecture)
+11. [Development Guide](#development-guide)
+
+---
+
+## Philosophy & Purpose
+
+### The Journey
+
+MDK didn't start as a design system project. It started from a simple observation: **AI can design beautifully, but breaks down when you modify anything**.
+
+When you ask AI to create a UI:
+- ✅ First attempt: Beautiful, consistent, well-proportioned
+- ❌ After modifications: Spacing inconsistent, colors drift, layout breaks
+
+**Why?** CSS has infinite combinations:
+```
+Spacing: 0-100px (infinite)
+Sizing: 0-∞ (infinite)
+Colors: 16,777,216 RGB combinations
+Layout: Hundreds of flexbox/grid combinations
+
+Total: Infinite × Infinite × 16M × Hundreds = Practically Infinite
+```
+
+With infinite choices, AI cannot maintain consistency.
+
+### The Insight: Design = Reasons, Not Choices
+
+**Traditional view**: Design is picking from infinite options
+**MDK view**: Design is answering "WHY?" questions
+
+When you know WHY:
+- "WHY this spacing?" → "Section separation" → 24px
+- "WHY this width?" → "Sidebar" → 240px
+- "WHY this color?" → "Primary action" → var(--primary-bg)
+
+**Result**: WHY → Automatic HOW
+
+### Core Philosophy
+
+```
+1. Every CSS property must answer a WHY question
+2. Same WHY → Same CSS (automatic consistency)
+3. AI can infer WHY from context
+4. WHY reduces infinite choices to ~100 semantic options
+```
+
+---
+
+## The Problem MDK Solves
+
+### CSS Combinatorial Explosion
+
+**Spacing Category**:
+```css
+margin: 0-100px      /* infinite */
+padding: 0-100px     /* infinite */
+gap: 0-100px         /* infinite */
+```
+Combinations: Infinite
+
+**Surface Category**:
+```css
+background-color: 16,777,216 colors
+border: 1px solid × 16,777,216 colors
+border-radius: 0-100px
+box-shadow: infinite combinations (x, y, blur, spread, color)
+```
+Combinations: 16M × 16M × Infinite × Infinite = Infinite
+
+**Layout Category**:
+```css
+display: flex | grid | block | inline | ...
+flex-direction: row | column
+justify-content: start | center | end | between | around | evenly
+align-items: start | center | end | stretch | baseline
+gap: 0-100px
+padding: 0-100px
+```
+Combinations: Hundreds of meaningful combinations
+
+**Total CSS Combinations**: Infinite × Infinite × Hundreds = Functionally Infinite
+
+### Why This Breaks AI
+
+Without MDK:
+```tsx
+// AI creates first button
+<button style={{ padding: "12px 24px", background: "#3B82F6" }}>Save</button>
+
+// AI creates second button (after some context)
+<button style={{ padding: "10px 20px", background: "#2563EB" }}>Cancel</button>
+
+// AI creates third button
+<button style={{ padding: "14px 28px", background: "#1D4ED8" }}>Submit</button>
+```
+
+**Problem**: 12px? 10px? 14px? #3B82F6? #2563EB? No consistency criteria.
+
+With MDK:
+```tsx
+// AI knows: Primary action → surface="primary", standard touch target → h="action"
+<Action variant="primary">Save</Action>   // padding: 12px 24px, background: var(--primary-bg)
+<Action variant="ghost">Cancel</Action>    // padding: 12px 24px, background: transparent
+<Action variant="primary">Submit</Action>  // padding: 12px 24px, background: var(--primary-bg)
+```
+
+**Solution**: WHY (primary action) → CSS (primary surface tokens)
+
+---
+
+## 3-Tier Intent System
+
+The universal pattern for all MDK component specifications.
+
+### Structure
+
+```
+Tier 1: Primitive (Container Component)
+   ↓ Controls
+Tier 2: Intent (Purpose/Why Layer)
+   ↓ Implements
+Tier 3: Component (Implementation/How Layer)
+```
+
+### Field Example (Complete)
+
+```tsx
+// Tier 1: Primitive - Field container
+<Field name="email">
+
+  {/* Tier 2: Intent - Guidance (WHY: User needs to know what to enter) */}
+  <Field.Guidance>
+    {/* Tier 3: Component - Specific guidance elements */}
+    <Field.Label>Email Address</Field.Label>
+    <Field.Description>We'll never share your email</Field.Description>
+    <Field.Placeholder value="you@example.com" />
+  </Field.Guidance>
+
+  {/* Tier 2: Intent - Control (WHY: User needs input mechanism) */}
+  <Field.Control>
+    {/* Tier 3: Component - Any input UI */}
+    <Input type="email" />
+  </Field.Control>
+
+  {/* Tier 2: Intent - Validation (WHY: Data must be correct) */}
+  <Field.Validation>
+    {/* Tier 3: Component - Validation rules */}
+    <Field.Schema value={emailSchema} />
+    <Field.Rule pattern="^[^@]+@[^@]+\.[^@]+$" />
+  </Field.Validation>
+
+  {/* Tier 2: Intent - Feedback (WHY: User needs to know if valid) */}
+  <Field.Feedback>
+    {/* Tier 3: Component - Feedback messages */}
+    <Field.Error />
+    <Field.Success message="Looks good!" />
+  </Field.Feedback>
+
+  {/* Tier 2: Intent - State (WHY: Track field state) */}
+  <Field.State>
+    <Field.Value />
+    <Field.Touched />
+    <Field.Dirty />
+  </Field.State>
+
+  {/* Tier 2: Intent - Transform (WHY: Format data) */}
+  <Field.Transform>
+    <Field.Format formatter={lowercase} />
+    <Field.Parse parser={trimSpaces} />
+  </Field.Transform>
+
+</Field>
+```
+
+### 6 Core Field Intents
+
+1. **Guidance** - Guide user on what to enter (label, description, placeholder)
+2. **Control** - Provide input mechanism (Input, Select, Textarea, custom UI)
+3. **Validation** - Ensure data correctness (schema, rules, triggers)
+4. **Feedback** - Show validation results (error, success, warning)
+5. **State** - Manage field state (value, touched, dirty, valid)
+6. **Transform** - Convert data format (format, parse, sanitize)
+
+### Action Example
+
+```tsx
+// Tier 1: Primitive - Action container
+<Action onClick={handleSave}>
+
+  {/* Tier 2: Intent - Handler (WHY: Define action behavior) */}
+  <Action.Handler>
+    <Action.OnClick handler={handleSave} />
+    <Action.Async />
+  </Action.Handler>
+
+  {/* Tier 2: Intent - State (WHY: Manage action state) */}
+  <Action.State loading={isSaving} disabled={!isValid} />
+
+  {/* Tier 2: Intent - Confirmation (WHY: Prevent accidental actions) */}
+  <Action.Confirmation message="Save changes?" />
+
+  {/* Tier 2: Intent - Feedback (WHY: Show action results) */}
+  <Action.Feedback>
+    <Action.Success message="Saved!" />
+    <Action.Error />
+  </Action.Feedback>
+
+  {/* Tier 3: Component - Button UI */}
+  <Button variant="primary">Save</Button>
+</Action>
+```
+
+### 6 Core Action Intents
+
+1. **Handler** - Define action behavior (onClick, async handling)
+2. **State** - Manage action state (loading, disabled, pending)
+3. **Confirmation** - Request user confirmation (dialog, message)
+4. **Feedback** - Show action results (success, error, progress)
+5. **Prevention** - Prevent unwanted execution (once, debounce, throttle)
+6. **Lifecycle** - Hook into action phases (onStart, onSuccess, onError)
+
+### Progressive Enhancement: 3 Usage Levels
+
+**Level 1: Simple** (Props-based, Intent hidden)
+```tsx
+<Field name="email" label="Email" validate={schema}>
+  <Input />
+</Field>
+```
+- Fast to write
+- Intent hidden in props
+- Good for simple cases
+
+**Level 2: Structured** (Intent groups visible)
+```tsx
+<Field name="email">
+  <Field.Guidance label="Email" />
+  <Field.Validation schema={schema} />
+  <Field.Control><Input /></Field.Control>
+</Field>
+```
+- Intent structure visible
+- Better control
+- Clear separation of concerns
+
+**Level 3: Explicit** (Full Intent + Component control)
+```tsx
+<Field name="email">
+  <Field.Guidance>
+    <Field.Label>Email</Field.Label>
+    <Field.Description>Login credentials</Field.Description>
+  </Field.Guidance>
+  <Field.Control><CustomInput /></Field.Control>
+  <Field.Validation><Field.Schema value={schema} /></Field.Validation>
+  <Field.Feedback><Field.Error /></Field.Feedback>
+</Field>
+```
+- Maximum flexibility
+- Full customization
+- Intent-driven clarity
+
+### 5 Design Principles
+
+1. **Intent Visibility** - API structure reveals WHY components exist
+2. **Progressive Enhancement** - Start simple, add complexity as needed
+3. **Default Composition** - Auto-render sensible defaults, allow overrides
+4. **Context Inheritance** - Child components inherit parent Intent contexts
+5. **Intent Independence** - Each Intent works standalone, order-agnostic
+
+---
+
+## 13 CSS Abstraction Categories
+
+Every CSS property belongs to exactly one category. Each category answers a specific WHY question.
+
+### Category Hierarchy
+
+```
+Level 1: Existence (기반)
+├─ Content Flow
+└─ Sizing
+
+Level 2: Structure (구조)
+├─ Layout
+├─ Spacing
+├─ Overlay
+├─ Anchor
+└─ Offset
+
+Level 3: Expression (표현)
+├─ Surface
+├─ Typography
+└─ Visual Effects
+
+Level 4: Response (반응)
+├─ Interaction
+├─ State
+└─ Motion
+```
+
+---
+
+### 1. Content Flow (표시)
+
+**WHY**: "Should this content be displayed, and how?"
+
+**Properties**: `display`, `visibility`, `clip-path`, `overflow`, `content` (::before/::after)
+
+**Decision Tree**:
+```
+"Should this be displayed?"
+├─ "Completely remove" → display: none
+├─ "Hide but keep space" → visibility: hidden
+├─ "Show partial" → clip-path: circle(50%)
+├─ "Overflow scroll" → overflow: auto
+└─ "Add decoration" → ::before { content: "★" }
+```
+
+**MDK Tokens**: 5 options
+- `display: none` | `block` | `flex` | `grid` | `inline`
+
+---
+
+### 2. Sizing (존재감)
+
+**WHY**: "How much space should this element occupy?"
+
+**Properties**: `width`, `height`, `min-width`, `max-width`, `min-height`, `max-height`, `flex-grow`, `flex-shrink`, `aspect-ratio`
+
+**3 Fundamental Questions**:
+1. "How important?" (importance-based) → Large/medium/small
+2. "What does it contain?" (content-based) → Text/image/button/input
+3. "Where is it?" (context-based) → Sidebar/main/modal
+
+**Width Strategies**:
+```
+"How to determine width?"
+├─ Content-based → auto / min-content / max-content
+├─ Flexible → flex: 1 / flex: 2
+├─ Fixed → 240px (sidebar) / 680px (content) / 1200px (max)
+└─ Ratio → 33% / 50% / 100% / 100vw
+```
+
+**Height Strategies**:
+```
+"How to determine height?"
+├─ Content-based (90%) → auto
+├─ Fixed → 48px (button) / 64px (header) / 200px (card)
+├─ Viewport → 100vh / 50vh / calc(100vh - 64px)
+└─ Aspect ratio → 16/9 / 4/3 / 1/1
+```
+
+**MDK Tokens**: ~20 semantic values
+```css
+/* Interactive */
+--size-action-sm: 40px   /* Min touch target */
+--size-action-md: 48px   /* Standard button/input */
+--size-action-lg: 56px   /* Large CTA */
+
+/* Layout */
+--size-sidebar-md: 240px  /* Standard sidebar */
+--size-panel-md: 480px    /* Medium panel */
+
+/* Content */
+--size-content-md: 680px  /* Optimal reading width */
+--size-content-max: 1200px /* Maximum content width */
+
+/* Modal */
+--size-modal-md: 600px    /* Standard modal */
+
+/* Header */
+--size-header-md: 64px    /* Desktop header */
+```
+
+**Usage**:
+```tsx
+<Frame w="sidebar" />        // 240px (WHY: Sidebar standard width)
+<Frame w="content" />        // 680px (WHY: Optimal reading width)
+<Frame w="modal" />          // 600px (WHY: Standard modal width)
+<Frame h="action" />         // 48px (WHY: Standard touch target)
+<Frame h="header" />         // 64px (WHY: Standard header height)
+<Frame aspectRatio="16/9" /> // Video/image ratio
+```
+
+---
+
+### 3. Layout (배치)
+
+**WHY**: "How to organize internal elements?"
+
+**Properties**: `display: flex/grid`, `flex-direction`, `justify-content`, `align-items`, `gap`, `padding`
+
+**Decision Tree**:
+```
+"How to arrange children?"
+├─ Vertical flow
+│   ├─ "Large section separation" → Layout.Stack.Section (gap: 24px, p: 24px)
+│   ├─ "Content rhythm" → Layout.Stack.Content (gap: 12px, p: 16px)
+│   ├─ "Tight list" → Layout.Stack.List (gap: 4px, p: 8px)
+│   └─ "Form fields" → Layout.Stack.Form (gap: 20px, p: 12px)
+├─ Horizontal flow
+│   ├─ "Action buttons" → Layout.Row.Actions (gap: 8px, p: 12px)
+│   ├─ "Items" → Layout.Row.Items (gap: 12px, p: 16px)
+│   └─ "Toolbar" → Layout.Row.Toolbar (gap: 4px, p: 8px)
+├─ Grid
+│   ├─ "Card grid" → Layout.Grid.Cards (gap: 16px)
+│   └─ "Data grid" → Layout.Grid.Data (gap: 1px)
+└─ Center
+    └─ "Empty state" → Layout.Center
+```
+
+**MDK Tokens**: ~15 presets
+```css
+--gap-section: 24px    /* Large section separation */
+--gap-content: 12px    /* Content rhythm */
+--gap-list: 4px        /* Tight list */
+--gap-form: 20px       /* Form field spacing */
+--gap-actions: 8px     /* Button group */
+```
+
+**Usage**:
+```tsx
+<Frame layout="stack.section">  {/* WHY: Large section separation */}
+  <Section />
+  <Section />
+</Frame>
+
+<Frame layout="row.actions">    {/* WHY: Action button group */}
+  <Button>Cancel</Button>
+  <Button>Save</Button>
+</Frame>
+
+<Frame layout="grid.cards" columns={3}> {/* WHY: Card grid */}
+  <Card />
+  <Card />
+  <Card />
+</Frame>
+```
+
+---
+
+### 4. Spacing (관계)
+
+**WHY**: "What relationship does this element have with others?"
+
+**Properties**: `margin`, `margin-block`, `margin-inline`
+
+**Decision Tree**:
+```
+"What relationship with siblings?"
+├─ "No relationship" → margin: 0
+├─ "Slight separation" → margin: var(--space-2)  // 8px
+├─ "Clear separation" → margin: var(--space-4)   // 16px
+└─ "Strong separation" → margin: var(--space-6)  // 32px
+```
+
+**Key Insight**: `gap` (Layout) vs `margin` (Spacing)
+- `gap`: Parent controls children spacing (consistent)
+- `margin`: Element controls its own relationship (exceptional)
+
+**Usage**:
+```tsx
+{/* Prefer gap (Layout) */}
+<Frame gap={4}>
+  <Item />  {/* No margin needed */}
+  <Item />
+</Frame>
+
+{/* Use margin (Spacing) for exceptions */}
+<Frame gap={2}>
+  <Item />
+  <Item m={4} />  {/* WHY: This item needs extra space */}
+  <Item />
+</Frame>
+```
+
+---
+
+### 5. Surface (배경면)
+
+**WHY**: "How should this element be visually distinguished?"
+
+**Properties**: `background-color`, `border`, `border-radius`, `box-shadow`
+
+**Decision Tree**:
+```
+"How to distinguish this element?"
+├─ "Base background" → surface="base" (page background)
+├─ "Recessed" → surface="sunken" (input fields, wells)
+├─ "Elevated card" → surface="raised" (cards, panels)
+├─ "Top layer" → surface="overlay" (modals, dropdowns)
+├─ "Emphasized" → surface="primary" (CTA, important)
+└─ "Selected" → surface="selected" (active tab, current item)
+```
+
+**MDK Tokens**: 6 semantic surfaces
+```css
+--surface-base      /* Page background */
+--surface-sunken    /* Input interior, well */
+--surface-raised    /* Card, panel, elevated content */
+--surface-overlay   /* Modal, drawer, top layer */
+--surface-primary   /* CTA, important action */
+--surface-selected  /* Active tab, selected item */
+```
+
+Each surface automatically determines:
+- `background-color`
+- `border` (present/absent)
+- `border-radius` (consistent rounding)
+- `box-shadow` (depth-appropriate)
+
+**Usage**:
+```tsx
+<Frame surface="base">       {/* WHY: Page background */}
+<Frame surface="raised">     {/* WHY: Elevated card */}
+<Frame surface="sunken">     {/* WHY: Input field */}
+<Frame surface="overlay">    {/* WHY: Modal dialog */}
+<Frame surface="primary">    {/* WHY: Primary CTA */}
+<Frame surface="selected">   {/* WHY: Active tab */}
+```
+
+---
+
+### 6. Typography (전달)
+
+**WHY**: "How should this text be read?"
+
+**Properties**: `font-size`, `line-height`, `font-weight`, `letter-spacing`, `color`, `font-family`
+
+**Decision Tree**:
+```
+"How should text be read?"
+├─ Document typography (Prose)
+│   ├─ "Top-level heading" → Prose.H1 (80px, bold, tight)
+│   ├─ "Section heading" → Prose.H2 (56px, bold)
+│   ├─ "Subsection" → Prose.H3 (40px, semibold)
+│   ├─ "Small heading" → Prose.H4 (24px, semibold)
+│   ├─ "Body text" → Prose.Body (20px, regular, 1.6 line-height)
+│   ├─ "Small body" → Prose.BodySm (16px, regular)
+│   └─ "Caption" → Prose.Caption (14px, medium, wide spacing)
+├─ UI typography (Context-aware)
+│   ├─ "Card title" → Card.Title (14px, medium)
+│   ├─ "Card description" → Card.Description (12px, regular)
+│   ├─ "Field label" → Field.Label (12px, medium)
+│   └─ "Menu item" → Menu.Item (14px, regular)
+└─ Data typography
+    ├─ "Table header" → Table.Header (12px, bold, uppercase)
+    └─ "Table cell" → Table.Cell (14px, regular)
+```
+
+**MDK Tokens**: ~15 semantic text styles
+```css
+/* Prose Typography */
+--prose-h1-size: 80px, height: 1.1, weight: 700
+--prose-h2-size: 56px, height: 1.2, weight: 700
+--prose-h3-size: 40px, height: 1.3, weight: 600
+--prose-h4-size: 24px, height: 1.4, weight: 600
+--prose-body-size: 20px, height: 1.6, weight: 400
+--prose-body-sm-size: 16px, height: 1.6, weight: 400
+--prose-caption-size: 14px, height: 1.5, weight: 500
+
+/* UI Typography */
+--text-ui-title-size: 14px, weight: 500
+--text-ui-body-size: 12px, weight: 400
+```
+
+**Usage**:
+```tsx
+{/* Document context */}
+<Prose role="h1">Main Title</Prose>
+<Prose role="body">Paragraph text</Prose>
+
+{/* Card context */}
+<Card>
+  <Text.Card.Title>Card Title</Text.Card.Title>
+  <Text.Card.Description>Card description</Text.Card.Description>
+</Card>
+
+{/* Field context */}
+<Field>
+  <Text.Field.Label>Field Label</Text.Field.Label>
+  <Text.Field.Value>Field Value</Text.Field.Value>
+</Field>
+```
+
+---
+
+### 7. Motion (변화)
+
+**WHY**: "How should change be perceived?"
+
+**Properties**: `transition`, `animation`, `transform`
+
+**Decision Tree**:
+```
+"How to show change?"
+├─ "Smooth transition" → transition: all 0.2s ease
+├─ "Instant response" → transition: none
+├─ "Attention-grabbing" → animation: bounce 0.5s
+├─ "Physical realism" → transition-timing-function: spring
+└─ "Spatial movement" → transform: translate(100px, 0)
+```
+
+**MDK Tokens**: ~8 motion patterns
+```css
+/* Duration */
+--motion-instant: 0ms
+--motion-fast: 150ms
+--motion-normal: 250ms
+--motion-slow: 400ms
+
+/* Easing */
+--motion-ease-out: cubic-bezier(0, 0, 0.2, 1)
+```
+
+**Usage**:
+```tsx
+<Frame motion="hover.lift">      {/* WHY: Lift on hover */}
+<Frame motion="press.shrink">    {/* WHY: Shrink on press */}
+<Frame motion="enter.fade">      {/* WHY: Fade in on enter */}
+```
+
+---
+
+### 8. Visual Effects (분위기)
+
+**WHY**: "What feeling should this element convey?"
+
+**Properties**: `opacity`, `filter`, `backdrop-filter`, `mix-blend-mode`
+
+**Decision Tree**:
+```
+"What feeling to convey?"
+├─ "Disabled/inactive" → opacity: 0.5
+├─ "Out of focus" → filter: blur(4px)
+├─ "Glass-like transparency" → backdrop-filter: blur(10px)
+├─ "Emphasized" → filter: brightness(1.2) contrast(1.1)
+└─ "Layer blending" → mix-blend-mode: multiply
+```
+
+**Usage**:
+```tsx
+<Frame opacity={0.5}>              {/* WHY: Disabled state */}
+<Frame backdrop="blur">            {/* WHY: Glass morphism */}
+```
+
+---
+
+### 9-13. Remaining Categories (Brief)
+
+**9. Interaction**: "How do users interact?" (cursor, pointer-events, user-select)
+**10. State**: "How to react to interaction?" (:hover, :active, .selected)
+**11. Overlay**: "Should this float above?" (position: absolute/fixed, z-index)
+**12. Anchor**: "Should this stick when scrolling?" (position: sticky)
+**13. Offset**: "Needs position adjustment?" (position: relative, top/left)
+
+---
+
+## Core Components
+
+### Frame
+
+Universal layout primitive. The foundation of all MDK layouts.
+
+**Purpose**: Replace `<div>` with semantic, token-driven props
+
+**Props**:
+```tsx
+interface FrameProps {
+  // Layout
+  row?: boolean           // flex-direction: row
+  flex?: number           // flex: 1
+  fill?: boolean          // width/height: 100%
+  gap?: number            // gap using space tokens
+  p?: number | string     // padding (shorthand)
+
+  // Grid
+  grid?: boolean          // display: grid
+  columns?: string        // grid-template-columns
+  rows?: string           // grid-template-rows
+
+  // Alignment
+  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
+  pack?: boolean          // center both align and justify
+
+  // Surface
+  surface?: 'base' | 'raised' | 'sunken' | 'overlay' | 'primary' | 'selected'
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'round'
+  shadow?: 'sm' | 'md' | 'lg'
+  border?: boolean | 'top' | 'bottom' | 'left' | 'right'
+
+  // Sizing
+  w?: number | string     // width using size tokens or value
+  h?: number | string     // height using size tokens or value
+  minW?: number | string
+  maxW?: number | string
+  minH?: number | string
+  maxH?: number | string
+
+  // Position
+  position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky'
+  top?: number | string
+  left?: number | string
+  right?: number | string
+  bottom?: number | string
+  zIndex?: number
+
+  // Other
+  overflow?: 'hidden' | 'auto' | 'scroll' | 'visible'
+  cursor?: 'pointer' | 'default' | 'text' | 'move' | 'not-allowed'
+  ratio?: string          // aspect-ratio
+  as?: string             // polymorphic component (default: "div")
+}
+```
+
+**Examples**:
+```tsx
+{/* Card */}
+<Frame
+  surface="raised"
+  layout="stack.content"
+  p={4}
+  rounded="md"
+  shadow="sm"
+>
+  <Text.Card.Title>Card Title</Text.Card.Title>
+  <Text.Card.Description>Description</Text.Card.Description>
+</Frame>
+
+{/* Sidebar + Main Layout */}
+<Frame row fill>
+  <Frame w="sidebar" surface="raised">
+    Sidebar
+  </Frame>
+  <Frame flex={1}>
+    Main Content
+  </Frame>
+</Frame>
+
+{/* Card Grid */}
+<Frame grid columns="repeat(3, 1fr)" gap={4}>
+  <Card />
+  <Card />
+  <Card />
+</Frame>
+
+{/* Centered Modal */}
+<Frame
+  position="fixed"
+  top="50%"
+  left="50%"
+  style={{ transform: 'translate(-50%, -50%)' }}
+  surface="overlay"
+  rounded="xl"
+  shadow="lg"
+  w="modal"
+>
+  Modal Content
+</Frame>
+```
+
+---
+
+### Text & Prose
+
+Context-aware typography components.
+
+**Text**: Base text component with variants
+```tsx
+<Text variant={1 | 2 | 3 | 4} weight="regular" | "medium" | "bold">
+  Text content
+</Text>
+```
+
+**Prose**: Document typography with semantic roles
+```tsx
+interface ProseProps {
+  role: 'h1' | 'h2' | 'h3' | 'h4' | 'body' | 'body-sm' | 'caption'
+  as?: string              // Override element
+  align?: 'left' | 'center' | 'right' | 'justify'
+  color?: 'primary' | 'secondary' | 'tertiary' | 'white' | string
+}
+```
+
+**Context-Aware Text**:
+```tsx
+// Card context
+<Card>
+  <Text.Card.Title>Card Title</Text.Card.Title>
+  <Text.Card.Description>Card description</Text.Card.Description>
+  <Text.Card.Note>Card note</Text.Card.Note>
+</Card>
+
+// Field context
+<Field>
+  <Text.Field.Label>Field Label</Text.Field.Label>
+  <Text.Field.Value>Field Value</Text.Field.Value>
+  <Text.Field.Note>Field note</Text.Field.Note>
+</Field>
+
+// Table context
+<Table>
+  <Text.Table.Header>Column</Text.Table.Header>
+  <Text.Table.Cell>Value</Text.Table.Cell>
+</Table>
+
+// Menu context
+<Menu>
+  <Text.Menu.Label>Menu</Text.Menu.Label>
+  <Text.Menu.Item>Item</Text.Menu.Item>
+</Menu>
+```
+
+**ProseDocument & ProseSection**:
+```tsx
+// Document with max-width and centered
+<ProseDocument maxWidth={680} gap={4}>
+  <Prose role="h1">Article Title</Prose>
+  <Prose role="body">Article content...</Prose>
+</ProseDocument>
+
+// Full-width section with document inside
+<ProseSection maxWidth={680} p="96 24">
+  <Prose role="h2">Section Title</Prose>
+  <Prose role="body">Section content...</Prose>
+</ProseSection>
+```
+
+---
+
+### Action
+
+Button/action component with variants and states.
+
+**Props**:
+```tsx
+interface ActionProps {
+  icon?: LucideIcon      // Icon component
+  label?: string         // Optional text label
+  variant?: 'ghost' | 'surface' | 'primary'
+  size?: number          // Square size shortcut
+  iconSize?: number      // Icon size
+  rounded?: string       // Border radius
+  onClick?: () => void
+}
+```
+
+**Examples**:
+```tsx
+{/* Icon only */}
+<Action icon={Settings} />
+
+{/* Icon + Label */}
+<Action icon={Save} label="Save" variant="primary" />
+
+{/* Ghost button */}
+<Action icon={Close} variant="ghost" />
+
+{/* Primary CTA */}
+<Action icon={ArrowRight} label="Continue" variant="primary" />
+```
+
+---
+
+### Field
+
+Input field component with label, scrubbing support, and validation.
+
+**Features**:
+- Label-based scrubbing: Drag horizontally on label to increment/decrement numeric values
+- Icon support (left and right)
+- Flexible width (flex: 1 by default)
+
+**Props**:
+```tsx
+interface FieldProps {
+  label?: string         // Optional label (enables scrubbing)
+  icon?: ReactNode       // Left icon
+  rightIcon?: ReactNode  // Right icon
+  value?: string | number
+  onChange?: (value: string) => void
+  flex?: boolean         // flex: 1
+  type?: string          // input type
+}
+```
+
+**Examples**:
+```tsx
+{/* Simple input */}
+<Field value={name} onChange={setName} />
+
+{/* With label (scrubbing enabled) */}
+<Field label="X" value={x} onChange={setX} />
+
+{/* With icons */}
+<Field icon={<Search />} rightIcon={<X />} />
+
+{/* Numeric scrubbing */}
+<Field label="Opacity" value={opacity} onChange={setOpacity} />
+{/* Drag left/right on "Opacity" label to change value */}
+```
+
+---
+
+### Section
+
+Container with optional title and surface styling.
+
+**Props**:
+```tsx
+interface SectionProps {
+  title?: string
+  surface?: string
+  children: ReactNode
+}
+```
+
+**Example**:
+```tsx
+<Section title="Settings" surface="raised">
+  <Field label="Name" />
+  <Field label="Email" />
+</Section>
+```
+
+---
+
+### Separator
+
+Divider component (horizontal/vertical).
+
+**Props**:
+```tsx
+interface SeparatorProps {
+  vertical?: boolean
+}
+```
+
+**Examples**:
+```tsx
+<Frame layout="stack.content">
+  <Item />
+  <Separator />
+  <Item />
+</Frame>
+
+<Frame row gap={2}>
+  <Item />
+  <Separator vertical />
+  <Item />
+</Frame>
+```
+
+---
+
+## Design Token System
+
+All design tokens are defined in `src/design-system/token/` as CSS custom properties.
+
+### Token Files
+
+**tokens.1tier.css** - Base tier tokens (spacing, sizing, radius, shadow)
+**tokens.palette.css** - Color palette (primitives)
+**tokens.components.css** - Component-specific tokens
+**tokens.themes.css** - Light/dark theme tokens
+**tokens.experiences.css** - Experience-level tokens (application, landing, document)
+**tokens.typography.css** - Typography scale and styles
+**tokens.layout.css** - Layout-specific tokens
+**tokens.icons.css** - Icon sizing tokens
+
+### Core Token Scales
+
+**Spacing Scale** (0-128px):
+```css
+--space-0: 0px
+--space-1: 4px
+--space-2: 8px
+--space-3: 12px
+--space-4: 16px
+--space-5: 24px
+--space-6: 32px
+--space-7: 48px
+--space-8: 64px
+--space-9: 80px
+--space-10: 96px
+--space-12: 112px
+--space-16: 128px
+```
+
+**Size Scale** (12px-1200px):
+```css
+--size-3: 12px
+--size-4: 16px
+--size-6: 32px
+--size-action: 40px     /* Standard button/input */
+--size-header: 80px     /* Header height */
+--size-50: 200px
+--size-60: 240px        /* Sidebar standard */
+--size-80: 320px
+--size-100: 400px
+--size-150: 600px       /* Modal standard */
+--size-170: 680px       /* Content optimal reading */
+--size-200: 800px
+--size-250: 1000px
+--size-300: 1200px      /* Content maximum */
+```
+
+**Surface Tokens**:
+```css
+--surface-base          /* Page background */
+--surface-sunken        /* Input interior */
+--surface-raised        /* Card, panel */
+--surface-overlay       /* Modal, dropdown */
+--surface-primary       /* Primary CTA */
+--surface-selected      /* Active tab */
+```
+
+**Text Color Tokens**:
+```css
+--text-primary          /* Main text */
+--text-body             /* Body text */
+--text-subtle           /* Subtle text */
+--text-muted            /* Muted text */
+--text-dim              /* Dim text */
+```
+
+**Border Tokens**:
+```css
+--border-color          /* Standard border */
+--border-width: 1px
+```
+
+**Radius Tokens**:
+```css
+--radius-none: 0
+--radius-sm: 4px
+--radius-md: 6px
+--radius-lg: 8px
+--radius-xl: 12px
+--radius-2xl: 16px
+--radius-3xl: 24px
+--radius-full: 9999px
+--radius-round: 50%
+--radius-round-md: 8px
+```
+
+**Shadow Tokens**:
+```css
+--shadow-sm: 0 1px 2px rgba(0,0,0,0.05)
+--shadow-md: 0 4px 6px rgba(0,0,0,0.1)
+--shadow-lg: 0 10px 15px rgba(0,0,0,0.15)
+```
+
+**Prose Typography Tokens**:
+```css
+--prose-h1-size: 80px, height: 1.1, spacing: -0.03em, weight: 700
+--prose-h2-size: 56px, height: 1.2, spacing: -0.02em, weight: 700
+--prose-h3-size: 40px, height: 1.3, spacing: -0.01em, weight: 600
+--prose-h4-size: 24px, height: 1.4, spacing: 0em, weight: 600
+--prose-body-size: 20px, height: 1.6, spacing: 0em, weight: 400
+--prose-body-sm-size: 16px, height: 1.6, spacing: 0em, weight: 400
+--prose-caption-size: 14px, height: 1.5, spacing: 0.05em, weight: 500
+```
+
+---
+
+## API Patterns & Usage
+
+### Token Conversion Utility
+
+The `toToken` utility in `src/design-system/utils.ts` converts prop values to CSS custom properties:
+
+```typescript
+toToken(2, "space")      // → "var(--space-2)"
+toToken("md", "radius")  // → "var(--radius-md)"
+toToken("12px", "space") // → "12px" (raw value passes through)
+toToken("10 20", "space") // → "var(--space-10) var(--space-20)"
+```
+
+This enables the prop-based API to accept both token names and raw CSS values.
+
+### Responsive Props
+
+Props can accept objects for responsive values:
+
+```tsx
+<Frame
+  w={{ base: "100%", md: "sidebar", lg: "sidebar.lg" }}
+  columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+>
+  {/* Responsive layout */}
+</Frame>
+```
+
+**Breakpoints**:
+```
+base:   0px    (mobile)
+sm:   640px    (large mobile)
+md:   768px    (tablet)
+lg:  1024px    (desktop)
+xl:  1280px    (large desktop)
+2xl: 1536px    (wide screen)
+```
+
+---
+
+## Component Examples
+
+### Example 1: Dashboard Page
+
+```tsx
+<Experience value="application">
+  <Frame fill surface="base">
+
+    {/* Header Bar */}
+    <Frame layout="row.header" h="header">
+      <Text.Prose variant="sm">Dashboard</Text.Prose>
+      <Action icon={Settings} />
+    </Frame>
+
+    {/* Section Separation */}
+    <Frame layout="stack.section">
+
+      {/* Card Grid */}
+      <Frame grid columns={{ base: 1, md: 2, lg: 3 }} gap={4}>
+
+        {/* Card */}
+        <Frame surface="raised" p={4} rounded="md" shadow="sm">
+          <Text.Card.Title>Total Users</Text.Card.Title>
+          <Text.Card.Description>1,234</Text.Card.Description>
+        </Frame>
+
+        {/* More cards... */}
+
+      </Frame>
+    </Frame>
+
+  </Frame>
+</Experience>
+```
+
+### Example 2: Form Page
+
+```tsx
+<Experience value="application">
+
+  {/* Centered Form */}
+  <Frame layout="stack.form" maxW={120}>
+
+    {/* Field */}
+    <Field name="email">
+      <Field.Label>Email</Field.Label>
+      <Field.Control><input type="email" /></Field.Control>
+    </Field>
+
+    {/* Actions */}
+    <Frame layout="row.actions">
+      <Action variant="ghost">Cancel</Action>
+      <Action variant="primary">Save</Action>
+    </Frame>
+
+  </Frame>
+
+</Experience>
+```
+
+### Example 3: Modal Dialog
+
+```tsx
+<Overlay position="center" backdrop="blur" motion="enter.fade">
+  <Frame
+    surface="overlay"
+    layout="stack.section"
+    shadow="lg"
+    rounded="xl"
+    w="modal"
+    maxH="90vh"
+  >
+    {/* Modal Header */}
+    <Frame layout="row.header">
+      <Text.Prose role="h3">Confirm Action</Text.Prose>
+      <Action icon={X} variant="ghost" />
+    </Frame>
+
+    <Separator />
+
+    {/* Modal Body */}
+    <Frame layout="stack.content">
+      <Text.Prose role="body">Are you sure?</Text.Prose>
+    </Frame>
+
+    <Separator />
+
+    {/* Modal Actions */}
+    <Frame layout="row.actions">
+      <Action variant="ghost">Cancel</Action>
+      <Action variant="primary">Confirm</Action>
+    </Frame>
+  </Frame>
+</Overlay>
+```
+
+### Example 4: App Layout (Header + Sidebar + Main)
+
+```tsx
+<Frame layout="column" h="100vh">
+
+  {/* Header */}
+  <Frame layout="row.header" h="header" surface="raised">
+    <Text.Prose variant="sm">App Name</Text.Prose>
+    <Action icon={Menu} />
+  </Frame>
+
+  {/* Body */}
+  <Frame row flex={1}>
+
+    {/* Sidebar */}
+    <Frame w="sidebar" surface="raised">
+      <Frame layout="stack.list">
+        <MenuItem icon={Home}>Home</MenuItem>
+        <MenuItem icon={Settings}>Settings</MenuItem>
+      </Frame>
+    </Frame>
+
+    {/* Main Content */}
+    <Frame flex={1} p={6}>
+      {/* Main content here */}
+    </Frame>
+
+  </Frame>
+
+</Frame>
+```
+
+---
+
+## Decision Trees
+
+### Sizing Decision Tree
+
+```
+"How to determine size?"
+
+Step 1: Width or Height?
+
+WIDTH:
+├─ "Content determines?" → auto / min-content / max-content
+├─ "Share space with siblings?" → flex: 1 / flex: 2
+├─ "Always same size?" → Fixed (40px-1200px)
+│   ├─ Interactive: 40/48/56/64px
+│   ├─ Layout: 160/240/280/320px
+│   └─ Content: 480/680/800/1200px
+└─ "Parent/viewport ratio?" → 33% / 50% / 100% / 100vw
+
+HEIGHT:
+├─ "Content determines?" (90%) → auto
+├─ "Fixed height needed?"
+│   ├─ Interactive: 40/48/56/64px
+│   ├─ Header: 56/64/80/96px
+│   └─ Card: 200/300/400px
+├─ "Viewport ratio?" → 100vh / 50vh / calc(...)
+└─ "Maintain aspect ratio?" → aspect-ratio: 1/1, 16/9, 4/3
+
+Step 2: Min/Max constraints?
+├─ max-width: Reading width (680px), Modal (90vw)
+├─ min-width: Sidebar (160px), Button (80px)
+├─ max-height: Modal (90vh), Scroll area (80vh)
+└─ min-height: Hero (100vh), Editor (400px)
+
+Step 3: Responsive?
+└─ { base, sm, md, lg, xl }
+```
+
+### Surface Decision Tree
+
+```
+"How to distinguish this element?"
+
+├─ "Base background" → surface="base"
+│   └─ Use: Page background, starting point
+│
+├─ "Recessed/sunken" → surface="sunken"
+│   └─ Use: Input interior, well, pressed button
+│
+├─ "Elevated card" → surface="raised"
+│   └─ Use: Cards, panels, important content
+│
+├─ "Top layer" → surface="overlay"
+│   └─ Use: Modal, drawer, dropdown, page overlay
+│
+├─ "Emphasized" → surface="primary"
+│   └─ Use: CTA, important action, primary button
+│
+└─ "Selected/active" → surface="selected"
+    └─ Use: Active tab, selected item, current state
+
+Each surface automatically applies:
+- background-color (from theme)
+- border (present/absent, color)
+- border-radius (consistent)
+- box-shadow (depth-appropriate)
+```
+
+### Layout Decision Tree
+
+```
+"How to arrange children?"
+
+├─ Vertical flow
+│   ├─ "Large sections" → layout="stack.section" (gap: 24px)
+│   ├─ "Content rhythm" → layout="stack.content" (gap: 12px)
+│   ├─ "Tight list" → layout="stack.list" (gap: 4px)
+│   └─ "Form fields" → layout="stack.form" (gap: 20px)
+│
+├─ Horizontal flow
+│   ├─ "Action buttons" → layout="row.actions" (gap: 8px)
+│   ├─ "Items" → layout="row.items" (gap: 12px)
+│   └─ "Toolbar" → layout="row.toolbar" (gap: 4px)
+│
+├─ Grid
+│   ├─ "Card grid" → layout="grid.cards" (gap: 16px)
+│   └─ "Data grid" → layout="grid.data" (gap: 1px)
+│
+└─ Center
+    └─ "Empty state/modal" → layout="center"
+```
+
+---
+
+## Architecture
+
+### Project Structure
+
+```
+minimal-design-kit/
+├── public/
+│   ├── llms.txt              # This file (overview)
+│   └── llms-full.txt         # Complete documentation
+├── src/
+│   ├── design-system/
+│   │   ├── token/            # Design tokens (CSS custom properties)
+│   │   │   ├── tokens.1tier.css
+│   │   │   ├── tokens.palette.css
+│   │   │   ├── tokens.components.css
+│   │   │   ├── tokens.themes.css
+│   │   │   ├── tokens.experiences.css
+│   │   │   ├── tokens.typography.css
+│   │   │   ├── tokens.layout.css
+│   │   │   └── tokens.icons.css
+│   │   ├── Frame/            # Frame component
+│   │   │   ├── Frame.tsx
+│   │   │   └── FrameProps.ts
+│   │   ├── text/             # Text system
+│   │   │   ├── Text.tsx
+│   │   │   └── context/      # Context-aware text components
+│   │   │       ├── Card.tsx
+│   │   │       ├── Field.tsx
+│   │   │       ├── Menu.tsx
+│   │   │       ├── Prose.tsx
+│   │   │       └── Table.tsx
+│   │   ├── Action.tsx        # Button/action component
+│   │   ├── Field.tsx         # Input field component
+│   │   ├── Section.tsx       # Section container
+│   │   ├── Separator.tsx     # Divider
+│   │   ├── Overlay.tsx       # Overlay/modal primitive
+│   │   ├── Icon.tsx          # Icon wrapper
+│   │   ├── theme.tsx         # Theme provider & hook
+│   │   └── utils.ts          # Token utilities
+│   ├── apps/                 # Demo applications
+│   │   ├── LandingApp.tsx
+│   │   ├── TokensApp.tsx
+│   │   ├── SlideApp.tsx
+│   │   ├── IDEApp.tsx
+│   │   ├── CMSApp.tsx
+│   │   ├── CRMApp.tsx
+│   │   ├── TextSystemApp.tsx
+│   │   └── LoginApp.tsx
+│   ├── components/           # Shared application components
+│   ├── App.tsx               # Root app with router
+│   ├── main.tsx              # Entry point
+│   └── index.css             # Global styles
+├── docs/
+│   └── claude/               # MDK philosophy documentation
+│       ├── 20-mdk-fundamental-purpose.md
+│       ├── 21-css-abstraction-categories.md
+│       └── 22-sizing-decision-model.md
+├── CLAUDE.md                 # Development guidelines
+├── README.md                 # Project overview
+└── package.json
+```
+
+### Theme System
+
+MDK uses CSS custom properties for theming with light/dark mode support.
+
+**Theme Provider**:
+```tsx
+import { ThemeProvider, useTheme } from '@/design-system/theme'
+
+function App() {
+  return (
+    <ThemeProvider>
+      <YourApp />
+    </ThemeProvider>
+  )
+}
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme()
+
+  return (
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Toggle Theme
+    </button>
+  )
+}
+```
+
+**Theme is set via `data-theme` attribute on document root**:
+```html
+<html data-theme="light">  <!-- or "dark" -->
+```
+
+**Theme tokens automatically switch**:
+```css
+[data-theme="light"] {
+  --surface-base: #ffffff;
+  --text-primary: #000000;
+}
+
+[data-theme="dark"] {
+  --surface-base: #000000;
+  --text-primary: #ffffff;
+}
+```
+
+---
+
+## Development Guide
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
+
+```bash
+npm run dev      # Start dev server (port 5173)
+```
+
+**Features**:
+- Hot Module Replacement (HMR)
+- React Inspector: Press `Cmd+Shift` (Mac) or `Ctrl+Shift` (Windows) during dev to activate component inspector
+
+### Building
+
+```bash
+npm run build    # TypeScript compilation + Vite build
+```
+
+### Code Quality
+
+```bash
+npm run lint     # Run Biome linter
+npm run format   # Format code with Biome
+npm run check    # Run Biome check and auto-fix
+npm run typecheck # Run TypeScript compiler check
+```
+
+### TypeScript Configuration
+
+The project uses TypeScript project references:
+- `tsconfig.json` - Root config with project references
+- `tsconfig.app.json` - Application source code config
+- `tsconfig.node.json` - Node.js tooling (Vite config, etc.)
+
+### Code Style
+
+- **No barrel exports** (per user's global instructions)
+- **Feature-Sliced Design (FSD)** architecture preferred
+- **Inline styles via props** rather than separate CSS modules
+- **Token-driven design** - use semantic tokens, not magic numbers
+
+### Adding New Components
+
+1. **Identify the WHY** - What problem does this solve?
+2. **Map to categories** - Which of the 13 categories does it use?
+3. **Define Intent structure** - If complex, use 3-Tier Intent System
+4. **Create tokens** - Add semantic tokens to appropriate token file
+5. **Implement component** - Use Frame as base, add semantic props
+6. **Add to docs** - Document the WHY and usage patterns
+
+**Example**:
+```tsx
+// 1. WHY: Need a toggle switch component
+// 2. Categories: Surface (visual), Interaction (clickable), State (on/off)
+// 3. Intent: Control Intent (Field.Control compatible)
+// 4. Tokens: --size-toggle (new), --surface-toggle-on, --surface-toggle-off
+// 5. Implementation:
+
+export function Toggle({ checked, onChange }) {
+  return (
+    <Frame
+      as="button"
+      w="toggle"                    // WHY: Standard toggle size
+      h="action-sm"                 // WHY: Small touch target
+      surface={checked ? "primary" : "sunken"}  // WHY: Show state
+      rounded="full"                // WHY: Pill shape
+      cursor="pointer"              // WHY: Interactive
+      onClick={() => onChange(!checked)}
+    >
+      <Frame
+        w={6}
+        h={6}
+        surface="base"
+        rounded="full"
+        style={{
+          transform: checked ? 'translateX(16px)' : 'translateX(0)',
+          transition: 'transform 0.2s ease'
+        }}
+      />
+    </Frame>
+  )
+}
+```
+
+---
+
+## Key Insights
+
+### 1. Design Convergence
+
+Purposeful UIs converge to similar designs:
+- Admin dashboards: Sidebar (~240px) + Header (~64px) + Content grid
+- E-commerce: Hero + Grid + Filters
+- Documentation: Sidebar TOC + Centered content (~680px)
+
+**WHY?** Same purpose → Same solution
+
+MDK accelerates convergence by asking WHY first.
+
+### 2. Inferrable vs Memorable
+
+**Traditional design systems**: Memorize rules
+- "Button padding is 12px 24px"
+- "Card gap is 16px"
+- "Header height is 64px"
+
+**MDK**: Understand reasons
+- "Primary action → surface=primary"
+- "Card grid → layout=grid.cards"
+- "Header bar → h=header"
+
+**Result**: AI can infer, doesn't need to memorize
+
+### 3. Why Specific Numbers?
+
+**40px**: iOS/Android minimum touch target (ergonomics)
+**48px**: Desktop comfortable touch target (Material Design standard)
+**64px**: Header height (logo + padding + comfortable)
+**240px**: Sidebar (icon 24px + text + padding = comfortable)
+**680px**: Optimal reading width (50-75 characters/line, typography research)
+**1200px**: Maximum content width (eye fatigue limit, peripheral vision)
+
+These are not arbitrary. They're ergonomic, typographic, and perceptual optimums that converged across the industry.
+
+### 4. The "No CSS Without Reason" Test
+
+Before writing CSS, ask:
+1. **WHY this value?** - Can you explain the reason?
+2. **Which category?** - Does it fit one of the 13 categories?
+3. **What's the intent?** - What problem does this solve?
+
+If you can't answer, the CSS choice is probably arbitrary and will hurt consistency.
+
+---
+
+## Comparison: Traditional vs MDK
+
+### Traditional Approach
+
+```tsx
+// Infinite choices, no guidance
+<div style={{
+  padding: "??px",           // 0-100?
+  gap: "??px",               // 0-100?
+  backgroundColor: "??",     // 16M colors?
+  borderRadius: "??px",      // 0-100?
+  width: "??px",             // 0-∞?
+  display: "flex",
+  flexDirection: "column"
+}}>
+  <h1 style={{
+    fontSize: "??px",        // 0-100?
+    fontWeight: "??",        // 100-900?
+    lineHeight: "??",        // 0-10?
+    color: "??"              // 16M colors?
+  }}>
+    Title
+  </h1>
+</div>
+
+// Result: Inconsistent, hard for AI to infer
+```
+
+### MDK Approach
+
+```tsx
+// ~100 semantic choices, reason-driven
+<Frame
+  layout="stack.content"     // WHY: Content rhythm → padding, gap decided
+  surface="raised"           // WHY: Elevated card → bg, border, shadow decided
+  w="content"                // WHY: Reading width → 680px, max-width: 100%
+>
+  <Prose role="h1">          {/* WHY: Top-level heading → size, weight, spacing decided */}
+    Title
+  </Prose>
+</Frame>
+
+// Result: Consistent, AI can infer from WHY
+```
+
+### Reduction
+
+```
+Traditional:
+- Spacing: Infinite
+- Sizing: Infinite
+- Colors: 16,777,216
+- Layout: Hundreds
+Total: Infinite
+
+MDK:
+- 13 categories
+- ~5-20 options per category
+- Total: ~100 meaningful choices
+Reduction: 99.999%
+```
+
+---
+
+## For AI Assistants: Working with MDK
+
+### Thought Process
+
+When generating UI:
+
+1. **Ask WHY first**
+   - "What is this element's purpose?"
+   - "What problem does it solve?"
+
+2. **Map to categories**
+   - "This needs spacing → Layout or Spacing?"
+   - "This needs color → Surface?"
+   - "This needs size → Sizing?"
+
+3. **Choose semantic token**
+   - "Sidebar → w=sidebar (240px)"
+   - "Primary action → surface=primary"
+   - "Content spacing → layout=stack.content"
+
+4. **Infer, don't memorize**
+   - Don't remember "240px for sidebar"
+   - Remember "sidebar needs comfortable width for text+icon → 240px"
+
+### Example: Building a Dashboard
+
+**User**: "Create a dashboard with sidebar and card grid"
+
+**AI Thought Process**:
+```
+1. WHY: Dashboard = app interface
+   → Experience: application
+
+2. WHY: Sidebar navigation
+   → w="sidebar" (standard sidebar width)
+   → h="100vh" (full height)
+   → surface="raised" (distinguished from main)
+
+3. WHY: Card grid
+   → layout="grid.cards" (card grid spacing)
+   → columns={{ base: 1, md: 2, lg: 3 }} (responsive)
+
+4. WHY: Cards need elevation
+   → surface="raised" (elevated card)
+   → rounded="md" (friendly corners)
+   → shadow="sm" (subtle depth)
+
+Result: Consistent, reason-driven UI
+```
+
+**Output**:
+```tsx
+<Experience value="application">
+  <Frame row h="100vh">
+    <Frame w="sidebar" surface="raised">
+      {/* Sidebar */}
+    </Frame>
+    <Frame flex={1} p={6}>
+      <Frame grid columns={{ base: 1, md: 2, lg: 3 }} gap={4}>
+        <Frame surface="raised" rounded="md" shadow="sm" p={4}>
+          <Text.Card.Title>Card 1</Text.Card.Title>
+        </Frame>
+        {/* More cards... */}
+      </Frame>
+    </Frame>
+  </Frame>
+</Experience>
+```
+
+### Common Patterns to Internalize
+
+**App Layout**:
+```tsx
+<Frame row h="100vh">
+  <Frame w="sidebar" />    {/* Navigation */}
+  <Frame flex={1}>         {/* Main content (takes remaining space) */}
+    <Frame h="header" />   {/* Header */}
+    <Frame flex={1} />     {/* Content (takes remaining space) */}
+  </Frame>
+</Frame>
+```
+
+**Form**:
+```tsx
+<Frame layout="stack.form" maxW={120}>
+  <Field label="..." />
+  <Field label="..." />
+  <Frame layout="row.actions">
+    <Action variant="ghost">Cancel</Action>
+    <Action variant="primary">Submit</Action>
+  </Frame>
+</Frame>
+```
+
+**Card Grid**:
+```tsx
+<Frame grid columns={{ base: 1, md: 2, lg: 3 }} gap={4}>
+  <Frame surface="raised" rounded="md" p={4}>
+    {/* Card content */}
+  </Frame>
+</Frame>
+```
+
+**Modal**:
+```tsx
+<Overlay position="center">
+  <Frame surface="overlay" w="modal" rounded="xl" shadow="lg">
+    {/* Modal content */}
+  </Frame>
+</Overlay>
+```
+
+---
+
+## Conclusion
+
+MDK is not a component library. It's not a design token system. It's not a CSS framework.
+
+**MDK is a CSS decision-making framework.**
+
+It transforms the question from:
+- "What CSS values should I use?" (infinite choices)
+
+To:
+- "WHY does this element exist?" (inferrable answer)
+
+By asking WHY first, CSS becomes:
+- **Inferrable** - AI can deduce from context
+- **Consistent** - Same WHY → Same CSS
+- **Maintainable** - Reason-driven changes
+- **Scalable** - ~100 patterns cover 99% of UIs
+
+**Core principle**: "No CSS Without Reason"
+
+Every design choice must answer WHY before HOW.
+
+---
+
+**Last Updated**: 2026-01-15
+**MDK Version**: 0.0.0
+**Philosophy**: "No CSS Without Reason"
+**Reduction**: Infinite CSS combinations → ~100 semantic choices (99.999%)
+
+---
+
+## Quick Links
+
+- **Repository**: https://github.com/[username]/minimal-design-kit
+- **Main Docs**: `/docs/claude/*.md`
+- **Components**: `/src/design-system/`
+- **Tokens**: `/src/design-system/token/`
+- **Apps**: `/src/apps/`
+- **Guidelines**: `/CLAUDE.md`
+- **Overview**: `/README.md`
+
+---
+
+## Additional Resources
+
+### Documentation Files
+
+- `docs/claude/20-mdk-fundamental-purpose.md` - Complete philosophy (1,442 lines)
+- `docs/claude/21-css-abstraction-categories.md` - All 13 categories with decision trees (963 lines)
+- `docs/claude/22-sizing-decision-model.md` - Complete sizing strategy (1,260 lines)
+
+### Key Concepts Files
+
+- `CLAUDE.md` - Development guidelines and architecture
+- `README.md` - Project journey and insights
+- `.agent/conventions.md` - Implementation conventions
+
+---
+
+End of documentation.
