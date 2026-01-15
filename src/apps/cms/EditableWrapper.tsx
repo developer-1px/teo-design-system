@@ -18,7 +18,7 @@ export function EditableWrapper({
   const [isHovered, setIsHovered] = useState(false);
   return (
     <Frame
-      override={{}}
+      override={{ cursor: "text" }}
       style={{
         position: "relative",
         outline: isHovered
@@ -29,7 +29,6 @@ export function EditableWrapper({
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      cursor="text"
       onClick={(e) => {
         e.stopPropagation();
         onEdit?.();

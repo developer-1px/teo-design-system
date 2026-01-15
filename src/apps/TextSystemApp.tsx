@@ -661,7 +661,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
       {/* Left: Code & Context */}
       <Frame
         style={{ width: "35%", borderRight: "1px solid var(--border-color)" }}
-        p={Space.n24}
+        override={{ p: Space.n24 }}
         surface="sunken"
         justify="center"
       >

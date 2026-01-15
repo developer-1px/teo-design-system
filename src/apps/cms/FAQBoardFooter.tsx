@@ -112,10 +112,10 @@ function FAQRow({ q, a }: FAQRowProps) {
         py: Space.n24,
         px: Space.n0,
         gap: Space.n16,
+        cursor: "pointer",
       }}
       style={{ borderBottom: "1px solid var(--border-color)" }}
       onClick={() => setIsOpen(!isOpen)}
-      cursor="pointer"
     >
       <Frame
         override={{ w: Size.full }}

@@ -218,6 +218,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
           override={{
             w: Size.full,
             rounded: "md",
+            cursor: "pointer",
           }}
           style={{
             border: "1px solid var(--border-color)",
@@ -227,7 +228,6 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
           ratio="16/9"
           surface={active ? "base" : "sunken"}
           pack
-          cursor="pointer"
         >
           {active && (
             <Frame
@@ -247,12 +247,11 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
 
   return (
     <Frame
-      override={{ py: Space.n8, px: Space.n12, rounded: "md" }}
+      override={{ py: Space.n8, px: Space.n12, rounded: "md", cursor: "pointer" }}
       layout={Layout.Row.Item.Default}
       align="center"
       justify="between"
       surface={active ? "raised" : undefined}
-      cursor="pointer"
     >
       <Frame
         override={{ gap: Space.n8 }}

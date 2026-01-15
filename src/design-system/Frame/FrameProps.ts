@@ -1,11 +1,5 @@
-import type React from "react";
-import type {
-  AlignToken,
-  CursorToken,
-  JustifyToken,
-  ShadowToken,
-  SurfaceToken,
-} from "../lib/types.ts";
+import type React from "react"
+import type {AlignToken, CursorToken, JustifyToken, ShadowToken, SurfaceToken,} from "../lib/types.ts"
 import type {
   HeightToken,
   MaxHeightToken,
@@ -14,8 +8,8 @@ import type {
   RadiusToken,
   SpaceToken,
   WidthToken,
-} from "../token/token.const.1tier.ts";
-import type { Radius2Token } from "../token/token.const.2tier.ts";
+} from "../token/token.const.1tier.ts"
+import type {Radius2Token} from "../token"
 
 // --- 1. LOOSE OVERRIDES (Token | string | number) ---
 // Used inside 'override={{ ... }}' prop
@@ -92,14 +86,6 @@ export interface FrameOverrides {
 // Used as top-level props on <Frame ... />
 interface FrameStrictProps {
   // Layout
-  p?: SpaceToken;
-  px?: SpaceToken;
-  py?: SpaceToken;
-  pt?: SpaceToken;
-  pb?: SpaceToken;
-  pl?: SpaceToken;
-  pr?: SpaceToken;
-
   gap?: SpaceToken;
   pack?: boolean;
 
@@ -130,8 +116,6 @@ interface FrameStrictProps {
   surface?: SurfaceToken;
   rounded?: Radius2Token | boolean;
   clip?: boolean;
-
-  cursor?: CursorToken;
 
   // Smart Layout
   scroll?: boolean | "x" | "y";

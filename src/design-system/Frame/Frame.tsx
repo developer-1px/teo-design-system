@@ -17,14 +17,6 @@ export function Frame({
   className = "",
 
   // Destructure Prop-Driven Styling to prevent DOM leakage
-  p,
-  px,
-  py,
-  pt,
-  pb,
-  pl,
-  pr,
-
   gap,
   pack,
 
@@ -50,7 +42,6 @@ export function Frame({
   surface,
   rounded,
   clip,
-  cursor,
   scroll,
   shrink,
   shadow,
@@ -78,13 +69,6 @@ export function Frame({
   // 3. Construct Settings Input (Layout < Props < Override)
   // We reconstruct the props object for calculation
   const explicitProps: FrameOverrides = {
-    p,
-    px,
-    py,
-    pt,
-    pb,
-    pl,
-    pr,
     gap,
     pack,
     w,
@@ -109,7 +93,6 @@ export function Frame({
     surface,
     rounded,
     clip,
-    cursor,
     scroll,
 
     shadow,

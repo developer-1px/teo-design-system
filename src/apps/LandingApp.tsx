@@ -63,11 +63,11 @@ export function LandingApp() {
               px: Space.n12,
               rounded: "full",
               gap: Space.n8,
+              cursor: "pointer",
             }}
             surface="sunken"
             layout={Layout.Row.Item.Tight}
             align="center"
-            cursor="pointer"
           >
             <Icon
               src={Zap}

@@ -54,7 +54,7 @@ export function LoginApp() {
             </Frame>
 
             <Frame layout={Layout.Row.LabelValue.Default}>
-              <Frame layout={Layout.Row.Item.Tight} cursor="pointer">
+              <Frame layout={Layout.Row.Item.Tight} override={{ cursor: "pointer" }}>
                 {/* Checkbox simulation */}
                 <Frame
                   override={{

@@ -26,12 +26,12 @@ function NavItem({ to, label }: { to: string; label: string }) {
             py: Space.n6,
             px: Space.n14,
             rounded: "full",
+            cursor: "pointer",
           }}
           style={{
             color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
           }}
           surface={isActive ? "sunken" : undefined}
-          cursor="pointer"
         >
           <Text size={FontSize.n12} weight={isActive ? "bold" : "medium"}>
             {label}
@@ -78,12 +78,12 @@ function ThemeToggleItem() {
       override={{
         p: Space.n8,
         rounded: "full",
+        cursor: "pointer",
       }}
       style={{
         color: "var(--text-secondary)",
       }}
       onClick={toggleTheme}
-      cursor="pointer"
       surface="hover"
       align="center"
       justify="center"
