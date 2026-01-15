@@ -6,7 +6,20 @@
       "WebFetch(domain:react-hook-form.com)",
       "WebFetch(domain:zod.dev)",
       "Read(//Users/user/Desktop/**)",
-      "WebFetch(domain:panda-css.com)"
+      "WebFetch(domain:panda-css.com)",
+      "Bash(npm install:*)",
+      "Bash(npm run lint:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create --title \"feat: implement CRM app with Tanstack Table and MDK design system\" --body \"$(cat <<''EOF''\n## Summary\nImplement a fully functional CRM application demonstrating Tanstack Table integration with MDK design system\n\n## Features Implemented\n- Dynamic DataTable with Tanstack Table v8 (sorting, dynamic columns)\n- Jotai atom-based state management (no props drilling)\n- Reusable Table UI components with namespace pattern (Table.Root, Table.Header, Table.Row, etc.)\n- CRM components:\n  - Sidebar navigation with dataset switching\n  - Detail drawer with properties and activity\n  - Toolbar with view controls\n  - Header with search and actions\n- Auto-generated unique row IDs (__rowId) for data integrity\n- Dynamic dataset loading with import.meta.glob\n- Korean filename support\n\n## Design System Compliance\n- ✅ All components use MDK Layout presets\n- ✅ Size and Space tokens applied throughout\n- ✅ Follows 3-tier intent system\n- ✅ Passes design lint (0 violations in CRM files)\n- ✅ No hardcoded pixels or colors (except dynamic values)\n\n## File Structure\n- `src/apps/crm/CRMApp.tsx` - Main app container\n- `src/apps/crm/CRM*.tsx` - Header, Sidebar, Toolbar, Table, Drawer\n- `src/apps/crm/drawer/*` - Drawer sub-components (Header, Properties, Activity, Footer)\n- `src/apps/crm/dataLoader.ts` - Dynamic data loading utilities\n- `src/apps/crm/store.ts` - Jotai atoms\n- `src/apps/crm/types.ts` - TypeScript definitions\n- `src/ui/table/*` - Reusable Table components\n\n## Test Plan\n- [ ] Verify dataset switching works correctly\n- [ ] Test row selection and drawer display\n- [ ] Confirm sorting functionality\n- [ ] Check Korean filename handling\n- [ ] Validate all design tokens are applied\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\nEOF\n)\")",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr create:*)",
+      "Bash(npm run lint:design:*)",
+      "Bash(tree:*)",
+      "Bash(awk:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(node -e:*)"
     ],
     "deny": [],
     "ask": []

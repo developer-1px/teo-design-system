@@ -8,6 +8,7 @@ import { ProseDocument } from "../design-system/ProseOld.tsx";
 import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text.tsx";
 import {
+  ContainerSize,
   FontSize,
   IconSize,
   Size,
@@ -104,7 +105,7 @@ export function LoginApp() {
       {/* Right: Description / Hero */}
       <Section flex={1} surface="panel" border="left">
         <Frame override={{ p: Space.n48 }} fill align="center" justify="center">
-          <ProseDocument maxWidth={120} gap={8}>
+          <ProseDocument maxWidth={ContainerSize.n480} gap={Space.n32}>
             <Frame
               override={{
                 w: Size.n64,
@@ -112,7 +113,7 @@ export function LoginApp() {
                 rounded: "2xl",
                 shadow: "lg",
               }}
-              style={{ marginBottom: 16 }}
+              style={{ marginBottom: "var(--space-n16)" }}
               surface="card"
               align="center"
               justify="center"
@@ -128,7 +129,7 @@ export function LoginApp() {
               for data-dense interfaces where content is the hero.
             </Text.Prose.Body>
 
-            <Frame override={{ gap: Space.n16 }} style={{ marginTop: 16 }}>
+            <Frame override={{ gap: Space.n16 }} style={{ marginTop: "var(--space-n16)" }}>
               <FeatureRow
                 title="Zero Decoration"
                 desc="Focus on content hierarchy and spacing."
@@ -154,7 +155,7 @@ function FeatureRow({ title, desc }: { title: string; desc: string }) {
     <Frame layout={Layout.Row.Item.Default} align="start">
       <Frame
         override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
-        style={{ marginTop: 4 }}
+        style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
         flex={0}
       />

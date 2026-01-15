@@ -1,7 +1,12 @@
 import React from "react";
 import { Frame } from "./Frame/Frame.tsx";
 import { Icon } from "./Icon";
-import type { ActionVariant, RoundedToken, SurfaceToken } from "./lib/types.ts";
+import type {
+  ActionVariant,
+  JustifyToken,
+  RoundedToken,
+  SurfaceToken,
+} from "./lib/types.ts";
 import { Text } from "./text/Text.tsx";
 import {
   type IconSizeToken,
@@ -27,7 +32,7 @@ interface ActionProps
   pb?: SpaceToken;
   pl?: SpaceToken;
   pr?: SpaceToken;
-  gap?: SpaceToken | number;
+  gap?: SpaceToken;
   border?: boolean;
   flex?: boolean | number;
   fill?: boolean;
@@ -54,7 +59,7 @@ interface ActionProps
   shadow?: string;
 
   // Layout
-  justify?: string;
+  justify?: JustifyToken;
 }
 
 export function Action({
@@ -123,13 +128,6 @@ export function Action({
 
   const finalRounded = rounded ?? "round";
 
-  const mapJustify = (v: string | undefined) => {
-    if (v === "start") return "flex-start";
-    if (v === "end") return "flex-end";
-    if (v === "between") return "space-between";
-    return v;
-  };
-
   const resolveSizingProp = (val: string | number | undefined) => {
     if (
       typeof val === "string" &&
@@ -157,7 +155,7 @@ export function Action({
         h: resolveSizingProp(finalHeight),
         rounded: finalRounded,
         p: finalP,
-        gap: (gap as SpaceToken) ?? Space.n4,
+        gap: gap ?? Space.n4,
         opacity: opacity,
         row: true,
         align: "center",
@@ -180,7 +178,7 @@ export function Action({
       title={tooltip}
       surface={surface}
       pack
-      justify={mapJustify(justify) as any}
+      justify={justify}
       {...props}
     >
       {icon && (

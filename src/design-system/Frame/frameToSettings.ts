@@ -1,6 +1,6 @@
 import type React from "react";
 import type { FrameOverrides } from "./FrameProps.ts";
-import { px } from "../token/utils";
+import { px } from "../token/lib/utils.ts";
 
 export function frameToSettings(props: FrameOverrides): {
   className: string;

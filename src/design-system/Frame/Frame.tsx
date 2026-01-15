@@ -170,12 +170,11 @@ export function Frame({
         : undefined,
 
     // Visual
-    opacity: input.opacity as any,
     aspectRatio: input.ratio,
 
     color: input.surface === "primary" ? "var(--primary-fg)" : "inherit",
 
-    ...settingsStyle, // Injected variables & standard props (p, gap, w, h, etc)
+    ...settingsStyle, // Injected variables & standard props (p, gap, w, h, etc, opacity)
     ...combinedOverrideStyle, // User arbitrary style overrides
   };
 

@@ -22,7 +22,7 @@ import type {
   LineHeightToken,
   NumericToken,
   OpacityToken,
-} from "./brand";
+} from "./brand.ts";
 
 // ---------------------------------
 // Unit Conversion Functions
