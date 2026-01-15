@@ -1,23 +1,20 @@
-import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
+import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { CMSApp } from "./apps/CMSApp";
+import { CRMApp } from "./apps/CRMApp";
 import { LandingApp } from "./apps/LandingApp";
-
+import { LoginApp } from "./apps/LoginApp";
 import { SlideApp } from "./apps/SlideApp";
+import { TextSystemApp } from "./apps/TextSystemApp";
 import { TokensApp } from "./apps/TokensApp";
-import { Text } from "./design-system/text/Text.tsx";
 import { Frame } from "./design-system/Frame/Frame.tsx";
 import { Layout } from "./design-system/Frame/Layout/Layout.ts";
-import { Space } from "./design-system/token/token.const.1tier";
-
-import { InspectorOverlay } from "./inspector/InspectorOverlay";
-
-import { CRMApp } from "./apps/CRMApp";
-import { LoginApp } from "./apps/LoginApp";
-import { TextSystemApp } from "./apps/TextSystemApp";
 import { Icon } from "./design-system/Icon";
-import { IconSize, FontSize } from "./design-system/token/token.const.1tier.ts";
+import { Text } from "./design-system/text/Text.tsx";
 import { useTheme } from "./design-system/theme";
+import { Space } from "./design-system/token/token.const.1tier";
+import { FontSize, IconSize } from "./design-system/token/token.const.1tier.ts";
+import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
 function NavItem({ to, label }: { to: string; label: string }) {
   return (
@@ -89,7 +86,11 @@ function ThemeToggleItem() {
       align="center"
       justify="center"
     >
-      {isDark ? <Icon src={Sun} size={IconSize.n16} /> : <Icon src={Moon} size={IconSize.n16} />}
+      {isDark ? (
+        <Icon src={Sun} size={IconSize.n16} />
+      ) : (
+        <Icon src={Moon} size={IconSize.n16} />
+      )}
     </Frame>
   );
 }

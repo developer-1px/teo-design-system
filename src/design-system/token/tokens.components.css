@@ -1,41 +1,41 @@
 :root {
-    /* Component Tokens */
-    --field-height: 24px;
-    --field-radius: 6px;
-    --field-bg: var(--surface-sunken);
-    --field-bg-hover: var(--surface-raised);
-    --field-bg-focus: var(--surface-base);
+  /* Component Tokens */
+  --field-height: 24px;
+  --field-radius: 6px;
+  --field-bg: var(--surface-sunken);
+  --field-bg-hover: var(--surface-raised);
+  --field-bg-focus: var(--surface-base);
 
-    /* --- Tier 2: Semantic Controls (Inputs) --- */
-    --control-bg-default: #f4f4f5;
-    /* Zinc-100: Explicitly distinct from white page */
-    --control-bg-hover: #f4f4f5;
-    /* Maintain sunken on hover */
-    --control-bg-focus: #ffffff;
-    /* White on focus for clean input feeling on white base */
+  /* --- Tier 2: Semantic Controls (Inputs) --- */
+  --control-bg-default: #f4f4f5;
+  /* Zinc-100: Explicitly distinct from white page */
+  --control-bg-hover: #f4f4f5;
+  /* Maintain sunken on hover */
+  --control-bg-focus: #ffffff;
+  /* White on focus for clean input feeling on white base */
 
-    --control-border-default: var(--border-color);
-    /* Minimal but visible */
-    --control-border-hover: var(--text-dim);
-    /* Slightly darker on hover */
-    --control-border-focus: var(--text-muted);
-    /* Darker grey on focus, not black */
+  --control-border-default: var(--border-color);
+  /* Minimal but visible */
+  --control-border-hover: var(--text-dim);
+  /* Slightly darker on hover */
+  --control-border-focus: var(--text-muted);
+  /* Darker grey on focus, not black */
 
-    --control-radius-sm: 6px;
-    --control-height-sm: 24px;
+  --control-radius-sm: 6px;
+  --control-height-sm: 24px;
 
-    /* --- Tier 3: Component Tokens (Field) --- */
-    --field-bg: var(--control-bg-default);
-    --field-bg-hover: var(--control-bg-hover);
-    --field-bg-focus: var(--control-bg-focus);
+  /* --- Tier 3: Component Tokens (Field) --- */
+  --field-bg: var(--control-bg-default);
+  --field-bg-hover: var(--control-bg-hover);
+  --field-bg-focus: var(--control-bg-focus);
 
-    --field-border: var(--control-border-default);
-    --field-border-hover: var(--control-border-hover);
-    --field-border-focus: var(--control-border-focus);
+  --field-border: var(--control-border-default);
+  --field-border-hover: var(--control-border-hover);
+  --field-border-focus: var(--control-border-focus);
 
-    --field-radius: var(--control-radius-sm);
-    --field-height: var(--control-height-sm);
+  --field-radius: var(--control-radius-sm);
+  --field-height: var(--control-height-sm);
 
-    /* Component Tokens (Legacy/Others) */
-    --tab-bg-active: var(--surface-base);
+  /* Component Tokens (Legacy/Others) */
+  --tab-bg-active: var(--surface-base);
 }

@@ -2,20 +2,28 @@ import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../design-system/text/Text";
 import {
-  Space,
-  SpaceScale,
+  ContainerSize,
+  FontSizeScale,
+  OpacityScale,
+  RadiusScale,
   Size,
   SizeScale,
-  RadiusScale,
-  FontSizeScale,
+  Space,
+  SpaceScale,
   ZIndexScale,
-  OpacityScale,
-  ContainerSize,
 } from "../design-system/token/token.const.1tier";
 
 // --- Components ---
 
-function ScaleVisualizer({ label, value, children }: any) {
+function ScaleVisualizer({
+  label,
+  value,
+  children,
+}: {
+  label: string;
+  value: string;
+  children: React.ReactNode;
+}) {
   return (
     <Frame
       layout={Layout.Row.Item.Default}
@@ -27,7 +35,9 @@ function ScaleVisualizer({ label, value, children }: any) {
           {label}
         </Text.Card.Code>
       </Frame>
-      <Frame flex={1}>{children}</Frame>
+      <Frame flex={1} minWidth={Size.n0}>
+        {children}
+      </Frame>
       <Frame override={{ w: Size.n64 }} justify="end">
         <Text.Card.Code style={{ opacity: 0.3 }}>{value}</Text.Card.Code>
       </Frame>
@@ -37,7 +47,10 @@ function ScaleVisualizer({ label, value, children }: any) {
 
 function SectionHeader({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame override={{ gap: Space.n8, w: Size.full, maxWidth: ContainerSize.n800 }} style={{ margin: "0 auto" }}>
+    <Frame
+      override={{ gap: Space.n8, w: Size.full, maxWidth: ContainerSize.n800 }}
+      style={{ margin: "0 auto" }}
+    >
       <Text.Prose.Title variant="md">{title}</Text.Prose.Title>
       <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
         {desc}
@@ -51,22 +64,34 @@ function SectionHeader({ title, desc }: { title: string; desc: string }) {
   );
 }
 
-function TextColumn({ children, gap = Space.n32 }: any) {
+function TextColumn({
+  children,
+  gap = Space.n32,
+}: {
+  children: React.ReactNode;
+  gap?: any;
+}) {
   return (
-    <Frame override={{ w: Size.full, maxWidth: ContainerSize.n800, gap: gap as any }} style={{ margin: "0 auto" }}>
+    <Frame
+      override={{ w: Size.full, maxWidth: ContainerSize.n800, gap: gap as any }}
+      style={{ margin: "0 auto" }}
+    >
       {children}
     </Frame>
   );
 }
 
-function ScrollContainer({ children, ...props }: any) {
+function ScrollContainer({
+  children,
+  ...props
+}: React.ComponentProps<typeof Frame>) {
   return (
     <Frame
       scroll="x"
       override={{ w: Size.full }}
       style={{
         paddingBottom: "var(--space-n16)", // Space for scrollbar
-        // Hide scrollbar but allow scroll behavior if desired, or keep it. 
+        // Hide scrollbar but allow scroll behavior if desired, or keep it.
         // Apple often hides it until scroll.
         // We'll keep standard behavior for accessibility but maybe style it later.
         // Apple often hides it until scroll.
@@ -84,7 +109,7 @@ function ScrollContainer({ children, ...props }: any) {
         {children}
       </Frame>
     </Frame>
-  )
+  );
 }
 
 export function TokensApp() {
@@ -95,15 +120,24 @@ export function TokensApp() {
         layout={Layout.Row.AppContainer.Default}
       >
         <Frame
-          override={{ gap: Space.n40, py: Space.n40, px: Space.n24, w: Size.full }}
+          override={{
+            gap: Space.n40,
+            py: Space.n40,
+            px: Space.n24,
+            w: Size.full,
+          }}
           minWidth={Size.n0}
         >
-
           {/* Header & Philosophy - Centered Prose */}
           <TextColumn gap={Space.n32}>
             <Frame override={{ gap: Space.n8 }}>
-              <Text.Prose.Title variant="xl">Design System Metrics</Text.Prose.Title>
-              <Text.Prose.Body variant="lg" style={{ color: "var(--text-secondary)" }}>
+              <Text.Prose.Title variant="xl">
+                Design System Metrics
+              </Text.Prose.Title>
+              <Text.Prose.Body
+                variant="lg"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 The physics and constraints of our digital universe.
               </Text.Prose.Body>
             </Frame>
@@ -120,8 +154,8 @@ export function TokensApp() {
               >
                 <Text.Card.Title>The Whitelist Concept</Text.Card.Title>
                 <Text.Card.Desc>
-                  We explicitly <b>whitelist</b> allowed values to enforce rhythm.
-                  No magic numbers allowed.
+                  We explicitly <b>whitelist</b> allowed values to enforce
+                  rhythm. No magic numbers allowed.
                 </Text.Card.Desc>
               </Frame>
 
@@ -132,7 +166,8 @@ export function TokensApp() {
               >
                 <Text.Card.Title>The Meaning of 'n'</Text.Card.Title>
                 <Text.Card.Desc>
-                  <b>'n'</b> represents an abstract numeric scale, decoupling logic from raw pixels.
+                  <b>'n'</b> represents an abstract numeric scale, decoupling
+                  logic from raw pixels.
                 </Text.Card.Desc>
               </Frame>
             </Frame>
@@ -148,7 +183,11 @@ export function TokensApp() {
             <TextColumn>
               <Frame override={{ gap: Space.n12, w: Size.full }}>
                 {SpaceScale.map((val) => (
-                  <ScaleVisualizer key={val} label={`n${val}`} value={`${val}px`}>
+                  <ScaleVisualizer
+                    key={val}
+                    label={`n${val}`}
+                    value={`${val}px`}
+                  >
                     <Frame
                       surface="primary"
                       style={{
@@ -186,7 +225,9 @@ export function TokensApp() {
                   align="center"
                   justify="center"
                 >
-                  <Text.Card.Code style={{ fontSize: "var(--font-size-n10)", opacity: 0.5 }}>
+                  <Text.Card.Code
+                    style={{ fontSize: "var(--font-size-n10)", opacity: 0.5 }}
+                  >
                     n{val}
                   </Text.Card.Code>
                 </Frame>
@@ -196,10 +237,7 @@ export function TokensApp() {
 
           {/* 3. Radius Scale - Horizontal Scroll */}
           <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
-            <SectionHeader
-              title="Radius"
-              desc="Softness of shapes."
-            />
+            <SectionHeader title="Radius" desc="Softness of shapes." />
             <ScrollContainer>
               {RadiusScale.map((val) => (
                 <Frame
@@ -217,10 +255,7 @@ export function TokensApp() {
 
           {/* 4. Z-Index Scale - Visual Stack (Prose Width) */}
           <Frame override={{ w: Size.full, gap: Space.n32 }}>
-            <SectionHeader
-              title="Z-Index"
-              desc="Elevation depth & Stacking."
-            />
+            <SectionHeader title="Z-Index" desc="Elevation depth & Stacking." />
             <TextColumn>
               <Frame
                 override={{
@@ -233,7 +268,13 @@ export function TokensApp() {
                 align="center"
                 justify="center"
               >
-                <Frame style={{ position: "relative", width: "100%", height: "100%" }}>
+                <Frame
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
                   {ZIndexScale.filter((_, i) => i % 2 === 0).map((val, i) => (
                     <Frame
                       key={val}
@@ -244,9 +285,15 @@ export function TokensApp() {
                         top: `${i * 20}px`,
                         left: `${i * 40}px`,
                         boxShadow: "var(--shadow-lg)",
-                        border: "var(--border-width-n1) solid var(--border-color)",
+                        border:
+                          "var(--border-width-n1) solid var(--border-color)",
                       }}
-                      override={{ w: Size.n160, h: Size.n128, rounded: "xl", p: Space.n16 }}
+                      override={{
+                        w: Size.n160,
+                        h: Size.n128,
+                        rounded: "xl",
+                        p: Space.n16,
+                      }}
                     >
                       <Text.Card.Title>n{val}</Text.Card.Title>
                     </Frame>
@@ -268,7 +315,12 @@ export function TokensApp() {
                     style={{
                       backgroundColor: "black",
                     }}
-                    override={{ w: Size.n64, h: Size.n64, rounded: "lg", minWidth: Size.n64 }}
+                    override={{
+                      w: Size.n64,
+                      h: Size.n64,
+                      rounded: "lg",
+                      minWidth: Size.n64,
+                    }}
                   />
                   <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>
@@ -277,29 +329,36 @@ export function TokensApp() {
           </Frame>
 
           {/* 6. Font Size Scale - Prose Width */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }}>
-            <SectionHeader
-              title="Font Size"
-              desc="Typography scale."
-            />
+          <Frame override={{ w: Size.full, gap: Space.n32 }} minWidth={Size.n0}>
+            <SectionHeader title="Font Size" desc="Typography scale." />
             <TextColumn>
               <Frame override={{ gap: Space.n16, w: Size.full }}>
                 {FontSizeScale.map((val) => (
-                  <Frame key={val} layout={Layout.Row.Item.Default} align="baseline">
+                  <Frame
+                    key={val}
+                    layout={Layout.Row.Item.Default}
+                    align="baseline"
+                  >
                     <Frame override={{ w: Size.n64 }}>
-                      <Text.Card.Code style={{ color: 'var(--text-tertiary)' }}>n{val}</Text.Card.Code>
+                      <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
+                        n{val}
+                      </Text.Card.Code>
                     </Frame>
-                    <Text size={`font-size.n${val}` as any} style={{ color: 'var(--text-primary)' }}>
-                      The quick brown fox.
-                    </Text>
+                    <Frame flex={1} minWidth={Size.n0}>
+                      <Text
+                        size={`font-size.n${val}` as any}
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        The quick brown fox.
+                      </Text>
+                    </Frame>
                   </Frame>
                 ))}
               </Frame>
             </TextColumn>
           </Frame>
-
         </Frame>
-      </Frame >
-    </Frame >
+      </Frame>
+    </Frame>
   );
 }

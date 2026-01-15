@@ -1,13 +1,20 @@
+import {
+  Menu,
+  Monitor,
+  PanelRight,
+  Play,
+  Smartphone,
+  Tablet,
+} from "lucide-react";
 import { useState } from "react";
+import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Space, Size } from "../design-system/token/token.const.1tier";
-
-// import { ProseDocument } from "../design-system/Prose";
+import { Overlay } from "../design-system/Overlay";
+import { Space } from "../design-system/token/token.const.1tier";
 
 // CMS Sections
 import { BodyContentSection } from "./cms/BodyContentSection";
-import { TopCenterBar, TopRightBar } from "./cms/CMSNavigation";
 import { CMSSidebar } from "./cms/CMSSidebar";
 import { FAQBoardFooter } from "./cms/FAQBoardFooter";
 import { FeatureGridSection } from "./cms/FeatureGridSection";
@@ -16,41 +23,82 @@ import { ImageFooterBanner } from "./cms/ImageFooterBanner";
 import { MainFooter } from "./cms/MainFooter";
 import { ScrollTabSection } from "./cms/ScrollTabSection";
 import { SiteHeader } from "./cms/SiteHeader";
+import { CMSRightPanel } from "./cms/CMSRightPanel";
 
 export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">(
+    "desktop"
+  );
+  const [isRightPanelOpen, setRightPanelOpen] = useState(false);
 
   return (
-    <Frame override={{ p: Space.n0 }} fill surface="raised" clip>
-      <TopCenterBar />
-      <TopRightBar />
+    <Frame
+      override={{ p: Space.n0 }}
+      fill
+      surface="sunken"
+      clip
+      layout={Layout.Row.AppContainer.Default}
+    >
+      <CMSSidebar
+        isOpen={isSidebarOpen}
+        onToggle={() => setSidebarOpen(!isSidebarOpen)}
+      />
 
+      {/* Main Content Area - Raised & Framed */}
       <Frame
-        style={{ position: "relative" }}
-        override={{}}
-        layout={Layout.Row.AppContainer.Default}
         fill
-        align="stretch"
+        flex
+        override={{
+          rounded: "2xl",
+          shadow: "lg",
+          clip: true,
+        }}
+        surface="raised"
+        style={{
+          margin: "var(--space-n4)",
+          marginLeft: isSidebarOpen ? "0" : "var(--space-n4)",
+          transition: "margin 0.3s ease",
+          position: "relative",
+        }}
       >
-        <CMSSidebar
-          isOpen={isSidebarOpen}
-          onToggle={() => setSidebarOpen(!isSidebarOpen)}
-        />
         <Frame
-          override={{ p: Space.n0 }}
-          flex
           fill
-          surface="overlay"
+          scroll
           align="center"
           justify="start"
-          scroll
+          override={{ pb: Space.n96 }} // Extra padding at bottom for floating toolbar
+          style={{
+            perspective: "1000px",
+          }}
         >
-          {/* The Canvas */}
-          <Frame style={{ minHeight: "100%" }} override={{ w: Size.full }}>
-            <SiteHeader
-              isSidebarOpen={isSidebarOpen}
-              onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
-            />
+          {/* Viewport Frame */}
+          <Frame
+            flex
+            style={{
+              width:
+                viewport === "mobile"
+                  ? "375px"
+                  : viewport === "tablet"
+                    ? "768px"
+                    : "100%",
+              minHeight: "100%",
+              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              margin: "0 auto",
+              borderLeft:
+                viewport !== "desktop"
+                  ? "1px solid var(--border-color)"
+                  : "none",
+              borderRight:
+                viewport !== "desktop"
+                  ? "1px solid var(--border-color)"
+                  : "none",
+              backgroundColor: "var(--surface-raised)",
+              boxShadow:
+                viewport !== "desktop" ? "0 0 40px rgba(0,0,0,0.1)" : "none",
+            }}
+          >
+            <SiteHeader isSidebarOpen={isSidebarOpen} />
             <ScrollTabSection />
             <HeaderHero />
             <FeatureGridSection />
@@ -60,7 +108,124 @@ export function CMSApp() {
             <MainFooter />
           </Frame>
         </Frame>
+
+        {/* Floating Toolbar */}
+        <FloatingToolbar
+          viewport={viewport}
+          setViewport={setViewport}
+          isRightPanelOpen={isRightPanelOpen}
+          toggleRightPanel={() => setRightPanelOpen(!isRightPanelOpen)}
+        />
       </Frame>
+
+      {isRightPanelOpen && (
+        <CMSRightPanel onClose={() => setRightPanelOpen(false)} />
+      )}
     </Frame>
+  );
+}
+
+interface FloatingToolbarProps {
+  viewport: "desktop" | "tablet" | "mobile";
+  setViewport: (v: "desktop" | "tablet" | "mobile") => void;
+  isRightPanelOpen: boolean;
+  toggleRightPanel: () => void;
+}
+
+function FloatingToolbar({
+  viewport,
+  setViewport,
+  isRightPanelOpen,
+  toggleRightPanel,
+}: FloatingToolbarProps) {
+  return (
+    <Overlay
+      position="absolute"
+      x="50%"
+      bottom="var(--space-n32)"
+      zIndex={200}
+      style={{ transform: "translateX(-50%)" }}
+    >
+      <Frame
+        surface="raised"
+        override={{
+          p: Space.n6,
+          rounded: "full",
+          gap: Space.n4,
+          shadow: "xl",
+        }}
+        layout={Layout.Row.Actions.Default}
+        align="center"
+        style={{ border: "1px solid var(--border-color)" }}
+      >
+        <Frame layout={Layout.Row.Item.Compact} override={{ gap: Space.n2 }}>
+          <Action
+            icon={Monitor}
+            variant={viewport === "desktop" ? "primary" : "ghost"}
+            size="sm"
+            rounded="full"
+            onClick={() => setViewport("desktop")}
+            tooltip="Desktop"
+          />
+          <Action
+            icon={Tablet}
+            variant={viewport === "tablet" ? "primary" : "ghost"}
+            size="sm"
+            rounded="full"
+            onClick={() => setViewport("tablet")}
+            tooltip="Tablet"
+          />
+          <Action
+            icon={Smartphone}
+            variant={viewport === "mobile" ? "primary" : "ghost"}
+            size="sm"
+            rounded="full"
+            onClick={() => setViewport("mobile")}
+            tooltip="Mobile"
+          />
+        </Frame>
+
+        <Frame
+          style={{
+            width: "1px",
+            height: "16px",
+            backgroundColor: "var(--border-color)",
+          }}
+        />
+
+        <Action
+          icon={Play}
+          variant="ghost"
+          size="sm"
+          rounded="full"
+          tooltip="Preview"
+        />
+
+        <Action
+          icon={PanelRight}
+          variant={isRightPanelOpen ? "primary" : "ghost"}
+          size="sm"
+          rounded="full"
+          onClick={toggleRightPanel}
+          tooltip="Toggle Properties"
+        />
+
+        <Frame
+          style={{
+            width: "1px",
+            height: "16px",
+            backgroundColor: "var(--border-color)",
+          }}
+        />
+
+        <Action
+          icon={Menu}
+          variant="ghost"
+          size="sm"
+          rounded="full"
+          tooltip="Options"
+        />
+      </Frame>
+    </Overlay>
   );
 }

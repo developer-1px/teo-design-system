@@ -19,12 +19,12 @@ import { Action } from "../design-system/Action";
 import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Space } from "../design-system/token/token.const.1tier.ts";
+import { Icon } from "../design-system/Icon";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
-import { Icon } from "../design-system/Icon";
 import { IconSize, Opacity } from "../design-system/token/token.const.1tier";
+import { Space } from "../design-system/token/token.const.1tier.ts";
 
 // --- Data ---
 
@@ -48,7 +48,12 @@ const PropertySection = ({
   children: React.ReactNode;
 }) => (
   <Frame override={{ gap: Space.n8 }}>
-    <Frame override={{ py: Space.n0, px: Space.n8 }} layout={Layout.Row.Header.Default} justify="between" align="center">
+    <Frame
+      override={{ py: Space.n0, px: Space.n8 }}
+      layout={Layout.Row.Header.Default}
+      justify="between"
+      align="center"
+    >
       <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
         {title}
       </Text.Menu.Group>
@@ -59,7 +64,17 @@ const PropertySection = ({
         opacity={Opacity.n40}
       />
     </Frame>
-    <Frame override={{ gap: Space.n4, pt: Space.n0, pr: Space.n8, pb: Space.n8, pl: Space.n8 }}>{children}</Frame>
+    <Frame
+      override={{
+        gap: Space.n4,
+        pt: Space.n0,
+        pr: Space.n8,
+        pb: Space.n8,
+        pl: Space.n8,
+      }}
+    >
+      {children}
+    </Frame>
     <Separator />
   </Frame>
 );
@@ -151,7 +166,11 @@ export function PropertiesPanel() {
           override={{
             rounded: "md",
           }}
-          style={{ border: "1px solid var(--border-color)", padding: "1px", gap: "1px" }} // 1px style override
+          style={{
+            border: "1px solid var(--border-color)",
+            padding: "1px",
+            gap: "1px",
+          }} // 1px style override
           layout={Layout.Row.Toolbar.Default}
           justify="between"
           surface="sunken"
@@ -166,7 +185,7 @@ export function PropertiesPanel() {
                 iconSize={IconSize.n12}
                 surface={(tool as any).surface}
                 rounded="round"
-                size="24px"
+                size="xs"
                 flex
                 iconRotation={tool.rotation}
               />
@@ -177,7 +196,11 @@ export function PropertiesPanel() {
 
         {/* Transform */}
         <Frame override={{ gap: Space.n8 }}>
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Default}
+            align="center"
+          >
             <TransformField
               label="X"
               value={transform.x}
@@ -190,7 +213,11 @@ export function PropertiesPanel() {
             />
             <Frame style={{ width: "24px" }} />
           </Frame>
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Default}
+            align="center"
+          >
             <TransformField
               label="W"
               value={transform.w}
@@ -210,7 +237,11 @@ export function PropertiesPanel() {
               />
             </Frame>
           </Frame>
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Default}
+            align="center"
+          >
             <TransformField
               label="°"
               value={transform.r}
@@ -228,8 +259,16 @@ export function PropertiesPanel() {
 
         {/* Properties */}
         <PropertySection title="LAYER">
-          <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default} justify="between">
-            <Field value="Normal" rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />} flex />
+          <Frame
+            override={{ gap: Space.n12 }}
+            layout={Layout.Row.Item.Default}
+            justify="between"
+          >
+            <Field
+              value="Normal"
+              rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
+              flex
+            />
             <Field
               value="100%"
               icon={<Icon src={Eye} size={IconSize.n10} />}
@@ -240,8 +279,14 @@ export function PropertiesPanel() {
 
         <PropertySection title="TEXT">
           <Frame override={{ gap: Space.n6 }}>
-            <Field value="Inter" rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />} />
-            <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default}>
+            <Field
+              value="Inter"
+              rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
+            />
+            <Frame
+              override={{ gap: Space.n8 }}
+              layout={Layout.Row.Item.Default}
+            >
               <Field
                 value="Regular"
                 rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
@@ -249,7 +294,10 @@ export function PropertiesPanel() {
               />
               <Field value="42" style={{ width: "50px" }} />
             </Frame>
-            <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default}>
+            <Frame
+              override={{ gap: Space.n8 }}
+              layout={Layout.Row.Item.Default}
+            >
               <Field label="LH" value="Auto" flex />
               <Field label="LS" value="0%" flex />
             </Frame>
@@ -257,7 +305,11 @@ export function PropertiesPanel() {
               override={{
                 rounded: "md",
               }}
-              style={{ border: "1px solid var(--border-color)", padding: "1px", gap: "1px" }}
+              style={{
+                border: "1px solid var(--border-color)",
+                padding: "1px",
+                gap: "1px",
+              }}
               layout={Layout.Row.Toolbar.Compact}
               justify="between"
               align="center"
@@ -276,7 +328,7 @@ export function PropertiesPanel() {
                   iconSize={IconSize.n12}
                   surface={i === 0 ? "selected" : undefined}
                   rounded="round"
-                  size="24px"
+                  size="xs"
                   flex
                 />
               ))}
@@ -323,7 +375,10 @@ export function PropertiesPanel() {
                 />
               }
               rightIcon={
-                <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default}>
+                <Frame
+                  override={{ gap: Space.n8 }}
+                  layout={Layout.Row.Item.Default}
+                >
                   <Text.Card.Note style={{ fontSize: "12px" }}>
                     100%
                   </Text.Card.Note>
@@ -341,7 +396,11 @@ export function PropertiesPanel() {
               }
               style={{ flexShrink: 0 }}
             />
-            <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
+            <Frame
+              override={{ gap: Space.n8 }}
+              layout={Layout.Row.Item.Default}
+              align="center"
+            >
               <Field value="1.5" style={{ width: "50px" }} />
               <Field
                 value="Inside"

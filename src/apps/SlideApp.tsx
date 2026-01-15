@@ -12,12 +12,16 @@ import { FloatingToolbar } from "../components/FloatingToolbar";
 import { PropertiesPanel } from "../components/PropertiesPanel";
 import { SlidesPanel } from "../components/SlidesPanel";
 import { Action } from "../design-system/Action";
-import { Text } from "../design-system/text/Text";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
-import { Space, Size, Opacity } from "../design-system/token/token.const.1tier";
-import { IconSize } from "../design-system/token/token.const.1tier";
+import { Text } from "../design-system/text/Text";
+import {
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 
 export function SlideApp() {
   return (
@@ -38,13 +42,21 @@ export function SlideApp() {
         }}
         layout={Layout.Row.Header.Default}
       >
-        <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default} align="center">
+        <Frame
+          override={{ gap: Space.n12 }}
+          layout={Layout.Row.Item.Default}
+          align="center"
+        >
           <Action
             icon={Grid}
             iconSize={IconSize.n16}
             style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
           />
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Default} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Default}
+            align="center"
+          >
             <Text.Menu.Item style={{ fontWeight: 600 }}>
               Untitled Presentation
             </Text.Menu.Item>
@@ -56,9 +68,18 @@ export function SlideApp() {
             />
           </Frame>
         </Frame>
-        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default} align="center">
+        <Frame
+          override={{ gap: Space.n8 }}
+          layout={Layout.Row.Actions.Default}
+          align="center"
+        >
           <Frame
-            override={{ gap: Space.n4, p: Space.n4, rounded: "round", shadow: "sm" }}
+            override={{
+              gap: Space.n4,
+              p: Space.n4,
+              rounded: "round",
+              shadow: "sm",
+            }}
             layout={Layout.Row.Item.Compact}
             align="center"
             surface="overlay"
@@ -124,9 +145,10 @@ export function SlideApp() {
         >
           <Frame fill pack scroll>
             <Frame
-              style={{ width: "1000px", maxWidth: "100%" }}
+              style={{ width: "80%", maxWidth: "var(--container-n1280)" }}
               override={{
                 shadow: "lg",
+                rounded: "2xl",
               }}
               surface="base"
               pack
@@ -143,7 +165,10 @@ export function SlideApp() {
                   Refined & Polished UI.
                 </Text.Prose.Title>
                 <Frame style={{ height: "var(--size-n4)" }} override={{}} />
-                <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Actions.Center}>
+                <Frame
+                  override={{ gap: Space.n12 }}
+                  layout={Layout.Row.Actions.Center}
+                >
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
@@ -152,7 +177,11 @@ export function SlideApp() {
                     surface="sunken"
                     pack
                   >
-                    <Icon src={Square} size={IconSize.n16} style={{ color: "var(--text-body)" }} />
+                    <Icon
+                      src={Square}
+                      size={IconSize.n16}
+                      style={{ color: "var(--text-body)" }}
+                    />
                   </Frame>
                   <Frame
                     style={{ width: "40px", height: "40px" }}
@@ -162,7 +191,11 @@ export function SlideApp() {
                     surface="raised"
                     pack
                   >
-                    <Icon src={Circle} size={IconSize.n16} style={{ color: "var(--text-body)" }} />
+                    <Icon
+                      src={Circle}
+                      size={IconSize.n16}
+                      style={{ color: "var(--text-body)" }}
+                    />
                   </Frame>
                   <Frame
                     style={{ width: "40px", height: "40px" }}
@@ -172,7 +205,11 @@ export function SlideApp() {
                     surface="overlay"
                     pack
                   >
-                    <Icon src={Type} size={IconSize.n16} style={{ color: "var(--text-body)" }} />
+                    <Icon
+                      src={Type}
+                      size={IconSize.n16}
+                      style={{ color: "var(--text-body)" }}
+                    />
                   </Frame>
                 </Frame>
               </Frame>

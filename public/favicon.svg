@@ -1,0 +1,26 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <desc>teo.v Favicon: Geometric 't' + '.' (Monochrome)</desc>
+  <rect width="64" height="64" rx="16" fill="#171717"/>
+  
+  <!-- t -->
+  <!-- Center t at x=24 -->
+  <g stroke="white" stroke-width="6" stroke-linecap="square">
+    <path d="M24 12V52" />
+    <path d="M12 24H36" />
+  </g>
+
+  <!-- . -->
+  <!-- Accent dot at x=48 -->
+  <!-- Using Naver Green because favors usually need color pop? 
+       Or stay monochrome as per rollback? 
+       "minimal design kit" usually implies monochrome.
+       But icons often need to stand out.
+       Let's use the Green Dot as a subtle brand link, or stick to white?
+       User rejected the "Box" icon which had a green dot.
+       User liked the "Wordmark" which was monochrome.
+       I will use White text on Black bg. 
+       Maybe add the green dot? The user said "dot를 우하단에 포인트로 추가하고" previously (for layout icon).
+       Let's use White for now to be safe with "Minimal".
+  -->
+  <rect x="44" y="44" width="8" height="8" fill="white"/>
+</svg>

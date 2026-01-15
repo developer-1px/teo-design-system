@@ -1,19 +1,18 @@
 import type React from "react";
 import type {
-  OpacityToken,
-  SizeToken,
-  SpaceToken,
-  RadiusToken,
-} from "../token/token.const.1tier.ts";
-
-import type {
   AlignToken,
   CursorToken,
   JustifyToken,
-  SurfaceToken,
   RoundedToken,
   ShadowToken,
+  SurfaceToken,
 } from "../lib/types.ts";
+import type {
+  OpacityToken,
+  RadiusToken,
+  SizeToken,
+  SpaceToken,
+} from "../token/token.const.1tier.ts";
 
 // --- 1. LOOSE OVERRIDES (Token | string | number) ---
 // Used inside 'override={{ ... }}' prop
@@ -30,18 +29,18 @@ export interface FrameOverrides {
   gap?: SpaceToken;
   pack?: boolean;
 
-  w?: SizeToken
-  h?: SizeToken
+  w?: SizeToken;
+  h?: SizeToken;
 
   flex?: boolean | number | string;
   row?: boolean; // Used internally by Layout presets
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
   fill?: boolean;
 
-  minWidth?: SizeToken | WidthToken
-  minHeight?: SizeToken | HeightToken
-  maxWidth?: SizeToken | MaxWidthToken
-  maxHeight?: SizeToken | MaxHeightToken
+  minWidth?: SizeToken | WidthToken;
+  minHeight?: SizeToken | HeightToken;
+  maxWidth?: SizeToken | MaxWidthToken;
+  maxHeight?: SizeToken | MaxHeightToken;
 
   // Grid
   grid?: boolean;
@@ -72,16 +71,20 @@ export interface FrameOverrides {
   opacity?: OpacityToken;
   ratio?: string;
   border?: boolean | string;
+  borderTop?: boolean | string;
+  borderRight?: boolean | string;
+  borderBottom?: boolean | string;
+  borderLeft?: boolean | string;
   borderColor?: string;
 
   className?: string;
 }
 
 import type {
-  WidthToken,
   HeightToken,
+  MaxHeightToken,
   MaxWidthToken,
-  MaxHeightToken
+  WidthToken,
 } from "../lib/types.ts";
 
 // --- 2. STRICT PROPS (Token Only) ---
@@ -138,12 +141,16 @@ export interface FrameStrictProps {
   opacity?: OpacityToken;
   ratio?: string;
   border?: boolean | string;
+  borderTop?: boolean | string;
+  borderRight?: boolean | string;
+  borderBottom?: boolean | string;
+  borderLeft?: boolean | string;
   borderColor?: string;
 }
 
 export interface FrameProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "color">,
-  FrameStrictProps {
+    FrameStrictProps {
   children?: React.ReactNode;
   as?: React.ElementType;
 

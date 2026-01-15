@@ -1,44 +1,44 @@
 :root {
-    /* 
+  /* 
      Premium Zinc Palette (Tailwind-like Zinc) 
   */
 
-    /* Semantic Surfaces (Modern Architecture) */
-    --surface-page: #ffffff;
-    /* Global App Background: White */
-    --surface-panel: #f9f9fb;
-    /* Sidebars: Very subtle grey to distinguish from white page */
-    --surface-card: #ffffff;
-    /* Content Cards: White (requires border/shadow on white page) */
-    --surface-overlay: #ffffff;
-    /* Floating Elements */
+  /* Semantic Surfaces (Modern Architecture) */
+  --surface-page: #ffffff;
+  /* Global App Background: White */
+  --surface-panel: #f9f9fb;
+  /* Sidebars: Very subtle grey to distinguish from white page */
+  --surface-card: #ffffff;
+  /* Content Cards: White (requires border/shadow on white page) */
+  --surface-overlay: #ffffff;
+  /* Floating Elements */
 
-    /* Legacy Mapping (Backend Compatibility) */
-    --surface-base: var(--surface-page);
-    --surface-sunken: var(--surface-panel);
-    --surface-raised: var(--surface-card);
-    --surface-selected: var(--surface-page);
-    /* Often same as base or specific color */
-    --surface-primary: var(--primary-bg);
+  /* Legacy Mapping (Backend Compatibility) */
+  --surface-base: var(--surface-page);
+  --surface-sunken: var(--surface-panel);
+  --surface-raised: var(--surface-card);
+  --surface-selected: var(--surface-page);
+  /* Often same as base or specific color */
+  --surface-primary: var(--primary-bg);
 
-    --text-primary: #18181b;
-    --text-body: #3f3f46;
-    --text-subtle: #71717a;
+  --text-primary: #18181b;
+  --text-body: #3f3f46;
+  --text-subtle: #71717a;
 
-    --text-muted: #a1a1aa;
-    --text-dim: #d4d4d8;
+  --text-muted: #a1a1aa;
+  --text-dim: #d4d4d8;
 
-    /* Fainter, subtle border */
-    --border-color: rgba(0, 0, 0, 0.08);
-    --border-width: 1px;
+  /* Fainter, subtle border */
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-width: 1px;
 
-    --link-color: #646cff;
-    --link-hover-color: #535bf2;
+  --link-color: #646cff;
+  --link-hover-color: #535bf2;
 
-    /* Accents */
-    --primary-bg: #18181b;
-    --primary-fg: #ffffff;
-    --focus-ring: 0 0 0 1px rgba(24, 24, 27, 0.4);
+  /* Accents */
+  --primary-bg: #18181b;
+  --primary-fg: #ffffff;
+  --focus-ring: 0 0 0 1px rgba(24, 24, 27, 0.4);
 
-    --text-secondary: var(--text-body);
+  --text-secondary: var(--text-body);
 }

@@ -11,13 +11,15 @@ import {
   Type,
 } from "lucide-react";
 import { Action } from "../design-system/Action";
-import { Space } from "../design-system/token/token.const.1tier";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { IconSize, Size } from "../design-system/token/token.const.1tier";
 import { Overlay } from "../design-system/Overlay";
 import { Separator } from "../design-system/Separator";
 import { useTheme } from "../design-system/theme";
+import {
+  IconSize,
+  Space,
+} from "../design-system/token/token.const.1tier";
 
 const BOTTOM_TOOLS = [
   { icon: MousePointer2, tooltip: "Move", variant: "surface" as const },
@@ -67,7 +69,7 @@ export function FloatingToolbar() {
               variant={tool.variant}
               rounded="full"
               tooltip={tool.tooltip}
-              size={Size.n32}
+              size="sm"
             />
           ),
         )}
@@ -77,9 +79,10 @@ export function FloatingToolbar() {
           rounded="full"
           onClick={toggleTheme}
           tooltip="Toggle Theme"
-          size={6}
+          w={6}
+          h={6}
         />
       </Frame>
-    </Overlay >
+    </Overlay>
   );
 }

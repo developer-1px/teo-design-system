@@ -1,16 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import type React from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { toToken } from "./lib/utils";
+import type { SpaceToken, ZIndexToken } from "./token/token.const.1tier";
 
 export interface OverlayProps {
   children: React.ReactNode;
 
   // Positioning
   position?: "absolute" | "fixed";
-  x?: number | string;
-  y?: number | string;
-  right?: number | string;
-  bottom?: number | string;
-  zIndex?: number;
+  x?: number | string | SpaceToken;
+  y?: number | string | SpaceToken;
+  right?: number | string | SpaceToken;
+  bottom?: number | string | SpaceToken;
+  zIndex?: number | ZIndexToken;
 
   // Interaction
   onDismiss?: () => void;
@@ -73,13 +76,15 @@ export function Overlay({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [onDismiss, clickOutsideToDismiss]);
 
+  const resolvedZIndex = toToken(zIndex, "z-index");
+
   const style: React.CSSProperties = {
     position,
-    zIndex,
-    top: y,
-    left: x,
-    right: right,
-    bottom: bottom,
+    zIndex: resolvedZIndex,
+    top: toToken(y, "space"),
+    left: toToken(x, "space"),
+    right: toToken(right, "space"),
+    bottom: toToken(bottom, "space"),
     // If not blocking interaction, let clicks pass through the container (if we had a full screen container)
     // But here we are likely rendering just the box.
     // Wait, if we use "clickOutside", we imply the overlay is NOT full screen, just the element.
@@ -96,7 +101,7 @@ export function Overlay({
             left: 0,
             width: "100vw",
             height: "100vh",
-            zIndex: zIndex - 1,
+            zIndex: `calc(${resolvedZIndex} - 1)`,
             // Transparent backdrop by default, or could accept a color prop
           }}
         />

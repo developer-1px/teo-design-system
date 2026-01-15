@@ -47,11 +47,11 @@ export type ShadowToken = "sm" | "md" | "lg" | "xl" | "2xl";
 
 // Re-export sizing tokens from source of truth
 import type {
-  WidthToken,
-  HeightToken,
-  MaxWidthToken,
-  MaxHeightToken,
   FontSizeToken,
+  HeightToken,
+  MaxHeightToken,
+  MaxWidthToken,
+  WidthToken,
 } from "../token/token.const.1tier";
 
 export type {

@@ -2,24 +2,24 @@
 
 /* Experience: Landing */
 [data-experience="landing"] {
-    /* Larger, more impactful typography */
-    --prose-title-size: 56px;
-    --prose-title-weight: 800;
-    --prose-title-spacing: -0.03em;
+  /* Larger, more impactful typography */
+  --prose-title-size: 56px;
+  --prose-title-weight: 800;
+  --prose-title-spacing: -0.03em;
 
-    --prose-body-size: 20px;
-    --prose-body-height: 1.6;
+  --prose-body-size: 20px;
+  --prose-body-height: 1.6;
 
-    --card-title-size: 24px;
-    --card-desc-size: 16px;
+  --card-title-size: 24px;
+  --card-desc-size: 16px;
 }
 
 /* Experience: Document */
 [data-experience="document"] {
-    /* Optimized for long-form reading */
-    --prose-title-size: 40px;
-    --prose-body-size: 18px;
-    --prose-body-height: 1.7;
-    /* Relaxed line height */
-    --prose-body-weight: 400;
+  /* Optimized for long-form reading */
+  --prose-title-size: 40px;
+  --prose-body-size: 18px;
+  --prose-body-height: 1.7;
+  /* Relaxed line height */
+  --prose-body-weight: 400;
 }

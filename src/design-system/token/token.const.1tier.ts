@@ -15,8 +15,8 @@ type KeyOf<T extends readonly number[]> = `n${ScaleOf<T>}`;
 // Space (spacing)
 // ---------------------------------
 export const SpaceScale = [
-  0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44,
-  48, 56, 64, 72, 80, 88, 96, 112, 128, 144, 160,
+  0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44, 48,
+  56, 64, 72, 80, 88, 96, 112, 128, 144, 160,
 ] as const;
 export type SpaceScale = ScaleOf<typeof SpaceScale>;
 export type SpaceKey = KeyOf<typeof SpaceScale>;
@@ -60,12 +60,35 @@ export type SpaceToken = (typeof Space)[keyof typeof Space];
 // ---------------------------------
 // Icon Size
 // ---------------------------------
-export const IconSizeScale = [10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40,
-  44, 48, 56, 64, 72, 80, 88, 96, 112, 128, 144, 160,
-  192,  // 대형 empty / landing
-  256,  // 브랜딩 / splash
-  384,  // 풀섹션 비주얼
-  512,  // 최대치 (hero / cover 급)
+export const IconSizeScale = [
+  10,
+  12,
+  14,
+  16,
+  18,
+  20,
+  22,
+  24,
+  28,
+  32,
+  36,
+  40,
+  44,
+  48,
+  56,
+  64,
+  72,
+  80,
+  88,
+  96,
+  112,
+  128,
+  144,
+  160,
+  192, // 대형 empty / landing
+  256, // 브랜딩 / splash
+  384, // 풀섹션 비주얼
+  512, // 최대치 (hero / cover 급)
 ] as const;
 
 export type IconSizeScale = ScaleOf<typeof IconSizeScale>;
@@ -111,13 +134,21 @@ export type IconSizeToken = (typeof IconSize)[keyof typeof IconSize];
 // Size (container / layout)
 // ---------------------------------
 export const SizeScale = [
-  0, 4, 8, 12, 16, 20, 24, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96, 112, 128, 144, 160, 176, 192, 208,
-  224, 240, 256, 288, 320, 384, 448, 512, 576, 640, 704, 768,
+  0, 4, 8, 12, 16, 20, 24, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96, 112, 128,
+  144, 160, 176, 192, 208, 224, 240, 256, 288, 320, 384, 448, 512, 576, 640,
+  704, 768,
 ] as const;
 export type SizeScale = ScaleOf<typeof SizeScale>;
 export type SizeNumericKey = KeyOf<typeof SizeScale>;
 
-export const SizeKeywords = ["full", "screen", "min", "max", "fit", "auto"] as const;
+export const SizeKeywords = [
+  "full",
+  "screen",
+  "min",
+  "max",
+  "fit",
+  "auto",
+] as const;
 export type SizeKeyword = (typeof SizeKeywords)[number];
 
 export type SizeKey = SizeNumericKey | SizeKeyword;
@@ -175,7 +206,9 @@ export type SizeToken = (typeof Size)[keyof typeof Size];
 // ---------------------------------
 // Container (max widths)
 // ---------------------------------
-export const ContainerSizeScale = [0, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1536, 1600] as const;
+export const ContainerSizeScale = [
+  0, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1536, 1600,
+] as const;
 export type ContainerSizeScale = ScaleOf<typeof ContainerSizeScale>;
 export type ContainerSizeKey = KeyOf<typeof ContainerSizeScale>;
 
@@ -191,7 +224,10 @@ export const ContainerSize = {
   n1440: "container.n1440",
   n1536: "container.n1536",
   n1600: "container.n1600",
-} as const satisfies Record<ContainerSizeKey, `container.n${ContainerSizeScale}`>;
+} as const satisfies Record<
+  ContainerSizeKey,
+  `container.n${ContainerSizeScale}`
+>;
 
 export type ContainerToken = (typeof ContainerSize)[keyof typeof ContainerSize];
 
@@ -208,11 +244,23 @@ export type SizingToken = WidthToken | MaxWidthToken | MaxHeightToken;
 // ---------------------------------
 // Radius
 // ---------------------------------
-export const RadiusScale = [0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32] as const;
+export const RadiusScale = [
+  0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32,
+] as const;
 export type RadiusScale = ScaleOf<typeof RadiusScale>;
 export type RadiusNumericKey = KeyOf<typeof RadiusScale>;
 
-export const RadiusAliases = ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "soft", "full"] as const;
+export const RadiusAliases = [
+  "none",
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "2xl",
+  "3xl",
+  "soft",
+  "full",
+] as const;
 export type RadiusAliasKey = (typeof RadiusAliases)[number];
 
 export type RadiusKey = RadiusNumericKey | RadiusAliasKey;
@@ -261,14 +309,20 @@ export const BorderWidth = {
   n3: "border-width.n3",
   n4: "border-width.n4",
   n6: "border-width.n6",
-} as const satisfies Record<BorderWidthKey, `border-width.n${BorderWidthScale}`>;
+} as const satisfies Record<
+  BorderWidthKey,
+  `border-width.n${BorderWidthScale}`
+>;
 
 export type BorderWidthToken = (typeof BorderWidth)[keyof typeof BorderWidth];
 
 // ---------------------------------
 // FontSize
 // ---------------------------------
-export const FontSizeScale = [9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 48, 56, 64, 72, 80, 96, 112, 128] as const;
+export const FontSizeScale = [
+  9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 48, 56, 64,
+  72, 80, 96, 112, 128,
+] as const;
 export type FontSizeScale = ScaleOf<typeof FontSizeScale>;
 export type FontSizeKey = KeyOf<typeof FontSizeScale>;
 
@@ -305,7 +359,10 @@ export type FontSizeToken = (typeof FontSize)[keyof typeof FontSize];
 // ---------------------------------
 // LineHeight
 // ---------------------------------
-export const LineHeightScale = [100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 190, 200, 210, 220] as const;
+export const LineHeightScale = [
+  100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170,
+  175, 180, 190, 200, 210, 220,
+] as const;
 export type LineHeightScale = ScaleOf<typeof LineHeightScale>;
 export type LineHeightKey = KeyOf<typeof LineHeightScale>;
 
@@ -338,7 +395,10 @@ export type LineHeightToken = (typeof LineHeight)[keyof typeof LineHeight];
 // ---------------------------------
 // Opacity
 // ---------------------------------
-export const OpacityScale = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100] as const;
+export const OpacityScale = [
+  0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
+  100,
+] as const;
 export type OpacityScale = ScaleOf<typeof OpacityScale>;
 export type OpacityKey = KeyOf<typeof OpacityScale>;
 
@@ -371,7 +431,9 @@ export type OpacityToken = (typeof Opacity)[keyof typeof Opacity];
 // ---------------------------------
 // ZIndex
 // ---------------------------------
-export const ZIndexScale = [0, 1, 2, 3, 5, 10, 20, 30, 40, 50, 75, 100, 200] as const;
+export const ZIndexScale = [
+  0, 1, 2, 3, 5, 10, 20, 30, 40, 50, 75, 100, 200,
+] as const;
 export type ZIndexScale = ScaleOf<typeof ZIndexScale>;
 export type ZIndexKey = KeyOf<typeof ZIndexScale>;
 
@@ -446,7 +508,10 @@ export const AspectRatio = {
   n2_3: "aspect-ratio.n2_3",
   n5_4: "aspect-ratio.n5_4",
   n4_5: "aspect-ratio.n4_5",
-} as const satisfies Record<AspectRatioKey, `aspect-ratio.n${AspectRatioScale}`>;
+} as const satisfies Record<
+  AspectRatioKey,
+  `aspect-ratio.n${AspectRatioScale}`
+>;
 
 export type AspectRatioToken = (typeof AspectRatio)[keyof typeof AspectRatio];
 

@@ -1,49 +1,49 @@
 /* Dark Theme - Premium Graphite/Obsidian */
 [data-theme="dark"] {
-    /* Semantic Surfaces */
-    --surface-page: #18181b;
-    /* Main Background */
-    --surface-panel: #09090b;
-    /* Sidebar (Darker) */
-    --surface-card: #27272a;
-    /* Cards (Lighter) */
-    --surface-overlay: #3f3f46;
-    /* Menus (Lightest) */
+  /* Semantic Surfaces */
+  --surface-page: #18181b;
+  /* Main Background */
+  --surface-panel: #09090b;
+  /* Sidebar (Darker) */
+  --surface-card: #27272a;
+  /* Cards (Lighter) */
+  --surface-overlay: #3f3f46;
+  /* Menus (Lightest) */
 
-    /* Legacy Mapping */
-    --surface-base: var(--surface-page);
-    --surface-sunken: var(--surface-panel);
-    --surface-raised: var(--surface-card);
-    --surface-overlay: var(--surface-overlay);
-    --surface-primary: var(--primary-bg);
+  /* Legacy Mapping */
+  --surface-base: var(--surface-page);
+  --surface-sunken: var(--surface-panel);
+  --surface-raised: var(--surface-card);
+  --surface-overlay: var(--surface-overlay);
+  --surface-primary: var(--primary-bg);
 
-    --text-primary: #fafafa;
-    --text-body: #e4e4e7;
-    --text-subtle: #a1a1aa;
-    --text-muted: #71717a;
-    --text-dim: #3f3f46;
+  --text-primary: #fafafa;
+  --text-body: #e4e4e7;
+  --text-subtle: #a1a1aa;
+  --text-muted: #71717a;
+  --text-dim: #3f3f46;
 
-    --border-color: #27272a;
+  --border-color: #27272a;
 
-    --primary-bg: #fafafa;
-    --primary-fg: #18181b;
-    --focus-ring: 0 0 0 1px rgba(255, 255, 255, 0.4);
+  --primary-bg: #fafafa;
+  --primary-fg: #18181b;
+  --focus-ring: 0 0 0 1px rgba(255, 255, 255, 0.4);
 
-    --link-color: #818cf8;
-    --link-hover-color: #a5b4fc;
+  --link-color: #818cf8;
+  --link-hover-color: #a5b4fc;
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 
-    /* Semantic Controls - Dark Mode */
-    --control-bg-default: var(--surface-sunken);
-    --control-bg-hover: var(--surface-raised);
-    --control-bg-focus: var(--surface-card);
+  /* Semantic Controls - Dark Mode */
+  --control-bg-default: var(--surface-sunken);
+  --control-bg-hover: var(--surface-raised);
+  --control-bg-focus: var(--surface-card);
 
-    --control-border-default: transparent;
-    --control-border-hover: var(--surface-overlay);
-    --control-border-focus: var(--primary-bg);
+  --control-border-default: transparent;
+  --control-border-hover: var(--surface-overlay);
+  --control-border-focus: var(--primary-bg);
 
-    --tab-bg-active: var(--surface-raised);
+  --tab-bg-active: var(--surface-raised);
 }

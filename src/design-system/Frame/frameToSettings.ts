@@ -1,6 +1,5 @@
-import React from "react";
+import type React from "react";
 import type { FrameOverrides } from "./FrameProps.ts";
-
 
 export function frameToSettings(props: FrameOverrides): {
   className: string;
@@ -11,7 +10,7 @@ export function frameToSettings(props: FrameOverrides): {
   // Helper to remove undefined keys
   const cleanStyles = (styles: React.CSSProperties) => {
     return Object.fromEntries(
-      Object.entries(styles).filter(([_, v]) => v !== undefined)
+      Object.entries(styles).filter(([_, v]) => v !== undefined),
     ) as React.CSSProperties;
   };
 
@@ -50,13 +49,12 @@ export function frameToSettings(props: FrameOverrides): {
     return val;
   };
 
-
-
-
-
   // Function to resolve size/container tokens strictly
   // Supports size.n*, size.full, container.n*
-  const resolveSizing = (val: string | number | undefined, axis: "width" | "height") => {
+  const resolveSizing = (
+    val: string | number | undefined,
+    axis: "width" | "height",
+  ) => {
     if (!val) return undefined;
     if (typeof val === "string") {
       // Legacy Token Fixes
@@ -73,15 +71,26 @@ export function frameToSettings(props: FrameOverrides): {
       }
 
       // Pass through known keywords (explicit styling)
-      // "full" and "screen" are handled by classes below, so we skip them here 
+      // "full" and "screen" are handled by classes below, so we skip them here
       // unless user passed "size.full" (handled above).
-      if (["auto", "fit-content", "min-content", "max-content", "100%", "50%", "33%", "66%"].includes(val)) {
+      if (
+        [
+          "auto",
+          "fit-content",
+          "min-content",
+          "max-content",
+          "100%",
+          "50%",
+          "33%",
+          "66%",
+        ].includes(val)
+      ) {
         return val;
       }
 
       // Allow explicit pixel values if string (e.g. "200px")?
       // User wants to remove legacy "toToken" behavior which allowed numbers -> px.
-      // But explicit strings like "20px" might be useful overrides. 
+      // But explicit strings like "20px" might be useful overrides.
       // For now, let's stick to tokens + keywords to be safe/strict as requested.
       // Allow explicit pixel/unit values
       if (/^-?\d*\.?\d+(px|rem|em|%|vw|vh)$/.test(val)) {
@@ -97,34 +106,37 @@ export function frameToSettings(props: FrameOverrides): {
   // --- Smart Logic Helpers ---
   const isFixedDimension = (
     val: string | number | undefined,
-    _: "width" | "height"
+    _: "width" | "height",
   ): boolean => {
     if (val === undefined) return false;
     if (typeof val === "number") return true;
     // String checks
     if (val.startsWith("size.n") || val.startsWith("container.n")) return true;
-    if (val === "size.full" || val === "size.screen" || val === "size.auto" || val === "size.min" || val === "size.max" || val === "size.fit") return false;
+    if (
+      val === "size.full" ||
+      val === "size.screen" ||
+      val === "size.auto" ||
+      val === "size.min" ||
+      val === "size.max" ||
+      val === "size.fit"
+    )
+      return false;
     // Explicit px/rem
     if (/^-?\d*\.?\d+(px|rem|em)$/.test(val)) return true;
     return false;
   };
 
-
   const standardStyles: React.CSSProperties = cleanStyles({
     // Standard Padding
     padding: resolveSpace(props.p) as any,
     paddingTop:
-      (resolveSpace(props.pt) as any) ??
-      (resolveSpace(props.py) as any),
+      (resolveSpace(props.pt) as any) ?? (resolveSpace(props.py) as any),
     paddingBottom:
-      (resolveSpace(props.pb) as any) ??
-      (resolveSpace(props.py) as any),
+      (resolveSpace(props.pb) as any) ?? (resolveSpace(props.py) as any),
     paddingLeft:
-      (resolveSpace(props.pl) as any) ??
-      (resolveSpace(props.px) as any),
+      (resolveSpace(props.pl) as any) ?? (resolveSpace(props.px) as any),
     paddingRight:
-      (resolveSpace(props.pr) as any) ??
-      (resolveSpace(props.px) as any),
+      (resolveSpace(props.pr) as any) ?? (resolveSpace(props.px) as any),
 
     gap: resolveSpace(props.gap) as any,
 
@@ -141,6 +153,39 @@ export function frameToSettings(props: FrameOverrides): {
 
     // Opacity
     opacity: resolveOpacity(props.opacity),
+
+    // Borders
+    border:
+      props.border === true
+        ? "1px solid var(--border-color)"
+        : typeof props.border === "string"
+          ? props.border
+          : undefined,
+    borderTop:
+      props.borderTop === true
+        ? "1px solid var(--border-color)"
+        : typeof props.borderTop === "string"
+          ? props.borderTop
+          : undefined,
+    borderRight:
+      props.borderRight === true
+        ? "1px solid var(--border-color)"
+        : typeof props.borderRight === "string"
+          ? props.borderRight
+          : undefined,
+    borderBottom:
+      props.borderBottom === true
+        ? "1px solid var(--border-color)"
+        : typeof props.borderBottom === "string"
+          ? props.borderBottom
+          : undefined,
+    borderLeft:
+      props.borderLeft === true
+        ? "1px solid var(--border-color)"
+        : typeof props.borderLeft === "string"
+          ? props.borderLeft
+          : undefined,
+    borderColor: props.borderColor,
   });
 
   // --- Base Layout ---
@@ -223,9 +268,9 @@ export function frameToSettings(props: FrameOverrides): {
   // 1. Scroll & Min-Size Safety
   if (props.scroll) {
     // If scroll is enabled, we MUST ensure min-size is 0 to allow shrinking
-    // unless user explicitly overwrote minWidth/minHeight (which standardStyles handles, 
+    // unless user explicitly overwrote minWidth/minHeight (which standardStyles handles,
     // but the class generation for automatic safety happens here or via vars?)
-    // Actually, standardStyles.minWidth takes precedence. 
+    // Actually, standardStyles.minWidth takes precedence.
 
     // We apply standard overflow classes
     if (props.scroll === true) {
@@ -259,7 +304,7 @@ export function frameToSettings(props: FrameOverrides): {
     // Heuristic: If fixed dim exists => shrink=0
     // We check raw props before resolution
     const hasFixedWidth = isFixedDimension(props.w, "width");
-    // const hasFixedHeight = isFixedDimension(props.h, "height"); 
+    // const hasFixedHeight = isFixedDimension(props.h, "height");
 
     // We only enforce shrink=0 if width is fixed, as flex-row is default context usually.
     // If flex-col, height matters. But defaulting to 0 for any fixed dim is safe?
@@ -269,7 +314,6 @@ export function frameToSettings(props: FrameOverrides): {
       standardStyles.flexShrink = 0;
     }
   }
-
 
   if (typeof props.gap === "number") {
     vars["--gap"] = props.gap;

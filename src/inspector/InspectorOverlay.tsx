@@ -1,24 +1,21 @@
-import {
-  Copy,
-  Lock,
-  Unlock,
-} from "lucide-react";
-import React, { useState } from "react";
-
-
-import { Text } from "../design-system/text/Text.tsx";
+import { Copy, Lock, Unlock } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Overlay } from "../design-system/Overlay";
 import { Icon } from "../design-system/Icon";
-import { IconSize, FontSize, Space, Size } from "../design-system/token/token.const.1tier"
-import { generateJSX } from "./lib/inspector-utils";
+import { Overlay } from "../design-system/Overlay";
+import { Text } from "../design-system/text/Text.tsx";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 import { InspectorPanel } from "./components/InspectorPanel";
-import { useInspectorTarget } from "./hooks/useInspectorTarget";
 import { useInspectorHotkeys } from "./hooks/useInspectorHotkeys";
-
-
-
+import { useInspectorTarget } from "./hooks/useInspectorTarget";
+import { generateJSX } from "./lib/inspector-utils";
 
 export function InspectorOverlay() {
   const [isActive, setIsActive] = useState(false);
@@ -52,8 +49,10 @@ export function InspectorOverlay() {
     clone.innerHTML = "";
     const shell = clone.outerHTML;
     const jsx = generateJSX(targetName || "Component", targetProps);
-    const location = componentStack[0] ? `${componentStack[0].fileName}:${componentStack[0].lineNumber}` : "";
-    const text = `${location ? location + "\n" : ""}${jsx}\n\n// HTML:\n// ${shell}`;
+    const location = componentStack[0]
+      ? `${componentStack[0].fileName}:${componentStack[0].lineNumber}`
+      : "";
+    const text = `${location ? `${location}\n` : ""}${jsx}\n\n// HTML:\n// ${shell}`;
 
     navigator.clipboard
       .writeText(text)
@@ -107,8 +106,10 @@ export function InspectorOverlay() {
   return (
     <>
       {/* Overlay Layer - captures clicks */}
-      <div
+      <button
+        type="button"
         id="inspector-overlay-layer"
+        tabIndex={-1}
         style={{
           position: "fixed",
           top: 0,
@@ -119,6 +120,7 @@ export function InspectorOverlay() {
           pointerEvents: isLocked ? "none" : "auto", // Allow clicking through when locked (except panel)
         }}
         onClick={handleClick}
+        onKeyDown={() => { }}
       >
         {/* Top Status Badge - Compact */}
         <Overlay
@@ -130,14 +132,28 @@ export function InspectorOverlay() {
           clickOutsideToDismiss={false}
         >
           <Frame
-            override={{ rounded: "full", py: Space.n2, px: Space.n8, gap: Space.n6, shadow: "lg" }}
+            override={{
+              rounded: "full",
+              py: Space.n2,
+              px: Space.n8,
+              gap: Space.n6,
+              shadow: "lg",
+            }}
             surface="primary"
             layout={Layout.Row.Meta.Default}
           >
             {isLocked ? (
-              <Icon src={Lock} size={IconSize.n10} style={{ color: "var(--primary-fg)" }} />
+              <Icon
+                src={Lock}
+                size={IconSize.n10}
+                style={{ color: "var(--primary-fg)" }}
+              />
             ) : (
-              <Icon src={Unlock} size={IconSize.n10} style={{ color: "var(--primary-fg)" }} />
+              <Icon
+                src={Unlock}
+                size={IconSize.n10}
+                style={{ color: "var(--primary-fg)" }}
+              />
             )}
             <Text
               size={FontSize.n9}
@@ -199,17 +215,24 @@ export function InspectorOverlay() {
                 // 24px
                 layout={Layout.Row.Meta.Default}
               >
-                <Text size={FontSize.n9} weight="bold" style={{ color: "white" }}>
+                <Text
+                  size={FontSize.n9}
+                  weight="bold"
+                  style={{ color: "white" }}
+                >
                   {targetName}
                 </Text>
-                <Text size={FontSize.n9} style={{ color: "white", opacity: 0.8 }}>
+                <Text
+                  size={FontSize.n9}
+                  style={{ color: "white", opacity: 0.8 }}
+                >
                   {Math.round(targetRect.width)}×{Math.round(targetRect.height)}
                 </Text>
               </Frame>
             </Overlay>
           </div>
         )}
-      </div>
+      </button>
 
       {/* Draggable Properties Panel (Only when locked) */}
       {isLocked && targetElement && (
@@ -243,11 +266,21 @@ export function InspectorOverlay() {
           clickOutsideToDismiss={false}
         >
           <Frame
-            override={{ rounded: "md", py: Space.n4, px: Space.n12, gap: Space.n8, shadow: "lg" }}
+            override={{
+              rounded: "md",
+              py: Space.n4,
+              px: Space.n12,
+              gap: Space.n8,
+              shadow: "lg",
+            }}
             surface="primary"
             layout={Layout.Row.Meta.Default}
           >
-            <Icon src={Copy} size={IconSize.n12} style={{ color: "var(--primary-fg)" }} />
+            <Icon
+              src={Copy}
+              size={IconSize.n12}
+              style={{ color: "var(--primary-fg)" }}
+            />
             <Text
               size={FontSize.n9}
               weight="medium"

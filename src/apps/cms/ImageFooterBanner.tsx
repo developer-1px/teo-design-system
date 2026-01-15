@@ -1,11 +1,16 @@
 import { Cpu, Globe, Shield, Zap } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Space } from "../../design-system/token/token.const.1tier";
 import { Icon } from "../../design-system/Icon";
-import { IconSize, Size, Opacity } from "../../design-system/token/token.const.1tier";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 
 export function ImageFooterBanner() {
   return (
@@ -13,7 +18,7 @@ export function ImageFooterBanner() {
       override={{
         w: Size.full,
         py: Space.n96,
-        px: Space.n0,
+        px: Space.n24,
       }}
       style={{ borderBottom: "1px solid var(--border-color)" }}
       surface="base"
@@ -27,13 +32,17 @@ export function ImageFooterBanner() {
         style={{
           position: "relative",
           background: "linear-gradient(225deg, #1a1a1a, #000)",
+          maxWidth: "var(--container-n1280)",
+          margin: "0 auto",
         }}
         clip
       >
         {/* Visual texture */}
         <Frame
           override={{
-            opacity: Opacity.n10
+            opacity: Opacity.n10,
+            w: Size.full,
+            h: Size.full,
           }}
           style={{
             position: "absolute",
@@ -48,8 +57,15 @@ export function ImageFooterBanner() {
             p: Space.n24,
             gap: Space.n24,
           }}
-          style={{ maxWidth: 640, position: "relative", zIndex: 10 }}
+          style={{
+            maxWidth: "var(--container-n640)",
+            position: "relative",
+            zIndex: 10,
+            margin: "0 auto",
+          }}
           align="center"
+          justify="center"
+          fill
         >
           <Text.Prose.Title
             variant="xl"
@@ -58,6 +74,7 @@ export function ImageFooterBanner() {
             Ready to elevate <br /> your web presence?
           </Text.Prose.Title>
           <Text.Prose.Body
+            size={FontSize.n16}
             style={{
               color: "white",
               textAlign: "center",
@@ -67,14 +84,16 @@ export function ImageFooterBanner() {
             Join 2,000+ companies building high-performance marketing sites with
             our Visual Engine.
           </Text.Prose.Body>
-          <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Actions.Default}>
+          <Frame
+            override={{ gap: Space.n16 }}
+            layout={Layout.Row.Actions.Default}
+          >
             <Action
               label="Start for Free"
               variant="primary"
               size="lg"
               glow
-              h={56}
-              py={Space.n0}
+              h={Size.n56}
               px={Space.n32}
               rounded="full"
             />
@@ -82,8 +101,7 @@ export function ImageFooterBanner() {
               label="Browse Templates"
               variant="surface"
               size="lg"
-              h={56}
-              py={Space.n0}
+              h={Size.n56}
               px={Space.n32}
               rounded="full"
             />
@@ -93,40 +111,70 @@ export function ImageFooterBanner() {
 
       {/* Partner Logos */}
       <Frame
-        override={{ gap: Space.n24 }}
-        style={{ paddingTop: 48, paddingBottom: 24 }}
+        override={{ gap: Space.n32, pt: Space.n48, pb: Space.n24 }}
         align="center"
       >
         <Text.Card.Note
+          size={FontSize.n12}
+          weight="bold"
           style={{
-            fontWeight: "bold",
             color: "var(--text-tertiary)",
             opacity: Opacity.n50,
+            letterSpacing: "0.05em",
           }}
         >
           TRUSTED WORLDWIDE
         </Text.Card.Note>
         <Frame
-          override={{ gap: Space.n48, py: Space.n0, px: Space.n24, opacity: Opacity.n30 }}
+          override={{
+            gap: Space.n48,
+            py: Space.n0,
+            px: Space.n24,
+            opacity: Opacity.n40,
+          }}
           layout={Layout.Wrap.Chips.Loose}
           justify="center"
           wrap="wrap"
         >
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Tight}
+            align="center"
+          >
             <Icon src={Zap} size={IconSize.n24} />
-            <Text.Card.Title>Bolt</Text.Card.Title>
+            <Text.Card.Title size={FontSize.n16} weight="bold">
+              Bolt
+            </Text.Card.Title>
           </Frame>
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Tight}
+            align="center"
+          >
             <Icon src={Globe} size={IconSize.n24} />
-            <Text.Card.Title>Stripe</Text.Card.Title>
+            <Text.Card.Title size={FontSize.n16} weight="bold">
+              Stripe
+            </Text.Card.Title>
           </Frame>
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Tight}
+            align="center"
+          >
             <Icon src={Shield} size={IconSize.n24} />
-            <Text.Card.Title>Linear</Text.Card.Title>
+            <Text.Card.Title size={FontSize.n16} weight="bold">
+              Linear
+            </Text.Card.Title>
           </Frame>
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Item.Tight} align="center">
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Item.Tight}
+            align="center"
+          >
             <Icon src={Cpu} size={IconSize.n24} />
-            <Text.Card.Title>Vercel</Text.Card.Title>
+            <Text.Card.Title size={FontSize.n16} weight="bold">
+              Vercel
+            </Text.Card.Title>
           </Frame>
         </Frame>
       </Frame>

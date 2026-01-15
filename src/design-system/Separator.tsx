@@ -36,10 +36,9 @@ export function Separator({
   };
 
   return (
-    <div
+    <hr
       className={`separator ${className}`}
-      style={finalStyle}
-      role="separator"
+      style={{ ...finalStyle, border: "none" }}
       aria-orientation={orientation}
     />
   );

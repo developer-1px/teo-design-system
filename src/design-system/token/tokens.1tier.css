@@ -4,7 +4,6 @@
  */
 
 :root {
-
   /* Space */
   --space-n0: 0px;
   --space-n2: 2px;
@@ -241,17 +240,17 @@
   --elevation-n12: 12;
 
   /* AspectRatio */
-  --aspect-ratio-n1_1: 1/1;
-  --aspect-ratio-n4_3: 4/3;
-  --aspect-ratio-n3_4: 3/4;
-  --aspect-ratio-n16_9: 16/9;
-  --aspect-ratio-n9_16: 9/16;
-  --aspect-ratio-n21_9: 21/9;
-  --aspect-ratio-n2_1: 2/1;
-  --aspect-ratio-n3_2: 3/2;
-  --aspect-ratio-n2_3: 2/3;
-  --aspect-ratio-n5_4: 5/4;
-  --aspect-ratio-n4_5: 4/5;
+  --aspect-ratio-n1_1: 1 / 1;
+  --aspect-ratio-n4_3: 4 / 3;
+  --aspect-ratio-n3_4: 3 / 4;
+  --aspect-ratio-n16_9: 16 / 9;
+  --aspect-ratio-n9_16: 9 / 16;
+  --aspect-ratio-n21_9: 21 / 9;
+  --aspect-ratio-n2_1: 2 / 1;
+  --aspect-ratio-n3_2: 3 / 2;
+  --aspect-ratio-n2_3: 2 / 3;
+  --aspect-ratio-n5_4: 5 / 4;
+  --aspect-ratio-n4_5: 4 / 5;
 
   /* Size Keywords */
   --size-full: 100%;

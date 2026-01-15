@@ -7,9 +7,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "biome lint .",
+    "lint:design": "node scripts/design-audit.cjs",
     "format": "biome format . --write",
     "check": "biome check --write .",
     "typecheck": "tsc -b",
+    "packages": "npm run lint && npm run typecheck && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {

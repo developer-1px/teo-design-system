@@ -68,7 +68,11 @@ export function toToken(
         .split(/\s+/)
         .map((v) => {
           const cleanV = v.replace(".", "-");
-          if (!isNaN(parseFloat(v)) && !v.includes("px") && !v.includes("%")) {
+          if (
+            !Number.isNaN(parseFloat(v)) &&
+            !v.includes("px") &&
+            !v.includes("%")
+          ) {
             return `var(--${prefix}-${cleanV})`;
           }
           return v;

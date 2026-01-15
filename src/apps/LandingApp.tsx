@@ -2,21 +2,25 @@ import {
   ArrowRight,
   Component,
   Layers,
-  Zap,
-  Type,
-  PanelTop,
   LayoutTemplate,
-  PenTool,
   MousePointerClick,
+  PanelTop,
+  PenTool,
+  Type,
+  Zap,
 } from "lucide-react";
 import { Action } from "../design-system/Action";
-import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../design-system/text/Text";
 import { Icon } from "../design-system/Icon";
-import { IconSize } from "../design-system/token/token.const.1tier";
+import { Text } from "../design-system/text/Text";
+import { TeoLogo } from "../design-system/TeoLogo";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 
 export function LandingApp() {
   return (
@@ -36,8 +40,11 @@ export function LandingApp() {
           }}
           layout={Layout.Row.Header.Sticky}
         >
-          <Text.Prose.Title variant="sm">TMDK</Text.Prose.Title>
-          <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
+          <TeoLogo height={24} />
+          <Frame
+            override={{ gap: Space.n8 }}
+            layout={Layout.Row.Actions.Default}
+          >
             <Action label="Documentation" variant="ghost" />
             <Action label="Components" variant="ghost" />
             <Action label="Download" variant="primary" />
@@ -45,7 +52,10 @@ export function LandingApp() {
         </Frame>
 
         {/* Hero Section */}
-        <Frame override={{ py: Space.n128, px: Space.n24, gap: Space.n24 }} align="center">
+        <Frame
+          override={{ py: Space.n128, px: Space.n24, gap: Space.n24 }}
+          align="center"
+        >
           <Frame
             style={{ border: "1px solid var(--border-color)" }}
             override={{
@@ -59,7 +69,11 @@ export function LandingApp() {
             align="center"
             cursor="pointer"
           >
-            <Icon src={Zap} size={IconSize.n12} style={{ fill: "currentColor", color: "var(--text-tertiary)" }} />
+            <Icon
+              src={Zap}
+              size={IconSize.n12}
+              style={{ fill: "currentColor", color: "var(--text-tertiary)" }}
+            />
             <Text.Card.Note
               style={{ fontWeight: 600, color: "var(--text-secondary)" }}
             >
@@ -86,17 +100,42 @@ export function LandingApp() {
             components crafted for modern web applications.
           </Text.Prose.Body>
 
-          <Frame override={{ gap: Space.n12, pt: Space.n32, px: Space.n0, pb: Space.n0 }} layout={Layout.Row.Actions.Center}>
+          <Frame
+            override={{
+              gap: Space.n12,
+              pt: Space.n32,
+              px: Space.n0,
+              pb: Space.n0,
+            }}
+            layout={Layout.Row.Actions.Center}
+          >
             {/* Main CTA */}
-            <Action variant="primary" rounded="full" py={Space.n12} px={Space.n20} gap={Space.n8}>
+            <Action
+              variant="primary"
+              rounded="full"
+              py={Space.n12}
+              px={Space.n20}
+              gap={Space.n8}
+            >
               <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>
                 Get Started
               </Text.Menu.Item>
-              <Icon src={ArrowRight} size={IconSize.n16} style={{ color: "white" }} />
+              <Icon
+                src={ArrowRight}
+                size={IconSize.n16}
+                style={{ color: "white" }}
+              />
             </Action>
 
             {/* Secondary CTA */}
-            <Action variant="surface" rounded="full" py={Space.n12} px={Space.n20} gap={Space.n8} border>
+            <Action
+              variant="surface"
+              rounded="full"
+              py={Space.n12}
+              px={Space.n20}
+              gap={Space.n8}
+              border
+            >
               <Text.Menu.Item
                 style={{ color: "var(--text-secondary)", fontWeight: 600 }}
               >
@@ -107,7 +146,10 @@ export function LandingApp() {
         </Frame>
 
         {/* Why Section */}
-        <Frame override={{ gap: Space.n24, py: Space.n96, px: Space.n24 }} align="center">
+        <Frame
+          override={{ gap: Space.n24, py: Space.n96, px: Space.n24 }}
+          align="center"
+        >
           <Text.Prose.Title variant="lg" style={{ textAlign: "center" }}>
             왜 만들었는가?
           </Text.Prose.Title>
@@ -136,7 +178,15 @@ export function LandingApp() {
 
         {/* Features Grid */}
         <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n48 }}>
-          <Frame override={{ gap: Space.n16, pb: Space.n32, pt: Space.n0, px: Space.n0 }} align="center">
+          <Frame
+            override={{
+              gap: Space.n16,
+              pb: Space.n32,
+              pt: Space.n0,
+              px: Space.n0,
+            }}
+            align="center"
+          >
             <Text.Prose.Title variant="lg">
               Everything you need
             </Text.Prose.Title>
@@ -202,7 +252,11 @@ export function LandingApp() {
 
         {/* Footer */}
         <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n16 }}>
-          <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="sunken" />
+          <Frame
+            style={{ height: "1px" }}
+            override={{ w: Size.full }}
+            surface="sunken"
+          />
           <Frame
             override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
             layout={Layout.Row.Header.Default}
@@ -210,7 +264,10 @@ export function LandingApp() {
             <Text.Card.Note>
               © 2026 Minimal Design Kit. All rights reserved.
             </Text.Card.Note>
-            <Frame override={{ gap: Space.n16 }} layout={Layout.Row.Actions.Default}>
+            <Frame
+              override={{ gap: Space.n16 }}
+              layout={Layout.Row.Actions.Default}
+            >
               <Text.Card.Note style={{ cursor: "pointer" }}>
                 Twitter
               </Text.Card.Note>
@@ -250,15 +307,20 @@ function FeatureCard({
       <Frame
         style={{ border: "1px solid var(--border-color)" }}
         override={{
-          w: Size.n32,
-          h: Size.n32,
+          w: Size.n40,
+          h: Size.n40,
+          p: Space.n8,
           rounded: "xl",
           shadow: "sm",
         }}
         surface="base"
         pack
       >
-        <Icon src={IconSrc} size={IconSize.n24} style={{ color: "var(--text-primary)" }} />
+        <Icon
+          src={IconSrc}
+          size={IconSize.n24}
+          style={{ color: "var(--text-primary)" }}
+        />
       </Frame>
       <Frame override={{ gap: Space.n8 }}>
         <Text.Card.Title>{title}</Text.Card.Title>

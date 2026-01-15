@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Space, Size } from "../../design-system/token/token.const.1tier";
-import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Overlay } from "../../design-system/Overlay";
+import { Text } from "../../design-system/text/Text";
+import { FontSize, Size, Space } from "../../design-system/token/token.const.1tier";
 
 export interface EditableWrapperProps {
   children: React.ReactNode;
@@ -22,9 +22,9 @@ export function EditableWrapper({
       style={{
         position: "relative",
         outline: isHovered
-          ? "2px solid var(--primary-bg)"
-          : "2px solid transparent",
-        outlineOffset: "2px",
+          ? "var(--size-n2) solid var(--primary-bg)"
+          : "var(--size-n2) solid transparent",
+        outlineOffset: "var(--size-n2)",
         ...style,
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -43,9 +43,9 @@ export function EditableWrapper({
             pack
           >
             <Text.Card.Note
+              size={FontSize.n10}
+              weight="bold"
               style={{
-                fontSize: "10px",
-                fontWeight: "bold",
                 color: "inherit",
                 lineHeight: 1,
               }}

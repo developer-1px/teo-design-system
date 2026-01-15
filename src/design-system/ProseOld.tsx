@@ -1,9 +1,8 @@
 import type React from "react";
 import { Frame } from "./Frame/Frame.tsx";
-import { Layout } from "./Frame/Layout/Layout.ts";
-import { Space, Size } from "./token/token.const.1tier";
 import type { FrameProps } from "./Frame/FrameProps.ts";
-
+import { Layout } from "./Frame/Layout/Layout.ts";
+import { Size, Space } from "./token/token.const.1tier";
 
 type ProseRole = "h1" | "h2" | "h3" | "h4" | "body" | "body-sm" | "caption";
 
@@ -78,15 +77,20 @@ export function ProseDocument({
   gap = 4,
   ...props
 }: ProseDocumentProps) {
-
   const resolveSizingProp = (val: string | number | undefined) => {
-    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+    if (
+      typeof val === "string" &&
+      (val.startsWith("size.") || val.startsWith("container."))
+    ) {
       return val as any;
     }
     return undefined;
   };
   const resolveSizingStyle = (val: string | number | undefined) => {
-    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+    if (
+      typeof val === "string" &&
+      (val.startsWith("size.") || val.startsWith("container."))
+    ) {
       return undefined;
     }
     if (typeof val === "number") return `${val}px`;

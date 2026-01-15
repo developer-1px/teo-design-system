@@ -27,15 +27,20 @@ export function Field({
   onChange,
   ...props
 }: FieldProps) {
-
   const resolveSizingProp = (val: string | number | undefined) => {
-    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+    if (
+      typeof val === "string" &&
+      (val.startsWith("size.") || val.startsWith("container."))
+    ) {
       return val as any;
     }
     return undefined;
   };
   const resolveSizingStyle = (val: string | number | undefined) => {
-    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+    if (
+      typeof val === "string" &&
+      (val.startsWith("size.") || val.startsWith("container."))
+    ) {
       return undefined;
     }
     if (typeof val === "number") return `${val}px`;
@@ -70,31 +75,28 @@ export function Field({
             display: "flex",
             flexShrink: 0,
           }}
-          override={{
-          }}
+          override={{}}
           className="field-icon"
         >
           {icon}
         </Frame>
       )}
-      {
-        label && (
-          <Text
-            className="field-label"
-            size={FontSize.n9}
-            weight="bold"
-            style={{
-              width: "var(--space-3-5)", // Approximately 14px if we added 3.5
-              marginRight: "var(--space-0-5)",
-              flexShrink: 0,
-              whiteSpace: "nowrap",
-              textAlign: "center",
-            }}
-          >
-            {label}
-          </Text>
-        )
-      }
+      {label && (
+        <Text
+          className="field-label"
+          size={FontSize.n9}
+          weight="bold"
+          style={{
+            width: "var(--space-3-5)", // Approximately 14px if we added 3.5
+            marginRight: "var(--space-0-5)",
+            flexShrink: 0,
+            whiteSpace: "nowrap",
+            textAlign: "center",
+          }}
+        >
+          {label}
+        </Text>
+      )}
       <input
         {...props}
         value={value}
@@ -109,20 +111,18 @@ export function Field({
           ...inputStyle,
         }}
       />
-      {
-        rightIcon && (
-          <Frame
-            style={{
-              opacity: 0.4,
-              display: "flex",
-              flexShrink: 0,
-            }}
-            override={{
-            }}
-          >
-            {rightIcon}
-          </Frame>
-        )}
+      {rightIcon && (
+        <Frame
+          style={{
+            opacity: 0.4,
+            display: "flex",
+            flexShrink: 0,
+          }}
+          override={{}}
+        >
+          {rightIcon}
+        </Frame>
+      )}
     </Frame>
   );
 }

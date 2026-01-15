@@ -1,14 +1,18 @@
+import { ArrowRight, Lock, Mail } from "lucide-react";
+import { Action } from "../design-system/Action";
+import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Space, Size } from "../design-system/token/token.const.1tier";
+import { Icon } from "../design-system/Icon";
+import { ProseDocument } from "../design-system/ProseOld.tsx";
 import { Section } from "../design-system/Section";
 import { Text } from "../design-system/text/Text.tsx";
-import { Field } from "../design-system/Field";
-import { Action } from "../design-system/Action";
-import { ProseOld, ProseDocument } from "../design-system/ProseOld.tsx";
-import { ArrowRight, Lock, Mail } from "lucide-react";
-import { Icon } from "../design-system/Icon";
-import { IconSize, FontSize } from "../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 
 export function LoginApp() {
   return (
@@ -21,7 +25,10 @@ export function LoginApp() {
         align="center"
         justify="center"
       >
-        <Frame override={{ w: Size.full, gap: Space.n32 }} style={{ maxWidth: "400px" }}>
+        <Frame
+          override={{ w: Size.full, gap: Space.n32 }}
+          style={{ maxWidth: "400px" }}
+        >
           <Frame override={{ gap: Space.n8 }}>
             <Text size={FontSize.n28} weight="bold">
               Welcome back
@@ -80,7 +87,11 @@ export function LoginApp() {
             />
           </Frame>
 
-          <Text size={FontSize.n14} color="tertiary" style={{ textAlign: "center" }}>
+          <Text
+            size={FontSize.n14}
+            color="tertiary"
+            style={{ textAlign: "center" }}
+          >
             Don't have an account?{" "}
             <span style={{ color: "var(--link-color)", cursor: "pointer" }}>
               Sign up
@@ -109,11 +120,13 @@ export function LoginApp() {
               <Icon src={Lock} size={IconSize.n32} />
             </Frame>
 
-            <ProseOld role="h2">Secure & Minimal Design System</ProseOld>
-            <ProseOld role="body" color="secondary">
+            <Text.Prose.Title variant="lg">
+              Secure & Minimal Design System
+            </Text.Prose.Title>
+            <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
               Experience the "Pure White" architecture. A design system built
               for data-dense interfaces where content is the hero.
-            </ProseOld>
+            </Text.Prose.Body>
 
             <Frame override={{ gap: Space.n16 }} style={{ marginTop: 16 }}>
               <FeatureRow
@@ -131,8 +144,8 @@ export function LoginApp() {
             </Frame>
           </ProseDocument>
         </Frame>
-      </Section >
-    </Frame >
+      </Section>
+    </Frame>
   );
 }
 

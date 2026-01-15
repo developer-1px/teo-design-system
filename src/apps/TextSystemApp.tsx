@@ -1,12 +1,16 @@
+import { FileText, Globe, Monitor } from "lucide-react";
 import { useState } from "react";
+import { Action } from "../design-system/Action";
+import { Experience, type ExperienceType } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Experience, type ExperienceType } from "../design-system/Experience";
-import { Action } from "../design-system/Action";
-import { Monitor, FileText, Globe } from "lucide-react";
-import { Text } from "../design-system/text/Text";
 import { Icon } from "../design-system/Icon";
-import { IconSize, Space, Size } from "../design-system/token/token.const.1tier";
+import { Text } from "../design-system/text/Text";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 
 /* 
   Text System Showcase
@@ -21,8 +25,7 @@ export function TextSystemApp() {
       <Frame
         style={{ scrollSnapType: "y mandatory" }}
         scroll="y"
-        override={{
-        }}
+        override={{}}
         fill
         surface="base"
       >
@@ -74,7 +77,11 @@ export function TextSystemApp() {
           justify="center"
           surface="base"
         >
-          <Frame style={{ maxWidth: "var(--container-n800)" }} override={{ gap: Space.n32 }} align="center">
+          <Frame
+            style={{ maxWidth: "var(--container-n800)" }}
+            override={{ gap: Space.n32 }}
+            align="center"
+          >
             <Frame
               style={{
                 background:
@@ -88,7 +95,11 @@ export function TextSystemApp() {
               }}
               surface="sunken"
             >
-              <Icon src={FileText} size={Size.n80} style={{ strokeWidth: 1, opacity: 0.8 }} />
+              <Icon
+                src={FileText}
+                size={Size.n80}
+                style={{ strokeWidth: 1, opacity: 0.8 }}
+              />
             </Frame>
 
             <Frame override={{ gap: Space.n16 }} align="center">
@@ -126,7 +137,12 @@ export function TextSystemApp() {
                 { title: "Slot", desc: "Content Area", icon: Monitor }, // Placeholder icon for slot
                 { title: "Variant", desc: "Visual Style", icon: Monitor }, // Placeholder
               ].map((layer, i) => (
-                <Frame override={{ gap: Space.n0 }} key={i} layout={Layout.Row.Item.Default} align="center">
+                <Frame
+                  override={{ gap: Space.n0 }}
+                  key={i}
+                  layout={Layout.Row.Item.Default}
+                  align="center"
+                >
                   <Frame
                     override={{
                       py: Space.n16,
@@ -153,7 +169,10 @@ export function TextSystemApp() {
                   </Frame>
                   {i < 3 && (
                     <Frame
-                      style={{ height: "var(--size-n2)", background: "var(--border-color)" }}
+                      style={{
+                        height: "var(--size-n2)",
+                        background: "var(--border-color)",
+                      }}
                       override={{
                         w: Size.n32,
                       }}
@@ -207,7 +226,11 @@ export function TextSystemApp() {
   <Text.Card.Note>Updated 2h ago</Text.Card.Note>
 </Frame>`}
         >
-          <Frame override={{ gap: Space.n32 }} layout={Layout.Wrap.Chips.Default} justify="center">
+          <Frame
+            override={{ gap: Space.n32 }}
+            layout={Layout.Wrap.Chips.Default}
+            justify="center"
+          >
             <Frame
               override={{
                 p: Space.n24,
@@ -287,12 +310,12 @@ export function TextSystemApp() {
                 <Text.Card.Note style={{ opacity: 0.6 }}>Draft</Text.Card.Note>
                 <Action size="sm" variant="ghost" label="Edit" />
               </Frame>
-            </Frame >
-          </Frame >
-        </ShowcaseSection >
+            </Frame>
+          </Frame>
+        </ShowcaseSection>
 
         {/* Section 3: Field Context */}
-        < ShowcaseSection
+        <ShowcaseSection
           title="Context: Field"
           description="Input labels, values, and hints optimized for forms."
           code={`<Frame override={{ gap: 1 }} >
@@ -388,10 +411,10 @@ export function TextSystemApp() {
               <Action variant="primary" label="Save Changes" />
             </Frame>
           </Frame>
-        </ShowcaseSection >
+        </ShowcaseSection>
 
         {/* Section 4: Table Context */}
-        < ShowcaseSection
+        <ShowcaseSection
           title="Context: Table"
           description="Tabular data with clear hierarchy between heads and cells."
           code={`<Frame override={{ p: Space.n12 }} row border="bottom" >
@@ -404,7 +427,10 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
-            style={{ maxWidth: "var(--container-n800)", border: "1px solid var(--border-color)" }}
+            style={{
+              maxWidth: "var(--container-n800)",
+              border: "1px solid var(--border-color)",
+            }}
             override={{
               rounded: "xl",
               w: Size.full,
@@ -520,10 +546,10 @@ export function TextSystemApp() {
               </Frame>
             ))}
           </Frame>
-        </ShowcaseSection >
+        </ShowcaseSection>
 
         {/* Section 5: Menu Context */}
-        < ShowcaseSection
+        <ShowcaseSection
           title="Context: Menu"
           description="Navigation lists and action groups."
           code={`<Frame override={{ w: "200px", shadow: "lg" }}  surface="overlay" >
@@ -532,10 +558,17 @@ export function TextSystemApp() {
   <Text.Menu.Item>Settings</Text.Menu.Item>
 </Frame>`}
         >
-          <Frame override={{ gap: Space.n48 }} layout={Layout.Row.Item.Default} align="start">
+          <Frame
+            override={{ gap: Space.n48 }}
+            layout={Layout.Row.Item.Default}
+            align="start"
+          >
             {/* Sidebar Menu Style */}
             <Frame
-              style={{ height: "400px", border: "1px solid var(--border-color)" }}
+              style={{
+                height: "400px",
+                border: "1px solid var(--border-color)",
+              }}
               override={{
                 w: Size.n240,
                 gap: Space.n4,
@@ -572,8 +605,7 @@ export function TextSystemApp() {
               <MenuItem>Duplicate</MenuItem>
               <Frame
                 style={{ height: "1px", marginBlock: "var(--space-1)" }}
-                override={{
-                }}
+                override={{}}
                 surface="base"
               />
               <MenuItem style={{ color: "var(--text-muted)" }}>
@@ -582,9 +614,9 @@ export function TextSystemApp() {
               <MenuItem style={{ color: "#ef4444" }}>Delete</MenuItem>
             </Frame>
           </Frame>
-        </ShowcaseSection >
-      </Frame >
-    </Experience >
+        </ShowcaseSection>
+      </Frame>
+    </Experience>
   );
 }
 
@@ -663,8 +695,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
           background:
             "radial-gradient(circle at center, var(--surface-base) 0%, var(--surface-sunken) 100%)",
         }}
-        override={{
-        }}
+        override={{}}
         flex={1}
         align="center"
         justify="center"

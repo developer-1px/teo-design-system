@@ -1,10 +1,8 @@
-import { Text } from "./text/Text.tsx";
 import { Frame } from "./Frame/Frame.tsx";
 import { Layout } from "./Frame/Layout/Layout.ts";
-import { Space } from "./token/token.const.1tier";
-
-
 import type { RoundedToken, SurfaceToken } from "./lib/types.ts";
+import { Text } from "./text/Text.tsx";
+import { Space } from "./token/token.const.1tier";
 
 interface SectionProps {
   children?: React.ReactNode;
@@ -44,15 +42,20 @@ export function Section({
     computedBorder[key] = "1px solid var(--border-color)";
   }
 
-
   const resolveSizingProp = (val: string | number | undefined) => {
-    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+    if (
+      typeof val === "string" &&
+      (val.startsWith("size.") || val.startsWith("container."))
+    ) {
       return val as any;
     }
     return undefined;
   };
   const resolveSizingStyle = (val: string | number | undefined) => {
-    if (typeof val === "string" && (val.startsWith("size.") || val.startsWith("container."))) {
+    if (
+      typeof val === "string" &&
+      (val.startsWith("size.") || val.startsWith("container."))
+    ) {
       return undefined;
     }
     if (typeof val === "number") return `${val}px`;
@@ -107,11 +110,11 @@ export function Section({
             {title}
           </Text.Card.Note>
           )
-        </Frame >
+        </Frame>
       )}
       <Frame style={{ minHeight: 0 }} scroll override={{}} fill flex>
         {children}
       </Frame>
-    </Frame >
+    </Frame>
   );
 }

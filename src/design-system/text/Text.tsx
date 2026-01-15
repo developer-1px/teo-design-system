@@ -1,11 +1,11 @@
 import type React from "react";
-import type { FontWeight, FontSizeToken } from "../lib/types.ts";
+import type { FontSizeToken, FontWeight } from "../lib/types.ts";
 import { toToken } from "../lib/utils.ts";
 
 import { Card } from "./context/Card.tsx";
-import { Prose } from "./context/Prose.tsx";
-import { Menu } from "./context/Menu.tsx";
 import { Field } from "./context/Field.tsx";
+import { Menu } from "./context/Menu.tsx";
+import { Prose } from "./context/Prose.tsx";
 import { Table } from "./context/Table.tsx";
 
 export type TextVariant =
@@ -34,13 +34,13 @@ export interface TextProps
   opacity?: number | import("../token/token.const.1tier").OpacityToken;
   size?: FontSizeToken; // Absolute scale only, strict
   color?:
-  | "primary"
-  | "secondary"
-  | "tertiary"
-  | "muted"
-  | "dim"
-  | "white"
-  | string;
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "muted"
+    | "dim"
+    | "white"
+    | string;
 
   className?: string;
   style?: React.CSSProperties;
@@ -136,9 +136,7 @@ function getTagForVariant(variant: TextVariant): React.ElementType {
   return "p";
 }
 
-function resolveColor(
-  color: TextProps["color"],
-): string | undefined {
+function resolveColor(color: TextProps["color"]): string | undefined {
   if (color) {
     if (["primary", "secondary", "tertiary", "muted", "dim"].includes(color)) {
       return `var(--text-${color})`;

@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { Frame } from "./Frame/Frame.tsx";
 import { Size } from "./token/token.const.1tier";
 
@@ -22,7 +22,6 @@ export function Experience({
       override={{ w: Size.full, h: Size.full }}
       style={style}
       className={className}
-      // @ts-ignore - Custom attribute for CSS tokens
       data-experience={value}
       fill
     >

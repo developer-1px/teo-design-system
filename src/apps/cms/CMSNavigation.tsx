@@ -9,44 +9,76 @@ import {
   Share,
 } from "lucide-react";
 import { Action } from "../../design-system/Action";
-import { Text } from "../../design-system/text/Text";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Space } from "../../design-system/token/token.const.1tier";
-import { Overlay } from "../../design-system/Overlay";
 import { Icon } from "../../design-system/Icon";
-import { IconSize, Size } from "../../design-system/token/token.const.1tier";
+import { Overlay } from "../../design-system/Overlay";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 
 export function TopCenterBar() {
   return (
     <Overlay
       position="fixed"
-      y="3px"
+      y="var(--space-n4)"
       x="50%"
       zIndex={200}
       style={{ transform: "translateX(-50%)", pointerEvents: "auto" }}
       clickOutsideToDismiss={false}
     >
-      <Frame layout={Layout.Row.Toolbar.Default} align="center">
+      <Frame
+        layout={Layout.Row.Toolbar.Default}
+        align="center"
+        surface="overlay"
+        override={{ px: Space.n8, rounded: "full" }}
+      >
         <Action icon={Monitor} variant="ghost" size="sm" rounded="full" />
-        <Frame override={{ h: Size.n4 }} style={{ width: "0.5px" }} surface="overlay" />
         <Frame
-          override={{ gap: Space.n8 }}
-          style={{ padding: "0 8px" }}
+          override={{ h: Size.n16 }}
+          style={{ width: "1px" }}
+          surface="sunken"
+          opacity={Opacity.n30}
+        />
+        <Frame
+          override={{ gap: Space.n8, px: Space.n8 }}
           layout={Layout.Row.Meta.Default}
           align="center"
         >
-          <Text.Card.Note style={{ fontSize: 13, fontWeight: "medium" }}>
-            Page:
+          <Text.Card.Note
+            size={FontSize.n12}
+            weight="medium"
+            style={{ opacity: 0.5 }}
+          >
+            PAGE
           </Text.Card.Note>
-          <Frame override={{ gap: Space.n4 }} layout={Layout.Row.Item.Compact} align="center" cursor="pointer">
-            <Text.Card.Title style={{ fontSize: 13, fontWeight: "bold" }}>
+          <Frame
+            override={{ gap: Space.n4 }}
+            layout={Layout.Row.Item.Compact}
+            align="center"
+            cursor="pointer"
+          >
+            <Text.Card.Title size={FontSize.n13} weight="bold">
               Marketing Home
             </Text.Card.Title>
-            <Icon src={ChevronDown} size={IconSize.n12} style={{ opacity: 0.5 }} />
+            <Icon
+              src={ChevronDown}
+              size={IconSize.n12}
+              style={{ opacity: 0.5 }}
+            />
           </Frame>
         </Frame>
-        <Frame override={{ h: Size.n4 }} style={{ width: "0.5px" }} surface="overlay" />
+        <Frame
+          override={{ h: Size.n16 }}
+          style={{ width: "1px" }}
+          surface="sunken"
+          opacity={Opacity.n30}
+        />
         <Action icon={Play} variant="ghost" size="sm" rounded="full" />
       </Frame>
     </Overlay>
@@ -57,22 +89,31 @@ export function TopRightBar() {
   return (
     <Overlay
       position="fixed"
-      y="3px"
-      right="3px"
+      y="var(--space-n4)"
+      right="var(--space-n4)"
       zIndex={200}
       clickOutsideToDismiss={false}
       style={{ pointerEvents: "auto" }}
     >
-      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default} align="center">
+      <Frame
+        override={{ gap: Space.n8 }}
+        layout={Layout.Row.Actions.Default}
+        align="center"
+      >
         <Frame
-          override={{ gap: Space.n4, p: Space.n4, rounded: "full", shadow: "lg" }}
+          override={{
+            gap: Space.n4,
+            p: Space.n4,
+            rounded: "full",
+            shadow: "lg",
+          }}
           layout={Layout.Row.Actions.Default}
-          surface="raised"
+          surface="overlay"
         >
-          <Frame override={{ p: Space.n6, rounded: "full" }}>
+          <Frame override={{ p: Space.n6, rounded: "full" }} cursor="pointer">
             <Icon src={Moon} size={IconSize.n16} />
           </Frame>
-          <Frame override={{ p: Space.n6, rounded: "full" }}>
+          <Frame override={{ p: Space.n6, rounded: "full" }} cursor="pointer">
             <Icon src={Bell} size={IconSize.n16} />
           </Frame>
         </Frame>
@@ -98,8 +139,8 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
   return (
     <Overlay
       position="fixed"
-      y="3px"
-      x="3px"
+      y="var(--space-n4)"
+      x="var(--space-n4)"
       zIndex={200}
       clickOutsideToDismiss={false}
       style={{ pointerEvents: "auto" }}
@@ -110,13 +151,15 @@ export function SidebarToggle({ isOpen, onClick }: SidebarToggleProps) {
           rounded: "full",
           shadow: "lg",
         }}
-        style={{ border: "1px solid var(--border-color)" }}
-        surface="base"
+        surface="overlay"
         cursor="pointer"
-        className=""
         onClick={onClick}
       >
-        {isOpen ? <Icon src={LayoutIcon} size={IconSize.n20} /> : <Icon src={Menu} size={IconSize.n20} />}
+        {isOpen ? (
+          <Icon src={LayoutIcon} size={IconSize.n20} />
+        ) : (
+          <Icon src={Menu} size={IconSize.n20} />
+        )}
       </Frame>
     </Overlay>
   );

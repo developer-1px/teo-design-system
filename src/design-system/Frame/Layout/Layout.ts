@@ -32,9 +32,9 @@
  * ```
  */
 
-import type { FrameOverrides } from "../FrameProps.ts";
-import { Size, Space } from "../../token/token.const.1tier.ts";
 import type React from "react";
+import { Size, Space } from "../../token/token.const.1tier.ts";
+import type { FrameOverrides } from "../FrameProps.ts";
 
 export const Layout = {
   // ⬇️ Vertical Flow (Stack)
@@ -281,7 +281,7 @@ export const Layout = {
 
   // @FIXME: for dev mark
   RowTemp: "row.temp",
-  StackTemp: "stack.temp"
+  StackTemp: "stack.temp",
 } as const;
 
 // Strict Type Extraction (Recursive)
@@ -295,7 +295,9 @@ export type LayoutToken = DeepValue<typeof Layout>;
  * Resolves a high-level LayoutToken (e.g. "stack.section")
  * into low-level FrameProps (flex, gap, padding, etc.)
  */
-export function resolveLayout(layout: LayoutToken): FrameOverrides & { style?: React.CSSProperties } {
+export function resolveLayout(
+  layout: LayoutToken,
+): FrameOverrides & { style?: React.CSSProperties } {
   switch (layout) {
     // --- Stack ---
     case Layout.Stack.Content.Default:

@@ -1,8 +1,8 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Section } from "../design-system/Section";
-import { Space, Size } from "../design-system/token/token.const.1tier";
 import { Text } from "../design-system/text/Text";
+import { Size, Space } from "../design-system/token/token.const.1tier";
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -15,16 +15,19 @@ export function SlidesPanel() {
       rounded="round"
       shadow="sm"
     >
-      <Frame
-        style={{ minHeight: 0 }}
-        scroll
-        surface="sunken"
-        flex
-        fill
-      >
+      <Frame style={{ minHeight: 0 }} scroll surface="sunken" flex fill>
         {slides.map((num) => (
-          <Frame override={{ gap: Space.n4, p: Space.n8 }} key={num} border={num === 1}>
-            <Frame override={{ gap: Space.n4 }} layout={Layout.Row.LabelValue.Default} justify="between" align="end">
+          <Frame
+            override={{ gap: Space.n4, p: Space.n8 }}
+            key={num}
+            border={num === 1}
+          >
+            <Frame
+              override={{ gap: Space.n4 }}
+              layout={Layout.Row.LabelValue.Default}
+              justify="between"
+              align="end"
+            >
               <Text.Card.Note
                 style={{
                   color: num === 1 ? "var(--text-white)" : "var(--text-subtle)",

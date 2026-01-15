@@ -1,6 +1,5 @@
 import type React from "react";
 
-
 interface DividerProps {
   variant?: "line" | "dot" | "slash" | "spacer";
   size?: number | string; // Margin size
@@ -83,7 +82,7 @@ export function Divider({
     // Vertical Bar (for Horizontal Stacks)
     // e.g. Toolbar | Item
     return (
-      <div
+      <hr
         className={`divider-vertical ${className}`}
         style={{
           ...lineStyle,
@@ -91,8 +90,8 @@ export function Divider({
           height: "1em", // Match text height by default
           alignSelf: "center",
           margin: `0 ${resolvedMargin}`,
+          border: "none", // Reset default hr styles
         }}
-        role="separator"
         aria-orientation="vertical"
       />
     );
@@ -101,15 +100,15 @@ export function Divider({
   // Horizontal Line (for Vertical Stacks) - Default
   // e.g. Section ---------------- Section
   return (
-    <div
+    <hr
       className={`divider-horizontal ${className}`}
       style={{
         ...lineStyle,
         width: "100%",
         height: "1px",
         margin: `${resolvedMargin} 0`,
+        border: "none", // Reset default hr styles
       }}
-      role="separator"
       aria-orientation="horizontal"
     />
   );

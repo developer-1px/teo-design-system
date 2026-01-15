@@ -5,7 +5,7 @@ import "./frame.css";
 import type { FrameOverrides, FrameProps } from "./FrameProps.ts";
 import { frameToSettings } from "./frameToSettings.ts";
 
-import { resolveLayout } from "./Layout/Layout.ts"
+import { resolveLayout } from "./Layout/Layout.ts";
 
 export function Frame({
   children,
@@ -24,7 +24,6 @@ export function Frame({
   // 2. Merge Overrides (Layout override < Direct override)
   // We extract style specifically to merge it last
   const combinedOverrideStyle = {
-    // @ts-ignore - layoutSettings might have top-level style if we updated Layout.ts
     ...layoutSettings.style,
     ...style,
   };
@@ -46,8 +45,6 @@ export function Frame({
   const { className: settingsClass, style: settingsStyle } =
     frameToSettings(settingsInput);
 
-
-
   // 5. Compute Final Style
   // Logic from previous Frame.tsx for specific computed props (grid, size logic)
   // We need to access props from settingsInput to ensure consistency
@@ -59,7 +56,6 @@ export function Frame({
     gridTemplateColumns: p.columns,
     gridTemplateRows: p.rows,
     gridTemplateAreas: p.areas,
-
 
     // Flex
     flex: typeof p.flex === "number" ? p.flex : undefined,
