@@ -246,10 +246,14 @@ export function TokensApp() {
               {RadiusScale.map((val) => (
                 <Frame
                   key={val}
-                  r={Radius[`n${val}` as keyof typeof Radius]}
                   surface="raised"
                   layout={Layout.Center.Default}
-                  override={{ w: Size.n96, h: Size.n96, minWidth: Size.n96 }}
+                  override={{
+                    w: Size.n96,
+                    h: Size.n96,
+                    minWidth: Size.n96,
+                    r: Radius[`n${val}` as keyof typeof Radius]
+                  }}
                 >
                   <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>

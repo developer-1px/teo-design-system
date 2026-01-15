@@ -136,7 +136,6 @@ interface FrameStrictProps {
 
   // Surface
   surface?: SurfaceToken;
-  r?: RadiusToken;
   rounded?: Radius2Token | boolean;
   clip?: boolean;
 
