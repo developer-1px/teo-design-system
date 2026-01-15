@@ -37,7 +37,7 @@ export interface FrameOverrides {
 
   // Flex
   row?: boolean; // Used internally by Layout presets
-  wrap?: "wrap" | "nowrap" | "wrap-reverse";
+  wrap?: boolean | "wrap" | "nowrap" | "wrap-reverse";
 
   fill?: boolean;
   flex?: boolean | number | string;
@@ -93,7 +93,7 @@ interface FrameStrictProps {
   h?: HeightToken;
 
   row?: boolean;
-  wrap?: "wrap" | "nowrap" | "wrap-reverse";
+  wrap?: boolean;
 
   fill?: boolean;
   flex?: boolean | number | string;

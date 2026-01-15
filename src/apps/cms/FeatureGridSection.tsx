@@ -54,7 +54,7 @@ export function FeatureGridSection() {
           <Frame
             override={{ gap: Space.n16 }}
             layout={Layout.Row.Item.Default}
-            wrap="wrap"
+            wrap
           >
             <FeatureCardLarge
               icon={Zap}
@@ -75,7 +75,7 @@ export function FeatureGridSection() {
           <Frame
             override={{ gap: Space.n16 }}
             layout={Layout.Row.Item.Default}
-            wrap="wrap"
+            wrap
           >
             <FeatureCardLarge
               icon={Shield}

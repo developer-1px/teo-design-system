@@ -124,7 +124,7 @@ export function ImageFooterBanner() {
         </Text.Card.Note>
         <Frame
           layout={Layout.Wrap.Chips.Loose}
-          wrap="wrap"
+          wrap
           override={{
             gap: Space.n48,
             py: Space.n0,

@@ -119,9 +119,15 @@ export function frameToSettings(props: FrameSettingsInput): {
   if (props.pack) classes.push("pack");
 
   // Wrap
-  if (props.wrap === "wrap") classes.push("wrap");
-  else if (props.wrap === "nowrap") classes.push("nowrap");
-  else if (props.wrap === "wrap-reverse") classes.push("wrap-reverse");
+  if (typeof props.wrap === "boolean") {
+    if (props.wrap) classes.push("wrap");
+  } else if (props.wrap === "wrap") {
+    classes.push("wrap");
+  } else if (props.wrap === "nowrap") {
+    classes.push("nowrap");
+  } else if (props.wrap === "wrap-reverse") {
+    classes.push("wrap-reverse");
+  }
 
   // Align
   if (props.align) classes.push(`items-${props.align}`);
