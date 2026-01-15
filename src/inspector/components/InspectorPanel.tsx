@@ -214,9 +214,8 @@ export function InspectorPanel({
     >
       <Frame
         override={{
-          rounded: "lg",
           shadow: "2xl",
-        }}
+        }} rounded="lg"
         style={{
           maxHeight: "80vh",
           border: "1px solid var(--border-color)",
@@ -391,10 +390,7 @@ export function InspectorPanel({
                   {section.section}
                 </Text>
                 <Frame
-                  override={{
-                    gap: Space.n0,
-                    rounded: "sm",
-                  }}
+                  override={{gap: Space.n0}} rounded="sm"
                   style={{ border: "1px solid var(--border-color)" }}
                   clip
                 >

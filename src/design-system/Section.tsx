@@ -58,9 +58,9 @@ export function Section({
       override={{
         p: Space.n0,
         flex,
-        rounded,
         shadow,
       }}
+      rounded={rounded}
       as="section"
       surface="base"
       fill={fill}

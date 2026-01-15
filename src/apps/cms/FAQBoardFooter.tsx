@@ -55,18 +55,15 @@ export function FAQBoardFooter() {
         </Frame>
 
         <Frame
-          override={{
-            p: Space.n32,
+          override={{p: Space.n32,
             w: Size.full,
-            rounded: "2xl",
-            gap: Space.n24,
-          }}
+            gap: Space.n24}} rounded="2xl"
           surface="raised"
           layout={Layout.Slots.Media.Default}
           align="center"
         >
           <Frame
-            override={{ w: Size.n56, h: Size.n56, rounded: "full" }}
+            override={{ w: Size.n56, h: Size.n56}} rounded="full"
             surface="sunken"
             pack
           >

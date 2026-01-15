@@ -40,21 +40,21 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
                 {/* Placeholder Content */}
                 <Frame override={{ gap: Space.n4 }}>
                     <Text.Card.Note>Title</Text.Card.Note>
-                    <Frame override={{ h: Size.n32, rounded: "md", p: Space.n8 }} style={{ background: "var(--surface-base)" }}>
+                    <Frame override={{h: Size.n32, p: Space.n8}} rounded="md" style={{ background: "var(--surface-base)" }}>
                         <Text.Prose.Body>Marketing Home</Text.Prose.Body>
                     </Frame>
                 </Frame>
 
                 <Frame override={{ gap: Space.n4 }}>
                     <Text.Card.Note>Slug</Text.Card.Note>
-                    <Frame override={{ h: Size.n32, rounded: "md", p: Space.n8 }} style={{ background: "var(--surface-base)" }}>
+                    <Frame override={{h: Size.n32, p: Space.n8}} rounded="md" style={{ background: "var(--surface-base)" }}>
                         <Text.Prose.Body>/</Text.Prose.Body>
                     </Frame>
                 </Frame>
 
                 <Frame override={{ gap: Space.n4 }}>
                     <Text.Card.Note>Description</Text.Card.Note>
-                    <Frame override={{ h: Size.n64, rounded: "md", p: Space.n8 }} style={{ background: "var(--surface-base)" }}>
+                    <Frame override={{h: Size.n64, p: Space.n8}} rounded="md" style={{ background: "var(--surface-base)" }}>
                         <Text.Prose.Body>Main landing page...</Text.Prose.Body>
                     </Frame>
                 </Frame>

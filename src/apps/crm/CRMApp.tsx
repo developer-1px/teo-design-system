@@ -62,7 +62,7 @@ export function CRMApp() {
           {isLoading ? (
             <Frame fill pack align="center" justify="center">
               <Frame
-                override={{ w: Size.n24, h: Size.n24, rounded: "full" }}
+                override={{ w: Size.n24, h: Size.n24}} rounded="full"
                 style={{
                   border: "2px solid var(--border-color)",
                   borderTopColor: "var(--text-primary)",

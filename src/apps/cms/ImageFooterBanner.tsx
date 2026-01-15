@@ -24,11 +24,8 @@ export function ImageFooterBanner() {
       surface="base"
     >
       <Frame
-        override={{
-          w: Size.full,
-          h: Size.n128,
-          rounded: "3xl",
-        }}
+        override={{w: Size.full,
+          h: Size.n128}} rounded="3xl"
         style={{
           position: "relative",
           background: "linear-gradient(225deg, #1a1a1a, #000)",

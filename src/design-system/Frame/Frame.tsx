@@ -90,8 +90,6 @@ export function Frame({
     areas,
     align,
     justify,
-    surface,
-    rounded,
     clip,
     scroll,
 
@@ -108,11 +106,14 @@ export function Frame({
   );
 
   // This flattens strict props and loose overrides into one Loose object for calculation
-  const settingsInput: FrameOverrides = {
+  // surface and rounded are top-level only, added separately
+  const settingsInput = {
     ...layoutSettings,
     ...explicitProps,
     ...combinedOverride,
-  } as FrameOverrides;
+    ...(surface !== undefined && { surface }),
+    ...(rounded !== undefined && { rounded }),
+  };
 
   // 4. Calculate Settings (Classes & CSS Vars)
   const { className: settingsClass, style: settingsStyle } =

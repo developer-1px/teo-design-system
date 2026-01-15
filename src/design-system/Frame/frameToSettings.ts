@@ -1,8 +1,16 @@
 import type React from "react";
 import type { FrameOverrides } from "./FrameProps.ts";
+import type { SurfaceToken } from "../lib/types.ts";
+import type { Radius2Token } from "../token";
 import { Radius2 } from "../token";
 
-export function frameToSettings(props: FrameOverrides): {
+// Internal type for frameToSettings - includes top-level only props
+type FrameSettingsInput = FrameOverrides & {
+  surface?: SurfaceToken;
+  rounded?: Radius2Token | boolean;
+};
+
+export function frameToSettings(props: FrameSettingsInput): {
   className: string;
   style: React.CSSProperties;
 } {

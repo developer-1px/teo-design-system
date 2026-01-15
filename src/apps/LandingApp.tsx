@@ -58,13 +58,10 @@ export function LandingApp() {
         >
           <Frame
             style={{ border: "1px solid var(--border-color)" }}
-            override={{
-              py: Space.n4,
+            override={{py: Space.n4,
               px: Space.n12,
-              rounded: "full",
               gap: Space.n8,
-              cursor: "pointer",
-            }}
+              cursor: "pointer"}} rounded="full"
             surface="sunken"
             layout={Layout.Row.Item.Tight}
             align="center"
@@ -297,22 +294,16 @@ function FeatureCard({
   return (
     <Frame
       style={{ border: "1px solid var(--border-color)" }}
-      override={{
-        p: Space.n24,
-        rounded: "2xl",
-        gap: Space.n16,
-      }}
+      override={{p: Space.n24,
+        gap: Space.n16}} rounded="2xl"
       surface="sunken"
     >
       <Frame
         style={{ border: "1px solid var(--border-color)" }}
-        override={{
-          w: Size.n40,
+        override={{w: Size.n40,
           h: Size.n40,
           p: Space.n8,
-          rounded: "xl",
-          shadow: "sm",
-        }}
+          shadow: "sm"}} rounded="xl"
         surface="base"
         pack
       >

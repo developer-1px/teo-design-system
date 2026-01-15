@@ -35,7 +35,7 @@ export function SlidesPanel() {
                 {num}
               </Text.Card.Note>
               <Frame
-                override={{ w: Size.full, rounded: "md" }}
+                override={{ w: Size.full}} rounded="md"
                 ratio="16/9"
                 surface="raised"
                 flex

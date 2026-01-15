@@ -169,8 +169,7 @@ export function PropertiesPanel() {
         {/* Alignment */}
         <Frame
           override={{
-            rounded: "md",
-          }}
+          }} rounded="md"
           style={{
             border: "1px solid var(--border-color)",
             padding: "1px",
@@ -308,8 +307,7 @@ export function PropertiesPanel() {
             </Frame>
             <Frame
               override={{
-                rounded: "md",
-              }}
+              }} rounded="md"
               style={{
                 border: "1px solid var(--border-color)",
                 padding: "1px",
@@ -347,8 +345,7 @@ export function PropertiesPanel() {
             icon={
               <Frame
                 override={{
-                  rounded: "full",
-                }}
+                }} rounded="full"
                 style={{
                   width: "10px",
                   height: "10px",
@@ -370,8 +367,7 @@ export function PropertiesPanel() {
               icon={
                 <Frame
                   override={{
-                    rounded: "full",
-                  }}
+                  }} rounded="full"
                   style={{
                     width: "10px",
                     height: "10px",

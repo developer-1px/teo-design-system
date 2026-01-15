@@ -43,11 +43,8 @@ function Avatar({
 }) {
   return (
     <Frame
-      override={{
-        w: size,
-        h: size,
-        rounded: "full",
-      }}
+      override={{w: size,
+        h: size}} rounded="full"
       style={{ backgroundColor: color }}
       pack
       align="center"

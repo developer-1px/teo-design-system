@@ -67,25 +67,19 @@ export function BodyContentSection() {
 
         <Frame flex pack>
           <Frame
-            override={{
-              w: Size.n160,
+            override={{w: Size.n160,
               h: Size.n208,
-              rounded: "3xl",
-              shadow: "2xl",
-            }}
+              shadow: "2xl"}} rounded="3xl"
             style={{ position: "relative" }}
             surface="raised"
           >
             {/* Floating Card 1 */}
             <Frame
-              override={{
-                w: Size.n64,
+              override={{w: Size.n64,
                 h: Size.n64,
-                rounded: "2xl",
                 shadow: "lg",
                 p: Space.n24,
-                gap: Space.n16,
-              }}
+                gap: Space.n16}} rounded="2xl"
               style={{
                 position: "absolute",
                 top: "var(--space-n40)",
@@ -100,11 +94,11 @@ export function BodyContentSection() {
               />
               <Frame override={{ gap: Space.n8 }}>
                 <Frame
-                  override={{ h: Size.n12, w: Size.full, rounded: "full" }}
+                  override={{ h: Size.n12, w: Size.full}} rounded="full"
                   surface="overlay"
                 />
                 <Frame
-                  override={{ h: Size.n12, rounded: "full" }}
+                  override={{ h: Size.n12}} rounded="full"
                   style={{ width: "60%" }}
                   surface="overlay"
                 />
@@ -113,14 +107,11 @@ export function BodyContentSection() {
 
             {/* Floating Card 2 */}
             <Frame
-              override={{
-                w: Size.n80,
+              override={{w: Size.n80,
                 h: Size.n80,
-                rounded: "2xl",
                 shadow: "lg",
                 p: Space.n24,
-                gap: Space.n16,
-              }}
+                gap: Space.n16}} rounded="2xl"
               style={{
                 position: "absolute",
                 bottom: "var(--space-n40)",
@@ -140,17 +131,17 @@ export function BodyContentSection() {
                   align="center"
                 >
                   <Frame
-                    override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
+                    override={{ w: Size.n8, h: Size.n8}} rounded="full"
                     surface="overlay"
                   />
                   <Frame
-                    override={{ w: Size.n24, rounded: "full" }}
+                    override={{ w: Size.n24}} rounded="full"
                     style={{ height: "var(--space-n4)" }}
                     surface="overlay"
                   />
                 </Frame>
                 <Frame
-                  override={{ w: Size.full, rounded: "full" }}
+                  override={{ w: Size.full}} rounded="full"
                   style={{ height: "var(--space-n4)" }}
                   surface="raised"
                 />
@@ -176,7 +167,7 @@ function CheckItem({ title, desc }: CheckItemProps) {
       align="start"
     >
       <Frame
-        override={{ w: Size.n20, h: Size.n20, rounded: "full" }}
+        override={{ w: Size.n20, h: Size.n20}} rounded="full"
         style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
         pack

@@ -22,12 +22,9 @@ function NavItem({ to, label }: { to: string; label: string }) {
     <NavLink to={to} style={{ textDecoration: "none" }}>
       {({ isActive }) => (
         <Frame
-          override={{
-            py: Space.n6,
+          override={{py: Space.n6,
             px: Space.n14,
-            rounded: "full",
-            cursor: "pointer",
-          }}
+            cursor: "pointer"}} rounded="full"
           style={{
             color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
           }}
@@ -46,11 +43,10 @@ function Navigation() {
   return (
     <Frame
       override={{
-        rounded: "full",
         shadow: "xl",
         p: Space.n4,
         gap: Space.n4,
-      }}
+      }} rounded="full"
       style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
       surface="raised"
       layout={Layout.Row.Toolbar.Default}
@@ -75,11 +71,8 @@ function ThemeToggleItem() {
 
   return (
     <Frame
-      override={{
-        p: Space.n8,
-        rounded: "full",
-        cursor: "pointer",
-      }}
+      override={{p: Space.n8,
+        cursor: "pointer"}} rounded="full"
       style={{
         color: "var(--text-secondary)",
       }}

@@ -57,11 +57,8 @@ export function LoginApp() {
               <Frame layout={Layout.Row.Item.Tight} override={{ cursor: "pointer" }}>
                 {/* Checkbox simulation */}
                 <Frame
-                  override={{
-                    w: Size.n4,
-                    h: Size.n4,
-                    rounded: "sm",
-                  }}
+                  override={{w: Size.n4,
+                    h: Size.n4}} rounded="sm"
                   style={{ border: "1px solid var(--border-color)" }}
                   surface="sunken"
                 />
@@ -109,12 +106,9 @@ export function LoginApp() {
             style={{ maxWidth: "480px", width: "100%" }}
           >
             <Frame
-              override={{
-                w: Size.n64,
+              override={{w: Size.n64,
                 h: Size.n64,
-                rounded: "2xl",
-                shadow: "lg",
-              }}
+                shadow: "lg"}} rounded="2xl"
               style={{ marginBottom: "var(--space-n16)" }}
               surface="card"
               align="center"
@@ -156,7 +150,7 @@ function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
     <Frame layout={Layout.Row.Item.Default} align="start">
       <Frame
-        override={{ w: Size.n8, h: Size.n8, rounded: "full" }}
+        override={{ w: Size.n8, h: Size.n8}} rounded="full"
         style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
         flex={0}

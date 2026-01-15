@@ -102,7 +102,7 @@ export function MailList() {
                 {thread.labels.map((label) => (
                   <Frame
                     key={label}
-                    override={{ py: Space.n2, px: Space.n6, rounded: "sm" }}
+                    override={{ py: Space.n2, px: Space.n6}} rounded="sm"
                     surface="raised"
                   >
                     <Text.Card.Note size={FontSize.n10} style={{ color: "var(--text-tertiary)" }}>

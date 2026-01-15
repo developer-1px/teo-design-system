@@ -47,12 +47,9 @@ export function FloatingToolbar() {
       style={{ transform: "translateX(-50%)" }}
     >
       <Frame
-        override={{
-          gap: Space.n4,
+        override={{gap: Space.n4,
           p: Space.n4,
-          rounded: "full",
-          shadow: "lg",
-        }}
+          shadow: "lg"}} rounded="full"
         style={{ border: "1px solid var(--border-color)" }}
         layout={Layout.Row.Toolbar.Default}
         surface="base"

@@ -130,13 +130,13 @@ export function Action({
   return (
     <Frame
       override={{
-        rounded: finalRounded,
         p: finalP,
         gap: gap ?? Space.n4,
         opacity: opacity,
         row: true,
         align: "center",
       }}
+      rounded={finalRounded}
       style={{
         width: typeof finalWidth === "number" ? `${finalWidth}px` : finalWidth,
         height: typeof finalHeight === "number" ? `${finalHeight}px` : finalHeight,

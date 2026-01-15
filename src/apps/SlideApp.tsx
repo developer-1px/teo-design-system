@@ -74,12 +74,9 @@ export function SlideApp() {
           align="center"
         >
           <Frame
-            override={{
-              gap: Space.n4,
+            override={{gap: Space.n4,
               p: Space.n4,
-              rounded: "md",
-              shadow: "sm",
-            }}
+              shadow: "sm"}} rounded="md"
             layout={Layout.Row.Item.Compact}
             align="center"
             surface="overlay"
@@ -87,8 +84,7 @@ export function SlideApp() {
             <Frame
               style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
               override={{
-                rounded: "md",
-              }}
+              }} rounded="md"
               surface="overlay"
             />
             <Action
@@ -136,7 +132,7 @@ export function SlideApp() {
         {/* 3. Central Canvas Area */}
         <Frame
           style={{ position: "relative" }}
-          override={{ rounded: "md" }}
+          rounded="md"
           flex
           fill
           clip
@@ -145,10 +141,7 @@ export function SlideApp() {
           <Frame fill pack scroll>
             <Frame
               style={{ width: "80%", maxWidth: "var(--container-n1280)" }}
-              override={{
-                shadow: "lg",
-                rounded: "2xl",
-              }}
+              override={{shadow: "lg"}} rounded="2xl"
               surface="base"
               pack
               ratio="16/9"
@@ -171,8 +164,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                      rounded: "md",
-                    }}
+                    }} rounded="md"
                     surface="sunken"
                     pack
                   >
@@ -185,8 +177,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                      rounded: "md",
-                    }}
+                    }} rounded="md"
                     surface="raised"
                     pack
                   >
@@ -199,8 +190,7 @@ export function SlideApp() {
                   <Frame
                     style={{ width: "40px", height: "40px" }}
                     override={{
-                      rounded: "md",
-                    }}
+                    }} rounded="md"
                     surface="overlay"
                     pack
                   >

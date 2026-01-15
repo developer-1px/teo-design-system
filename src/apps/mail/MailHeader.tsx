@@ -28,7 +28,7 @@ export function MailHeader() {
 
       {/* Center: Search */}
       <Frame
-        override={{ w: Size.n448, rounded: "md", py: Space.n6, px: Space.n12, gap: Space.n8 }}
+        override={{w: Size.n448, py: Space.n6, px: Space.n12, gap: Space.n8}} rounded="md"
         surface="sunken"
         layout={Layout.Row.Toolbar.Compact}
         align="center"

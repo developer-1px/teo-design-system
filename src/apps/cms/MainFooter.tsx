@@ -38,7 +38,7 @@ export function MainFooter() {
               align="center"
             >
               <Frame
-                override={{ w: Size.n40, h: Size.n40, rounded: "xl" }}
+                override={{ w: Size.n40, h: Size.n40}} rounded="xl"
                 surface="primary"
                 pack
               >

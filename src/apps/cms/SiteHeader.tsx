@@ -50,12 +50,9 @@ export function SiteHeader({
           align="center"
         >
           <Frame
-            override={{
-              w: Size.n32,
+            override={{w: Size.n32,
               h: Size.n32,
-              rounded: "lg",
-              shadow: "sm",
-            }}
+              shadow: "sm"}} rounded="lg"
             style={{ border: "1px solid var(--border-color)" }}
             surface="primary"
             pack

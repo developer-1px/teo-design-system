@@ -111,16 +111,13 @@ function FeatureCardSmall({
 }: FeatureCardSmallProps) {
   return (
     <Frame
-      override={{ p: Space.n32, rounded: "2xl", gap: Space.n24 }}
+      override={{p: Space.n32, gap: Space.n24}} rounded="2xl"
       flex={flex}
       surface="raised"
     >
       <Frame
-        override={{
-          w: Size.n48,
-          h: Size.n48,
-          rounded: "xl",
-        }}
+        override={{w: Size.n48,
+          h: Size.n48}} rounded="xl"
         style={{ border: "1px solid var(--border-color)" }}
         surface="sunken"
         pack
@@ -163,7 +160,7 @@ function FeatureCardLarge({
 }: FeatureCardLargeProps) {
   return (
     <Frame
-      override={{ rounded: "2xl" }}
+      rounded="2xl"
       flex={flex}
       surface="raised"
       clip
@@ -171,11 +168,8 @@ function FeatureCardLarge({
     >
       <Frame override={{ p: Space.n32, gap: Space.n24 }} flex justify="center">
         <Frame
-          override={{
-            w: Size.n48,
-            h: Size.n48,
-            rounded: "xl",
-          }}
+          override={{w: Size.n48,
+            h: Size.n48}} rounded="xl"
           style={{ border: "1px solid var(--border-color)" }}
           surface="sunken"
           pack
@@ -213,12 +207,9 @@ function FeatureCardLarge({
           pack
         >
           <Frame
-            override={{
-              w: Size.n128,
+            override={{w: Size.n128,
               h: Size.n160,
-              rounded: "lg",
-              shadow: "xl",
-            }}
+              shadow: "xl"}} rounded="lg"
             style={{ border: "1px solid var(--border-color)" }}
             surface="base"
           />

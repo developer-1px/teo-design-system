@@ -122,7 +122,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
             />
           </Frame>
           <Frame
-            override={{ gap: Space.n4, p: Space.n4, rounded: "md" }}
+            override={{ gap: Space.n4, p: Space.n4}} rounded="md"
             layout={Layout.Row.Actions.Default}
             surface="sunken"
           >
@@ -169,7 +169,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         align="center"
       >
         <Frame
-          override={{ w: Size.n32, h: Size.n32, rounded: "full" }}
+          override={{ w: Size.n32, h: Size.n32}} rounded="full"
           surface="sunken"
           pack
         >
@@ -215,11 +215,8 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
           </Text.Card.Note>
         </Frame>
         <Frame
-          override={{
-            w: Size.full,
-            rounded: "md",
-            cursor: "pointer",
-          }}
+          override={{w: Size.full,
+            cursor: "pointer"}} rounded="md"
           style={{
             border: "1px solid var(--border-color)",
             boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
@@ -231,12 +228,9 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
         >
           {active && (
             <Frame
-              override={{
-                w: Size.n8,
+              override={{w: Size.n8,
                 h: Size.n8,
-                rounded: "full",
-                shadow: "sm",
-              }}
+                shadow: "sm"}} rounded="full"
               surface="primary"
             />
           )}
@@ -247,7 +241,7 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
 
   return (
     <Frame
-      override={{ py: Space.n8, px: Space.n12, rounded: "md", cursor: "pointer" }}
+      override={{py: Space.n8, px: Space.n12, cursor: "pointer"}} rounded="md"
       layout={Layout.Row.Item.Default}
       align="center"
       justify="between"

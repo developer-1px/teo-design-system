@@ -61,9 +61,6 @@ export interface FrameOverrides {
   justify?: JustifyToken;
 
   // Surface
-  surface?: SurfaceToken;
-  rounded?: Radius2Token | boolean;
-  // deprecated overflow removed
   clip?: boolean;
 
   cursor?: CursorToken;

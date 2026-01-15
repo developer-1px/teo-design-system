@@ -43,13 +43,10 @@ export function CRMHeader() {
 
       {/* Global Search */}
       <Frame
-        override={{
-          w: Size.n384,
-          rounded: "md",
+        override={{w: Size.n384,
           py: Space.n6,
           px: Space.n12,
-          gap: Space.n8,
-        }}
+          gap: Space.n8}} rounded="md"
         surface="sunken"
         layout={Layout.Row.Toolbar.Compact}
         align="center"
@@ -72,10 +69,9 @@ export function CRMHeader() {
         <Frame flex />
         <Frame
           override={{
-            rounded: "sm",
             px: Space.n4,
             py: Space.n2,
-          }}
+          }} rounded="sm"
           surface="raised"
         >
           <Text.Card.Note

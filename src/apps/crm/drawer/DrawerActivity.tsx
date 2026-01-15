@@ -30,7 +30,7 @@ function ActivityItem({
   return (
     <Frame layout={Layout.Row.Item.Default}>
       <Frame
-        override={{ w: Size.n24, h: Size.n24, rounded: "full" }}
+        override={{ w: Size.n24, h: Size.n24}} rounded="full"
         surface="raised"
         pack
       >

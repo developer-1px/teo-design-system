@@ -84,11 +84,8 @@ function PropertyRow({
       >
         {isColor && colorValue && (
           <Frame
-            override={{
-              w: Size.n16,
-              h: Size.n16,
-              rounded: "sm",
-            }}
+            override={{w: Size.n16,
+              h: Size.n16}} rounded="sm"
             style={{
               backgroundColor: colorValue,
               border: "1px solid var(--border-color)",

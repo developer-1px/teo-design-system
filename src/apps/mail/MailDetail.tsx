@@ -84,7 +84,7 @@ export function MailDetail() {
               {selectedThread.labels.map((label) => (
                 <Frame
                   key={label}
-                  override={{ py: Space.n4, px: Space.n8, rounded: "sm" }}
+                  override={{ py: Space.n4, px: Space.n8}} rounded="sm"
                   surface="raised"
                 >
                   <Text.Card.Note size={FontSize.n11}>{label}</Text.Card.Note>
@@ -97,7 +97,7 @@ export function MailDetail() {
         {/* Sender Info */}
         <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default} align="start">
           <Frame
-            override={{ w: Size.n40, h: Size.n40, rounded: "full" }}
+            override={{ w: Size.n40, h: Size.n40}} rounded="full"
             surface="raised"
             pack
           >
@@ -150,7 +150,7 @@ export function MailDetail() {
               {mail.attachmentCount} Attachment{mail.attachmentCount !== 1 ? "s" : ""}
             </Text.Card.Note>
             <Frame
-              override={{ py: Space.n12, px: Space.n12, rounded: "md", gap: Space.n12 }}
+              override={{py: Space.n12, px: Space.n12, gap: Space.n12}} rounded="md"
               surface="raised"
               layout={Layout.Row.Item.Default}
               align="center"

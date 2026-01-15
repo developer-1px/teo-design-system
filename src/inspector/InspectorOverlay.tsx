@@ -133,12 +133,11 @@ export function InspectorOverlay() {
         >
           <Frame
             override={{
-              rounded: "full",
               py: Space.n2,
               px: Space.n8,
               gap: Space.n6,
               shadow: "lg",
-            }}
+            }} rounded="full"
             surface="primary"
             layout={Layout.Row.Meta.Default}
           >
@@ -198,14 +197,11 @@ export function InspectorOverlay() {
               }}
             >
               <Frame
-                override={{
-                  py: Space.n0,
+                override={{py: Space.n0,
                   px: Space.n6,
-                  rounded: "sm",
                   h: Size.n16,
                   gap: Space.n4,
-                  shadow: "sm",
-                }}
+                  shadow: "sm"}} rounded="sm"
                 style={{
                   backgroundColor: "var(--link-color)",
                   borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
@@ -267,12 +263,11 @@ export function InspectorOverlay() {
         >
           <Frame
             override={{
-              rounded: "md",
               py: Space.n4,
               px: Space.n12,
               gap: Space.n8,
               shadow: "lg",
-            }}
+            }} rounded="md"
             surface="primary"
             layout={Layout.Row.Meta.Default}
           >

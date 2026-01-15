@@ -37,7 +37,7 @@ export function EditableWrapper({
       {isHovered && (
         <Overlay position="absolute" y={-10} x={-2} zIndex={50}>
           <Frame
-            override={{ py: Space.n0, px: Space.n6, rounded: "sm", h: Size.n4 }}
+            override={{py: Space.n0, px: Space.n6, h: Size.n4}} rounded="sm"
             surface="primary"
             pack
           >

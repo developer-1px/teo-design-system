@@ -50,10 +50,9 @@ export function CMSApp() {
         fill
         flex
         override={{
-          rounded: "2xl",
           shadow: "lg",
           clip: true,
-        }}
+        }} rounded="2xl"
         surface="raised"
         style={{
           margin: "var(--space-n4)",
@@ -148,12 +147,9 @@ function FloatingToolbar({
     >
       <Frame
         surface="raised"
-        override={{
-          p: Space.n6,
-          rounded: "full",
+        override={{p: Space.n6,
           gap: Space.n4,
-          shadow: "xl",
-        }}
+          shadow: "xl"}} rounded="full"
         layout={Layout.Row.Actions.Default}
         align="center"
         style={{ border: "1px solid var(--border-color)" }}

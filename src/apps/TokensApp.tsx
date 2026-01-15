@@ -154,7 +154,7 @@ export function TokensApp() {
               <Frame
                 flex={1}
                 surface="sunken"
-                override={{ p: Space.n32, rounded: "2xl", gap: Space.n12 }}
+                override={{p: Space.n32, gap: Space.n12}} rounded="2xl"
               >
                 <Text.Card.Title>The Whitelist Concept</Text.Card.Title>
                 <Text.Card.Desc>
@@ -166,7 +166,7 @@ export function TokensApp() {
               <Frame
                 flex={1}
                 surface="sunken"
-                override={{ p: Space.n32, rounded: "2xl", gap: Space.n12 }}
+                override={{p: Space.n32, gap: Space.n12}} rounded="2xl"
               >
                 <Text.Card.Title>The Meaning of 'n'</Text.Card.Title>
                 <Text.Card.Desc>
@@ -198,7 +198,7 @@ export function TokensApp() {
                         width: `var(--space-n${val})`,
                         transition: "width 0.3s ease",
                       }}
-                      override={{ h: Size.n24, rounded: "sm" }}
+                      override={{ h: Size.n24}} rounded="sm"
                     />
                   </ScaleVisualizer>
                 ))}
@@ -225,7 +225,7 @@ export function TokensApp() {
                     minWidth: `var(--size-n${val})`, // Ensure it doesn't shrink
                     minHeight: `var(--size-n${val})`,
                   }}
-                  override={{ rounded: "xl" }}
+                  rounded="xl"
                   align="center"
                   justify="center"
                 >
@@ -266,12 +266,9 @@ export function TokensApp() {
             <SectionHeader title="Z-Index" desc="Elevation depth & Stacking." />
             <TextColumn>
               <Frame
-                override={{
-                  h: Size.n256,
+                override={{h: Size.n256,
                   w: Size.full,
-                  p: Space.n48,
-                  rounded: "3xl",
-                }}
+                  p: Space.n48}} rounded="3xl"
                 surface="sunken"
                 align="center"
                 justify="center"
@@ -296,12 +293,9 @@ export function TokensApp() {
                         border:
                           "var(--border-width-n1) solid var(--border-color)",
                       }}
-                      override={{
-                        w: Size.n160,
+                      override={{w: Size.n160,
                         h: Size.n128,
-                        rounded: "xl",
-                        p: Space.n16,
-                      }}
+                        p: Space.n16}} rounded="xl"
                     >
                       <Text.Card.Title>n{val}</Text.Card.Title>
                     </Frame>
@@ -323,12 +317,9 @@ export function TokensApp() {
                     style={{
                       backgroundColor: "black",
                     }}
-                    override={{
-                      w: Size.n64,
+                    override={{w: Size.n64,
                       h: Size.n64,
-                      rounded: "lg",
-                      minWidth: Size.n64,
-                    }}
+                      minWidth: Size.n64}} rounded="lg"
                   />
                   <Text.Card.Code>n{val}</Text.Card.Code>
                 </Frame>
