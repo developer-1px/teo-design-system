@@ -1,7 +1,7 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Prose } from "../design-system/text/context/Prose.tsx";
-import { Space } from "../design-system/token/token.const.1tier.ts";
+import { Space, Size, Opacity, ContainerSize } from "../design-system/token/token.const.1tier.ts";
 import { Radius2 } from "../design-system/token/token.const.2tier.ts";
 import type { SurfaceToken } from "../design-system/lib/types.ts";
 
@@ -10,60 +10,52 @@ const SURFACES: Array<{
   name: string;
   description: string;
   usage: string;
-  icon: string;
 }> = [
-  {
-    token: "base",
-    name: "Base",
-    description: "기본 배경 레이어",
-    usage: "카드, 패널, 다이얼로그 등 주요 컨텐츠 영역",
-    icon: "□",
-  },
-  {
-    token: "sunken",
-    name: "Sunken",
-    description: "음각 효과의 낮은 레이어",
-    usage: "앱 전체 배경, Well 영역, 입력 필드",
-    icon: "⊡",
-  },
-  {
-    token: "raised",
-    name: "Raised",
-    description: "부각된 높은 레이어",
-    usage: "플로팅 툴바, 드롭다운 메뉴",
-    icon: "▣",
-  },
-  {
-    token: "overlay",
-    name: "Overlay",
-    description: "최상단 오버레이",
-    usage: "모달, 토스트, 팝오버",
-    icon: "▦",
-  },
-  {
-    token: "primary",
-    name: "Primary",
-    description: "강조 액센트 레이어",
-    usage: "주요 액션 버튼, 선택된 상태",
-    icon: "◆",
-  },
-  {
-    token: "selected",
-    name: "Selected",
-    description: "선택/활성 상태",
-    usage: "선택된 리스트 아이템, 활성 탭",
-    icon: "●",
-  },
-];
+    {
+      token: "ghost",
+      name: "Ghost",
+      description: "투명한 배경 레이어",
+      usage: "아이콘 버튼, 고스트 버튼",
+    },
+    {
+      token: "base",
+      name: "Base",
+      description: "기본 배경 레이어",
+      usage: "카드, 패널, 다이얼로그 등 주요 컨텐츠 영역",
+    },
+    {
+      token: "sunken",
+      name: "Sunken",
+      description: "음각 효과의 낮은 레이어",
+      usage: "앱 전체 배경, Well 영역, 입력 필드",
+    },
+    {
+      token: "raised",
+      name: "Raised",
+      description: "부각된 높은 레이어",
+      usage: "플로팅 툴바, 드롭다운 메뉴",
+    },
+    {
+      token: "overlay",
+      name: "Overlay",
+      description: "최상단 오버레이",
+      usage: "모달, 토스트, 팝오버",
+    },
+    {
+      token: "primary",
+      name: "Primary",
+      description: "강조 액센트 레이어",
+      usage: "주요 액션 버튼, 선택된 상태",
+    },
+  ];
 
 export function SurfaceApp() {
   return (
     <Frame
       style={{
-        height: "100vh",
         overflowY: "scroll",
         scrollSnapType: "y mandatory",
-      }}
+      }} override={{ h: Size.screen }}
     >
       {/* Page 1: Surface Concept Introduction */}
       <IntroductionPage />
@@ -87,19 +79,18 @@ function IntroductionPage() {
   return (
     <Frame
       style={{
-        minHeight: "100vh",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
       }}
       surface="sunken"
-      layout={Layout.Center.Default}
+      layout={Layout.Center.Default} override={{ minHeight: Size.screen }}
     >
       <Frame
         override={{
           gap: Space.n24,
+          maxWidth: ContainerSize.n768,
         }}
         layout={Layout.Stack.Content.Loose}
-        style={{ maxWidth: "800px" }}
       >
         {/* Title */}
         <Frame layout={Layout.Stack.Content.Tight}>
@@ -166,10 +157,10 @@ function IntroductionPage() {
           <Frame
             override={{
               gap: Space.n8,
+              opacity: Opacity.n60,
             }}
             layout={Layout.Stack.Content.Tight}
             style={{
-              opacity: 0.6,
               animation: "bounce 2s infinite",
             }}
           >
@@ -209,7 +200,6 @@ function ShowcasePage() {
   return (
     <Frame
       style={{
-        minHeight: "100vh",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
       }}
@@ -217,6 +207,7 @@ function ShowcasePage() {
       layout={Layout.Center.Default}
       override={{
         gap: Space.n40,
+        minHeight: Size.screen
       }}
     >
       <Frame
@@ -263,27 +254,25 @@ function ShowcasePage() {
             <Frame
               key={item.token}
               surface={item.token}
+              interactive
               rounded={Radius2.xl}
+              override={{
+                w: Size.n192,
+                h: Size.n192,
+                p: Space.n16,
+              }}
               style={{
-                width: "200px",
-                height: "200px",
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                transition: "transform 0.2s ease",
                 cursor: "pointer",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-4px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
               }}
             >
               <Prose.Title
                 variant="sm"
                 style={{
-                  fontSize: "18px",
+                  fontSize: "16px",
                   fontWeight: 600,
                 }}
               >
@@ -311,20 +300,17 @@ function SurfaceDetailPage({
   name,
   description,
   usage,
-  icon,
   pageNumber,
 }: {
   token: SurfaceToken;
   name: string;
   description: string;
   usage: string;
-  icon: string;
   pageNumber: number;
 }) {
   return (
     <Frame
       style={{
-        minHeight: "100vh",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
         background: `linear-gradient(135deg, var(--surface-sunken) 0%, var(--surface-base) 100%)`,
@@ -332,16 +318,15 @@ function SurfaceDetailPage({
       override={{
         py: Space.n64,
         px: Space.n64,
+        minHeight: Size.screen
       }}
       layout={Layout.Center.Default}
     >
       <Frame
         override={{
           gap: Space.n64,
-        }}
-        style={{
-          maxWidth: "1200px",
-          width: "100%",
+          maxWidth: ContainerSize.n1280,
+          w: Size.fill
         }}
       >
         {/* Page Number */}
@@ -370,34 +355,23 @@ function SurfaceDetailPage({
             {/* Large Surface Preview */}
             <Frame
               surface={token}
+              interactive
               rounded={Radius2["3xl"]}
               style={{
-                width: "100%",
                 aspectRatio: "1",
-                maxWidth: "400px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "120px",
-                border: "2px solid var(--border-color)",
-                boxShadow: "0 20px 60px rgba(0,0,0,0.12)",
               }}
-            >
-              {icon}
-            </Frame>
-
-            {/* Token Code */}
-            <Frame
-              override={{ p: Space.n16, gap: Space.n8 }}
-              rounded={Radius2.lg}
-              surface="overlay"
-              style={{
-                border: "1px solid var(--border-color)",
+              override={{
+                w: Size.fill,
+                maxWidth: ContainerSize.n480,
+                p: Space.n32,
               }}
             >
               <Prose.Code
                 style={{
-                  fontSize: "14px",
+                  fontSize: "16px",
                   opacity: 0.6,
                 }}
               >
@@ -422,12 +396,10 @@ function SurfaceDetailPage({
                 {name}
               </Prose.Title>
               <Frame
+                rounded={Radius2.sm}
                 style={{
-                  width: "80px",
-                  height: "4px",
                   background: `var(--surface-${token})`,
-                  borderRadius: "2px",
-                }}
+                }} override={{ w: Size.n80, h: Size.n4 }}
               />
             </Frame>
 

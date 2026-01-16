@@ -35,11 +35,11 @@ export function PropertyTree({
         override={{
           py: Space.n2,
           px: Space.n6,
+          border: true,
         }}
         style={{
-          borderBottom: "1px solid var(--border-color)",
           paddingLeft: `${depth * 12 + 8}px`,
-        }}
+        } as React.CSSProperties}
         layout={Layout.Row.LabelValue.Default}
         surface={background}
       >
@@ -71,12 +71,12 @@ export function PropertyTree({
         override={{
           py: Space.n2,
           px: Space.n6,
+          border: true,
         }}
         style={{
-          borderBottom: "1px solid var(--border-color)",
           paddingLeft: `${depth * 12 + 8}px`,
           cursor: isEmpty ? "default" : "pointer",
-        }}
+        } as React.CSSProperties}
         layout={Layout.Row.LabelValue.Default}
         surface={background}
         onClick={(e) => {

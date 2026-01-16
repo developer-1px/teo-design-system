@@ -54,14 +54,15 @@ type KeyOf<T extends readonly number[]> = `n${ScaleOf<T>}`;
 // Space (spacing)
 // ---------------------------------
 export const SpaceScale = [
-  0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44, 48,
-  56, 64, 72, 80, 88, 96, 112, 128, 144, 160,
+  0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44,
+  48, 56, 64, 72, 80, 88, 96, 112, 128, 144, 160,
 ] as const;
 export type SpaceScale = ScaleOf<typeof SpaceScale>;
 export type SpaceKey = KeyOf<typeof SpaceScale>;
 
 export const Space = {
   n0: "var(--space-n0)" as SpaceToken,
+  n1: "var(--space-n1)" as SpaceToken,
   n2: "var(--space-n2)" as SpaceToken,
   n4: "var(--space-n4)" as SpaceToken,
   n6: "var(--space-n6)" as SpaceToken,
@@ -177,10 +178,9 @@ export type SizeScale = ScaleOf<typeof SizeScale>;
 export type SizeNumericKey = KeyOf<typeof SizeScale>;
 
 export const SizeKeywords = [
-  "full",
   "screen",
-  "min",
-  "max",
+  "hug",
+  "fill",
   "fit",
   "auto",
 ] as const;
@@ -227,11 +227,10 @@ export const Size = {
   n704: "var(--size-n704)" as SizeToken,
   n768: "var(--size-n768)" as SizeToken,
 
-  // Keywords (CSS values remain as-is)
-  full: "100%" as SizeToken,
+  // Keywords (Figma-aligned)
   screen: "100vh" as SizeToken,
-  min: "min-content" as SizeToken,
-  max: "max-content" as SizeToken,
+  hug: "hug" as SizeToken,
+  fill: "fill" as SizeToken,
   fit: "fit-content" as SizeToken,
   auto: "auto" as SizeToken,
 } as const satisfies Record<SizeKey, SizeToken>;

@@ -16,11 +16,9 @@
  * ```
  */
 
-// Re-export all 1-tier tokens
-export * from "./token.const.1tier";
-
-// Re-export all 2-tier tokens
-export * from "./token.const.2tier";
-
 // Re-export branded types
 export * from "./lib/brand";
+// Re-export all 1-tier tokens
+export * from "./token.const.1tier";
+// Re-export all 2-tier tokens
+export * from "./token.const.2tier";

@@ -1,6 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "./style/frame.css";
+import "./style/surface.css";
+
 import "./style/tokens.1tier.css";
 import "./style/tokens.palette.css";
 import "./style/tokens.typography.css";

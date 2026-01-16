@@ -9,10 +9,7 @@ const INPUT_FILE = path.resolve(
   __dirname,
   "../src/design-system/token/token.const.1tier.ts",
 );
-const OUTPUT_FILE = path.resolve(
-  __dirname,
-  "../src/style/tokens.1tier.css",
-);
+const OUTPUT_FILE = path.resolve(__dirname, "../src/style/tokens.1tier.css");
 
 const content = fs.readFileSync(INPUT_FILE, "utf-8");
 
@@ -49,7 +46,7 @@ const scales = {
   },
   container: {
     data: extractScale("ContainerSizeScale"),
-    prefix: "container",
+    prefix: "container-size",
     transform: (v) => `${v}px`,
   },
   radius: {

@@ -2,6 +2,7 @@ import { Moon, Sun } from "lucide-react";
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { CMSApp } from "./apps/CMSApp";
 import { CRMApp } from "./apps/crm/CRMApp.tsx";
+import { DiscordApp } from "./apps/DiscordApp";
 import { LandingApp } from "./apps/LandingApp";
 import { LoginApp } from "./apps/LoginApp";
 import { MailApp } from "./apps/MailApp";
@@ -17,8 +18,7 @@ import { useTheme } from "./design-system/theme";
 import {
   FontSize,
   IconSize,
-  Space,
-} from "./design-system/token/token.const.1tier";
+  Space, ZIndex, Size } from "./design-system/token/token.const.1tier";
 import { Radius2 } from "./design-system/token/token.const.2tier";
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
@@ -50,9 +50,10 @@ function Navigation() {
         shadow: "xl",
         p: Space.n4,
         gap: Space.n4,
-      }}
+          zIndex: ZIndex.n200
+    }}
       rounded={Radius2.full}
-      style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
+      style={{ position: "fixed", bottom: 20, left: 20 }}
       surface="raised"
       layout={Layout.Row.Toolbar.Default}
     >
@@ -65,6 +66,7 @@ function Navigation() {
       <NavItem to="/cms" label="CMS" />
       <NavItem to="/crm" label="CRM" />
       <NavItem to="/mail" label="Mail" />
+      <NavItem to="/discord" label="Discord" />
       <NavItem to="/login" label="Login" />
       <ThemeToggleItem />
     </Frame>
@@ -103,7 +105,7 @@ function App() {
   return (
     <HashRouter>
       <InspectorOverlay />
-      <Frame fill>
+      <Frame override={{ minHeight: Size.screen }}>
         <Routes>
           <Route path="/" element={<LandingApp />} />
           <Route path="/text" element={<TextSystemApp />} />
@@ -114,6 +116,7 @@ function App() {
           <Route path="/cms" element={<CMSApp />} />
           <Route path="/crm" element={<CRMApp />} />
           <Route path="/mail" element={<MailApp />} />
+          <Route path="/discord" element={<DiscordApp />} />
           <Route path="/login" element={<LoginApp />} />
         </Routes>
         <Navigation />

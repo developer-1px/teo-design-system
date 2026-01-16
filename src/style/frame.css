@@ -1,334 +1,519 @@
-/* Base Frame */
-Frame {
+/**
+ * Figma Auto Layout CSS Framework
+ *
+ * Figma의 Auto Layout 동작을 CSS Flexbox로 1:1 매핑
+ *
+ * 용어:
+ * - frame: Figma Frame = flex container
+ * - text: 텍스트 요소
+ * - hbox: 가로 방향 (flex-direction: row)
+ * - vbox: 세로 방향 (flex-direction: column)
+ * - fixed: 고정 크기 (inline style로 지정)
+ * - hug: 콘텐츠 크기에 맞춤
+ * - fill: 남은 공간 채움
+ *
+ * Main Axis vs Cross Axis:
+ * - hbox: main=width, cross=height
+ * - vbox: main=height, cross=width
+ */
+
+/* =============================================================================
+   1. BASE
+   ============================================================================= */
+
+.frame {
+  position: relative;
+  box-sizing: border-box;
   display: flex;
 }
 
-/* Base Layout Display */
-.flex {
-  display: flex;
+.text {
+  display: block;
+  box-sizing: border-box;
 }
 
-.grid {
-  display: grid;
-}
+/* =============================================================================
+   2. DIRECTION
+   ============================================================================= */
 
-.inline-flex {
-  display: inline-flex;
-}
-
-.inline-grid {
-  display: inline-grid;
-}
-
-/* Fill Utility */
-.fill {
-  align-self: stretch;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-}
-
-/* Layout Keyword Classes */
-.hbox {
+.frame.hbox {
   flex-direction: row;
 }
 
-.vbox {
+.frame.vbox {
   flex-direction: column;
 }
 
-.pack {
-  justify-content: center;
-  align-items: center;
-}
-
-.wrap {
+.frame.wrap {
   flex-wrap: wrap;
 }
 
-.nowrap {
-  flex-wrap: nowrap;
+/* =============================================================================
+   3. MAIN AXIS SIZING
+
+   Main axis에서는 flex 속성으로 제어
+   - fixed/hug: flex: 0 0 auto (grow 안 함, shrink 안 함)
+   - fill: flex: 1 1 0 + min-width/height: 0 (grow, shrink 허용)
+   ============================================================================= */
+
+/* --- hbox: main axis = width --- */
+
+.frame.hbox>.w\(fixed\),
+.frame.hbox>.frame.w\(fixed\),
+.frame.hbox>.text.w\(fixed\) {
+  flex: 0 0 auto;
 }
 
-.wrap-reverse {
-  flex-wrap: wrap-reverse;
+.frame.hbox>.frame.w\(hug\) {
+  flex: 0 0 auto;
+  width: fit-content;
 }
 
-/* Flex Utilities (Align) */
-.items-start {
-  align-items: flex-start;
+.frame.hbox>.text.w\(hug\) {
+  flex: 0 0 auto;
+  width: max-content;
+  white-space: nowrap;
 }
 
-.items-center {
-  align-items: center;
+.frame.hbox>.frame.w\(fill\) {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
-.items-end {
-  align-items: flex-end;
+.frame.hbox>.text.w\(fill\) {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
-.items-stretch {
-  align-items: stretch;
+/* --- vbox: main axis = height --- */
+
+.frame.vbox>.h\(fixed\),
+.frame.vbox>.frame.h\(fixed\),
+.frame.vbox>.text.h\(fixed\) {
+  flex: 0 0 auto;
 }
 
-.items-baseline {
-  align-items: baseline;
+.frame.vbox>.frame.h\(hug\),
+.frame.vbox>.text.h\(hug\) {
+  flex: 0 0 auto;
 }
 
-/* Flex Utilities (Justify) */
-.justify-start {
-  justify-content: flex-start;
+.frame.vbox>.frame.h\(fill\) {
+  flex: 1 1 0;
+  min-height: 0;
 }
 
-.justify-center {
-  justify-content: center;
+.frame.vbox>.text.h\(fill\) {
+  flex: 1 1 0;
+  min-height: 0;
 }
 
-.justify-end {
-  justify-content: flex-end;
-}
+/* =============================================================================
+   4. CROSS AXIS SIZING
 
-.justify-between {
-  justify-content: space-between;
-}
+   Cross axis에서는 align-self로 제어
+   - fixed: align-self: auto (inline style로 크기 지정)
+   - hug: align-self: flex-start (콘텐츠 크기 유지)
+   - fill: align-self: stretch (부모에 맞춤)
 
-.justify-around {
-  justify-content: space-around;
-}
+   Cross axis에서는 min-width/height: 0 불필요!
+   ============================================================================= */
 
-.justify-evenly {
-  justify-content: space-evenly;
-}
+/* --- hbox: cross axis = height --- */
 
-/* Flex Utilities (Flex) */
-.flex-1 {
-  flex: 1 1 0%;
-}
-
-.flex-auto {
-  flex: 1 1 auto;
-}
-
-.flex-none {
-  flex: none;
-}
-
-.grow {
-  flex-grow: 1;
-}
-
-.shrink {
-  flex-shrink: 1;
-}
-
-.shrink-0 {
-  flex-shrink: 0;
-}
-
-/* Flex Utilities (Self) */
-.self-auto {
+.frame.hbox>.h\(fixed\),
+.frame.hbox>.frame.h\(fixed\),
+.frame.hbox>.text.h\(fixed\) {
   align-self: auto;
 }
 
-.self-start {
+.frame.hbox>.frame.h\(hug\),
+.frame.hbox>.text.h\(hug\) {
   align-self: flex-start;
 }
 
-.self-center {
-  align-self: center;
-}
-
-.self-end {
-  align-self: flex-end;
-}
-
-.self-stretch {
+.frame.hbox>.frame.h\(fill\),
+.frame.hbox>.text.h\(fill\) {
   align-self: stretch;
 }
 
-/* Sizing Keywords */
-.w-full {
+/* --- vbox: cross axis = width --- */
+
+.frame.vbox>.w\(fixed\),
+.frame.vbox>.frame.w\(fixed\),
+.frame.vbox>.text.w\(fixed\) {
+  align-self: auto;
+}
+
+.frame.vbox>.frame.w\(hug\) {
+  align-self: flex-start;
+  width: fit-content;
+}
+
+.frame.vbox>.text.w\(hug\) {
+  align-self: flex-start;
+  width: max-content;
+  white-space: nowrap;
+}
+
+.frame.vbox>.frame.w\(fill\),
+.frame.vbox>.text.w\(fill\) {
+  align-self: stretch;
+}
+
+/* 
+  Special Case: 
+  When w="fill" is used with maxWidth in a vbox, 
+  we want 100% width but respect parent alignment (align-self: auto).
+*/
+.frame.vbox>.frame.w\(fill\).max-w\(fixed\) {
   width: 100%;
+  align-self: auto;
 }
 
-.h-full {
-  height: 100%;
-}
-
-.w-screen {
+.frame.w\(screen\) {
   width: 100vw;
 }
 
-.h-screen {
+.frame.h\(screen\) {
   height: 100vh;
 }
 
-/* Radius classes removed - now handled directly in frameToSettings.ts */
+/* =============================================================================
+   5. ALIGNMENT
+   ============================================================================= */
 
-/* Surface Keywords */
-.surface-base {
-  background-color: var(--surface-base);
+/* align-items (cross axis 정렬) */
+.frame.align\(start\) {
+  align-items: flex-start;
 }
 
-.surface-sunken {
-  background-color: var(--surface-sunken);
+.frame.align\(center\) {
+  align-items: center;
 }
 
-.surface-raised {
-  background-color: var(--surface-raised);
-  box-shadow: var(--shadow-sm);
-  border: var(--border-width) solid var(--border-color);
+.frame.align\(end\) {
+  align-items: flex-end;
 }
 
-.surface-overlay {
-  background-color: var(--surface-overlay);
-  box-shadow: var(--shadow-lg);
-  border: var(--border-width) solid var(--border-color);
+.frame.align\(stretch\) {
+  align-items: stretch;
 }
 
-/* Modern Semantic Surfaces */
-.surface-page {
-  background-color: var(--surface-page);
+/* justify-content (main axis 정렬) */
+.frame.justify\(start\) {
+  justify-content: flex-start;
 }
 
-.surface-panel {
-  background-color: var(--surface-panel);
-  border-right: var(--border-width) solid var(--border-color);
-  /* Default to sidebar style */
+.frame.justify\(center\) {
+  justify-content: center;
 }
 
-.surface-card {
-  background-color: var(--surface-card);
-  box-shadow: var(--shadow-sm);
-  border: var(--border-width) solid var(--border-color);
+.frame.justify\(end\) {
+  justify-content: flex-end;
 }
 
-.surface-primary {
-  background-color: var(--surface-primary);
-  color: var(--primary-fg);
+.frame.justify\(between\) {
+  justify-content: space-between;
 }
 
-.surface-selected {
-  background-color: var(--surface-selected);
+.frame.justify\(around\) {
+  justify-content: space-around;
 }
 
-.surface-hover {
-  background-color: var(--control-bg-hover);
+.frame.justify\(evenly\) {
+  justify-content: space-evenly;
 }
 
-/* Position */
-.relative {
-  position: relative;
+.frame.pack {
+  align-items: center;
+  justify-content: center;
 }
 
-.absolute {
-  position: absolute;
+.frame.pack\(start\) {
+  justify-content: flex-start;
 }
 
-.fixed {
-  position: fixed;
+.frame.pack\(center\) {
+  justify-content: center;
 }
 
-.sticky {
-  position: sticky;
+.frame.pack\(end\) {
+  justify-content: flex-end;
 }
 
-/* Overflow */
-.overflow-hidden {
+.frame.pack\(between\) {
+  justify-content: space-between;
+}
+
+.frame.pack\(space\) {
+  justify-content: space-between;
+}
+
+
+/* =============================================================================
+   6. GAP
+   ============================================================================= */
+
+.frame.gap\(0\) {
+  gap: 0;
+}
+
+.frame.gap\(2\) {
+  gap: 2px;
+}
+
+.frame.gap\(4\) {
+  gap: 4px;
+}
+
+.frame.gap\(8\) {
+  gap: 8px;
+}
+
+.frame.gap\(12\) {
+  gap: 12px;
+}
+
+.frame.gap\(16\) {
+  gap: 16px;
+}
+
+.frame.gap\(20\) {
+  gap: 20px;
+}
+
+.frame.gap\(24\) {
+  gap: 24px;
+}
+
+.frame.gap\(32\) {
+  gap: 32px;
+}
+
+.frame.gap\(40\) {
+  gap: 40px;
+}
+
+.frame.gap\(48\) {
+  gap: 48px;
+}
+
+/* =============================================================================
+   7. PADDING
+   ============================================================================= */
+
+/* 전체 패딩 */
+.p\(0\) {
+  padding: 0;
+}
+
+.p\(4\) {
+  padding: 4px;
+}
+
+.p\(8\) {
+  padding: 8px;
+}
+
+.p\(12\) {
+  padding: 12px;
+}
+
+.p\(16\) {
+  padding: 16px;
+}
+
+.p\(20\) {
+  padding: 20px;
+}
+
+.p\(24\) {
+  padding: 24px;
+}
+
+.p\(32\) {
+  padding: 32px;
+}
+
+/* 수평 패딩 */
+.px\(0\) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.px\(4\) {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.px\(8\) {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.px\(12\) {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.px\(16\) {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.px\(20\) {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.px\(24\) {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.px\(32\) {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+/* 수직 패딩 */
+.py\(0\) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.py\(4\) {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.py\(8\) {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.py\(12\) {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.py\(16\) {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.py\(20\) {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.py\(24\) {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.py\(32\) {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+/* =============================================================================
+   8. BORDER RADIUS
+   ============================================================================= */
+
+.r\(0\) {
+  border-radius: 0;
+}
+
+.r\(2\) {
+  border-radius: 2px;
+}
+
+.r\(4\) {
+  border-radius: 4px;
+}
+
+.r\(8\) {
+  border-radius: 8px;
+}
+
+.r\(12\) {
+  border-radius: 12px;
+}
+
+.r\(16\) {
+  border-radius: 16px;
+}
+
+.r\(full\) {
+  border-radius: 9999px;
+}
+
+/* =============================================================================
+   9. OVERFLOW
+
+   overflow 설정 시 스펙에 의해 min-width: auto가 0처럼 동작
+   ============================================================================= */
+
+.frame.clip {
   overflow: hidden;
 }
 
-.overflow-auto {
+.frame.scroll {
   overflow: auto;
 }
 
-.overflow-scroll {
-  overflow: scroll;
-}
-
-.overflow-visible {
-  overflow: visible;
-}
-
-.overflow-x-auto {
+.frame.scroll-x {
   overflow-x: auto;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
-}
-
-.overflow-clip {
-  overflow: clip;
-}
-
-.overflow-x-hidden {
-  overflow-x: hidden;
-}
-
-.overflow-y-hidden {
   overflow-y: hidden;
 }
 
-/* Cursor */
-.cursor-pointer {
-  cursor: pointer;
+.frame.scroll-y {
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 0
 }
 
-.cursor-default {
-  cursor: default;
+/* =============================================================================
+   10. TEXT UTILITIES
+   ============================================================================= */
+
+/* 한 줄 말줄임 */
+.text.truncate {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.cursor-text {
-  cursor: text;
+/* 여러 줄 말줄임 */
+.text.truncate\(2\) {
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.cursor-move {
-  cursor: move;
+.text.truncate\(3\) {
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.cursor-not-allowed {
-  cursor: not-allowed;
+/* 텍스트 정렬 */
+.text.left {
+  text-align: left;
 }
 
-.cursor-grab {
-  cursor: grab;
+.text.center {
+  text-align: center;
 }
 
-.cursor-grabbing {
-  cursor: grabbing;
-}
-
-/* Shadow */
-.shadow-sm {
-  box-shadow: var(--shadow-sm);
-}
-
-.shadow-md {
-  box-shadow: var(--shadow-md);
-}
-
-.shadow-lg {
-  box-shadow: var(--shadow-lg);
-}
-
-.shadow-xl {
-  box-shadow: var(--shadow-xl);
-}
-
-.shadow-2xl {
-  box-shadow: var(--shadow-2xl);
-}
-
-/* Border Colors */
-.border-default {
-  border-color: var(--border-color);
-}
-
-.border-transparent {
-  border-color: transparent;
-}
-
-.border-primary {
-  border-color: var(--text-primary);
+.text.right {
+  text-align: right;
 }

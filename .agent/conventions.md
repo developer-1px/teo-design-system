@@ -2,18 +2,32 @@
 
 ## 0. CRITICAL: THE GOLDEN RULE
 
-### **NEVER CONFUSE NUMERIC TOKENS WITH PIXELS**
-- All numeric values passed to layout props (`p`, `pt`, `pb`, `pl`, `pr`, `px`, `py`, `gap`, `w`, `h`, `minWidth`, `minHeight`, `maxWidth`, `maxHeight`, `size`, `top`, `bottom`, `left`, `right`) are interpreted as **TOKEN IDs**, not pixels.
-- **Example**: `p={4}` results in `16px` (from `--space-4`), whereas `p={20}` results in `160px` (from `--space-20`).
-- **Standard Scale**:
-    - `1` = 4px
-    - `2` = 8px
-    - `3` = 12px
-    - `4` = 16px
-    - `5` = 24px (Standard Action/Icon size)
-    - `6` = 32px
-    - `8` = 48px
-- **Sanity Check**: If you are using a number > 10 for padding or small icons, you are likely making a mistake.
+### **ALWAYS USE EXPLICIT TOKEN CONSTANTS**
+- **NEVER** use raw numbers or strings for spacing, sizing, or tokens
+- **ALWAYS** import and use token constants from `token.const.1tier` or `token.const.2tier`
+- The branded type system enforces this at compile time
+
+**Example**:
+```tsx
+import { Space, Size, IconSize } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
+
+// ✅ CORRECT - Explicit constants
+<Frame override={{ p: Space.n16, gap: Space.n12 }} w={Size.n240}>
+
+// ❌ WRONG - Raw numbers (TypeScript will error)
+<Frame override={{ p: 16, gap: 12 }} w={240}>
+```
+
+**Token Naming Convention**:
+- CSS Variables: `--space-n16`, `--size-n240`, `--icon-size-n24`
+- Constants: `Space.n16`, `Size.n240`, `IconSize.n24`
+- All tokens use the `n{value}` format where value = actual pixels
+
+**Common Values**:
+- Spacing: `Space.n4` (4px), `Space.n8` (8px), `Space.n12` (12px), `Space.n16` (16px), `Space.n24` (24px)
+- Size: `Size.n16` (16px), `Size.n240` (240px), `Size.n680` (680px), `Size.n1200` (1200px)
+- Icon: `IconSize.n16` (16px), `IconSize.n20` (20px), `IconSize.n24` (24px)
 
 ## 1. Import & Module Organization
 
@@ -30,8 +44,9 @@
 1. External libraries (React, Lucide)
 2. Internal components (same feature)
 3. Design system components
-4. Utilities and types
-5. CSS imports
+4. Design system tokens
+5. Utilities and types
+6. CSS imports
 
 ```tsx
 import { useState } from "react";
@@ -40,29 +55,62 @@ import { Plus } from "lucide-react";
 import { PropertiesPanel } from "../components/PropertiesPanel";
 
 import { Action } from "../design-system/Action";
-import { Frame } from "../design-system/Frame";
+import { Frame } from "../design-system/Frame/Frame";
+import { Layout } from "../design-system/Frame/Layout/Layout";
+import { Text } from "../design-system/text/Text";
 
-import type { ActionVariant } from "../design-system/types";
+import { Space, Size, IconSize } from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
+
+import type { ActionVariant } from "../design-system/lib/types";
 ```
 
-## 2. No Hardcoded Pixels
+## 2. Token System Usage
 
 ### Strict Rule
 - **NEVER** use hardcoded `px` values in styles/props
-- Use token props: `p={2}`, `w={65}`, `gap={4}`
+- **ALWAYS** use explicit token constants: `Space.n16`, `Size.n240`, etc.
 - Non-token values (100%, auto) must be strings: `w="100%"`
 
-### Token Mapping
-- `p`, `gap`, `top`, `left` → `var(--space-*)`
-- `w`, `h`, `minWidth` → `var(--size-*)`
-- `rounded` → `var(--radius-*)`
+### Token Categories
+- **Spacing** (`Space.*`): padding, gap, margin → `var(--space-n{value})`
+- **Sizing** (`Size.*`): width, height → `var(--size-n{value})`
+- **Icon Size** (`IconSize.*`): icon dimensions → `var(--icon-size-n{value})`
+- **Font Size** (`FontSize.*`): font sizes → `var(--font-size-n{value})`
+- **Radius** (`Radius2.*`): border radius → `var(--radius-{name})`
+- **Opacity** (`Opacity.*`): opacity values → `var(--opacity-n{value})`
 
-### Component Props
-- Use: `w`, `h`, `p`, `gap`, `rounded`
-- NOT: `width`, `height`, `radius`
+### Frame Component API
 
-### Padding Law
-If `Frame` has `surface` prop, it MUST have padding (default `p={2}`)
+**❌ DEPRECATED - Legacy shorthand props:**
+```tsx
+<Frame gap={4} flex p={3} grid>  // DO NOT USE
+```
+
+**✅ RECOMMENDED - Use layout presets:**
+```tsx
+import { Layout } from "../design-system/Frame/Layout/Layout";
+import { Space, Size } from "../design-system/token/token.const.1tier";
+
+<Frame layout={Layout.Stack.Content.Default}>
+```
+
+**✅ ALTERNATIVE - Use override for custom tokens:**
+```tsx
+<Frame
+  override={{
+    gap: Space.n12,
+    p: Space.n16,
+    row: true,
+    align: "center"
+  }}
+>
+```
+
+### Surface Padding Law
+If `Frame` has `surface` prop, it should have padding via:
+- Layout preset (includes padding)
+- OR explicit override: `override={{ p: Space.n16 }}`
 
 ## 3. TypeScript Standards
 
@@ -236,41 +284,70 @@ export function Frame(props: FrameProps) { }
 
 ## 11. Design Token System
 
-### Available Tokens
-- **Spacing**: `--space-{0-40}` (0px-160px)
-- **Sizing**: `--size-{3-300}` (12px-1200px)
-- **Typography**: `--font-size-{1-6}`, `--font-weight-{regular|medium|bold}`
-- **Prose**: `--prose-{role}-{size|height|spacing|weight}`
-- **Colors**: `--surface-*`, `--text-*`, `--primary-*`
-- **Radius**: `--radius-{none|sm|md|lg|xl|2xl|3xl|full|round}`
-- **Shadows**: `--shadow-{sm|md|lg|xl|2xl}`
+### Token Structure (1-Tier + 2-Tier)
 
-### toToken() Utility
+**1-Tier Tokens** (Numeric, Absolute):
 ```tsx
-toToken(2, "space")      // → "var(--space-2)"
-toToken(65, "size")      // → "var(--size-65)"
-toToken("100%", "space") // → "100%"
-toToken("10 20", "space") // → "var(--space-10) var(--space-20)"
+import { Space, Size, IconSize, FontSize, Opacity } from "./token/token.const.1tier";
+
+Space.n0, Space.n4, Space.n8, Space.n12, Space.n16, Space.n24, Space.n32, ...n160
+Size.n0, Size.n16, Size.n32, ...Size.n240, Size.n680, Size.n1200, ...
+IconSize.n10, IconSize.n12, IconSize.n16, IconSize.n20, IconSize.n24, ...
+FontSize.n9, FontSize.n10, FontSize.n11, FontSize.n12, FontSize.n14, ...
+Opacity.n0, Opacity.n10, ...Opacity.n100
 ```
+
+**2-Tier Tokens** (Semantic, Contextual):
+```tsx
+import { Radius2, ActionSize } from "./token/token.const.2tier";
+
+Radius2.none, Radius2.sm, Radius2.md, Radius2.lg, Radius2.full, Radius2.round
+ActionSize.sm, ActionSize.md, ActionSize.lg
+```
+
+**CSS Variable Format**:
+- `--space-n16` (16px)
+- `--size-n240` (240px)
+- `--icon-size-n24` (24px)
+- `--font-size-n12` (12px)
+- `--radius-md` (6px)
+
+### Branded Type System
+
+The token system uses **TypeScript branded types** to enforce token usage:
+
+```tsx
+// ✅ Type-safe - AI must use constants
+<Frame override={{ gap: Space.n12 }}>
+
+// ❌ Type error - raw numbers rejected
+<Frame override={{ gap: 12 }}>
+```
+
+**Benefits**:
+- AI cannot use arbitrary numbers
+- Unused tokens detected by `ts-unused-exports`
+- Zero runtime overhead (types only)
+- Dead code elimination
 
 ## 12. Visual Excellence
 
-- Use rich gradients, subtle shadows (`shadow="lg"`)
+- Use rich gradients, subtle shadows via tokens
 - Proper typography (Inter, Outfit)
 - **NO** placeholder text/images - generate real content
-- Use `ProseDocument` and `ProseSection` for text-heavy content
-- Use `Action` for buttons with consistent `iconSize` and `variant`
+- Use `Text.Prose` for text-heavy content (accessed via Text namespace)
+- Use `Action` with T-shirt sizing (`size="sm"`) and consistent icon sizes (`IconSize.n16`)
 
 ## 13. Design Principles
 
 ### 1. Convergent Evolution
-UI elements with a background (surface) naturally demand internal spacing. If a `Frame` has a `surface`, it almost always needs `p={2}` or more. 
+UI elements with a background (surface) naturally demand internal spacing. If a `Frame` has a `surface`, it should have padding via layout preset or `override={{ p: Space.n8 }}` or higher. 
 
 ### 2. Semantic Hierarchy
-Use `Prose` roles (`h1`, `h2`, `body`, etc.) instead of manual font sizes. This ensures consistency across the entire application and allows for easy global theme adjustments.
+Use `Text.Prose` roles (`Text.Prose.Title`, `Text.Prose.Body`, etc.) instead of manual font sizes. This ensures consistency across the entire application and allows for easy global theme adjustments.
 
 ### 3. Purposeful Density
-Avoid "airless" designs. Use the spacing scale to create clear visual grouping. Related items use small gaps (`gap={1}` or `gap={2}`), while unrelated sections use large spacing (`p={24}` or more).
+Avoid "airless" designs. Use the spacing scale to create clear visual grouping. Related items use small gaps (`Space.n4` or `Space.n8`), while unrelated sections use large spacing (`Space.n24` or more).
 
 ### 4. Interactive Affordance
 Every interactive element must use the `Action` component or `cursor="pointer"`. Feedback (hover, active states) is managed by the design system; do not override it with manual CSS unless absolutely necessary.
@@ -518,8 +595,9 @@ src/design-system/
 ### Documentation Reference
 
 Complete 3-Tier specification details:
-- `docs/claude/13-field-action-purpose-definition.md` - Intent philosophy and WHY-first approach
-- `docs/claude/14-field-action-three-tier-structure.md` - Complete 3-Tier structure tables and examples
+- `docs/0-best/13-field-action-purpose-definition.md` - Intent philosophy and WHY-first approach
+- `docs/0-best/15-three-tier-as-core-concept.md` - 3-Tier as core concept
+- `docs/0-best/19-headless-vs-ui-component-philosophy.md` - Headless vs UI component philosophy
 
 ### Checklist: Before Implementing New Components
 

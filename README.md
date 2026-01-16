@@ -1,283 +1,518 @@
-# Teo's Minimal Design Kit (MDK)
+# Minimal Design Kit (MDK)
 
-**AI가 디자인을 계속 잘하도록,
-일관성을 깨지 않게 만든 CSS 의사결정 시스템**
+> **⚠️ WORK IN PROGRESS - AI-GENERATED CONTENT**
+>
+> This README and documentation were written by AI and may contain inaccuracies or concepts that don't match the actual implementation. This is an experimental project exploring design system ideas through AI agent coding, which means the codebase changes extremely frequently and without notice. Treat all content as exploratory drafts, not authoritative documentation.
 
-> 이 글은 AI가 작성했습니다.
----
+**A CSS decision-making framework that helps AI maintain design consistency**
 
-## 시작: AI에게 디자인을 시켜보다
-
-이 프로젝트는 "디자인 시스템을 만들어야지"라는 생각에서 시작되지 않았습니다. 시작은 **AI에게 디자인을 시켜본 경험**이었습니다.
-
-AI에게 화면을 만들어 달라고 하면 Tailwind CSS로 굉장히 빠르고 그럴듯한 UI를 만들어냈죠. 여백도 안정적이고, 비율도 좋고, 전반적으로 "이쁜 디자인"이었어요.
-
-그런데 조금만 수정하려고 하는 순간, **디자인의 일관성이 빠르게 무너졌습니다.** 버튼의 padding을 조금 바꾸고, 색상을 약간 조정하고, 레이아웃을 일부 손대면... 갑자기 전체가 어색해지더군요.
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
 
 ---
 
-## 첫 번째 시도: 디자인 시스템으로 제한하기
+## Overview
 
-해결책은 명확해 보였습니다. 디자인 토큰을 정의하고, 사용할 수 있는 값을 제한하고, 엄격한 컴포넌트를 만들자.
+MDK is not a component library or a design token system. **MDK is a CSS decision-making framework** that reduces infinite CSS combinations to ~100 meaningful choices by asking "WHY" before "HOW".
 
-사람에게는 잘 작동했어요. 그런데 그 순간, **AI가 갑자기 디자인을 못 하기 시작했습니다.** 레이아웃은 어색해지고, 여백은 불안정해지고, 전체적인 완성도가 눈에 띄게 떨어졌죠.
+### The Problem
 
-이상했어요. 규칙을 줬는데 오히려 더 못하다니. 뭔가 근본적으로 잘못 접근하고 있다는 생각이 들었죠.
+AI can generate beautiful UIs quickly, but struggles to maintain consistency when making modifications. Traditional design systems solve this for humans by providing constraints (tokens, components), but paradoxically make AI perform worse.
 
----
+**Why?** CSS has infinite combinations:
+- Spacing: `0~100px` (infinite)
+- Sizing: `0~∞`
+- Layout: `display × flex-direction × justify × align` (hundreds)
+- Colors: `16,777,216` RGB combinations
+- **Total**: Practically infinite
 
-## 진짜 문제 발견: "FE 디자인이란 무엇인가?"
+**Result**: AI cannot make consistent choices across infinite options, even with design tokens.
 
-고민하다가 근본적인 질문을 던져봤습니다. **"FE 디자인이란 정확히 무엇을 하는 것인가?"**
+### The Solution
 
-답은 간단했어요. FE 디자인은 HTML과 CSS를 결정하는 겁니다. HTML은 어떤 요소를 쓸지(div, button, input), CSS는 어떻게 보일지(크기, 색상, 배치, 간격).
-
-그런데 AI는 HTML은 잘 선택해요. 문제는 **CSS였습니다.**
-
----
-
-## CSS 조합 폭발 문제
-
-CSS가 왜 문제인지 계산해봤습니다.
-
-**간격 (Spacing)**:
-```css
-margin: 0~100px (무한)
-padding: 0~100px (무한)
-gap: 0~100px (무한)
-```
-
-**크기 (Sizing)**:
-```css
-width: 0~∞
-height: 0~∞
-min-width, max-width, min-height, max-height
-```
-
-**배치 (Layout)**:
-```css
-display: block | inline | flex | grid | ...
-flex-direction: row | column
-justify-content: start | center | end | between | around | evenly
-align-items: start | center | end | stretch | baseline
-```
-
-**색상 (Color)**:
-```css
-color: 16,777,216 가지 (RGB)
-background-color: 16,777,216 가지
-```
-
-**총 조합**: 간격 × 크기 × 배치 × 색상 × 기타 = 무한 × 무한 × 수백 × 천만 × 무한 = 사실상 무한
-
-**CSS는 조합이 너무 많아서, AI가 일관된 선택을 하는 게 불가능합니다.** 디자인 토큰을 줘도 마찬가지예요. `--space-1`, `--space-2`, `--space-3`... 이런 걸 줘도, **"왜 여기는 2고 저기는 3인가?"**에 대한 답이 없으면 AI는 추론할 수 없어요.
-
-이게 진짜 문제였죠. 선택지를 줄이는 게 아니라, **선택의 이유**를 제공해야 했어요.
-
----
-
-## 방향 전환: "이유"를 찾기 시작하다
-
-그래서 질문이 바뀌었습니다. "AI에게 디자인 시스템을 어떻게 강요할까?"가 아니라, **"AI가 스스로 그 선택을 할 수 있게 하려면 무엇이 필요할까?"**
-
-좋은 디자인에는 공통점이 있다는 걸 알고 있었어요. 선택지는 적을수록 좋고, 그 선택에는 이유가 있으며, 가능하다면 그 이유는 하나다.
-
-그렇다면 "왜 이 간격이어야 하는가?", "왜 이 크기여야 하는가?", "왜 이 색상이어야 하는가?" 이 질문들에 답할 수 있다면, 선택지는 자연스럽게 줄어들 겁니다.
-
----
-
-## 여정 1: Surface - 배경면의 이유
-
-처음 발견한 건 **Surface**였습니다. 카드를 만들 때마다 `background-color`는 뭘로 할지, `border`는 있어야 하나, `border-radius`는 얼마로, `box-shadow`는 어떻게... 이 4가지를 매번 따로 고민하는 게 비효율적이었죠.
-
-그런데 생각해보니, 이건 사실 **하나의 질문**이더군요. **"이 요소가 다른 요소와 어떻게 구분되어야 하는가?"**
-
-이 질문의 답에 따라 4가지가 자동으로 결정되었습니다. "떠 있는 카드처럼"이면 밝은 배경, 테두리 있음, 중간 radius, 그림자 있음. "눌린 것처럼"이면 어두운 배경, 테두리 없음, 작은 radius, 그림자 없음.
-
-**무한한 조합 → 6가지 의미 (base, sunken, raised, overlay, primary, selected)**
-
----
-
-## 여정 2: Layout - 배치의 이유
-
-다음은 **Layout**이었습니다. 매번 `display: flex`, `flexDirection: column`, `gap: 12px`, `padding: 16px` 이렇게 쓰고 있었어요. 그런데 이것도 사실은 **하나의 질문**이었습니다. **"내부 요소들을 어떻게 배치할 것인가?"** 답은 맥락에 따라 결정되더군요. "섹션을 큰 단위로 구분"하려면 gap 24px에 padding 24px. "콘텐츠를 읽기 좋게"는 gap 12px에 padding 16px. "리스트를 밀집하게"는 gap 4px에 padding 8px.
-
-**무한한 조합 → 15가지 의미 (stack.section, stack.content, row.actions...)**
-
----
-
-## 여정 3: Sizing - 크기의 이유
-
-**Sizing**이 가장 어려웠습니다. `width: 240px`을 왜 쓰는가? `width: 680px`은 왜 쓰는가? 처음엔 "그냥 보기 좋아서"라고 생각했어요. 하지만 파고들수록 **이유**가 있었죠.
-
-**240px**은 텍스트 레이블 + 아이콘이 들어갈 편안한 너비예요. 사이드바나 네비게이션 패널에 쓰이죠. 근거는 인간공학, 읽기 편한 최소 너비입니다.
-
-**680px**은 한 줄에 50-75자가 읽기 편한 폭이에요. 블로그 포스트, 문서, 긴 텍스트에 쓰입니다. 타이포그래피 이론에서 나온 최적 독서 폭이죠.
-
-**1200px**은 이보다 넓으면 눈의 피로도가 증가하는 한계점이에요. 메인 콘텐츠 컨테이너의 최대 너비로 쓰입니다. 시선 이동 거리의 한계죠. 크기를 결정하는 3가지 질문을 찾았습니다: "얼마나 중요한가?"(중요도 기반), "무엇을 담는가?"(콘텐츠 기반), "어디에 있는가?"(맥락 기반).
-
-**무한한 크기 → 20가지 의미 기반 토큰**
-
----
-
-## 여정 4: 나머지 10개 범주 발견
-
-같은 방식으로 계속 파고들었어요. **Typography** - "어떻게 읽혀야 하는가?", **Spacing** - "다른 요소들과 어떤 관계인가?", **Motion** - "변화가 어떻게 인지되어야 하는가?", **Visual Effects** - "어떤 느낌을 주어야 하는가?", **Interaction** - "사용자가 어떻게 상호작용하는가?", **State** - "상호작용에 어떻게 반응하는가?", **Overlay** - "다른 요소 위에 떠야 하는가?", **Content Flow** - "콘텐츠가 어떻게 표시되어야 하는가?", **Anchor** - "스크롤 시 고정되어야 하는가?", **Offset** - "원래 위치에서 조정이 필요한가?"
-
-총 **13개 범주**. 모든 CSS 속성이 이 13개 중 하나에 속했고, 각 범주는 명확한 **WHY**를 가지고 있었습니다.
-
----
-
-## 핵심 통찰: "디자인 = 이유의 모음"
-
-어느 순간 깨달았습니다. **디자인은 장식이 아니다. 디자인은 이유의 모음이다.** "왜 이 버튼이 파란색인가?" → 강조되어야 하니까 (surface="primary"). "왜 이 간격이 24px인가?" → 큰 섹션 구분이니까 (layout="stack.section"). "왜 이 너비가 680px인가?" → 읽기 편한 문단이니까 (w="content").
-
-**모든 선택에 이유가 있어요.** 그리고 이유를 알면, 선택지는 줄어듭니다. 원래 CSS는 간격 × 크기 × 배치 × 색상... = 사실상 무한이었죠. MDK는 13개 범주 × 각 범주당 5-20가지 의미 = 약 100가지 의미 있는 선택으로 바꿨습니다.
-
-**무한 → 100 (99.999% 감소)**
-
----
-
-## MDK의 본질: CSS 의사결정 프레임워크
-
-MDK는 컴포넌트 라이브러리가 아닙니다. 디자인 토큰 시스템도 아니에요. **MDK는 CSS 의사결정 프레임워크입니다.** CSS 속성을 주는 게 아니라, **CSS를 선택하는 방법**을 제공하죠.
+MDK transforms the question from "What value should I use?" to "What is the purpose?"
 
 ```tsx
-// ❌ Before: 무한한 선택지
+// ❌ Before: Infinite choices
 <div style={{
   padding: "??px",        // 0~100
   gap: "??px",            // 0~100
-  backgroundColor: "??",  // 16,777,216 색상
+  backgroundColor: "??",  // 16,777,216 colors
   borderRadius: "??px"    // 0~100
 }}>
 
-// ✅ After: 이유 기반 선택
+// ✅ After: Purpose-driven choices
 <Frame
-  layout="stack.content"  // 왜? 콘텐츠 리듬이 필요함
-  surface="raised"        // 왜? 떠 있는 카드처럼
+  layout="stack.content"  // WHY? Content needs rhythm
+  surface="raised"        // WHY? Card-like elevation
 >
 ```
 
-하나의 질문: "이 요소가 무엇을 하는가?" 하나의 답: `layout="stack.content"`, `surface="raised"`. 그 답이 자동으로 결정해요: padding 16px, gap 12px, background-color var(--surface-raised), border-radius 8px, box-shadow 0 2px 4px rgba(...).
+**One question**: "What does this element do?"
+**One answer**: `layout="stack.content"`, `surface="raised"`
+**Auto-determined**: padding 16px, gap 12px, background-color, border-radius 8px, box-shadow
+
+**Result**: Infinite → ~100 meaningful choices (99.999% reduction)
 
 ---
 
-## 철학: "No CSS Without Reason"
+## Table of Contents
 
-MDK의 핵심 철학: **"이유 없는 CSS는 없다"**
-
-모든 CSS 선택에는 반드시 이유가 있어야 합니다. "그냥 이뻐서"는 안 돼요. "섹션을 구분해야 해서"라고 말할 수 있어야 하죠.
-
-"24px이 좋아 보여서"가 아니라 "큰 섹션 간격이 필요해서(→ 24px)"라고요. 이유를 먼저 생각하면, 선택은 자연스럽게 따라와요. 그리고 이건 AI가 이해할 수 있죠.
+- [Quick Start](#quick-start)
+- [Core Concepts](#core-concepts)
+- [API Reference](#api-reference)
+- [13 CSS Categories](#13-css-categories)
+- [Design Philosophy](#design-philosophy)
+- [Examples](#examples)
+- [What MDK Is Not](#what-mdk-is-not)
+- [Key Benefits](#key-benefits)
 
 ---
 
-## AI와 함께 일하는 방법
+## Quick Start
 
-MDK를 사용하면 이렇게 됩니다.
+### Installation
 
-**AI에게**: "사이드바 만들어줘"
+```bash
+npm install minimal-design-kit
+# or
+yarn add minimal-design-kit
+```
 
-**AI가 이해하는 것**: 사이드바 = 고정 너비 필요, 고정 너비 = w="sidebar" (240px), 화면 전체 높이 = h="100vh", 내부는 세로 나열 = layout="stack.list".
+### Basic Usage
 
-**결과**:
 ```tsx
-<Sidebar w="sidebar" h="100vh">
-  <Frame layout="stack.list">
+import { Frame, Text } from 'minimal-design-kit';
+
+function App() {
+  return (
+    <Frame
+      layout="stack.content"  // Internal arrangement
+      surface="raised"         // Visual identity
+      w="content"             // Width purpose
+    >
+      <Text variant="h1">Hello MDK</Text>
+      <Text variant="body">Purpose-driven CSS decisions</Text>
+    </Frame>
+  );
+}
+```
+
+---
+
+## Core Concepts
+
+### 1. Surface = Complete Identity
+
+Each surface is a **complete combination** of background + border + shadow + interactive behavior:
+
+```tsx
+// Surface is NOT just background color
+<Frame surface="base" />     // Clean, flat background (no border, no shadow)
+<Frame surface="raised" />   // Card-like (bg + border + shadow-sm)
+<Frame surface="overlay" />  // Modal-like (bg + border + shadow-lg)
+<Frame surface="ghost" />    // Transparent (becomes visible on hover)
+```
+
+**Key Principle**: You don't add border/shadow separately. The surface defines its complete visual identity.
+
+### 2. Layout = Purpose-Driven Spacing
+
+Instead of setting `padding`, `gap` individually, declare the **purpose**:
+
+```tsx
+<Frame layout="stack.section">    // Large section separation (gap 24px, p 24px)
+<Frame layout="stack.content">    // Readable content rhythm (gap 12px, p 16px)
+<Frame layout="stack.list.dense"> // Compact list scanning (gap 4px, p 8px)
+<Frame layout="row.actions">      // Button group spacing (gap 8px, p 0)
+```
+
+**Result**: 15 semantic layouts instead of infinite spacing combinations.
+
+### 3. Sizing = Content-Based Dimensions
+
+Sizes are derived from **what the container holds**:
+
+```tsx
+w="sidebar"   // 240px - Optimal for text + icon (ergonomics)
+w="content"   // 680px - Optimal reading width (50-75 chars, typography theory)
+w="container" // 1200px - Max width before eye fatigue (visual ergonomics)
+```
+
+**Key Insight**: These aren't arbitrary numbers. They're **converged optimal values** from purpose.
+
+### 4. Interactive = Contextual Response
+
+Each surface responds in a way that **fits its identity**:
+
+```tsx
+<Frame surface="base" interactive>    // Darkens background (stays flat)
+<Frame surface="raised" interactive>  // Tactile feedback (maintains elevation)
+<Frame surface="ghost" interactive>   // Materializes from transparent
+```
+
+**Principle**: Interactive doesn't "elevate" surfaces. Each surface reacts **in character**.
+
+---
+
+## API Reference
+
+### Frame Component
+
+The universal layout primitive.
+
+```tsx
+interface FrameProps {
+  // Layout (Internal arrangement)
+  layout?: LayoutToken;              // Semantic layout preset
+  row?: boolean;                     // Horizontal flow
+  gap?: SpaceToken;                  // Item spacing
+
+  // Surface (Visual identity)
+  surface?: SurfaceToken;            // Complete visual identity
+  rounded?: Radius2Token;            // Border radius override
+
+  // Sizing (Container dimensions)
+  w?: WidthToken;                    // Width purpose
+  h?: HeightToken;                   // Height purpose
+  fill?: boolean;                    // Fill parent
+  flex?: boolean | number;           // Flex grow
+
+  // Interactive (Behavior)
+  interactive?: boolean | "button" | "text";
+
+  // Overrides (Fine-tuning)
+  override?: FrameOverrides;         // Token-based overrides
+  style?: RestrictedFrameStyle;      // Escape hatch (restricted)
+}
+```
+
+### Surface Tokens
+
+```typescript
+type SurfaceToken =
+  | "base"      // Clean flat background
+  | "sunken"    // Recessed background (#f9f9fb)
+  | "raised"    // Card-like (bg + border + shadow-sm)
+  | "overlay"   // Modal-like (bg + border + shadow-lg)
+  | "ghost"     // Transparent (visible on hover)
+  | "primary"   // Emphasis (black bg, white text)
+  | "selected"; // Active selection state
+```
+
+### Layout Tokens
+
+```typescript
+type LayoutToken =
+  | "stack.section"       // Large sections (gap 24px, p 24px)
+  | "stack.content"       // Content rhythm (gap 12px, p 16px)
+  | "stack.content.loose" // Relaxed content (gap 16px, p 20px)
+  | "stack.list.dense"    // Compact list (gap 4px, p 8px)
+  | "row.actions"         // Button groups (gap 8px)
+  | "row.header"          // Header layout (gap 12px, p 16px)
+  // ... 15 total semantic layouts
+```
+
+### Width Tokens
+
+```typescript
+type WidthToken =
+  | "sidebar"    // 240px - Navigation panel width
+  | "content"    // 680px - Optimal reading width
+  | "container"  // 1200px - Max content width
+  | "screen"     // 100vw - Full viewport
+  | "fill"       // 100% - Fill parent
+  | "hug"        // fit-content - Hug children
+```
+
+---
+
+## 13 CSS Categories
+
+MDK organizes all CSS properties into 13 categories, each answering a specific "WHY":
+
+| Category | Question | Examples |
+|----------|----------|----------|
+| **Surface** | How is this distinguished? | base, raised, overlay, ghost |
+| **Layout** | How are children arranged? | stack.content, row.actions |
+| **Sizing** | What does this contain? | sidebar (240px), content (680px) |
+| **Typography** | How should this be read? | h1, body, caption |
+| **Spacing** | What's the relationship? | section, content, compact |
+| **Motion** | How is change perceived? | instant, quick, smooth |
+| **Visual Effects** | What feeling does this give? | shadow-sm, shadow-lg, blur |
+| **Interaction** | How do users interact? | button, text, drag |
+| **State** | How does it respond? | hover, focus, active, disabled |
+| **Overlay** | Should it float above? | modal, dropdown, tooltip |
+| **Content Flow** | How is content displayed? | scroll, clip, wrap |
+| **Anchor** | Should it stick on scroll? | sticky-top, sticky-bottom |
+| **Offset** | Adjustment from original? | nudge, offset |
+
+**Total**: ~100 meaningful choices across 13 categories.
+
+---
+
+## Design Philosophy
+
+### "No CSS Without Reason"
+
+Every CSS choice must have a reason. Not "because it looks nice", but "because it serves a purpose".
+
+- ❌ "24px looks good"
+- ✅ "Large section separation requires 24px" (→ `layout="stack.section"`)
+
+- ❌ "680px feels right"
+- ✅ "Optimal reading width is 50-75 characters" (→ `w="content"`)
+
+### Design Converges
+
+UIs with clear purpose converge to similar solutions:
+- Admin sidebars: 200-280px (ergonomic text + icon width)
+- Blog content: 600-720px (optimal reading line length)
+- Card spacing: 16-24px (visual grouping threshold)
+
+**Same purpose → Same solution**
+
+MDK accelerates this convergence by asking "WHY" first.
+
+### AI-Friendly Design
+
+Traditional design systems give AI **rules to memorize**:
+- "Use --space-2 for compact, --space-3 for comfortable"
+- Result: AI guesses inconsistently
+
+MDK gives AI **context to reason**:
+- "Sidebar needs navigation width" → `w="sidebar"` (240px)
+- "List needs quick scanning" → `layout="stack.list.dense"`
+- Result: AI infers correctly
+
+**Why it works**: AI doesn't memorize values, it **reasons about purpose**.
+
+---
+
+## Examples
+
+### Admin Dashboard Layout
+
+```tsx
+<Frame w="screen" h="screen" layout="row.app">
+  {/* Sidebar */}
+  <Frame w="sidebar" surface="sunken" layout="stack.list">
     <MenuItem />
     <MenuItem />
   </Frame>
-</Sidebar>
+
+  {/* Main Content */}
+  <Frame flex scroll layout="stack.content">
+    <Frame surface="raised" layout="stack.content">
+      <Text variant="h2">Dashboard</Text>
+      <Text variant="body">Content here</Text>
+    </Frame>
+  </Frame>
+</Frame>
 ```
 
-AI는 규칙을 외우지 않아요. AI는 **이유를 추론합니다.** "사이드바니까 240px", "리스트니까 gap: 4px", "떠 있는 카드니까 shadow 있음".
+**Decisions made**:
+- `w="sidebar"` → 240px (optimal for text + icon)
+- `surface="sunken"` → recessed background (sidebar identity)
+- `layout="stack.list"` → compact vertical list (gap 4px)
+- `flex` → main content fills remaining space
+- `surface="raised"` → card-like elevation
 
-이게 가능한 이유: 무한한 선택지 대신 → 의미 있는 100가지, 숫자 대신 → 이유, 규칙 대신 → 맥락.
+### Modal Dialog
 
----
+```tsx
+<Frame surface="overlay" w="content" layout="stack.content" rounded="lg">
+  <Text variant="h3">Confirm Action</Text>
+  <Text variant="body">Are you sure you want to proceed?</Text>
 
-## 내가 고민했던 것들
+  <Frame layout="row.actions" justify="end">
+    <Frame surface="ghost" interactive>Cancel</Frame>
+    <Frame surface="primary" interactive>Confirm</Frame>
+  </Frame>
+</Frame>
+```
 
-### 왜 240px인가?
+**Decisions made**:
+- `surface="overlay"` → modal-like (bg + border + shadow-lg)
+- `w="content"` → readable width (680px)
+- `layout="stack.content"` → content rhythm (gap 12px, p 16px)
+- `layout="row.actions"` → button spacing (gap 8px)
+- `surface="ghost"` → transparent button (materializes on hover)
+- `surface="primary"` → emphasis button (black bg, white text)
 
-처음엔 그냥 "보기 좋아서" 240px을 썼어요. 하지만 계속 쓰다 보니 이유가 있더군요.
+### Input Field
 
-200px은 너무 좁아서 텍스트가 두 줄로 깨지고, 280px은 너무 넓어서 메인 콘텐츠를 압박해요. 240px은 텍스트 + 아이콘이 딱 맞죠.
+```tsx
+<Frame surface="sunken" interactive="text" layout="row.item">
+  <Icon name="search" />
+  <input placeholder="Search..." />
+</Frame>
+```
 
-이건 우연이 아니었어요. **인간공학적 최적값**이었죠.
+**Behavior**:
+- Default: `sunken` background (#f9f9fb) + border
+- Hover: Border darkens
+- Focus: "Pops" to `base` background (white) + dark border
 
-### 왜 680px인가?
-
-블로그를 만들 때마다 고민했습니다. "콘텐츠 너비를 얼마로 할까?" 600px? 700px? 800px?
-
-찾아보니 **타이포그래피 이론**이 있더군요. 한 줄에 50-75자가 읽기 편하고, 16px 폰트 기준으로는 약 680px이 최적이에요.
-
-이것도 우연이 아니었어요.
-
-### 왜 gap: 24px / 12px / 4px인가?
-
-24px은 큰 섹션 구분용이에요(눈에 띄게 떨어져야 함). 12px은 콘텐츠 리듬용(읽기 편한 간격). 4px은 밀집 리스트용(빠르게 스캔해야 함).
-
-이건 **사용 목적**에 따라 수렴한 값이었죠.
-
-### 왜 flex: 1인가?
-
-생각해보니 사이드바는 고정 너비(항상 같아야 함), 메인 콘텐츠는 유연한 너비(화면에 맞춰야 함)예요.
-
-`flex: 1`은 단순한 CSS가 아니라, **"나는 메인 콘텐츠다"**라는 의미였어요.
-
----
-
-## 디자인은 수렴한다
-
-목적이 명확한 UI는 디자인이 수렴합니다. 어드민 대시보드를 보면 사이드바는 대부분 200-280px, 헤더는 대부분 56-80px, 카드 간격은 대부분 16-24px이에요.
-
-**같은 목적 → 같은 해결책**
-
-MDK는 이 수렴을 가속화해요. "왜"를 먼저 물어보면, 자연스럽게 비슷한 답에 도달하죠.
-
----
-
-## MDK가 가능하게 하는 것
-
-MDK를 사용하면:
-
-✅ **AI가 계속 디자인할 수 있어요** - 이유를 이해하니까 일관된 선택
-
-✅ **커스터마이징해도 일관성이 유지돼요** - 같은 맥락 → 같은 선택
-
-✅ **시스템이 커질수록 읽기 쉬워져요** - 100가지 의미로 수렴
-
-✅ **디자인 결정이 추론으로 이루어져요** - 암기 불필요, 맥락만 이해하면 됨
+**Why**: Input fields are recessed by default, then "rise" when focused.
 
 ---
 
-## MDK가 아닌 것
+## What MDK Is Not
 
-❌ Tailwind를 대체하려는 도구가 아니에요
+❌ **Not a Tailwind replacement** - MDK doesn't provide utility classes
+❌ **Not a component library** - MDK doesn't ship pre-built UI components
+❌ **Not a token system** - MDK provides decision framework, not just values
 
-❌ 시각적 컴포넌트 라이브러리가 아니에요
-
-❌ 토큰 중심 디자인 시스템이 아니에요
-
-MDK는 CSS를 **결정하는 방법**이에요. CSS를 **그리는 방법**이 아니죠.
+**MDK is a way to _decide_ CSS, not a way to _write_ CSS.**
 
 ---
 
-## 결론
+## Key Benefits
 
-AI는 이미 디자인을 잘합니다. 문제는 CSS 선택지가 너무 많아서, 일관된 선택을 하기 어렵다는 거였어요.
+### ✅ AI Maintains Consistency
+- AI understands **purpose**, not just values
+- Same context → Same choice
+- Modifications stay coherent
 
-MDK는 이 문제를 해결합니다. CSS를 13개 범주로 추상화하고, 각 범주에 명확한 WHY를 부여하죠. 무한한 선택지를 100가지 의미로 축소하고, AI가 이유를 추론할 수 있게 만들어요.
+### ✅ Scales Without Complexity
+- 100 meaningful choices (not infinite)
+- New features follow existing patterns
+- Codebase stays readable
 
-**결과**: AI는 계속 잘 디자인하고, 일관성은 자동으로 유지되고, 개발자는 "왜"만 생각하면 돼요.
+### ✅ Design Decisions Are Inferrable
+- No memorization required
+- Context provides the answer
+- Onboarding is understanding, not learning rules
+
+### ✅ Customization Preserves Intent
+- Change values, keep purpose
+- `w="sidebar"` can be 240px or 280px
+- The meaning stays clear
 
 ---
 
-MDK는 AI가 디자인을 **망치지 않게 하기 위해** 존재합니다.
+## Philosophy Deep Dive
 
-그리고 그 과정에서, 저는 "디자인이 무엇인가"를 다시 배웠어요.
+### Why 240px?
 
-**디자인은 이유의 모음입니다.**
+Not "because it looks good", but:
+- 200px: Too narrow, text wraps awkwardly
+- 280px: Too wide, compresses main content
+- 240px: **Ergonomic optimum** for text + icon
 
-— Teo
+This isn't arbitrary. It's a **converged value** from purpose.
+
+### Why 680px?
+
+Typography theory: 50-75 characters per line is optimal for reading.
+- 16px font size
+- 50-75 characters
+- = ~680px width
+
+Again, not arbitrary. **Purpose-driven**.
+
+### Why gap: 24px / 12px / 4px?
+
+- **24px**: Large section separation (visually distinct)
+- **12px**: Content rhythm (comfortable reading)
+- **4px**: Compact list (quick scanning)
+
+These values **emerged from use cases**, not designer preference.
+
+---
+
+## Installation & Setup
+
+### Requirements
+
+- React 18+
+- TypeScript 5.0+
+- Node.js 18+
+
+### Install
+
+```bash
+npm install minimal-design-kit
+```
+
+### Basic Setup
+
+```tsx
+import { Frame, Text } from 'minimal-design-kit';
+import 'minimal-design-kit/dist/style.css';
+
+function App() {
+  return (
+    <Frame layout="stack.content" surface="base">
+      <Text variant="h1">Hello MDK</Text>
+    </Frame>
+  );
+}
+```
+
+No configuration needed. The framework is ready to use.
+
+---
+
+## Advanced Usage
+
+### Custom Layouts
+
+```tsx
+import { Layout } from 'minimal-design-kit';
+
+// Use preset
+<Frame layout={Layout.Stack.Content.Default} />
+
+// Extend with override
+<Frame
+  layout={Layout.Stack.Content.Default}
+  override={{ gap: Space.n24 }}
+/>
+```
+
+### Interactive Variants
+
+```tsx
+<Frame surface="ghost" interactive>         // Default button behavior
+<Frame surface="sunken" interactive="text"> // Input field behavior
+<Frame surface="raised" interactive="button"> // Explicit button
+```
+
+---
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+### Development Setup
+
+```bash
+git clone https://github.com/yourusername/minimal-design-kit
+cd minimal-design-kit
+npm install
+npm run dev
+```
+
+---
+
+## License
+
+License terms to be determined.
+
+---
+
+## Links
+
+- [Documentation](https://docs.minimal-design-kit.dev)
+- [GitHub](https://github.com/yourusername/minimal-design-kit)
+- [Examples](https://examples.minimal-design-kit.dev)
+
+---
+
+**Remember**: Every CSS choice must have a reason. Ask "WHY" before "HOW".
+
+**Core Insight**: Design is not decoration. Design is a collection of reasons.
+
+— MDK Team

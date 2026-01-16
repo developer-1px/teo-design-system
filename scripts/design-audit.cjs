@@ -15,8 +15,10 @@ const MIN_ACTION_SIZE = 20;
 const HARDCODED_PIXEL_REGEX =
   /:\s*["']\d+px["']|width={["']\d+px["']}|height={["']\d+px["']}|w={["']\d+px["']}|h={["']\d+px["']}/g;
 
-const SIZE_VALUE_REGEX = /(?<!icon)(?:width|height|w|h|min-width|min-height|minWidth|minHeight|size)[=:]\s*[{'"]?(\d+)(?:px)?['"}]?/i;
-const SIZE_TOKEN_REGEX = /(?<!icon)(?:width|height|w|h|min-width|min-height|minWidth|minHeight|size)[=:]\s*[{'"]?var\(--size-n?(\d+)\)['"}]?/i;
+const SIZE_VALUE_REGEX =
+  /(?<!icon)(?:width|height|w|h|min-width|min-height|minWidth|minHeight|size)[=:]\s*[{'"]?(\d+)(?:px)?['"}]?/i;
+const SIZE_TOKEN_REGEX =
+  /(?<!icon)(?:width|height|w|h|min-width|min-height|minWidth|minHeight|size)[=:]\s*[{'"]?var\(--size-n?(\d+)\)['"}]?/i;
 
 function walkDir(dir, callback) {
   if (!fs.existsSync(dir)) return;
@@ -133,7 +135,10 @@ function collectProps(line, node) {
   if (node.tag === "Frame") {
     if (l.includes("surface=")) node.hasSurface = true;
     if (l.includes("rounded=") || l.includes(" r=")) node.hasRadius = true;
-    if (/\b(?:max-?width|margin|width)\b\s*[=:]/i.test(l) && !l.includes("scrollbarwidth"))
+    if (
+      /\b(?:max-?width|margin|width)\b\s*[=:]/i.test(l) &&
+      !l.includes("scrollbarwidth")
+    )
       node.hasCentering = true;
     if (l.includes("flex") || l.includes("fill")) node.hasFlex = true;
     if (l.includes("layout") && l.includes("row")) node.isRow = true;
@@ -150,7 +155,12 @@ function collectProps(line, node) {
 function runComponentChecks(node, issues) {
   // Rule: Rigid Row
   // Applying only to fixed-width rows (centering or explicit width)
-  if (node.tag === "Frame" && node.isRow && node.hasCentering && node.children.length > 1) {
+  if (
+    node.tag === "Frame" &&
+    node.isRow &&
+    node.hasCentering &&
+    node.children.length > 1
+  ) {
     const hasFlexibleChild = node.children.some((c) => c.hasFlex);
     if (!hasFlexibleChild) {
       issues.push({
@@ -163,7 +173,12 @@ function runComponentChecks(node, issues) {
   }
 
   // Rule: Floating Flat Surface
-  if (node.tag === "Frame" && node.hasSurface && !node.hasRadius && node.hasCentering) {
+  if (
+    node.tag === "Frame" &&
+    node.hasSurface &&
+    !node.hasRadius &&
+    node.hasCentering
+  ) {
     issues.push({
       line: node.line,
       type: "Floating Flat Surface",

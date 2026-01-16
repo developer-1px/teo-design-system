@@ -23,8 +23,12 @@ import {
   Space,
   Radius2,
 } from "../design-system/token";
+import { ZIndex } from "../design-system/token/token.const.1tier";
+import { SegmentedControl } from "../design-system/SegmentedControl";
+import { useState } from "react";
 
 export function SlideApp() {
+  const [activeTool, setActiveTool] = useState("square");
   return (
     <Frame fill surface="sunken" clip>
       {/* 1. Global Header */}
@@ -33,13 +37,13 @@ export function SlideApp() {
           position: "absolute",
           top: 0,
           left: 0,
-          right: 0,
-          zIndex: 10,
-          height: "var(--size-n44)",
-          borderBottom: "1px solid var(--border-color)",
+          right: 0
         }}
         override={{
           px: Space.n16,
+          h: Size.n44,
+          zIndex: ZIndex.n10,
+          borderBottom: true,
         }}
         layout={Layout.Row.Header.Default}
       >
@@ -50,7 +54,7 @@ export function SlideApp() {
           <Action
             icon={Grid}
             iconSize={IconSize.n16}
-            style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
+            style={{ width: "var(--size-n28)", height: "var(--size-n28)" } as any}
           />
           <Frame
             layout={Layout.Row.Item.Default}
@@ -62,7 +66,7 @@ export function SlideApp() {
             <Action
               icon={ChevronDown}
               iconSize={IconSize.n12}
-              style={{ width: "20px", height: "20px" }}
+              style={{ width: "20px", height: "20px" } as any}
               opacity={Opacity.n50}
             />
           </Frame>
@@ -83,15 +87,17 @@ export function SlideApp() {
             }}
           >
             <Frame
-              style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
-              override={{}}
+              override={{
+                w: Size.n24,
+                h: Size.n24
+              }}
               rounded={Radius2.md}
               surface="overlay"
             />
             <Action
               icon={Plus}
               iconSize={IconSize.n10}
-              style={{ width: "20px", height: "20px" }}
+              style={{ width: "20px", height: "20px" } as any}
             />
           </Frame>
           <Action
@@ -141,7 +147,7 @@ export function SlideApp() {
         >
           <Frame fill pack scroll>
             <Frame
-              style={{ width: "80%", maxWidth: "var(--container-n1280)" }}
+              style={{ width: "80%", maxWidth: "var(--container-n1280)" } as any}
               override={{ shadow: "lg" }}
               rounded={Radius2["2xl"]}
               surface="base"
@@ -163,44 +169,16 @@ export function SlideApp() {
                   override={{ gap: Space.n12 }}
                   layout={Layout.Row.Actions.Center}
                 >
-                  <Frame
-                    override={{ w: Size.n40, h: Size.n40 }}
-                    rounded={Radius2.md}
-                    surface="sunken"
-                    pack
-                  >
-                    <Icon
-                      src={Square}
-                      size={IconSize.n16}
-                      style={{ color: "var(--text-body)" }}
-                    />
-                  </Frame>
-                  <Frame
-                    style={{ width: "40px", height: "40px" }}
-                    override={{}}
-                    rounded={Radius2.md}
-                    surface="raised"
-                    pack
-                  >
-                    <Icon
-                      src={Circle}
-                      size={IconSize.n16}
-                      style={{ color: "var(--text-body)" }}
-                    />
-                  </Frame>
-                  <Frame
-                    style={{ width: "40px", height: "40px" }}
-                    override={{}}
-                    rounded={Radius2.md}
-                    surface="overlay"
-                    pack
-                  >
-                    <Icon
-                      src={Type}
-                      size={IconSize.n16}
-                      style={{ color: "var(--text-body)" }}
-                    />
-                  </Frame>
+                  <SegmentedControl
+                    w={Size.n128} // Approx width for 3 items
+                    value={activeTool}
+                    onChange={setActiveTool}
+                    options={[
+                      { value: "square", label: <Icon src={Square} size={IconSize.n16} /> },
+                      { value: "circle", label: <Icon src={Circle} size={IconSize.n16} /> },
+                      { value: "type", label: <Icon src={Type} size={IconSize.n16} /> },
+                    ]}
+                  />
                 </Frame>
               </Frame>
             </Frame>

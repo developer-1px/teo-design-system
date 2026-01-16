@@ -1,4 +1,5 @@
 import { FileText, Globe, Monitor } from "lucide-react";
+import type React from "react";
 import { useState } from "react";
 import { Action } from "../design-system/Action";
 import { Experience, type ExperienceType } from "../design-system/Experience";
@@ -7,9 +8,12 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
 import { Text } from "../design-system/text/Text";
 import {
+  ContainerSize,
+  FontSize,
   IconSize,
   Size,
   Space,
+  ZIndex,
 } from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
@@ -24,23 +28,32 @@ export function TextSystemApp() {
   return (
     <Experience value={experience}>
       <Frame
-        style={{ scrollSnapType: "y mandatory" }}
+        style={{ scrollSnapType: "y mandatory" } as React.CSSProperties}
         scroll="y"
-        override={{}}
-        fill
+        override={{
+          w: Size.fill,
+          h: Size.screen,
+        }}
         surface="base"
+        layout={Layout.Stack.Content.None}
       >
         {/* Floating Experience Switcher */}
         <Frame
-          style={{
-            position: "fixed",
-            top: 24,
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 100,
+          style={
+            {
+              position: "fixed",
+              top: 24,
+              left: "50%",
+              transform: "translateX(-50%)",
+            } as React.CSSProperties
+          }
+          override={{
+            shadow: "lg",
+            p: Space.n4,
+            zIndex: ZIndex.n100,
+            r: Radius2.full,
           }}
-          override={{ shadow: "lg", p: Space.n4 }}
-          rounded={Radius2.full}
+          surface="raised" // Added surface
           layout={Layout.Row.Actions.Center}
         >
           <ExperienceButton
@@ -65,28 +78,37 @@ export function TextSystemApp() {
 
         {/* Section 0: Text System Intro (1-Column Layout) */}
         <Frame
-          style={{ scrollSnapAlign: "start" }}
+          style={
+            {
+              scrollSnapAlign: "start",
+            } as React.CSSProperties
+          }
           surface="base"
           override={{
-            w: Size.full,
-            h: Size.screen,
+            w: Size.fill,
+            minHeight: Size.screen, // Changed to minHeight
             p: Space.n40,
-            align: "center",
           }}
+          layout={Layout.Center.Default}
         >
           <Frame
-            style={{ maxWidth: "var(--container-n800)" }}
-            override={{ gap: Space.n32, align: "center" }}
+            maxWidth={ContainerSize.n800}
+            override={{ gap: Space.n32, w: Size.fill }}
+            layout={Layout.Center.Default}
           >
             <Frame
-              style={{
-                background:
-                  "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
-                border: "1px solid var(--border-color)",
-                boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
+              style={
+                {
+                  background:
+                    "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
+                  boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
+                } as React.CSSProperties
+              }
+              override={{
+                p: Space.n16,
+                r: Radius2["3xl"],
+                border: true,
               }}
-              override={{ p: Space.n16 }}
-              rounded={Radius2["3xl"]}
               surface="sunken"
             >
               <Icon
@@ -100,7 +122,7 @@ export function TextSystemApp() {
               <Text.Prose.Title
                 variant="xl"
                 style={{
-                  fontSize: "var(--font-size-7xl)", // 72px
+                  fontSize: FontSize.n72,
                   letterSpacing: "-0.04em",
                   lineHeight: 1,
                 }}
@@ -108,12 +130,14 @@ export function TextSystemApp() {
                 Text System
               </Text.Prose.Title>
               <Text.Prose.Body
-                style={{
-                  fontSize: "var(--font-size-2xl)", // 24px
-                  textAlign: "center",
-                  opacity: 0.6,
-                  maxWidth: "600px",
-                }}
+                style={
+                  {
+                    fontSize: FontSize.n24,
+                    textAlign: "center",
+                    opacity: 0.6,
+                    maxWidth: "600px",
+                  } as React.CSSProperties
+                }
               >
                 A semantic, context-aware hierarchy engine.
               </Text.Prose.Body>
@@ -121,8 +145,8 @@ export function TextSystemApp() {
 
             {/* Hierarchy Visualization */}
             <Frame
-              style={{ marginTop: "var(--space-8)" }}
               layout={Layout.Row.Item.Default}
+              style={{ marginTop: Space.n8 } as React.CSSProperties}
               override={{ gap: Space.n0 }}
             >
               {[
@@ -143,17 +167,19 @@ export function TextSystemApp() {
                       shadow: "sm",
                       gap: Space.n4,
                       w: Size.n160,
+                      r: Radius2.xl,
                     }}
-                    rounded={Radius2.xl}
                     surface="raised"
                   >
                     <Text.Card.Note
-                      style={{
-                        opacity: 0.5,
-                        fontSize: "11px",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.05em",
-                      }}
+                      style={
+                        {
+                          opacity: 0.5,
+                          fontSize: "11px",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                        } as React.CSSProperties
+                      }
                     >
                       Layer {i + 1}
                     </Text.Card.Note>
@@ -162,12 +188,14 @@ export function TextSystemApp() {
                   </Frame>
                   {i < 3 && (
                     <Frame
-                      style={{
-                        height: "var(--size-n2)",
-                        background: "var(--border-color)",
-                      }}
+                      style={
+                        {
+                          background: "var(--border-color)",
+                        } as React.CSSProperties
+                      }
                       override={{
                         w: Size.n32,
+                        h: Size.n4,
                       }}
                     />
                   )}
@@ -188,8 +216,9 @@ export function TextSystemApp() {
 </Text.Prose.Body>`}
         >
           <Frame
-            style={{ maxWidth: "600px", textAlign: "left" }}
-            override={{ gap: Space.n24, w: Size.full }}
+            maxWidth={ContainerSize.n640} // Approx 600px
+            style={{ textAlign: "left" } as React.CSSProperties}
+            override={{ gap: Space.n24, w: Size.fill }}
           >
             <Text.Prose.Title>Context: Prose</Text.Prose.Title>
             <Text.Prose.Body>
@@ -214,7 +243,7 @@ export function TextSystemApp() {
         <ShowcaseSection
           title="Context: Card"
           description="Compact, summarized information blocks."
-          code={`<Frame override={{ p: Space.n24}} rounded={Radius2.xl} surface="raised"   border>
+          code={`<Frame override={{ p: Space.n24, r: Radius2.xl, border: true }} surface="raised">
   <Text.Card.Title>Project Alpha</Text.Card.Title>
   <Text.Card.Desc>
     High-priority infrastructure migration.
@@ -232,19 +261,18 @@ export function TextSystemApp() {
                 gap: Space.n12,
                 w: Size.n320,
                 shadow: "sm",
+                r: Radius2.xl,
+                border: true,
               }}
-              rounded={Radius2.xl}
-              style={{ border: "1px solid var(--border-color)" }}
               surface="raised"
             >
               <Frame
-                override={{ w: Size.n40, h: Size.n40 }}
-                rounded={Radius2.lg}
-                style={{ marginBottom: "var(--space-2)" }}
+                override={{ w: Size.n40, h: Size.n40, r: Radius2.lg }}
+                style={{ marginBottom: Space.n2 } as React.CSSProperties}
                 surface="sunken"
                 pack
               >
-                <Icon src={Globe} size={IconSize.n20} />
+                <Icon src={Globe} size={IconSize.n40} />
               </Frame>
               <Text.Card.Title>Project Alpha</Text.Card.Title>
               <Text.Card.Desc>
@@ -252,9 +280,8 @@ export function TextSystemApp() {
                 gateway.
               </Text.Card.Desc>
               <Frame
-                style={{ marginTop: "var(--space-4)" }}
-                layout={Layout.RowTemp}
-                override={{ align: "center" }}
+                layout={Layout.Row.Actions.Between}
+                style={{ marginTop: Space.n4 } as React.CSSProperties}
               >
                 <Text.Card.Note style={{ opacity: 0.6 }}>
                   Updated 2h ago
@@ -269,28 +296,26 @@ export function TextSystemApp() {
                 gap: Space.n12,
                 w: Size.n320,
                 shadow: "sm",
+                r: Radius2.xl,
+                border: true,
               }}
-              rounded={Radius2.xl}
-              style={{ border: "1px solid var(--border-color)" }}
               surface="raised"
             >
               <Frame
-                override={{ w: Size.n40, h: Size.n40 }}
-                rounded={Radius2.lg}
-                style={{ marginBottom: "var(--space-2)" }}
+                override={{ w: Size.n40, h: Size.n40, r: Radius2.lg }}
+                style={{ marginBottom: Space.n2 } as React.CSSProperties}
                 surface="sunken"
                 pack
               >
-                <Icon src={FileText} size={IconSize.n20} />
+                <Icon src={FileText} size={IconSize.n40} />
               </Frame>
               <Text.Card.Title>Q1 Report</Text.Card.Title>
               <Text.Card.Desc>
                 Quarterly financial analysis and growth projections.
               </Text.Card.Desc>
               <Frame
-                style={{ marginTop: "var(--space-4)" }}
-                layout={Layout.RowTemp}
-                override={{ align: "center" }}
+                layout={Layout.Row.Actions.Between}
+                style={{ marginTop: Space.n4 } as React.CSSProperties}
               >
                 <Text.Card.Note style={{ opacity: 0.6 }}>Draft</Text.Card.Note>
                 <Action size="sm" variant="ghost" label="Edit" />
@@ -310,9 +335,13 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
-            style={{ border: "1px solid var(--border-color)" }}
-            override={{ w: Size.n384, p: Space.n32, gap: Space.n24 }}
-            rounded={Radius2["2xl"]}
+            override={{
+              w: Size.n384,
+              p: Space.n32,
+              gap: Space.n24,
+              r: Radius2["2xl"],
+              border: true,
+            }}
             surface="raised"
           >
             <Text.Prose.Title style={{ fontSize: "var(--prose-h3-size)" }}>
@@ -323,14 +352,14 @@ export function TextSystemApp() {
               <Frame override={{ gap: Space.n6 }}>
                 <Text.Field.Label>Display Name</Text.Field.Label>
                 <Frame
-                  style={{
-                    paddingLeft: "var(--space-3)",
-                    paddingRight: "var(--space-3)",
-                    border: "1px solid var(--border-color)",
+                  override={{
+                    h: Size.n32,
+                    align: "center",
+                    r: Radius2.md,
+                    px: Space.n4,
+                    border: true,
                   }}
-                  rounded={Radius2.md}
                   surface="sunken"
-                  override={{ h: Size.n32, align: "center" }}
                 >
                   <Text.Field.Value style={{ opacity: 0.5 }}>
                     Jane Doe
@@ -341,14 +370,14 @@ export function TextSystemApp() {
               <Frame override={{ gap: Space.n6 }}>
                 <Text.Field.Label>Email Address</Text.Field.Label>
                 <Frame
-                  style={{
-                    paddingLeft: "var(--space-3)",
-                    paddingRight: "var(--space-3)",
-                    border: "1px solid var(--border-color)",
+                  override={{
+                    h: Size.n32,
+                    align: "center",
+                    r: Radius2.md,
+                    px: Space.n4,
+                    border: true,
                   }}
-                  rounded={Radius2.md}
                   surface="sunken"
-                  override={{ h: Size.n32, align: "center" }}
                 >
                   <Text.Field.Value style={{ opacity: 0.5 }}>
                     name@example.com
@@ -362,9 +391,12 @@ export function TextSystemApp() {
               <Frame override={{ gap: Space.n6 }}>
                 <Text.Field.Label>Bio</Text.Field.Label>
                 <Frame
-                  style={{ border: "1px solid var(--border-color)" }}
-                  override={{ h: Size.n80, p: Space.n12 }}
-                  rounded={Radius2.md}
+                  override={{
+                    h: Size.n80,
+                    p: Space.n12,
+                    r: Radius2.md,
+                    border: true,
+                  }}
                   surface="sunken"
                 >
                   <Text.Field.Value style={{ opacity: 0.5 }}>
@@ -375,9 +407,9 @@ export function TextSystemApp() {
             </Frame>
 
             <Frame
-              style={{ marginTop: "var(--space-4)" }}
               layout={Layout.Row.Actions.Default}
               override={{ gap: Space.n12, justify: "end" }}
+              style={{ marginTop: Space.n4 } as React.CSSProperties}
             >
               <Action variant="ghost" label="Cancel" />
               <Action variant="primary" label="Save Changes" />
@@ -389,32 +421,30 @@ export function TextSystemApp() {
         <ShowcaseSection
           title="Context: Table"
           description="Tabular data with clear hierarchy between heads and cells."
-          code={`<Frame override={{ p: Space.n12 }} row border="bottom" >
+          code={`<Frame override={{ p: Space.n12, border: true }} row >
   <Text.Table.Head>Name</Text.Table.Head>
   <Text.Table.Head>Role</Text.Table.Head>
 </Frame>
-<Frame override={{ p: 3 }} row border="bottom" >
+<Frame override={{ p: 3, border: true }} row >
   <Text.Table.Cell>Alice</Text.Table.Cell>
   <Text.Table.Cell>Admin</Text.Table.Cell>
 </Frame>`}
         >
           <Frame
-            style={{
-              maxWidth: "var(--container-n800)",
-              border: "1px solid var(--border-color)",
-            }}
+            maxWidth={ContainerSize.n800}
             override={{
-              w: Size.full,
+              w: Size.fill,
+              r: Radius2.xl,
+              border: true,
             }}
-            rounded={Radius2.xl}
             surface="raised"
             clip
           >
             <Frame
-              style={{ borderBottom: "1px solid var(--border-color)" }}
               override={{
                 py: Space.n12,
                 px: Space.n16,
+                borderBottom: true,
               }}
               layout={Layout.Row.Item.Default}
               surface="sunken"
@@ -463,11 +493,15 @@ export function TextSystemApp() {
               },
             ].map((user, i) => (
               <Frame
-                style={{ borderBottom: "1px solid var(--border-color)" }}
                 key={i}
                 layout={Layout.Row.Item.Default}
                 surface="hover"
-                override={{ py: Space.n12, px: Space.n16, align: "center" }}
+                override={{
+                  py: Space.n12,
+                  px: Space.n16,
+                  align: "center",
+                  borderBottom: true,
+                }}
               >
                 <Frame override={{ gap: Space.n2 }} flex={2}>
                   <Text.Table.Cell style={{ fontWeight: 500 }}>
@@ -484,15 +518,18 @@ export function TextSystemApp() {
                   <Frame
                     style={{
                       display: "inline-flex",
-                      border: "1px solid var(--border-color)",
                       fontSize: "11px",
                       color:
                         user.status === "Active"
                           ? "var(--text-primary)"
                           : "var(--text-muted)",
                     }}
-                    override={{ py: Space.n2, px: Space.n8 }}
-                    rounded={Radius2.full}
+                    override={{
+                      py: Space.n2,
+                      px: Space.n8,
+                      r: Radius2.full,
+                      border: true,
+                    }}
                     surface={user.status === "Active" ? "sunken" : undefined}
                   >
                     {user.status}
@@ -529,13 +566,15 @@ export function TextSystemApp() {
           >
             {/* Sidebar Menu Style */}
             <Frame
-              style={{
-                height: "400px",
-                border: "1px solid var(--border-color)",
-              }}
+              style={
+                {
+                  height: "400px",
+                } as React.CSSProperties
+              }
               override={{
-                w: Size.n240,
+                w: Size.n448,
                 gap: Space.n4,
+                border: true,
               }}
               surface="sunken"
             >
@@ -554,21 +593,26 @@ export function TextSystemApp() {
 
             {/* Context Menu Style */}
             <Frame
-              style={{ border: "1px solid var(--border-color)" }}
               override={{
-                w: Size.n224,
+                w: Size.n448,
                 p: Space.n4,
                 gap: Space.n4,
                 shadow: "lg",
+                r: Radius2.xl,
+                border: true,
               }}
-              rounded={Radius2.xl}
               surface="raised"
             >
               <MenuItem>View Details</MenuItem>
               <MenuItem>Edit</MenuItem>
               <MenuItem>Duplicate</MenuItem>
               <Frame
-                style={{ marginBlock: "var(--space-1)", height: "1px" }}
+                style={
+                  {
+                    marginBlock: Space.n1,
+                    height: "1px",
+                  } as React.CSSProperties
+                }
                 override={{}}
                 surface="base"
               />
@@ -589,7 +633,13 @@ export function TextSystemApp() {
 function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
   return (
     <Frame
-      rounded={Radius2.full}
+      override={{
+        r: Radius2.full,
+        py: Space.n8,
+        px: Space.n16,
+        gap: Space.n8,
+        align: "center",
+      }}
       style={{
         color: active ? "var(--primary-fg)" : "var(--text-secondary)",
         cursor: "pointer",
@@ -598,7 +648,6 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
       onClick={onClick}
       surface={active ? "primary" : "hover"}
       layout={Layout.Row.Item.Tight}
-      override={{ py: Space.n8, px: Space.n16, gap: Space.n8, align: "center" }}
     >
       <Icon src={IconSrc} size={IconSize.n14} />
       <Text.Menu.Item>{label}</Text.Menu.Item>
@@ -609,19 +658,24 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
 function ShowcaseSection({ title, description, code, children }: any) {
   return (
     <Frame
-      style={{ scrollSnapAlign: "start" }}
-      override={{ w: Size.full, h: Size.screen }}
+      style={
+        {
+          scrollSnapAlign: "start",
+          flexShrink: 0,
+        } as React.CSSProperties
+      }
+      override={{ w: Size.fill, minHeight: Size.screen }}
       layout={Layout.Row.AppContainer.Default}
       clip
     >
       {/* Left: Code & Context */}
       <Frame
-        style={{ width: "35%", borderRight: "1px solid var(--border-color)" }}
+        style={{ width: "35%" } as React.CSSProperties}
         surface="sunken"
-        override={{ p: Space.n24, justify: "center" }}
+        override={{ p: Space.n24, justify: "center", border: true }}
       >
         <Frame override={{ gap: Space.n16 }}>
-          <Text.Prose.Title style={{ fontSize: "var(--font-size-4xl)" }}>
+          <Text.Prose.Title style={{ fontSize: FontSize.n36 }}>
             {title}
           </Text.Prose.Title>
           <Text.Prose.Body style={{ opacity: 0.7 }}>
@@ -630,15 +684,15 @@ function ShowcaseSection({ title, description, code, children }: any) {
         </Frame>
 
         <Frame
-          style={{
-            border: "1px solid var(--border-color)",
-            fontFamily: "var(--font-family-mono)",
-            fontSize: "var(--font-size-n13)",
-            lineHeight: "1.6",
-          }}
+          style={
+            {
+              fontFamily: "var(--font-family-mono)",
+              fontSize: FontSize.n13,
+              lineHeight: "1.6",
+            } as React.CSSProperties
+          }
           scroll="x"
-          override={{ p: Space.n24 }}
-          rounded={Radius2.xl}
+          override={{ p: Space.n24, r: Radius2.xl, border: true }}
           surface="base"
         >
           <pre style={{ margin: 0 }}>{code}</pre>
@@ -647,13 +701,15 @@ function ShowcaseSection({ title, description, code, children }: any) {
 
       {/* Right: Preview */}
       <Frame
-        style={{
-          background:
-            "radial-gradient(circle at center, var(--surface-base) 0%, var(--surface-sunken) 100%)",
-        }}
+        style={
+          {
+            background:
+              "radial-gradient(circle at center, var(--surface-base) 0%, var(--surface-sunken) 100%)",
+          } as React.CSSProperties
+        }
         flex={1}
         surface="base"
-        override={{ align: "center" }}
+        pack
       >
         {children}
       </Frame>
@@ -664,8 +720,11 @@ function ShowcaseSection({ title, description, code, children }: any) {
 function MenuItem({ children, active, style, ...props }: any) {
   return (
     <Frame
-      override={{ py: Space.n8, px: Space.n12 }}
-      rounded={Radius2.lg}
+      override={{
+        py: Space.n8,
+        px: Space.n12,
+        r: Radius2.lg,
+      }}
       surface={active ? "selected" : "hover"}
       cursor="pointer"
       {...props}

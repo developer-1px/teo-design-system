@@ -6,6 +6,7 @@ import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
 import {
+  ContainerSize,
   FontSize,
   IconSize,
   Size,
@@ -15,17 +16,17 @@ import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function FAQBoardFooter() {
   return (
-    <Frame override={{ w: Size.full }} surface="base">
+    <Frame override={{ w: Size.fill }} surface="base">
       <Frame
         override={{
-          w: Size.full,
+          w: Size.fill,
           py: Space.n96,
           px: Space.n24,
           gap: Space.n48,
+          maxWidth: ContainerSize.n768,
         }}
-        style={{ maxWidth: "var(--container-n768)" }}
       >
-        <Frame override={{ gap: Space.n12, w: Size.full, align: "center" }}>
+        <Frame override={{ gap: Space.n12, w: Size.fill, align: "center" }}>
           <Text.Card.Note
             size={FontSize.n12}
             weight="bold"
@@ -36,7 +37,7 @@ export function FAQBoardFooter() {
           <Text.Prose.Title variant="lg">Common questions</Text.Prose.Title>
         </Frame>
 
-        <Frame override={{ w: Size.full, gap: Space.n0 }}>
+        <Frame override={{ w: Size.fill, gap: Space.n0 }}>
           <FAQRow
             q="How secure is my data?"
             a="We use industry-standard encryption and SOC2 certification to ensure your data stays protected at all times."
@@ -56,19 +57,12 @@ export function FAQBoardFooter() {
         </Frame>
 
         <Frame
-          rounded={Radius2["2xl"]}
+          override={{ r: Radius2["2xl"], p: Space.n32, w: Size.fill, gap: Space.n24, align: "center" }}
           surface="raised"
           layout={Layout.Slots.Media.Default}
-          override={{
-            p: Space.n32,
-            w: Size.full,
-            gap: Space.n24,
-            align: "center",
-          }}
         >
           <Frame
-            override={{ w: Size.n56, h: Size.n56 }}
-            rounded={Radius2.full}
+            override={{ w: Size.n56, h: Size.n56, r: Radius2.full }}
             surface="sunken"
             pack
           >
@@ -110,18 +104,18 @@ function FAQRow({ q, a }: FAQRowProps) {
   return (
     <Frame
       override={{
-        w: Size.full,
+        w: Size.fill,
         py: Space.n24,
         px: Space.n0,
         gap: Space.n16,
         cursor: "pointer",
+        border: true,
       }}
-      style={{ borderBottom: "1px solid var(--border-color)" }}
       onClick={() => setIsOpen(!isOpen)}
     >
       <Frame
         layout={Layout.Row.LabelValue.Default}
-        override={{ w: Size.full, align: "center" }}
+        override={{ w: Size.fill, align: "center" }}
       >
         <Text.Card.Title size={FontSize.n16} weight="medium">
           {q}

@@ -4,6 +4,7 @@ import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
 import {
+  ContainerSize,
   FontSize,
   IconSize,
   Size,
@@ -15,21 +16,20 @@ import { EditableWrapper } from "./EditableWrapper";
 export function FeatureGridSection() {
   return (
     <Frame
-      override={{ w: Size.full }}
-      style={{ borderBottom: "1px solid var(--border-color)" }}
-      surface="base"
+      override={{ w: Size.fill }}
+      surface="base" border={true}
     >
       <Frame
         override={{
-          w: Size.full,
+          w: Size.fill,
           py: Space.n96,
           px: Space.n24,
           gap: Space.n48,
         }}
-        style={{ maxWidth: "var(--container-n1280)" }}
+        override={{ maxWidth: ContainerSize.n1280 }}
       >
         <Frame
-          style={{ maxWidth: "var(--container-n800)" }}
+          override={{ maxWidth: ContainerSize.n800 }}
           override={{ gap: Space.n12, align: "center" }}
         >
           <Text.Card.Note
@@ -49,7 +49,7 @@ export function FeatureGridSection() {
           </EditableWrapper>
         </Frame>
 
-        <Frame override={{ gap: Space.n16, w: Size.full }}>
+        <Frame override={{ gap: Space.n16, w: Size.fill }}>
           {/* Row 1 */}
           <Frame
             override={{ gap: Space.n16 }}
@@ -119,9 +119,8 @@ function FeatureCardSmall({
       <Frame
         override={{ w: Size.n48, h: Size.n48 }}
         rounded={Radius2.xl}
-        style={{ border: "1px solid var(--border-color)" }}
         surface="sunken"
-        pack
+        pack border
       >
         <Icon
           src={IconSrc}
@@ -174,9 +173,8 @@ function FeatureCardLarge({
         <Frame
           override={{ w: Size.n48, h: Size.n48 }}
           rounded={Radius2.xl}
-          style={{ border: "1px solid var(--border-color)" }}
           surface="sunken"
-          pack
+          pack border
         >
           <Icon
             src={IconSrc}
@@ -213,8 +211,7 @@ function FeatureCardLarge({
           <Frame
             override={{ w: Size.n128, h: Size.n160, shadow: "xl" }}
             rounded={Radius2.lg}
-            style={{ border: "1px solid var(--border-color)" }}
-            surface="base"
+            surface="base" border
           />
         </Frame>
       )}

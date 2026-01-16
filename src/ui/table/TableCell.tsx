@@ -15,17 +15,22 @@ export function TableCell({
   weight = "regular",
 }: TableCellProps) {
   return (
-    <Text.Table.Cell
-      weight={weight}
+    <td
       style={{
-        color,
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
         textAlign: align,
       }}
     >
-      {children}
-    </Text.Table.Cell>
+      <Text.Table.Cell
+        weight={weight}
+        style={{
+          color,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {children}
+      </Text.Table.Cell>
+    </td>
   );
 }

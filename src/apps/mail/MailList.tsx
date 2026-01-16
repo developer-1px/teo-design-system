@@ -1,5 +1,5 @@
-import { Paperclip, Star } from "lucide-react";
 import { useAtom, useAtomValue } from "jotai";
+import { Paperclip, Star } from "lucide-react";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
@@ -40,11 +40,18 @@ export function MailList() {
         return (
           <Frame
             key={thread.id}
-            override={{ py: Space.n12, px: Space.n16, gap: Space.n8 }}
+            interactive
+            surface={isSelected ? "sunken" : "base"}
+            override={{
+              py: Space.n12,
+              px: Space.n16,
+              gap: Space.n8,
+              borderBottom: true, // Frame override handles the structure
+            }}
             style={{
-              borderBottom: "1px solid var(--border-color)",
-              backgroundColor: isSelected ? "var(--surface-sunken)" : undefined,
-              cursor: "pointer",
+              // Reserve border space when not selected (sunken creates 1px border)
+              border: isSelected ? undefined : "1px solid transparent",
+              borderBottomColor: "var(--border-color)", // Ensure bottom separator is visible
             }}
             onClick={() => setSelectedThreadId(thread.id)}
           >

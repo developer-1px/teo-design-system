@@ -19,7 +19,8 @@ export type SurfaceToken =
   | "page"
   | "panel"
   | "card"
-  | "hover";
+  | "hover"
+  | "ghost";
 
 export type ActionVariant = "ghost" | "surface" | "primary";
 
@@ -51,6 +52,7 @@ import type {
   MaxHeightToken,
   MaxWidthToken,
   WidthToken,
+  ZIndexToken,
 } from "../token/token.const.1tier";
 
 export type {
@@ -59,4 +61,5 @@ export type {
   MaxWidthToken,
   MaxHeightToken,
   FontSizeToken,
+  ZIndexToken,
 };

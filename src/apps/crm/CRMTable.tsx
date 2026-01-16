@@ -6,29 +6,31 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
 import { useAtom, useAtomValue } from "jotai";
+import { useMemo, useState } from "react";
 
 import { Table } from "../../ui/table/Table";
 import { formatColumnLabel } from "./dataLoader";
+import { formatForTable } from "./drawer/nestedValueFormatter";
+import { TableObjectCell } from "./TableObjectCell"; // Import new component
 import { currentDataAtom, selectedRowIdAtom } from "./store";
 import type { DataRow } from "./types";
 
 function formatCellValue(value: unknown): string {
-  if (value === null || value === undefined) return "-";
-  if (typeof value === "boolean") return value ? "Yes" : "No";
-  if (typeof value === "number") {
-    // Format currency if the value is large
-    if (value > 1000) {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-      }).format(value);
-    }
-    return value.toString();
+  if (Array.isArray(value)) {
+    return `${value.length} Items`;
   }
-  return String(value);
+  if (typeof value === "object" && value !== null) {
+    // Just return Object count/type for cleanliness in table
+    return Object.keys(value).length + " Props";
+  }
+
+  return formatForTable(value, {
+    maxDepth: 0,
+    maxArrayItems: 0,
+    maxStringLength: 40,
+    arrayOfObjectsStrategy: "count",
+  });
 }
 
 export function CRMTable() {
@@ -43,10 +45,18 @@ export function CRMTable() {
     const firstRow = data[0];
     const keys = Object.keys(firstRow).filter((key) => key !== "__rowId");
 
+    // accessorKey and header are already defined above implicitly by the map structure 
+    // but wait, I see I pasted the key/header TWICE in the previous edit.
     return keys.map((key) => ({
       accessorKey: key,
       header: formatColumnLabel(key),
-      cell: (info) => formatCellValue(info.getValue()),
+      cell: (info) => {
+        const value = info.getValue() as unknown; // Explicit type for info.getValue()
+        if (typeof value === "object" && value !== null) {
+          return <TableObjectCell value={value as object} />;
+        }
+        return formatCellValue(value);
+      },
     }));
   }, [data]);
 
@@ -65,13 +75,11 @@ export function CRMTable() {
     return <Table.Empty message="No data available" />;
   }
 
-  const columnTemplate = `repeat(${columns.length}, minmax(120px, 1fr))`;
-
   return (
     <Table.Root>
       {/* Header */}
       {table.getHeaderGroups().map((headerGroup) => (
-        <Table.Header key={headerGroup.id} columns={columnTemplate}>
+        <Table.Header key={headerGroup.id}>
           {headerGroup.headers.map((header) => {
             const sortState = header.column.getIsSorted();
             return (
@@ -92,25 +100,26 @@ export function CRMTable() {
       ))}
 
       {/* Rows */}
-      {table.getRowModel().rows.map((row) => {
-        const rowData = row.original as DataRow & { __rowId: string };
-        const isSelected = selectedRowId === rowData.__rowId;
+      <tbody>
+        {table.getRowModel().rows.map((row) => {
+          const rowData = row.original as DataRow & { __rowId: string };
+          const isSelected = selectedRowId === rowData.__rowId;
 
-        return (
-          <Table.Row
-            key={row.id}
-            columns={columnTemplate}
-            selected={isSelected}
-            onClick={() => setSelectedRowId(rowData.__rowId)}
-          >
-            {row.getVisibleCells().map((cell) => (
-              <Table.Cell key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </Table.Cell>
-            ))}
-          </Table.Row>
-        );
-      })}
+          return (
+            <Table.Row
+              key={row.id}
+              selected={isSelected}
+              onClick={() => setSelectedRowId(rowData.__rowId)}
+            >
+              {row.getVisibleCells().map((cell) => (
+                <Table.Cell key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Table.Cell>
+              ))}
+            </Table.Row>
+          );
+        })}
+      </tbody>
     </Table.Root>
   );
 }

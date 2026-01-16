@@ -17,13 +17,12 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
         w: Size.n320,
         gap: Space.n4,
         p: Space.n4,
-      }}
+          h: Size.fill
+    }}
       surface="sunken" // Match sidebar
       style={{
-        borderLeft: "1px solid var(--border-color)",
-        height: "100%",
         transition: "width 0.3s ease",
-      }}
+      }} border={true}
     >
       <Frame
         override={{ gap: Space.n12, p: Space.n4 }}

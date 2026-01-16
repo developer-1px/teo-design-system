@@ -4,8 +4,6 @@ import {
   Eye,
   Menu,
   Monitor,
-  PanelLeft,
-  PanelRight,
   Play,
   Save,
   Smartphone,
@@ -17,11 +15,17 @@ import { Action } from "../design-system/Action";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Overlay } from "../design-system/Overlay";
-import { ContainerSize, Size, Space } from "../design-system/token/token.const.1tier";
+import {
+  ContainerSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // CMS Sections
 import { BodyContentSection } from "./cms/BodyContentSection";
+import { CMSDrawer } from "./cms/CMSDrawer";
+import { CMSRightPanel } from "./cms/CMSRightPanel";
 import { CMSSidebar } from "./cms/CMSSidebar";
 import { FAQBoardFooter } from "./cms/FAQBoardFooter";
 import { FeatureGridSection } from "./cms/FeatureGridSection";
@@ -30,8 +34,6 @@ import { ImageFooterBanner } from "./cms/ImageFooterBanner";
 import { MainFooter } from "./cms/MainFooter";
 import { ScrollTabSection } from "./cms/ScrollTabSection";
 import { SiteHeader } from "./cms/SiteHeader";
-import { CMSRightPanel } from "./cms/CMSRightPanel";
-import { CMSDrawer } from "./cms/CMSDrawer";
 
 export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -44,8 +46,7 @@ export function CMSApp() {
 
   return (
     <Frame
-      override={{ p: Space.n0 }}
-      fill
+      override={{ p: Space.n0, w: Size.screen, h: Size.screen }}
       surface="sunken"
       clip
       layout={Layout.Row.AppContainer.Default}
@@ -86,14 +87,14 @@ export function CMSApp() {
             override={{
               w:
                 viewport === "mobile"
-                  ? "375px"
+                  ? ContainerSize.n320
                   : viewport === "tablet"
                     ? ContainerSize.n768
-                    : Size.full,
+                    : Size.fill,
+                minHeight: Size.screen
             }}
             surface="raised"
             style={{
-              minHeight: "100vh",
               transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               borderLeft:
                 viewport !== "desktop"
@@ -104,9 +105,7 @@ export function CMSApp() {
                   ? "1px solid var(--border-color)"
                   : "none",
               boxShadow:
-                viewport !== "desktop"
-                  ? "var(--elevation-n4)"
-                  : "none",
+                viewport !== "desktop" ? "var(--elevation-n4)" : "none",
             }}
           >
             <SiteHeader isSidebarOpen={isSidebarOpen} />
@@ -138,9 +137,7 @@ export function CMSApp() {
         <CMSRightPanel onClose={() => setRightPanelOpen(false)} />
       )}
 
-      {isDrawerOpen && (
-        <CMSDrawer onClose={() => setDrawerOpen(false)} />
-      )}
+      {isDrawerOpen && <CMSDrawer onClose={() => setDrawerOpen(false)} />}
     </Frame>
   );
 }
@@ -164,8 +161,7 @@ function ViewportSelector({ viewport, setViewport }: ViewportSelectorProps) {
         surface="raised"
         rounded={Radius2.full}
         layout={Layout.Row.Actions.Default}
-        style={{ border: "1px solid var(--border-color)" }}
-        override={{ p: Space.n6, gap: Space.n2, shadow: "xl", align: "center" }}
+        override={{ p: Space.n6, gap: Space.n2, shadow: "xl", align: "center" }} border
       >
         <Action
           icon={Monitor}
@@ -209,8 +205,6 @@ interface BottomToolbarProps {
 function BottomToolbar({
   isEditMode,
   toggleEditMode,
-  isRightPanelOpen,
-  toggleRightPanel,
   isDrawerOpen,
   toggleDrawer,
 }: BottomToolbarProps) {
@@ -226,8 +220,7 @@ function BottomToolbar({
         surface="raised"
         rounded={Radius2.full}
         layout={Layout.Row.Actions.Default}
-        style={{ border: "1px solid var(--border-color)" }}
-        override={{ p: Space.n6, gap: Space.n4, shadow: "xl", align: "center" }}
+        override={{ p: Space.n6, gap: Space.n4, shadow: "xl", align: "center" }} border
       >
         {/* Edit Mode Toggle - Left */}
         <Action
@@ -250,9 +243,8 @@ function BottomToolbar({
         <Frame
           style={{
             width: "1px",
-            height: "16px",
             backgroundColor: "var(--border-color)",
-          }}
+          }} override={{ h: Size.n16 }}
         />
 
         <Action
@@ -266,9 +258,8 @@ function BottomToolbar({
         <Frame
           style={{
             width: "1px",
-            height: "16px",
             backgroundColor: "var(--border-color)",
-          }}
+          }} override={{ h: Size.n16 }}
         />
 
         <Action
@@ -290,9 +281,8 @@ function BottomToolbar({
         <Frame
           style={{
             width: "1px",
-            height: "16px",
             backgroundColor: "var(--border-color)",
-          }}
+          }} override={{ h: Size.n16 }}
         />
 
         <Action

@@ -19,7 +19,7 @@ export function Experience({
 }: ExperienceProps) {
   return (
     <Frame
-      override={{ w: Size.full, h: Size.full }}
+      override={{ w: Size.fill, h: Size.fill }}
       style={style}
       className={className}
       data-experience={value}

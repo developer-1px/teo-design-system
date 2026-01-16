@@ -1,15 +1,14 @@
 import { useAtom, useAtomValue } from "jotai";
-import { FileText } from "lucide-react";
+import { useEffect, useState } from "react";
+
 
 import { Divider } from "../../design-system/Divider";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
+import { ResizeHandle, useResizable } from "../../design-system/Resizable";
 import {
-  IconSize,
-  Size,
   Space,
+  ZIndex,
 } from "../../design-system/token/token.const.1tier";
 import { formatColumnLabel } from "./dataLoader";
 import { DrawerActivity } from "./drawer/DrawerActivity";
@@ -20,7 +19,6 @@ import {
   formatValue,
   getAvatarColor,
   getDisplayTitle,
-  getFieldIcon,
 } from "./drawer/drawerUtils";
 import { currentDataAtom, selectedRowIdAtom } from "./store";
 import type { DataRow } from "./types";
@@ -33,45 +31,70 @@ export function CRMDrawer() {
     (row) => (row as DataRow & { __rowId: string }).__rowId === selectedRowId,
   );
 
-  const hasSelection = !!selectedRowId && !!selectedRow;
-
   const handleClose = () => setSelectedRowId(null);
+
+  // Resizable hook
+  const { size, resizeHandleProps } = useResizable({
+    direction: "right",
+    defaultSize: 6,
+    minSize: 320,
+    maxSize: 1000,
+    storageKey: "crm-drawer-width",
+  });
+
+  // Cache the last valid selection to persist content during exit animation
+  const [cachedRow, setCachedRow] = useState<typeof selectedRow | null>(null);
+
+  useEffect(() => {
+    if (selectedRow) {
+      setCachedRow(selectedRow);
+    }
+  }, [selectedRow]);
+
+  const displayRow = selectedRow || cachedRow;
+  const isVisible = !!selectedRow;
+
+  if (!displayRow) {
+    return null; // Initial state, nothing to show/animate
+  }
 
   return (
     <Frame
       override={{
-        w: Size.n512,
-        shadow: "lg",
-        borderLeft: true,
+        borderLeft: true, // Flat separation
+        zIndex: ZIndex.n100,
       }}
+      w={`${size}px` as unknown as any}
       style={{
         position: "absolute",
         top: 0,
         right: 0,
         bottom: 0,
-        zIndex: 100,
+        // Drawer Animation: Slide in from right
+        transition: "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)", // Smooth "iOS-like" ease
+        transform: isVisible ? "translateX(0)" : "translateX(100%)",
+        pointerEvents: isVisible ? "auto" : "none", // Prevent interaction when hidden
       }}
-      surface="overlay"
+      surface="base" // Tone match with Main Area
     >
-      {hasSelection && selectedRow ? (
+      <ResizeHandle direction="right" {...resizeHandleProps} />
+      {displayRow ? (
         <>
           <DrawerHeader
-            title={getDisplayTitle(selectedRow)}
-            subtitle={`${Object.entries(selectedRow).filter(([key]) => !key.startsWith("_") && key !== "avatarColor").length} properties`}
-            avatarColor={getAvatarColor(selectedRow)}
+            title={getDisplayTitle(displayRow)}
+            subtitle={`${Object.entries(displayRow).filter(([key]) => !key.startsWith("_") && key !== "avatarColor").length} properties`}
+            avatarColor={getAvatarColor(displayRow)}
             onClose={handleClose}
           />
 
-          <Frame flex fill scroll>
+          <Frame layout={Layout.Stack.Content.Scroll} fill>
             <Frame
               override={{ p: Space.n24, gap: Space.n32 }}
-              layout={Layout.Stack.Content.Default}
             >
               <DrawerProperties
-                entries={Object.entries(selectedRow).filter(
+                entries={Object.entries(displayRow).filter(
                   ([key]) => !key.startsWith("_") && key !== "avatarColor",
                 )}
-                getFieldIcon={getFieldIcon}
                 formatColumnLabel={formatColumnLabel}
                 formatValue={formatValue}
               />
@@ -84,23 +107,7 @@ export function CRMDrawer() {
 
           <DrawerFooter onClose={handleClose} />
         </>
-      ) : (
-        <Frame flex fill layout={Layout.Center.Default}>
-          <Frame override={{ gap: Space.n16, align: "center" }}>
-            <Icon
-              src={FileText}
-              size={IconSize.n48}
-              style={{ color: "var(--text-tertiary)" }}
-            />
-            <Text.Card.Title style={{ color: "var(--text-secondary)" }}>
-              No Selection
-            </Text.Card.Title>
-            <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
-              Select a row to view details
-            </Text.Card.Note>
-          </Frame>
-        </Frame>
-      )}
+      ) : null}
     </Frame>
   );
 }

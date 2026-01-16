@@ -14,13 +14,12 @@ import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
-import { Text } from "../design-system/text/Text";
 import { TeoLogo } from "../design-system/TeoLogo";
+import { Text } from "../design-system/text/Text";
 import {
   IconSize,
   Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
+  Space, ZIndex } from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LandingApp() {
@@ -32,13 +31,13 @@ export function LandingApp() {
           style={{
             position: "sticky",
             top: 0,
-            zIndex: 100,
             borderBottom: "1px solid var(--border-subtle)",
           }}
           override={{
             py: Space.n20,
             px: Space.n24,
-          }}
+              zIndex: ZIndex.n100
+        }}
           layout={Layout.Row.Header.Sticky}
         >
           <TeoLogo height={24} />
@@ -62,7 +61,6 @@ export function LandingApp() {
           }}
         >
           <Frame
-            style={{ border: "1px solid var(--border-color)" }}
             rounded={Radius2.full}
             surface="sunken"
             layout={Layout.Row.Item.Tight}
@@ -72,7 +70,7 @@ export function LandingApp() {
               gap: Space.n8,
               cursor: "pointer",
               align: "center",
-            }}
+            }} border
           >
             <Icon
               src={Zap}
@@ -208,12 +206,12 @@ export function LandingApp() {
             style={{
               gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
               maxWidth: 1200,
-              margin: "0 auto",
-              width: "100%",
+              margin: "0 auto"
             }}
             override={{
               gap: Space.n16,
               grid: true,
+                w: Size.fill
             }}
           >
             <FeatureCard
@@ -263,7 +261,7 @@ export function LandingApp() {
         <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n16 }}>
           <Frame
             style={{ height: "1px" }}
-            override={{ w: Size.full }}
+            override={{ w: Size.fill }}
             surface="sunken"
           />
           <Frame
@@ -305,17 +303,15 @@ function FeatureCard({
 }) {
   return (
     <Frame
-      style={{ border: "1px solid var(--border-color)" }}
       override={{ p: Space.n24, gap: Space.n16 }}
       rounded={Radius2["2xl"]}
-      surface="sunken"
+      surface="sunken" border
     >
       <Frame
-        style={{ border: "1px solid var(--border-color)" }}
         override={{ w: Size.n40, h: Size.n40, p: Space.n8, shadow: "sm" }}
         rounded={Radius2.xl}
         surface="base"
-        pack
+        pack border
       >
         <Icon
           src={IconSrc}

@@ -1,5 +1,4 @@
-import type React from "react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
+import "../../style/table.css";
 
 interface TableRootProps {
   children: React.ReactNode;
@@ -7,8 +6,8 @@ interface TableRootProps {
 
 export function TableRoot({ children }: TableRootProps) {
   return (
-    <Frame flex fill scroll>
-      {children}
-    </Frame>
+    <div className="table-container">
+      <table>{children}</table>
+    </div>
   );
 }

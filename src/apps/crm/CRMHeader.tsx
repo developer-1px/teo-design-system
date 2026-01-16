@@ -17,7 +17,13 @@ export function CRMHeader() {
     <Frame
       layout={Layout.Row.Header.Default}
       surface="base"
-      override={{ h: Size.n64, py: Space.n0, px: Space.n20, align: "center" }}
+      h={Size.n64}
+      override={{
+        py: Space.n0,
+        px: Space.n20,
+        align: "center",
+        borderBottom: true, // Continuous line with Sidebar
+      }}
     >
       <Frame
         layout={Layout.Row.Meta.Default}
