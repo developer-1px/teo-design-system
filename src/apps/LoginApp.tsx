@@ -25,7 +25,7 @@ export function LoginApp() {
         override={{ p: Space.n32, align: "center" }}
       >
         <Frame
-          override={{ w: Size.full, gap: Space.n32 }}
+          override={{ w: Size.fill, gap: Space.n32 }}
           style={{ maxWidth: "400px" }}
         >
           <Frame override={{ gap: Space.n8 }}>
@@ -61,8 +61,7 @@ export function LoginApp() {
                 <Frame
                   override={{ w: Size.n4, h: Size.n4 }}
                   rounded={Radius2.sm}
-                  style={{ border: "1px solid var(--border-color)" }}
-                  surface="sunken"
+                  surface="sunken" border
                 />
                 <Text size={FontSize.n14} color="secondary">
                   Remember me

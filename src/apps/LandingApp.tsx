@@ -14,8 +14,8 @@ import { Experience } from "../design-system/Experience";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../design-system/Icon";
-import { Text } from "../design-system/text/Text";
 import { TeoLogo } from "../design-system/TeoLogo";
+import { Text } from "../design-system/text/Text";
 import {
   IconSize,
   Size,
@@ -62,7 +62,6 @@ export function LandingApp() {
           }}
         >
           <Frame
-            style={{ border: "1px solid var(--border-color)" }}
             rounded={Radius2.full}
             surface="sunken"
             layout={Layout.Row.Item.Tight}
@@ -72,7 +71,7 @@ export function LandingApp() {
               gap: Space.n8,
               cursor: "pointer",
               align: "center",
-            }}
+            }} border
           >
             <Icon
               src={Zap}
@@ -263,7 +262,7 @@ export function LandingApp() {
         <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n16 }}>
           <Frame
             style={{ height: "1px" }}
-            override={{ w: Size.full }}
+            override={{ w: Size.fill }}
             surface="sunken"
           />
           <Frame
@@ -305,17 +304,15 @@ function FeatureCard({
 }) {
   return (
     <Frame
-      style={{ border: "1px solid var(--border-color)" }}
       override={{ p: Space.n24, gap: Space.n16 }}
       rounded={Radius2["2xl"]}
-      surface="sunken"
+      surface="sunken" border
     >
       <Frame
-        style={{ border: "1px solid var(--border-color)" }}
         override={{ w: Size.n40, h: Size.n40, p: Space.n8, shadow: "sm" }}
         rounded={Radius2.xl}
         surface="base"
-        pack
+        pack border
       >
         <Icon
           src={IconSrc}
