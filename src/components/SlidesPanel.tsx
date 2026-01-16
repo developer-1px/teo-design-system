@@ -16,7 +16,8 @@ export function SlidesPanel() {
       shadow="sm"
     >
       <Frame
-        override={{ minHeight: Size.n0 }}
+        override={{ minHeight: Size.n0, align: "stretch" }}
+        layout={Layout.Stack.List.Dense}
         scroll
         surface="sunken"
         flex
@@ -24,13 +25,12 @@ export function SlidesPanel() {
       >
         {slides.map((num) => (
           <Frame
-            override={{ gap: Space.n4, p: Space.n8 }}
-            border={num === 1}
+            override={{ gap: Space.n4, p: Space.n8, border: num === 1 }}
             key={num}
           >
             <Frame
               layout={Layout.Row.LabelValue.Default}
-              override={{ gap: Space.n4, justify: "between" }}
+              override={{ gap: Space.n4 }}
             >
               <Text.Card.Note
                 style={{

@@ -119,5 +119,51 @@ export function fixBorderStyle(
 }
 
 /**
+ * Apply auto-fix: convert style={{ alignItems: "center", justifyContent: "center" }} to pack prop
+ * ⚠️ CRITICAL: NO STRING TEMPLATES - Use AST node manipulation only!
+ */
+export function fixCenterToPack(
+  element: JsxOpeningElement | JsxSelfClosingElement,
+  styleAttr: JsxAttribute,
+  styleObj: Record<string, string>,
+): void {
+  // Step 1: Remove alignItems and justifyContent from style object
+  delete styleObj.alignItems;
+  delete styleObj.justifyContent;
+
+  // Step 2: Update or remove style attribute using AST
+  if (Object.keys(styleObj).length === 0) {
+    // No remaining styles - remove the entire style attribute
+    styleAttr.remove();
+  } else {
+    // Get the existing object literal expression
+    const initializer = styleAttr.getInitializer();
+    const jsxExpression = initializer?.asKind(SyntaxKind.JsxExpression);
+    const objectLiteral = jsxExpression?.getExpression()?.asKind(SyntaxKind.ObjectLiteralExpression);
+
+    if (objectLiteral) {
+      // Find and remove alignItems and justifyContent properties from AST
+      const properties = objectLiteral.getProperties();
+      for (const prop of properties) {
+        if (prop.getKind() === SyntaxKind.PropertyAssignment) {
+          const assignment = prop.asKind(SyntaxKind.PropertyAssignment);
+          const propName = assignment?.getName();
+
+          if (propName === "alignItems" || propName === "justifyContent") {
+            assignment?.remove();
+          }
+        }
+      }
+    }
+  }
+
+  // Step 3: Add pack prop (boolean) using ts-morph's insertAttribute
+  const insertIndex = element.getAttributes().length;
+  element.insertAttribute(insertIndex, {
+    name: "pack",
+  });
+}
+
+/**
  * Check design system rules on Frame component
  */

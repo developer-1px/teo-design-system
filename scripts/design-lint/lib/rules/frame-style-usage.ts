@@ -1,8 +1,8 @@
 import type { JsxOpeningElement, JsxSelfClosingElement, JsxAttribute, Issue, TokenConversion } from "../types";
 import { parseStyleObject } from "../ast-parser";
-import { isBorderStyleFixable, detectTokenizableStyles } from "../token-detector";
+import { isBorderStyleFixable, detectTokenizableStyles, isCenterPackFixable } from "../token-detector";
 import { ensureTokenImports } from "../import-manager";
-import { fixStyleToOverride, fixBorderStyle } from "../fixers";
+import { fixStyleToOverride, fixBorderStyle, fixCenterToPack } from "../fixers";
 
 const FIX_MODE = process.argv.includes("--fix");
 
@@ -29,6 +29,39 @@ function checkFrameStyleUsage(
     const styleObj = parseStyleObject(styleAttribute);
 
     if (!styleObj) return;
+
+    // Check 0: Center Pack (alignItems + justifyContent both "center")
+    const centerPackFixable = isCenterPackFixable(styleObj);
+
+    if (centerPackFixable && FIX_MODE) {
+      // Apply auto-fix: style={{ alignItems: "center", justifyContent: "center" }} → pack
+      try {
+        fixCenterToPack(element, styleAttribute, styleObj);
+
+        issues.push({
+          file: filePath,
+          line,
+          column,
+          rule: "Center Alignment → pack (FIXED)",
+          message: 'Auto-fixed: style={{ alignItems: "center", justifyContent: "center" }} → pack',
+          code: elementText.trim(),
+          fixable: true,
+        });
+        return; // Don't check other styles if we converted center pack
+      } catch (error) {
+        // Skip this fix if AST manipulation fails
+        issues.push({
+          file: filePath,
+          line,
+          column,
+          rule: "Center Alignment → pack (SKIPPED)",
+          message: "Cannot auto-fix center pack due to AST complexity. Manual fix required.",
+          code: elementText.trim(),
+          fixable: false,
+        });
+        return;
+      }
+    }
 
     // Check 1: Tokenizable styles (padding, gap, width, etc.)
     const { fixable: tokenFixable, conversions } = detectTokenizableStyles(styleObj);
@@ -124,6 +157,17 @@ function checkFrameStyleUsage(
         column,
         rule: tokenFixable ? "Style → Override" : "Frame Border Style → Prop",
         message,
+        code: elementText.trim(),
+        fixable: true,
+      });
+    } else if (centerPackFixable) {
+      // Report fixable center pack issue
+      issues.push({
+        file: filePath,
+        line,
+        column,
+        rule: "Center Alignment → pack",
+        message: 'Can auto-fix: style={{ alignItems: "center", justifyContent: "center" }} → pack (run with --fix)',
         code: elementText.trim(),
         fixable: true,
       });

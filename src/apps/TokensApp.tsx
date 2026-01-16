@@ -94,10 +94,11 @@ function ScrollContainer({
   return (
     <Frame
       scroll="x"
-      override={{ w: Size.fill, p: Space.n32 }}
+      override={{ w: Size.fill, p: Space.n32,
+          maxWidth: Size.fill
+    }}
       style={{
-        maskImage: "linear-gradient(to right, black 95%, transparent 100%)", // Fade out effect
-        maxWidth: "100%", // Prevent parent blowout
+        maskImage: "linear-gradient(to right, black 95%, transparent 100%)" // Prevent parent blowout
       }}
       pack
     >

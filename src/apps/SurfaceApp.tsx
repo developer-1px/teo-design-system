@@ -264,10 +264,8 @@ function ShowcasePage() {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
                 cursor: "pointer",
-              }}
+              }} pack
             >
               <Prose.Title
                 variant="sm"
@@ -359,15 +357,13 @@ function SurfaceDetailPage({
               rounded={Radius2["3xl"]}
               style={{
                 aspectRatio: "1",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                display: "flex"
               }}
               override={{
                 w: Size.fill,
                 maxWidth: ContainerSize.n480,
                 p: Space.n32,
-              }}
+              }} pack
             >
               <Prose.Code
                 style={{

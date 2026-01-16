@@ -27,6 +27,14 @@ export function isBorderStyleFixable(styleObj: Record<string, string>): BorderFi
 }
 
 /**
+ * Check if style has both alignItems and justifyContent as "center"
+ * Can be converted to pack prop
+ */
+export function isCenterPackFixable(styleObj: Record<string, string>): boolean {
+  return styleObj.alignItems === "center" && styleObj.justifyContent === "center";
+}
+
+/**
  * Detect tokenizable styles that can be converted to override prop
  * ⚠️ NO REGEX - AST only
  */

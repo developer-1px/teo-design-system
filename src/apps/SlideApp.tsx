@@ -40,8 +40,6 @@ export function SlideApp() {
           right: 0
         }}
         override={{
-          px: Space.n16,
-          h: Size.n44,
           zIndex: ZIndex.n10,
           borderBottom: true,
         }}
@@ -144,8 +142,9 @@ export function SlideApp() {
           fill
           clip
           as="main"
+          layout={Layout.Center.Default}
         >
-          <Frame fill pack scroll>
+          <Frame fill scroll layout={Layout.Center.Default}>
             <Frame
               style={{ width: "80%", maxWidth: "var(--container-n1280)" } as any}
               override={{ shadow: "lg" }}

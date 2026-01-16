@@ -189,12 +189,13 @@ export function PropertiesPanel() {
         override={{
           p: Space.n4,
           gap: Space.n4,
-            h: Size.n40
+          h: Size.n40
         }}
         style={{
           borderColor: "var(--border-color)",
         }}
-        layout={Layout.Row.Toolbar.Compact} border={true}
+        layout={Layout.Row.Toolbar.Compact}
+        override={{ border: true }}
       >
         {tabs.map((tab) => {
           const tabProps = getTabProps(tab);
@@ -234,14 +235,12 @@ export function PropertiesPanel() {
       >
         {/* Alignment */}
         <Frame
-          rounded={Radius2.md}
           style={{
-            padding: "1px",
             gap: "1px",
           }} // 1px style override
           layout={Layout.Row.Toolbar.Default}
           surface="sunken"
-          override={{ justify: "between" }} border
+          override={{ border: true, p: "1px" as any }}
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
             isSeparator(tool) ? (
@@ -330,8 +329,8 @@ export function PropertiesPanel() {
           getPanelProps={getPanelProps}
         >
           <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ gap: Space.n12, justify: "between" }}
+            layout={Layout.Row.LabelValue.Default}
+            override={{ gap: Space.n12 }}
           >
             <Field
               value="Normal"
@@ -375,7 +374,7 @@ export function PropertiesPanel() {
                     override={{ gap: Space.n1 }}
                     surface="overlay"
                     rounded={Radius2.md}
-                    shadow="md" border
+                    override={{ shadow: "md", border: true }}
                   >
                     {fontFamilies.map((item, index) => (
                       <Frame
@@ -431,7 +430,7 @@ export function PropertiesPanel() {
                       override={{ gap: Space.n1 }}
                       surface="overlay"
                       rounded={Radius2.md}
-                      shadow="md" border
+                      override={{ shadow: "md", border: true }}
                     >
                       {fontWeights.map((item, index) => (
                         <Frame
@@ -471,12 +470,11 @@ export function PropertiesPanel() {
             <Frame
               rounded={Radius2.md}
               style={{
-                padding: "1px",
                 gap: "1px",
               }}
               layout={Layout.Row.Toolbar.Compact}
               surface="sunken"
-              override={{ justify: "between" }} border
+              override={{ border: true, p: "1px" as any }}
             >
               {[
                 AlignLeft,
