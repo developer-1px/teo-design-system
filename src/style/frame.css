@@ -22,8 +22,9 @@
    ============================================================================= */
 
 .frame {
-  display: flex;
+  position: relative;
   box-sizing: border-box;
+  display: flex;
 }
 
 .text {

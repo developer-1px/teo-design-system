@@ -6,6 +6,7 @@
 import { useAtomValue } from "jotai";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Overlay } from "../../design-system/Overlay";
 import { Text } from "../../design-system/text/Text.tsx";
 import { FontSize, Size, Space } from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
@@ -41,9 +42,6 @@ function MessageItem({ message }: { message: Message }) {
         py: Space.n8,
         align: "start",
       }}
-      style={{
-        position: "relative",
-      }}
     >
       {/* Avatar */}
       <Frame
@@ -52,27 +50,25 @@ function MessageItem({ message }: { message: Message }) {
           h: Size.n40,
           align: "center",
           justify: "center",
-          position: "relative",
         }}
         surface="raised"
         rounded={Radius2.full}
       >
         <Text size={FontSize.n20}>{message.author.avatar}</Text>
         {/* Status Indicator */}
-        <Frame
-          override={{
-            w: Size.n12,
-            h: Size.n12,
-          }}
-          rounded={Radius2.full}
-          style={{
-            position: "absolute",
-            bottom: "0px",
-            right: "0px",
-            backgroundColor: getStatusColor(message.author.status),
-            border: "2px solid var(--surface-base)",
-          }}
-        />
+        <Overlay position="absolute" bottom="0px" right="0px">
+          <Frame
+            override={{
+              w: Size.n12,
+              h: Size.n12,
+            }}
+            rounded={Radius2.full}
+            style={{
+              backgroundColor: getStatusColor(message.author.status),
+              border: "2px solid var(--surface-base)",
+            }}
+          />
+        </Overlay>
       </Frame>
 
       {/* Message Content */}

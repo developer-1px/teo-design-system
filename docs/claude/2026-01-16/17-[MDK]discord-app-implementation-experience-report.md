@@ -134,39 +134,52 @@ Size.n14  // 14px (작은 아이콘)
 Size.n28  // 28px (중간 크기 액션 버튼)
 ```
 
-### 4.2 ⚠️ FrameOverrides에서 position 제한
+### 4.2 ✅ Position 처리 - Overlay 패턴 학습 (해결 완료)
 
-**발견한 이슈**:
+**초기 오해**:
 ```typescript
-// ❌ TypeScript 에러
-override={{
-  position: "absolute"  // Error: 'position' does not exist in FrameOverrides
-}}
-
-// ✅ 현재 해결책
-style={{
-  position: "absolute"  // style prop 사용 필요
-}}
+// ❌ 잘못된 접근 (타입 에러 발생)
+<Frame override={{ position: "relative" }}>
+  <Frame style={{ position: "absolute", bottom: "0px", right: "0px" }}>
+    {/* 상태 인디케이터 */}
+  </Frame>
+</Frame>
 ```
 
-**문제점**:
-- 상태 인디케이터를 아바타 위에 절대 배치하려면 `style` 사용 필요
-- `style`을 사용하면 MDK의 타입 안정성 이점 상실
-- `position`은 레이아웃의 핵심 속성인데 override에서 제외됨
+**올바른 MDK 패턴 학습**:
 
-**제안**:
+**핵심 개념**:
+1. Frame은 CSS에서 `position: relative`가 기본값
+2. FrameOverrides에 position을 추가하는 것은 **잘못된 접근**
+3. absolute/fixed/sticky positioning이 필요하면 **Overlay 컴포넌트 사용**
+
+**올바른 구현**:
 ```typescript
-export interface FrameOverrides {
-  // ... 기존 props
+// ✅ MDK의 올바른 패턴
+import { Overlay } from "../../design-system/Overlay";
 
-  // Position (추가 제안)
-  position?: "relative" | "absolute" | "fixed" | "sticky";
-  top?: SpaceToken | "auto";
-  bottom?: SpaceToken | "auto";
-  left?: SpaceToken | "auto";
-  right?: SpaceToken | "auto";
-}
+<Frame>  {/* Frame은 position: relative가 기본 */}
+  <Overlay position="absolute" bottom="0px" right="0px">
+    <Frame
+      override={{ w: Size.n12, h: Size.n12 }}
+      rounded={Radius2.full}
+      style={{
+        backgroundColor: getStatusColor(member.status),
+        border: "2px solid var(--surface-base)",
+      }}
+    />
+  </Overlay>
+</Frame>
 ```
+
+**적용 사례**:
+- `MessageList.tsx:58-71` - 메시지 작성자 아바타의 상태 인디케이터
+- `MemberList.tsx:58-70` - 멤버 목록 아바타의 상태 인디케이터
+
+**배운 점**:
+- MDK의 Overlay는 absolute positioning의 의도를 명확히 표현
+- Portal 기능도 지원하여 stacking context 문제 해결
+- 타입 안정성을 유지하면서 정확한 positioning 가능
 
 ### 4.3 ✅ Space 토큰 스케일 불균형 (해결 완료)
 

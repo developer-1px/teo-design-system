@@ -6,6 +6,7 @@
 import { useAtomValue } from "jotai";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Overlay } from "../../design-system/Overlay";
 import { Text } from "../../design-system/text/Text.tsx";
 import {
   FontSize,
@@ -48,27 +49,25 @@ function MemberItem({ member }: { member: Member }) {
           h: Size.n32,
           align: "center",
           justify: "center",
-          position: "relative",
         }}
         surface="raised"
         rounded={Radius2.full}
       >
         <Text size={FontSize.n16}>{member.avatar}</Text>
         {/* Status Indicator */}
-        <Frame
-          override={{
-            w: Size.n8,
-            h: Size.n8,
-          }}
-          rounded={Radius2.full}
-          style={{
-            position: "absolute",
-            bottom: "-1px",
-            right: "-1px",
-            backgroundColor: getStatusColor(member.status),
-            border: "2px solid var(--surface-base)",
-          }}
-        />
+        <Overlay position="absolute" bottom="-1px" right="-1px">
+          <Frame
+            override={{
+              w: Size.n8,
+              h: Size.n8,
+            }}
+            rounded={Radius2.full}
+            style={{
+              backgroundColor: getStatusColor(member.status),
+              border: "2px solid var(--surface-base)",
+            }}
+          />
+        </Overlay>
       </Frame>
 
       {/* Member Info */}
