@@ -1,39 +1,24 @@
-import {
-  Download,
-  Edit,
-  Eye,
-  Menu,
-  Monitor,
-  Play,
-  Save,
-  Smartphone,
-  Tablet,
-  Upload,
-} from "lucide-react";
-import { useState } from "react";
-import { Action } from "../design-system/Action";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Overlay } from "../design-system/Overlay";
-import {
-  ContainerSize,
-  Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
+import {Download, Edit, Eye, Menu, Monitor, Play, Save, Smartphone, Tablet, Upload,} from "lucide-react"
+import {useState} from "react"
+import {Action} from "../design-system/Action"
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {Overlay} from "../design-system/Overlay"
+import {ContainerSize, Size, Space,} from "../design-system/token/token.const.1tier"
+import {Radius2} from "../design-system/token/token.const.2tier"
 
 // CMS Sections
-import { BodyContentSection } from "./cms/BodyContentSection";
-import { CMSDrawer } from "./cms/CMSDrawer";
-import { CMSRightPanel } from "./cms/CMSRightPanel";
-import { CMSSidebar } from "./cms/CMSSidebar";
-import { FAQBoardFooter } from "./cms/FAQBoardFooter";
-import { FeatureGridSection } from "./cms/FeatureGridSection";
-import { HeaderHero } from "./cms/HeaderHero";
-import { ImageFooterBanner } from "./cms/ImageFooterBanner";
-import { MainFooter } from "./cms/MainFooter";
-import { ScrollTabSection } from "./cms/ScrollTabSection";
-import { SiteHeader } from "./cms/SiteHeader";
+import {BodyContentSection} from "./cms/BodyContentSection"
+import {CMSDrawer} from "./cms/CMSDrawer"
+import {CMSRightPanel} from "./cms/CMSRightPanel"
+import {CMSSidebar} from "./cms/CMSSidebar"
+import {FAQBoardFooter} from "./cms/FAQBoardFooter"
+import {FeatureGridSection} from "./cms/FeatureGridSection"
+import {HeaderHero} from "./cms/HeaderHero"
+import {ImageFooterBanner} from "./cms/ImageFooterBanner"
+import {MainFooter} from "./cms/MainFooter"
+import {ScrollTabSection} from "./cms/ScrollTabSection"
+import {SiteHeader} from "./cms/SiteHeader"
 
 export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -78,9 +63,9 @@ export function CMSApp() {
           fill
           scroll
           override={{
-            align: "center",
             pb: Space.n96,
           }}
+          layout={Layout.Center.Default}
         >
           {/* Viewport Frame */}
           <Frame
@@ -91,7 +76,7 @@ export function CMSApp() {
                   : viewport === "tablet"
                     ? ContainerSize.n768
                     : Size.fill,
-                minHeight: Size.screen
+              minHeight: Size.screen,
             }}
             surface="raised"
             style={{
@@ -161,7 +146,7 @@ function ViewportSelector({ viewport, setViewport }: ViewportSelectorProps) {
         surface="raised"
         rounded={Radius2.full}
         layout={Layout.Row.Actions.Default}
-        override={{ p: Space.n6, gap: Space.n2, shadow: "xl", align: "center" }} border
+        override={{ p: Space.n6, gap: Space.n2, shadow: "xl", border: true }}
       >
         <Action
           icon={Monitor}
@@ -220,7 +205,7 @@ function BottomToolbar({
         surface="raised"
         rounded={Radius2.full}
         layout={Layout.Row.Actions.Default}
-        override={{ p: Space.n6, gap: Space.n4, shadow: "xl", align: "center" }} border
+        override={{ p: Space.n6, gap: Space.n4, shadow: "xl", border: true }}
       >
         {/* Edit Mode Toggle - Left */}
         <Action
@@ -244,7 +229,8 @@ function BottomToolbar({
           style={{
             width: "1px",
             backgroundColor: "var(--border-color)",
-          }} override={{ h: Size.n16 }}
+          }}
+          override={{ h: Size.n16 }}
         />
 
         <Action
@@ -259,7 +245,8 @@ function BottomToolbar({
           style={{
             width: "1px",
             backgroundColor: "var(--border-color)",
-          }} override={{ h: Size.n16 }}
+          }}
+          override={{ h: Size.n16 }}
         />
 
         <Action
@@ -282,7 +269,8 @@ function BottomToolbar({
           style={{
             width: "1px",
             backgroundColor: "var(--border-color)",
-          }} override={{ h: Size.n16 }}
+          }}
+          override={{ h: Size.n16 }}
         />
 
         <Action

@@ -1,15 +1,9 @@
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  Size,
-  Space, ZIndex
-} from "../../design-system/token/token.const.1tier";
-import {
-  Radius2
-} from "../../design-system/token/token.const.2tier";
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Text} from "../../design-system/text/Text"
+import {FontSize, Size, Space, ZIndex,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
 
 export interface SiteHeaderProps {
   isSidebarOpen?: boolean;
@@ -22,11 +16,13 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   return (
     <Frame
-      style={{
-        height: "var(--header-height)",
-        position: "sticky",
-        top: 0
-      } as React.CSSProperties}
+      style={
+        {
+          height: "var(--header-height)",
+          position: "sticky",
+          top: 0,
+        } as React.CSSProperties
+      }
       layout={Layout.Row.Header.Default}
       surface="base"
       override={{
@@ -37,10 +33,12 @@ export function SiteHeader({
       }}
     >
       <Frame
-        style={{
-          maxWidth: "var(--container-n1280)",
-          padding: "0 var(--space-n24)",
-        } as React.CSSProperties}
+        style={
+          {
+            maxWidth: "var(--container-n1280)",
+            padding: "0 var(--space-n24)",
+          } as React.CSSProperties
+        }
         layout={Layout.Row.Header.Default}
         override={{ w: Size.fill, justify: "between" }}
       >
@@ -49,7 +47,13 @@ export function SiteHeader({
           override={{ gap: Space.n8, align: "center" }}
         >
           <Frame
-            override={{ w: Size.n32, h: Size.n32, shadow: "sm", r: Radius2.lg, border: true }}
+            override={{
+              w: Size.n32,
+              h: Size.n32,
+              shadow: "sm",
+              r: Radius2.lg,
+              border: true,
+            }}
             surface="primary"
             pack
           >
@@ -101,7 +105,7 @@ export function SiteHeader({
             />
           </Frame>
         </Frame>
-      </Frame >
-    </Frame >
+      </Frame>
+    </Frame>
   );
 }

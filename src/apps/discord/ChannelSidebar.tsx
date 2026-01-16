@@ -3,22 +3,17 @@
  * Displays server name, channels, and user profile
  */
 
-import { ChevronDown, Hash, Headphones, Settings, Volume2 } from "lucide-react";
-import { useAtom, useAtomValue } from "jotai";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { getServerById } from "./mockData";
-import { selectedChannelIdAtom, selectedServerIdAtom } from "./store";
-import type { Channel } from "./types";
+import {useAtom, useAtomValue} from "jotai"
+import {ChevronDown, Hash, Headphones, Settings, Volume2} from "lucide-react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text.tsx"
+import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {getServerById} from "./mockData"
+import {selectedChannelIdAtom, selectedServerIdAtom} from "./store"
+import type {Channel} from "./types"
 
 function ChannelItem({
   channel,

@@ -3,25 +3,16 @@
  * Displays channel name, description, and actions
  */
 
-import { Hash, Search, Users } from "lucide-react";
-import { useAtom, useAtomValue } from "jotai";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { getChannelById } from "./mockData";
-import {
-  selectedChannelIdAtom,
-  selectedServerIdAtom,
-  showMemberListAtom,
-} from "./store";
+import {useAtom, useAtomValue} from "jotai"
+import {Hash, Search, Users} from "lucide-react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text.tsx"
+import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {getChannelById} from "./mockData"
+import {selectedChannelIdAtom, selectedServerIdAtom, showMemberListAtom,} from "./store"
 
 export function ChannelHeader() {
   const selectedServerId = useAtomValue(selectedServerIdAtom);

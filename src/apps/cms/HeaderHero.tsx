@@ -1,19 +1,12 @@
-import { ArrowUpRight, Command, Sparkles } from "lucide-react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space, Opacity, ContainerSize
-} from "../../design-system/token/token.const.1tier";
-import {
-  Radius2
-} from "../../design-system/token/token.const.2tier";
-import { EditableWrapper } from "./EditableWrapper";
+import {ArrowUpRight, Command, Sparkles} from "lucide-react"
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text"
+import {ContainerSize, FontSize, IconSize, Opacity, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {EditableWrapper} from "./EditableWrapper"
 
 export function HeaderHero() {
   return (
@@ -29,43 +22,56 @@ export function HeaderHero() {
           px: Space.n24,
           gap: Space.n12,
         }}
-        style={{
-          minHeight: "90vh",
-          maxWidth: "var(--container-n1280)",
-          margin: "0 auto",
-        } as React.CSSProperties}
+        style={
+          {
+            minHeight: "90vh",
+            maxWidth: "var(--container-n1280)",
+            margin: "0 auto",
+          } as React.CSSProperties
+        }
       >
         {/* Background Decoration */}
         <Frame
           override={{
-            opacity: Opacity.n10
+            opacity: Opacity.n10,
           }}
           style={{
             position: "absolute",
             top: "-25px",
             right: "-25px",
             background: "var(--color-primary)",
-            filter: "blur(150px)"
+            filter: "blur(150px)",
           }}
         />
         <Frame
           override={{
-            opacity: Opacity.n15
+            opacity: Opacity.n15,
           }}
           style={{
             position: "absolute",
             bottom: "-25px",
             left: "-25px",
             background: "var(--color-warning)",
-            filter: "blur(150px)"
+            filter: "blur(150px)",
           }}
         />
 
         <Frame
-          override={{ maxWidth: ContainerSize.n800, w: Size.fill, gap: Space.n24, align: "center" }}
+          override={{
+            maxWidth: ContainerSize.n800,
+            w: Size.fill,
+            gap: Space.n24,
+            align: "center",
+          }}
         >
           <Frame
-            override={{ r: Radius2.full, py: Space.n4, px: Space.n12, gap: Space.n8, align: "center" }}
+            override={{
+              r: Radius2.full,
+              py: Space.n4,
+              px: Space.n12,
+              gap: Space.n8,
+              align: "center",
+            }}
             surface="raised"
             layout={Layout.Row.Item.Compact}
           >
@@ -106,8 +112,8 @@ export function HeaderHero() {
                   opacity: 0.8,
                 }}
               >
-                The visual engine for creators who demand perfection. No code, no
-                constraints, just pure creativity.
+                The visual engine for creators who demand perfection. No code,
+                no constraints, just pure creativity.
               </Text.Prose.Body>
             </EditableWrapper>
           </Frame>
@@ -145,12 +151,14 @@ export function HeaderHero() {
             maxWidth: Size.n384 as any,
             r: Radius2["2xl"],
           }}
-          style={{
-            position: "relative",
-            marginTop: "var(--space-n64)",
-            transform: "perspective(1000px) rotateX(5deg)",
-            margin: "0 auto",
-          } as React.CSSProperties}
+          style={
+            {
+              position: "relative",
+              marginTop: "var(--space-n64)",
+              transform: "perspective(1000px) rotateX(5deg)",
+              margin: "0 auto",
+            } as React.CSSProperties
+          }
           surface="raised"
           clip
         >
@@ -217,7 +225,12 @@ export function HeaderHero() {
               pack
             >
               <Frame
-                override={{ w: Size.n32, h: Size.n32, shadow: "lg", r: Radius2["2xl"] }}
+                override={{
+                  w: Size.n32,
+                  h: Size.n32,
+                  shadow: "lg",
+                  r: Radius2["2xl"],
+                }}
                 surface="raised"
                 pack
               >

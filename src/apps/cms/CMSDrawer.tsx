@@ -1,15 +1,10 @@
-import { X } from "lucide-react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Overlay } from "../../design-system/Overlay";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import {X} from "lucide-react"
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Overlay} from "../../design-system/Overlay"
+import {Text} from "../../design-system/text/Text"
+import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
 
 export function CMSDrawer({ onClose }: { onClose: () => void }) {
   return (

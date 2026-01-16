@@ -1,26 +1,13 @@
-import {
-  ChevronRight,
-  FileText,
-  Grid2X2,
-  List,
-  PanelLeft,
-  Plus,
-  Settings,
-} from "lucide-react";
-import { useState } from "react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { ResizeHandle, useResizable } from "../../design-system/Resizable";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
+import {ChevronRight, FileText, Grid2X2, List, PanelLeft, Plus, Settings,} from "lucide-react"
+import {useState} from "react"
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {ResizeHandle, useResizable} from "../../design-system/Resizable"
+import {Text} from "../../design-system/text/Text"
+import {AspectRatio, FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
 
 interface CMSSidebarProps {
   isOpen: boolean;
@@ -57,6 +44,13 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         position: "relative",
       }}
       surface="sunken"
+      layout={Layout.Stack.List.Dense}
+      override={{
+        h: Size.fill,
+        p: Space.n4,
+        gap: Space.n4,
+        clip: true,
+      }}
     >
       {isOpen && <ResizeHandle direction="left" {...resizeHandleProps} />}
       {/* Toggle Button - Top Right */}
@@ -164,7 +158,12 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           display: isOpen ? "flex" : "none",
         }}
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n12, p: Space.n12, align: "center" }} border={true}
+        override={{
+          gap: Space.n12,
+          p: Space.n12,
+          align: "center",
+          border: true,
+        }}
       >
         <Frame
           override={{ w: Size.n32, h: Size.n32 }}
@@ -219,9 +218,14 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
             boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
             borderColor: active ? "var(--text-primary)" : "var(--border-color)",
           }}
-          ratio="16/9"
           surface={active ? "base" : "sunken"}
-          pack border
+          pack
+          override={{
+            border: true,
+            w: Size.fill,
+            cursor: "pointer",
+            ratio: AspectRatio.n16_9,
+          }}
         >
           {active && (
             <Frame

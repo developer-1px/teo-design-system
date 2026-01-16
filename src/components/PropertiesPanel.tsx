@@ -13,26 +13,21 @@ import {
   Plus,
   Settings,
   Sun,
-} from "lucide-react";
-import type React from "react";
-import { useState } from "react";
-import { Action } from "../design-system/Action";
-import { Field } from "../design-system/Field";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { useAccordion, useDropdown, useTabs } from "../design-system/hooks";
-import { Icon } from "../design-system/Icon";
-import { Overlay } from "../design-system/Overlay";
-import { Section } from "../design-system/Section";
-import { Separator } from "../design-system/Separator";
-import { Text } from "../design-system/text/Text";
-import {
-  IconSize,
-  Opacity,
-  Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
+} from "lucide-react"
+import type React from "react"
+import {useState} from "react"
+import {Action} from "../design-system/Action"
+import {Field} from "../design-system/Field"
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {useAccordion, useDropdown, useTabs} from "../design-system/hooks"
+import {Icon} from "../design-system/Icon"
+import {Overlay} from "../design-system/Overlay"
+import {Section} from "../design-system/Section"
+import {Separator} from "../design-system/Separator"
+import {Text} from "../design-system/text/Text"
+import {IconSize, Opacity, Size, Space,} from "../design-system/token/token.const.1tier"
+import {Radius2} from "../design-system/token/token.const.2tier"
 
 // --- Data ---
 
@@ -189,12 +184,13 @@ export function PropertiesPanel() {
         override={{
           p: Space.n4,
           gap: Space.n4,
-            h: Size.n40
+          h: Size.n40,
         }}
         style={{
           borderColor: "var(--border-color)",
         }}
-        layout={Layout.Row.Toolbar.Compact} border={true}
+        layout={Layout.Row.Toolbar.Compact}
+        override={{ border: true }}
       >
         {tabs.map((tab) => {
           const tabProps = getTabProps(tab);
@@ -207,7 +203,9 @@ export function PropertiesPanel() {
               flex
               variant="ghost"
               style={{
-                backgroundColor: isSelected ? "var(--tab-bg-active)" : undefined,
+                backgroundColor: isSelected
+                  ? "var(--tab-bg-active)"
+                  : undefined,
               }}
             >
               <Text.Menu.Item
@@ -234,14 +232,12 @@ export function PropertiesPanel() {
       >
         {/* Alignment */}
         <Frame
-          rounded={Radius2.md}
           style={{
-            padding: "1px",
             gap: "1px",
           }} // 1px style override
           layout={Layout.Row.Toolbar.Default}
           surface="sunken"
-          override={{ justify: "between" }} border
+          override={{ border: true, p: "1px" as any }}
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
             isSeparator(tool) ? (
@@ -330,8 +326,8 @@ export function PropertiesPanel() {
           getPanelProps={getPanelProps}
         >
           <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ gap: Space.n12, justify: "between" }}
+            layout={Layout.Row.LabelValue.Default}
+            override={{ gap: Space.n12 }}
           >
             <Field
               value="Normal"
@@ -375,7 +371,7 @@ export function PropertiesPanel() {
                     override={{ gap: Space.n1 }}
                     surface="overlay"
                     rounded={Radius2.md}
-                    shadow="md" border
+                    override={{ shadow: "md", border: true }}
                   >
                     {fontFamilies.map((item, index) => (
                       <Frame
@@ -387,7 +383,9 @@ export function PropertiesPanel() {
                           cursor: "pointer",
                         }}
                         surface={
-                          fontFamily.selectedItem === item ? "selected" : undefined
+                          fontFamily.selectedItem === item
+                            ? "selected"
+                            : undefined
                         }
                         style={{
                           backgroundColor:
@@ -431,7 +429,7 @@ export function PropertiesPanel() {
                       override={{ gap: Space.n1 }}
                       surface="overlay"
                       rounded={Radius2.md}
-                      shadow="md" border
+                      override={{ shadow: "md", border: true }}
                     >
                       {fontWeights.map((item, index) => (
                         <Frame
@@ -443,7 +441,9 @@ export function PropertiesPanel() {
                             cursor: "pointer",
                           }}
                           surface={
-                            fontWeight.selectedItem === item ? "selected" : undefined
+                            fontWeight.selectedItem === item
+                              ? "selected"
+                              : undefined
                           }
                           style={{
                             backgroundColor:
@@ -471,12 +471,11 @@ export function PropertiesPanel() {
             <Frame
               rounded={Radius2.md}
               style={{
-                padding: "1px",
                 gap: "1px",
               }}
               layout={Layout.Row.Toolbar.Compact}
               surface="sunken"
-              override={{ justify: "between" }} border
+              override={{ border: true, p: "1px" as any }}
             >
               {[
                 AlignLeft,
@@ -513,9 +512,10 @@ export function PropertiesPanel() {
                 rounded={Radius2.full}
                 style={{
                   width: "10px",
-                  height: "10px"
+                  height: "10px",
                 }}
-                surface="base" border
+                surface="base"
+                border
               />
             }
             rightIcon={

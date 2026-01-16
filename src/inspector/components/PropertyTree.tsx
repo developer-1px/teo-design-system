@@ -1,15 +1,10 @@
-import { ChevronDown, ChevronRight } from "lucide-react";
-import React, { useState } from "react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import {ChevronDown, ChevronRight} from "lucide-react"
+import React, {useState} from "react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text"
+import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
 
 export function PropertyTree({
   label,
@@ -37,9 +32,11 @@ export function PropertyTree({
           px: Space.n6,
           border: true,
         }}
-        style={{
-          paddingLeft: `${depth * 12 + 8}px`,
-        } as React.CSSProperties}
+        style={
+          {
+            paddingLeft: `${depth * 12 + 8}px`,
+          } as React.CSSProperties
+        }
         layout={Layout.Row.LabelValue.Default}
         surface={background}
       >
@@ -73,10 +70,12 @@ export function PropertyTree({
           px: Space.n6,
           border: true,
         }}
-        style={{
-          paddingLeft: `${depth * 12 + 8}px`,
-          cursor: isEmpty ? "default" : "pointer",
-        } as React.CSSProperties}
+        style={
+          {
+            paddingLeft: `${depth * 12 + 8}px`,
+            cursor: isEmpty ? "default" : "pointer",
+          } as React.CSSProperties
+        }
         layout={Layout.Row.LabelValue.Default}
         surface={background}
         onClick={(e) => {

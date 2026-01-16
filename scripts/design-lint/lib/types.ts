@@ -4,13 +4,13 @@
 
 // Re-export ts-morph types for convenience
 export type {
+  JsxAttribute,
   JsxOpeningElement,
   JsxSelfClosingElement,
-  JsxAttribute,
   Project,
   SourceFile,
 } from "ts-morph";
-export { SyntaxKind, Node } from "ts-morph";
+export { Node, SyntaxKind } from "ts-morph";
 
 /**
  * Lint issue found in code
@@ -71,7 +71,13 @@ export interface TokenConversion {
  */
 export interface BorderFixResult {
   fixable: boolean;
-  borderType: "border" | "borderTop" | "borderBottom" | "borderLeft" | "borderRight" | null;
+  borderType:
+    | "border"
+    | "borderTop"
+    | "borderBottom"
+    | "borderLeft"
+    | "borderRight"
+    | null;
 }
 
 /**

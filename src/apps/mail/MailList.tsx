@@ -1,16 +1,12 @@
-import { useAtom, useAtomValue } from "jotai";
-import { Paperclip, Star } from "lucide-react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
-import {
-  FontSize,
-  IconSize,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { filteredThreadsAtom, selectedThreadIdAtom } from "./store";
+import {useAtom, useAtomValue} from "jotai"
+import {Paperclip, Star} from "lucide-react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text.tsx"
+import {FontSize, IconSize, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {filteredThreadsAtom, selectedThreadIdAtom} from "./store"
 
 export function MailList() {
   const threads = useAtomValue(filteredThreadsAtom);

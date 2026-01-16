@@ -31,12 +31,7 @@ export function Divider({
   const isVerticalLine = orientation === "vertical"; // This creates a Vertical Bar |
 
   if (variant === "spacer") {
-    return (
-      <div
-        style={{ flexBasis: resolvedMargin}}
-        aria-hidden="true"
-      />
-    );
+    return <div style={{ flexBasis: resolvedMargin }} aria-hidden="true" />;
   }
 
   if (variant === "dot") {

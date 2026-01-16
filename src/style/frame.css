@@ -58,29 +58,29 @@
 
 /* --- hbox: main axis = width --- */
 
-.frame.hbox>.w\(fixed\),
-.frame.hbox>.frame.w\(fixed\),
-.frame.hbox>.text.w\(fixed\) {
+.frame.hbox > .w\(fixed\),
+.frame.hbox > .frame.w\(fixed\),
+.frame.hbox > .text.w\(fixed\) {
   flex: 0 0 auto;
 }
 
-.frame.hbox>.frame.w\(hug\) {
+.frame.hbox > .frame.w\(hug\) {
   flex: 0 0 auto;
   width: fit-content;
 }
 
-.frame.hbox>.text.w\(hug\) {
+.frame.hbox > .text.w\(hug\) {
   flex: 0 0 auto;
   width: max-content;
   white-space: nowrap;
 }
 
-.frame.hbox>.frame.w\(fill\) {
+.frame.hbox > .frame.w\(fill\) {
   flex: 1 1 0;
   min-width: 0;
 }
 
-.frame.hbox>.text.w\(fill\) {
+.frame.hbox > .text.w\(fill\) {
   flex: 1 1 0;
   min-width: 0;
   overflow-wrap: break-word;
@@ -88,23 +88,23 @@
 
 /* --- vbox: main axis = height --- */
 
-.frame.vbox>.h\(fixed\),
-.frame.vbox>.frame.h\(fixed\),
-.frame.vbox>.text.h\(fixed\) {
+.frame.vbox > .h\(fixed\),
+.frame.vbox > .frame.h\(fixed\),
+.frame.vbox > .text.h\(fixed\) {
   flex: 0 0 auto;
 }
 
-.frame.vbox>.frame.h\(hug\),
-.frame.vbox>.text.h\(hug\) {
+.frame.vbox > .frame.h\(hug\),
+.frame.vbox > .text.h\(hug\) {
   flex: 0 0 auto;
 }
 
-.frame.vbox>.frame.h\(fill\) {
+.frame.vbox > .frame.h\(fill\) {
   flex: 1 1 0;
   min-height: 0;
 }
 
-.frame.vbox>.text.h\(fill\) {
+.frame.vbox > .text.h\(fill\) {
   flex: 1 1 0;
   min-height: 0;
 }
@@ -122,43 +122,43 @@
 
 /* --- hbox: cross axis = height --- */
 
-.frame.hbox>.h\(fixed\),
-.frame.hbox>.frame.h\(fixed\),
-.frame.hbox>.text.h\(fixed\) {
+.frame.hbox > .h\(fixed\),
+.frame.hbox > .frame.h\(fixed\),
+.frame.hbox > .text.h\(fixed\) {
   align-self: auto;
 }
 
-.frame.hbox>.frame.h\(hug\),
-.frame.hbox>.text.h\(hug\) {
+.frame.hbox > .frame.h\(hug\),
+.frame.hbox > .text.h\(hug\) {
   align-self: flex-start;
 }
 
-.frame.hbox>.frame.h\(fill\),
-.frame.hbox>.text.h\(fill\) {
+.frame.hbox > .frame.h\(fill\),
+.frame.hbox > .text.h\(fill\) {
   align-self: stretch;
 }
 
 /* --- vbox: cross axis = width --- */
 
-.frame.vbox>.w\(fixed\),
-.frame.vbox>.frame.w\(fixed\),
-.frame.vbox>.text.w\(fixed\) {
+.frame.vbox > .w\(fixed\),
+.frame.vbox > .frame.w\(fixed\),
+.frame.vbox > .text.w\(fixed\) {
   align-self: auto;
 }
 
-.frame.vbox>.frame.w\(hug\) {
+.frame.vbox > .frame.w\(hug\) {
   align-self: flex-start;
   width: fit-content;
 }
 
-.frame.vbox>.text.w\(hug\) {
+.frame.vbox > .text.w\(hug\) {
   align-self: flex-start;
   width: max-content;
   white-space: nowrap;
 }
 
-.frame.vbox>.frame.w\(fill\),
-.frame.vbox>.text.w\(fill\) {
+.frame.vbox > .frame.w\(fill\),
+.frame.vbox > .text.w\(fill\) {
   align-self: stretch;
 }
 
@@ -167,7 +167,7 @@
   When w="fill" is used with maxWidth in a vbox, 
   we want 100% width but respect parent alignment (align-self: auto).
 */
-.frame.vbox>.frame.w\(fill\).max-w\(fixed\) {
+.frame.vbox > .frame.w\(fill\).max-w\(fixed\) {
   width: 100%;
   align-self: auto;
 }
@@ -250,7 +250,6 @@
 .frame.pack\(space\) {
   justify-content: space-between;
 }
-
 
 /* =============================================================================
    6. GAP
@@ -473,7 +472,7 @@
 .frame.scroll-y {
   overflow-x: hidden;
   overflow-y: auto;
-  min-height: 0
+  min-height: 0;
 }
 
 /* =============================================================================
@@ -516,4 +515,22 @@
 
 .text.right {
   text-align: right;
+}
+
+/* --- */
+/* Position */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
 }

@@ -1,27 +1,19 @@
-import { useAtom, useAtomValue } from "jotai";
-import { useEffect, useState } from "react";
+import {useAtom, useAtomValue} from "jotai"
+import {useEffect, useState} from "react"
 
-
-import { Divider } from "../../design-system/Divider";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { ResizeHandle, useResizable } from "../../design-system/Resizable";
-import {
-  Space,
-  ZIndex,
-} from "../../design-system/token/token.const.1tier";
-import { formatColumnLabel } from "./dataLoader";
-import { DrawerActivity } from "./drawer/DrawerActivity";
-import { DrawerFooter } from "./drawer/DrawerFooter";
-import { DrawerHeader } from "./drawer/DrawerHeader";
-import { DrawerProperties } from "./drawer/DrawerProperties";
-import {
-  formatValue,
-  getAvatarColor,
-  getDisplayTitle,
-} from "./drawer/drawerUtils";
-import { currentDataAtom, selectedRowIdAtom } from "./store";
-import type { DataRow } from "./types";
+import {Divider} from "../../design-system/Divider"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {ResizeHandle, useResizable} from "../../design-system/Resizable"
+import {Space, ZIndex} from "../../design-system/token/token.const.1tier"
+import {formatColumnLabel} from "./dataLoader"
+import {DrawerActivity} from "./drawer/DrawerActivity"
+import {DrawerFooter} from "./drawer/DrawerFooter"
+import {DrawerHeader} from "./drawer/DrawerHeader"
+import {DrawerProperties} from "./drawer/DrawerProperties"
+import {formatValue, getAvatarColor, getDisplayTitle,} from "./drawer/drawerUtils"
+import {currentDataAtom, selectedRowIdAtom} from "./store"
+import type {DataRow} from "./types"
 
 export function CRMDrawer() {
   const data = useAtomValue(currentDataAtom);
@@ -64,8 +56,9 @@ export function CRMDrawer() {
         borderLeft: true, // Flat separation
         zIndex: ZIndex.n100,
       }}
-      w={`${size}px` as unknown as any}
       style={{
+        width: `${size}px`,
+        boxShadow: "var(--elevation-n5)", // Critical focus level
         position: "absolute",
         top: 0,
         right: 0,
@@ -88,9 +81,7 @@ export function CRMDrawer() {
           />
 
           <Frame layout={Layout.Stack.Content.Scroll} fill>
-            <Frame
-              override={{ p: Space.n24, gap: Space.n32 }}
-            >
+            <Frame override={{ p: Space.n24, gap: Space.n32 }}>
               <DrawerProperties
                 entries={Object.entries(displayRow).filter(
                   ([key]) => !key.startsWith("_") && key !== "avatarColor",

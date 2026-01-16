@@ -1,18 +1,12 @@
-import { HelpCircle, Plus } from "lucide-react";
-import { useState } from "react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  ContainerSize,
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
+import {HelpCircle, Plus} from "lucide-react"
+import {useState} from "react"
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text"
+import {ContainerSize, FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
 
 export function FAQBoardFooter() {
   return (
@@ -57,7 +51,13 @@ export function FAQBoardFooter() {
         </Frame>
 
         <Frame
-          override={{ r: Radius2["2xl"], p: Space.n32, w: Size.fill, gap: Space.n24, align: "center" }}
+          override={{
+            r: Radius2["2xl"],
+            p: Space.n32,
+            w: Size.fill,
+            gap: Space.n24,
+            align: "center",
+          }}
           surface="raised"
           layout={Layout.Slots.Media.Default}
         >

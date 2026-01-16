@@ -1,7 +1,7 @@
-import { Action } from "../../../design-system/Action";
-import { Frame } from "../../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
-import { Size, Space } from "../../../design-system/token/token.const.1tier";
+import {Action} from "../../../design-system/Action"
+import {Frame} from "../../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../../design-system/Frame/Layout/Layout.ts"
+import {Size, Space} from "../../../design-system/token/token.const.1tier"
 
 export function DrawerFooter({ onClose }: { onClose: () => void }) {
   return (

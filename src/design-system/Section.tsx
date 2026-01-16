@@ -69,7 +69,12 @@ export function Section({
       {(title || icon) && (
         <Frame
           layout={Layout.Row.Item.Tight}
-          override={{ gap: Space.n8, p: Space.n8, align: "center", border: true }}
+          override={{
+            gap: Space.n8,
+            p: Space.n8,
+            align: "center",
+            border: true,
+          }}
         >
           <Text.Card.Note
             style={{

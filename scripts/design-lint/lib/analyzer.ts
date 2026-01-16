@@ -1,11 +1,11 @@
-import type { FrameProps, ComputedCSS, Issue, Project } from "./types";
-import { SyntaxKind } from "./types";
 import { frameToSettings } from "../../../src/design-system/Frame/frameToSettings";
-import { resolveLayout } from "../../../src/design-system/Frame/Layout/Layout";
 import type { LayoutToken } from "../../../src/design-system/Frame/Layout/Layout";
+import { resolveLayout } from "../../../src/design-system/Frame/Layout/Layout";
 import { extractFrameProps } from "./ast-parser";
 import { checkFrameDesignRules } from "./rules/frame-design-rules";
 import { checkFrameStyleUsage } from "./rules/frame-style-usage";
+import type { ComputedCSS, FrameProps, Issue, Project } from "./types";
+import { SyntaxKind } from "./types";
 
 export { computeFinalCSS, analyzeFile };
 function computeFinalCSS(props: FrameProps): ComputedCSS {
@@ -31,9 +31,7 @@ function computeFinalCSS(props: FrameProps): ComputedCSS {
 
     // Step 4: Analyze computed CSS
     const hasBackground =
-      !!props.surface ||
-      !!style.background ||
-      !!style.backgroundColor;
+      !!props.surface || !!style.background || !!style.backgroundColor;
 
     const hasPadding =
       !!props.p ||
@@ -52,19 +50,12 @@ function computeFinalCSS(props: FrameProps): ComputedCSS {
       !!style.paddingLeft ||
       !!style.paddingRight;
 
-    const hasBorder =
-      !!props.border ||
-      !!style.border ||
-      !!style.borderWidth;
+    const hasBorder = !!props.border || !!style.border || !!style.borderWidth;
 
-    const hasRadius =
-      !!props.rounded ||
-      !!style.borderRadius;
+    const hasRadius = !!props.rounded || !!style.borderRadius;
 
     // Floating: has centering (maxWidth/margin) but not fill
-    const isFloating =
-      (!!style.maxWidth || !!style.margin) &&
-      !props.fill;
+    const isFloating = (!!style.maxWidth || !!style.margin) && !props.fill;
 
     return {
       hasBackground,
@@ -99,7 +90,9 @@ function analyzeFile(project: Project, filePath: string): Issue[] {
 
   // Find all JSX elements
   const jsxElements = sourceFile.getDescendantsOfKind(SyntaxKind.JsxElement);
-  const jsxSelfClosingElements = sourceFile.getDescendantsOfKind(SyntaxKind.JsxSelfClosingElement);
+  const jsxSelfClosingElements = sourceFile.getDescendantsOfKind(
+    SyntaxKind.JsxSelfClosingElement,
+  );
 
   // Check JSX opening elements (from JsxElement)
   for (const jsxElement of jsxElements) {

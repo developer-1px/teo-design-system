@@ -8,19 +8,16 @@ import {
   PenTool,
   Type,
   Zap,
-} from "lucide-react";
-import { Action } from "../design-system/Action";
-import { Experience } from "../design-system/Experience";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../design-system/Icon";
-import { TeoLogo } from "../design-system/TeoLogo";
-import { Text } from "../design-system/text/Text";
-import {
-  IconSize,
-  Size,
-  Space, ZIndex } from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
+} from "lucide-react"
+import {Action} from "../design-system/Action"
+import {Experience} from "../design-system/Experience"
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../design-system/Icon"
+import {TeoLogo} from "../design-system/TeoLogo"
+import {Text} from "../design-system/text/Text"
+import {IconSize, Size, Space, ZIndex,} from "../design-system/token/token.const.1tier"
+import {Radius2} from "../design-system/token/token.const.2tier"
 
 export function LandingApp() {
   return (
@@ -36,8 +33,8 @@ export function LandingApp() {
           override={{
             py: Space.n20,
             px: Space.n24,
-              zIndex: ZIndex.n100
-        }}
+            zIndex: ZIndex.n100,
+          }}
           layout={Layout.Row.Header.Sticky}
         >
           <TeoLogo height={24} />
@@ -70,7 +67,8 @@ export function LandingApp() {
               gap: Space.n8,
               cursor: "pointer",
               align: "center",
-            }} border
+            }}
+            border
           >
             <Icon
               src={Zap}
@@ -206,12 +204,12 @@ export function LandingApp() {
             style={{
               gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
               maxWidth: 1200,
-              margin: "0 auto"
+              margin: "0 auto",
             }}
             override={{
               gap: Space.n16,
               grid: true,
-                w: Size.fill
+              w: Size.fill,
             }}
           >
             <FeatureCard
@@ -305,13 +303,15 @@ function FeatureCard({
     <Frame
       override={{ p: Space.n24, gap: Space.n16 }}
       rounded={Radius2["2xl"]}
-      surface="sunken" border
+      surface="sunken"
+      border
     >
       <Frame
         override={{ w: Size.n40, h: Size.n40, p: Space.n8, shadow: "sm" }}
         rounded={Radius2.xl}
         surface="base"
-        pack border
+        pack
+        border
       >
         <Icon
           src={IconSrc}

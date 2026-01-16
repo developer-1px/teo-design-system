@@ -5,16 +5,16 @@ import {
   getSortedRowModel,
   type SortingState,
   useReactTable,
-} from "@tanstack/react-table";
-import { useAtom, useAtomValue } from "jotai";
-import { useMemo, useState } from "react";
+} from "@tanstack/react-table"
+import {useAtom, useAtomValue} from "jotai"
+import {useMemo, useState} from "react"
 
-import { Table } from "../../ui/table/Table";
-import { formatColumnLabel } from "./dataLoader";
-import { formatForTable } from "./drawer/nestedValueFormatter";
-import { TableObjectCell } from "./TableObjectCell"; // Import new component
-import { currentDataAtom, selectedRowIdAtom } from "./store";
-import type { DataRow } from "./types";
+import {Table} from "../../ui/table/Table"
+import {formatColumnLabel} from "./dataLoader"
+import {formatForTable} from "./drawer/nestedValueFormatter"
+import {currentDataAtom, selectedRowIdAtom} from "./store"
+import {TableObjectCell} from "./TableObjectCell" // Import new component
+import type {DataRow} from "./types"
 
 function formatCellValue(value: unknown): string {
   if (Array.isArray(value)) {
@@ -45,7 +45,7 @@ export function CRMTable() {
     const firstRow = data[0];
     const keys = Object.keys(firstRow).filter((key) => key !== "__rowId");
 
-    // accessorKey and header are already defined above implicitly by the map structure 
+    // accessorKey and header are already defined above implicitly by the map structure
     // but wait, I see I pasted the key/header TWICE in the previous edit.
     return keys.map((key) => ({
       accessorKey: key,

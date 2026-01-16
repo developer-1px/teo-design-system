@@ -1,15 +1,11 @@
-import { Filter, LayoutGrid, List, SlidersHorizontal } from "lucide-react";
+import {Filter, LayoutGrid, List, SlidersHorizontal} from "lucide-react"
 
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Separator } from "../../design-system/Separator";
-import { Text } from "../../design-system/text/Text.tsx";
-import {
-  Opacity,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Separator} from "../../design-system/Separator"
+import {Text} from "../../design-system/text/Text.tsx"
+import {Opacity, Size, Space,} from "../../design-system/token/token.const.1tier"
 
 export function CRMToolbar() {
   return (

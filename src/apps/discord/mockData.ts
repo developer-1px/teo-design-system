@@ -2,7 +2,7 @@
  * Discord Mock App Data
  */
 
-import type { Member, Message, Server } from "./types";
+import type {Member, Message, Server} from "./types"
 
 export const mockServers: Server[] = [
   {
@@ -11,11 +11,36 @@ export const mockServers: Server[] = [
     icon: "🎨",
     channels: [
       { id: "1-1", name: "general", type: "text", category: "TEXT CHANNELS" },
-      { id: "1-2", name: "announcements", type: "text", category: "TEXT CHANNELS" },
-      { id: "1-3", name: "design-discussion", type: "text", category: "TEXT CHANNELS" },
-      { id: "1-4", name: "code-review", type: "text", category: "TEXT CHANNELS" },
-      { id: "1-5", name: "General Voice", type: "voice", category: "VOICE CHANNELS" },
-      { id: "1-6", name: "Design Sync", type: "voice", category: "VOICE CHANNELS" },
+      {
+        id: "1-2",
+        name: "announcements",
+        type: "text",
+        category: "TEXT CHANNELS",
+      },
+      {
+        id: "1-3",
+        name: "design-discussion",
+        type: "text",
+        category: "TEXT CHANNELS",
+      },
+      {
+        id: "1-4",
+        name: "code-review",
+        type: "text",
+        category: "TEXT CHANNELS",
+      },
+      {
+        id: "1-5",
+        name: "General Voice",
+        type: "voice",
+        category: "VOICE CHANNELS",
+      },
+      {
+        id: "1-6",
+        name: "Design Sync",
+        type: "voice",
+        category: "VOICE CHANNELS",
+      },
     ],
   },
   {
@@ -26,7 +51,12 @@ export const mockServers: Server[] = [
       { id: "2-1", name: "general", type: "text", category: "TEXT CHANNELS" },
       { id: "2-2", name: "help", type: "text", category: "TEXT CHANNELS" },
       { id: "2-3", name: "showcase", type: "text", category: "TEXT CHANNELS" },
-      { id: "2-4", name: "Voice Chat", type: "voice", category: "VOICE CHANNELS" },
+      {
+        id: "2-4",
+        name: "Voice Chat",
+        type: "voice",
+        category: "VOICE CHANNELS",
+      },
     ],
   },
   {
@@ -35,8 +65,18 @@ export const mockServers: Server[] = [
     icon: "📘",
     channels: [
       { id: "3-1", name: "general", type: "text", category: "TEXT CHANNELS" },
-      { id: "3-2", name: "type-challenges", type: "text", category: "TEXT CHANNELS" },
-      { id: "3-3", name: "Coding Session", type: "voice", category: "VOICE CHANNELS" },
+      {
+        id: "3-2",
+        name: "type-challenges",
+        type: "text",
+        category: "TEXT CHANNELS",
+      },
+      {
+        id: "3-3",
+        name: "Coding Session",
+        type: "voice",
+        category: "VOICE CHANNELS",
+      },
     ],
   },
 ];
@@ -52,7 +92,8 @@ export const mockMessages: Record<string, Message[]> = {
         avatar: "👩‍💻",
         status: "online",
       },
-      content: "Hey everyone! Just finished implementing the new Layout presets 🎉",
+      content:
+        "Hey everyone! Just finished implementing the new Layout presets 🎉",
       timestamp: new Date("2026-01-16T10:30:00"),
     },
     {

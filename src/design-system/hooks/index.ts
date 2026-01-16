@@ -55,3 +55,24 @@ export type { UseFocusTrapOptions } from "./utils/useFocusTrap";
 export { useFocusTrap } from "./utils/useFocusTrap";
 export { useId } from "./utils/useId";
 export { useScrollLock } from "./utils/useScrollLock";
+
+// Advanced Hooks (Phase 3)
+export type {
+  FuzzyMatch,
+  UseFuzzySearchOptions,
+} from "./useFuzzySearch";
+export {
+  useFuzzySearch,
+  fuzzyMatch,
+  getHighlightedParts,
+} from "./useFuzzySearch";
+export type {
+  UseVirtualScrollOptions,
+  UseVirtualScrollReturn,
+  VirtualScrollRange,
+} from "./useVirtualScroll";
+export {
+  useVirtualScroll,
+  getVirtualItemStyle,
+  isItemVisible,
+} from "./useVirtualScroll";

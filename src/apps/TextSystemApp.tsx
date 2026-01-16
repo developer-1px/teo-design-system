@@ -1,21 +1,14 @@
-import { FileText, Globe, Monitor } from "lucide-react";
-import type React from "react";
-import { useState } from "react";
-import { Action } from "../design-system/Action";
-import { Experience, type ExperienceType } from "../design-system/Experience";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../design-system/Icon";
-import { Text } from "../design-system/text/Text";
-import {
-  ContainerSize,
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-  ZIndex,
-} from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
+import {FileText, Globe, Monitor} from "lucide-react"
+import type React from "react"
+import {useState} from "react"
+import {Action} from "../design-system/Action"
+import {Experience, type ExperienceType} from "../design-system/Experience"
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../design-system/Icon"
+import {Text} from "../design-system/text/Text"
+import {ContainerSize, FontSize, IconSize, Size, Space, ZIndex,} from "../design-system/token/token.const.1tier"
+import {Radius2} from "../design-system/token/token.const.2tier"
 
 /* 
   Text System Showcase

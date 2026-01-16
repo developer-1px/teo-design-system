@@ -17,7 +17,7 @@ export function ensureTokenImports(
 ): void {
   // Find the token import statement
   const importDecl = sourceFile.getImportDeclaration((imp: any) =>
-    imp.getModuleSpecifierValue().includes("token.const.1tier")
+    imp.getModuleSpecifierValue().includes("token.const.1tier"),
   );
 
   if (!importDecl) {
@@ -25,7 +25,8 @@ export function ensureTokenImports(
     // Calculate relative path from source file to token file
     const sourceFilePath = sourceFile.getFilePath();
     const depth = sourceFilePath.split("/src/")[1]?.split("/").length - 1 || 0;
-    const relativePath = "../".repeat(depth) + "design-system/token/token.const.1tier";
+    const relativePath =
+      "../".repeat(depth) + "design-system/token/token.const.1tier";
 
     sourceFile.addImportDeclaration({
       namedImports: Array.from(requiredTokens),
@@ -36,12 +37,12 @@ export function ensureTokenImports(
 
   // Import exists - check what's already imported
   const existingImports = new Set(
-    importDecl.getNamedImports().map((ni: any) => ni.getName())
+    importDecl.getNamedImports().map((ni: any) => ni.getName()),
   );
 
   // Add missing tokens
   const tokensToAdd = Array.from(requiredTokens).filter(
-    token => !existingImports.has(token)
+    (token) => !existingImports.has(token),
   );
 
   if (tokensToAdd.length > 0) {

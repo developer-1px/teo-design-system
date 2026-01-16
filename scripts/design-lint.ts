@@ -5,14 +5,16 @@
 
 import path from "node:path";
 import { Project } from "ts-morph";
-import { TARGET_PATTERNS } from "./design-lint/lib/constants";
 import { analyzeFile } from "./design-lint/lib/analyzer";
+import { TARGET_PATTERNS } from "./design-lint/lib/constants";
 import type { Issue } from "./design-lint/lib/types";
 
 const FIX_MODE = process.argv.includes("--fix");
 
 function run() {
-  console.log(`🔍 Starting TypeScript-based Design Lint${FIX_MODE ? " (Auto-fix mode)" : ""}...\\n`);
+  console.log(
+    `🔍 Starting TypeScript-based Design Lint${FIX_MODE ? " (Auto-fix mode)" : ""}...\\n`,
+  );
 
   const project = new Project({
     tsConfigFilePath: path.join(process.cwd(), "tsconfig.app.json"),
@@ -38,8 +40,11 @@ function run() {
       console.log(`📄 ${relativePath}`);
 
       for (const issue of issues) {
-        const prefix = issue.fixable && FIX_MODE ? "✓" : issue.fixable ? "🔧" : "  ";
-        console.log(`   ${prefix} L${issue.line} [${issue.rule}]: ${issue.message}`);
+        const prefix =
+          issue.fixable && FIX_MODE ? "✓" : issue.fixable ? "🔧" : "  ";
+        console.log(
+          `   ${prefix} L${issue.line} [${issue.rule}]: ${issue.message}`,
+        );
         if (issue.code) {
           console.log(`      Code: ${issue.code}`);
         }
@@ -61,8 +66,12 @@ function run() {
     console.log(`✅ Auto-fixed ${fixedCount} issue(s).\\n`);
   }
 
-  const remainingIssues = allIssues.filter((issue) => !issue.fixable || !FIX_MODE).length;
-  const fixableIssues = allIssues.filter((issue) => issue.fixable && !FIX_MODE).length;
+  const remainingIssues = allIssues.filter(
+    (issue) => !issue.fixable || !FIX_MODE,
+  ).length;
+  const fixableIssues = allIssues.filter(
+    (issue) => issue.fixable && !FIX_MODE,
+  ).length;
 
   console.log(`📊 Summary:`);
   console.log(`   Total issues: ${allIssues.length}`);

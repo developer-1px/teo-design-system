@@ -1,8 +1,8 @@
-import type React from "react";
-import type { SurfaceToken } from "../lib/types.ts";
-import type { BorderWidthToken, Radius2Token, ZIndexToken } from "../token";
-import { Radius2, Size, type SizeKey } from "../token"; // Import Size for token lookup
-import type { FrameOverrides } from "./FrameProps.ts";
+import type React from "react"
+import type {SurfaceToken} from "../lib/types.ts"
+import type {BorderWidthToken, Radius2Token, ZIndexToken} from "../token"
+import {Radius2, Size, type SizeKey} from "../token" // Import Size for token lookup
+import type {FrameOverrides} from "./FrameProps.ts"
 
 // Internal type for frameToSettings - includes top-level only props
 type FrameSettingsInput = FrameOverrides & {
@@ -223,7 +223,6 @@ export function frameToSettings(props: FrameSettingsInput): {
 
   // Cursor & Shadow
   if (props.cursor) classes.push(`cursor-${props.cursor}`);
-  if (props.shadow) classes.push(`shadow-${props.shadow}`);
   if (props.opacity) styles.opacity = props.opacity;
   if (props.z) styles.zIndex = props.z;
   if (props.zIndex) styles.zIndex = props.zIndex;

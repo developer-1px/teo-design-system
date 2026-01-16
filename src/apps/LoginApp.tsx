@@ -1,22 +1,16 @@
-import { ArrowRight, Lock, Mail } from "lucide-react";
-import { useState } from "react";
-import { Action } from "../design-system/Action";
-import { Field } from "../design-system/Field";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../design-system/Icon";
-import { Section } from "../design-system/Section";
-import { Switch } from "../design-system/Switch";
-import { Prose } from "../design-system/text/context/Prose";
-import { Text } from "../design-system/text/Text.tsx";
-import {
-  ContainerSize,
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
+import {ArrowRight, Lock, Mail} from "lucide-react"
+import {useState} from "react"
+import {Action} from "../design-system/Action"
+import {Field} from "../design-system/Field"
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../design-system/Icon"
+import {Section} from "../design-system/Section"
+import {Switch} from "../design-system/Switch"
+import {Prose} from "../design-system/text/context/Prose"
+import {Text} from "../design-system/text/Text.tsx"
+import {ContainerSize, FontSize, IconSize, Size, Space,} from "../design-system/token/token.const.1tier"
+import {Radius2} from "../design-system/token/token.const.2tier"
 
 export function LoginApp() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -30,14 +24,14 @@ export function LoginApp() {
         override={{
           p: Space.n32,
           align: "center",
-          justify: "center"
+          justify: "center",
         }}
       >
         <Frame
-          w={Size.full}
+          w={Size.fill}
           maxWidth={ContainerSize.n480} // Standardized to n480 (prev 400px)
           override={{
-            gap: Space.n32
+            gap: Space.n32,
           }}
         >
           <Frame override={{ gap: Space.n8 }}>
@@ -113,7 +107,7 @@ export function LoginApp() {
           fill
         >
           <Frame
-            w={Size.full}
+            w={Size.fill}
             maxWidth={ContainerSize.n480}
             override={{
               gap: Space.n32,
@@ -128,7 +122,7 @@ export function LoginApp() {
                 align: "center",
                 justify: "center",
                 border: true,
-                r: Radius2["2xl"]
+                r: Radius2["2xl"],
               }}
               style={{ marginBottom: "var(--space-n16)" } as any}
               surface="base"
@@ -137,10 +131,17 @@ export function LoginApp() {
             </Frame>
 
             <Frame override={{ gap: Space.n12 }}>
-              <Prose.Title variant="xl">
+              <Prose.Title variant="lg">
                 Secure & Minimal Design System
               </Prose.Title>
-              <Prose.Body style={{ color: "var(--text-secondary)", fontSize: "var(--font-size-n16)" } as any}>
+              <Prose.Body
+                style={
+                  {
+                    color: "var(--text-secondary)",
+                    fontSize: "var(--font-size-n16)",
+                  } as any
+                }
+              >
                 Experience the "Pure White" architecture. A design system built
                 for data-dense interfaces where content is the hero.
               </Prose.Body>
@@ -172,9 +173,18 @@ export function LoginApp() {
 
 function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame layout={Layout.Row.Item.Default} override={{ align: "start", gap: Space.n16 }}>
+    <Frame
+      layout={Layout.Row.Item.Default}
+      override={{ align: "start", gap: Space.n16 }}
+    >
       <Frame
-        override={{ w: Size.n24, h: Size.n24, align: "center", justify: "center", r: Radius2.full }}
+        override={{
+          w: Size.n24,
+          h: Size.n24,
+          align: "center",
+          justify: "center",
+          r: Radius2.full,
+        }}
         surface="sunken"
         flex={0}
       >
@@ -187,7 +197,11 @@ function FeatureRow({ title, desc }: { title: string; desc: string }) {
         <Text weight="bold" size={FontSize.n14}>
           {title}
         </Text>
-        <Text color="secondary" size={FontSize.n14} style={{ lineHeight: "1.5" }}>
+        <Text
+          color="secondary"
+          size={FontSize.n14}
+          style={{ lineHeight: "1.5" }}
+        >
           {desc}
         </Text>
       </Frame>

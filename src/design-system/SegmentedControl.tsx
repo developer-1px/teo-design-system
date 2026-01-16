@@ -33,10 +33,12 @@ export function SegmentedControl<T extends string>({
         w: w,
         clip: true, // Contain indicator
       }}
-      style={{
-        width: w ? undefined : "fit-content",
-        position: "relative",
-      } as React.CSSProperties}
+      style={
+        {
+          width: w ? undefined : "fit-content",
+          position: "relative",
+        } as React.CSSProperties
+      }
     >
       {/* Sliding Indicator */}
       <Frame
@@ -66,10 +68,12 @@ export function SegmentedControl<T extends string>({
           w: "100%" as any, // Force full width
           justify: "between",
         }}
-        style={{
-          position: "relative", // Ensure zIndex works
-          zIndex: 1, // Cast needed if restricted or acceptable as CSSProperties
-        } as React.CSSProperties}
+        style={
+          {
+            position: "relative", // Ensure zIndex works
+            zIndex: 1, // Cast needed if restricted or acceptable as CSSProperties
+          } as React.CSSProperties
+        }
       >
         {options.map((option) => {
           const isSelected = option.value === value;
@@ -85,14 +89,16 @@ export function SegmentedControl<T extends string>({
                 py: Space.n4,
                 cursor: "pointer",
               }}
-              style={{
-                textAlign: "center",
-                color: isSelected
-                  ? "var(--text-primary)"
-                  : "var(--text-secondary)",
-                transition: "color 0.2s ease",
-                zIndex: 2,
-              } as React.CSSProperties}
+              style={
+                {
+                  textAlign: "center",
+                  color: isSelected
+                    ? "var(--text-primary)"
+                    : "var(--text-secondary)",
+                  transition: "color 0.2s ease",
+                  zIndex: 2,
+                } as React.CSSProperties
+              }
             >
               {typeof option.label === "string" ? (
                 <Text

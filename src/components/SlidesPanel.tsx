@@ -1,8 +1,8 @@
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Section } from "../design-system/Section";
-import { Text } from "../design-system/text/Text";
-import { Radius2, Size, Space } from "../design-system/token";
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {Section} from "../design-system/Section"
+import {Text} from "../design-system/text/Text"
+import {Radius2, Size, Space} from "../design-system/token"
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -16,7 +16,8 @@ export function SlidesPanel() {
       shadow="sm"
     >
       <Frame
-        override={{ minHeight: Size.n0 }}
+        override={{ minHeight: Size.n0, align: "stretch" }}
+        layout={Layout.Stack.List.Dense}
         scroll
         surface="sunken"
         flex
@@ -24,13 +25,12 @@ export function SlidesPanel() {
       >
         {slides.map((num) => (
           <Frame
-            override={{ gap: Space.n4, p: Space.n8 }}
-            border={num === 1}
+            override={{ gap: Space.n4, p: Space.n8, border: num === 1 }}
             key={num}
           >
             <Frame
               layout={Layout.Row.LabelValue.Default}
-              override={{ gap: Space.n4, justify: "between" }}
+              override={{ gap: Space.n4 }}
             >
               <Text.Card.Note
                 style={{

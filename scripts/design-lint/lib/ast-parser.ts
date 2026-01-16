@@ -2,9 +2,13 @@
  * AST parsing utilities for extracting Frame props and style objects
  */
 
-import type { JsxOpeningElement, JsxSelfClosingElement, JsxAttribute } from "./types";
-import { SyntaxKind, Node } from "./types";
-import type { FrameProps } from "./types";
+import type {
+  FrameProps,
+  JsxAttribute,
+  JsxOpeningElement,
+  JsxSelfClosingElement,
+} from "./types";
+import { Node, SyntaxKind } from "./types";
 
 /**
  * Extract all Frame props from JSX element using AST
@@ -69,7 +73,9 @@ export function extractFrameProps(
  * @param styleAttr - JSX style attribute
  * @returns CSS properties object or null if not parseable
  */
-export function parseStyleObject(styleAttr: JsxAttribute): Record<string, string> | null {
+export function parseStyleObject(
+  styleAttr: JsxAttribute,
+): Record<string, string> | null {
   const initializer = styleAttr.getInitializer();
   if (!initializer) return null;
 
@@ -92,7 +98,9 @@ export function parseStyleObject(styleAttr: JsxAttribute): Record<string, string
     // Only handle PropertyAssignment (e.g., border: "...")
     if (prop.getKind() !== SyntaxKind.PropertyAssignment) continue;
 
-    const propertyAssignment = prop.asKindOrThrow(SyntaxKind.PropertyAssignment);
+    const propertyAssignment = prop.asKindOrThrow(
+      SyntaxKind.PropertyAssignment,
+    );
     const name = propertyAssignment.getName();
     const initializer = propertyAssignment.getInitializer();
 

@@ -32,9 +32,9 @@
  * ```
  */
 
-import type React from "react";
-import { Size, Space } from "../../token/token.const.1tier.ts";
-import type { FrameOverrides } from "../FrameProps.ts";
+import type React from "react"
+import {Size, Space} from "../../token/token.const.1tier.ts"
+import type {FrameOverrides} from "../FrameProps.ts"
 
 export const Layout = {
   // ⬇️ Vertical Flow (Stack)

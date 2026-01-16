@@ -53,7 +53,7 @@ import type {
   MaxWidthToken,
   WidthToken,
   ZIndexToken,
-} from "../token/token.const.1tier";
+} from "../token/token.const.1tier"
 
 export type {
   WidthToken,

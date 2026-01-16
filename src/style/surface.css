@@ -35,7 +35,10 @@
 
 /* Transitions for all interactive surfaces */
 .frame.interactive {
-  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   cursor: pointer;
   /* Default cursor for interactive */
 }
@@ -163,26 +166,6 @@
   cursor: grabbing;
 }
 
-/* Shadow */
-.shadow-sm {
-  box-shadow: var(--shadow-sm);
-}
-
-.shadow-md {
-  box-shadow: var(--shadow-md);
-}
-
-.shadow-lg {
-  box-shadow: var(--shadow-lg);
-}
-
-.shadow-xl {
-  box-shadow: var(--shadow-xl);
-}
-
-.shadow-2xl {
-  box-shadow: var(--shadow-2xl);
-}
 
 /* Border */
 .border-default {
@@ -195,44 +178,4 @@
 
 .border-primary {
   border-color: var(--text-primary);
-}
-
-/* Overflow & Clip */
-.overflow-hidden {
-  overflow: hidden;
-}
-
-.overflow-auto {
-  overflow: auto;
-}
-
-.overflow-x-auto {
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.overflow-visible {
-  overflow: visible;
-}
-
-/* Position */
-.relative {
-  position: relative;
-}
-
-.absolute {
-  position: absolute;
-}
-
-.fixed {
-  position: fixed;
-}
-
-.sticky {
-  position: sticky;
 }

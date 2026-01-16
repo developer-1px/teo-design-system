@@ -2,7 +2,7 @@
  * Mock Mail Data
  */
 
-import type { Mail, MailThread } from "./types";
+import type {Mail, MailThread} from "./types"
 
 const mockMails: Mail[] = [
   {

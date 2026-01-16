@@ -3,20 +3,16 @@
  * Displays online/offline members on the right sidebar
  */
 
-import { useAtomValue } from "jotai";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Overlay } from "../../design-system/Overlay";
-import { Text } from "../../design-system/text/Text.tsx";
-import {
-  FontSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { mockMembers } from "./mockData";
-import { showMemberListAtom } from "./store";
-import type { Member } from "./types";
+import {useAtomValue} from "jotai"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Overlay} from "../../design-system/Overlay"
+import {Text} from "../../design-system/text/Text.tsx"
+import {FontSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {mockMembers} from "./mockData"
+import {showMemberListAtom} from "./store"
+import type {Member} from "./types"
 
 function MemberItem({ member }: { member: Member }) {
   const getStatusColor = (status: Member["status"]) => {
@@ -95,12 +91,8 @@ export function MemberList() {
     return null;
   }
 
-  const onlineMembers = mockMembers.filter(
-    (m) => m.status !== "offline",
-  );
-  const offlineMembers = mockMembers.filter(
-    (m) => m.status === "offline",
-  );
+  const onlineMembers = mockMembers.filter((m) => m.status !== "offline");
+  const offlineMembers = mockMembers.filter((m) => m.status === "offline");
 
   return (
     <Frame

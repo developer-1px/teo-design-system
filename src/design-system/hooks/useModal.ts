@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef } from "react";
-import { useFocusTrap } from "./utils/useFocusTrap";
-import { useId } from "./utils/useId";
-import { useScrollLock } from "./utils/useScrollLock";
+import {useCallback, useEffect, useRef} from "react"
+import {useFocusTrap} from "./utils/useFocusTrap"
+import {useId} from "./utils/useId"
+import {useScrollLock} from "./utils/useScrollLock"
 
 /**
  * Options for useModal hook
@@ -207,7 +207,7 @@ export function useModal(options: UseModalOptions): UseModalReturn {
    */
   const getBackdropProps = useCallback(
     (): BackdropProps => ({
-      onClick: closeOnBackdropClick ? close : () => { },
+      onClick: closeOnBackdropClick ? close : () => {},
       "aria-hidden": true,
     }),
     [closeOnBackdropClick, close],
