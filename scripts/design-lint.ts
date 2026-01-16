@@ -8,6 +8,11 @@ import {
   Node,
 } from "ts-morph";
 
+// Import runtime functions for CSS calculation
+import { frameToSettings } from "../src/design-system/Frame/frameToSettings.ts";
+import { resolveLayout } from "../src/design-system/Frame/Layout/Layout.ts";
+import type { LayoutToken } from "../src/design-system/Frame/Layout/Layout.ts";
+
 // Configuration
 const TARGET_PATTERN = "src/apps/**/*.tsx";
 const FIX_MODE = process.argv.includes("--fix");
@@ -20,6 +25,164 @@ interface Issue {
   message: string;
   code?: string;
   fixable?: boolean;
+}
+
+interface FrameProps {
+  surface?: string;
+  border?: boolean | string;
+  rounded?: string | boolean;
+  layout?: string;
+  p?: string | number;
+  px?: string | number;
+  py?: string | number;
+  pt?: string | number;
+  pb?: string | number;
+  pl?: string | number;
+  pr?: string | number;
+  [key: string]: any;
+}
+
+interface ComputedCSS {
+  hasBackground: boolean;
+  hasPadding: boolean;
+  hasBorder: boolean;
+  hasRadius: boolean;
+  isFloating: boolean;
+  rawCSS: any;
+}
+
+/**
+ * Compute final CSS properties by executing runtime logic
+ * This simulates what Frame component actually renders
+ */
+function computeFinalCSS(props: FrameProps): ComputedCSS {
+  try {
+    // Step 1: Resolve layout preset if exists
+    let layoutSettings: any = {};
+    if (props.layout) {
+      try {
+        layoutSettings = resolveLayout(props.layout as LayoutToken);
+      } catch (e) {
+        // Layout token not recognized, skip
+      }
+    }
+
+    // Step 2: Merge props (explicit > layout > override)
+    const mergedProps = {
+      ...layoutSettings,
+      ...props,
+    };
+
+    // Step 3: Execute frameToSettings
+    const { className, style } = frameToSettings(mergedProps as any);
+
+    // Step 4: Analyze computed CSS
+    const hasBackground =
+      !!props.surface ||
+      !!style.background ||
+      !!style.backgroundColor;
+
+    const hasPadding =
+      !!props.p ||
+      !!props.px ||
+      !!props.py ||
+      !!props.pt ||
+      !!props.pb ||
+      !!props.pl ||
+      !!props.pr ||
+      !!layoutSettings.p ||
+      !!layoutSettings.px ||
+      !!layoutSettings.py ||
+      !!style.padding ||
+      !!style.paddingTop ||
+      !!style.paddingBottom ||
+      !!style.paddingLeft ||
+      !!style.paddingRight;
+
+    const hasBorder =
+      !!props.border ||
+      !!style.border ||
+      !!style.borderWidth;
+
+    const hasRadius =
+      !!props.rounded ||
+      !!style.borderRadius;
+
+    // Floating: has centering (maxWidth/margin) but not fill
+    const isFloating =
+      (!!style.maxWidth || !!style.margin) &&
+      !props.fill;
+
+    return {
+      hasBackground,
+      hasPadding,
+      hasBorder,
+      hasRadius,
+      isFloating,
+      rawCSS: style,
+    };
+  } catch (error) {
+    // Fallback: basic prop-based detection
+    return {
+      hasBackground: !!props.surface,
+      hasPadding: !!props.p || !!props.px || !!props.py,
+      hasBorder: !!props.border,
+      hasRadius: !!props.rounded,
+      isFloating: false,
+      rawCSS: {},
+    };
+  }
+}
+
+/**
+ * Extract all Frame props from JSX element using AST
+ * ⚠️ CRITICAL: NO REGEX ALLOWED - Use AST only!
+ */
+function extractFrameProps(element: JsxOpeningElement | JsxSelfClosingElement): FrameProps {
+  const props: FrameProps = {};
+
+  for (const attr of element.getAttributes()) {
+    if (attr.getKind() !== SyntaxKind.JsxAttribute) continue;
+
+    const jsxAttr = attr.asKind(SyntaxKind.JsxAttribute);
+    if (!jsxAttr) continue;
+
+    const nameNode = jsxAttr.getNameNode();
+    const name = nameNode.getText();
+    const initializer = jsxAttr.getInitializer();
+
+    if (!initializer) {
+      // Boolean prop (e.g., border, fill)
+      props[name] = true;
+      continue;
+    }
+
+    // Get value from different node types
+    if (Node.isStringLiteral(initializer)) {
+      props[name] = initializer.getLiteralValue();
+    } else if (Node.isJsxExpression(initializer)) {
+      const expression = initializer.getExpression();
+      if (!expression) continue;
+
+      if (Node.isStringLiteral(expression)) {
+        props[name] = expression.getLiteralValue();
+      } else if (Node.isNumericLiteral(expression)) {
+        props[name] = expression.getLiteralValue();
+      } else if (Node.isTrueLiteral(expression)) {
+        props[name] = true;
+      } else if (Node.isFalseLiteral(expression)) {
+        props[name] = false;
+      } else if (Node.isPropertyAccessExpression(expression)) {
+        // e.g., Layout.Stack.Content or Space.n12
+        props[name] = expression.getText();
+      } else {
+        // Complex expression, store as text
+        props[name] = expression.getText();
+      }
+    }
+  }
+
+  return props;
 }
 
 /**
@@ -151,6 +314,71 @@ function fixBorderStyle(
   }
 }
 
+/**
+ * Check design system rules on Frame component
+ */
+function checkFrameDesignRules(
+  element: JsxOpeningElement | JsxSelfClosingElement,
+  issues: Issue[],
+  filePath: string,
+): void {
+  const tagName = element.getTagNameNode().getText();
+  if (tagName !== "Frame") return;
+
+  const sourceFile = element.getSourceFile();
+  const { line, column } = sourceFile.getLineAndColumnAtPos(element.getStart());
+  const elementText = element.getText().split("\n")[0];
+
+  // Extract all props
+  const props = extractFrameProps(element);
+
+  // Compute final CSS
+  const computed = computeFinalCSS(props);
+
+  // Rule 1: Surface without padding (HIGHEST PRIORITY)
+  if (computed.hasBackground && !computed.hasPadding) {
+    issues.push({
+      file: filePath,
+      line,
+      column,
+      rule: "Surface without padding",
+      message: `surface="${props.surface}" requires padding for visual breathing room. Add p={3} or use Layout.Stack.Section`,
+      code: elementText.trim(),
+      fixable: false,
+    });
+  }
+
+  // Rule 2: Border without radius on floating
+  if (computed.hasBorder && !computed.hasRadius && computed.isFloating) {
+    issues.push({
+      file: filePath,
+      line,
+      column,
+      rule: "Floating Flat Surface",
+      message: "Floating surfaces with borders must have border-radius. Add rounded=\"md\"",
+      code: elementText.trim(),
+      fixable: false,
+    });
+  }
+
+  // Rule 3: Hardcoded background (detect style={{ background: ... }})
+  const styleAttr = element.getAttribute("style");
+  if (styleAttr) {
+    const styleObj = parseStyleObject(styleAttr);
+    if (styleObj && (styleObj.background || styleObj.backgroundColor) && !props.surface) {
+      issues.push({
+        file: filePath,
+        line,
+        column,
+        rule: "Hardcoded background",
+        message: "Use surface token instead of hardcoded background. Replace with surface=\"raised\" or similar",
+        code: elementText.trim(),
+        fixable: false,
+      });
+    }
+  }
+}
+
 function checkFrameStyleUsage(
   element: JsxOpeningElement | JsxSelfClosingElement,
   issues: Issue[],
@@ -212,6 +440,7 @@ function analyzeFile(project: Project, filePath: string): Issue[] {
     SyntaxKind.JsxOpeningElement,
   );
   openingElements.forEach((element) => {
+    checkFrameDesignRules(element, issues, filePath);
     checkFrameStyleUsage(element, issues, filePath);
   });
 
@@ -220,6 +449,7 @@ function analyzeFile(project: Project, filePath: string): Issue[] {
     SyntaxKind.JsxSelfClosingElement,
   );
   selfClosingElements.forEach((element) => {
+    checkFrameDesignRules(element, issues, filePath);
     checkFrameStyleUsage(element, issues, filePath);
   });
 
