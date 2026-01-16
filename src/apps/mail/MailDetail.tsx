@@ -12,7 +12,7 @@ import {
   Star,
   Trash2,
 } from "lucide-react";
-import { Action } from "../../design-system/Action";
+
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
@@ -64,13 +64,27 @@ export function MailDetail() {
         }}
         layout={Layout.Row.Toolbar.Default}
       >
-        <Action variant="ghost" icon={ArrowLeft} />
-        <Action variant="ghost" icon={Archive} />
-        <Action variant="ghost" icon={Trash2} />
-        <Action variant="ghost" icon={MoreVertical} />
+        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+          <Icon src={ArrowLeft} size={IconSize.n20} />
+        </Frame>
+        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+          <Icon src={Archive} size={IconSize.n20} />
+        </Frame>
+        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+          <Icon src={Trash2} size={IconSize.n20} />
+        </Frame>
+        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+          <Icon src={MoreVertical} size={IconSize.n20} />
+        </Frame>
+
         <Frame flex />
-        <Action variant="ghost" icon={ChevronLeft} />
-        <Action variant="ghost" icon={ChevronRight} />
+
+        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+          <Icon src={ChevronLeft} size={IconSize.n20} />
+        </Frame>
+        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+          <Icon src={ChevronRight} size={IconSize.n20} />
+        </Frame>
       </Frame>
 
       {/* Mail Content */}
@@ -231,9 +245,39 @@ export function MailDetail() {
 
         {/* Reply Actions */}
         <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
-          <Action variant="surface" border icon={Reply} label="Reply" />
-          <Action variant="surface" border icon={ReplyAll} label="Reply All" />
-          <Action variant="surface" border icon={Forward} label="Forward" />
+          <Frame
+            as="button"
+            interactive
+            surface="base"
+            border
+            rounded={Radius2.md}
+            override={{ py: Space.n8, px: Space.n12, gap: Space.n8, row: true, align: "center" }}
+          >
+            <Icon src={Reply} size={IconSize.n16} />
+            <Text.Menu.Item weight="medium">Reply</Text.Menu.Item>
+          </Frame>
+          <Frame
+            as="button"
+            interactive
+            surface="base"
+            border
+            rounded={Radius2.md}
+            override={{ py: Space.n8, px: Space.n12, gap: Space.n8, row: true, align: "center" }}
+          >
+            <Icon src={ReplyAll} size={IconSize.n16} />
+            <Text.Menu.Item weight="medium">Reply All</Text.Menu.Item>
+          </Frame>
+          <Frame
+            as="button"
+            interactive
+            surface="base"
+            border
+            rounded={Radius2.md}
+            override={{ py: Space.n8, px: Space.n12, gap: Space.n8, row: true, align: "center" }}
+          >
+            <Icon src={Forward} size={IconSize.n16} />
+            <Text.Menu.Item weight="medium">Forward</Text.Menu.Item>
+          </Frame>
         </Frame>
       </Frame>
     </Frame>

@@ -23,6 +23,7 @@ import {
   Space,
   Radius2,
 } from "../design-system/token";
+import { ZIndex } from "../design-system/token/token.const.1tier";
 
 export function SlideApp() {
   return (
@@ -33,12 +34,12 @@ export function SlideApp() {
           position: "absolute",
           top: 0,
           left: 0,
-          right: 0,
-          zIndex: 10
+          right: 0
         }}
         override={{
           px: Space.n16,
-            h: Size.n44
+            h: Size.n44,
+            zIndex: ZIndex.n10
         }}
         layout={Layout.Row.Header.Default} border="bottom"
       >

@@ -5,8 +5,7 @@ import { Text } from "../../design-system/text/Text";
 import {
   FontSize,
   Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+  Space, ZIndex } from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export interface SiteHeaderProps {
@@ -23,12 +22,13 @@ export function SiteHeader({
       style={{
         height: "var(--header-height)",
         position: "sticky",
-        top: 0,
-        zIndex: 100
+        top: 0
       }}
       layout={Layout.Row.Header.Default}
       surface="base"
-      override={{ w: Size.fill, align: "center" }} border="bottom"
+      override={{ w: Size.fill, align: "center",
+          zIndex: ZIndex.n100
+    }} border="bottom"
     >
       <Frame
         style={{

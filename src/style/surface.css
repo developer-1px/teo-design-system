@@ -9,30 +9,19 @@
 }
 
 .surface-sunken {
-  background-color: var(--surface-sunken);
+  background-color: var(--surface-sunken-bg);
 }
 
 .surface-raised {
-  background-color: var(--surface-raised);
-  box-shadow: var(--shadow-sm);
-  border: var(--border-width) solid var(--border-color);
+  background-color: var(--surface-raised-bg);
+  box-shadow: var(--surface-raised-shadow);
+  border: var(--border-width) solid var(--surface-raised-border);
 }
 
 .surface-overlay {
-  background-color: var(--surface-overlay);
-  box-shadow: var(--shadow-lg);
-  border: var(--border-width) solid var(--border-color);
-}
-
-.surface-panel {
-  background-color: var(--surface-panel);
-  border-right: var(--border-width) solid var(--border-color);
-}
-
-.surface-card {
-  background-color: var(--surface-card);
-  box-shadow: var(--shadow-sm);
-  border: var(--border-width) solid var(--border-color);
+  background-color: var(--surface-overlay-bg);
+  box-shadow: var(--surface-overlay-shadow);
+  border: var(--border-width) solid var(--surface-overlay-border);
 }
 
 .surface-primary {
@@ -40,12 +29,109 @@
   color: var(--primary-fg);
 }
 
-.surface-selected {
-  background-color: var(--surface-selected);
+/* -------------------------------------------------------------------------- */
+/*                          Interactive Surfaces                              */
+/* -------------------------------------------------------------------------- */
+
+/* Transitions for all interactive surfaces */
+.frame.interactive {
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  /* Default cursor for interactive */
 }
 
-.surface-hover {
-  background-color: var(--control-bg-hover);
+/* Explicit Interactive Modes */
+.frame.interactive-button {
+  cursor: pointer;
+}
+
+.frame.interactive-text {
+  cursor: text;
+}
+
+/* 
+ * 1. Base Interactive 
+ * Typically used for List Items, Menu Items
+ */
+/* 
+ * 1. Base Interactive 
+ * Typically used for List Items, Menu Items
+ */
+.frame.interactive.surface-base:hover {
+  background-color: var(--surface-base-bg-hover);
+}
+
+.frame.interactive.surface-base:active {
+  background-color: var(--surface-base-bg-active);
+}
+
+/* 
+ * 2. Sunken Interactive (INPUT PATTERN) 
+ * Crucial: Sunken -> Base on Focus (Pop effect)
+ */
+.frame.interactive.surface-sunken {
+  /* Default: Sunken (Gray/Input BG) */
+  background-color: var(--surface-sunken-bg);
+  border: 1px solid var(--control-border-default);
+  /* Always enforce border for inputs */
+}
+
+.frame.interactive.surface-sunken:hover {
+  background-color: var(--surface-sunken-bg-hover);
+  border-color: var(--surface-sunken-border-hover);
+}
+
+.frame.interactive.surface-sunken:focus-within,
+.frame.interactive.surface-sunken.active {
+  background-color: var(--surface-sunken-bg-focus);
+  border-color: var(--surface-sunken-border-focus);
+  z-index: 1;
+  /* Bring to front if overlapping */
+}
+
+/* 
+ * 3. Ghost Interactive (No Surface initially) 
+ */
+.surface-ghost {
+  background-color: transparent;
+  color: var(--text-body);
+  border: var(--border-width) solid transparent;
+  /* Prevent layout shift when switching to raised/bordered */
+}
+
+.frame.interactive.surface-ghost:hover {
+  background-color: var(--surface-ghost-bg-hover);
+  color: var(--surface-ghost-fg-hover);
+}
+
+.frame.interactive.surface-ghost:active {
+  background-color: var(--surface-ghost-bg-active);
+}
+
+/* 
+ * 4. Primary Interactive 
+ */
+.frame.interactive.surface-primary:hover {
+  opacity: var(--surface-primary-opacity-hover);
+}
+
+.frame.interactive.surface-primary:active {
+  opacity: var(--surface-primary-opacity-active);
+}
+
+/* 
+ * 5. Raised/Control Interactive (Buttons) 
+ */
+.frame.interactive.surface-raised:hover {
+  filter: brightness(0.95);
+  /* Slight dim for raised elements */
+  border-color: var(--surface-raised-border-hover);
+}
+
+.frame.interactive.surface-raised:active {
+  filter: brightness(0.9);
+  transform: translateY(1px);
+  /* Tactile feedback */
 }
 
 /* Cursor */

@@ -19,8 +19,7 @@ import { Text } from "../design-system/text/Text";
 import {
   IconSize,
   Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
+  Space, ZIndex } from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LandingApp() {
@@ -32,13 +31,13 @@ export function LandingApp() {
           style={{
             position: "sticky",
             top: 0,
-            zIndex: 100,
             borderBottom: "1px solid var(--border-subtle)",
           }}
           override={{
             py: Space.n20,
             px: Space.n24,
-          }}
+              zIndex: ZIndex.n100
+        }}
           layout={Layout.Row.Header.Sticky}
         >
           <TeoLogo height={24} />

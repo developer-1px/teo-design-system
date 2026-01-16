@@ -37,11 +37,10 @@ export function PropertyTree({
           px: Space.n6,
         }}
         style={{
-          borderBottom: "1px solid var(--border-color)",
           paddingLeft: `${depth * 12 + 8}px`,
         }}
         layout={Layout.Row.LabelValue.Default}
-        surface={background}
+        surface={background} border="bottom"
       >
         <Text size={FontSize.n9} color="secondary">
           {label}
@@ -73,7 +72,6 @@ export function PropertyTree({
           px: Space.n6,
         }}
         style={{
-          borderBottom: "1px solid var(--border-color)",
           paddingLeft: `${depth * 12 + 8}px`,
           cursor: isEmpty ? "default" : "pointer",
         }}
@@ -82,7 +80,7 @@ export function PropertyTree({
         onClick={(e) => {
           e.stopPropagation();
           if (!isEmpty) setIsOpen(!isOpen);
-        }}
+        }} border="bottom"
       >
         <Frame layout={Layout.Row.Item.Default}>
           {!isEmpty && (

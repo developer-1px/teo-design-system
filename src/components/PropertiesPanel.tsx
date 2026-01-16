@@ -189,9 +189,9 @@ export function PropertiesPanel() {
         override={{
           p: Space.n4,
           gap: Space.n4,
+            h: Size.n40
         }}
         style={{
-          height: "40px",
           borderBottom: "1px solid var(--border-color)",
           borderColor: "var(--border-color)",
         }}
@@ -237,13 +237,12 @@ export function PropertiesPanel() {
         <Frame
           rounded={Radius2.md}
           style={{
-            border: "1px solid var(--border-color)",
             padding: "1px",
             gap: "1px",
           }} // 1px style override
           layout={Layout.Row.Toolbar.Default}
           surface="sunken"
-          override={{ justify: "between" }}
+          override={{ justify: "between" }} border
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
             isSeparator(tool) ? (
@@ -377,8 +376,7 @@ export function PropertiesPanel() {
                     override={{ gap: Space.n1 }}
                     surface="overlay"
                     rounded={Radius2.md}
-                    shadow="md"
-                    style={{ border: "1px solid var(--border-color)" }}
+                    shadow="md" border
                   >
                     {fontFamilies.map((item, index) => (
                       <Frame
@@ -434,8 +432,7 @@ export function PropertiesPanel() {
                       override={{ gap: Space.n1 }}
                       surface="overlay"
                       rounded={Radius2.md}
-                      shadow="md"
-                      style={{ border: "1px solid var(--border-color)" }}
+                      shadow="md" border
                     >
                       {fontWeights.map((item, index) => (
                         <Frame
@@ -475,13 +472,12 @@ export function PropertiesPanel() {
             <Frame
               rounded={Radius2.md}
               style={{
-                border: "1px solid var(--border-color)",
                 padding: "1px",
                 gap: "1px",
               }}
               layout={Layout.Row.Toolbar.Compact}
               surface="sunken"
-              override={{ justify: "between" }}
+              override={{ justify: "between" }} border
             >
               {[
                 AlignLeft,
@@ -518,10 +514,9 @@ export function PropertiesPanel() {
                 rounded={Radius2.full}
                 style={{
                   width: "10px",
-                  height: "10px",
-                  border: "1px solid var(--border-color)",
+                  height: "10px"
                 }}
-                surface="base"
+                surface="base" border
               />
             }
             rightIcon={

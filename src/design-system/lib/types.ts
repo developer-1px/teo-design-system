@@ -19,7 +19,8 @@ export type SurfaceToken =
   | "page"
   | "panel"
   | "card"
-  | "hover";
+  | "hover"
+  | "ghost";
 
 export type ActionVariant = "ghost" | "surface" | "primary";
 

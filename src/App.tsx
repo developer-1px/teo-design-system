@@ -18,8 +18,7 @@ import { useTheme } from "./design-system/theme";
 import {
   FontSize,
   IconSize,
-  Space,
-} from "./design-system/token/token.const.1tier";
+  Space, ZIndex, Size } from "./design-system/token/token.const.1tier";
 import { Radius2 } from "./design-system/token/token.const.2tier";
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
@@ -51,9 +50,10 @@ function Navigation() {
         shadow: "xl",
         p: Space.n4,
         gap: Space.n4,
-      }}
+          zIndex: ZIndex.n200
+    }}
       rounded={Radius2.full}
-      style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
+      style={{ position: "fixed", bottom: 20, left: 20 }}
       surface="raised"
       layout={Layout.Row.Toolbar.Default}
     >
@@ -105,7 +105,7 @@ function App() {
   return (
     <HashRouter>
       <InspectorOverlay />
-      <Frame style={{ minHeight: "100vh" }}>
+      <Frame override={{ minHeight: Size.screen }}>
         <Routes>
           <Route path="/" element={<LandingApp />} />
           <Route path="/text" element={<TextSystemApp />} />

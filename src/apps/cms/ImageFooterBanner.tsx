@@ -9,8 +9,7 @@ import {
   IconSize,
   Opacity,
   Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+  Space, ZIndex } from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function ImageFooterBanner() {
@@ -53,11 +52,12 @@ export function ImageFooterBanner() {
           style={{
             maxWidth: "var(--container-n640)",
             position: "relative",
-            zIndex: 10,
             margin: "0 auto",
           }}
           fill
-          override={{ p: Space.n24, gap: Space.n24, align: "center" }}
+          override={{ p: Space.n24, gap: Space.n24, align: "center",
+              zIndex: ZIndex.n10
+        }}
         >
           <Text.Prose.Title
             variant="xl"

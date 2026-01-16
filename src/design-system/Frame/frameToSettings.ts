@@ -12,6 +12,7 @@ type FrameSettingsInput = FrameOverrides & {
   borderWidth?: BorderWidthToken;
   z?: ZIndexToken;
   zIndex?: ZIndexToken;
+  interactive?: boolean;
 };
 
 export function frameToSettings(props: FrameSettingsInput): {
@@ -219,6 +220,13 @@ export function frameToSettings(props: FrameSettingsInput): {
   // ---------------------------------------------------------------------------
   // 6. Return
   // ---------------------------------------------------------------------------
+  if (props.interactive) {
+    classes.push("interactive");
+    if (typeof props.interactive === "string") {
+      classes.push(`interactive-${props.interactive}`);
+    }
+  }
+
   return {
     className: classes.join(" "),
     style: cleanStyles(styles),

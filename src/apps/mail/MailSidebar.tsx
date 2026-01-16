@@ -9,7 +9,7 @@ import {
   Star,
   Trash2,
 } from "lucide-react";
-import { Action } from "../../design-system/Action";
+
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
@@ -28,14 +28,14 @@ const FOLDER_CONFIG: Array<{
   label: string;
   icon: React.ElementType;
 }> = [
-  { id: "inbox", label: "Inbox", icon: Inbox },
-  { id: "starred", label: "Starred", icon: Star },
-  { id: "sent", label: "Sent", icon: Send },
-  { id: "drafts", label: "Drafts", icon: FileText },
-  { id: "archive", label: "Archive", icon: Archive },
-  { id: "spam", label: "Spam", icon: AlertOctagon },
-  { id: "trash", label: "Trash", icon: Trash2 },
-];
+    { id: "inbox", label: "Inbox", icon: Inbox },
+    { id: "starred", label: "Starred", icon: Star },
+    { id: "sent", label: "Sent", icon: Send },
+    { id: "drafts", label: "Drafts", icon: FileText },
+    { id: "archive", label: "Archive", icon: Archive },
+    { id: "spam", label: "Spam", icon: AlertOctagon },
+    { id: "trash", label: "Trash", icon: Trash2 },
+  ];
 
 export function MailSidebar() {
   const [selectedFolder, setSelectedFolder] = useAtom(selectedFolderAtom);
@@ -52,14 +52,25 @@ export function MailSidebar() {
       }}
       surface="sunken"
     >
-      {/* Compose Button */}
-      <Action
-        variant="primary"
-        icon={Edit}
-        label="Compose"
+      {/* Compose Button - Raised Interactive */}
+      <Frame
+        as="button"
+        interactive
+        surface="raised"
         rounded={Radius2.md}
-        w="100%"
-      />
+        layout={Layout.Row.Item.Default}
+        override={{
+          p: Space.n8,
+          gap: Space.n8,
+          align: "center",
+          justify: "start",
+        }}
+      // Primary override style if needed for Compose, but "raised" is standard button now.
+      // Assuming we want strict raised button behavior.
+      >
+        <Icon src={Edit} size={IconSize.n16} />
+        <Text.Menu.Item weight="medium">Compose</Text.Menu.Item>
+      </Frame>
 
       <Frame override={{ h: Size.n8 }} />
 
@@ -70,57 +81,55 @@ export function MailSidebar() {
           const count = folderCounts[folder.id];
 
           return (
-            <Action
+            <Frame
               key={folder.id}
-              variant={isActive ? "surface" : "ghost"}
+              as="button"
+              interactive
+              surface={isActive ? "raised" : "ghost"}
               rounded={Radius2.md}
-              w="100%"
-              justify="start"
+              layout={Layout.Row.Item.Default}
+              override={{
+                gap: Space.n12,
+                py: Space.n6,
+                px: Space.n8,
+                align: "center",
+                justify: "start",
+                w: Size.fill,
+              }}
               onClick={() => setSelectedFolder(folder.id)}
             >
-              <Frame
-                layout={Layout.Row.Item.Default}
-                override={{
-                  gap: Space.n12,
-                  w: Size.fill,
-                  py: Space.n6,
-                  px: Space.n8,
-                  align: "center",
+              <Icon
+                src={folder.icon}
+                size={IconSize.n16}
+                style={{
+                  color: isActive
+                    ? "var(--text-primary)"
+                    : "var(--text-secondary)",
+                }}
+              />
+              <Text.Menu.Item
+                weight={isActive ? "medium" : "regular"}
+                style={{
+                  color: isActive
+                    ? "var(--text-primary)"
+                    : "var(--text-secondary)",
                 }}
               >
-                <Icon
-                  src={folder.icon}
-                  size={IconSize.n16}
+                {folder.label}
+              </Text.Menu.Item>
+              <Frame flex />
+              {count > 0 && (
+                <Text.Card.Note
                   style={{
                     color: isActive
                       ? "var(--text-primary)"
-                      : "var(--text-secondary)",
-                  }}
-                />
-                <Text.Menu.Item
-                  weight={isActive ? "medium" : "regular"}
-                  style={{
-                    color: isActive
-                      ? "var(--text-primary)"
-                      : "var(--text-secondary)",
+                      : "var(--text-tertiary)",
                   }}
                 >
-                  {folder.label}
-                </Text.Menu.Item>
-                <Frame flex />
-                {count > 0 && (
-                  <Text.Card.Note
-                    style={{
-                      color: isActive
-                        ? "var(--text-primary)"
-                        : "var(--text-tertiary)",
-                    }}
-                  >
-                    {count}
-                  </Text.Card.Note>
-                )}
-              </Frame>
-            </Action>
+                  {count}
+                </Text.Card.Note>
+              )}
+            </Frame>
           );
         })}
       </Frame>

@@ -280,10 +280,8 @@ export function TokensApp() {
               >
                 <Frame
                   style={{
-                    position: "relative",
-                    width: "100%",
-                    height: "100%",
-                  }}
+                    position: "relative"
+                  }} override={{ w: Size.fill, h: Size.fill }}
                 >
                   {ZIndexScale.filter((_, i) => i % 2 === 0).map((val, i) => (
                     <Frame

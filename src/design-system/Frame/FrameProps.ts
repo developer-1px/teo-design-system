@@ -53,6 +53,8 @@ interface FramePresetProps {
 
   opacity?: OpacityToken;
   clip?: boolean;
+
+  interactive?: boolean | "button" | "text";
 }
 
 // --- 2. OVERRIDES (Strict 1-Tier Tokens) ---

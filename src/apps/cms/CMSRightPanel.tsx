@@ -17,10 +17,10 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
         w: Size.n320,
         gap: Space.n4,
         p: Space.n4,
-      }}
+          h: Size.fill
+    }}
       surface="sunken" // Match sidebar
       style={{
-        height: "100%",
         transition: "width 0.3s ease",
       }} border="left"
     >

@@ -9,8 +9,7 @@ import { Text } from "../design-system/text/Text";
 import {
   IconSize,
   Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
+  Space, ZIndex } from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
 
 /* 
@@ -36,10 +35,11 @@ export function TextSystemApp() {
             position: "fixed",
             top: 24,
             left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 100,
+            transform: "translateX(-50%)"
           }}
-          override={{ shadow: "lg", p: Space.n4 }}
+          override={{ shadow: "lg", p: Space.n4,
+              zIndex: ZIndex.n100
+        }}
           rounded={Radius2.full}
           layout={Layout.Row.Actions.Center}
         >

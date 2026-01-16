@@ -45,10 +45,9 @@ export function FloatingToolbar() {
     >
       <Frame
         rounded={Radius2.full}
-        style={{ border: "1px solid var(--border-color)" }}
         layout={Layout.Row.Toolbar.Default}
         surface="base"
-        override={{ gap: Space.n4, p: Space.n4, shadow: "lg", align: "center" }}
+        override={{ gap: Space.n4, p: Space.n4, shadow: "lg", align: "center" }} border
       >
         {BOTTOM_TOOLS.map((tool, i) =>
           tool.separator ? (

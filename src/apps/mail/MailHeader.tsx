@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { Menu, Search, Settings, User } from "lucide-react";
-import { Action } from "../../design-system/Action";
+
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
@@ -30,7 +30,16 @@ export function MailHeader() {
     >
       {/* Left: Logo and Menu */}
       <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default}>
-        <Action variant="ghost" icon={Menu} />
+        <Frame
+          as="button"
+          interactive
+          surface="ghost"
+          rounded={Radius2.md}
+          override={{ p: Space.n8 }}
+        >
+          <Icon src={Menu} size={IconSize.n20} />
+        </Frame>
+
         <Frame
           override={{ gap: Space.n8, align: "center" }}
           layout={Layout.Row.Item.Default}
@@ -46,8 +55,10 @@ export function MailHeader() {
 
       {/* Center: Search */}
       <Frame
+        as="label"
         rounded={Radius2.md}
         surface="sunken"
+        interactive="text"
         layout={Layout.Row.Toolbar.Compact}
         override={{
           w: Size.n448,
@@ -80,8 +91,25 @@ export function MailHeader() {
 
       {/* Right: Profile and Settings */}
       <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
-        <Action variant="ghost" icon={Settings} />
-        <Action variant="surface" icon={User} />
+        <Frame
+          as="button"
+          interactive
+          surface="ghost"
+          rounded={Radius2.md}
+          override={{ p: Space.n8 }}
+        >
+          <Icon src={Settings} size={IconSize.n20} />
+        </Frame>
+        <Frame
+          as="button"
+          interactive
+          surface="base"
+          border
+          rounded={Radius2.full}
+          override={{ p: Space.n8 }}
+        >
+          <Icon src={User} size={IconSize.n20} />
+        </Frame>
       </Frame>
     </Frame>
   );

@@ -40,12 +40,20 @@ export function MailList() {
         return (
           <Frame
             key={thread.id}
-            override={{ py: Space.n12, px: Space.n16, gap: Space.n8 }}
-            style={{
-              backgroundColor: isSelected ? "var(--surface-sunken)" : undefined,
-              cursor: "pointer",
+            interactive
+            surface={isSelected ? "sunken" : "base"}
+            override={{
+              py: Space.n12,
+              px: Space.n16,
+              gap: Space.n8,
+              borderBottom: true, // Frame override handles the structure
             }}
-            onClick={() => setSelectedThreadId(thread.id)} border="bottom"
+            style={{
+              // Reserve border space when not selected (sunken creates 1px border)
+              border: isSelected ? undefined : "1px solid transparent",
+              borderBottomColor: "var(--border-color)", // Ensure bottom separator is visible
+            }}
+            onClick={() => setSelectedThreadId(thread.id)}
           >
             {/* Header Row */}
             <Frame

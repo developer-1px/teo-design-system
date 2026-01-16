@@ -233,10 +233,9 @@ export function InspectorPanel({
         rounded={Radius2.lg}
         style={{
           maxHeight: "80vh",
-          border: "1px solid var(--border-color)",
           width: 260, // Enforce width as per original code logic usually IMPLIED or specific
         }}
-        surface="base"
+        surface="base" border
       >
         {/* Draggable Header - Compact */}
         <Frame
@@ -247,12 +246,11 @@ export function InspectorPanel({
           }}
           style={{
             cursor: "grab",
-            userSelect: "none",
-            borderBottom: "1px solid var(--border-color)",
+            userSelect: "none"
           }}
           surface="sunken"
           layout={Layout.Row.Header.Default}
-          onMouseDown={handleMouseDown}
+          onMouseDown={handleMouseDown} border="bottom"
         >
           <Frame
             override={{ gap: Space.n6 }}
@@ -415,8 +413,7 @@ export function InspectorPanel({
                 <Frame
                   override={{ gap: Space.n0 }}
                   rounded={Radius2.sm}
-                  style={{ border: "1px solid var(--border-color)" }}
-                  clip
+                  clip border
                 >
                   {section.items.map((item, i) => (
                     <PropertyTree

@@ -21,6 +21,49 @@
   /* Often same as base or specific color */
   --surface-primary: var(--primary-bg);
 
+  /* --- Semantic Surface Properties (Decoupled) --- */
+
+  /* Raised (Card/Popups) */
+  --surface-raised-bg: var(--surface-raised);
+  --surface-raised-border: var(--border-color);
+  --surface-raised-shadow: var(--shadow-sm);
+
+  /* Overlay (Modals/Tooltips) */
+  --surface-overlay-bg: var(--surface-overlay);
+  --surface-overlay-border: var(--border-color);
+  --surface-overlay-shadow: var(--shadow-lg);
+
+  /* Card (Content - Now Raised) -- REMOVED */
+  /* Panel (Sidebar - Now Base/Sunken) -- REMOVED */
+
+  /* Sunken (Background/Inputs) */
+  --surface-sunken-bg: var(--surface-sunken);
+
+  /* --- Interactive States (Detailed) --- */
+
+  /* Base Interactive */
+  --surface-base-bg-hover: var(--control-bg-hover);
+  --surface-base-bg-active: var(--surface-sunken-bg);
+
+  /* Sunken Interactive (Input) */
+  --surface-sunken-bg-hover: var(--surface-sunken-bg);
+  --surface-sunken-border-hover: var(--control-border-hover);
+  --surface-sunken-bg-focus: var(--surface-base);
+  /* Pop to white */
+  --surface-sunken-border-focus: var(--control-border-focus);
+
+  /* Ghost Interactive */
+  --surface-ghost-bg-hover: var(--control-bg-hover);
+  --surface-ghost-fg-hover: var(--text-primary);
+  --surface-ghost-bg-active: var(--surface-overlay-bg);
+
+  /* Raised Interactive */
+  --surface-raised-border-hover: var(--control-border-hover);
+
+  /* Primary Interactive */
+  --surface-primary-opacity-hover: 0.9;
+  --surface-primary-opacity-active: 0.8;
+
   --text-primary: #18181b;
   --text-body: #3f3f46;
   --text-subtle: #71717a;

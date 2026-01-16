@@ -8,8 +8,7 @@ import {
   FontSize,
   IconSize,
   Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+  Space, Opacity } from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { EditableWrapper } from "./EditableWrapper";
 
@@ -35,25 +34,27 @@ export function HeaderHero() {
       >
         {/* Background Decoration */}
         <Frame
-          override={{}}
+          override={{
+              opacity: Opacity.n10
+        }}
           style={{
             position: "absolute",
             top: "-25px",
             right: "-25px",
             background: "var(--color-primary)",
-            filter: "blur(150px)",
-            opacity: 0.1,
+            filter: "blur(150px)"
           }}
         />
         <Frame
-          override={{}}
+          override={{
+              opacity: Opacity.n15
+        }}
           style={{
             position: "absolute",
             bottom: "-25px",
             left: "-25px",
             background: "var(--color-warning)",
-            filter: "blur(150px)",
-            opacity: 0.15,
+            filter: "blur(150px)"
           }}
         />
 
@@ -141,10 +142,11 @@ export function HeaderHero() {
 
         {/* Hero Visual: Mockup UI */}
         <Frame
-          override={{ w: Size.fill }}
+          override={{ w: Size.fill,
+              maxWidth: Size.n384
+        }}
           rounded={Radius2["2xl"]}
           style={{
-            maxWidth: "var(--size-n384)",
             position: "relative",
             marginTop: "var(--space-n64)",
             transform: "perspective(1000px) rotateX(5deg)",

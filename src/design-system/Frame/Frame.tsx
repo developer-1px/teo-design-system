@@ -1,9 +1,9 @@
 import type React from "react"
 
-import type {FrameOverrides, FrameProps} from "./FrameProps.ts"
-import {frameToSettings} from "./frameToSettings.ts"
+import type { FrameOverrides, FrameProps } from "./FrameProps.ts"
+import { frameToSettings } from "./frameToSettings.ts"
 
-import {resolveLayout} from "./Layout/Layout.ts"
+import { resolveLayout } from "./Layout/Layout.ts"
 
 export function Frame({
   children,
@@ -40,6 +40,7 @@ export function Frame({
 
   clip,
   scroll,
+  interactive,
 
   // Overrides (1-Tier Tokens)
   override,
@@ -101,16 +102,17 @@ export function Frame({
     ...cleanExplicitProps,
     ...combinedOverride, // Valid 1-Tier tokens
     // Top-level only Appearance props
-    ...(surface !== undefined && {surface}),
-    ...(rounded !== undefined && {rounded}),
-    ...(border !== undefined && {border}),
-    ...(borderWidth !== undefined && {borderWidth}),
+    ...(surface !== undefined && { surface }),
+    ...(rounded !== undefined && { rounded }),
+    ...(border !== undefined && { border }),
+    ...(borderWidth !== undefined && { borderWidth }),
+    ...(interactive !== undefined && { interactive }),
   }
 
   // ---------------------------------------------------------------------------
   // 5. Calculate CSS (Classes & Vars)
   // ---------------------------------------------------------------------------
-  const {className: settingsClass, style: settingsVars} =
+  const { className: settingsClass, style: settingsVars } =
     frameToSettings(settingsInput)
 
   // ---------------------------------------------------------------------------

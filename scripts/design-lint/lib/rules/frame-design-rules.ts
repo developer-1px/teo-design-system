@@ -1,0 +1,67 @@
+import type { JsxOpeningElement, JsxSelfClosingElement, Issue, FrameProps, ComputedCSS } from "../types";
+import { extractFrameProps } from "../ast-parser";
+import { computeFinalCSS } from "../analyzer";
+
+export { checkFrameDesignRules };
+function checkFrameDesignRules(
+  element: JsxOpeningElement | JsxSelfClosingElement,
+  issues: Issue[],
+  filePath: string,
+): void {
+  const tagName = element.getTagNameNode().getText();
+  if (tagName !== "Frame") return;
+
+  const sourceFile = element.getSourceFile();
+  const { line, column } = sourceFile.getLineAndColumnAtPos(element.getStart());
+  const elementText = element.getText().split("\n")[0];
+
+  // Extract all props
+  const props = extractFrameProps(element);
+
+  // Compute final CSS
+  const computed = computeFinalCSS(props);
+
+  // Rule 1: Surface without padding (HIGHEST PRIORITY)
+  if (computed.hasBackground && !computed.hasPadding) {
+    issues.push({
+      file: filePath,
+      line,
+      column,
+      rule: "Surface without padding",
+      message: `surface="${props.surface}" requires padding for visual breathing room. Add p={3} or use Layout.Stack.Section`,
+      code: elementText.trim(),
+      fixable: false,
+    });
+  }
+
+  // Rule 2: Border without radius on floating
+  if (computed.hasBorder && !computed.hasRadius && computed.isFloating) {
+    issues.push({
+      file: filePath,
+      line,
+      column,
+      rule: "Floating Flat Surface",
+      message: "Floating surfaces with borders must have border-radius. Add rounded=\"md\"",
+      code: elementText.trim(),
+      fixable: false,
+    });
+  }
+
+  // Rule 3: Hardcoded background (detect style={{ background: ... }})
+  const styleAttr = element.getAttribute("style");
+  if (styleAttr) {
+    const styleObj = parseStyleObject(styleAttr);
+    if (styleObj && (styleObj.background || styleObj.backgroundColor) && !props.surface) {
+      issues.push({
+        file: filePath,
+        line,
+        column,
+        rule: "Hardcoded background",
+        message: "Use surface token instead of hardcoded background. Replace with surface=\"raised\" or similar",
+        code: elementText.trim(),
+        fixable: false,
+      });
+    }
+  }
+}
+

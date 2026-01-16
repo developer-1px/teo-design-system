@@ -2,7 +2,7 @@ import type React from "react";
 import { Frame } from "./Frame/Frame.tsx";
 
 import { Text } from "./text/Text.tsx";
-import { FontSize, Space } from "./token/token.const.1tier.ts";
+import { FontSize, Space, Opacity } from "./token/token.const.1tier.ts";
 
 interface FieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -86,10 +86,9 @@ export function Field({
       />
       {rightIcon && (
         <Frame
-          style={{
-            opacity: 0.4,
-          }}
-          override={{}}
+          override={{
+              opacity: Opacity.n40
+        }}
         >
           {rightIcon}
         </Frame>
