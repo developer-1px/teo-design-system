@@ -54,14 +54,15 @@ type KeyOf<T extends readonly number[]> = `n${ScaleOf<T>}`;
 // Space (spacing)
 // ---------------------------------
 export const SpaceScale = [
-  0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44, 48,
-  56, 64, 72, 80, 88, 96, 112, 128, 144, 160,
+  0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44,
+  48, 56, 64, 72, 80, 88, 96, 112, 128, 144, 160,
 ] as const;
 export type SpaceScale = ScaleOf<typeof SpaceScale>;
 export type SpaceKey = KeyOf<typeof SpaceScale>;
 
 export const Space = {
   n0: "var(--space-n0)" as SpaceToken,
+  n1: "var(--space-n1)" as SpaceToken,
   n2: "var(--space-n2)" as SpaceToken,
   n4: "var(--space-n4)" as SpaceToken,
   n6: "var(--space-n6)" as SpaceToken,

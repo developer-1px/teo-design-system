@@ -57,8 +57,8 @@ function MemberItem({ member }: { member: Member }) {
         {/* Status Indicator */}
         <Frame
           override={{
-            w: Size.n10,
-            h: Size.n10,
+            w: Size.n8,
+            h: Size.n8,
           }}
           rounded={Radius2.full}
           style={{

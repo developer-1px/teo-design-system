@@ -65,7 +65,7 @@ export function ServerList() {
       <Frame
         override={{
           w: Size.n32,
-          h: Size.n2,
+          h: Size.n4,
         }}
         style={{ backgroundColor: "var(--border-color)" }}
         rounded={Radius2.full}

@@ -16,7 +16,6 @@ import { Radius2 } from "../design-system/token/token.const.2tier";
 import { InspectorPanel } from "./components/InspectorPanel";
 import { useInspectorHotkeys } from "./hooks/useInspectorHotkeys";
 import { useInspectorTarget } from "./hooks/useInspectorTarget";
-import { generateJSX } from "./lib/inspector-utils";
 
 export function InspectorOverlay() {
   const [isActive, setIsActive] = useState(false);

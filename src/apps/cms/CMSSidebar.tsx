@@ -3,7 +3,6 @@ import {
   FileText,
   Grid2X2,
   List,
-  Menu,
   PanelLeft,
   Plus,
   Settings,
