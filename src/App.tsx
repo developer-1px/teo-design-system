@@ -2,6 +2,7 @@ import { Moon, Sun } from "lucide-react";
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import { CMSApp } from "./apps/CMSApp";
 import { CRMApp } from "./apps/crm/CRMApp.tsx";
+import { DiscordApp } from "./apps/DiscordApp";
 import { LandingApp } from "./apps/LandingApp";
 import { LoginApp } from "./apps/LoginApp";
 import { MailApp } from "./apps/MailApp";
@@ -65,6 +66,7 @@ function Navigation() {
       <NavItem to="/cms" label="CMS" />
       <NavItem to="/crm" label="CRM" />
       <NavItem to="/mail" label="Mail" />
+      <NavItem to="/discord" label="Discord" />
       <NavItem to="/login" label="Login" />
       <ThemeToggleItem />
     </Frame>
@@ -114,6 +116,7 @@ function App() {
           <Route path="/cms" element={<CMSApp />} />
           <Route path="/crm" element={<CRMApp />} />
           <Route path="/mail" element={<MailApp />} />
+          <Route path="/discord" element={<DiscordApp />} />
           <Route path="/login" element={<LoginApp />} />
         </Routes>
         <Navigation />
