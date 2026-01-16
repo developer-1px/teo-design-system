@@ -3,21 +3,16 @@
  * Message composer at the bottom of the channel
  */
 
-import { Plus, Smile } from "lucide-react";
-import { useState } from "react";
-import { useAtomValue } from "jotai";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { getChannelById } from "./mockData";
-import { selectedChannelIdAtom, selectedServerIdAtom } from "./store";
+import {useAtomValue} from "jotai"
+import {Plus, Smile} from "lucide-react"
+import {useState} from "react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {getChannelById} from "./mockData"
+import {selectedChannelIdAtom, selectedServerIdAtom} from "./store"
 
 export function MessageInput() {
   const [message, setMessage] = useState("");

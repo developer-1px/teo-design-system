@@ -10,23 +10,18 @@ import {
   Palette,
   Type,
   X,
-} from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../../design-system/text/Text";
-import { FontSize, Space } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import type { ComponentStackItem } from "../lib/fiber-utils";
-import { generateJSX } from "../lib/inspector-utils";
-import {
-  AppearanceControl,
-  LayoutControl,
-  SizingControl,
-  TypographyControl,
-} from "./InspectorControls";
-import { PropertyTree } from "./PropertyTree";
+} from "lucide-react"
+import {useEffect, useRef, useState} from "react"
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Text} from "../../design-system/text/Text"
+import {FontSize, Space} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import type {ComponentStackItem} from "../lib/fiber-utils"
+import {generateJSX} from "../lib/inspector-utils"
+import {AppearanceControl, LayoutControl, SizingControl, TypographyControl,} from "./InspectorControls"
+import {PropertyTree} from "./PropertyTree"
 
 const SECTION_MAPPING: Record<string, string> = {
   // Layout (Inner Flow)
@@ -172,9 +167,9 @@ export function InspectorPanel({
   const hierarchyStack =
     stack && stack.length > 0
       ? stack.map((item, i) => ({
-        key: `${i + 1}`,
-        value: `${item.fileName}:${item.lineNumber}(${item.name})`,
-      }))
+          key: `${i + 1}`,
+          value: `${item.fileName}:${item.lineNumber}(${item.name})`,
+        }))
       : [];
 
   const handleCopy = () => {

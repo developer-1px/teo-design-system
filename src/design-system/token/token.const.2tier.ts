@@ -12,8 +12,8 @@
  * ```
  */
 
-import type { Brand } from "./lib/brand";
-import { FontSize, IconSize, Radius, Size, Space } from "./token.const.1tier";
+import type {Brand} from "./lib/brand"
+import {FontSize, IconSize, Radius, Size, Space} from "./token.const.1tier"
 
 // ---------------------------------
 // Action Size
@@ -26,19 +26,19 @@ export const ActionSize = {
   xs: {
     height: Size.n24,
     icon: IconSize.n14,
-    padding: Space.n4,
+    padding: Space.n6,
     fontSize: FontSize.n12,
   },
   sm: {
     height: Size.n32,
     icon: IconSize.n16,
-    padding: Space.n6,
+    padding: Space.n8,
     fontSize: FontSize.n13,
   },
   md: {
     height: Size.n40,
     icon: IconSize.n20,
-    padding: Space.n8,
+    padding: Space.n10,
     fontSize: FontSize.n14,
   },
   lg: {

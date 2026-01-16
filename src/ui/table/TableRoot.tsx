@@ -1,4 +1,4 @@
-import "../../style/table.css";
+import "../../style/table.css"
 
 interface TableRootProps {
   children: React.ReactNode;

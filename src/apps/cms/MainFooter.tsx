@@ -1,15 +1,10 @@
-import { ArrowUpRight, Globe, MessageSquare, Sparkles } from "lucide-react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
+import {ArrowUpRight, Globe, MessageSquare, Sparkles} from "lucide-react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text"
+import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
 
 export function MainFooter() {
   return (
@@ -21,16 +16,21 @@ export function MainFooter() {
           px: Space.n24,
           gap: Space.n48,
         }}
-        style={{
-          maxWidth: "var(--container-n1280)",
-          margin: "0 auto",
-        } as React.CSSProperties}
+        style={
+          {
+            maxWidth: "var(--container-n1280)",
+            margin: "0 auto",
+          } as React.CSSProperties
+        }
       >
         <Frame
           layout={Layout.Row.Header.Default}
           override={{ w: Size.fill, justify: "between" }}
         >
-          <Frame override={{ gap: Space.n24 }} style={{ width: "35%" } as React.CSSProperties}>
+          <Frame
+            override={{ gap: Space.n24 }}
+            style={{ width: "35%" } as React.CSSProperties}
+          >
             <Frame
               layout={Layout.Row.Item.Tight}
               override={{ gap: Space.n12, align: "center" }}
@@ -104,7 +104,12 @@ export function MainFooter() {
 
         <Frame
           layout={Layout.Row.Header.Default}
-          override={{ pt: Space.n32, w: Size.fill, justify: "between", border: true }}
+          override={{
+            pt: Space.n32,
+            w: Size.fill,
+            justify: "between",
+            border: true,
+          }}
         >
           <Text.Card.Note
             size={FontSize.n13}

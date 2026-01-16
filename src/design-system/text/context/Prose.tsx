@@ -1,4 +1,4 @@
-import { Text } from "../Text.tsx";
+import {Text} from "../Text.tsx"
 
 /* 
   Context: Prose
@@ -63,7 +63,6 @@ export const Prose = {
       }}
       {...props}
     >
-      {children}
       {children}
     </Text>
   ),

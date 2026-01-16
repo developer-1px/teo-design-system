@@ -9,14 +9,14 @@ import {
   Square,
   Sun,
   Type,
-} from "lucide-react";
-import { Action } from "../design-system/Action";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Overlay } from "../design-system/Overlay";
-import { Separator } from "../design-system/Separator";
-import { useTheme } from "../design-system/theme";
-import { IconSize, Radius2, Space } from "../design-system/token";
+} from "lucide-react"
+import {Action} from "../design-system/Action"
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {Overlay} from "../design-system/Overlay"
+import {Separator} from "../design-system/Separator"
+import {useTheme} from "../design-system/theme"
+import {IconSize, Radius2, Space} from "../design-system/token"
 
 const BOTTOM_TOOLS = [
   { icon: MousePointer2, tooltip: "Move", variant: "surface" as const },
@@ -47,7 +47,8 @@ export function FloatingToolbar() {
         rounded={Radius2.full}
         layout={Layout.Row.Toolbar.Default}
         surface="base"
-        override={{ gap: Space.n4, p: Space.n4, shadow: "lg", align: "center" }} border
+        override={{ gap: Space.n4, p: Space.n4, shadow: "lg", align: "center" }}
+        border
       >
         {BOTTOM_TOOLS.map((tool, i) =>
           tool.separator ? (

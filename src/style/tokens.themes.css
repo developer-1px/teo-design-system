@@ -10,7 +10,7 @@
   --surface-overlay: #3f3f46;
   /* Menus (Lightest) */
 
-  --surface-overlay-shadow: var(--shadow-xl);
+  --surface-overlay-shadow: var(--elevation-n3);
 
   /* Legacy Mapping */
   --surface-base: var(--surface-page);

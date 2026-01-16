@@ -4,18 +4,30 @@
 
 import {
   CSS_TO_OVERRIDE_PROP,
-  SPACE_VALUES_TO_TOKENS,
-  SIZE_VALUES_TO_TOKENS,
   OPACITY_VALUES_TO_TOKENS,
+  SIZE_VALUES_TO_TOKENS,
+  SPACE_VALUES_TO_TOKENS,
   ZINDEX_VALUES_TO_TOKENS,
 } from "./constants";
-import type { BorderFixResult, TokenizationResult, TokenConversion } from "./types";
+import type {
+  BorderFixResult,
+  TokenConversion,
+  TokenizationResult,
+} from "./types";
 
 /**
  * Check if style can be converted to border prop
  */
-export function isBorderStyleFixable(styleObj: Record<string, string>): BorderFixResult {
-  const borderProps = ["border", "borderTop", "borderBottom", "borderLeft", "borderRight"];
+export function isBorderStyleFixable(
+  styleObj: Record<string, string>,
+): BorderFixResult {
+  const borderProps = [
+    "border",
+    "borderTop",
+    "borderBottom",
+    "borderLeft",
+    "borderRight",
+  ];
 
   for (const prop of borderProps) {
     if (styleObj[prop] === "1px solid var(--border-color)") {
@@ -31,14 +43,18 @@ export function isBorderStyleFixable(styleObj: Record<string, string>): BorderFi
  * Can be converted to pack prop
  */
 export function isCenterPackFixable(styleObj: Record<string, string>): boolean {
-  return styleObj.alignItems === "center" && styleObj.justifyContent === "center";
+  return (
+    styleObj.alignItems === "center" && styleObj.justifyContent === "center"
+  );
 }
 
 /**
  * Detect tokenizable styles that can be converted to override prop
  * ⚠️ NO REGEX - AST only
  */
-export function detectTokenizableStyles(styleObj: Record<string, string>): TokenizationResult {
+export function detectTokenizableStyles(
+  styleObj: Record<string, string>,
+): TokenizationResult {
   const conversions: TokenConversion[] = [];
 
   for (const [cssProp, cssValue] of Object.entries(styleObj)) {
@@ -49,12 +65,33 @@ export function detectTokenizableStyles(styleObj: Record<string, string>): Token
     let tokenValue: string | null = null;
 
     // Try Space tokens first (for padding, gap)
-    if (["padding", "paddingTop", "paddingBottom", "paddingLeft", "paddingRight", "paddingInline", "paddingBlock", "gap"].includes(cssProp)) {
+    if (
+      [
+        "padding",
+        "paddingTop",
+        "paddingBottom",
+        "paddingLeft",
+        "paddingRight",
+        "paddingInline",
+        "paddingBlock",
+        "gap",
+      ].includes(cssProp)
+    ) {
       tokenValue = SPACE_VALUES_TO_TOKENS[cssValue] || null;
     }
 
     // Try Size tokens (for width, height)
-    if (!tokenValue && ["width", "height", "minWidth", "minHeight", "maxWidth", "maxHeight"].includes(cssProp)) {
+    if (
+      !tokenValue &&
+      [
+        "width",
+        "height",
+        "minWidth",
+        "minHeight",
+        "maxWidth",
+        "maxHeight",
+      ].includes(cssProp)
+    ) {
       tokenValue = SIZE_VALUES_TO_TOKENS[cssValue] || null;
     }
 
@@ -72,7 +109,8 @@ export function detectTokenizableStyles(styleObj: Record<string, string>): Token
     // Extract number from "var(--space-n12)" → "Space.n12"
     if (!tokenValue && cssValue.startsWith("var(--space-n")) {
       const numPart = cssValue.slice("var(--space-n".length, -1); // Remove "var(--space-n" and ")"
-      if (numPart && !numPart.includes("-")) { // Ensure it's just a number
+      if (numPart && !numPart.includes("-")) {
+        // Ensure it's just a number
         tokenValue = `Space.n${numPart}`;
       }
     }

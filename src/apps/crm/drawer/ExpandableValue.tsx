@@ -1,14 +1,11 @@
-import { useState } from "react";
-import { JsonSmartView } from "./JsonSmartView";
-import { Action } from "../../../design-system/Action";
-import { Frame } from "../../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../../../design-system/text/Text.tsx";
-import {
-  Size,
-  Space,
-} from "../../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../../design-system/token/token.const.2tier";
+import {useState} from "react"
+import {Action} from "../../../design-system/Action"
+import {Frame} from "../../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../../design-system/Frame/Layout/Layout.ts"
+import {Text} from "../../../design-system/text/Text.tsx"
+import {Size, Space} from "../../../design-system/token/token.const.1tier"
+import {Radius2} from "../../../design-system/token/token.const.2tier"
+import {JsonSmartView} from "./JsonSmartView"
 
 interface ExpandableValueProps {
   value: string;
@@ -27,7 +24,9 @@ export function ExpandableValue({
   // Handle null/undefined
   if (empty || rawValue === null || rawValue === undefined) {
     return (
-      <Text.Field.Value style={{ color: "var(--text-tertiary)", fontSize: "12px" }}>
+      <Text.Field.Value
+        style={{ color: "var(--text-tertiary)", fontSize: "12px" }}
+      >
         —
       </Text.Field.Value>
     );
@@ -36,7 +35,9 @@ export function ExpandableValue({
   // If it's an array
   if (Array.isArray(rawValue)) {
     // Check if it's a complex array (contains objects)
-    const isComplex = rawValue.some((item) => typeof item === "object" && item !== null);
+    const isComplex = rawValue.some(
+      (item) => typeof item === "object" && item !== null,
+    );
 
     if (isComplex) {
       return <JsonSmartView data={rawValue} />;
@@ -56,7 +57,9 @@ export function ExpandableValue({
             surface="sunken"
             rounded={Radius2.sm}
           >
-            <Text.Field.Value style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
+            <Text.Field.Value
+              style={{ fontSize: "12px", color: "var(--text-secondary)" }}
+            >
               {String(item)}
             </Text.Field.Value>
           </Frame>
@@ -70,8 +73,12 @@ export function ExpandableValue({
               rounded={Radius2.sm}
               style={{ cursor: "pointer" }}
             >
-              <Text.Field.Value style={{ fontSize: "11px", color: "var(--primary-text)" }}>
-                {isExpanded ? "Show Less" : `+${rawValue.length - threshold} more`}
+              <Text.Field.Value
+                style={{ fontSize: "11px", color: "var(--primary-text)" }}
+              >
+                {isExpanded
+                  ? "Show Less"
+                  : `+${rawValue.length - threshold} more`}
               </Text.Field.Value>
             </Frame>
           </Action>
@@ -87,7 +94,8 @@ export function ExpandableValue({
 
   // Handle long strings (e.g. description)
   const isLong = value.length > 60;
-  const displayValue = isExpanded || !isLong ? value : `${value.slice(0, 60)}...`;
+  const displayValue =
+    isExpanded || !isLong ? value : `${value.slice(0, 60)}...`;
 
   return (
     <Frame layout={Layout.Stack.Content.None} gap={Space.n4}>
@@ -110,7 +118,9 @@ export function ExpandableValue({
             rounded={Radius2.sm}
             style={{ cursor: "pointer" }}
           >
-            <Text.Field.Value style={{ fontSize: "11px", color: "var(--primary-text)" }}>
+            <Text.Field.Value
+              style={{ fontSize: "11px", color: "var(--primary-text)" }}
+            >
               {isExpanded ? "Show Less" : "Show More"}
             </Text.Field.Value>
           </Frame>

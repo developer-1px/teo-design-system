@@ -1,19 +1,11 @@
-import { Cpu, Globe, Shield, Zap } from "lucide-react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  ContainerSize,
-  FontSize,
-  IconSize,
-  Opacity,
-  Size,
-  Space,
-  ZIndex,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
+import {Cpu, Globe, Shield, Zap} from "lucide-react"
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text"
+import {FontSize, IconSize, Opacity, Size, Space, ZIndex,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
 
 export function ImageFooterBanner() {
   return (
@@ -28,12 +20,14 @@ export function ImageFooterBanner() {
     >
       <Frame
         override={{ w: Size.fill, h: Size.n128, r: Radius2["3xl"] }}
-        style={{
-          position: "relative",
-          background: "linear-gradient(225deg, #1a1a1a, #000)",
-          maxWidth: "var(--container-n1280)",
-          margin: "0 auto",
-        } as React.CSSProperties}
+        style={
+          {
+            position: "relative",
+            background: "linear-gradient(225deg, #1a1a1a, #000)",
+            maxWidth: "var(--container-n1280)",
+            margin: "0 auto",
+          } as React.CSSProperties
+        }
         clip
       >
         {/* Visual texture */}
@@ -43,24 +37,30 @@ export function ImageFooterBanner() {
             w: Size.fill,
             h: Size.fill,
           }}
-          style={{
-            position: "absolute",
-            backgroundImage:
-              "radial-gradient(circle at center, #fff 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          } as React.CSSProperties}
+          style={
+            {
+              position: "absolute",
+              backgroundImage:
+                "radial-gradient(circle at center, #fff 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            } as React.CSSProperties
+          }
         />
 
         <Frame
-          style={{
-            maxWidth: "var(--container-n640)",
-            position: "relative",
-            margin: "0 auto",
-          } as React.CSSProperties}
+          style={
+            {
+              maxWidth: "var(--container-n640)",
+              position: "relative",
+              margin: "0 auto",
+            } as React.CSSProperties
+          }
           fill
           override={{
-            p: Space.n24, gap: Space.n24, align: "center",
-            zIndex: ZIndex.n10
+            p: Space.n24,
+            gap: Space.n24,
+            align: "center",
+            zIndex: ZIndex.n10,
           }}
         >
           <Text.Prose.Title

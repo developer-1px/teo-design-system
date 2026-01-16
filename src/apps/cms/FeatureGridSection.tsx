@@ -1,24 +1,15 @@
-import { Cpu, MessageSquare, Shield, Zap } from "lucide-react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  ContainerSize,
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { EditableWrapper } from "./EditableWrapper";
+import {Cpu, MessageSquare, Shield, Zap} from "lucide-react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text"
+import {ContainerSize, FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {EditableWrapper} from "./EditableWrapper"
 
 export function FeatureGridSection() {
   return (
-    <Frame
-      override={{ w: Size.fill }}
-      surface="base" border={true}
-    >
+    <Frame override={{ w: Size.fill }} surface="base" border={true}>
       <Frame
         override={{
           w: Size.fill,
@@ -120,7 +111,8 @@ function FeatureCardSmall({
         override={{ w: Size.n48, h: Size.n48 }}
         rounded={Radius2.xl}
         surface="sunken"
-        pack border
+        pack
+        border
       >
         <Icon
           src={IconSrc}
@@ -174,7 +166,8 @@ function FeatureCardLarge({
           override={{ w: Size.n48, h: Size.n48 }}
           rounded={Radius2.xl}
           surface="sunken"
-          pack border
+          pack
+          border
         >
           <Icon
             src={IconSrc}
@@ -211,7 +204,8 @@ function FeatureCardLarge({
           <Frame
             override={{ w: Size.n128, h: Size.n160, shadow: "xl" }}
             rounded={Radius2.lg}
-            surface="base" border
+            surface="base"
+            border
           />
         </Frame>
       )}

@@ -1,4 +1,4 @@
-import { useAtomValue } from "jotai";
+import {useAtomValue} from "jotai"
 import {
   Archive,
   ArrowLeft,
@@ -11,20 +11,15 @@ import {
   ReplyAll,
   Star,
   Trash2,
-} from "lucide-react";
+} from "lucide-react"
 
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { selectedThreadAtom } from "./store";
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text.tsx"
+import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {selectedThreadAtom} from "./store"
 
 export function MailDetail() {
   const selectedThread = useAtomValue(selectedThreadAtom);
@@ -64,25 +59,61 @@ export function MailDetail() {
         }}
         layout={Layout.Row.Toolbar.Default}
       >
-        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+        <Frame
+          as="button"
+          interactive
+          surface="ghost"
+          rounded={Radius2.md}
+          override={{ p: Space.n8 }}
+        >
           <Icon src={ArrowLeft} size={IconSize.n20} />
         </Frame>
-        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+        <Frame
+          as="button"
+          interactive
+          surface="ghost"
+          rounded={Radius2.md}
+          override={{ p: Space.n8 }}
+        >
           <Icon src={Archive} size={IconSize.n20} />
         </Frame>
-        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+        <Frame
+          as="button"
+          interactive
+          surface="ghost"
+          rounded={Radius2.md}
+          override={{ p: Space.n8 }}
+        >
           <Icon src={Trash2} size={IconSize.n20} />
         </Frame>
-        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+        <Frame
+          as="button"
+          interactive
+          surface="ghost"
+          rounded={Radius2.md}
+          override={{ p: Space.n8 }}
+        >
           <Icon src={MoreVertical} size={IconSize.n20} />
         </Frame>
 
         <Frame flex />
 
-        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+        <Frame
+          as="button"
+          interactive
+          surface="ghost"
+          rounded={Radius2.md}
+          override={{ p: Space.n8 }}
+        >
           <Icon src={ChevronLeft} size={IconSize.n20} />
         </Frame>
-        <Frame as="button" interactive surface="ghost" rounded={Radius2.md} override={{ p: Space.n8 }}>
+        <Frame
+          as="button"
+          interactive
+          surface="ghost"
+          rounded={Radius2.md}
+          override={{ p: Space.n8 }}
+        >
           <Icon src={ChevronRight} size={IconSize.n20} />
         </Frame>
       </Frame>
@@ -251,7 +282,13 @@ export function MailDetail() {
             surface="base"
             border
             rounded={Radius2.md}
-            override={{ py: Space.n8, px: Space.n12, gap: Space.n8, row: true, align: "center" }}
+            override={{
+              py: Space.n8,
+              px: Space.n12,
+              gap: Space.n8,
+              row: true,
+              align: "center",
+            }}
           >
             <Icon src={Reply} size={IconSize.n16} />
             <Text.Menu.Item weight="medium">Reply</Text.Menu.Item>
@@ -262,7 +299,13 @@ export function MailDetail() {
             surface="base"
             border
             rounded={Radius2.md}
-            override={{ py: Space.n8, px: Space.n12, gap: Space.n8, row: true, align: "center" }}
+            override={{
+              py: Space.n8,
+              px: Space.n12,
+              gap: Space.n8,
+              row: true,
+              align: "center",
+            }}
           >
             <Icon src={ReplyAll} size={IconSize.n16} />
             <Text.Menu.Item weight="medium">Reply All</Text.Menu.Item>
@@ -273,7 +316,13 @@ export function MailDetail() {
             surface="base"
             border
             rounded={Radius2.md}
-            override={{ py: Space.n8, px: Space.n12, gap: Space.n8, row: true, align: "center" }}
+            override={{
+              py: Space.n8,
+              px: Space.n12,
+              gap: Space.n8,
+              row: true,
+              align: "center",
+            }}
           >
             <Icon src={Forward} size={IconSize.n16} />
             <Text.Menu.Item weight="medium">Forward</Text.Menu.Item>

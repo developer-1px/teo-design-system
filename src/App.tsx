@@ -15,10 +15,14 @@ import { Layout } from "./design-system/Frame/Layout/Layout.ts";
 import { Icon } from "./design-system/Icon";
 import { Text } from "./design-system/text/Text.tsx";
 import { useTheme } from "./design-system/theme";
+
 import {
   FontSize,
   IconSize,
-  Space, ZIndex, Size } from "./design-system/token/token.const.1tier";
+  Size,
+  Space,
+  ZIndex,
+} from "./design-system/token/token.const.1tier";
 import { Radius2 } from "./design-system/token/token.const.2tier";
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
@@ -50,8 +54,8 @@ function Navigation() {
         shadow: "xl",
         p: Space.n4,
         gap: Space.n4,
-          zIndex: ZIndex.n200
-    }}
+        zIndex: ZIndex.n200,
+      }}
       rounded={Radius2.full}
       style={{ position: "fixed", bottom: 20, left: 20 }}
       surface="raised"
@@ -68,6 +72,7 @@ function Navigation() {
       <NavItem to="/mail" label="Mail" />
       <NavItem to="/discord" label="Discord" />
       <NavItem to="/login" label="Login" />
+
       <ThemeToggleItem />
     </Frame>
   );
@@ -118,6 +123,7 @@ function App() {
           <Route path="/mail" element={<MailApp />} />
           <Route path="/discord" element={<DiscordApp />} />
           <Route path="/login" element={<LoginApp />} />
+
         </Routes>
         <Navigation />
       </Frame>

@@ -1,9 +1,9 @@
-import type React from "react";
+import type React from "react"
 
-import type { FrameOverrides, FrameProps } from "./FrameProps.ts";
-import { frameToSettings } from "./frameToSettings.ts";
+import type {FrameOverrides, FrameProps} from "./FrameProps.ts"
+import {frameToSettings} from "./frameToSettings.ts"
 
-import { resolveLayout } from "./Layout/Layout.ts";
+import {resolveLayout} from "./Layout/Layout.ts"
 
 export function Frame({
   children,

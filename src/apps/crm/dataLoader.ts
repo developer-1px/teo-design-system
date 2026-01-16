@@ -1,4 +1,4 @@
-import type { DataRow, DatasetMeta } from "./types";
+import type {DataRow, DatasetMeta} from "./types"
 
 // Load all JSON files from data/crm directory using Vite's import.meta.glob
 const dataFiles = import.meta.glob<{ default: DataRow[] }>(

@@ -1,5 +1,5 @@
-import type React from "react";
-import { Text } from "../../design-system/text/Text.tsx";
+import type React from "react"
+import {Text} from "../../design-system/text/Text.tsx"
 
 interface TableCellProps {
   children: React.ReactNode;

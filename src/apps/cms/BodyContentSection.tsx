@@ -1,16 +1,10 @@
-import { Check, MessageSquare, Zap } from "lucide-react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  ContainerSize,
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
+import {Check, MessageSquare, Zap} from "lucide-react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text"
+import {ContainerSize, FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
 
 export function BodyContentSection() {
   return (
@@ -21,11 +15,17 @@ export function BodyContentSection() {
         px: Space.n24,
       }}
       surface="sunken"
-      pack border={true}
+      pack
+      border={true}
     >
       <Frame
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n48, w: Size.fill, align: "center", maxWidth: ContainerSize.n1280 }}
+        override={{
+          gap: Space.n48,
+          w: Size.fill,
+          align: "center",
+          maxWidth: ContainerSize.n1280,
+        }}
       >
         <Frame override={{ gap: Space.n24 }} style={{ width: "50%" }}>
           <Frame override={{ gap: Space.n8 }}>

@@ -3,7 +3,6 @@ import type {
   AlignToken,
   CursorToken,
   JustifyToken,
-  ShadowToken,
   SurfaceToken,
   ZIndexToken,
 } from "../lib/types.ts";
@@ -27,36 +26,35 @@ interface FramePresetProps {
   // 1. Layout (Inner Flow)
   // How children are arranged
   layout?: LayoutToken;
-  gap?: SpaceToken;
+
   row?: boolean;
   wrap?: boolean;
   pack?: boolean;
+
   grid?: boolean;
-  scroll?: boolean | "x" | "y";
+  gap?: SpaceToken;
 
   // 2. Sizing (Outer Constraints)
   // How this frame sizes itself
   w?: WidthToken;
   h?: HeightToken;
-  fill?: boolean;
-  flex?: boolean | number | string;
+  ratio?: string;
 
   maxWidth?: MaxWidthToken;
 
-  ratio?: string;
+  fill?: boolean;
+  flex?: boolean | number | string;
 
   // 3. Appearance (Visual Decoration)
   // Visual style without affecting layout flow
   surface?: SurfaceToken;
-
-  opacity?: OpacityToken;
-  clip?: boolean;
-
+  rounded?: Radius2Token | boolean;
   interactive?: boolean | "button" | "text";
 
   // 4. Decoration (Visual)
-  // restored for convenience
-  rounded?: Radius2Token | boolean;
+  opacity?: OpacityToken;
+  clip?: boolean;
+  scroll?: boolean | "x" | "y";
 }
 
 // --- 2. OVERRIDES (Strict 1-Tier Tokens) ---
@@ -120,7 +118,6 @@ export interface FrameOverrides {
   override?: FrameOverrides;
 
   // Visual
-  shadow?: ShadowToken;
   opacity?: OpacityToken;
   ratio?: string;
 
@@ -129,9 +126,11 @@ export interface FrameOverrides {
 }
 
 export interface FrameProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "color" | "style">,
-  FramePresetProps {
-  children?: React.ReactNode;
+  extends Omit<
+      React.HTMLAttributes<HTMLElement>,
+      "title" | "color" | "style" | "className"
+    >,
+    FramePresetProps {
   as?: React.ElementType;
 
   /**
@@ -148,41 +147,7 @@ export interface FrameProps
    * Safe Style Prop (Restricted)
    * Prevents usage of restricted CSS properties like margin, padding, width, height, etc.
    */
-  style?: RestrictedFrameStyle;
+  style?: React.CSSProperties;
+
+  children?: React.ReactNode;
 }
-
-// Block List for Style Prop
-type BlockedStyleProps =
-  | "width"
-  | "height"
-  | "minWidth"
-  | "minHeight"
-  | "maxWidth"
-  | "maxHeight"
-  | "margin"
-  | "marginTop"
-  | "marginBottom"
-  | "marginLeft"
-  | "marginRight"
-  | "marginBlock"
-  | "marginInline"
-  | "padding"
-  | "paddingTop"
-  | "paddingBottom"
-  | "paddingLeft"
-  | "paddingRight"
-  | "paddingBlock"
-  | "paddingInline"
-  | "gap"
-  | "opacity"
-  | "borderRadius"
-  | "boxShadow"
-  | "zIndex"
-  | "borderWidth"
-  | "borderTopWidth"
-  | "borderRightWidth"
-  | "borderBottomWidth"
-  | "borderLeftWidth";
-
-// Type-Level Restriction
-type RestrictedFrameStyle = Omit<React.CSSProperties, BlockedStyleProps>;

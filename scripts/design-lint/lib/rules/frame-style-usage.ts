@@ -1,8 +1,18 @@
-import type { JsxOpeningElement, JsxSelfClosingElement, JsxAttribute, Issue, TokenConversion } from "../types";
 import { parseStyleObject } from "../ast-parser";
-import { isBorderStyleFixable, detectTokenizableStyles, isCenterPackFixable } from "../token-detector";
+import { fixBorderStyle, fixCenterToPack, fixStyleToOverride } from "../fixers";
 import { ensureTokenImports } from "../import-manager";
-import { fixStyleToOverride, fixBorderStyle, fixCenterToPack } from "../fixers";
+import {
+  detectTokenizableStyles,
+  isBorderStyleFixable,
+  isCenterPackFixable,
+} from "../token-detector";
+import type {
+  Issue,
+  JsxAttribute,
+  JsxOpeningElement,
+  JsxSelfClosingElement,
+  TokenConversion,
+} from "../types";
 
 const FIX_MODE = process.argv.includes("--fix");
 
@@ -43,7 +53,8 @@ function checkFrameStyleUsage(
           line,
           column,
           rule: "Center Alignment → pack (FIXED)",
-          message: 'Auto-fixed: style={{ alignItems: "center", justifyContent: "center" }} → pack',
+          message:
+            'Auto-fixed: style={{ alignItems: "center", justifyContent: "center" }} → pack',
           code: elementText.trim(),
           fixable: true,
         });
@@ -55,7 +66,8 @@ function checkFrameStyleUsage(
           line,
           column,
           rule: "Center Alignment → pack (SKIPPED)",
-          message: "Cannot auto-fix center pack due to AST complexity. Manual fix required.",
+          message:
+            "Cannot auto-fix center pack due to AST complexity. Manual fix required.",
           code: elementText.trim(),
           fixable: false,
         });
@@ -64,7 +76,8 @@ function checkFrameStyleUsage(
     }
 
     // Check 1: Tokenizable styles (padding, gap, width, etc.)
-    const { fixable: tokenFixable, conversions } = detectTokenizableStyles(styleObj);
+    const { fixable: tokenFixable, conversions } =
+      detectTokenizableStyles(styleObj);
 
     if (tokenFixable && FIX_MODE) {
       // Apply auto-fix: style → override
@@ -85,7 +98,12 @@ function checkFrameStyleUsage(
 
         fixStyleToOverride(element, styleAttribute, conversions);
 
-        const propsConverted = conversions.map(c => `${c.cssProp}: "${c.cssValue}" → ${c.overrideProp}: ${c.tokenValue}`).join(", ");
+        const propsConverted = conversions
+          .map(
+            (c) =>
+              `${c.cssProp}: "${c.cssValue}" → ${c.overrideProp}: ${c.tokenValue}`,
+          )
+          .join(", ");
         issues.push({
           file: filePath,
           line,
@@ -98,7 +116,9 @@ function checkFrameStyleUsage(
         return; // Don't check border if we already converted
       } catch (error) {
         // Skip this fix if AST manipulation fails (e.g., comments in style object)
-        const propsConverted = conversions.map(c => `${c.cssProp} → override.${c.overrideProp}`).join(", ");
+        const propsConverted = conversions
+          .map((c) => `${c.cssProp} → override.${c.overrideProp}`)
+          .join(", ");
         issues.push({
           file: filePath,
           line,
@@ -113,7 +133,8 @@ function checkFrameStyleUsage(
     }
 
     // Check 2: Border styles
-    const { fixable: borderFixable, borderType } = isBorderStyleFixable(styleObj);
+    const { fixable: borderFixable, borderType } =
+      isBorderStyleFixable(styleObj);
 
     if (borderFixable && borderType && FIX_MODE) {
       // Apply auto-fix: border
@@ -145,7 +166,9 @@ function checkFrameStyleUsage(
       // Report fixable issue
       let message = "";
       if (tokenFixable) {
-        const propsConverted = conversions.map(c => `${c.cssProp} → override.${c.overrideProp}`).join(", ");
+        const propsConverted = conversions
+          .map((c) => `${c.cssProp} → override.${c.overrideProp}`)
+          .join(", ");
         message = `Can auto-fix tokenizable styles: ${propsConverted} (run with --fix)`;
       } else if (borderFixable) {
         message = `Can auto-fix: style={{ ${borderType}: "..." }} → border prop (run with --fix)`;
@@ -167,7 +190,8 @@ function checkFrameStyleUsage(
         line,
         column,
         rule: "Center Alignment → pack",
-        message: 'Can auto-fix: style={{ alignItems: "center", justifyContent: "center" }} → pack (run with --fix)',
+        message:
+          'Can auto-fix: style={{ alignItems: "center", justifyContent: "center" }} → pack (run with --fix)',
         code: elementText.trim(),
         fixable: true,
       });
@@ -178,11 +202,11 @@ function checkFrameStyleUsage(
         line,
         column,
         rule: "Frame Style Usage",
-        message: "Frame component should use semantic props instead of style prop",
+        message:
+          "Frame component should use semantic props instead of style prop",
         code: elementText.trim(),
         fixable: false,
       });
     }
   }
 }
-

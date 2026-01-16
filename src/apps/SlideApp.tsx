@@ -1,31 +1,16 @@
-import {
-  ChevronDown,
-  Circle,
-  Grid,
-  Play,
-  Plus,
-  Share,
-  Square,
-  Type,
-} from "lucide-react";
-import { FloatingToolbar } from "../components/FloatingToolbar";
-import { PropertiesPanel } from "../components/PropertiesPanel";
-import { SlidesPanel } from "../components/SlidesPanel";
-import { Action } from "../design-system/Action";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../design-system/Icon";
-import { Text } from "../design-system/text/Text";
-import {
-  IconSize,
-  Opacity,
-  Size,
-  Space,
-  Radius2,
-} from "../design-system/token";
-import { ZIndex } from "../design-system/token/token.const.1tier";
-import { SegmentedControl } from "../design-system/SegmentedControl";
-import { useState } from "react";
+import {ChevronDown, Circle, Grid, Play, Plus, Share, Square, Type,} from "lucide-react"
+import {useState} from "react"
+import {FloatingToolbar} from "../components/FloatingToolbar"
+import {PropertiesPanel} from "../components/PropertiesPanel"
+import {SlidesPanel} from "../components/SlidesPanel"
+import {Action} from "../design-system/Action"
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../design-system/Icon"
+import {SegmentedControl} from "../design-system/SegmentedControl"
+import {Text} from "../design-system/text/Text"
+import {IconSize, Opacity, Radius2, Size, Space,} from "../design-system/token"
+import {ZIndex} from "../design-system/token/token.const.1tier"
 
 export function SlideApp() {
   const [activeTool, setActiveTool] = useState("square");
@@ -37,7 +22,7 @@ export function SlideApp() {
           position: "absolute",
           top: 0,
           left: 0,
-          right: 0
+          right: 0,
         }}
         override={{
           zIndex: ZIndex.n10,
@@ -52,7 +37,9 @@ export function SlideApp() {
           <Action
             icon={Grid}
             iconSize={IconSize.n16}
-            style={{ width: "var(--size-n28)", height: "var(--size-n28)" } as any}
+            style={
+              { width: "var(--size-n28)", height: "var(--size-n28)" } as any
+            }
           />
           <Frame
             layout={Layout.Row.Item.Default}
@@ -87,7 +74,7 @@ export function SlideApp() {
             <Frame
               override={{
                 w: Size.n24,
-                h: Size.n24
+                h: Size.n24,
               }}
               rounded={Radius2.md}
               surface="overlay"
@@ -146,7 +133,9 @@ export function SlideApp() {
         >
           <Frame fill scroll layout={Layout.Center.Default}>
             <Frame
-              style={{ width: "80%", maxWidth: "var(--container-n1280)" } as any}
+              style={
+                { width: "80%", maxWidth: "var(--container-n1280)" } as any
+              }
               override={{ shadow: "lg" }}
               rounded={Radius2["2xl"]}
               surface="base"
@@ -173,9 +162,18 @@ export function SlideApp() {
                     value={activeTool}
                     onChange={setActiveTool}
                     options={[
-                      { value: "square", label: <Icon src={Square} size={IconSize.n16} /> },
-                      { value: "circle", label: <Icon src={Circle} size={IconSize.n16} /> },
-                      { value: "type", label: <Icon src={Type} size={IconSize.n16} /> },
+                      {
+                        value: "square",
+                        label: <Icon src={Square} size={IconSize.n16} />,
+                      },
+                      {
+                        value: "circle",
+                        label: <Icon src={Circle} size={IconSize.n16} />,
+                      },
+                      {
+                        value: "type",
+                        label: <Icon src={Type} size={IconSize.n16} />,
+                      },
                     ]}
                   />
                 </Frame>

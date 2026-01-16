@@ -1,10 +1,10 @@
-import type React from "react";
-import { Frame } from "./Frame/Frame.tsx";
-import type { FrameOverrides } from "./Frame/FrameProps.ts";
+import type React from "react"
+import {Frame} from "./Frame/Frame.tsx"
+import type {FrameOverrides} from "./Frame/FrameProps.ts"
 
-import { Text } from "./text/Text.tsx";
-import { FontSize, Space, Opacity, Size } from "./token/token.const.1tier.ts";
-import { Radius2 } from "./token/token.const.2tier.ts";
+import {Text} from "./text/Text.tsx"
+import {FontSize, Opacity, Size, Space} from "./token/token.const.1tier.ts"
+import {Radius2} from "./token/token.const.2tier.ts"
 
 interface FieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -50,7 +50,7 @@ export function Field({
         row: true, // Ensure row layout
         align: "center",
         ...((flex ? { flex } : {}) as any),
-        ...override
+        ...override,
       }}
       rounded={Radius2.md}
       className={className}
@@ -59,8 +59,10 @@ export function Field({
         <Frame
           override={{
             // Ensure icon doesn't shrink
-            w: Size.n16, h: Size.n16,
-            align: "center", justify: "center"
+            w: Size.n16,
+            h: Size.n16,
+            align: "center",
+            justify: "center",
           }}
           style={{ color: "var(--text-subtle)" }}
         >
@@ -75,7 +77,7 @@ export function Field({
             marginRight: "var(--space-0-5)",
             whiteSpace: "nowrap",
             textAlign: "center",
-            color: "var(--text-subtle)"
+            color: "var(--text-subtle)",
           }}
         >
           {label}
@@ -101,7 +103,7 @@ export function Field({
       {rightIcon && (
         <Frame
           override={{
-            opacity: Opacity.n40
+            opacity: Opacity.n40,
           }}
         >
           {rightIcon}

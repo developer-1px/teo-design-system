@@ -59,6 +59,7 @@ export function TextRoot({
   ...props
 }: TextProps) {
   // 1. Resolve Tag
+  // 1. Resolve Tag
   const Tag = (as || getTagForVariant(variant)) as React.ElementType;
 
   // 2. Resolve Color

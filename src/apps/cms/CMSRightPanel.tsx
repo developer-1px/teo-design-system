@@ -1,14 +1,10 @@
-import { X } from "lucide-react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
+import {X} from "lucide-react"
+import {Action} from "../../design-system/Action"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Text} from "../../design-system/text/Text"
+import {FontSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
 
 export function CMSRightPanel({ onClose }: { onClose: () => void }) {
   return (
@@ -17,12 +13,13 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
         w: Size.n320,
         gap: Space.n4,
         p: Space.n4,
-          h: Size.fill
-    }}
+        h: Size.fill,
+      }}
       surface="sunken" // Match sidebar
       style={{
         transition: "width 0.3s ease",
-      }} border={true}
+      }}
+      override={{ border: true }}
     >
       <Frame
         override={{ gap: Space.n12, p: Space.n4 }}
@@ -40,9 +37,14 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
         />
       </Frame>
 
-      <Frame scroll flex override={{ gap: Space.n16, p: Space.n4 }}>
+      <Frame
+        scroll
+        flex
+        layout={Layout.Stack.Content.Loose}
+        override={{ p: Space.n4 }}
+      >
         {/* Placeholder Content */}
-        <Frame override={{ gap: Space.n4 }}>
+        <Frame layout={Layout.Stack.List.Dense}>
           <Text.Card.Note>Title</Text.Card.Note>
           <Frame
             override={{ h: Size.n32, p: Space.n8 }}

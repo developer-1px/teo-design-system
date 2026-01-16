@@ -13,26 +13,21 @@ import {
   Plus,
   Settings,
   Sun,
-} from "lucide-react";
-import type React from "react";
-import { useState } from "react";
-import { Action } from "../design-system/Action";
-import { Field } from "../design-system/Field";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { useAccordion, useDropdown, useTabs } from "../design-system/hooks";
-import { Icon } from "../design-system/Icon";
-import { Overlay } from "../design-system/Overlay";
-import { Section } from "../design-system/Section";
-import { Separator } from "../design-system/Separator";
-import { Text } from "../design-system/text/Text";
-import {
-  IconSize,
-  Opacity,
-  Size,
-  Space,
-} from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
+} from "lucide-react"
+import type React from "react"
+import {useState} from "react"
+import {Action} from "../design-system/Action"
+import {Field} from "../design-system/Field"
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {useAccordion, useDropdown, useTabs} from "../design-system/hooks"
+import {Icon} from "../design-system/Icon"
+import {Overlay} from "../design-system/Overlay"
+import {Section} from "../design-system/Section"
+import {Separator} from "../design-system/Separator"
+import {Text} from "../design-system/text/Text"
+import {IconSize, Opacity, Size, Space,} from "../design-system/token/token.const.1tier"
+import {Radius2} from "../design-system/token/token.const.2tier"
 
 // --- Data ---
 
@@ -189,7 +184,7 @@ export function PropertiesPanel() {
         override={{
           p: Space.n4,
           gap: Space.n4,
-          h: Size.n40
+          h: Size.n40,
         }}
         style={{
           borderColor: "var(--border-color)",
@@ -208,7 +203,9 @@ export function PropertiesPanel() {
               flex
               variant="ghost"
               style={{
-                backgroundColor: isSelected ? "var(--tab-bg-active)" : undefined,
+                backgroundColor: isSelected
+                  ? "var(--tab-bg-active)"
+                  : undefined,
               }}
             >
               <Text.Menu.Item
@@ -386,7 +383,9 @@ export function PropertiesPanel() {
                           cursor: "pointer",
                         }}
                         surface={
-                          fontFamily.selectedItem === item ? "selected" : undefined
+                          fontFamily.selectedItem === item
+                            ? "selected"
+                            : undefined
                         }
                         style={{
                           backgroundColor:
@@ -442,7 +441,9 @@ export function PropertiesPanel() {
                             cursor: "pointer",
                           }}
                           surface={
-                            fontWeight.selectedItem === item ? "selected" : undefined
+                            fontWeight.selectedItem === item
+                              ? "selected"
+                              : undefined
                           }
                           style={{
                             backgroundColor:
@@ -511,9 +512,10 @@ export function PropertiesPanel() {
                 rounded={Radius2.full}
                 style={{
                   width: "10px",
-                  height: "10px"
+                  height: "10px",
                 }}
-                surface="base" border
+                surface="base"
+                border
               />
             }
             rightIcon={

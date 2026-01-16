@@ -1,6 +1,6 @@
-import { useCallback, useMemo } from "react";
-import { useControlledState } from "./utils/useControlledState";
-import { useId } from "./utils/useId";
+import {useCallback, useMemo} from "react"
+import {useControlledState} from "./utils/useControlledState"
+import {useId} from "./utils/useId"
 
 /**
  * Options for useAccordion hook

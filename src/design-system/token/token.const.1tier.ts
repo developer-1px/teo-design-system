@@ -27,7 +27,7 @@ import type {
   SizeToken,
   SpaceToken,
   ZIndexToken,
-} from "./lib/brand.ts";
+} from "./lib/brand.ts"
 
 // Re-export branded types for consumer convenience
 export type {
@@ -177,13 +177,7 @@ export const SizeScale = [
 export type SizeScale = ScaleOf<typeof SizeScale>;
 export type SizeNumericKey = KeyOf<typeof SizeScale>;
 
-export const SizeKeywords = [
-  "screen",
-  "hug",
-  "fill",
-  "fit",
-  "auto",
-] as const;
+export const SizeKeywords = ["screen", "hug", "fill", "fit", "auto"] as const;
 export type SizeKeyword = (typeof SizeKeywords)[number];
 
 export type SizeKey = SizeNumericKey | SizeKeyword;
@@ -440,26 +434,6 @@ export const ZIndex = {
 } as const satisfies Record<ZIndexKey, ZIndexToken>;
 
 // ---------------------------------
-// Elevation
-// ---------------------------------
-export const ElevationScale = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12] as const;
-export type ElevationScale = ScaleOf<typeof ElevationScale>;
-export type ElevationKey = KeyOf<typeof ElevationScale>;
-
-export const Elevation = {
-  n0: "var(--elevation-n0)" as ElevationToken,
-  n1: "var(--elevation-n1)" as ElevationToken,
-  n2: "var(--elevation-n2)" as ElevationToken,
-  n3: "var(--elevation-n3)" as ElevationToken,
-  n4: "var(--elevation-n4)" as ElevationToken,
-  n5: "var(--elevation-n5)" as ElevationToken,
-  n6: "var(--elevation-n6)" as ElevationToken,
-  n8: "var(--elevation-n8)" as ElevationToken,
-  n10: "var(--elevation-n10)" as ElevationToken,
-  n12: "var(--elevation-n12)" as ElevationToken,
-} as const satisfies Record<ElevationKey, ElevationToken>;
-
-// ---------------------------------
 // AspectRatio
 // ---------------------------------
 export const AspectRatioScale = [
@@ -496,15 +470,17 @@ export const AspectRatio = {
 >;
 
 // ---------------------------------
-// Shadow (Legacy)
+// Elevation (Shadow Depth 0-5)
 // ---------------------------------
-export const ShadowScale = ["sm", "md", "lg", "xl", "2xl"] as const;
-export type ShadowScale = (typeof ShadowScale)[number];
+export const ElevationScale = [0, 1, 2, 3, 4, 5] as const;
+export type ElevationScale = ScaleOf<typeof ElevationScale>;
+export type ElevationKey = KeyOf<typeof ElevationScale>;
 
-export const Shadow = {
-  sm: "shadow.sm",
-  md: "shadow.md",
-  lg: "shadow.lg",
-  xl: "shadow.xl",
-  "2xl": "shadow.2xl",
-} as const satisfies Record<ShadowScale, `shadow.${ShadowScale}`>;
+export const Elevation = {
+  n0: "var(--elevation-n0)" as ElevationToken,
+  n1: "var(--elevation-n1)" as ElevationToken,
+  n2: "var(--elevation-n2)" as ElevationToken,
+  n3: "var(--elevation-n3)" as ElevationToken,
+  n4: "var(--elevation-n4)" as ElevationToken,
+  n5: "var(--elevation-n5)" as ElevationToken,
+} as const satisfies Record<ElevationKey, ElevationToken>;

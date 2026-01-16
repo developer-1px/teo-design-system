@@ -1,8 +1,9 @@
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../design-system/text/Text";
+import {Frame} from "../design-system/Frame/Frame.tsx"
+import {Layout} from "../design-system/Frame/Layout/Layout.ts"
+import {Text} from "../design-system/text/Text"
 import {
   ContainerSize,
+  ElevationScale,
   FontSize,
   FontSizeScale,
   Opacity,
@@ -15,8 +16,8 @@ import {
   SpaceScale,
   type SpaceToken,
   ZIndexScale,
-} from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
+} from "../design-system/token/token.const.1tier"
+import {Radius2} from "../design-system/token/token.const.2tier"
 
 // --- Components ---
 
@@ -94,11 +95,9 @@ function ScrollContainer({
   return (
     <Frame
       scroll="x"
-      override={{ w: Size.fill, p: Space.n32,
-          maxWidth: Size.fill
-    }}
+      override={{ w: Size.fill, p: Space.n32, maxWidth: Size.fill }}
       style={{
-        maskImage: "linear-gradient(to right, black 95%, transparent 100%)" // Prevent parent blowout
+        maskImage: "linear-gradient(to right, black 95%, transparent 100%)", // Prevent parent blowout
       }}
       pack
     >
@@ -260,7 +259,35 @@ export function TokensApp() {
             </ScrollContainer>
           </Frame>
 
-          {/* 4. Z-Index Scale - Visual Stack (Prose Width) */}
+          {/* 4. Elevation Scale - Horizontal Scroll */}
+          <Frame override={{ w: Size.fill, gap: Space.n32, minWidth: Size.n0 }}>
+            <SectionHeader
+              title="Elevation"
+              desc="Depth, Shadow, and Z-axis hierarchy."
+            />
+            <ScrollContainer>
+              {ElevationScale.map((val) => (
+                <Frame
+                  key={val}
+                  style={{
+                    backgroundColor: "white",
+                    boxShadow: `var(--elevation-n${val})`,
+                  }}
+                  layout={Layout.Center.Default}
+                  override={{
+                    w: Size.n96,
+                    h: Size.n96,
+                    minWidth: Size.n96,
+                    r: Radius.n12,
+                  }}
+                >
+                  <Text.Card.Code>n{val}</Text.Card.Code>
+                </Frame>
+              ))}
+            </ScrollContainer>
+          </Frame>
+
+          {/* 5. Z-Index Scale - Visual Stack (Prose Width) */}
           <Frame override={{ w: Size.fill, gap: Space.n32 }}>
             <SectionHeader title="Z-Index" desc="Elevation depth & Stacking." />
             <TextColumn>

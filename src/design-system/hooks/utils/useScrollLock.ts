@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {useEffect} from "react"
 
 /**
  * Hook to lock body scroll when active

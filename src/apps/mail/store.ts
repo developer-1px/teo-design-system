@@ -2,9 +2,9 @@
  * Mail Client State Management (Jotai)
  */
 
-import { atom } from "jotai";
-import { mockThreads } from "./mockData";
-import type { MailFolder, MailThread } from "./types";
+import {atom} from "jotai"
+import {mockThreads} from "./mockData"
+import type {MailFolder, MailThread} from "./types"
 
 // Base atoms
 export const selectedFolderAtom = atom<MailFolder>("inbox");

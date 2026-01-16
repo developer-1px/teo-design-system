@@ -3,16 +3,16 @@
  * Displays scrollable list of messages
  */
 
-import { useAtomValue } from "jotai";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Overlay } from "../../design-system/Overlay";
-import { Text } from "../../design-system/text/Text.tsx";
-import { FontSize, Size, Space } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { getChannelMessages } from "./mockData";
-import { selectedChannelIdAtom } from "./store";
-import type { Message } from "./types";
+import {useAtomValue} from "jotai"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Overlay} from "../../design-system/Overlay"
+import {Text} from "../../design-system/text/Text.tsx"
+import {FontSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {getChannelMessages} from "./mockData"
+import {selectedChannelIdAtom} from "./store"
+import type {Message} from "./types"
 
 function MessageItem({ message }: { message: Message }) {
   const formatTime = (date: Date) => {
@@ -74,7 +74,10 @@ function MessageItem({ message }: { message: Message }) {
       {/* Message Content */}
       <Frame flex layout={Layout.Stack.Content.None}>
         {/* Header */}
-        <Frame layout={Layout.Row.Item.Compact} override={{ align: "baseline" }}>
+        <Frame
+          layout={Layout.Row.Item.Compact}
+          override={{ align: "baseline" }}
+        >
           <Text size={FontSize.n14} weight="bold">
             {message.author.name}
           </Text>

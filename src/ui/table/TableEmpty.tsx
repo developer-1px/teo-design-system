@@ -1,5 +1,5 @@
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Text } from "../../design-system/text/Text.tsx";
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Text} from "../../design-system/text/Text.tsx"
 
 interface TableEmptyProps {
   message?: string;

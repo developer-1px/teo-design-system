@@ -3,21 +3,16 @@
  * Displays server icons in a vertical list (far left sidebar)
  */
 
-import { Home, Plus } from "lucide-react";
-import { useAtom } from "jotai";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
-import { mockServers } from "./mockData";
-import { selectedServerIdAtom } from "./store";
+import {useAtom} from "jotai"
+import {Home, Plus} from "lucide-react"
+import {Frame} from "../../design-system/Frame/Frame.tsx"
+import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
+import {Icon} from "../../design-system/Icon"
+import {Text} from "../../design-system/text/Text.tsx"
+import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import {Radius2} from "../../design-system/token/token.const.2tier"
+import {mockServers} from "./mockData"
+import {selectedServerIdAtom} from "./store"
 
 export function ServerList() {
   const [selectedServerId, setSelectedServerId] = useAtom(selectedServerIdAtom);
@@ -84,9 +79,7 @@ export function ServerList() {
               justify: "center",
             }}
             surface={selectedServerId === server.id ? "primary" : "raised"}
-            rounded={
-              selectedServerId === server.id ? Radius2.md : Radius2.full
-            }
+            rounded={selectedServerId === server.id ? Radius2.md : Radius2.full}
             onClick={() => setSelectedServerId(server.id)}
             style={{
               transition: "border-radius 0.2s ease",
