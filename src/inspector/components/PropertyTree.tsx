@@ -35,12 +35,13 @@ export function PropertyTree({
         override={{
           py: Space.n2,
           px: Space.n6,
+          border: true,
         }}
         style={{
           paddingLeft: `${depth * 12 + 8}px`,
-        }}
+        } as React.CSSProperties}
         layout={Layout.Row.LabelValue.Default}
-        surface={background} border="bottom"
+        surface={background}
       >
         <Text size={FontSize.n9} color="secondary">
           {label}
@@ -70,17 +71,18 @@ export function PropertyTree({
         override={{
           py: Space.n2,
           px: Space.n6,
+          border: true,
         }}
         style={{
           paddingLeft: `${depth * 12 + 8}px`,
           cursor: isEmpty ? "default" : "pointer",
-        }}
+        } as React.CSSProperties}
         layout={Layout.Row.LabelValue.Default}
         surface={background}
         onClick={(e) => {
           e.stopPropagation();
           if (!isEmpty) setIsOpen(!isOpen);
-        }} border="bottom"
+        }}
       >
         <Frame layout={Layout.Row.Item.Default}>
           {!isEmpty && (

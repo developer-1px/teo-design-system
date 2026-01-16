@@ -192,10 +192,9 @@ export function PropertiesPanel() {
             h: Size.n40
         }}
         style={{
-          borderBottom: "1px solid var(--border-color)",
           borderColor: "var(--border-color)",
         }}
-        layout={Layout.Row.Toolbar.Compact}
+        layout={Layout.Row.Toolbar.Compact} border={true}
       >
         {tabs.map((tab) => {
           const tabProps = getTabProps(tab);

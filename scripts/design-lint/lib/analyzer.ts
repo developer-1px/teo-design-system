@@ -1,8 +1,8 @@
 import type { FrameProps, ComputedCSS, Issue, Project } from "./types";
 import { SyntaxKind } from "./types";
-import { frameToSettings } from "../../src/design-system/Frame/frameToSettings";
-import { resolveLayout } from "../../src/design-system/Frame/Layout/Layout";
-import type { LayoutToken } from "../../src/design-system/Frame/Layout/Layout";
+import { frameToSettings } from "../../../src/design-system/Frame/frameToSettings";
+import { resolveLayout } from "../../../src/design-system/Frame/Layout/Layout";
+import type { LayoutToken } from "../../../src/design-system/Frame/Layout/Layout";
 import { extractFrameProps } from "./ast-parser";
 import { checkFrameDesignRules } from "./rules/frame-design-rules";
 import { checkFrameStyleUsage } from "./rules/frame-style-usage";
@@ -89,3 +89,30 @@ function computeFinalCSS(props: FrameProps): ComputedCSS {
 
 /**
  * Extract all Frame props from JSX element using AST
+
+ */
+function analyzeFile(project: Project, filePath: string): Issue[] {
+  const sourceFile = project.getSourceFile(filePath);
+  if (!sourceFile) return [];
+
+  const issues: Issue[] = [];
+
+  // Find all JSX elements
+  const jsxElements = sourceFile.getDescendantsOfKind(SyntaxKind.JsxElement);
+  const jsxSelfClosingElements = sourceFile.getDescendantsOfKind(SyntaxKind.JsxSelfClosingElement);
+
+  // Check JSX opening elements (from JsxElement)
+  for (const jsxElement of jsxElements) {
+    const openingElement = jsxElement.getOpeningElement();
+    checkFrameStyleUsage(openingElement, issues, filePath);
+    checkFrameDesignRules(openingElement, issues, filePath);
+  }
+
+  // Check self-closing elements
+  for (const selfClosingElement of jsxSelfClosingElements) {
+    checkFrameStyleUsage(selfClosingElement, issues, filePath);
+    checkFrameDesignRules(selfClosingElement, issues, filePath);
+  }
+
+  return issues;
+}

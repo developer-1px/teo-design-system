@@ -41,20 +41,22 @@ interface FramePresetProps {
   fill?: boolean;
   flex?: boolean | number | string;
 
+  maxWidth?: MaxWidthToken;
+
   ratio?: string;
 
   // 3. Appearance (Visual Decoration)
   // Visual style without affecting layout flow
   surface?: SurfaceToken;
-  rounded?: Radius2Token | boolean;
-  border?: boolean;
-  borderWidth?: BorderWidthToken;
-  shadow?: ShadowToken;
 
   opacity?: OpacityToken;
   clip?: boolean;
 
   interactive?: boolean | "button" | "text";
+
+  // 4. Decoration (Visual)
+  // restored for convenience
+  rounded?: Radius2Token | boolean;
 }
 
 // --- 2. OVERRIDES (Strict 1-Tier Tokens) ---
@@ -97,6 +99,7 @@ export interface FrameOverrides {
   gap?: SpaceToken;
 
   // border (override: individual sides)
+  border?: boolean;
   borderTop?: boolean;
   borderRight?: boolean;
   borderBottom?: boolean;
@@ -104,7 +107,7 @@ export interface FrameOverrides {
   borderWidth?: BorderWidthToken;
 
   // BorderRadius
-  r?: RadiusToken;
+  r?: RadiusToken | Radius2Token;
 
   // Surface
   clip?: boolean;

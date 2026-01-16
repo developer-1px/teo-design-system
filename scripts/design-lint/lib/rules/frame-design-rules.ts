@@ -1,6 +1,12 @@
-import type { JsxOpeningElement, JsxSelfClosingElement, Issue, FrameProps, ComputedCSS } from "../types";
-import { extractFrameProps } from "../ast-parser";
 import { computeFinalCSS } from "../analyzer";
+import { extractFrameProps, parseStyleObject } from "../ast-parser";
+import type {
+  ComputedCSS,
+  FrameProps,
+  Issue,
+  JsxOpeningElement,
+  JsxSelfClosingElement,
+} from "../types";
 
 export { checkFrameDesignRules };
 function checkFrameDesignRules(
@@ -28,7 +34,7 @@ function checkFrameDesignRules(
       line,
       column,
       rule: "Surface without padding",
-      message: `surface="${props.surface}" requires padding for visual breathing room. Add p={3} or use Layout.Stack.Section`,
+      message: `surface="${props.surface}" requires padding for visual breathing room.`,
       code: elementText.trim(),
       fixable: false,
     });
@@ -41,7 +47,8 @@ function checkFrameDesignRules(
       line,
       column,
       rule: "Floating Flat Surface",
-      message: "Floating surfaces with borders must have border-radius. Add rounded=\"md\"",
+      message:
+        'Floating surfaces with borders must have border-radius. Add rounded="md"',
       code: elementText.trim(),
       fixable: false,
     });
@@ -51,17 +58,21 @@ function checkFrameDesignRules(
   const styleAttr = element.getAttribute("style");
   if (styleAttr) {
     const styleObj = parseStyleObject(styleAttr);
-    if (styleObj && (styleObj.background || styleObj.backgroundColor) && !props.surface) {
+    if (
+      styleObj &&
+      (styleObj.background || styleObj.backgroundColor) &&
+      !props.surface
+    ) {
       issues.push({
         file: filePath,
         line,
         column,
         rule: "Hardcoded background",
-        message: "Use surface token instead of hardcoded background. Replace with surface=\"raised\" or similar",
+        message:
+          'Use surface token instead of hardcoded background. Replace with surface="raised" or similar',
         code: elementText.trim(),
         fixable: false,
       });
     }
   }
 }
-

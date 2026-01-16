@@ -59,8 +59,8 @@ export function Section({
         p: Space.n0,
         flex,
         shadow,
+        r: rounded,
       }}
-      rounded={rounded}
       as="section"
       surface="base"
       fill={fill}
@@ -69,7 +69,7 @@ export function Section({
       {(title || icon) && (
         <Frame
           layout={Layout.Row.Item.Tight}
-          override={{ gap: Space.n8, p: Space.n8, align: "center" }} border="bottom"
+          override={{ gap: Space.n8, p: Space.n8, align: "center", border: true }}
         >
           <Text.Card.Note
             style={{

@@ -213,21 +213,18 @@ Complete 3-Tier specification details:
 - `Section` - Container component with title and optional surface styling
 
 **Typography:**
-- `Text` - Text component with variant system (1-4) and weight options
-- `Prose` - Prose typography component with semantic role system (h1, h2, h3, h4, body, body-sm, caption)
-- `ProseDocument` - Document container with max-width and centered layout
-- `ProseSection` - Full-width section with ProseDocument inside
+- `Text` - Text component with variant system and weight options
+- `Text.Prose` - Prose typography component with semantic role system (accessed via Text namespace)
 
 **Interactive:**
-- `Action` - Button/action component with variants (ghost, surface, primary)
-- `Field` - Input field with scrubbing support (drag to change numeric values)
+- `Action` - Button/action component with variants (ghost, surface, primary) and T-shirt sizing ("sm", "md", "lg")
+- `Field` - Input field component with icon support
 
 **Visual:**
 - `Separator` - Divider component (horizontal/vertical)
 
 **Utilities:**
 - `theme.tsx` - Theme provider and hook for light/dark mode with localStorage persistence
-- `utils.ts` - Token conversion utility (`toToken`) for transforming prop values to CSS variables
 
 ### Design Token System
 
@@ -240,13 +237,14 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
 - **Border**: `--border-color`, `--border-width`
 
 **Spacing Scale:**
-- `--space-0` (0px) through `--space-16` (128px)
-- Common: `--space-1` (4px), `--space-2` (8px), `--space-3` (12px), `--space-4` (16px), `--space-5` (24px), `--space-6` (32px)
+- Format: `--space-n{value}` (e.g., `--space-n16` for 16px)
+- Common values: n4 (4px), n8 (8px), n12 (12px), n16 (16px), n24 (24px), n32 (32px)
+- Used via constants: `Space.n4`, `Space.n8`, `Space.n16`, etc.
 
 **Size Scale (Layout):**
-- `--size-3` through `--size-300` (12px through 1200px)
-- Common component sizes: `--size-3` (12px), `--size-4` (16px), `--size-6` (32px), `--size-action` (40px), `--size-header` (80px)
-- Layout sizes: `--size-50` through `--size-300` (200px through 1200px)
+- Format: `--size-n{value}` (e.g., `--size-n240` for 240px)
+- Common values: n16, n32, n40, n240 (sidebar), n680 (content), n1200 (max)
+- Used via constants: `Size.n16`, `Size.n240`, etc.
 
 **Typography:**
 - **Font Sizes**: `--font-size-1` through `--font-size-6` (32px, 20px, 14px, 12px, 10px, 9px)
@@ -274,48 +272,47 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
 **Frame Component:**
 ```tsx
 <Frame
-  // Layout
-  row             // Flexbox row direction
-  flex            // Flex: 1
-  fill            // Width/height: 100%
-  gap={2}         // Gap using space tokens
-  p={3}           // Padding using space tokens (shorthand)
+  // Layout (2-Tier Semantic Presets - RECOMMENDED)
+  layout={Layout.Stack.Content.Default}  // Use semantic layout presets
 
-  // Grid Layout
-  grid            // Display: grid
-  columns="1fr 2fr"  // Grid template columns
-  rows="auto"     // Grid template rows
-
-  // Alignment
-  align="center"  // align-items (start, center, end, stretch, baseline)
-  justify="between" // justify-content (start, center, end, between, around, evenly)
-  pack            // Shortcut for pack
+  // Legacy Props (DEPRECATED - use 'override' instead)
+  // gap, flex, fill, grid are deprecated. Use 'layout' + 'override'
 
   // Visual
   surface="base"  // Background from surface tokens (base, raised, sunken, overlay, primary, selected)
-  rounded="md"    // Border radius (none, sm, md, lg, xl, 2xl, 3xl, full, round)
-  shadow="sm"     // Box shadow (sm, md, lg, xl, 2xl)
-  border          // 1px solid border (true, "top", "bottom", "left", "right")
-  borderColor="default" // Border color (default, text-4, text-primary, transparent)
+  opacity={Opacity.n80}  // Opacity token
+  clip            // Clip overflow
+  scroll          // Enable scrolling
+  interactive     // Interactive states (hover, focus)
 
   // Sizing
-  w={60}          // Width using size tokens
-  h={50}          // Height using size tokens
-  minWidth={200}  // Min width
-  maxWidth={800}  // Max width
+  w={Size.n240}   // Width using Size tokens
+  h={Size.n640}   // Height using Size tokens
+  maxWidth={Size.n1200}  // Max width
+  ratio="16/9"    // Aspect ratio
 
-  // Positioning
-  position="absolute"
-  top={0} left={0} bottom={0} right={0}
-  zIndex={10}
+  // Overrides (1-Tier Tokens - use when layout presets are not enough)
+  override={{
+    gap: Space.n12,
+    p: Space.n16,
+    row: true,
+    align: "center",
+    justify: "space-between",
+    // ... other 1-tier tokens
+  }}
 
-  // Other
-  overflow="hidden" // Overflow (hidden, auto, scroll, visible)
-  cursor="pointer"  // Cursor (pointer, default, text, move, not-allowed, grab, grabbing)
-  ratio="16/9"      // Aspect ratio
-  as="main"         // Polymorphic component (defaults to "div")
+  // Semantic
+  title="Section title"  // Tooltip/title
+
+  // DOM
+  as="main"       // Polymorphic component (defaults to "div")
 />
 ```
+
+**IMPORTANT**: The Frame API has evolved to use a **2-Tier system**:
+- **Tier 1**: Semantic layout presets via `layout` prop (e.g., `Layout.Stack.Content.Default`)
+- **Tier 2**: Direct token control via `override` prop (e.g., `override={{ gap: Space.n12 }}`)
+- Legacy shorthand props (`gap`, `flex`, `fill`, `grid`) are deprecated
 
 **Action Component:**
 ```tsx
@@ -323,54 +320,49 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
   icon={Icon}        // Lucide icon component
   label="Text"       // Optional text label
   variant="primary"  // ghost (default), surface, primary
-  size={32}          // Square size shortcut
-  iconSize={16}      // Icon size
-  rounded="round"    // Border radius
+  size="sm"          // T-shirt size: "sm" (32px), "md" (40px), "lg" (48px)
+  iconSize={IconSize.n16}  // Icon size token (or number)
+  rounded={Radius2.round}  // Border radius token
 />
 ```
 
 **Field Component:**
 ```tsx
 <Field
-  label="X"          // Optional label (enables scrubbing)
+  label="X"          // Optional label text
   icon={<Icon />}    // Left icon
   rightIcon={<Icon />} // Right icon
   value={value}      // Input value
   onChange={handler} // Change handler
   flex               // Flex: 1
+  w="100%"           // Width
+  override={{        // Additional token overrides
+    gap: Space.n8,
+    py: Space.n6,
+  }}
 />
 ```
 
-**Note:** Fields with labels support **scrubbing** - drag horizontally on the label to increment/decrement numeric values.
-
 **Prose Components:**
 ```tsx
-// Prose is a namespace object with context-specific components
-// Available components: Title, Body, Note, Code
+// Prose is accessed via Text.Prose namespace
+// Per conventions.md: ALWAYS use Text.Prose, not direct Prose imports
+
+import { Text } from "../design-system/text/Text";
 
 // Title with variants (xl=h1, lg=h2, md=h3, sm=h4)
-<Prose.Title variant="xl" style={{ textAlign: "center" }}>
+<Text.Prose.Title variant="xl" style={{ textAlign: "center" }}>
   Main Heading
-</Prose.Title>
-
-<Prose.Title variant="lg">
-  Section Heading
-</Prose.Title>
+</Text.Prose.Title>
 
 // Body text for paragraphs
-<Prose.Body style={{ textAlign: "left", lineHeight: 1.6 }}>
+<Text.Prose.Body>
   Paragraph content with comfortable reading flow.
-</Prose.Body>
+</Text.Prose.Body>
 
-// Note for secondary information
-<Prose.Note style={{ fontSize: "14px", color: "var(--text-subtle)" }}>
-  Additional context or metadata
-</Prose.Note>
-
-// Code for inline code snippets
-<Prose.Code>
-  const example = "code";
-</Prose.Code>
+// Other Text contexts: Card, Field, Menu, Table
+<Text.Card.Title>Card Title</Text.Card.Title>
+<Text.Menu.Label>Menu Item</Text.Menu.Label>
 ```
 
 ## Application Structure
@@ -383,9 +375,10 @@ The project uses **React Router DOM** with a hash router to showcase multiple de
 - **`/cms` (CMSApp)** - CMS/website builder interface
 - **`/crm` (CRMApp)** - CRM application with Tanstack Table integration
 - **`/mail` (MailApp)** - Mail client interface
+- **`/discord` (DiscordApp)** - Discord-like chat interface
 - **`/login` (LoginApp)** - Login/authentication interface
 - **`/surface` (SurfaceApp)** - Surface token demonstration
-- **`/text-system` (TextSystemApp)** - Typography system showcase
+- **`/text` (TextSystemApp)** - Typography system showcase
 
 Each app demonstrates different design patterns and component compositions. The main `App.tsx` includes a floating navigation pill to switch between demos.
 
@@ -417,28 +410,33 @@ Demonstrates a CRM application with Tanstack Table integration:
 - **Data Loading**: Dynamic dataset loading with `import.meta.glob` (supports Korean filenames)
 - **Auto Row IDs**: Generates unique `__rowId` for each data row to ensure stable keys
 
-## Token Utility System
+## Token System
 
-The `toToken` utility in `src/design-system/utils.ts` converts prop values to CSS custom properties:
+MDK uses a **branded type system** with explicit token constants to prevent arbitrary values and enable dead code detection:
 
 ```typescript
-toToken(2, "space")      // → "var(--space-2)"
-toToken("md", "radius")  // → "var(--radius-md)"
-toToken("12px", "space") // → "12px" (passes through)
-toToken("10 20", "space") // → "var(--space-10) var(--space-20)"
+import { Space, Size, IconSize, FontSize, Opacity } from "./design-system/token/token.const.1tier";
+import { Radius2, ActionSize } from "./design-system/token/token.const.2tier";
+
+// Usage
+<Frame override={{ gap: Space.n12, p: Space.n16 }}>
+<Action size="sm" iconSize={IconSize.n16} rounded={Radius2.md}>
 ```
 
-This enables the prop-based API to accept both token names and raw CSS values.
+**Key Benefits:**
+- AI cannot use arbitrary numbers (enforced by branded types)
+- Unused tokens are detected by `ts-unused-exports`
+- Zero runtime overhead (types only)
 
 ## Key Architectural Decisions
 
 1. **Token-Driven Design** - All spacing, colors, and sizing use CSS custom properties for consistency
-2. **Prop-Based API** - Components use semantic props (`surface`, `p`, `gap`) instead of className strings
-3. **Polymorphic Components** - Frame supports `as` prop to render as different HTML elements
-4. **Theme System** - Light/dark mode with automatic persistence to localStorage (via `data-theme` attribute)
-5. **TypeScript First** - Full type safety with strict typing on all component props
-6. **Router-Based Demos** - Multiple demo apps showcase different use cases for the design system
-7. **Flexible Token Resolution** - `toToken` utility allows mixing token names and raw values
+2. **2-Tier Layout System** - Semantic layout presets (`layout` prop) + direct token overrides (`override` prop)
+3. **Branded Type System** - TypeScript branded types enforce token usage and prevent arbitrary values
+4. **Polymorphic Components** - Frame supports `as` prop to render as different HTML elements
+5. **Theme System** - Light/dark mode with automatic persistence to localStorage (via `data-theme` attribute)
+6. **TypeScript First** - Full type safety with strict typing on all component props
+7. **Router-Based Demos** - Multiple demo apps showcase different use cases for the design system
 
 ## TypeScript Configuration
 
@@ -501,20 +499,21 @@ Documentation files in `docs/claude/` use zero-padded number prefixes for sequen
 4. **Consult Conventions**: Reference `.agent/conventions.md` for the complete 3-Tier Intent System
 
 ### Common Mistakes to Avoid
-1. **Pixel Confusion**: `p={20}` is NOT 20px, it's 160px (--space-20). Use `p={5}` for 24px spacing
-2. **Hardcoded Values**: Never use `style={{ padding: "16px" }}`, use `p={4}` instead
-3. **Missing Surface Padding**: If Frame has `surface` prop, it MUST have padding (default `p={2}`)
+1. **Using Deprecated Props**: Don't use `gap`, `flex`, `fill`, `grid` directly on Frame. Use `layout` prop or `override`
+2. **Token Constants**: Always use token constants: `Space.n16`, not `p={16}` or hardcoded strings
+3. **Missing Surface Padding**: If Frame has `surface` prop, it should have padding via layout or override
 4. **Barrel Exports**: Never create index.ts files that re-export components
 5. **Direct Context Imports**: Always import via namespace (e.g., `Text.Card.Title`, not `Card.Title`)
+6. **Action Size**: Use T-shirt sizes (`size="sm"`), not numbers (`size={32}`)
 
 ### Token Quick Reference
 **Most Common Values**:
-- Spacing: `gap={2}` (8px), `gap={3}` (12px), `gap={4}` (16px), `gap={5}` (24px)
-- Padding: `p={2}` (8px), `p={3}` (12px), `p={4}` (16px)
-- Width: `w={60}` (240px sidebar), `w={170}` (680px content), `w={300}` (1200px max)
-- Action size: `size={action}` (40px), icon: `iconSize={16}`
+- Spacing: `Space.n8` (8px), `Space.n12` (12px), `Space.n16` (16px), `Space.n24` (24px)
+- Size: `Size.n240` (240px sidebar), `Size.n680` (680px content), `Size.n1200` (1200px max)
+- Action size: `size="sm"` (32px), `size="md"` (40px), `size="lg"` (48px)
+- Icon size: `IconSize.n16`, `IconSize.n20`, `IconSize.n24`
 - Surfaces: `base`, `raised`, `sunken`, `overlay`, `primary`, `selected`
-- Radius: `rounded="md"` (6px), `rounded="lg"` (8px), `rounded="round"` (50%)
+- Radius: `Radius2.md`, `Radius2.lg`, `Radius2.round`, `Radius2.full`
 
 ### Debug Tools
 - **React Inspector**: Press `Cmd+Shift` during development to inspect components and copy code

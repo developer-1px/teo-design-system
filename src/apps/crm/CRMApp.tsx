@@ -31,8 +31,7 @@ export function CRMApp() {
 
   return (
     <Frame
-      w="screen"
-      h="screen"
+      override={{ w: Size.screen, h: Size.screen }}
       layout={Layout.Row.AppContainer.Default}
       surface="base" // 1. Flat base foundation
     >

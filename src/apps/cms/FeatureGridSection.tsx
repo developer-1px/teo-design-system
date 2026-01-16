@@ -4,6 +4,7 @@ import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
 import {
+  ContainerSize,
   FontSize,
   IconSize,
   Size,
@@ -16,7 +17,7 @@ export function FeatureGridSection() {
   return (
     <Frame
       override={{ w: Size.fill }}
-      surface="base" border="bottom"
+      surface="base" border={true}
     >
       <Frame
         override={{
@@ -25,10 +26,10 @@ export function FeatureGridSection() {
           px: Space.n24,
           gap: Space.n48,
         }}
-        style={{ maxWidth: "var(--container-n1280)" }}
+        override={{ maxWidth: ContainerSize.n1280 }}
       >
         <Frame
-          style={{ maxWidth: "var(--container-n800)" }}
+          override={{ maxWidth: ContainerSize.n800 }}
           override={{ gap: Space.n12, align: "center" }}
         >
           <Text.Card.Note

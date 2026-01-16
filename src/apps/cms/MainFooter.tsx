@@ -24,20 +24,19 @@ export function MainFooter() {
         style={{
           maxWidth: "var(--container-n1280)",
           margin: "0 auto",
-        }}
+        } as React.CSSProperties}
       >
         <Frame
           layout={Layout.Row.Header.Default}
           override={{ w: Size.fill, justify: "between" }}
         >
-          <Frame override={{ gap: Space.n24 }} style={{ width: "35%" }}>
+          <Frame override={{ gap: Space.n24 }} style={{ width: "35%" } as React.CSSProperties}>
             <Frame
               layout={Layout.Row.Item.Tight}
               override={{ gap: Space.n12, align: "center" }}
             >
               <Frame
-                override={{ w: Size.n40, h: Size.n40 }}
-                rounded={Radius2.xl}
+                override={{ w: Size.n40, h: Size.n40, r: Radius2.xl }}
                 surface="primary"
                 pack
               >
@@ -105,7 +104,7 @@ export function MainFooter() {
 
         <Frame
           layout={Layout.Row.Header.Default}
-          override={{ pt: Space.n32, w: Size.fill, justify: "between" }} border="top"
+          override={{ pt: Space.n32, w: Size.fill, justify: "between", border: true }}
         >
           <Text.Card.Note
             size={FontSize.n13}

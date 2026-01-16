@@ -12,7 +12,7 @@ type FrameSettingsInput = FrameOverrides & {
   borderWidth?: BorderWidthToken;
   z?: ZIndexToken;
   zIndex?: ZIndexToken;
-  interactive?: boolean;
+  interactive?: boolean | "button" | "text";
 };
 
 export function frameToSettings(props: FrameSettingsInput): {
@@ -115,6 +115,17 @@ export function frameToSettings(props: FrameSettingsInput): {
     // If it's a CSS variable (from token) or arbitrary string
     classes.push("w(fixed)");
     styles.width = wVal;
+  }
+
+  // -- MaxWidth (Added) --
+  if (props.maxWidth !== undefined) {
+    classes.push("max-w(fixed)");
+    const maxWVal = resolveSizing(props.maxWidth, "width");
+    if (typeof maxWVal === "number") {
+      styles.maxWidth = `${maxWVal}px`;
+    } else if (typeof maxWVal === "string") {
+      styles.maxWidth = maxWVal;
+    }
   }
 
   // -- Height --

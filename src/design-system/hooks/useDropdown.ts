@@ -182,7 +182,7 @@ export function useDropdown<T>(
 ): UseDropdownReturn<T> {
   const {
     items,
-    itemToString = (item) => (item == null ? "" : String(item)),
+    itemToString: _itemToString = (item) => (item == null ? "" : String(item)),
     selectedItem: controlledSelectedItem,
     defaultSelectedItem = null,
     onSelectedItemChange,

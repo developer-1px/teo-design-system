@@ -164,7 +164,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           display: isOpen ? "flex" : "none",
         }}
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n12, p: Space.n12, align: "center" }} border="top"
+        override={{ gap: Space.n12, p: Space.n12, align: "center" }} border={true}
       >
         <Frame
           override={{ w: Size.n32, h: Size.n32 }}

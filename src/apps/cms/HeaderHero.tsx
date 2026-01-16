@@ -8,8 +8,11 @@ import {
   FontSize,
   IconSize,
   Size,
-  Space, Opacity } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
+  Space, Opacity, ContainerSize
+} from "../../design-system/token/token.const.1tier";
+import {
+  Radius2
+} from "../../design-system/token/token.const.2tier";
 import { EditableWrapper } from "./EditableWrapper";
 
 export function HeaderHero() {
@@ -30,13 +33,13 @@ export function HeaderHero() {
           minHeight: "90vh",
           maxWidth: "var(--container-n1280)",
           margin: "0 auto",
-        }}
+        } as React.CSSProperties}
       >
         {/* Background Decoration */}
         <Frame
           override={{
-              opacity: Opacity.n10
-        }}
+            opacity: Opacity.n10
+          }}
           style={{
             position: "absolute",
             top: "-25px",
@@ -47,8 +50,8 @@ export function HeaderHero() {
         />
         <Frame
           override={{
-              opacity: Opacity.n15
-        }}
+            opacity: Opacity.n15
+          }}
           style={{
             position: "absolute",
             bottom: "-25px",
@@ -59,19 +62,12 @@ export function HeaderHero() {
         />
 
         <Frame
-          style={{ maxWidth: "var(--container-n800)" }}
-          override={{ w: Size.fill, gap: Space.n24, align: "center" }}
+          override={{ maxWidth: ContainerSize.n800, w: Size.fill, gap: Space.n24, align: "center" }}
         >
           <Frame
-            rounded={Radius2.full}
+            override={{ r: Radius2.full, py: Space.n4, px: Space.n12, gap: Space.n8, align: "center" }}
             surface="raised"
             layout={Layout.Row.Item.Compact}
-            override={{
-              py: Space.n4,
-              px: Space.n12,
-              gap: Space.n8,
-              align: "center",
-            }}
           >
             <Icon
               src={Sparkles}
@@ -99,20 +95,22 @@ export function HeaderHero() {
             </Text.Prose.Title>
           </EditableWrapper>
 
-          <EditableWrapper style={{ maxWidth: "var(--container-n640)" }}>
-            <Text.Prose.Body
-              size={FontSize.n14}
-              weight="medium"
-              style={{
-                textAlign: "center",
-                letterSpacing: "0.01em",
-                opacity: 0.8,
-              }}
-            >
-              The visual engine for creators who demand perfection. No code, no
-              constraints, just pure creativity.
-            </Text.Prose.Body>
-          </EditableWrapper>
+          <Frame override={{ maxWidth: ContainerSize.n640 }}>
+            <EditableWrapper>
+              <Text.Prose.Body
+                size={FontSize.n14}
+                weight="medium"
+                style={{
+                  textAlign: "center",
+                  letterSpacing: "0.01em",
+                  opacity: 0.8,
+                }}
+              >
+                The visual engine for creators who demand perfection. No code, no
+                constraints, just pure creativity.
+              </Text.Prose.Body>
+            </EditableWrapper>
+          </Frame>
 
           <Frame
             layout={Layout.Row.Actions.Default}
@@ -142,16 +140,17 @@ export function HeaderHero() {
 
         {/* Hero Visual: Mockup UI */}
         <Frame
-          override={{ w: Size.fill,
-              maxWidth: Size.n384
-        }}
-          rounded={Radius2["2xl"]}
+          override={{
+            w: Size.fill,
+            maxWidth: Size.n384 as any,
+            r: Radius2["2xl"],
+          }}
           style={{
             position: "relative",
             marginTop: "var(--space-n64)",
             transform: "perspective(1000px) rotateX(5deg)",
             margin: "0 auto",
-          }}
+          } as React.CSSProperties}
           surface="raised"
           clip
         >
@@ -160,25 +159,22 @@ export function HeaderHero() {
             layout={Layout.Row.Item.Tight}
             override={{
               h: Size.n12,
-              py: Space.n0,
               px: Space.n4,
               gap: Space.n2,
               align: "center",
-            }} border="bottom"
+              border: true,
+            }}
           >
             <Frame
-              override={{ w: Size.n12, h: Size.n12 }}
-              rounded={Radius2.full}
+              override={{ w: Size.n12, h: Size.n12, r: Radius2.full }}
               surface="overlay"
             />
             <Frame
-              override={{ w: Size.n12, h: Size.n12 }}
-              rounded={Radius2.full}
+              override={{ w: Size.n12, h: Size.n12, r: Radius2.full }}
               surface="overlay"
             />
             <Frame
-              override={{ w: Size.n12, h: Size.n12 }}
-              rounded={Radius2.full}
+              override={{ w: Size.n12, h: Size.n12, r: Radius2.full }}
               surface="overlay"
             />
             <Frame flex />
@@ -194,25 +190,23 @@ export function HeaderHero() {
                 w: Size.n64,
                 p: Space.n4,
                 gap: Space.n4,
+                border: true,
               }}
-              surface="sunken" border="right"
+              surface="sunken"
             >
               <Frame
-                rounded={Radius2.full}
-                override={{ h: Size.n16 }}
-                style={{ width: "80%" }}
+                override={{ h: Size.n16, r: Radius2.full }}
+                style={{ width: "80%" } as React.CSSProperties}
                 surface="overlay"
               />
               <Frame
-                override={{ h: Size.n4 }}
-                rounded={Radius2.full}
-                style={{ width: "60%" }}
+                override={{ h: Size.n4, r: Radius2.full }}
+                style={{ width: "60%" } as React.CSSProperties}
                 surface="overlay"
               />
               <Frame flex />
               <Frame
-                override={{ h: Size.n12, w: Size.fill }}
-                rounded={Radius2.lg}
+                override={{ h: Size.n12, w: Size.fill, r: Radius2.lg }}
                 surface="raised"
               />
             </Frame>
@@ -223,8 +217,7 @@ export function HeaderHero() {
               pack
             >
               <Frame
-                override={{ w: Size.n32, h: Size.n32, shadow: "lg" }}
-                rounded={Radius2["2xl"]}
+                override={{ w: Size.n32, h: Size.n32, shadow: "lg", r: Radius2["2xl"] }}
                 surface="raised"
                 pack
               >
@@ -236,13 +229,11 @@ export function HeaderHero() {
               </Frame>
               <Frame override={{ gap: Space.n4, align: "center" }}>
                 <Frame
-                  override={{ h: Size.n4, w: Size.n48 }}
-                  rounded={Radius2.full}
+                  override={{ h: Size.n4, w: Size.n48, r: Radius2.full }}
                   surface="overlay"
                 />
                 <Frame
-                  override={{ h: Size.n4, w: Size.n72 }}
-                  rounded={Radius2.full}
+                  override={{ h: Size.n4, w: Size.n72, r: Radius2.full }}
                   surface="raised"
                 />
               </Frame>

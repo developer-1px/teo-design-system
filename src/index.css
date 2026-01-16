@@ -109,75 +109,14 @@ button {
   opacity: 0.8;
 }
 
-/* Input / Field base resets */
-.field-base {
-  height: var(--field-height);
-  border-radius: var(--field-radius);
-  background-color: var(--field-bg);
-  border: 1px solid var(--field-border);
-}
-
-.field-base:hover {
-  background-color: var(--field-bg-hover);
-  border-color: var(--field-border-hover);
-}
-
-.field-input {
-  color: var(--text-primary);
-  font-size: var(--font-size-input);
-  font-weight: var(--font-weight-medium);
-  border: none;
-  background: none;
-  width: 100%;
-  height: 100%;
-  outline: none;
-}
-
-input::placeholder {
-  color: var(--text-muted);
-}
-
-/* Field Child Elements specific handling */
-.field-base .field-icon {
-  opacity: 0.7;
-}
-
-.field-base:focus-within .field-icon {
-  opacity: 1;
-}
-
-.field-base .field-label {
-  opacity: 0.6;
-  color: var(--text-subtle);
-}
-
-.field-base:focus-within .field-label {
-  opacity: 0.9;
-}
-
-.field-base:active .field-label,
-.field-base.is-scrubbing .field-label {
-  color: var(--primary-bg);
-  opacity: 1;
-}
-
-.field-base:active,
-.field-base:focus-within,
-.field-base.is-scrubbing {
-  background-color: var(--field-bg-focus);
-  border-color: var(--field-border-focus);
-}
-
-.field-base.is-scrubbing .field-input {
-  color: var(--text-body);
-  opacity: 0.5;
-}
+/* Field Child Elements specific handling - Removed as now handled by Frame/Text styles */
 
 /* Animations */
 @keyframes spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

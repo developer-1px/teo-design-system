@@ -178,7 +178,6 @@ export type SizeScale = ScaleOf<typeof SizeScale>;
 export type SizeNumericKey = KeyOf<typeof SizeScale>;
 
 export const SizeKeywords = [
-  // "full", // REMOVED: Use Size.full (100%) or w="100%" (Fixed)
   "screen",
   "hug",
   "fill",

@@ -42,7 +42,7 @@ export interface TriggerProps {
   /** ARIA describedby */
   "aria-describedby": string;
   /** Ref for positioning */
-  ref: React.RefObject<HTMLElement>;
+  ref: React.RefObject<HTMLElement | null>;
 }
 
 /**
@@ -56,7 +56,7 @@ export interface TooltipProps {
   /** Positioning styles */
   style: React.CSSProperties;
   /** Ref for positioning */
-  ref: React.RefObject<HTMLElement>;
+  ref: React.RefObject<HTMLElement | null>;
 }
 
 /**
@@ -119,8 +119,8 @@ export function useTooltip(options: UseTooltipOptions = {}): UseTooltipReturn {
   const baseId = useId("tooltip");
   const triggerRef = useRef<HTMLElement>(null);
   const tooltipRef = useRef<HTMLElement>(null);
-  const showTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const showTimeoutRef = useRef<any>(null);
+  const hideTimeoutRef = useRef<any>(null);
 
   const [position, setPosition] = useState({ top: 0, left: 0 });
 

@@ -94,17 +94,12 @@ function ScrollContainer({
   return (
     <Frame
       scroll="x"
-      override={{ w: Size.fill }}
+      override={{ w: Size.fill, p: Space.n32 }}
       style={{
-        paddingBottom: "var(--space-n16)", // Space for scrollbar
-        // Hide scrollbar but allow scroll behavior if desired, or keep it.
-        // Apple often hides it until scroll.
-        // We'll keep standard behavior for accessibility but maybe style it later.
-        // Apple often hides it until scroll.
-        // We'll keep standard behavior for accessibility but maybe style it later.
         maskImage: "linear-gradient(to right, black 95%, transparent 100%)", // Fade out effect
         maxWidth: "100%", // Prevent parent blowout
       }}
+      pack
     >
       <Frame
         layout={Layout.Row.Item.Default}
@@ -126,7 +121,7 @@ export function TokensApp() {
       >
         <Frame
           override={{
-            gap: Space.n40,
+            gap: Space.n64,
             py: Space.n40,
             px: Space.n24,
             w: Size.fill,
@@ -280,8 +275,9 @@ export function TokensApp() {
               >
                 <Frame
                   style={{
-                    position: "relative"
-                  }} override={{ w: Size.fill, h: Size.fill }}
+                    position: "relative",
+                  }}
+                  override={{ w: Size.fill, h: Size.fill }}
                 >
                   {ZIndexScale.filter((_, i) => i % 2 === 0).map((val, i) => (
                     <Frame
@@ -312,13 +308,10 @@ export function TokensApp() {
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
               {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
-                <Frame key={val} override={{ gap: Space.n8, align: "center" }}>
+                <Frame key={val} override={{ gap: Space.n8 }}>
                   <Frame
-                    surface="base"
+                    surface="primary"
                     opacity={Opacity[`n${val}` as keyof typeof Opacity]}
-                    style={{
-                      backgroundColor: "black",
-                    }}
                     override={{ w: Size.n64, h: Size.n64, minWidth: Size.n64 }}
                     rounded={Radius2.lg}
                   />

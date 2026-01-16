@@ -5,8 +5,11 @@ import { Text } from "../../design-system/text/Text";
 import {
   FontSize,
   Size,
-  Space, ZIndex } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
+  Space, ZIndex
+} from "../../design-system/token/token.const.1tier";
+import {
+  Radius2
+} from "../../design-system/token/token.const.2tier";
 
 export interface SiteHeaderProps {
   isSidebarOpen?: boolean;
@@ -23,18 +26,21 @@ export function SiteHeader({
         height: "var(--header-height)",
         position: "sticky",
         top: 0
-      }}
+      } as React.CSSProperties}
       layout={Layout.Row.Header.Default}
       surface="base"
-      override={{ w: Size.fill, align: "center",
-          zIndex: ZIndex.n100
-    }} border="bottom"
+      override={{
+        w: Size.fill,
+        align: "center",
+        zIndex: ZIndex.n100,
+        border: true,
+      }}
     >
       <Frame
         style={{
           maxWidth: "var(--container-n1280)",
           padding: "0 var(--space-n24)",
-        }}
+        } as React.CSSProperties}
         layout={Layout.Row.Header.Default}
         override={{ w: Size.fill, justify: "between" }}
       >
@@ -43,10 +49,9 @@ export function SiteHeader({
           override={{ gap: Space.n8, align: "center" }}
         >
           <Frame
-            override={{ w: Size.n32, h: Size.n32, shadow: "sm" }}
-            rounded={Radius2.lg}
+            override={{ w: Size.n32, h: Size.n32, shadow: "sm", r: Radius2.lg, border: true }}
             surface="primary"
-            pack border
+            pack
           >
             <Text.Card.Title
               size={FontSize.n16}
@@ -96,7 +101,7 @@ export function SiteHeader({
             />
           </Frame>
         </Frame>
-      </Frame>
-    </Frame>
+      </Frame >
+    </Frame >
   );
 }

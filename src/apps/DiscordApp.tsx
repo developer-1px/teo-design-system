@@ -15,11 +15,9 @@ import { ServerList } from "./discord/ServerList";
 export function DiscordApp() {
   return (
     <Frame
-      w="screen"
-      h="screen"
       layout={Layout.Row.AppContainer.Default}
       surface="base"
-      override={{ p: Space.n0 }}
+      override={{ p: Space.n0, w: Size.screen, h: Size.screen }}
     >
       {/* Server List (Far Left) */}
       <ServerList />

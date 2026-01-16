@@ -29,7 +29,7 @@ export function ScrollTabSection() {
         py: Space.n12,
         px: Space.n0,
       }}
-      surface="base" border="bottom"
+      surface="base" border={true}
     >
       <Frame
         override={{

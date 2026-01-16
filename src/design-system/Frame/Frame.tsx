@@ -1,9 +1,9 @@
-import type React from "react"
+import type React from "react";
 
-import type { FrameOverrides, FrameProps } from "./FrameProps.ts"
-import { frameToSettings } from "./frameToSettings.ts"
+import type { FrameOverrides, FrameProps } from "./FrameProps.ts";
+import { frameToSettings } from "./frameToSettings.ts";
 
-import { resolveLayout } from "./Layout/Layout.ts"
+import { resolveLayout } from "./Layout/Layout.ts";
 
 export function Frame({
   children,
@@ -22,25 +22,23 @@ export function Frame({
   // @deprecated
   gap, // @deprecated
   grid, // @deprecated
-  fill,// @deprecated
-  flex,// @deprecated
+  fill, // @deprecated
+  flex, // @deprecated
 
   // Sizing (Constraints)
   w,
   h,
+  maxWidth,
   ratio,
 
   // Appearance (Visuals)
   surface,
-  border,
-  borderWidth,
-  rounded,
-  shadow,
   opacity,
 
   clip,
   scroll,
   interactive,
+  rounded,
 
   // Overrides (1-Tier Tokens)
   override,
@@ -54,7 +52,7 @@ export function Frame({
   // ---------------------------------------------------------------------------
   // 1. Resolve Presets (Layout Token)
   // ---------------------------------------------------------------------------
-  const layoutSettings = layout ? resolveLayout(layout) : {}
+  const layoutSettings = layout ? resolveLayout(layout) : {};
 
   // ---------------------------------------------------------------------------
   // 2. Resolve Overrides (Standard < Layout < Override)
@@ -62,7 +60,7 @@ export function Frame({
   const combinedOverride: FrameOverrides = {
     ...layoutSettings.override,
     ...override,
-  }
+  };
 
   // ---------------------------------------------------------------------------
   // 3. Flatten Props (Explicit > Undefined)
@@ -81,18 +79,18 @@ export function Frame({
     w,
     h,
     fill,
+    maxWidth,
 
     ratio,
     // Appearance (Partial) - some are top-level only
     clip,
-    shadow,
     opacity,
-  }
+  };
 
   // Clean undefined values
   const cleanExplicitProps = Object.fromEntries(
     Object.entries(explicitProps).filter(([_, v]) => v !== undefined),
-  )
+  );
 
   // ---------------------------------------------------------------------------
   // 4. Construct Settings Input (The "Source of Truth")
@@ -103,17 +101,15 @@ export function Frame({
     ...combinedOverride, // Valid 1-Tier tokens
     // Top-level only Appearance props
     ...(surface !== undefined && { surface }),
-    ...(rounded !== undefined && { rounded }),
-    ...(border !== undefined && { border }),
-    ...(borderWidth !== undefined && { borderWidth }),
     ...(interactive !== undefined && { interactive }),
-  }
+    ...(rounded !== undefined && { rounded }),
+  };
 
   // ---------------------------------------------------------------------------
   // 5. Calculate CSS (Classes & Vars)
   // ---------------------------------------------------------------------------
   const { className: settingsClass, style: settingsVars } =
-    frameToSettings(settingsInput)
+    frameToSettings(settingsInput);
 
   // ---------------------------------------------------------------------------
   // 6. Compute Final Style (Restricted Style Injection)
@@ -134,7 +130,7 @@ export function Frame({
 
     // F. User Restricted Style (Escape Hatch)
     ...style,
-  }
+  };
 
   return (
     <Component
@@ -145,5 +141,5 @@ export function Frame({
     >
       {children}
     </Component>
-  )
+  );
 }

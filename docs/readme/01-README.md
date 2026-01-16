@@ -1,11 +1,8 @@
 # Minimal Design Kit (MDK)
 
-> **⚠️ WORK IN PROGRESS - AI-GENERATED CONTENT**
->
-> This README and documentation were written by AI and may contain inaccuracies or concepts that don't match the actual implementation. This is an experimental project exploring design system ideas through AI agent coding, which means the codebase changes extremely frequently and without notice. Treat all content as exploratory drafts, not authoritative documentation.
-
 **A CSS decision-making framework that helps AI maintain design consistency**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
 
@@ -499,7 +496,7 @@ npm run dev
 
 ## License
 
-License terms to be determined.
+MIT © Teo
 
 ---
 

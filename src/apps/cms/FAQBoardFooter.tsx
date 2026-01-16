@@ -6,6 +6,7 @@ import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
 import {
+  ContainerSize,
   FontSize,
   IconSize,
   Size,
@@ -22,8 +23,8 @@ export function FAQBoardFooter() {
           py: Space.n96,
           px: Space.n24,
           gap: Space.n48,
+          maxWidth: ContainerSize.n768,
         }}
-        style={{ maxWidth: "var(--container-n768)" }}
       >
         <Frame override={{ gap: Space.n12, w: Size.fill, align: "center" }}>
           <Text.Card.Note
@@ -56,19 +57,12 @@ export function FAQBoardFooter() {
         </Frame>
 
         <Frame
-          rounded={Radius2["2xl"]}
+          override={{ r: Radius2["2xl"], p: Space.n32, w: Size.fill, gap: Space.n24, align: "center" }}
           surface="raised"
           layout={Layout.Slots.Media.Default}
-          override={{
-            p: Space.n32,
-            w: Size.fill,
-            gap: Space.n24,
-            align: "center",
-          }}
         >
           <Frame
-            override={{ w: Size.n56, h: Size.n56 }}
-            rounded={Radius2.full}
+            override={{ w: Size.n56, h: Size.n56, r: Radius2.full }}
             surface="sunken"
             pack
           >
@@ -115,8 +109,9 @@ function FAQRow({ q, a }: FAQRowProps) {
         px: Space.n0,
         gap: Space.n16,
         cursor: "pointer",
+        border: true,
       }}
-      onClick={() => setIsOpen(!isOpen)} border="bottom"
+      onClick={() => setIsOpen(!isOpen)}
     >
       <Frame
         layout={Layout.Row.LabelValue.Default}

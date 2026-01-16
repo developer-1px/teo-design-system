@@ -46,7 +46,7 @@ const scales = {
   },
   container: {
     data: extractScale("ContainerSizeScale"),
-    prefix: "container",
+    prefix: "container-size",
     transform: (v) => `${v}px`,
   },
   radius: {

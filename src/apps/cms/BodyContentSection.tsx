@@ -4,6 +4,7 @@ import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
 import { Text } from "../../design-system/text/Text";
 import {
+  ContainerSize,
   FontSize,
   IconSize,
   Size,
@@ -20,12 +21,11 @@ export function BodyContentSection() {
         px: Space.n24,
       }}
       surface="sunken"
-      pack border="bottom"
+      pack border={true}
     >
       <Frame
-        style={{ maxWidth: "var(--container-n1280)" }}
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n48, w: Size.fill, align: "center" }}
+        override={{ gap: Space.n48, w: Size.fill, align: "center", maxWidth: ContainerSize.n1280 }}
       >
         <Frame override={{ gap: Space.n24 }} style={{ width: "50%" }}>
           <Frame override={{ gap: Space.n8 }}>

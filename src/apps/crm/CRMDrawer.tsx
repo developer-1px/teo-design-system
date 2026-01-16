@@ -31,8 +31,6 @@ export function CRMDrawer() {
     (row) => (row as DataRow & { __rowId: string }).__rowId === selectedRowId,
   );
 
-  const hasSelection = !!selectedRowId && !!selectedRow;
-
   const handleClose = () => setSelectedRowId(null);
 
   // Resizable hook

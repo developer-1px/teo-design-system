@@ -22,7 +22,7 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
       surface="sunken" // Match sidebar
       style={{
         transition: "width 0.3s ease",
-      }} border="left"
+      }} border={true}
     >
       <Frame
         override={{ gap: Space.n12, p: Space.n4 }}

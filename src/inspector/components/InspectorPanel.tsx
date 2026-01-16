@@ -1,9 +1,14 @@
 import {
-  ChevronDown,
-  ChevronRight,
+  AppWindow,
+  Box,
+  Code,
   Copy,
+  Layers,
+  Layout as LayoutIcon,
   Lock,
-  RefreshCw,
+  MousePointerClick,
+  Palette,
+  Type,
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -15,70 +20,81 @@ import { FontSize, Space } from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 import type { ComponentStackItem } from "../lib/fiber-utils";
 import { generateJSX } from "../lib/inspector-utils";
+import {
+  AppearanceControl,
+  LayoutControl,
+  SizingControl,
+  TypographyControl,
+} from "./InspectorControls";
 import { PropertyTree } from "./PropertyTree";
 
-const PROMPT_POOL = [
-  {
-    label: "토큰 사용",
-    prompt:
-      "이 컴포넌트를 하드코딩된 값(px) 대신 디자인 시스템 토큰(간격, 색상, 반경)을 사용하도록 리팩토링해주세요.",
-  },
-  {
-    label: "콤팩트하게",
-    prompt:
-      "이 컴포넌트의 패딩과 간격을 줄여서 더 콤팩트하고 정보 밀도를 높여주세요.",
-  },
-  {
-    label: "아이콘 수정",
-    prompt:
-      "이모지나 일반 SVG 아이콘을 디자인 시스템의 Lucide-React 아이콘으로 교체해주세요.",
-  },
-  {
-    label: "Props 정리",
-    prompt:
-      "사용하지 않는 불필요한 props를 제거하고 컴포넌트 구조를 단순화해주세요.",
-  },
-  {
-    label: "컴포넌트 추출",
-    prompt:
-      "이 논리적 단위를 별도의 재사용 가능한 하위 컴포넌트로 추출해주세요.",
-  },
-  {
-    label: "다크모드 수정",
-    prompt:
-      "다크 모드에서 올바르게 보이도록 모든 색상(배경, 테두리, 텍스트)이 시맨틱 토큰을 사용하는지 확인해주세요.",
-  },
-  {
-    label: "레이아웃 정렬",
-    prompt:
-      "이 컴포넌트의 자식 요소 정렬이 잘못되었습니다. flex 속성을 수정하여 올바른 레이아웃을 잡아주세요.",
-  },
-  {
-    label: "반응형 적용",
-    prompt:
-      "이 컴포넌트가 모바일에서도 잘 보이도록 반응형 스타일(flex-wrap 등)을 적용해주세요.",
-  },
-  {
-    label: "접근성 향상",
-    prompt:
-      "스크린 리더 사용자를 위해 적절한 aria 속성과 시맨틱 태그를 추가해주세요.",
-  },
-  {
-    label: "조건부 렌더링",
-    prompt:
-      "이 컴포넌트의 렌더링 로직을 확인하고, 조건부 렌더링이 더 깔끔하게 되도록 수정해주세요.",
-  },
-  {
-    label: "타이포그래피",
-    prompt:
-      "수동 스타일 오버라이드 대신 Text 컴포넌트의 variant prop을 사용하여 타이포그래피를 표준화해주세요.",
-  },
-];
+const SECTION_MAPPING: Record<string, string> = {
+  // Layout (Inner Flow)
+  layout: "Layout",
+  gap: "Layout",
+  row: "Layout",
+  wrap: "Layout",
+  pack: "Layout",
+  grid: "Layout",
 
-function getRandomPrompts(count: number) {
-  const shuffled = [...PROMPT_POOL].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-}
+  // Layout (Overrides)
+  align: "Layout",
+  justify: "Layout",
+  p: "Layout",
+  px: "Layout",
+  py: "Layout",
+  pt: "Layout",
+  pb: "Layout",
+  pl: "Layout",
+  pr: "Layout",
+
+  // Sizing (Outer Dimensions)
+  w: "Sizing",
+  h: "Sizing",
+  fill: "Sizing",
+  flex: "Sizing",
+  maxWidth: "Sizing",
+  minWidth: "Sizing",
+  maxHeight: "Sizing",
+  minHeight: "Sizing",
+  ratio: "Sizing",
+
+  // Appearance
+  surface: "Appearance",
+  opacity: "Appearance",
+  clip: "Appearance",
+
+  // Appearance (Overrides)
+  border: "Appearance",
+  borderTop: "Appearance",
+  borderRight: "Appearance",
+  borderBottom: "Appearance",
+  borderLeft: "Appearance",
+  borderWidth: "Appearance",
+  r: "Appearance",
+  shadow: "Appearance",
+  cursor: "Appearance",
+  zIndex: "Appearance",
+
+  // Text
+  size: "Typography",
+  weight: "Typography",
+  color: "Typography",
+
+  // Behavior
+  scroll: "Behavior",
+  interactive: "Behavior",
+};
+
+const SECTION_ICONS: Record<string, any> = {
+  Layout: LayoutIcon,
+  Sizing: Box,
+  Appearance: Palette,
+  Behavior: MousePointerClick,
+  Typography: Type,
+  Other: Layers,
+  Hierarchy: AppWindow,
+};
 
 export function InspectorPanel({
   element,
@@ -99,66 +115,68 @@ export function InspectorPanel({
   onClose: () => void;
   onCopy: (msg: string) => void;
 }) {
-  // Initialize position only once on mount, so it doesn't jump around if parent rerenders
   const [position, setPosition] = useState({ x: initialX, y: initialY });
   const isDragging = useRef(false);
   const dragOffset = useRef({ x: 0, y: 0 });
 
-  const styles = window.getComputedStyle(element);
-  const getProp = (key: string) => styles.getPropertyValue(key);
-
-  // DOM Properties Removed as per request
-  const properties: {
-    section: string;
-    items: { key: string; value: any }[];
-  }[] = [];
-
-  // Additional Section for Hierarchy
-  if (stack && stack.length > 0) {
-    properties.push({
-      section: "Hierarchy",
-      items: stack.map((item, i) => ({
-        key: `${i + 1}`, // Simple index key
-        value: `${item.fileName}:${item.lineNumber}(${item.name})`, // Format: File:Line(Name)
-      })),
-    });
-  }
-
-  // React Props Section (Priority)
-  if (Object.keys(props).length > 0) {
-    properties.unshift({
-      section: "React Props",
-      items: Object.entries(props).map(([key, value]) => ({
-        key,
-        value,
-      })),
-    });
-  }
-
-  // State
-  const [showAiAssist, setShowAiAssist] = useState(false);
-  const [randomPrompts, setRandomPrompts] = useState<
-    { label: string; prompt: string }[]
-  >(() => getRandomPrompts(5));
-
-  const handlePromptClick = (prompt: string) => {
-    const clone = element.cloneNode(true) as HTMLElement;
-    clone.innerHTML = ""; // Just the shell to avoid noise
-    const shell = clone.outerHTML;
-
-    // Construct Prompt
-    const fullPrompt = `I need to modify this component in ${name} (${stack[0]?.fileName || "unknown file"}).\n\nComponent Shell:\n${shell}\n\nRequest: ${prompt}\n\nPlease provide the corrected code.`;
-
-    navigator.clipboard.writeText(fullPrompt).then(() => {
-      onCopy("Prompt copied!");
-    });
+  // Organize Properties
+  const sections: Record<string, Record<string, any>> = {
+    Layout: {},
+    Sizing: {},
+    Appearance: {},
+    Typography: {},
+    Behavior: {},
   };
 
-  // Filter
-  const hasFlex =
-    getProp("display").includes("flex") || getProp("display").includes("grid");
+  // Flatten and Categorize
+  const processProp = (key: string, value: any) => {
+    if (key === "children") return;
 
-  // Copy full info (location + JSX + HTML)
+    // Special handling for override object
+    if (key === "override" && typeof value === "object" && value !== null) {
+      Object.entries(value).forEach(([k, v]) => processProp(k, v));
+      return;
+    }
+
+    const section = SECTION_MAPPING[key];
+    if (section && sections[section]) {
+      sections[section][key] = value;
+    }
+  };
+
+  Object.entries(props).forEach(([key, value]) => {
+    processProp(key, value);
+  });
+
+  // Prepare renderable list
+  const properties = Object.entries(sections)
+    .filter(([_, items]) => Object.keys(items).length > 0)
+    .map(([section, items]) => ({
+      section,
+      items, // Keep as object for custom controls
+    }));
+
+  // Raw Props (Override & Style)
+  const rawSections: { title: string; data: Record<string, any>; icon: any }[] =
+    [];
+
+  if (props.override && Object.keys(props.override).length > 0) {
+    rawSections.push({ title: "Override", data: props.override, icon: Code });
+  }
+
+  if (props.style && Object.keys(props.style).length > 0) {
+    rawSections.push({ title: "Style", data: props.style, icon: Code });
+  }
+
+  // Add Hierarchy
+  const hierarchyStack =
+    stack && stack.length > 0
+      ? stack.map((item, i) => ({
+        key: `${i + 1}`,
+        value: `${item.fileName}:${item.lineNumber}(${item.name})`,
+      }))
+      : [];
+
   const handleCopy = () => {
     const clone = element.cloneNode(true) as HTMLElement;
     clone.innerHTML = "";
@@ -174,7 +192,6 @@ export function InspectorPanel({
     });
   };
 
-  // Drag Logic
   const handleMouseDown = (e: React.MouseEvent) => {
     isDragging.current = true;
     dragOffset.current = {
@@ -213,14 +230,13 @@ export function InspectorPanel({
     };
   }, [element, name, props, stack]);
 
-  // Determine Title
   const title = stack.length > 0 ? stack[0].name : "Element";
 
   return (
     <div
       style={{
         position: "fixed",
-        top: position.y, // absolute or fixed? original was fixed inside overlay.
+        top: position.y,
         left: position.x,
         zIndex: 10003,
         pointerEvents: "auto",
@@ -229,28 +245,32 @@ export function InspectorPanel({
       <Frame
         override={{
           shadow: "2xl",
+          r: Radius2.lg,
+          border: true,
         }}
-        rounded={Radius2.lg}
-        style={{
-          maxHeight: "80vh",
-          width: 260, // Enforce width as per original code logic usually IMPLIED or specific
-        }}
-        surface="base" border
+        style={
+          {
+            maxHeight: "80vh",
+            width: 260,
+          } as React.CSSProperties
+        }
+        surface="base"
       >
-        {/* Draggable Header - Compact */}
+        {/* Header */}
         <Frame
           override={{
             py: Space.n0,
-            px: Space.n8,
+            px: Space.n4,
             justify: "between",
+            border: true,
           }}
           style={{
             cursor: "grab",
-            userSelect: "none"
+            userSelect: "none",
           }}
           surface="sunken"
           layout={Layout.Row.Header.Default}
-          onMouseDown={handleMouseDown} border="bottom"
+          onMouseDown={handleMouseDown}
         >
           <Frame
             override={{ gap: Space.n6 }}
@@ -273,7 +293,7 @@ export function InspectorPanel({
               iconSize={12}
               tooltip="Copy HTML"
               onClick={(e) => {
-                e.stopPropagation(); // Prevent drag start
+                e.stopPropagation();
                 handleCopy();
               }}
             />
@@ -284,16 +304,16 @@ export function InspectorPanel({
               iconSize={12}
               tooltip="Close Inspector"
               onClick={(e) => {
-                e.stopPropagation(); // Prevent drag start
+                e.stopPropagation();
                 onClose();
               }}
             />
           </Frame>
         </Frame>
 
-        {/* Content - Compact */}
+        {/* Content */}
         <Frame override={{ py: Space.n8, px: Space.n0 }} scroll>
-          {/* File Path Subtitle */}
+          {/* File Path */}
           <Frame
             override={{
               pt: Space.n0,
@@ -303,7 +323,7 @@ export function InspectorPanel({
             }}
           >
             <Text
-              size={FontSize.n28}
+              size={FontSize.n13}
               color="tertiary"
               style={{ wordBreak: "break-all" }}
             >
@@ -311,83 +331,10 @@ export function InspectorPanel({
             </Text>
           </Frame>
 
-          {/* AI Assist Section (Collapsible) */}
-          <Frame
-            override={{
-              gap: Space.n2,
-              pt: Space.n0,
-              pr: Space.n8,
-              pb: Space.n8,
-              pl: Space.n8,
-            }}
-          >
-            <Frame
-              layout={Layout.Row.Header.Default}
-              flex
-              override={{ justify: "between" }}
-            >
-              <Action
-                variant="ghost"
-                w={20}
-                h={20}
-                icon={showAiAssist ? ChevronDown : ChevronRight}
-                label="AI Assist"
-                onClick={() => setShowAiAssist(!showAiAssist)}
-                flex
-                style={{
-                  justifyContent: "flex-start",
-                  color: "var(--text-tertiary)",
-                }}
-              />
-              {showAiAssist && (
-                <Action
-                  icon={RefreshCw}
-                  variant="ghost"
-                  w={20}
-                  h={20}
-                  iconSize={10}
-                  tooltip="새로운 제안 보기"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setRandomPrompts(getRandomPrompts(5));
-                  }}
-                />
-              )}
-            </Frame>
-
-            {showAiAssist && (
-              <Frame
-                override={{
-                  gap: Space.n2,
-                  pt: Space.n0,
-                  pr: Space.n0,
-                  pb: Space.n0,
-                  pl: Space.n8,
-                }}
-              >
-                {randomPrompts.map((item) => (
-                  <Action
-                    key={item.label}
-                    w={FontSize.n9}
-                    h={FontSize.n9}
-                    variant="ghost"
-                    justify="start"
-                    label={item.label}
-                    onClick={() => handlePromptClick(item.prompt)}
-                    style={{
-                      width: "100%",
-                      justifyContent: "flex-start",
-                      textAlign: "left",
-                    }}
-                  />
-                ))}
-              </Frame>
-            )}
-          </Frame>
-
-          {/* Properties & Hierarchy (Always Visible now or simplified) */}
+          {/* Properties Sections */}
           {properties.map((section) => {
-            if (section.section === "Flex" && !hasFlex) return null;
+            const SectionIcon = SECTION_ICONS[section.section] || Layers;
+
             return (
               <Frame
                 override={{
@@ -399,6 +346,69 @@ export function InspectorPanel({
                 }}
                 key={section.section}
               >
+                <Frame
+                  layout={Layout.Row.Item.Tight}
+                  override={{ gap: Space.n4, py: Space.n4 }}
+                >
+                  <SectionIcon size={10} className="text-tertiary" />
+                  <Text
+                    weight="bold"
+                    size={FontSize.n9}
+                    color="tertiary"
+                    style={{
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    {section.section}
+                  </Text>
+                </Frame>
+
+                {/* Visual Controls */}
+                {section.section === "Layout" ? (
+                  <LayoutControl props={section.items} />
+                ) : section.section === "Sizing" ? (
+                  <SizingControl props={section.items} />
+                ) : section.section === "Appearance" ? (
+                  <AppearanceControl props={section.items} />
+                ) : section.section === "Typography" ? (
+                  <TypographyControl props={section.items} />
+                ) : (
+                  <Frame
+                    override={{ gap: Space.n0, r: Radius2.sm, border: true }}
+                    clip
+                  >
+                    {Object.entries(section.items).map(([key, value], i) => (
+                      <PropertyTree
+                        key={key}
+                        label={key}
+                        value={value}
+                        background={i % 2 === 0 ? "base" : "sunken"}
+                      />
+                    ))}
+                  </Frame>
+                )}
+              </Frame>
+            );
+          })}
+
+          {/* Raw Sections (Override & Style) */}
+          {rawSections.map((section) => (
+            <Frame
+              override={{
+                gap: Space.n2,
+                pt: Space.n0,
+                pr: Space.n8,
+                pb: Space.n8,
+                pl: Space.n8,
+              }}
+              key={section.title}
+            >
+              <Frame
+                layout={Layout.Row.Item.Tight}
+                override={{ gap: Space.n4, py: Space.n4 }}
+              >
+                <section.icon size={10} className="text-tertiary" />
                 <Text
                   weight="bold"
                   size={FontSize.n9}
@@ -408,25 +418,68 @@ export function InspectorPanel({
                     letterSpacing: "0.05em",
                   }}
                 >
-                  {section.section}
+                  {section.title}
                 </Text>
-                <Frame
-                  override={{ gap: Space.n0 }}
-                  rounded={Radius2.sm}
-                  clip border
-                >
-                  {section.items.map((item, i) => (
-                    <PropertyTree
-                      key={item.key}
-                      label={item.key}
-                      value={item.value}
-                      background={i % 2 === 0 ? "base" : "sunken"}
-                    />
-                  ))}
-                </Frame>
               </Frame>
-            );
-          })}
+              <Frame
+                override={{ gap: Space.n0, r: Radius2.sm, border: true }}
+                clip
+              >
+                {Object.entries(section.data).map(([key, value], i) => (
+                  <PropertyTree
+                    key={key}
+                    label={key}
+                    value={value}
+                    background={i % 2 === 0 ? "base" : "sunken"}
+                  />
+                ))}
+              </Frame>
+            </Frame>
+          ))}
+
+          {/* Hierarchy */}
+          {hierarchyStack.length > 0 && (
+            <Frame
+              override={{
+                gap: Space.n2,
+                pt: Space.n0,
+                pr: Space.n8,
+                pb: Space.n8,
+                pl: Space.n8,
+              }}
+            >
+              <Frame
+                layout={Layout.Row.Item.Tight}
+                override={{ gap: Space.n4, py: Space.n4 }}
+              >
+                <AppWindow size={10} className="text-tertiary" />
+                <Text
+                  weight="bold"
+                  size={FontSize.n9}
+                  color="tertiary"
+                  style={{
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  Hierarchy
+                </Text>
+              </Frame>
+              <Frame
+                override={{ gap: Space.n0, r: Radius2.sm, border: true }}
+                clip
+              >
+                {hierarchyStack.map((item, i) => (
+                  <PropertyTree
+                    key={item.key}
+                    label={item.key}
+                    value={item.value}
+                    background={i % 2 === 0 ? "base" : "sunken"}
+                  />
+                ))}
+              </Frame>
+            </Frame>
+          )}
         </Frame>
       </Frame>
     </div>

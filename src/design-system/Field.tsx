@@ -1,8 +1,10 @@
 import type React from "react";
 import { Frame } from "./Frame/Frame.tsx";
+import type { FrameOverrides } from "./Frame/FrameProps.ts";
 
 import { Text } from "./text/Text.tsx";
-import { FontSize, Space, Opacity } from "./token/token.const.1tier.ts";
+import { FontSize, Space, Opacity, Size } from "./token/token.const.1tier.ts";
+import { Radius2 } from "./token/token.const.2tier.ts";
 
 interface FieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -12,6 +14,7 @@ interface FieldProps
   w?: string | number;
   flex?: boolean | number;
   inputStyle?: React.CSSProperties;
+  override?: FrameOverrides;
 }
 
 export function Field({
@@ -25,15 +28,18 @@ export function Field({
   inputStyle,
   value,
   onChange,
+  override,
   ...props
 }: FieldProps) {
   const effW = flex ? undefined : w;
 
   return (
     <Frame
+      as="label"
+      interactive="text"
+      surface="sunken"
       style={{
         width: effW,
-        cursor: "text",
         ...style,
       }}
       override={{
@@ -43,28 +49,33 @@ export function Field({
         pr: rightIcon ? Space.n6 : Space.n8,
         row: true, // Ensure row layout
         align: "center",
+        ...((flex ? { flex } : {}) as any),
+        ...override
       }}
-      flex={flex}
-      as="label"
-      className={`field-base ${className}`}
+      rounded={Radius2.md}
+      className={className}
     >
       {icon && (
         <Frame
-          className="field-icon"
+          override={{
+            // Ensure icon doesn't shrink
+            w: Size.n16, h: Size.n16,
+            align: "center", justify: "center"
+          }}
+          style={{ color: "var(--text-subtle)" }}
         >
           {icon}
         </Frame>
       )}
       {label && (
         <Text
-          className="field-label"
           size={FontSize.n9}
           weight="bold"
           style={{
-            width: "var(--space-3-5)", // Approximately 14px if we added 3.5
             marginRight: "var(--space-0-5)",
             whiteSpace: "nowrap",
             textAlign: "center",
+            color: "var(--text-subtle)"
           }}
         >
           {label}
@@ -74,21 +85,24 @@ export function Field({
         {...props}
         value={value}
         onChange={onChange}
-        className="field-input"
         style={{
-          paddingLeft: 0,
+          border: "none",
+          background: "transparent",
+          outline: "none",
+          padding: 0,
           minWidth: 0,
           flex: 1,
-          cursor: "text",
-          fontSize: "var(--font-size-n11)",
+          color: "var(--text-primary)",
+          fontSize: "var(--font-size-n14)", // Default Input Size
+          height: "100%",
           ...inputStyle,
         }}
       />
       {rightIcon && (
         <Frame
           override={{
-              opacity: Opacity.n40
-        }}
+            opacity: Opacity.n40
+          }}
         >
           {rightIcon}
         </Frame>

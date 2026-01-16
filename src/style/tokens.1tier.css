@@ -106,17 +106,17 @@
   --size-n768: 768px;
 
   /* Container */
-  --container-n0: 0px;
-  --container-n320: 320px;
-  --container-n480: 480px;
-  --container-n640: 640px;
-  --container-n768: 768px;
-  --container-n800: 800px;
-  --container-n1024: 1024px;
-  --container-n1280: 1280px;
-  --container-n1440: 1440px;
-  --container-n1536: 1536px;
-  --container-n1600: 1600px;
+  --container-size-n0: 0px;
+  --container-size-n320: 320px;
+  --container-size-n480: 480px;
+  --container-size-n640: 640px;
+  --container-size-n768: 768px;
+  --container-size-n800: 800px;
+  --container-size-n1024: 1024px;
+  --container-size-n1280: 1280px;
+  --container-size-n1440: 1440px;
+  --container-size-n1536: 1536px;
+  --container-size-n1600: 1600px;
 
   /* Radius */
   --radius-n0: 0px;

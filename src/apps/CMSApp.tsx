@@ -4,8 +4,6 @@ import {
   Eye,
   Menu,
   Monitor,
-  PanelLeft,
-  PanelRight,
   Play,
   Save,
   Smartphone,
@@ -48,9 +46,7 @@ export function CMSApp() {
 
   return (
     <Frame
-      override={{ p: Space.n0 }}
-      w="screen"
-      h="screen"
+      override={{ p: Space.n0, w: Size.screen, h: Size.screen }}
       surface="sunken"
       clip
       layout={Layout.Row.AppContainer.Default}
@@ -91,7 +87,7 @@ export function CMSApp() {
             override={{
               w:
                 viewport === "mobile"
-                  ? "375px"
+                  ? ContainerSize.n320
                   : viewport === "tablet"
                     ? ContainerSize.n768
                     : Size.fill,
@@ -209,8 +205,6 @@ interface BottomToolbarProps {
 function BottomToolbar({
   isEditMode,
   toggleEditMode,
-  isRightPanelOpen,
-  toggleRightPanel,
   isDrawerOpen,
   toggleDrawer,
 }: BottomToolbarProps) {

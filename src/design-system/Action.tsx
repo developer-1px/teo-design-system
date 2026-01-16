@@ -136,8 +136,8 @@ export function Action({
         row: true,
         align: "center",
         justify,
+        r: finalRounded,
       }}
-      rounded={finalRounded}
       style={{
         width: typeof finalWidth === "number" ? `${finalWidth}px` : finalWidth,
         height:

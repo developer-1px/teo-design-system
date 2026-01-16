@@ -38,7 +38,7 @@ export interface BackdropProps {
  */
 export interface DialogProps {
   /** Ref for the dialog container */
-  ref: React.RefObject<HTMLDivElement>;
+  ref: React.RefObject<HTMLDivElement | null>;
   /** ARIA role */
   role: "dialog";
   /** ARIA modal */
@@ -156,7 +156,7 @@ export function useModal(options: UseModalOptions): UseModalReturn {
   const dialogRef = useRef<HTMLDivElement>(null);
 
   // Apply focus trap
-  useFocusTrap(dialogRef, {
+  useFocusTrap(dialogRef as React.RefObject<HTMLElement>, {
     active: open,
     initialFocus,
     restoreFocus,
@@ -207,7 +207,7 @@ export function useModal(options: UseModalOptions): UseModalReturn {
    */
   const getBackdropProps = useCallback(
     (): BackdropProps => ({
-      onClick: closeOnBackdropClick ? close : () => {},
+      onClick: closeOnBackdropClick ? close : () => { },
       "aria-hidden": true,
     }),
     [closeOnBackdropClick, close],

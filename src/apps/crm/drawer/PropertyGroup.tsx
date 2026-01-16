@@ -42,7 +42,7 @@ export interface PropertyGroupData {
 /**
  * Get icon for field key
  */
-export function getFieldIcon(key: string): LucideIcon {
+export function getFieldIcon(_key: string): LucideIcon {
   return Layers;
 }
 
