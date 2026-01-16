@@ -162,12 +162,12 @@ export function TextSystemApp() {
                   {i < 3 && (
                     <Frame
                       style={{
-                        height: "var(--size-n2)",
                         background: "var(--border-color)",
                       }}
                       override={{
                         w: Size.n32,
-                      }}
+                          h: Size.n2
+                    }}
                     />
                   )}
                 </Frame>

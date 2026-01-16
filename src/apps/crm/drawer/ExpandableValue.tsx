@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { JsonTree } from "./JsonTree";
 import { Action } from "../../../design-system/Action";
 import { Frame } from "../../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
 import { Text } from "../../../design-system/text/Text.tsx";
 import {
+  Size,
   Space,
 } from "../../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../../design-system/token/token.const.2tier";
@@ -31,10 +33,19 @@ export function ExpandableValue({
     );
   }
 
-  // If it's an array, show tags
+  // If it's an array
   if (Array.isArray(rawValue)) {
-    const visibleItems = isExpanded ? rawValue : rawValue.slice(0, 3);
-    const hasMore = rawValue.length > 3;
+    // Check if it's a complex array (contains objects)
+    const isComplex = rawValue.some((item) => typeof item === "object" && item !== null);
+
+    if (isComplex) {
+      return <JsonTree data={rawValue} />;
+    }
+
+    // Simple arrays: show tags
+    const threshold = 10;
+    const visibleItems = isExpanded ? rawValue : rawValue.slice(0, threshold);
+    const hasMore = rawValue.length > threshold;
 
     return (
       <Frame layout={Layout.Wrap.Chips.Default} override={{ gap: Space.n4 }}>
@@ -46,34 +57,32 @@ export function ExpandableValue({
             rounded={Radius2.sm}
           >
             <Text.Field.Value style={{ fontSize: "11px", color: "var(--text-secondary)" }}>
-              {typeof item === 'object' ? JSON.stringify(item) : String(item)}
+              {String(item)}
             </Text.Field.Value>
           </Frame>
         ))}
         {hasMore && (
           <Action onClick={() => setIsExpanded(!isExpanded)}>
-            <Text.Field.Value style={{ fontSize: "11px", color: "var(--primary-text)", cursor: "pointer" }}>
-              {isExpanded ? "Show Less" : `+${rawValue.length - 3} more`}
-            </Text.Field.Value>
+            <Frame
+              w={Size.hug}
+              override={{ px: Space.n8, py: Space.n2 }}
+              surface="sunken"
+              rounded={Radius2.sm}
+              style={{ cursor: "pointer" }}
+            >
+              <Text.Field.Value style={{ fontSize: "11px", color: "var(--primary-text)" }}>
+                {isExpanded ? "Show Less" : `+${rawValue.length - threshold} more`}
+              </Text.Field.Value>
+            </Frame>
           </Action>
         )}
       </Frame>
     );
   }
 
-  // Handle objects (Render as a badge or stringified)
-  if (typeof rawValue === 'object') {
-    return (
-      <Frame
-        override={{ px: Space.n8, py: Space.n2 }}
-        surface="sunken"
-        rounded={Radius2.sm}
-      >
-        <Text.Field.Value style={{ fontSize: "11px", color: "var(--text-tertiary)" }}>
-          {Object.keys(rawValue).length} properties
-        </Text.Field.Value>
-      </Frame>
-    );
+  // Handle objects (Render as JsonTree)
+  if (typeof rawValue === "object" && rawValue !== null) {
+    return <JsonTree data={rawValue} />;
   }
 
   // Handle long strings (e.g. description)
@@ -81,7 +90,7 @@ export function ExpandableValue({
   const displayValue = isExpanded || !isLong ? value : `${value.slice(0, 60)}...`;
 
   return (
-    <Frame layout={Layout.Stack.Content.None}>
+    <Frame layout={Layout.Stack.Content.None} gap={Space.n4}>
       <Text.Field.Value
         style={{
           color: empty ? "var(--text-tertiary)" : "var(--text-secondary)",
@@ -94,9 +103,17 @@ export function ExpandableValue({
       </Text.Field.Value>
       {isLong && (
         <Action onClick={() => setIsExpanded(!isExpanded)}>
-          <Text.Field.Value style={{ fontSize: "11px", color: "var(--primary-text)", cursor: "pointer", pt: Space.n4 }}>
-            {isExpanded ? "Show Less" : "Show More"}
-          </Text.Field.Value>
+          <Frame
+            w={Size.hug}
+            override={{ px: Space.n8, py: Space.n2 }}
+            surface="sunken"
+            rounded={Radius2.sm}
+            style={{ cursor: "pointer" }}
+          >
+            <Text.Field.Value style={{ fontSize: "11px", color: "var(--primary-text)" }}>
+              {isExpanded ? "Show Less" : "Show More"}
+            </Text.Field.Value>
+          </Frame>
         </Action>
       )}
     </Frame>

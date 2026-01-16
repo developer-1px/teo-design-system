@@ -60,10 +60,9 @@ export function SurfaceApp() {
   return (
     <Frame
       style={{
-        height: "100vh",
         overflowY: "scroll",
         scrollSnapType: "y mandatory",
-      }}
+      }} override={{ h: Size.screen }}
     >
       {/* Page 1: Surface Concept Introduction */}
       <IntroductionPage />
@@ -87,12 +86,11 @@ function IntroductionPage() {
   return (
     <Frame
       style={{
-        minHeight: "100vh",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
       }}
       surface="sunken"
-      layout={Layout.Center.Default}
+      layout={Layout.Center.Default} override={{ minHeight: Size.screen }}
     >
       <Frame
         override={{
@@ -209,7 +207,6 @@ function ShowcasePage() {
   return (
     <Frame
       style={{
-        minHeight: "100vh",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
       }}
@@ -217,7 +214,8 @@ function ShowcasePage() {
       layout={Layout.Center.Default}
       override={{
         gap: Space.n40,
-      }}
+          minHeight: Size.screen
+    }}
     >
       <Frame
         override={{
@@ -324,7 +322,6 @@ function SurfaceDetailPage({
   return (
     <Frame
       style={{
-        minHeight: "100vh",
         scrollSnapAlign: "start",
         scrollSnapStop: "always",
         background: `linear-gradient(135deg, var(--surface-sunken) 0%, var(--surface-base) 100%)`,
@@ -332,16 +329,15 @@ function SurfaceDetailPage({
       override={{
         py: Space.n64,
         px: Space.n64,
-      }}
+          minHeight: Size.screen
+    }}
       layout={Layout.Center.Default}
     >
       <Frame
         override={{
           gap: Space.n64,
-        }}
-        style={{
-          maxWidth: "1200px",
-          width: "100%",
+            maxWidth: Size.n1200,
+            w: Size.fill
         }}
       >
         {/* Page Number */}
@@ -372,7 +368,6 @@ function SurfaceDetailPage({
               surface={token}
               rounded={Radius2["3xl"]}
               style={{
-                width: "100%",
                 aspectRatio: "1",
                 maxWidth: "400px",
                 display: "flex",
@@ -381,7 +376,7 @@ function SurfaceDetailPage({
                 fontSize: "120px",
                 border: "2px solid var(--border-color)",
                 boxShadow: "0 20px 60px rgba(0,0,0,0.12)",
-              }}
+              }} override={{ w: Size.fill }}
             >
               {icon}
             </Frame>
@@ -420,11 +415,10 @@ function SurfaceDetailPage({
               </Prose.Title>
               <Frame
                 style={{
-                  width: "80px",
                   height: "4px",
                   background: `var(--surface-${token})`,
                   borderRadius: "2px",
-                }}
+                }} override={{ w: Size.n80 }}
               />
             </Frame>
 

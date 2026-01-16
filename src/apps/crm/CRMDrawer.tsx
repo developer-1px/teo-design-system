@@ -21,7 +21,6 @@ import {
   formatValue,
   getAvatarColor,
   getDisplayTitle,
-  getFieldIcon,
 } from "./drawer/drawerUtils";
 import { currentDataAtom, selectedRowIdAtom } from "./store";
 import type { DataRow } from "./types";

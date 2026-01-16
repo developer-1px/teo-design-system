@@ -106,8 +106,10 @@ export function LoginApp() {
           fill
         >
           <Frame
-            override={{ gap: Space.n32 }}
-            style={{ maxWidth: "480px", width: "100%" }}
+            override={{ gap: Space.n32,
+                w: Size.fill
+            }}
+            style={{ maxWidth: "480px" }}
           >
             <Frame
               rounded={Radius2["2xl"]}

@@ -11,6 +11,7 @@ type FrameSettingsInput = FrameOverrides & {
   border?: boolean;
   borderWidth?: BorderWidthToken;
   z?: ZIndexToken;
+  zIndex?: ZIndexToken;
 };
 
 export function frameToSettings(props: FrameSettingsInput): {
@@ -213,6 +214,7 @@ export function frameToSettings(props: FrameSettingsInput): {
   if (props.shadow) classes.push(`shadow-${props.shadow}`);
   if (props.opacity) styles.opacity = props.opacity;
   if (props.z) styles.zIndex = props.z;
+  if (props.zIndex) styles.zIndex = props.zIndex;
 
   // ---------------------------------------------------------------------------
   // 6. Return

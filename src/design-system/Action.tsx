@@ -135,7 +135,7 @@ export function Action({
         opacity: opacity,
         row: true,
         align: "center",
-        ...(justify && { justify }),
+        justify,
       }}
       rounded={finalRounded}
       style={{

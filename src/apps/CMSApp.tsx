@@ -95,10 +95,10 @@ export function CMSApp() {
                   : viewport === "tablet"
                     ? ContainerSize.n768
                     : Size.fill,
+                minHeight: Size.screen
             }}
             surface="raised"
             style={{
-              minHeight: "100vh",
               transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               borderLeft:
                 viewport !== "desktop"
@@ -249,9 +249,8 @@ function BottomToolbar({
         <Frame
           style={{
             width: "1px",
-            height: "16px",
             backgroundColor: "var(--border-color)",
-          }}
+          }} override={{ h: Size.n16 }}
         />
 
         <Action
@@ -265,9 +264,8 @@ function BottomToolbar({
         <Frame
           style={{
             width: "1px",
-            height: "16px",
             backgroundColor: "var(--border-color)",
-          }}
+          }} override={{ h: Size.n16 }}
         />
 
         <Action
@@ -289,9 +287,8 @@ function BottomToolbar({
         <Frame
           style={{
             width: "1px",
-            height: "16px",
             backgroundColor: "var(--border-color)",
-          }}
+          }} override={{ h: Size.n16 }}
         />
 
         <Action

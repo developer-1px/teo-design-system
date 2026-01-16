@@ -34,11 +34,11 @@ export function SlideApp() {
           top: 0,
           left: 0,
           right: 0,
-          zIndex: 10,
-          height: "var(--size-n44)"
+          zIndex: 10
         }}
         override={{
           px: Space.n16,
+            h: Size.n44
         }}
         layout={Layout.Row.Header.Default} border="bottom"
       >
@@ -82,8 +82,10 @@ export function SlideApp() {
             }}
           >
             <Frame
-              style={{ width: "var(--size-n28)", height: "var(--size-n28)" }}
-              override={{}}
+              override={{
+                  w: Size.n28,
+                  h: Size.n28
+            }}
               rounded={Radius2.md}
               surface="overlay"
             />
@@ -175,8 +177,10 @@ export function SlideApp() {
                     />
                   </Frame>
                   <Frame
-                    style={{ width: "40px", height: "40px" }}
-                    override={{}}
+                    override={{
+                        w: Size.n40,
+                        h: Size.n40
+                    }}
                     rounded={Radius2.md}
                     surface="raised"
                     pack
@@ -188,8 +192,10 @@ export function SlideApp() {
                     />
                   </Frame>
                   <Frame
-                    style={{ width: "40px", height: "40px" }}
-                    override={{}}
+                    override={{
+                        w: Size.n40,
+                        h: Size.n40
+                    }}
                     rounded={Radius2.md}
                     surface="overlay"
                     pack

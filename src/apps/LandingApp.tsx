@@ -207,12 +207,12 @@ export function LandingApp() {
             style={{
               gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
               maxWidth: 1200,
-              margin: "0 auto",
-              width: "100%",
+              margin: "0 auto"
             }}
             override={{
               gap: Space.n16,
               grid: true,
+                w: Size.fill
             }}
           >
             <FeatureCard

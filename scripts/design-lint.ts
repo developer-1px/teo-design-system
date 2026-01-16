@@ -12,10 +12,100 @@ import {
 import { frameToSettings } from "../src/design-system/Frame/frameToSettings.ts";
 import { resolveLayout } from "../src/design-system/Frame/Layout/Layout.ts";
 import type { LayoutToken } from "../src/design-system/Frame/Layout/Layout.ts";
+import { Space, Size } from "../src/design-system/token/token.const.1tier.ts";
 
 // Configuration
 const TARGET_PATTERN = "src/apps/**/*.tsx";
 const FIX_MODE = process.argv.includes("--fix");
+
+// Token mapping tables: CSS value → Token name
+const SPACE_VALUES_TO_TOKENS: Record<string, string> = {
+  "0px": "Space.n0",
+  "2px": "Space.n2",
+  "4px": "Space.n4",
+  "6px": "Space.n6",
+  "8px": "Space.n8",
+  "10px": "Space.n10",
+  "12px": "Space.n12",
+  "14px": "Space.n14",
+  "16px": "Space.n16",
+  "18px": "Space.n18",
+  "20px": "Space.n20",
+  "22px": "Space.n22",
+  "24px": "Space.n24",
+  "26px": "Space.n26",
+  "28px": "Space.n28",
+  "30px": "Space.n30",
+  "32px": "Space.n32",
+  "36px": "Space.n36",
+  "40px": "Space.n40",
+  "44px": "Space.n44",
+  "48px": "Space.n48",
+  "56px": "Space.n56",
+  "64px": "Space.n64",
+  "72px": "Space.n72",
+  "80px": "Space.n80",
+  "88px": "Space.n88",
+  "96px": "Space.n96",
+  "112px": "Space.n112",
+  "128px": "Space.n128",
+  "144px": "Space.n144",
+  "160px": "Space.n160",
+};
+
+const SIZE_VALUES_TO_TOKENS: Record<string, string> = {
+  "100%": "Size.fill",
+  "100vh": "Size.screen",
+  "100vw": "Size.screen",
+  "0px": "Size.n0",
+  "12px": "Size.n12",
+  "16px": "Size.n16",
+  "20px": "Size.n20",
+  "24px": "Size.n24",
+  "28px": "Size.n28",
+  "32px": "Size.n32",
+  "36px": "Size.n36",
+  "40px": "Size.n40",
+  "44px": "Size.n44",
+  "48px": "Size.n48",
+  "56px": "Size.n56",
+  "64px": "Size.n64",
+  "80px": "Size.n80",
+  "96px": "Size.n96",
+  "128px": "Size.n128",
+  "160px": "Size.n160",
+  "192px": "Size.n192",
+  "224px": "Size.n224",
+  "240px": "Size.n240",
+  "256px": "Size.n256",
+  "320px": "Size.n320",
+  "384px": "Size.n384",
+  "448px": "Size.n448",
+  "512px": "Size.n512",
+  "640px": "Size.n640",
+  "768px": "Size.n768",
+  "896px": "Size.n896",
+  "1024px": "Size.n1024",
+  "1200px": "Size.n1200",
+};
+
+// CSS property → Override prop mapping
+const CSS_TO_OVERRIDE_PROP: Record<string, string> = {
+  padding: "p",
+  paddingTop: "pt",
+  paddingBottom: "pb",
+  paddingLeft: "pl",
+  paddingRight: "pr",
+  paddingInline: "px",
+  paddingBlock: "py",
+  gap: "gap",
+  width: "w",
+  height: "h",
+  minWidth: "minWidth",
+  minHeight: "minHeight",
+  maxWidth: "maxWidth",
+  maxHeight: "maxHeight",
+};
 
 interface Issue {
   file: string;
@@ -259,6 +349,126 @@ function isBorderStyleFixable(styleObj: Record<string, string>): {
 }
 
 /**
+ * Detect tokenizable styles that can be converted to override prop
+ * ⚠️ NO REGEX - AST only
+ */
+function detectTokenizableStyles(styleObj: Record<string, string>): {
+  fixable: boolean;
+  conversions: Array<{ cssProp: string; cssValue: string; overrideProp: string; tokenValue: string }>;
+} {
+  const conversions: Array<{ cssProp: string; cssValue: string; overrideProp: string; tokenValue: string }> = [];
+
+  for (const [cssProp, cssValue] of Object.entries(styleObj)) {
+    // Skip non-tokenizable properties
+    if (!CSS_TO_OVERRIDE_PROP[cssProp]) continue;
+
+    const overrideProp = CSS_TO_OVERRIDE_PROP[cssProp];
+    let tokenValue: string | null = null;
+
+    // Try Space tokens first (for padding, gap)
+    if (["padding", "paddingTop", "paddingBottom", "paddingLeft", "paddingRight", "paddingInline", "paddingBlock", "gap"].includes(cssProp)) {
+      tokenValue = SPACE_VALUES_TO_TOKENS[cssValue] || null;
+    }
+
+    // Try Size tokens (for width, height)
+    if (!tokenValue && ["width", "height", "minWidth", "minHeight", "maxWidth", "maxHeight"].includes(cssProp)) {
+      tokenValue = SIZE_VALUES_TO_TOKENS[cssValue] || null;
+    }
+
+    // Also check for var(--space-*) or var(--size-*) format
+    // Extract number from "var(--space-n12)" → "Space.n12"
+    if (!tokenValue && cssValue.startsWith("var(--space-n")) {
+      const numPart = cssValue.slice("var(--space-n".length, -1); // Remove "var(--space-n" and ")"
+      if (numPart && !numPart.includes("-")) { // Ensure it's just a number
+        tokenValue = `Space.n${numPart}`;
+      }
+    }
+
+    if (!tokenValue && cssValue.startsWith("var(--size-n")) {
+      const numPart = cssValue.slice("var(--size-n".length, -1);
+      if (numPart && !numPart.includes("-")) {
+        tokenValue = `Size.n${numPart}`;
+      }
+    }
+
+    if (tokenValue) {
+      conversions.push({ cssProp, cssValue, overrideProp, tokenValue });
+    }
+  }
+
+  return {
+    fixable: conversions.length > 0,
+    conversions,
+  };
+}
+
+/**
+ * Apply auto-fix: convert style to override prop
+ * ⚠️ CRITICAL: NO STRING TEMPLATES - Use AST node manipulation only!
+ */
+function fixStyleToOverride(
+  element: JsxOpeningElement | JsxSelfClosingElement,
+  styleAttr: JsxAttribute,
+  conversions: Array<{ cssProp: string; cssValue: string; overrideProp: string; tokenValue: string }>,
+): void {
+  // Step 1: Get or create override attribute
+  let overrideAttr = element.getAttribute("override");
+
+  // Step 2: Remove converted properties from style
+  const initializer = styleAttr.getInitializer();
+  const jsxExpression = initializer?.asKind(SyntaxKind.JsxExpression);
+  const objectLiteral = jsxExpression?.getExpression()?.asKind(SyntaxKind.ObjectLiteralExpression);
+
+  if (objectLiteral) {
+    // Find and remove converted properties from style AST
+    const properties = objectLiteral.getProperties();
+    for (const prop of properties) {
+      if (prop.getKind() === SyntaxKind.PropertyAssignment) {
+        const assignment = prop.asKind(SyntaxKind.PropertyAssignment);
+        const propName = assignment?.getName();
+
+        // Check if this property is being converted
+        const isConverted = conversions.some(c => c.cssProp === propName);
+        if (isConverted && assignment) {
+          assignment.remove();
+        }
+      }
+    }
+
+    // If style object is now empty, remove the entire style attribute
+    if (objectLiteral.getProperties().length === 0) {
+      styleAttr.remove();
+    }
+  }
+
+  // Step 3: Add or update override attribute
+  if (!overrideAttr) {
+    // Create new override={{ ... }}
+    const overrideProps = conversions.map(c => `${c.overrideProp}: ${c.tokenValue}`).join(", ");
+    const insertIndex = element.getAttributes().length;
+    element.insertAttribute(insertIndex, {
+      name: "override",
+      initializer: `{{ ${overrideProps} }}`,
+    });
+  } else {
+    // Merge with existing override
+    const overrideInit = overrideAttr.getInitializer();
+    const overrideExpr = overrideInit?.asKind(SyntaxKind.JsxExpression);
+    const overrideObj = overrideExpr?.getExpression()?.asKind(SyntaxKind.ObjectLiteralExpression);
+
+    if (overrideObj) {
+      // Add new properties to existing override object
+      for (const { overrideProp, tokenValue } of conversions) {
+        overrideObj.addPropertyAssignment({
+          name: overrideProp,
+          initializer: tokenValue,
+        });
+      }
+    }
+  }
+}
+
+/**
  * Apply auto-fix: convert style={{ border: "..." }} to border prop
  * ⚠️ CRITICAL: NO STRING TEMPLATES - Use AST node manipulation only!
  */
@@ -399,11 +609,35 @@ function checkFrameStyleUsage(
 
     // Parse style object to check if auto-fixable
     const styleObj = parseStyleObject(styleAttribute);
-    const { fixable, borderType } = styleObj ? isBorderStyleFixable(styleObj) : { fixable: false, borderType: null };
 
-    if (fixable && borderType && FIX_MODE) {
-      // Apply auto-fix
-      fixBorderStyle(element, styleAttribute, styleObj!, borderType);
+    if (!styleObj) return;
+
+    // Check 1: Tokenizable styles (padding, gap, width, etc.)
+    const { fixable: tokenFixable, conversions } = detectTokenizableStyles(styleObj);
+
+    if (tokenFixable && FIX_MODE) {
+      // Apply auto-fix: style → override
+      fixStyleToOverride(element, styleAttribute, conversions);
+
+      const propsConverted = conversions.map(c => `${c.cssProp}: "${c.cssValue}" → ${c.overrideProp}: ${c.tokenValue}`).join(", ");
+      issues.push({
+        file: filePath,
+        line,
+        column,
+        rule: "Style → Override (FIXED)",
+        message: `Auto-fixed: ${propsConverted}`,
+        code: elementText.trim(),
+        fixable: true,
+      });
+      return; // Don't check border if we already converted
+    }
+
+    // Check 2: Border styles
+    const { fixable: borderFixable, borderType } = isBorderStyleFixable(styleObj);
+
+    if (borderFixable && borderType && FIX_MODE) {
+      // Apply auto-fix: border
+      fixBorderStyle(element, styleAttribute, styleObj, borderType);
 
       issues.push({
         file: filePath,
@@ -414,17 +648,35 @@ function checkFrameStyleUsage(
         code: elementText.trim(),
         fixable: true,
       });
-    } else {
+    } else if (tokenFixable || borderFixable) {
+      // Report fixable issue
+      let message = "";
+      if (tokenFixable) {
+        const propsConverted = conversions.map(c => `${c.cssProp} → override.${c.overrideProp}`).join(", ");
+        message = `Can auto-fix tokenizable styles: ${propsConverted} (run with --fix)`;
+      } else if (borderFixable) {
+        message = `Can auto-fix: style={{ ${borderType}: "..." }} → border prop (run with --fix)`;
+      }
+
       issues.push({
         file: filePath,
         line,
         column,
-        rule: fixable ? "Frame Border Style → Prop" : "Frame Style Usage",
-        message: fixable
-          ? `Can auto-fix: style={{ ${borderType}: "..." }} → border prop (run with --fix)`
-          : "Frame component should use semantic props instead of style prop",
+        rule: tokenFixable ? "Style → Override" : "Frame Border Style → Prop",
+        message,
         code: elementText.trim(),
-        fixable,
+        fixable: true,
+      });
+    } else {
+      // Not auto-fixable
+      issues.push({
+        file: filePath,
+        line,
+        column,
+        rule: "Frame Style Usage",
+        message: "Frame component should use semantic props instead of style prop",
+        code: elementText.trim(),
+        fixable: false,
       });
     }
   }
