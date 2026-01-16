@@ -12,8 +12,8 @@ import {
   Size,
   SizeScale,
   Space,
-  type SpaceToken,
   SpaceScale,
+  type SpaceToken,
   ZIndexScale,
 } from "../design-system/token/token.const.1tier";
 import { Radius2 } from "../design-system/token/token.const.2tier";
@@ -32,7 +32,7 @@ function ScaleVisualizer({
   return (
     <Frame
       layout={Layout.Row.Item.Default}
-      override={{ w: Size.full, gap: Space.n24, align: "center" }}
+      override={{ w: Size.fill, gap: Space.n24, align: "center" }}
     >
       <Frame override={{ w: Size.n64 }}>
         <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
@@ -53,14 +53,18 @@ function SectionHeader({ title, desc }: { title: string; desc: string }) {
   return (
     <Frame pack>
       <Frame
-        override={{ gap: Space.n8, w: Size.full, maxWidth: ContainerSize.n800 }}
+        override={{ gap: Space.n8, w: Size.fill, maxWidth: ContainerSize.n800 }}
       >
         <Text.Prose.Title variant="md">{title}</Text.Prose.Title>
         <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
           {desc}
         </Text.Prose.Body>
         <Frame override={{ h: Size.n16 }} />
-        <Frame style={{ height: "1px" }} override={{ w: Size.full }} surface="overlay" />
+        <Frame
+          style={{ height: "1px" }}
+          override={{ w: Size.fill }}
+          surface="overlay"
+        />
         <Frame override={{ h: Size.n16 }} />
       </Frame>
     </Frame>
@@ -75,8 +79,8 @@ function TextColumn({
   gap?: SpaceToken;
 }) {
   return (
-    <Frame pack>
-      <Frame override={{ w: Size.full, maxWidth: ContainerSize.n800, gap }}>
+    <Frame override={{ w: Size.fill, align: "center" }}>
+      <Frame override={{ w: Size.fill, maxWidth: ContainerSize.n800, gap }}>
         {children}
       </Frame>
     </Frame>
@@ -90,7 +94,7 @@ function ScrollContainer({
   return (
     <Frame
       scroll="x"
-      override={{ w: Size.full }}
+      override={{ w: Size.fill }}
       style={{
         paddingBottom: "var(--space-n16)", // Space for scrollbar
         // Hide scrollbar but allow scroll behavior if desired, or keep it.
@@ -104,7 +108,7 @@ function ScrollContainer({
     >
       <Frame
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n24, minWidth: Size.max }}
+        override={{ gap: Space.n24, minWidth: Size.hug }}
         {...props}
       >
         {children}
@@ -117,7 +121,7 @@ export function TokensApp() {
   return (
     <Frame fill surface="base" scroll={"y"} override={{ align: "center" }}>
       <Frame
-        override={{ w: Size.full, maxWidth: ContainerSize.n1024, p: Space.n0 }}
+        override={{ w: Size.fill, maxWidth: ContainerSize.n1024, p: Space.n0 }}
         layout={Layout.Row.AppContainer.Default}
       >
         <Frame
@@ -125,7 +129,7 @@ export function TokensApp() {
             gap: Space.n40,
             py: Space.n40,
             px: Space.n24,
-            w: Size.full,
+            w: Size.fill,
             minWidth: Size.n0,
           }}
         >
@@ -146,7 +150,7 @@ export function TokensApp() {
             {/* Philosophy Cards - Stacked or Grid within Prose Width */}
             <Frame
               layout={Layout.Row.Item.Default}
-              override={{ gap: Space.n24, w: Size.full }}
+              override={{ gap: Space.n24, w: Size.fill }}
             >
               <Frame
                 flex={1}
@@ -177,14 +181,14 @@ export function TokensApp() {
           </TextColumn>
 
           {/* 1. Spacing Scale - Centered Prose List */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }}>
+          <Frame override={{ w: Size.fill, gap: Space.n32 }}>
             <SectionHeader
               title="Space"
               desc="The rhythm of the page. Margins, paddings, gaps."
             />
             {/* Spacing is vertical list, fits well in prose width */}
             <TextColumn>
-              <Frame override={{ gap: Space.n12, w: Size.full }}>
+              <Frame override={{ gap: Space.n12, w: Size.fill }}>
                 {SpaceScale.map((val) => (
                   <ScaleVisualizer
                     key={val}
@@ -207,7 +211,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 2. Size Scale - Horizontal Scroll (Breakout) */}
-          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
+          <Frame override={{ w: Size.fill, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader
               title="Size"
               desc="Component widths and heights. Defines density."
@@ -226,7 +230,7 @@ export function TokensApp() {
                     minHeight: `var(--size-n${val})`,
                   }}
                   rounded={Radius2.xl}
-                  override={{ align: "center", justify: "center" }}
+                  pack
                 >
                   <Text.Card.Code
                     style={{ fontSize: "var(--font-size-n10)", opacity: 0.5 }}
@@ -239,7 +243,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 3. Radius Scale - Horizontal Scroll */}
-          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
+          <Frame override={{ w: Size.fill, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Radius" desc="Softness of shapes." />
             <ScrollContainer>
               {RadiusScale.map((val) => (
@@ -261,7 +265,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 4. Z-Index Scale - Visual Stack (Prose Width) */}
-          <Frame override={{ w: Size.full, gap: Space.n32 }}>
+          <Frame override={{ w: Size.fill, gap: Space.n32 }}>
             <SectionHeader title="Z-Index" desc="Elevation depth & Stacking." />
             <TextColumn>
               <Frame
@@ -269,7 +273,7 @@ export function TokensApp() {
                 surface="sunken"
                 override={{
                   h: Size.n256,
-                  w: Size.full,
+                  w: Size.fill,
                   p: Space.n48,
                   align: "center",
                 }}
@@ -306,7 +310,7 @@ export function TokensApp() {
           </Frame>
 
           {/* 5. Opacity Scale - Horizontal Scroll */}
-          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
+          <Frame override={{ w: Size.fill, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
               {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
@@ -327,10 +331,10 @@ export function TokensApp() {
           </Frame>
 
           {/* 6. Font Size Scale - Prose Width */}
-          <Frame override={{ w: Size.full, gap: Space.n32, minWidth: Size.n0 }}>
+          <Frame override={{ w: Size.fill, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Font Size" desc="Typography scale." />
             <TextColumn>
-              <Frame override={{ gap: Space.n16, w: Size.full }}>
+              <Frame override={{ gap: Space.n16, w: Size.fill }}>
                 {FontSizeScale.map((val) => (
                   <Frame
                     key={val}

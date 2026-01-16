@@ -51,6 +51,7 @@ import type {
   MaxHeightToken,
   MaxWidthToken,
   WidthToken,
+  ZIndexToken,
 } from "../token/token.const.1tier";
 
 export type {
@@ -59,4 +60,5 @@ export type {
   MaxWidthToken,
   MaxHeightToken,
   FontSizeToken,
+  ZIndexToken,
 };

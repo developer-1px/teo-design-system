@@ -4,7 +4,12 @@ import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Overlay } from "../../design-system/Overlay";
 import { Text } from "../../design-system/text/Text";
-import { FontSize, IconSize, Size, Space } from "../../design-system/token/token.const.1tier";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function CMSDrawer({ onClose }: { onClose: () => void }) {
@@ -27,10 +32,7 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
             h: Size.screen,
             shadow: "2xl",
           }}
-          surface="base"
-          style={{
-            borderLeft: "1px solid var(--border-color)",
-          }}
+          surface="base" border="left"
         >
           {/* Header */}
           <Frame
@@ -39,10 +41,7 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
               px: Space.n24,
               justify: "between",
             }}
-            layout={Layout.Row.Header.Default}
-            style={{
-              borderBottom: "1px solid var(--border-color)",
-            }}
+            layout={Layout.Row.Header.Default} border="bottom"
           >
             <Text size={FontSize.n20} weight="bold">
               Options

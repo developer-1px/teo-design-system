@@ -1,14 +1,14 @@
+import { useAtom, useAtomValue } from "jotai";
 import {
+  AlertOctagon,
   Archive,
   Edit,
+  FileText,
   Inbox,
   Send,
   Star,
-  FileText,
   Trash2,
-  AlertOctagon,
 } from "lucide-react";
-import { useAtom, useAtomValue } from "jotai";
 import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
@@ -46,7 +46,7 @@ export function MailSidebar() {
       override={{
         w: Size.n240,
         minWidth: Size.n240,
-        h: Size.full,
+        h: Size.fill,
         p: Space.n8,
         gap: Space.n8,
       }}
@@ -82,7 +82,7 @@ export function MailSidebar() {
                 layout={Layout.Row.Item.Default}
                 override={{
                   gap: Space.n12,
-                  w: Size.full,
+                  w: Size.fill,
                   py: Space.n6,
                   px: Space.n8,
                   align: "center",

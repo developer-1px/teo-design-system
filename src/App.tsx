@@ -103,7 +103,7 @@ function App() {
   return (
     <HashRouter>
       <InspectorOverlay />
-      <Frame fill>
+      <Frame style={{ minHeight: "100vh" }}>
         <Routes>
           <Route path="/" element={<LandingApp />} />
           <Route path="/text" element={<TextSystemApp />} />

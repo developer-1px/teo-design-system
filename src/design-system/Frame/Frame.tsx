@@ -10,197 +10,140 @@ import { resolveLayout } from "./Layout/Layout.ts";
 export function Frame({
   children,
   as: Component = "div",
-  style,
-  layout,
-  override,
-  title,
   className = "",
+  style,
 
-  // Destructure Prop-Driven Styling to prevent DOM leakage
+  // --- Preset Props (2-Tier Semantic) ---
+  // Layout (Flow)
+  layout,
+  row,
   gap,
   pack,
+  grid,
+  wrap,
+  flex,
+  scroll,
+
+  // Sizing (Constraints)
   w,
   h,
-  flex,
-  row,
-  wrap,
   fill,
-  surface,
-  rounded,
-  clip,
-  border,
-  scroll,
-  shrink,
-  shadow,
-  opacity,
+
   ratio,
 
-  // Remaining props are passed to DOM
+  // Appearance (Visuals)
+  surface,
+  border,
+  borderWidth,
+  rounded,
+  shadow,
+  opacity,
+  clip,
+
+  // Overrides (1-Tier Tokens)
+  override,
+
+  // Semantic
+  title,
+
+  // DOM
   ...domProps
 }: FrameProps) {
-  // 1. Resolve Layout
+  // ---------------------------------------------------------------------------
+  // 1. Resolve Presets (Layout Token)
+  // ---------------------------------------------------------------------------
   const layoutSettings = layout ? resolveLayout(layout) : {};
 
-  // 2. Merge Overrides (Layout override < Direct override)
-  // We extract style specifically to merge it last
-  // Filter out sizing/spacing/visual/layout properties to enforce token usage
-  // margin is blocked - use gap or Divider component instead
-  // opacity is blocked - use Opacity token
-  // borderRadius is blocked - use rounded prop with Radius2 token
-  // boxShadow is blocked - use shadow prop with Shadow token
-  // flexbox is blocked - use row/wrap/align/justify/flex/pack props
-  const {
-    width,
-    height,
-    minWidth,
-    minHeight,
-    maxWidth,
-    maxHeight,
-    gap: _gap,
-    padding,
-    paddingTop,
-    paddingBottom,
-    paddingLeft,
-    paddingRight,
-    paddingBlock,
-    paddingInline,
-    margin,
-    marginTop,
-    marginBottom,
-    marginLeft,
-    marginRight,
-    marginBlock,
-    marginInline,
-    opacity: _opacityLayout,
-    borderRadius,
-    boxShadow,
-    flexDirection,
-    flexWrap,
-    alignItems,
-    justifyContent,
-    flex: _flexLayout,
-    flexShrink,
-    flexGrow,
-    flexBasis,
-    ...safeLayoutStyle
-  } = (layoutSettings.style || {}) as React.CSSProperties;
-
-  const {
-    width: _width2,
-    height: _height2,
-    minWidth: _minWidth2,
-    minHeight: _minHeight2,
-    maxWidth: _maxWidth2,
-    maxHeight: _maxHeight2,
-    gap: _gap2,
-    padding: _padding2,
-    paddingTop: _paddingTop2,
-    paddingBottom: _paddingBottom2,
-    paddingLeft: _paddingLeft2,
-    paddingRight: _paddingRight2,
-    paddingBlock: _paddingBlock2,
-    paddingInline: _paddingInline2,
-    margin: _margin2,
-    marginTop: _marginTop2,
-    marginBottom: _marginBottom2,
-    marginLeft: _marginLeft2,
-    marginRight: _marginRight2,
-    marginBlock: _marginBlock2,
-    marginInline: _marginInline2,
-    opacity: _opacityUser,
-    borderRadius: _borderRadius2,
-    boxShadow: _boxShadow2,
-    flexDirection: _flexDirection2,
-    flexWrap: _flexWrap2,
-    alignItems: _alignItems2,
-    justifyContent: _justifyContent2,
-    flex: _flexUser,
-    flexShrink: _flexShrink2,
-    flexGrow: _flexGrow2,
-    flexBasis: _flexBasis2,
-    ...safeUserStyle
-  } = (style || {}) as React.CSSProperties;
-
-  const combinedOverrideStyle = {
-    ...safeLayoutStyle,
-    ...safeUserStyle,
-  };
-
+  // ---------------------------------------------------------------------------
+  // 2. Resolve Overrides (Standard < Layout < Override)
+  // ---------------------------------------------------------------------------
   const combinedOverride: FrameOverrides = {
     ...layoutSettings.override,
     ...override,
   };
 
-  // 3. Construct Settings Input (Layout < Props < Override)
-  // We reconstruct the props object for calculation
+  // ---------------------------------------------------------------------------
+  // 3. Flatten Props (Explicit > Undefined)
+  // ---------------------------------------------------------------------------
+  // Collect explicit props to ensure they override presets
   const explicitProps: FrameOverrides = {
+    // Layout
+    row,
     gap,
     pack,
+    grid,
+    wrap,
+    flex,
+    scroll,
+    // Sizing
     w,
     h,
-
-    flex,
-    row,
-    wrap,
     fill,
-    shrink,
 
+    ratio,
+    // Appearance (Partial) - some are top-level only
     clip,
-    scroll,
-
     shadow,
     opacity,
-    ratio,
   };
 
-  // Remove undefined keys so they don't overwrite layoutSettings
-  Object.keys(explicitProps).forEach(
-    (key) =>
-      explicitProps[key as keyof FrameOverrides] === undefined &&
-      delete explicitProps[key as keyof FrameOverrides],
+  // Clean undefined values
+  const cleanExplicitProps = Object.fromEntries(
+    Object.entries(explicitProps).filter(([_, v]) => v !== undefined),
   );
 
-  // This flattens strict props and loose overrides into one Loose object for calculation
-  // surface, rounded, border are top-level only, added separately
+  // ---------------------------------------------------------------------------
+  // 4. Construct Settings Input (The "Source of Truth")
+  // ---------------------------------------------------------------------------
   const settingsInput = {
     ...layoutSettings,
-    ...explicitProps,
-    ...combinedOverride,
+    ...cleanExplicitProps,
+    ...combinedOverride, // Valid 1-Tier tokens
+    // Top-level only Appearance props
     ...(surface !== undefined && { surface }),
     ...(rounded !== undefined && { rounded }),
     ...(border !== undefined && { border }),
+    ...(borderWidth !== undefined && { borderWidth }),
   };
 
-  // 4. Calculate Settings (Classes & CSS Vars)
-  const { className: settingsClass, style: settingsStyle } =
+  // ---------------------------------------------------------------------------
+  // 5. Calculate CSS (Classes & Vars)
+  // ---------------------------------------------------------------------------
+  const { className: settingsClass, style: settingsVars } =
     frameToSettings(settingsInput);
 
-  // 5. Compute Final Style
-  // Logic from previous Frame.tsx for specific computed props (grid, size logic)
-  const input = settingsInput; // Alias for brevity
-
+  // ---------------------------------------------------------------------------
+  // 6. Compute Final Style (Restricted Style Injection)
+  // ---------------------------------------------------------------------------
   const computedStyle: React.CSSProperties = {
-    // Grid Areas/Columns (Dynamic)
-    gridTemplateColumns: input.columns,
-    gridTemplateRows: input.rows,
-    gridTemplateAreas: input.areas,
+    // A. Dynamic Layout Logic
+    gridTemplateColumns: settingsInput.columns,
+    gridTemplateRows: settingsInput.rows,
+    gridTemplateAreas: settingsInput.areas,
 
-    // Flex
-    flex: typeof input.flex === "number" ? input.flex : undefined,
+    // B. Legacy/Compat Logic
+    flex:
+      typeof settingsInput.flex === "number" ? settingsInput.flex : undefined,
     flexShrink:
-      input.w !== undefined ||
-      input.h !== undefined ||
-      input.ratio !== undefined
+      settingsInput.w !== undefined ||
+      settingsInput.h !== undefined ||
+      settingsInput.ratio !== undefined
         ? 0
         : undefined,
+    aspectRatio: settingsInput.ratio,
 
-    // Visual
-    aspectRatio: input.ratio,
+    // C. Theme Logic
+    color:
+      settingsInput.surface === "primary" ? "var(--primary-fg)" : "inherit",
 
-    color: input.surface === "primary" ? "var(--primary-fg)" : "inherit",
+    // D. Injected Variables
+    ...settingsVars,
 
-    ...settingsStyle, // Injected variables & standard props (p, gap, w, h, etc, opacity)
-    ...combinedOverrideStyle, // User arbitrary style overrides
+    // E. Layout Override Style (e.g. from preset)
+    ...((layoutSettings.style || {}) as React.CSSProperties),
+
+    // F. User Restricted Style (Escape Hatch)
+    ...style,
   };
 
   return (

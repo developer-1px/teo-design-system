@@ -1,5 +1,7 @@
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { Frame } from "../../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { useAccordion } from "../../../design-system/hooks";
 import { Icon } from "../../../design-system/Icon";
 import { Text } from "../../../design-system/text/Text.tsx";
 import {
@@ -7,107 +9,129 @@ import {
   Size,
   Space,
 } from "../../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../../design-system/token/token.const.2tier";
+import { groupEntries } from "./PropertyGroup.tsx";
+import { ExpandableValue } from "./ExpandableValue.tsx";
 
 export function DrawerProperties({
   entries,
-  getFieldIcon,
   formatColumnLabel,
   formatValue,
 }: {
   entries: [string, unknown][];
-  getFieldIcon: (key: string) => React.ElementType;
   formatColumnLabel: (key: string) => string;
   formatValue: (value: unknown) => string;
 }) {
+  const groups = groupEntries(entries);
+  const groupIds = groups.map((g, i) => `${g.title}-${i}`);
+  const defaultExpanded = groups.filter(g => g.isPrimary).map((g, i) => `${g.title}-${i}`);
+
+  const { getItemProps, getPanelProps } = useAccordion({
+    items: groupIds,
+    defaultExpanded,
+    allowMultiple: true,
+  });
+
   return (
-    <Frame layout={Layout.Stack.Content.Default}>
-      <Text.Menu.Group style={{ color: "var(--text-tertiary)" }}>
-        PROPERTIES
-      </Text.Menu.Group>
-      <Frame layout={Layout.Stack.List.Default}>
-        {entries.map(([key, value]) => (
-          <PropertyRow
-            key={key}
-            icon={getFieldIcon(key)}
-            label={formatColumnLabel(key)}
-            value={formatValue(value)}
-            primary={key === "name" || key === "title" || key === "value"}
-            empty={value === null || value === undefined || value === ""}
-            isColor={typeof value === "string" && value.startsWith("#")}
-            colorValue={
-              typeof value === "string" && value.startsWith("#")
-                ? value
-                : undefined
-            }
-          />
-        ))}
-      </Frame>
+    <Frame layout={Layout.Stack.List.Default}>
+      {groups.map((group, groupIndex) => {
+        const groupId = `${group.title}-${groupIndex}`;
+        const itemProps = getItemProps(groupId);
+        const panelProps = getPanelProps(groupId);
+
+        return (
+          <Frame key={groupId} layout={Layout.Stack.Content.None}>
+            {/* Header / Trigger */}
+            <Frame
+              {...itemProps}
+              layout={Layout.Row.Item.Default}
+              override={{
+                h: Size.n32,
+                gap: Space.n8,
+                cursor: "pointer",
+                px: Space.n8,
+              }}
+              style={{
+                backgroundColor: itemProps.expanded ? "var(--surface-raised)" : "transparent",
+                transition: "all 0.15s ease",
+              }}
+              onClick={itemProps.onToggle}
+            >
+              <Icon
+                src={itemProps.expanded ? ChevronDown : ChevronRight}
+                size={IconSize.n14}
+                style={{ color: "var(--text-tertiary)" }}
+              />
+              <Icon
+                src={group.icon}
+                size={IconSize.n14}
+                style={{ color: "var(--text-tertiary)" }}
+              />
+              <Text.Menu.Group
+                style={{
+                  color: itemProps.expanded ? "var(--text-primary)" : "var(--text-tertiary)",
+                  fontSize: "12px",
+                  fontWeight: itemProps.expanded ? 600 : 500,
+                }}
+              >
+                {group.title.toUpperCase()}
+              </Text.Menu.Group>
+            </Frame>
+
+            {/* Content Panel */}
+            <Frame
+              {...panelProps}
+              layout={Layout.Stack.List.Default}
+              h={Size.hug}
+              clip={false}
+              override={{
+                pb: Space.n20,
+                pl: Space.n24,
+                gap: Space.n12,
+              }}
+            >
+              {group.entries.map((entry) => (
+                <PropertyRow
+                  key={entry.key}
+                  label={formatColumnLabel(entry.key)}
+                  value={formatValue(entry.value)}
+                  rawValue={entry.value}
+                  empty={!entry.value}
+                />
+              ))}
+            </Frame>
+          </Frame>
+        );
+      })}
     </Frame>
   );
 }
 
 function PropertyRow({
-  icon: IconSrc,
   label,
   value,
-  primary,
+  rawValue,
   empty,
-  isColor,
-  colorValue,
 }: {
-  icon: React.ElementType;
   label: string;
   value: string;
-  primary?: boolean;
+  rawValue?: unknown;
   empty?: boolean;
-  isColor?: boolean;
-  colorValue?: string;
 }) {
   return (
-    <Frame
-      layout={Layout.Row.Item.Default}
-      override={{ minHeight: Size.n32, gap: Space.n16, align: "center" }}
-    >
-      <Frame
-        layout={Layout.Row.Meta.Default}
-        override={{ gap: Space.n8, w: Size.n128, align: "center" }}
-      >
-        <Icon
-          src={IconSrc}
-          size={IconSize.n14}
-          style={{ color: "var(--text-tertiary)" }}
-        />
-        <Text.Field.Label style={{ color: "var(--text-tertiary)" }}>
+    <Frame layout={Layout.Row.Item.Default} h={Size.hug} override={{ align: "start", gap: Space.n16 }}>
+      {/* Key (Fixed Width) */}
+      <Frame override={{ w: Size.n128 }} style={{ flexShrink: 0 }}>
+        <Text.Field.Label style={{ color: "var(--text-tertiary)", fontSize: "12px", lineHeight: "1.5" }}>
           {label}
         </Text.Field.Label>
       </Frame>
-      <Frame
-        layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n8, align: "center" }}
-      >
-        {isColor && colorValue && (
-          <Frame
-            override={{ w: Size.n16, h: Size.n16 }}
-            rounded={Radius2.sm}
-            style={{
-              backgroundColor: colorValue,
-              border: "1px solid var(--border-color)",
-            }}
-          />
-        )}
-        <Text.Field.Value
-          weight={primary ? "bold" : "regular"}
-          style={{
-            color: empty
-              ? "var(--text-tertiary)"
-              : primary
-                ? "var(--text-primary)"
-                : "var(--text-secondary)",
-          }}
-        >
-          {value}
-        </Text.Field.Value>
+      {/* Value (Fill Width) */}
+      <Frame layout={Layout.Stack.Content.None} w={Size.fill} h={Size.hug} override={{ minWidth: Size.n0 }}>
+        <ExpandableValue
+          value={value}
+          rawValue={rawValue}
+          empty={empty}
+        />
       </Frame>
     </Frame>
   );

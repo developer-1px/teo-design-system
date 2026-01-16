@@ -1,5 +1,5 @@
-import { Menu, Search, Settings, User } from "lucide-react";
 import { useAtom } from "jotai";
+import { Menu, Search, Settings, User } from "lucide-react";
 import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";

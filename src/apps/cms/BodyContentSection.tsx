@@ -15,18 +15,17 @@ export function BodyContentSection() {
   return (
     <Frame
       override={{
-        w: Size.full,
+        w: Size.fill,
         py: Space.n96,
         px: Space.n24,
       }}
-      style={{ borderBottom: "1px solid var(--border-color)" }}
       surface="sunken"
-      pack
+      pack border="bottom"
     >
       <Frame
         style={{ maxWidth: "var(--container-n1280)" }}
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n48, w: Size.full, align: "center" }}
+        override={{ gap: Space.n48, w: Size.fill, align: "center" }}
       >
         <Frame override={{ gap: Space.n24 }} style={{ width: "50%" }}>
           <Frame override={{ gap: Space.n8 }}>
@@ -94,7 +93,7 @@ export function BodyContentSection() {
               />
               <Frame override={{ gap: Space.n8 }}>
                 <Frame
-                  override={{ h: Size.n12, w: Size.full }}
+                  override={{ h: Size.n12, w: Size.fill }}
                   rounded={Radius2.full}
                   surface="overlay"
                 />
@@ -146,7 +145,7 @@ export function BodyContentSection() {
                   />
                 </Frame>
                 <Frame
-                  override={{ w: Size.full, h: Size.n16 }}
+                  override={{ w: Size.fill, h: Size.n16 }}
                   rounded={Radius2.full}
                   surface="raised"
                 />

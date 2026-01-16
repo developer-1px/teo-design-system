@@ -24,12 +24,11 @@ export function SiteHeader({
         height: "var(--header-height)",
         position: "sticky",
         top: 0,
-        zIndex: 100,
-        borderBottom: "1px solid var(--border-color)",
+        zIndex: 100
       }}
       layout={Layout.Row.Header.Default}
       surface="base"
-      override={{ w: Size.full, align: "center" }}
+      override={{ w: Size.fill, align: "center" }} border="bottom"
     >
       <Frame
         style={{
@@ -37,7 +36,7 @@ export function SiteHeader({
           padding: "0 var(--space-n24)",
         }}
         layout={Layout.Row.Header.Default}
-        override={{ w: Size.full, justify: "between" }}
+        override={{ w: Size.fill, justify: "between" }}
       >
         <Frame
           layout={Layout.Row.Item.Default}
@@ -46,9 +45,8 @@ export function SiteHeader({
           <Frame
             override={{ w: Size.n32, h: Size.n32, shadow: "sm" }}
             rounded={Radius2.lg}
-            style={{ border: "1px solid var(--border-color)" }}
             surface="primary"
-            pack
+            pack border
           >
             <Text.Card.Title
               size={FontSize.n16}

@@ -24,26 +24,54 @@ interface Issue {
 
 /**
  * Parse style attribute value to extract CSS properties
+ * ⚠️ CRITICAL: NO REGEX ALLOWED - Use AST only!
  */
 function parseStyleObject(styleAttr: JsxAttribute): Record<string, string> | null {
   const initializer = styleAttr.getInitializer();
   if (!initializer) return null;
 
-  const text = initializer.getText();
-  // Extract object literal: {{ ... }}
-  const match = text.match(/\{\s*\{([^}]+)\}\s*\}/);
-  if (!match) return null;
+  // Get the JsxExpression node
+  const jsxExpression = initializer.asKind(SyntaxKind.JsxExpression);
+  if (!jsxExpression) return null;
+
+  // Get the inner expression (the object literal)
+  const expression = jsxExpression.getExpression();
+  if (!expression) return null;
+
+  // Check if it's an ObjectLiteralExpression
+  const objectLiteral = expression.asKind(SyntaxKind.ObjectLiteralExpression);
+  if (!objectLiteral) return null;
 
   const styleObj: Record<string, string> = {};
-  const properties = match[1].split(",");
 
-  for (const prop of properties) {
-    const [key, ...valueParts] = prop.split(":");
-    if (!key || valueParts.length === 0) continue;
+  // Iterate through properties using AST
+  for (const prop of objectLiteral.getProperties()) {
+    // Only handle PropertyAssignment (e.g., border: "...")
+    if (prop.getKind() !== SyntaxKind.PropertyAssignment) continue;
 
-    const cleanKey = key.trim();
-    const cleanValue = valueParts.join(":").trim().replace(/^["']|["']$/g, "");
-    styleObj[cleanKey] = cleanValue;
+    const propertyAssignment = prop.asKindOrThrow(SyntaxKind.PropertyAssignment);
+    const name = propertyAssignment.getName();
+    const initializer = propertyAssignment.getInitializer();
+
+    if (!initializer) continue;
+
+    // Get the literal value (string, number, etc.)
+    let value: string | null = null;
+
+    if (Node.isStringLiteral(initializer)) {
+      value = initializer.getLiteralValue();
+    } else if (Node.isNumericLiteral(initializer)) {
+      value = initializer.getLiteralValue().toString();
+    } else if (Node.isNoSubstitutionTemplateLiteral(initializer)) {
+      value = initializer.getLiteralValue();
+    } else {
+      // For complex expressions (ternary, function calls, etc.), get the text representation
+      value = initializer.getText();
+    }
+
+    if (value !== null) {
+      styleObj[name] = value;
+    }
   }
 
   return styleObj;
@@ -69,7 +97,7 @@ function isBorderStyleFixable(styleObj: Record<string, string>): {
 
 /**
  * Apply auto-fix: convert style={{ border: "..." }} to border prop
- * Uses ts-morph AST manipulation only
+ * ⚠️ CRITICAL: NO STRING TEMPLATES - Use AST node manipulation only!
  */
 function fixBorderStyle(
   element: JsxOpeningElement | JsxSelfClosingElement,
@@ -80,18 +108,29 @@ function fixBorderStyle(
   // Step 1: Remove the border property from style object
   delete styleObj[borderType];
 
-  // Step 2: Update or remove style attribute
+  // Step 2: Update or remove style attribute using AST
   if (Object.keys(styleObj).length === 0) {
     // No remaining styles - remove the entire style attribute
     styleAttr.remove();
   } else {
-    // Rebuild the style initializer with remaining properties
-    const newStyleProps = Object.entries(styleObj)
-      .map(([key, value]) => `${key}: "${value}"`)
-      .join(", ");
+    // Get the existing object literal expression
+    const initializer = styleAttr.getInitializer();
+    const jsxExpression = initializer?.asKind(SyntaxKind.JsxExpression);
+    const objectLiteral = jsxExpression?.getExpression()?.asKind(SyntaxKind.ObjectLiteralExpression);
 
-    // Use ts-morph's setInitializer method
-    styleAttr.setInitializer(`{{ ${newStyleProps} }}`);
+    if (objectLiteral) {
+      // Find and remove the border property from AST
+      const properties = objectLiteral.getProperties();
+      for (const prop of properties) {
+        if (prop.getKind() === SyntaxKind.PropertyAssignment) {
+          const assignment = prop.asKind(SyntaxKind.PropertyAssignment);
+          if (assignment && assignment.getName() === borderType) {
+            assignment.remove();
+            break;
+          }
+        }
+      }
+    }
   }
 
   // Step 3: Add border prop using ts-morph's insertAttribute

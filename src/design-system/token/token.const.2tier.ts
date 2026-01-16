@@ -12,8 +12,8 @@
  * ```
  */
 
-import { FontSize, IconSize, Radius, Size, Space } from "./token.const.1tier";
 import type { Brand } from "./lib/brand";
+import { FontSize, IconSize, Radius, Size, Space } from "./token.const.1tier";
 
 // ---------------------------------
 // Action Size

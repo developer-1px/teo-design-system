@@ -25,17 +25,16 @@ export function ScrollTabSection() {
   return (
     <Frame
       override={{
-        w: Size.full,
+        w: Size.fill,
         py: Space.n12,
         px: Space.n0,
       }}
-      style={{ borderBottom: "1px solid var(--border-color)" }}
-      surface="base"
+      surface="base" border="bottom"
     >
       <Frame
         override={{
           gap: Space.n8,
-          w: Size.full,
+          w: Size.fill,
           py: Space.n0,
           px: Space.n24,
           justify: "center",

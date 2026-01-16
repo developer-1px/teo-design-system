@@ -82,12 +82,11 @@ export function TextSystemApp() {
               style={{
                 background:
                   "linear-gradient(135deg, var(--surface-raised), var(--surface-sunken))",
-                border: "1px solid var(--border-color)",
                 boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
               }}
               override={{ p: Space.n16 }}
               rounded={Radius2["3xl"]}
-              surface="sunken"
+              surface="sunken" border
             >
               <Icon
                 src={FileText}
@@ -234,8 +233,7 @@ export function TextSystemApp() {
                 shadow: "sm",
               }}
               rounded={Radius2.xl}
-              style={{ border: "1px solid var(--border-color)" }}
-              surface="raised"
+              surface="raised" border
             >
               <Frame
                 override={{ w: Size.n40, h: Size.n40 }}
@@ -271,8 +269,7 @@ export function TextSystemApp() {
                 shadow: "sm",
               }}
               rounded={Radius2.xl}
-              style={{ border: "1px solid var(--border-color)" }}
-              surface="raised"
+              surface="raised" border
             >
               <Frame
                 override={{ w: Size.n40, h: Size.n40 }}
@@ -310,10 +307,9 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
-            style={{ border: "1px solid var(--border-color)" }}
             override={{ w: Size.n384, p: Space.n32, gap: Space.n24 }}
             rounded={Radius2["2xl"]}
-            surface="raised"
+            surface="raised" border
           >
             <Text.Prose.Title style={{ fontSize: "var(--prose-h3-size)" }}>
               Account Settings
@@ -325,12 +321,11 @@ export function TextSystemApp() {
                 <Frame
                   style={{
                     paddingLeft: "var(--space-3)",
-                    paddingRight: "var(--space-3)",
-                    border: "1px solid var(--border-color)",
+                    paddingRight: "var(--space-3)"
                   }}
                   rounded={Radius2.md}
                   surface="sunken"
-                  override={{ h: Size.n32, align: "center" }}
+                  override={{ h: Size.n32, align: "center" }} border
                 >
                   <Text.Field.Value style={{ opacity: 0.5 }}>
                     Jane Doe
@@ -343,12 +338,11 @@ export function TextSystemApp() {
                 <Frame
                   style={{
                     paddingLeft: "var(--space-3)",
-                    paddingRight: "var(--space-3)",
-                    border: "1px solid var(--border-color)",
+                    paddingRight: "var(--space-3)"
                   }}
                   rounded={Radius2.md}
                   surface="sunken"
-                  override={{ h: Size.n32, align: "center" }}
+                  override={{ h: Size.n32, align: "center" }} border
                 >
                   <Text.Field.Value style={{ opacity: 0.5 }}>
                     name@example.com
@@ -362,10 +356,9 @@ export function TextSystemApp() {
               <Frame override={{ gap: Space.n6 }}>
                 <Text.Field.Label>Bio</Text.Field.Label>
                 <Frame
-                  style={{ border: "1px solid var(--border-color)" }}
                   override={{ h: Size.n80, p: Space.n12 }}
                   rounded={Radius2.md}
-                  surface="sunken"
+                  surface="sunken" border
                 >
                   <Text.Field.Value style={{ opacity: 0.5 }}>
                     Product Designer based in Seoul.
@@ -400,24 +393,22 @@ export function TextSystemApp() {
         >
           <Frame
             style={{
-              maxWidth: "var(--container-n800)",
-              border: "1px solid var(--border-color)",
+              maxWidth: "var(--container-n800)"
             }}
             override={{
               w: Size.full,
             }}
             rounded={Radius2.xl}
             surface="raised"
-            clip
+            clip border
           >
             <Frame
-              style={{ borderBottom: "1px solid var(--border-color)" }}
               override={{
                 py: Space.n12,
                 px: Space.n16,
               }}
               layout={Layout.Row.Item.Default}
-              surface="sunken"
+              surface="sunken" border="bottom"
             >
               <Frame flex={2}>
                 <Text.Table.Head>User</Text.Table.Head>
@@ -463,11 +454,10 @@ export function TextSystemApp() {
               },
             ].map((user, i) => (
               <Frame
-                style={{ borderBottom: "1px solid var(--border-color)" }}
                 key={i}
                 layout={Layout.Row.Item.Default}
                 surface="hover"
-                override={{ py: Space.n12, px: Space.n16, align: "center" }}
+                override={{ py: Space.n12, px: Space.n16, align: "center" }} border="bottom"
               >
                 <Frame override={{ gap: Space.n2 }} flex={2}>
                   <Text.Table.Cell style={{ fontWeight: 500 }}>
@@ -484,7 +474,6 @@ export function TextSystemApp() {
                   <Frame
                     style={{
                       display: "inline-flex",
-                      border: "1px solid var(--border-color)",
                       fontSize: "11px",
                       color:
                         user.status === "Active"
@@ -493,7 +482,7 @@ export function TextSystemApp() {
                     }}
                     override={{ py: Space.n2, px: Space.n8 }}
                     rounded={Radius2.full}
-                    surface={user.status === "Active" ? "sunken" : undefined}
+                    surface={user.status === "Active" ? "sunken" : undefined} border
                   >
                     {user.status}
                   </Frame>
@@ -530,14 +519,13 @@ export function TextSystemApp() {
             {/* Sidebar Menu Style */}
             <Frame
               style={{
-                height: "400px",
-                border: "1px solid var(--border-color)",
+                height: "400px"
               }}
               override={{
                 w: Size.n240,
                 gap: Space.n4,
               }}
-              surface="sunken"
+              surface="sunken" border
             >
               <Text.Menu.Group>Platform</Text.Menu.Group>
               <MenuItem active>Dashboard</MenuItem>
@@ -554,7 +542,6 @@ export function TextSystemApp() {
 
             {/* Context Menu Style */}
             <Frame
-              style={{ border: "1px solid var(--border-color)" }}
               override={{
                 w: Size.n224,
                 p: Space.n4,
@@ -562,7 +549,7 @@ export function TextSystemApp() {
                 shadow: "lg",
               }}
               rounded={Radius2.xl}
-              surface="raised"
+              surface="raised" border
             >
               <MenuItem>View Details</MenuItem>
               <MenuItem>Edit</MenuItem>
@@ -616,9 +603,9 @@ function ShowcaseSection({ title, description, code, children }: any) {
     >
       {/* Left: Code & Context */}
       <Frame
-        style={{ width: "35%", borderRight: "1px solid var(--border-color)" }}
+        style={{ width: "35%" }}
         surface="sunken"
-        override={{ p: Space.n24, justify: "center" }}
+        override={{ p: Space.n24, justify: "center" }} border="right"
       >
         <Frame override={{ gap: Space.n16 }}>
           <Text.Prose.Title style={{ fontSize: "var(--font-size-4xl)" }}>
@@ -631,7 +618,6 @@ function ShowcaseSection({ title, description, code, children }: any) {
 
         <Frame
           style={{
-            border: "1px solid var(--border-color)",
             fontFamily: "var(--font-family-mono)",
             fontSize: "var(--font-size-n13)",
             lineHeight: "1.6",
@@ -639,7 +625,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
           scroll="x"
           override={{ p: Space.n24 }}
           rounded={Radius2.xl}
-          surface="base"
+          surface="base" border
         >
           <pre style={{ margin: 0 }}>{code}</pre>
         </Frame>

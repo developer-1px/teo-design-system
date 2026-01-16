@@ -338,7 +338,7 @@ export function resolveLayout(
       return {
         row: true,
         align: "center",
-        justify: "between",
+        pack: "space", // Was justify: between
         gap: Space.n12,
         px: Space.n16, // 16px horizontal padding
         h: Size.n44, // Minimal standard
@@ -358,7 +358,7 @@ export function resolveLayout(
       return {
         row: true,
         align: "center",
-        justify: "between",
+        pack: "space", // Was justify: between
         gap: Space.n12,
         h: Size.n40, // Standard toolbar
         clip: true,
@@ -367,7 +367,7 @@ export function resolveLayout(
       return {
         row: true,
         align: "center",
-        justify: "between",
+        pack: "space", // Was justify: between
         gap: Space.n8,
         h: Size.n36, // Compact toolbar
         clip: true,
@@ -376,7 +376,7 @@ export function resolveLayout(
       return {
         row: true,
         align: "center",
-        justify: "between",
+        pack: "space", // Was justify: between
         gap: Space.n12,
         h: Size.n44, // Match header
         clip: true,
@@ -384,30 +384,30 @@ export function resolveLayout(
       };
 
     case Layout.Row.Item.Default:
-      return { row: true, align: "center", justify: "start", gap: Space.n12 };
+      return { row: true, align: "center", pack: "start", gap: Space.n12 };
     case Layout.Row.Item.Tight:
-      return { row: true, align: "center", justify: "start", gap: Space.n8 };
+      return { row: true, align: "center", pack: "start", gap: Space.n8 };
     case Layout.Row.Item.Compact:
-      return { row: true, align: "center", justify: "start", gap: Space.n4 };
+      return { row: true, align: "center", pack: "start", gap: Space.n4 };
 
     case Layout.Row.LabelValue.Default:
-      return { row: true, align: "center", justify: "between", gap: Space.n12 };
+      return { row: true, align: "center", pack: "space", gap: Space.n12 };
 
     case Layout.Row.Meta.Default:
       return {
         row: true,
         align: "baseline",
-        justify: "start",
+        pack: "start",
         gap: Space.n8,
         clip: true,
       };
 
     case Layout.Row.Actions.Default:
-      return { row: true, align: "center", justify: "end", gap: Space.n8 };
+      return { row: true, align: "center", pack: "end", gap: Space.n8 };
     case Layout.Row.Actions.Between:
-      return { row: true, align: "center", justify: "between", gap: Space.n8 };
+      return { row: true, align: "center", pack: "space", gap: Space.n8 };
     case Layout.Row.Actions.Center:
-      return { row: true, align: "center", justify: "center", gap: Space.n8 };
+      return { row: true, align: "center", pack: "center", gap: Space.n8 };
 
     case Layout.Row.AppContainer.Default:
       return {
@@ -415,6 +415,9 @@ export function resolveLayout(
         align: "stretch",
         gap: Space.n0,
         style: { maxWidth: "100%" },
+        // AppContainer usually wants to fill
+        w: Size.fill,
+        h: Size.fill,
       };
 
     // --- Wrap ---
@@ -423,7 +426,7 @@ export function resolveLayout(
         row: true,
         wrap: "wrap",
         align: "center",
-        justify: "start",
+        pack: "start",
         gap: Space.n8, // was 2 -> 8px
       };
     case Layout.Wrap.Chips.Loose:
@@ -431,7 +434,7 @@ export function resolveLayout(
         row: true,
         wrap: "wrap",
         align: "center",
-        justify: "start",
+        pack: "start",
         gap: Space.n12, // was 3 -> 12px
       };
     case Layout.Wrap.Filters.Default:
@@ -439,7 +442,7 @@ export function resolveLayout(
         row: true,
         wrap: "wrap",
         align: "center",
-        justify: "start",
+        pack: "start",
         gap: Space.n12, // was 3 -> 12px
       };
     case Layout.Wrap.Actions.Default:
@@ -447,7 +450,7 @@ export function resolveLayout(
         row: true,
         wrap: "wrap",
         align: "center",
-        justify: "end",
+        pack: "end",
         gap: Space.n8, // was 2 -> 8px
       };
 
@@ -497,9 +500,9 @@ export function resolveLayout(
 
     // --- Slots ---
     case Layout.Slots.Media.Default:
-      return { row: true, align: "start", justify: "start", gap: Space.n12 }; // was 3
+      return { row: true, align: "start", pack: "start", gap: Space.n12 };
     case Layout.Slots.Media.Tight:
-      return { row: true, align: "start", justify: "start", gap: Space.n8 }; // was 2
+      return { row: true, align: "start", pack: "start", gap: Space.n8 };
     case Layout.Slots.KeyValue.Default:
       return {
         grid: true,
@@ -510,11 +513,11 @@ export function resolveLayout(
 
     // --- Center ---
     case Layout.Center.Default:
-      return { align: "center", justify: "center", gap: Space.n12 }; // was 3
+      return { align: "center", pack: "center", gap: Space.n12 };
     case Layout.Center.Padded:
       return {
         align: "center",
-        justify: "center",
+        pack: "center",
         gap: Space.n12,
         p: Space.n24,
       }; // was 6 units (24px)

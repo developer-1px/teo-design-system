@@ -35,13 +35,12 @@ export function SlideApp() {
           left: 0,
           right: 0,
           zIndex: 10,
-          height: "var(--size-n44)",
-          borderBottom: "1px solid var(--border-color)",
+          height: "var(--size-n44)"
         }}
         override={{
           px: Space.n16,
         }}
-        layout={Layout.Row.Header.Default}
+        layout={Layout.Row.Header.Default} border="bottom"
       >
         <Frame
           layout={Layout.Row.Item.Default}

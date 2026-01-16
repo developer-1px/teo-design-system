@@ -16,13 +16,13 @@ import { EditableWrapper } from "./EditableWrapper";
 export function HeaderHero() {
   return (
     <Frame
-      override={{ w: Size.full, clip: true }}
+      override={{ w: Size.fill, clip: true }}
       style={{ position: "relative" }}
       surface="base"
     >
       <Frame
         override={{
-          w: Size.full,
+          w: Size.fill,
           py: Space.n88,
           px: Space.n24,
           gap: Space.n12,
@@ -59,7 +59,7 @@ export function HeaderHero() {
 
         <Frame
           style={{ maxWidth: "var(--container-n800)" }}
-          override={{ w: Size.full, gap: Space.n24, align: "center" }}
+          override={{ w: Size.fill, gap: Space.n24, align: "center" }}
         >
           <Frame
             rounded={Radius2.full}
@@ -141,7 +141,7 @@ export function HeaderHero() {
 
         {/* Hero Visual: Mockup UI */}
         <Frame
-          override={{ w: Size.full }}
+          override={{ w: Size.fill }}
           rounded={Radius2["2xl"]}
           style={{
             maxWidth: "var(--size-n384)",
@@ -154,7 +154,6 @@ export function HeaderHero() {
           clip
         >
           <Frame
-            style={{ borderBottom: "1px solid var(--border-color)" }}
             surface="raised"
             layout={Layout.Row.Item.Tight}
             override={{
@@ -163,7 +162,7 @@ export function HeaderHero() {
               px: Space.n4,
               gap: Space.n2,
               align: "center",
-            }}
+            }} border="bottom"
           >
             <Frame
               override={{ w: Size.n12, h: Size.n12 }}
@@ -194,8 +193,7 @@ export function HeaderHero() {
                 p: Space.n4,
                 gap: Space.n4,
               }}
-              style={{ borderRight: "1px solid var(--border-color)" }}
-              surface="sunken"
+              surface="sunken" border="right"
             >
               <Frame
                 rounded={Radius2.full}
@@ -211,7 +209,7 @@ export function HeaderHero() {
               />
               <Frame flex />
               <Frame
-                override={{ h: Size.n12, w: Size.full }}
+                override={{ h: Size.n12, w: Size.fill }}
                 rounded={Radius2.lg}
                 surface="raised"
               />

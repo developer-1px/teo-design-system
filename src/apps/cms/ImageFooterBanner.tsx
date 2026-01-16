@@ -17,15 +17,14 @@ export function ImageFooterBanner() {
   return (
     <Frame
       override={{
-        w: Size.full,
+        w: Size.fill,
         py: Space.n96,
         px: Space.n24,
       }}
-      style={{ borderBottom: "1px solid var(--border-color)" }}
-      surface="base"
+      surface="base" border="bottom"
     >
       <Frame
-        override={{ w: Size.full, h: Size.n128 }}
+        override={{ w: Size.fill, h: Size.n128 }}
         rounded={Radius2["3xl"]}
         style={{
           position: "relative",
@@ -39,8 +38,8 @@ export function ImageFooterBanner() {
         <Frame
           override={{
             opacity: Opacity.n10,
-            w: Size.full,
-            h: Size.full,
+            w: Size.fill,
+            h: Size.fill,
           }}
           style={{
             position: "absolute",

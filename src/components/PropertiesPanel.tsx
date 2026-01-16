@@ -4,6 +4,7 @@ import {
   AlignLeft,
   AlignRight,
   ChevronDown,
+  ChevronRight,
   CornerUpRight,
   Eye,
   Lock,
@@ -19,6 +20,7 @@ import { Action } from "../design-system/Action";
 import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { useAccordion } from "../design-system/hooks";
 import { Icon } from "../design-system/Icon";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
@@ -59,38 +61,65 @@ const ALIGNMENT_TOOLS: AlignmentTool[] = [
 // --- Helpers ---
 
 const PropertySection = ({
+  id,
   title,
   children,
+  getItemProps,
+  getPanelProps,
 }: {
+  id: string;
   title: string;
   children: React.ReactNode;
-}) => (
-  <Frame override={{ gap: Space.n8 }}>
-    <Frame override={{ px: Space.n8 }} layout={Layout.Row.Actions.Between}>
-      <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
-        {title}
-      </Text.Menu.Group>
-      <Action
-        icon={Plus}
-        iconSize={IconSize.n12}
-        style={{ width: "20px", height: "20px" }}
-        opacity={Opacity.n40}
-      />
+  getItemProps: (id: string) => any;
+  getPanelProps: (id: string) => any;
+}) => {
+  const itemProps = getItemProps(id);
+  const panelProps = getPanelProps(id);
+
+  return (
+    <Frame override={{ gap: Space.n8 }}>
+      {/* Collapsible Header */}
+      <Frame
+        {...itemProps}
+        override={{ px: Space.n8, cursor: "pointer" }}
+        layout={Layout.Row.Actions.Between}
+        onClick={itemProps.onToggle}
+      >
+        <Frame override={{ gap: Space.n6 }} layout={Layout.Row.Item.Default}>
+          <Icon
+            src={itemProps.expanded ? ChevronDown : ChevronRight}
+            size={IconSize.n12}
+            style={{ color: "var(--text-tertiary)" }}
+          />
+          <Text.Menu.Group style={{ padding: "8px 0 4px" }}>
+            {title}
+          </Text.Menu.Group>
+        </Frame>
+        <Action
+          icon={Plus}
+          iconSize={IconSize.n12}
+          style={{ width: "20px", height: "20px" }}
+          opacity={Opacity.n40}
+        />
+      </Frame>
+
+      {/* Collapsible Content */}
+      <Frame
+        {...panelProps}
+        override={{
+          gap: Space.n4,
+          pt: Space.n0,
+          pr: Space.n8,
+          pb: Space.n8,
+          pl: Space.n8,
+        }}
+      >
+        {children}
+      </Frame>
+      <Separator />
     </Frame>
-    <Frame
-      override={{
-        gap: Space.n4,
-        pt: Space.n0,
-        pr: Space.n8,
-        pb: Space.n8,
-        pl: Space.n8,
-      }}
-    >
-      {children}
-    </Frame>
-    <Separator />
-  </Frame>
-);
+  );
+};
 
 const TransformField = ({
   label,
@@ -124,13 +153,16 @@ export function PropertiesPanel() {
   const updateTransform = (key: string, value: string) =>
     setTransform((prev) => ({ ...prev, [key]: value }));
 
+  // Accordion for collapsible sections
+  const sections = ["LAYER", "TEXT", "FILL", "STROKE", "EFFECTS", "EXPORT"];
+  const { getItemProps, getPanelProps } = useAccordion({
+    items: sections,
+    defaultExpanded: ["LAYER", "TEXT", "FILL"], // Default open sections
+    allowMultiple: true,
+  });
+
   return (
-    <Section
-      w={Size.n256}
-      surface="base"
-      rounded={Radius2.lg}
-      shadow="sm"
-    >
+    <Section w={Size.n256} surface="base" rounded={Radius2.lg} shadow="sm">
       {/* Tabs */}
       <Frame
         override={{
@@ -270,7 +302,12 @@ export function PropertiesPanel() {
         <Separator />
 
         {/* Properties */}
-        <PropertySection title="LAYER">
+        <PropertySection
+          id="LAYER"
+          title="LAYER"
+          getItemProps={getItemProps}
+          getPanelProps={getPanelProps}
+        >
           <Frame
             layout={Layout.Row.Item.Default}
             override={{ gap: Space.n12, justify: "between" }}
@@ -288,7 +325,12 @@ export function PropertiesPanel() {
           </Frame>
         </PropertySection>
 
-        <PropertySection title="TEXT">
+        <PropertySection
+          id="TEXT"
+          title="TEXT"
+          getItemProps={getItemProps}
+          getPanelProps={getPanelProps}
+        >
           <Frame override={{ gap: Space.n6 }}>
             <Field
               value="Inter"
@@ -344,7 +386,12 @@ export function PropertiesPanel() {
           </Frame>
         </PropertySection>
 
-        <PropertySection title="FILL">
+        <PropertySection
+          id="FILL"
+          title="FILL"
+          getItemProps={getItemProps}
+          getPanelProps={getPanelProps}
+        >
           <Field
             value="F4F4F5"
             icon={
@@ -365,7 +412,12 @@ export function PropertiesPanel() {
           />
         </PropertySection>
 
-        <PropertySection title="STROKE">
+        <PropertySection
+          id="STROKE"
+          title="STROKE"
+          getItemProps={getItemProps}
+          getPanelProps={getPanelProps}
+        >
           <Frame override={{ gap: Space.n6 }}>
             <Field
               value="000000"
@@ -422,7 +474,12 @@ export function PropertiesPanel() {
           </Frame>
         </PropertySection>
 
-        <PropertySection title="EFFECTS">
+        <PropertySection
+          id="EFFECTS"
+          title="EFFECTS"
+          getItemProps={getItemProps}
+          getPanelProps={getPanelProps}
+        >
           <Field
             value="Drop Shadow"
             icon={<Icon src={Sun} size={IconSize.n10} />}
@@ -436,7 +493,12 @@ export function PropertiesPanel() {
           />
         </PropertySection>
 
-        <PropertySection title="EXPORT">
+        <PropertySection
+          id="EXPORT"
+          title="EXPORT"
+          getItemProps={getItemProps}
+          getPanelProps={getPanelProps}
+        >
           <Field
             value="PNG"
             rightIcon={

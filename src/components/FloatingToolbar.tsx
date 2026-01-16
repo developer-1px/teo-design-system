@@ -16,7 +16,7 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Overlay } from "../design-system/Overlay";
 import { Separator } from "../design-system/Separator";
 import { useTheme } from "../design-system/theme";
-import { IconSize, Space, Radius2 } from "../design-system/token";
+import { IconSize, Radius2, Space } from "../design-system/token";
 
 const BOTTOM_TOOLS = [
   { icon: MousePointer2, tooltip: "Move", variant: "surface" as const },

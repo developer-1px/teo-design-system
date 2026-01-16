@@ -25,7 +25,14 @@
       "Bash(npx ts-unused-exports:*)",
       "Bash(npm run check:unused:*)",
       "Bash(npx @biomejs/biome format:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:react-spectrum.adobe.com)",
+      "WebFetch(domain:react-aria.adobe.com)",
+      "WebFetch(domain:headlessui.com)",
+      "Bash(npm run lint:design:ts:*)",
+      "Bash(npx tsx:*)"
     ],
     "deny": [],
     "ask": []

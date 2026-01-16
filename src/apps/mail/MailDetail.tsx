@@ -1,17 +1,17 @@
+import { useAtomValue } from "jotai";
 import {
   Archive,
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
+  Forward,
   MoreVertical,
   Paperclip,
   Reply,
   ReplyAll,
-  Forward,
-  Trash2,
   Star,
+  Trash2,
 } from "lucide-react";
-import { useAtomValue } from "jotai";
 import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";

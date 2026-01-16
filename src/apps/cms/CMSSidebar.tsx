@@ -13,6 +13,7 @@ import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
+import { ResizeHandle, useResizable } from "../../design-system/Resizable";
 import { Text } from "../../design-system/text/Text";
 import {
   FontSize,
@@ -30,23 +31,35 @@ interface CMSSidebarProps {
 export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
   const [viewMode, setViewMode] = useState<"bar" | "thumbnail">("thumbnail");
 
+  // Resizable hook (only when open)
+  const { size, resizeHandleProps } = useResizable({
+    direction: "left",
+    defaultSize: 240,
+    minSize: 200,
+    maxSize: 400,
+    storageKey: "cms-sidebar-width",
+  });
+
   return (
     <Frame
       override={{
-        h: Size.full,
+        h: Size.fill,
         p: Space.n4,
         gap: Space.n4,
         clip: true,
       }}
       style={{
-        width: isOpen ? "var(--size-n240)" : "var(--size-n64)",
+        width: isOpen ? `${size}px` : "var(--size-n64)",
         whiteSpace: "nowrap",
         transformOrigin: "top left",
-        transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        transition: isOpen
+          ? "none"
+          : "width 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         position: "relative",
       }}
       surface="sunken"
     >
+      {isOpen && <ResizeHandle direction="left" {...resizeHandleProps} />}
       {/* Toggle Button - Top Right */}
       <Frame
         override={{
@@ -147,13 +160,12 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       {/* Footer Settings */}
       <Frame
         style={{
-          borderTop: "1px solid var(--border-color)",
           opacity: isOpen ? 1 : 0,
           transition: "opacity 0.2s",
           display: isOpen ? "flex" : "none",
         }}
         layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n12, p: Space.n12, align: "center" }}
+        override={{ gap: Space.n12, p: Space.n12, align: "center" }} border="top"
       >
         <Frame
           override={{ w: Size.n32, h: Size.n32 }}
@@ -202,16 +214,15 @@ function LayerItem({ label, active, viewMode }: LayerItemProps) {
           </Text.Card.Note>
         </Frame>
         <Frame
-          override={{ w: Size.full, cursor: "pointer" }}
+          override={{ w: Size.fill, cursor: "pointer" }}
           rounded={Radius2.md}
           style={{
-            border: "1px solid var(--border-color)",
             boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
             borderColor: active ? "var(--text-primary)" : "var(--border-color)",
           }}
           ratio="16/9"
           surface={active ? "base" : "sunken"}
-          pack
+          pack border
         >
           {active && (
             <Frame

@@ -1,3 +1,4 @@
+import { useAtom, useAtomValue } from "jotai";
 import {
   Building2,
   CheckSquare,
@@ -7,12 +8,12 @@ import {
   LayoutGrid,
   Users,
 } from "lucide-react";
-import { useAtom, useAtomValue } from "jotai";
 
 import { Action } from "../../design-system/Action";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
+import { ResizeHandle, useResizable } from "../../design-system/Resizable";
 import { Text } from "../../design-system/text/Text.tsx";
 import {
   IconSize,
@@ -75,7 +76,7 @@ function DatasetItem({
   return (
     <Action
       variant={active ? "surface" : "ghost"}
-      rounded={Radius2.md}
+      rounded={Radius2.sm}
       w="100%"
       justify="start"
       onClick={onClick}
@@ -84,7 +85,7 @@ function DatasetItem({
         layout={Layout.Row.Item.Default}
         override={{
           gap: Space.n12,
-          w: Size.full,
+          w: Size.fill,
           py: Space.n6,
           px: Space.n8,
           align: "center",
@@ -114,34 +115,57 @@ export function CRMSidebar() {
   const datasets = useAtomValue(datasetsAtom);
   const [selectedDataset, setSelectedDataset] = useAtom(selectedDatasetAtom);
 
+  // Resizable hook
+  const { size, resizeHandleProps } = useResizable({
+    direction: "left",
+    defaultSize: 240,
+    minSize: 200,
+    maxSize: 400,
+    storageKey: "crm-sidebar-width",
+  });
+
   return (
     <Frame
       override={{
-        w: Size.n240,
-        minWidth: Size.n240,
-        h: Size.full,
+        h: Size.fill,
         p: Space.n8,
         gap: Space.n4,
+        borderRight: true, // Flat separation
       }}
+      style={{
+        position: "relative",
+      }}
+      w={`${size}px` as unknown as any}
       surface="sunken"
     >
-      {/* Workspace Switcher */}
-      <Action variant="ghost" rounded={Radius2.md}>
-        <Frame
-          layout={Layout.Row.Item.Default}
-          override={{ gap: Space.n12, p: Space.n4, align: "center" }}
-        >
-          <Avatar initial="D" color="black" size={Size.n20} />
-          <Text.Menu.Item weight="bold">DataTable</Text.Menu.Item>
-          <Frame flex />
-          <Icon src={ChevronDown} size={IconSize.n14} opacity={0.4} />
-        </Frame>
-      </Action>
+      <ResizeHandle direction="left" {...resizeHandleProps} />
+      {/* Workspace Switcher - Fixed Height Header */}
+      <Frame
+        h={Size.n64}
+        override={{
+          px: Space.n8,
+          borderBottom: true, // Continuous line with Main Header
+          align: "center",
+        }}
+        surface="sunken"
+      >
+        <Action variant="ghost" rounded={Radius2.sm} w="100%">
+          <Frame
+            layout={Layout.Row.Item.Default}
+            override={{ gap: Space.n12, p: Space.n4, align: "center" }}
+          >
+            <Avatar initial="D" color="black" size={Size.n20} />
+            <Text.Menu.Item weight="bold">DataTable</Text.Menu.Item>
+            <Frame flex />
+            <Icon src={ChevronDown} size={IconSize.n14} opacity={0.4} />
+          </Frame>
+        </Action>
+      </Frame>
 
       <Frame override={{ h: Size.n8 }} />
 
       {/* Datasets Section */}
-      <Frame override={{ gap: Space.n4 }}>
+      <Frame override={{ gap: Space.n2 }}>
         <SectionLabel label="Datasets" />
         {datasets.map((dataset) => (
           <DatasetItem
@@ -160,8 +184,8 @@ export function CRMSidebar() {
       <Frame override={{ gap: Space.n4 }}>
         <Frame
           override={{ py: Space.n6, px: Space.n8 }}
-          surface="base"
-          rounded={Radius2.md}
+          surface="sunken"
+          rounded={Radius2.sm}
         >
           <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
             {datasets.length} datasets loaded

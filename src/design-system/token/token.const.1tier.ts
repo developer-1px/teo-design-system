@@ -177,10 +177,10 @@ export type SizeScale = ScaleOf<typeof SizeScale>;
 export type SizeNumericKey = KeyOf<typeof SizeScale>;
 
 export const SizeKeywords = [
-  "full",
+  // "full", // REMOVED: Use Size.full (100%) or w="100%" (Fixed)
   "screen",
-  "min",
-  "max",
+  "hug",
+  "fill",
   "fit",
   "auto",
 ] as const;
@@ -227,11 +227,10 @@ export const Size = {
   n704: "var(--size-n704)" as SizeToken,
   n768: "var(--size-n768)" as SizeToken,
 
-  // Keywords (CSS values remain as-is)
-  full: "100%" as SizeToken,
+  // Keywords (Figma-aligned)
   screen: "100vh" as SizeToken,
-  min: "min-content" as SizeToken,
-  max: "max-content" as SizeToken,
+  hug: "hug" as SizeToken,
+  fill: "fill" as SizeToken,
   fit: "fit-content" as SizeToken,
   auto: "auto" as SizeToken,
 } as const satisfies Record<SizeKey, SizeToken>;

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useEffect } from "react";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Size, Space } from "../../design-system/token/token.const.1tier";
@@ -31,50 +31,53 @@ export function CRMApp() {
 
   return (
     <Frame
-      fill
+      w="screen"
+      h="screen"
       layout={Layout.Row.AppContainer.Default}
-      surface="base"
-      override={{ p: Space.n0 }}
+      surface="base" // 1. Flat base foundation
     >
-      {/* Sidebar Section */}
+      {/* Sidebar: Sunken + Border Right */}
       <CRMSidebar />
 
-      {/* Main Content Area */}
-      <Frame
-        style={{
-          position: "relative",
-        }}
-        override={{
-          p: Space.n0,
-          borderLeft: true,
-        }}
-        fill
-        flex
-        clip
-      >
-        <CRMHeader />
-        <CRMToolbar />
+      {/* Main Content Area: Flat, Border Separated */}
+      <Frame flex fill override={{ borderRight: true, minWidth: Size.n0 }}>
+        <Frame
+          flex
+          fill
+          clip
+          surface="base"
+          style={{
+            position: "relative",
+          }}
+        >
+          <CRMHeader />
+          <CRMToolbar />
 
-        <Frame flex fill scroll override={{ p: Space.n0 }}>
-          {isLoading ? (
-            <Frame fill pack override={{ align: "center", justify: "center" }}>
+          <Frame flex fill override={{ p: Space.n0 }}>
+            {isLoading ? (
               <Frame
-                override={{ w: Size.n24, h: Size.n24 }}
-                rounded={Radius2.full}
-                style={{
-                  border: "2px solid var(--border-color)",
-                  borderTopColor: "var(--text-primary)",
-                  animation: "spin 1s linear infinite",
-                }}
-              />
-            </Frame>
-          ) : (
-            <CRMTable />
-          )}
-        </Frame>
+                fill
+                pack
+                override={{ align: "center", justify: "center" }}
+              >
+                <Frame
+                  override={{ w: Size.n24, h: Size.n24 }}
+                  rounded={Radius2.full}
+                  style={{
+                    border: "2px solid var(--border-color)",
+                    borderTopColor: "var(--text-primary)",
+                    animation: "spin 1s linear infinite",
+                  }}
+                />
+              </Frame>
+            ) : (
+              <CRMTable />
+            )}
+          </Frame>
 
-        {/* Overlay Drawer */}
-        <CRMDrawer />
+          {/* Overlay Drawer */}
+          <CRMDrawer />
+        </Frame>
       </Frame>
     </Frame>
   );

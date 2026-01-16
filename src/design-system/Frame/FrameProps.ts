@@ -5,20 +5,59 @@ import type {
   JustifyToken,
   ShadowToken,
   SurfaceToken,
+  ZIndexToken,
 } from "../lib/types.ts";
 import type {
+  BorderWidthToken,
   HeightToken,
   MaxHeightToken,
   MaxWidthToken,
   OpacityToken,
+  Radius2Token,
   RadiusToken,
   SpaceToken,
   WidthToken,
-} from "../token/token.const.1tier.ts";
-import type { Radius2Token } from "../token";
+} from "../token";
+import type { LayoutToken } from "./Layout/Layout.ts";
 
-// --- 1. LOOSE OVERRIDES (Token | string | number) ---
+// --- 1. PRESET PROPS (2-Tier / Semantic) ---
+// The primary interface for standard UI development.
+// Designed around the "4 Pillars": Layout, Sizing, Appearance, Behavior.
+interface FramePresetProps {
+  // 1. Layout (Inner Flow)
+  // How children are arranged
+  layout?: LayoutToken;
+  gap?: SpaceToken;
+  row?: boolean;
+  wrap?: boolean;
+  pack?: boolean;
+  grid?: boolean;
+  scroll?: boolean | "x" | "y";
+
+  // 2. Sizing (Outer Constraints)
+  // How this frame sizes itself
+  w?: WidthToken;
+  h?: HeightToken;
+  fill?: boolean;
+  flex?: boolean | number | string;
+
+  ratio?: string;
+
+  // 3. Appearance (Visual Decoration)
+  // Visual style without affecting layout flow
+  surface?: SurfaceToken;
+  rounded?: Radius2Token | boolean;
+  border?: boolean;
+  borderWidth?: BorderWidthToken;
+  shadow?: ShadowToken;
+
+  opacity?: OpacityToken;
+  clip?: boolean;
+}
+
+// --- 2. OVERRIDES (Strict 1-Tier Tokens) ---
 // Used inside 'override={{ ... }}' prop
+// Use this when you need specific Tokens not exposed by top-level props
 export interface FrameOverrides {
   // Layout
   w?: WidthToken;
@@ -43,7 +82,7 @@ export interface FrameOverrides {
   flex?: boolean | number | string;
   align?: AlignToken;
   justify?: JustifyToken;
-  pack?: boolean;
+  pack?: boolean | "start" | "center" | "end" | "space";
 
   p?: SpaceToken;
   px?: SpaceToken;
@@ -60,6 +99,7 @@ export interface FrameOverrides {
   borderRight?: boolean;
   borderBottom?: boolean;
   borderLeft?: boolean;
+  borderWidth?: BorderWidthToken;
 
   // BorderRadius
   r?: RadiusToken;
@@ -71,7 +111,6 @@ export interface FrameOverrides {
 
   // Smart Layout
   scroll?: boolean | "x" | "y";
-  shrink?: boolean | number;
 
   override?: FrameOverrides;
 
@@ -80,61 +119,65 @@ export interface FrameOverrides {
   opacity?: OpacityToken;
   ratio?: string;
 
+  zIndex?: ZIndexToken;
   className?: string;
 }
 
-// --- 2. STRICT PROPS (Token Only) ---
-// Used as top-level props on <Frame ... />
-interface FrameStrictProps {
-  // Layout
-  gap?: SpaceToken;
-
-  w?: WidthToken;
-  h?: HeightToken;
-
-  row?: boolean;
-  wrap?: boolean;
-
-  fill?: boolean;
-  flex?: boolean | number | string;
-  pack?: boolean;
-
-  // Surface
-  surface?: SurfaceToken;
-  rounded?: Radius2Token | boolean;
-  clip?: boolean;
-
-  // Border
-  border?: boolean;
-
-  // Smart Layout
-  scroll?: boolean | "x" | "y";
-  shrink?: boolean | number;
-
-  // Visual
-  shadow?: ShadowToken;
-  opacity?: OpacityToken;
-  ratio?: string;
-}
-
 export interface FrameProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "color">,
-    FrameStrictProps {
+  extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "color" | "style">,
+  FramePresetProps {
   children?: React.ReactNode;
   as?: React.ElementType;
 
   /**
-   * High-level layout preset.
-   */
-  layout?: import("./Layout/Layout.ts").LayoutToken;
-
-  /**
-   * Ad-hoc overrides for specific instances.
+   * Ad-hoc overrides using specific 1-Tier Tokens.
    * Takes precedence over both 'layout' preset and top-level props.
-   * Use this for loose values (numbers, raw strings).
+   * Must use Tokens (e.g. Size.n10). For arbitrary values, use 'style'.
    */
   override?: FrameOverrides;
 
   // Semantic
   title?: string;
+
+  /**
+   * Safe Style Prop (Restricted)
+   * Prevents usage of restricted CSS properties like margin, padding, width, height, etc.
+   */
+  style?: RestrictedFrameStyle;
 }
+
+// Block List for Style Prop
+type BlockedStyleProps =
+  | "width"
+  | "height"
+  | "minWidth"
+  | "minHeight"
+  | "maxWidth"
+  | "maxHeight"
+  | "margin"
+  | "marginTop"
+  | "marginBottom"
+  | "marginLeft"
+  | "marginRight"
+  | "marginBlock"
+  | "marginInline"
+  | "padding"
+  | "paddingTop"
+  | "paddingBottom"
+  | "paddingLeft"
+  | "paddingRight"
+  | "paddingBlock"
+  | "paddingInline"
+  | "gap"
+  | "opacity"
+  | "borderRadius"
+  | "boxShadow"
+  | "zIndex"
+  | "borderWidth"
+  | "borderTopWidth"
+  | "borderRightWidth"
+  | "borderBottomWidth"
+  | "borderLeftWidth";
+
+// Type-Level Restriction
+type RestrictedFrameStyle = Omit<React.CSSProperties, BlockedStyleProps>;

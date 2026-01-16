@@ -5,11 +5,12 @@ import { Divider } from "../../design-system/Divider";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
 import { Icon } from "../../design-system/Icon";
+import { ResizeHandle, useResizable } from "../../design-system/Resizable";
 import { Text } from "../../design-system/text/Text.tsx";
 import {
   IconSize,
-  Size,
   Space,
+  ZIndex,
 } from "../../design-system/token/token.const.1tier";
 import { formatColumnLabel } from "./dataLoader";
 import { DrawerActivity } from "./drawer/DrawerActivity";
@@ -37,22 +38,31 @@ export function CRMDrawer() {
 
   const handleClose = () => setSelectedRowId(null);
 
+  // Resizable hook
+  const { size, resizeHandleProps } = useResizable({
+    direction: "right",
+    defaultSize: 512,
+    minSize: 320,
+    maxSize: 800,
+    storageKey: "crm-drawer-width",
+  });
+
   return (
     <Frame
       override={{
-        w: Size.n512,
-        shadow: "lg",
-        borderLeft: true,
+        borderLeft: true, // Flat separation
+        zIndex: ZIndex.n100,
       }}
+      w={`${size}px` as unknown as any}
       style={{
         position: "absolute",
         top: 0,
         right: 0,
         bottom: 0,
-        zIndex: 100,
       }}
-      surface="overlay"
+      surface="base" // Tone match with Main Area
     >
+      <ResizeHandle direction="right" {...resizeHandleProps} />
       {hasSelection && selectedRow ? (
         <>
           <DrawerHeader
@@ -62,16 +72,14 @@ export function CRMDrawer() {
             onClose={handleClose}
           />
 
-          <Frame flex fill scroll>
+          <Frame layout={Layout.Stack.Content.Scroll} fill>
             <Frame
               override={{ p: Space.n24, gap: Space.n32 }}
-              layout={Layout.Stack.Content.Default}
             >
               <DrawerProperties
                 entries={Object.entries(selectedRow).filter(
                   ([key]) => !key.startsWith("_") && key !== "avatarColor",
                 )}
-                getFieldIcon={getFieldIcon}
                 formatColumnLabel={formatColumnLabel}
                 formatValue={formatValue}
               />

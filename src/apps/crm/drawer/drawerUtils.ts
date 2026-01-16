@@ -1,5 +1,6 @@
 import { Calendar, Globe, Hash, Mail, User } from "lucide-react";
 import type { DataRow } from "../types";
+import { formatForDrawer } from "./nestedValueFormatter";
 
 // Icon mapping for common field types
 const FIELD_ICON_MAP: Record<string, React.ElementType> = {
@@ -27,22 +28,12 @@ export function getFieldIcon(key: string): React.ElementType {
 }
 
 export function formatValue(value: unknown): string {
-  if (value === null || value === undefined) return "-";
-  if (typeof value === "boolean") return value ? "Yes" : "No";
-  if (typeof value === "number") {
-    if (value > 1000) {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-      }).format(value);
-    }
-    return value.toString();
-  }
-  if (typeof value === "string" && value.startsWith("#")) {
-    return value;
-  }
-  return String(value);
+  return formatForDrawer(value, {
+    maxDepth: 1, // Drawer: show one level of nesting
+    maxArrayItems: 3, // Show up to 3 items in arrays
+    maxStringLength: 100, // Longer strings allowed in drawer
+    arrayOfObjectsStrategy: "summary", // Array of objects: show summary
+  });
 }
 
 export function getDisplayTitle(data: DataRow): string {

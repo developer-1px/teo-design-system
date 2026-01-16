@@ -390,10 +390,7 @@ function SurfaceDetailPage({
             <Frame
               override={{ p: Space.n16, gap: Space.n8 }}
               rounded={Radius2.lg}
-              surface="overlay"
-              style={{
-                border: "1px solid var(--border-color)",
-              }}
+              surface="overlay" border
             >
               <Prose.Code
                 style={{
