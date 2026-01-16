@@ -50,11 +50,6 @@ export function Field({
     >
       {icon && (
         <Frame
-          style={{
-            display: "flex",
-            flexShrink: 0,
-          }}
-          override={{}}
           className="field-icon"
         >
           {icon}
@@ -68,7 +63,6 @@ export function Field({
           style={{
             width: "var(--space-3-5)", // Approximately 14px if we added 3.5
             marginRight: "var(--space-0-5)",
-            flexShrink: 0,
             whiteSpace: "nowrap",
             textAlign: "center",
           }}
@@ -94,8 +88,6 @@ export function Field({
         <Frame
           style={{
             opacity: 0.4,
-            display: "flex",
-            flexShrink: 0,
           }}
           override={{}}
         >

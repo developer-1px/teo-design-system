@@ -1,0 +1,152 @@
+/* -------------------------------------------------------------------------- */
+/*                          6. Visual Utilities                               */
+/* -------------------------------------------------------------------------- */
+
+/* Surface */
+.surface-base {
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+}
+
+.surface-sunken {
+  background-color: var(--surface-sunken);
+}
+
+.surface-raised {
+  background-color: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width) solid var(--border-color);
+}
+
+.surface-overlay {
+  background-color: var(--surface-overlay);
+  box-shadow: var(--shadow-lg);
+  border: var(--border-width) solid var(--border-color);
+}
+
+.surface-panel {
+  background-color: var(--surface-panel);
+  border-right: var(--border-width) solid var(--border-color);
+}
+
+.surface-card {
+  background-color: var(--surface-card);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width) solid var(--border-color);
+}
+
+.surface-primary {
+  background-color: var(--surface-primary);
+  color: var(--primary-fg);
+}
+
+.surface-selected {
+  background-color: var(--surface-selected);
+}
+
+.surface-hover {
+  background-color: var(--control-bg-hover);
+}
+
+/* Cursor */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-text {
+  cursor: text;
+}
+
+.cursor-move {
+  cursor: move;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grabbing {
+  cursor: grabbing;
+}
+
+/* Shadow */
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-xl {
+  box-shadow: var(--shadow-xl);
+}
+
+.shadow-2xl {
+  box-shadow: var(--shadow-2xl);
+}
+
+/* Border */
+.border-default {
+  border-color: var(--border-color);
+}
+
+.border-transparent {
+  border-color: transparent;
+}
+
+.border-primary {
+  border-color: var(--text-primary);
+}
+
+/* Overflow & Clip */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.overflow-visible {
+  overflow: visible;
+}
+
+/* Position */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}

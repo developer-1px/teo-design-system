@@ -1,7 +1,5 @@
 import type React from "react"
 
-import "../../style/frame.css"
-
 import type {FrameOverrides, FrameProps} from "./FrameProps.ts"
 import {frameToSettings} from "./frameToSettings.ts"
 
@@ -124,20 +122,7 @@ export function Frame({
     gridTemplateRows: settingsInput.rows,
     gridTemplateAreas: settingsInput.areas,
 
-    // B. Legacy/Compat Logic
-    flex:
-      typeof settingsInput.flex === "number" ? settingsInput.flex : undefined,
-    flexShrink:
-      settingsInput.w !== undefined ||
-      settingsInput.h !== undefined ||
-      settingsInput.ratio !== undefined
-        ? 0
-        : undefined,
     aspectRatio: settingsInput.ratio,
-
-    // C. Theme Logic
-    color:
-      settingsInput.surface === "primary" ? "var(--primary-fg)" : "inherit",
 
     // D. Injected Variables
     ...settingsVars,

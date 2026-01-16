@@ -1,15 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  Building2,
-  Calendar,
-  DollarSign,
-  FileText,
-  Info,
   Layers,
-  Mail,
-  MapPin,
-  Tag,
-  User,
 } from "lucide-react";
 
 /**
@@ -49,96 +40,10 @@ export interface PropertyGroupData {
 }
 
 /**
- * Category configuration for automatic grouping
- */
-const CATEGORY_CONFIG: Record<
-  string,
-  { keywords: string[]; icon: LucideIcon; isPrimary: boolean }
-> = {
-  contact: {
-    keywords: ["email", "phone", "mobile", "fax", "contact"],
-    icon: Mail,
-    isPrimary: true,
-  },
-  address: {
-    keywords: [
-      "address",
-      "location",
-      "street",
-      "city",
-      "country",
-      "postal",
-      "zip",
-    ],
-    icon: MapPin,
-    isPrimary: false,
-  },
-  company: {
-    keywords: ["company", "organization", "business"],
-    icon: Building2,
-    isPrimary: true,
-  },
-  financial: {
-    keywords: ["revenue", "budget", "price", "cost", "salary", "payment"],
-    icon: DollarSign,
-    isPrimary: false,
-  },
-  metadata: {
-    keywords: ["metadata", "meta", "data", "info", "details"],
-    icon: Info,
-    isPrimary: false,
-  },
-  profile: {
-    keywords: ["profile", "bio", "about", "avatar"],
-    icon: User,
-    isPrimary: true,
-  },
-  dates: {
-    keywords: [
-      "date",
-      "created",
-      "updated",
-      "modified",
-      "founded",
-      "start",
-      "end",
-    ],
-    icon: Calendar,
-    isPrimary: false,
-  },
-  tags: {
-    keywords: ["tag", "label", "category", "type", "status"],
-    icon: Tag,
-    isPrimary: true,
-  },
-  description: {
-    keywords: ["description", "note", "comment", "summary"],
-    icon: FileText,
-    isPrimary: false,
-  },
-};
-
-/**
- * Detect category from key name
- */
-function detectCategory(key: string): keyof typeof CATEGORY_CONFIG | null {
-  const lowerKey = key.toLowerCase();
-
-  for (const [category, config] of Object.entries(CATEGORY_CONFIG)) {
-    if (config.keywords.some((keyword) => lowerKey.includes(keyword))) {
-      return category as keyof typeof CATEGORY_CONFIG;
-    }
-  }
-
-  return null;
-}
-
-/**
  * Get icon for field key
  */
 export function getFieldIcon(key: string): LucideIcon {
-  const category = detectCategory(key);
-  return category ? CATEGORY_CONFIG[category].icon : Layers;
+  return Layers;
 }
 
 /**
@@ -176,12 +81,9 @@ export function groupEntries(
 
     if (isNested) {
       // Create a dedicated section for nested objects
-      const category = detectCategory(key);
-      const config = category ? CATEGORY_CONFIG[category] : null;
-
       groups.push({
         title: formatGroupTitle(key),
-        icon: config?.icon || Layers,
+        icon: Layers,
         entries: Object.entries(value).map(([nestedKey, nestedValue]) => ({
           key: nestedKey,
           value: nestedValue,
@@ -189,7 +91,7 @@ export function groupEntries(
           isPrimary: isPrimaryField(nestedKey),
         })),
         isNested: true,
-        isPrimary: config?.isPrimary ?? false,
+        isPrimary: false,
         level,
       });
     } else {
@@ -203,39 +105,14 @@ export function groupEntries(
     }
   }
 
-  // Second pass: group flat entries by category
-  const categorizedGroups = new Map<string, PropertyEntry[]>();
-
-  for (const entry of ungroupedEntries) {
-    const category = detectCategory(entry.key);
-
-    if (category) {
-      if (!categorizedGroups.has(category)) {
-        categorizedGroups.set(category, []);
-      }
-      categorizedGroups.get(category)!.push(entry);
-    } else {
-      // Uncategorized entries go to "General" group
-      if (!categorizedGroups.has("general")) {
-        categorizedGroups.set("general", []);
-      }
-      categorizedGroups.get("general")!.push(entry);
-    }
-  }
-
-  // Convert categorized groups to PropertyGroupData
-  for (const [category, entries] of categorizedGroups.entries()) {
-    const config =
-      category === "general"
-        ? { icon: Layers, isPrimary: true }
-        : CATEGORY_CONFIG[category as keyof typeof CATEGORY_CONFIG];
-
+  // Second pass: put all flat entries into "Properties" group
+  if (ungroupedEntries.length > 0) {
     groups.push({
-      title: category === "general" ? "Properties" : formatGroupTitle(category),
-      icon: config.icon,
-      entries,
+      title: "Properties",
+      icon: Layers,
+      entries: ungroupedEntries,
       isNested: false,
-      isPrimary: config.isPrimary,
+      isPrimary: true, // Flat properties are usually primary
       level,
     });
   }

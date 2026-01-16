@@ -10,7 +10,6 @@ import {
   Size,
   Space,
 } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function CMSDrawer({ onClose }: { onClose: () => void }) {
   return (
@@ -31,8 +30,9 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
             w: Size.n512,
             h: Size.screen,
             shadow: "2xl",
+            borderLeft: true,
           }}
-          surface="base" border="left"
+          surface="base"
         >
           {/* Header */}
           <Frame
@@ -40,8 +40,9 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
               py: Space.n16,
               px: Space.n24,
               justify: "between",
+              borderBottom: true,
             }}
-            layout={Layout.Row.Header.Default} border="bottom"
+            layout={Layout.Row.Header.Default}
           >
             <Text size={FontSize.n20} weight="bold">
               Options

@@ -33,7 +33,7 @@ export function Divider({
   if (variant === "spacer") {
     return (
       <div
-        style={{ flexBasis: resolvedMargin, flexShrink: 0 }}
+        style={{ flexBasis: resolvedMargin}}
         aria-hidden="true"
       />
     );
@@ -46,7 +46,6 @@ export function Divider({
         style={{
           color,
           margin: `0 ${resolvedMargin}`,
-          flexShrink: 0,
           ...style,
         }}
       >
@@ -62,7 +61,6 @@ export function Divider({
         style={{
           color,
           margin: `0 ${resolvedMargin}`,
-          flexShrink: 0,
           ...style,
         }}
       >
@@ -74,7 +72,6 @@ export function Divider({
   // Line Variant
   const lineStyle: React.CSSProperties = {
     backgroundColor: color,
-    flexShrink: 0,
     ...style,
   };
 

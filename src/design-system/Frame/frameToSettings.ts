@@ -201,13 +201,13 @@ export function frameToSettings(props: FrameSettingsInput): {
     styles.borderLeft = "1px solid var(--border-color)";
 
   // Clip
-  if (props.clip === true) classes.push("overflow-hidden");
+  if (props.clip === true) classes.push("clip");
   else if (props.clip === false) classes.push("overflow-visible");
 
   // Scroll
-  if (props.scroll === true) classes.push("overflow-auto");
-  else if (props.scroll === "x") classes.push("overflow-x-auto");
-  else if (props.scroll === "y") classes.push("overflow-y-auto");
+  if (props.scroll === true) classes.push("scroll");
+  else if (props.scroll === "x") classes.push("scroll-x");
+  else if (props.scroll === "y") classes.push("scroll-y");
 
   // Cursor & Shadow
   if (props.cursor) classes.push(`cursor-${props.cursor}`);

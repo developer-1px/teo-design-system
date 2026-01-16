@@ -120,7 +120,7 @@ function PropertyRow({
   return (
     <Frame layout={Layout.Row.Item.Default} h={Size.hug} override={{ align: "start", gap: Space.n16 }}>
       {/* Key (Fixed Width) */}
-      <Frame override={{ w: Size.n128 }} style={{ flexShrink: 0 }}>
+      <Frame override={{ w: Size.n128 }}>
         <Text.Field.Label style={{ color: "var(--text-tertiary)", fontSize: "12px", lineHeight: "1.5" }}>
           {label}
         </Text.Field.Label>

@@ -1,14 +1,12 @@
 import { useAtom, useAtomValue } from "jotai";
-import { FileText } from "lucide-react";
+import { useEffect, useState } from "react";
+
 
 import { Divider } from "../../design-system/Divider";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
 import { ResizeHandle, useResizable } from "../../design-system/Resizable";
-import { Text } from "../../design-system/text/Text.tsx";
 import {
-  IconSize,
   Space,
   ZIndex,
 } from "../../design-system/token/token.const.1tier";
@@ -40,11 +38,27 @@ export function CRMDrawer() {
   // Resizable hook
   const { size, resizeHandleProps } = useResizable({
     direction: "right",
-    defaultSize: 512,
+    defaultSize: 6,
     minSize: 320,
-    maxSize: 800,
+    maxSize: 1000,
     storageKey: "crm-drawer-width",
   });
+
+  // Cache the last valid selection to persist content during exit animation
+  const [cachedRow, setCachedRow] = useState<typeof selectedRow | null>(null);
+
+  useEffect(() => {
+    if (selectedRow) {
+      setCachedRow(selectedRow);
+    }
+  }, [selectedRow]);
+
+  const displayRow = selectedRow || cachedRow;
+  const isVisible = !!selectedRow;
+
+  if (!displayRow) {
+    return null; // Initial state, nothing to show/animate
+  }
 
   return (
     <Frame
@@ -58,16 +72,20 @@ export function CRMDrawer() {
         top: 0,
         right: 0,
         bottom: 0,
+        // Drawer Animation: Slide in from right
+        transition: "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)", // Smooth "iOS-like" ease
+        transform: isVisible ? "translateX(0)" : "translateX(100%)",
+        pointerEvents: isVisible ? "auto" : "none", // Prevent interaction when hidden
       }}
       surface="base" // Tone match with Main Area
     >
       <ResizeHandle direction="right" {...resizeHandleProps} />
-      {hasSelection && selectedRow ? (
+      {displayRow ? (
         <>
           <DrawerHeader
-            title={getDisplayTitle(selectedRow)}
-            subtitle={`${Object.entries(selectedRow).filter(([key]) => !key.startsWith("_") && key !== "avatarColor").length} properties`}
-            avatarColor={getAvatarColor(selectedRow)}
+            title={getDisplayTitle(displayRow)}
+            subtitle={`${Object.entries(displayRow).filter(([key]) => !key.startsWith("_") && key !== "avatarColor").length} properties`}
+            avatarColor={getAvatarColor(displayRow)}
             onClose={handleClose}
           />
 
@@ -76,7 +94,7 @@ export function CRMDrawer() {
               override={{ p: Space.n24, gap: Space.n32 }}
             >
               <DrawerProperties
-                entries={Object.entries(selectedRow).filter(
+                entries={Object.entries(displayRow).filter(
                   ([key]) => !key.startsWith("_") && key !== "avatarColor",
                 )}
                 formatColumnLabel={formatColumnLabel}
@@ -91,23 +109,7 @@ export function CRMDrawer() {
 
           <DrawerFooter onClose={handleClose} />
         </>
-      ) : (
-        <Frame flex fill layout={Layout.Center.Default}>
-          <Frame override={{ gap: Space.n16, align: "center" }}>
-            <Icon
-              src={FileText}
-              size={IconSize.n48}
-              style={{ color: "var(--text-tertiary)" }}
-            />
-            <Text.Card.Title style={{ color: "var(--text-secondary)" }}>
-              No Selection
-            </Text.Card.Title>
-            <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
-              Select a row to view details
-            </Text.Card.Note>
-          </Frame>
-        </Frame>
-      )}
+      ) : null}
     </Frame>
   );
 }

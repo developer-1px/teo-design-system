@@ -20,8 +20,9 @@ import { Action } from "../design-system/Action";
 import { Field } from "../design-system/Field";
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { useAccordion } from "../design-system/hooks";
+import { useAccordion, useDropdown, useTabs } from "../design-system/hooks";
 import { Icon } from "../design-system/Icon";
+import { Overlay } from "../design-system/Overlay";
 import { Section } from "../design-system/Section";
 import { Separator } from "../design-system/Separator";
 import { Text } from "../design-system/text/Text";
@@ -140,7 +141,6 @@ const TransformField = ({
 );
 
 export function PropertiesPanel() {
-  const [activeTab, setActiveTab] = useState<"DESIGN" | "ANIMATE">("DESIGN");
   const [transform, setTransform] = useState({
     x: "400",
     y: "225",
@@ -152,6 +152,26 @@ export function PropertiesPanel() {
 
   const updateTransform = (key: string, value: string) =>
     setTransform((prev) => ({ ...prev, [key]: value }));
+
+  // Tabs for DESIGN/ANIMATE
+  const tabs = ["DESIGN", "ANIMATE"];
+  const { selectedTab, getTabListProps, getTabProps } = useTabs({
+    tabs,
+    defaultTab: "DESIGN",
+  });
+
+  // Dropdowns for font selection
+  const fontFamilies = ["Inter", "SF Pro", "Roboto", "Helvetica", "Arial"];
+  const fontFamily = useDropdown({
+    items: fontFamilies,
+    defaultSelectedItem: "Inter",
+  });
+
+  const fontWeights = ["Thin", "Light", "Regular", "Medium", "Bold", "Black"];
+  const fontWeight = useDropdown({
+    items: fontWeights,
+    defaultSelectedItem: "Regular",
+  });
 
   // Accordion for collapsible sections
   const sections = ["LAYER", "TEXT", "FILL", "STROKE", "EFFECTS", "EXPORT"];
@@ -165,43 +185,46 @@ export function PropertiesPanel() {
     <Section w={Size.n256} surface="base" rounded={Radius2.lg} shadow="sm">
       {/* Tabs */}
       <Frame
+        {...getTabListProps()}
         override={{
           p: Space.n4,
           gap: Space.n4,
         }}
         style={{
-          flexShrink: 0,
           height: "40px",
           borderBottom: "1px solid var(--border-color)",
           borderColor: "var(--border-color)",
         }}
         layout={Layout.Row.Toolbar.Compact}
       >
-        {["DESIGN", "ANIMATE"].map((tab) => (
-          <Action
-            key={tab}
-            flex
-            variant="ghost"
-            onClick={() => setActiveTab(tab as "DESIGN" | "ANIMATE")}
-            style={{
-              backgroundColor:
-                activeTab === tab ? "var(--tab-bg-active)" : undefined,
-            }}
-          >
-            <Text.Menu.Item
+        {tabs.map((tab) => {
+          const tabProps = getTabProps(tab);
+          const isSelected = selectedTab === tab;
+
+          return (
+            <Action
+              key={tab}
+              {...tabProps}
+              flex
+              variant="ghost"
               style={{
-                fontWeight: activeTab === tab ? "bold" : "medium",
-                fontSize: "12px",
-                color:
-                  activeTab === tab
-                    ? "var(--text-primary)"
-                    : "var(--text-muted)",
+                backgroundColor: isSelected ? "var(--tab-bg-active)" : undefined,
               }}
             >
-              {tab}
-            </Text.Menu.Item>
-          </Action>
-        ))}
+              <Text.Menu.Item
+                style={{
+                  fontWeight: isSelected ? "bold" : "medium",
+                  fontSize: "12px",
+                  color: isSelected
+                    ? "var(--text-primary)"
+                    : "var(--text-muted)",
+                }}
+              >
+                {tab}
+              </Text.Menu.Item>
+            </Action>
+          );
+        })}
       </Frame>
 
       <Frame
@@ -332,19 +355,114 @@ export function PropertiesPanel() {
           getPanelProps={getPanelProps}
         >
           <Frame override={{ gap: Space.n6 }}>
-            <Field
-              value="Inter"
-              rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
-            />
+            {/* Font Family Dropdown */}
+            <Frame override={{ position: "relative" }}>
+              <Field
+                {...fontFamily.getToggleButtonProps()}
+                value={fontFamily.selectedItem ?? "Inter"}
+                rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
+              />
+              {fontFamily.isOpen && (
+                <Overlay
+                  position="absolute"
+                  top={Size.n32}
+                  left={Space.n0}
+                  right={Space.n0}
+                  zIndex={100}
+                  onDismiss={fontFamily.closeMenu}
+                  clickOutsideToDismiss={true}
+                >
+                  <Frame
+                    {...fontFamily.getMenuProps()}
+                    override={{ gap: Space.n1 }}
+                    surface="overlay"
+                    rounded={Radius2.md}
+                    shadow="md"
+                    style={{ border: "1px solid var(--border-color)" }}
+                  >
+                    {fontFamilies.map((item, index) => (
+                      <Frame
+                        key={index}
+                        {...fontFamily.getItemProps({ item, index })}
+                        override={{
+                          px: Space.n8,
+                          py: Space.n4,
+                          cursor: "pointer",
+                        }}
+                        surface={
+                          fontFamily.selectedItem === item ? "selected" : undefined
+                        }
+                        style={{
+                          backgroundColor:
+                            fontFamily.highlightedIndex === index
+                              ? "var(--surface-raised)"
+                              : undefined,
+                        }}
+                      >
+                        <Text.Menu.Item>{item}</Text.Menu.Item>
+                      </Frame>
+                    ))}
+                  </Frame>
+                </Overlay>
+              )}
+            </Frame>
+
             <Frame
               override={{ gap: Space.n8 }}
               layout={Layout.Row.Item.Default}
             >
-              <Field
-                value="Regular"
-                rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
-                flex
-              />
+              {/* Font Weight Dropdown */}
+              <Frame override={{ position: "relative" }} flex>
+                <Field
+                  {...fontWeight.getToggleButtonProps()}
+                  value={fontWeight.selectedItem ?? "Regular"}
+                  rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
+                  flex
+                />
+                {fontWeight.isOpen && (
+                  <Overlay
+                    position="absolute"
+                    top={Size.n32}
+                    left={Space.n0}
+                    right={Space.n0}
+                    zIndex={100}
+                    onDismiss={fontWeight.closeMenu}
+                    clickOutsideToDismiss={true}
+                  >
+                    <Frame
+                      {...fontWeight.getMenuProps()}
+                      override={{ gap: Space.n1 }}
+                      surface="overlay"
+                      rounded={Radius2.md}
+                      shadow="md"
+                      style={{ border: "1px solid var(--border-color)" }}
+                    >
+                      {fontWeights.map((item, index) => (
+                        <Frame
+                          key={index}
+                          {...fontWeight.getItemProps({ item, index })}
+                          override={{
+                            px: Space.n8,
+                            py: Space.n4,
+                            cursor: "pointer",
+                          }}
+                          surface={
+                            fontWeight.selectedItem === item ? "selected" : undefined
+                          }
+                          style={{
+                            backgroundColor:
+                              fontWeight.highlightedIndex === index
+                                ? "var(--surface-raised)"
+                                : undefined,
+                          }}
+                        >
+                          <Text.Menu.Item>{item}</Text.Menu.Item>
+                        </Frame>
+                      ))}
+                    </Frame>
+                  </Overlay>
+                )}
+              </Frame>
               <Field value="42" w={Size.n48} />
             </Frame>
             <Frame
@@ -452,7 +570,6 @@ export function PropertiesPanel() {
                   />
                 </Frame>
               }
-              style={{ flexShrink: 0 }}
             />
             <Frame
               layout={Layout.Row.Item.Default}

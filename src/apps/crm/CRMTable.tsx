@@ -12,6 +12,7 @@ import { useMemo, useState } from "react";
 import { Table } from "../../ui/table/Table";
 import { formatColumnLabel } from "./dataLoader";
 import { formatForTable } from "./drawer/nestedValueFormatter";
+import { TableObjectCell } from "./TableObjectCell"; // Import new component
 import { currentDataAtom, selectedRowIdAtom } from "./store";
 import type { DataRow } from "./types";
 
@@ -44,10 +45,18 @@ export function CRMTable() {
     const firstRow = data[0];
     const keys = Object.keys(firstRow).filter((key) => key !== "__rowId");
 
+    // accessorKey and header are already defined above implicitly by the map structure 
+    // but wait, I see I pasted the key/header TWICE in the previous edit.
     return keys.map((key) => ({
       accessorKey: key,
       header: formatColumnLabel(key),
-      cell: (info) => formatCellValue(info.getValue()),
+      cell: (info) => {
+        const value = info.getValue() as unknown; // Explicit type for info.getValue()
+        if (typeof value === "object" && value !== null) {
+          return <TableObjectCell value={value as object} />;
+        }
+        return formatCellValue(value);
+      },
     }));
   }, [data]);
 

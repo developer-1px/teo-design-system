@@ -1,4 +1,4 @@
-import { MoreHorizontal, X } from "lucide-react";
+import { ChevronsRight, MoreHorizontal } from "lucide-react";
 import { Action } from "../../../design-system/Action";
 import { Frame } from "../../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
@@ -64,6 +64,7 @@ export function DrawerHeader({
         layout={Layout.Row.Item.Default}
         override={{ gap: Space.n12, align: "center" }}
       >
+        <Action icon={ChevronsRight} variant="ghost" onClick={onClose} />
         <Avatar initial={title[0]} color={avatarColor} size={Size.n32} />
         <Frame>
           <Text.Card.Title weight="bold">{title}</Text.Card.Title>
@@ -74,7 +75,6 @@ export function DrawerHeader({
       </Frame>
       <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
         <Action icon={MoreHorizontal} variant="ghost" />
-        <Action icon={X} variant="ghost" onClick={onClose} />
       </Frame>
     </Frame>
   );

@@ -64,7 +64,7 @@ export function JsonTree({ data, name, depth = 0, initiallyExpanded = false }: J
             <Action onClick={() => setIsExpanded(!isExpanded)}>
                 <Frame layout={Layout.Row.Item.Default} gap={Space.n4} style={{ cursor: "pointer" }}>
                     {/* Caret */}
-                    <Text.Field.Value style={{ color: "var(--text-tertiary)", fontSize: "10px", width: "12px" }}>
+                    <Text.Field.Value style={{ color: "var(--text-tertiary)", fontSize: "11px", width: "12px" }}>
                         {isExpanded ? "▼" : "▶"}
                     </Text.Field.Value>
 
@@ -84,7 +84,7 @@ export function JsonTree({ data, name, depth = 0, initiallyExpanded = false }: J
                             surface="sunken"
                             rounded={Radius2.sm}
                         >
-                            <Text.Field.Value style={{ fontSize: "10px", color: "var(--text-tertiary)" }}>
+                            <Text.Field.Value style={{ fontSize: "11px", color: "var(--text-tertiary)" }}>
                                 {sizeLabel}
                             </Text.Field.Value>
                         </Frame>

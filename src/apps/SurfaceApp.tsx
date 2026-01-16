@@ -1,7 +1,7 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { Prose } from "../design-system/text/context/Prose.tsx";
-import { Space } from "../design-system/token/token.const.1tier.ts";
+import { Space, Size, Opacity, ContainerSize } from "../design-system/token/token.const.1tier.ts";
 import { Radius2 } from "../design-system/token/token.const.2tier.ts";
 import type { SurfaceToken } from "../design-system/lib/types.ts";
 
@@ -95,9 +95,9 @@ function IntroductionPage() {
       <Frame
         override={{
           gap: Space.n24,
+          maxWidth: ContainerSize.n768,
         }}
         layout={Layout.Stack.Content.Loose}
-        style={{ maxWidth: "800px" }}
       >
         {/* Title */}
         <Frame layout={Layout.Stack.Content.Tight}>
@@ -164,10 +164,10 @@ function IntroductionPage() {
           <Frame
             override={{
               gap: Space.n8,
+              opacity: Opacity.n60,
             }}
             layout={Layout.Stack.Content.Tight}
             style={{
-              opacity: 0.6,
               animation: "bounce 2s infinite",
             }}
           >
@@ -262,9 +262,11 @@ function ShowcasePage() {
               key={item.token}
               surface={item.token}
               rounded={Radius2.xl}
+              override={{
+                w: Size.n192,
+                h: Size.n192,
+              }}
               style={{
-                width: "200px",
-                height: "200px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -336,7 +338,7 @@ function SurfaceDetailPage({
       <Frame
         override={{
           gap: Space.n64,
-            maxWidth: Size.n1200,
+            maxWidth: ContainerSize.n1280,
             w: Size.fill
         }}
       >
@@ -369,14 +371,12 @@ function SurfaceDetailPage({
               rounded={Radius2["3xl"]}
               style={{
                 aspectRatio: "1",
-                maxWidth: "400px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "120px",
                 border: "2px solid var(--border-color)",
-                boxShadow: "0 20px 60px rgba(0,0,0,0.12)",
-              }} override={{ w: Size.fill }}
+              }} override={{ w: Size.fill, maxWidth: ContainerSize.n480, shadow: "xl" }}
             >
               {icon}
             </Frame>
@@ -414,11 +414,10 @@ function SurfaceDetailPage({
                 {name}
               </Prose.Title>
               <Frame
+                rounded={Radius2.sm}
                 style={{
-                  height: "4px",
                   background: `var(--surface-${token})`,
-                  borderRadius: "2px",
-                }} override={{ w: Size.n80 }}
+                }} override={{ w: Size.n80, h: Size.n4 }}
               />
             </Frame>
 

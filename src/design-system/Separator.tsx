@@ -31,7 +31,6 @@ export function Separator({
       : typeof length === "number"
         ? `${length}px`
         : length,
-    flexShrink: 0,
     ...style,
   };
 

@@ -1,359 +1,290 @@
-/* -------------------------------------------------------------------------- */
-/*                                 Base Frame                                 */
-/* -------------------------------------------------------------------------- */
+/**
+ * Figma Auto Layout CSS Framework
+ *
+ * Figma의 Auto Layout 동작을 CSS Flexbox로 1:1 매핑
+ *
+ * 용어:
+ * - frame: Figma Frame = flex container
+ * - text: 텍스트 요소
+ * - hbox: 가로 방향 (flex-direction: row)
+ * - vbox: 세로 방향 (flex-direction: column)
+ * - fixed: 고정 크기 (inline style로 지정)
+ * - hug: 콘텐츠 크기에 맞춤
+ * - fill: 남은 공간 채움
+ *
+ * Main Axis vs Cross Axis:
+ * - hbox: main=width, cross=height
+ * - vbox: main=height, cross=width
+ */
+
+/* =============================================================================
+   1. BASE
+   ============================================================================= */
+
 .frame {
   display: flex;
   box-sizing: border-box;
-  flex-direction: column;
-  /* Default: vbox */
-  position: relative;
 }
 
-.frame > * {
-  min-width: 0;
-  /*min-height: 0;*/
+.text {
+  display: block;
+  box-sizing: border-box;
 }
 
-/* Ensure hidden attribute works even with flex/grid */
-[hidden] {
-  display: none !important;
+/* =============================================================================
+   2. DIRECTION
+   ============================================================================= */
+
+.frame.hbox { flex-direction: row; }
+.frame.vbox { flex-direction: column; }
+.frame.wrap { flex-wrap: wrap; }
+
+/* =============================================================================
+   3. MAIN AXIS SIZING
+
+   Main axis에서는 flex 속성으로 제어
+   - fixed/hug: flex: 0 0 auto (grow 안 함, shrink 안 함)
+   - fill: flex: 1 1 0 + min-width/height: 0 (grow, shrink 허용)
+   ============================================================================= */
+
+/* --- hbox: main axis = width --- */
+
+.frame.hbox > .w\(fixed\),
+.frame.hbox > .frame.w\(fixed\),
+.frame.hbox > .text.w\(fixed\) {
+  flex: 0 0 auto;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                          1. Context (Direction)                            */
-/* -------------------------------------------------------------------------- */
-.hbox {
-  flex-direction: row;
+.frame.hbox > .frame.w\(hug\) {
+  flex: 0 0 auto;
+  width: fit-content;
 }
 
-.vbox {
-  flex-direction: column;
-}
-
-.wrap {
-  flex-wrap: wrap;
-}
-
-.nowrap {
-  flex-wrap: nowrap;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                     2. Distribution (Pack = Main Axis)                     */
-/* -------------------------------------------------------------------------- */
-
-/* "Magic Pack": pack={true} means Center/Center */
-.pack {
-  justify-content: center;
-  align-items: center;
-}
-
-/* Specific Packing (Main Axis) */
-.pack\(start\) {
-  justify-content: flex-start;
-}
-
-.pack\(center\) {
-  justify-content: center;
-}
-
-.pack\(end\) {
-  justify-content: flex-end;
-}
-
-.pack\(space\) {
-  justify-content: space-between;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                      3. Alignment (Align = Cross Axis)                     */
-/* -------------------------------------------------------------------------- */
-.align\(start\) {
-  align-items: flex-start;
-}
-
-.align\(center\) {
-  align-items: center;
-}
-
-.align\(end\) {
-  align-items: flex-end;
-}
-
-.align\(stretch\) {
-  align-items: stretch;
-}
-
-.align\(baseline\) {
-  align-items: baseline;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                        4. Resizing (Width Intent)                          */
-/* -------------------------------------------------------------------------- */
-
-/* A. Fixed Width (Arbitrary Number) */
-.w\(fixed\) {
-  flex-grow: 0;
-  flex-shrink: 0;
-  /* width: set via inline style */
-}
-
-/* B. Hug Width (Fit Content) */
-.w\(hug\) {
+.frame.hbox > .text.w\(hug\) {
+  flex: 0 0 auto;
   width: max-content;
-  max-width: 100%;
-  /* Prevent blowout */
-  /* Ensure it wraps text only if needed, usually max-content for 'hug' */
-  flex-grow: 0;
-  flex-shrink: 0;
+  white-space: nowrap;
 }
 
-/* C. Fill Width (Context Aware) */
-
-/* C-1. Inside Row: Share space */
-.hbox>.w\(fill\) {
-  flex-grow: 1;
-  flex-basis: 0;
-  width: auto;
+.frame.hbox > .frame.w\(fill\) {
+  flex: 1 1 0;
   min-width: 0;
-  /* The Fix */
 }
 
-/* C-2. Inside Col: Stretch to edges */
-.vbox>.w\(fill\) {
-  align-self: stretch;
-  width: 100%;
-  flex-grow: 0;
-  /* Prevent accidental vertical growth */
+.frame.hbox > .text.w\(fill\) {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
-/* C-3. Default Fallback (if no parent context class, assume smart defaults) */
-.w\(fill\) {
-  width: 100%;
-  /* Default to 100% usually safe */
+/* --- vbox: main axis = height --- */
+
+.frame.vbox > .h\(fixed\),
+.frame.vbox > .frame.h\(fixed\),
+.frame.vbox > .text.h\(fixed\) {
+  flex: 0 0 auto;
 }
 
-.w\(screen\) {
-  width: 100vw;
+.frame.vbox > .frame.h\(hug\),
+.frame.vbox > .text.h\(hug\) {
+  flex: 0 0 auto;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                  5. Grid                                    */
-/* -------------------------------------------------------------------------- */
-.grid {
-  display: grid;
-  flex-direction: unset;
-  /* Disable default vbox behavior */
-}
-
-/* C-4. Inside Grid: Match horizontal bounds */
-.grid>.w\(fill\) {
-  width: 100%;
-}
-
-/* B-2. Inside Grid: Wrap content */
-.grid>.w\(hug\) {
-  width: max-content;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                        6. Resizing (Height Intent)                         */
-/* -------------------------------------------------------------------------- */
-
-/* A. Fixed Height */
-.h\(fixed\) {
-  flex-grow: 0;
-  flex-shrink: 0;
-  /* height: set via inline style */
-}
-
-/* B. Hug Height */
-.h\(hug\) {
-  height: max-content;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-/* B-2. Inside Grid: Wrap content */
-.grid>.h\(hug\) {
-  height: max-content;
-}
-
-/* C. Fill Height (Context Aware) */
-
-/* C-1. Inside Row: Stretch to edges */
-.hbox>.h\(fill\) {
-  align-self: stretch;
-  height: auto;
-}
-
-/* C-2. Inside Col: Share space */
-.vbox>.h\(fill\) {
-  flex-grow: 1;
-  flex-basis: 0;
-  height: auto;
+.frame.vbox > .frame.h\(fill\) {
+  flex: 1 1 0;
   min-height: 0;
 }
 
-/* C-3. Inside Grid: Stretch to edges */
-.grid>.h\(fill\) {
-  height: 100%;
+.frame.vbox > .text.h\(fill\) {
+  flex: 1 1 0;
+  min-height: 0;
 }
 
-.h\(screen\) {
-  height: 100vh;
+/* =============================================================================
+   4. CROSS AXIS SIZING
+
+   Cross axis에서는 align-self로 제어
+   - fixed: align-self: auto (inline style로 크기 지정)
+   - hug: align-self: flex-start (콘텐츠 크기 유지)
+   - fill: align-self: stretch (부모에 맞춤)
+
+   Cross axis에서는 min-width/height: 0 불필요!
+   ============================================================================= */
+
+/* --- hbox: cross axis = height --- */
+
+.frame.hbox > .h\(fixed\),
+.frame.hbox > .frame.h\(fixed\),
+.frame.hbox > .text.h\(fixed\) {
+  align-self: auto;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                          6. Visual Utilities                               */
-/* -------------------------------------------------------------------------- */
-
-/* Surface */
-.surface-base {
-  background-color: var(--surface-base);
-  color: var(--text-primary);
+.frame.hbox > .frame.h\(hug\),
+.frame.hbox > .text.h\(hug\) {
+  align-self: flex-start;
 }
 
-.surface-sunken {
-  background-color: var(--surface-sunken);
+.frame.hbox > .frame.h\(fill\),
+.frame.hbox > .text.h\(fill\) {
+  align-self: stretch;
 }
 
-.surface-raised {
-  background-color: var(--surface-raised);
-  box-shadow: var(--shadow-sm);
-  border: var(--border-width) solid var(--border-color);
+/* --- vbox: cross axis = width --- */
+
+.frame.vbox > .w\(fixed\),
+.frame.vbox > .frame.w\(fixed\),
+.frame.vbox > .text.w\(fixed\) {
+  align-self: auto;
 }
 
-.surface-overlay {
-  background-color: var(--surface-overlay);
-  box-shadow: var(--shadow-lg);
-  border: var(--border-width) solid var(--border-color);
+.frame.vbox > .frame.w\(hug\) {
+  align-self: flex-start;
+  width: fit-content;
 }
 
-.surface-panel {
-  background-color: var(--surface-panel);
-  border-right: var(--border-width) solid var(--border-color);
+.frame.vbox > .text.w\(hug\) {
+  align-self: flex-start;
+  width: max-content;
+  white-space: nowrap;
 }
 
-.surface-card {
-  background-color: var(--surface-card);
-  box-shadow: var(--shadow-sm);
-  border: var(--border-width) solid var(--border-color);
+.frame.vbox > .frame.w\(fill\),
+.frame.vbox > .text.w\(fill\) {
+  align-self: stretch;
 }
 
-.surface-primary {
-  background-color: var(--surface-primary);
-  color: var(--primary-fg);
+.frame.w\(screen\) { width: 100vw; }
+.frame.h\(screen\) { height: 100vh; }
+
+/* =============================================================================
+   5. ALIGNMENT
+   ============================================================================= */
+
+/* align-items (cross axis 정렬) */
+.frame.align\(start\)   { align-items: flex-start; }
+.frame.align\(center\)  { align-items: center; }
+.frame.align\(end\)     { align-items: flex-end; }
+.frame.align\(stretch\) { align-items: stretch; }
+
+/* justify-content (main axis 정렬) */
+.frame.justify\(start\)   { justify-content: flex-start; }
+.frame.justify\(center\)  { justify-content: center; }
+.frame.justify\(end\)     { justify-content: flex-end; }
+.frame.justify\(between\) { justify-content: space-between; }
+.frame.justify\(around\)  { justify-content: space-around; }
+.frame.justify\(evenly\)  { justify-content: space-evenly; }
+
+.frame.pack   { align-items: center; justify-content: center; }
+.frame.pack\(start\)   { justify-content: flex-start; }
+.frame.pack\(center\)  { justify-content: center; }
+.frame.pack\(end\)     { justify-content: flex-end; }
+.frame.pack\(between\) { justify-content: space-between; }
+.frame.pack\(space\) { justify-content: space-between; }
+
+
+/* =============================================================================
+   6. GAP
+   ============================================================================= */
+
+.frame.gap\(0\)  { gap: 0; }
+.frame.gap\(2\)  { gap: 2px; }
+.frame.gap\(4\)  { gap: 4px; }
+.frame.gap\(8\)  { gap: 8px; }
+.frame.gap\(12\) { gap: 12px; }
+.frame.gap\(16\) { gap: 16px; }
+.frame.gap\(20\) { gap: 20px; }
+.frame.gap\(24\) { gap: 24px; }
+.frame.gap\(32\) { gap: 32px; }
+.frame.gap\(40\) { gap: 40px; }
+.frame.gap\(48\) { gap: 48px; }
+
+/* =============================================================================
+   7. PADDING
+   ============================================================================= */
+
+/* 전체 패딩 */
+.p\(0\)  { padding: 0; }
+.p\(4\)  { padding: 4px; }
+.p\(8\)  { padding: 8px; }
+.p\(12\) { padding: 12px; }
+.p\(16\) { padding: 16px; }
+.p\(20\) { padding: 20px; }
+.p\(24\) { padding: 24px; }
+.p\(32\) { padding: 32px; }
+
+/* 수평 패딩 */
+.px\(0\)  { padding-left: 0; padding-right: 0; }
+.px\(4\)  { padding-left: 4px; padding-right: 4px; }
+.px\(8\)  { padding-left: 8px; padding-right: 8px; }
+.px\(12\) { padding-left: 12px; padding-right: 12px; }
+.px\(16\) { padding-left: 16px; padding-right: 16px; }
+.px\(20\) { padding-left: 20px; padding-right: 20px; }
+.px\(24\) { padding-left: 24px; padding-right: 24px; }
+.px\(32\) { padding-left: 32px; padding-right: 32px; }
+
+/* 수직 패딩 */
+.py\(0\)  { padding-top: 0; padding-bottom: 0; }
+.py\(4\)  { padding-top: 4px; padding-bottom: 4px; }
+.py\(8\)  { padding-top: 8px; padding-bottom: 8px; }
+.py\(12\) { padding-top: 12px; padding-bottom: 12px; }
+.py\(16\) { padding-top: 16px; padding-bottom: 16px; }
+.py\(20\) { padding-top: 20px; padding-bottom: 20px; }
+.py\(24\) { padding-top: 24px; padding-bottom: 24px; }
+.py\(32\) { padding-top: 32px; padding-bottom: 32px; }
+
+/* =============================================================================
+   8. BORDER RADIUS
+   ============================================================================= */
+
+.r\(0\)    { border-radius: 0; }
+.r\(2\)    { border-radius: 2px; }
+.r\(4\)    { border-radius: 4px; }
+.r\(8\)    { border-radius: 8px; }
+.r\(12\)   { border-radius: 12px; }
+.r\(16\)   { border-radius: 16px; }
+.r\(full\) { border-radius: 9999px; }
+
+/* =============================================================================
+   9. OVERFLOW
+
+   overflow 설정 시 스펙에 의해 min-width: auto가 0처럼 동작
+   ============================================================================= */
+
+.frame.clip     { overflow: hidden; }
+.frame.scroll   { overflow: auto; }
+.frame.scroll-x { overflow-x: auto; overflow-y: hidden; }
+.frame.scroll-y { overflow-x: hidden; overflow-y: auto; min-height: 0 }
+
+/* =============================================================================
+   10. TEXT UTILITIES
+   ============================================================================= */
+
+/* 한 줄 말줄임 */
+.text.truncate {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.surface-selected {
-  background-color: var(--surface-selected);
-}
-
-.surface-hover {
-  background-color: var(--control-bg-hover);
-}
-
-/* Cursor */
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.cursor-default {
-  cursor: default;
-}
-
-.cursor-text {
-  cursor: text;
-}
-
-.cursor-move {
-  cursor: move;
-}
-
-.cursor-not-allowed {
-  cursor: not-allowed;
-}
-
-.cursor-grab {
-  cursor: grab;
-}
-
-.cursor-grabbing {
-  cursor: grabbing;
-}
-
-/* Shadow */
-.shadow-sm {
-  box-shadow: var(--shadow-sm);
-}
-
-.shadow-md {
-  box-shadow: var(--shadow-md);
-}
-
-.shadow-lg {
-  box-shadow: var(--shadow-lg);
-}
-
-.shadow-xl {
-  box-shadow: var(--shadow-xl);
-}
-
-.shadow-2xl {
-  box-shadow: var(--shadow-2xl);
-}
-
-/* Border */
-.border-default {
-  border-color: var(--border-color);
-}
-
-.border-transparent {
-  border-color: transparent;
-}
-
-.border-primary {
-  border-color: var(--text-primary);
-}
-
-/* Overflow & Clip */
-.overflow-hidden {
+/* 여러 줄 말줄임 */
+.text.truncate\(2\) {
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.overflow-auto {
-  overflow: auto;
+.text.truncate\(3\) {
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.overflow-x-auto {
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.overflow-visible {
-  overflow: visible;
-}
-
-/* Position */
-.relative {
-  position: relative;
-}
-
-.absolute {
-  position: absolute;
-}
-
-.fixed {
-  position: fixed;
-}
-
-.sticky {
-  position: sticky;
-}
+/* 텍스트 정렬 */
+.text.left   { text-align: left; }
+.text.center { text-align: center; }
+.text.right  { text-align: right; }

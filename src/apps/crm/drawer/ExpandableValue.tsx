@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { JsonTree } from "./JsonTree";
+import { JsonSmartView } from "./JsonSmartView";
 import { Action } from "../../../design-system/Action";
 import { Frame } from "../../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
@@ -39,7 +39,7 @@ export function ExpandableValue({
     const isComplex = rawValue.some((item) => typeof item === "object" && item !== null);
 
     if (isComplex) {
-      return <JsonTree data={rawValue} />;
+      return <JsonSmartView data={rawValue} />;
     }
 
     // Simple arrays: show tags
@@ -56,7 +56,7 @@ export function ExpandableValue({
             surface="sunken"
             rounded={Radius2.sm}
           >
-            <Text.Field.Value style={{ fontSize: "11px", color: "var(--text-secondary)" }}>
+            <Text.Field.Value style={{ fontSize: "12px", color: "var(--text-secondary)" }}>
               {String(item)}
             </Text.Field.Value>
           </Frame>
@@ -80,9 +80,9 @@ export function ExpandableValue({
     );
   }
 
-  // Handle objects (Render as JsonTree)
+  // Handle objects (Render as JsonSmartView)
   if (typeof rawValue === "object" && rawValue !== null) {
-    return <JsonTree data={rawValue} />;
+    return <JsonSmartView data={rawValue} />;
   }
 
   // Handle long strings (e.g. description)
