@@ -1,12 +1,16 @@
-import {ChevronDown, ChevronRight} from "lucide-react"
-import {Frame} from "../../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../../design-system/Frame/Layout/Layout.ts"
-import {useAccordion} from "../../../design-system/hooks"
-import {Icon} from "../../../design-system/Icon"
-import {Text} from "../../../design-system/text/Text.tsx"
-import {IconSize, Size, Space,} from "../../../design-system/token/token.const.1tier"
-import {ExpandableValue} from "./ExpandableValue.tsx"
-import {groupEntries} from "./PropertyGroup.tsx"
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { Frame } from "../../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { useAccordion } from "../../../design-system/hooks";
+import { Icon } from "../../../design-system/Icon";
+import { Text } from "../../../design-system/text/Text.tsx";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../../../design-system/token/token.const.1tier";
+import { ExpandableValue } from "./ExpandableValue.tsx";
+import { groupEntries } from "./PropertyGroup.tsx";
 
 export function DrawerProperties({
   entries,
@@ -30,18 +34,20 @@ export function DrawerProperties({
   });
 
   return (
-    <Frame layout={Layout.Stack.List.Default}>
+    <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
       {groups.map((group, groupIndex) => {
         const groupId = `${group.title}-${groupIndex}`;
         const itemProps = getItemProps(groupId);
         const panelProps = getPanelProps(groupId);
 
         return (
-          <Frame key={groupId} layout={Layout.Stack.Content.None}>
+          <Frame key={groupId} layout={Layout.Col.Left.Start} spacing={Space.n0}>
             {/* Header / Trigger */}
             <Frame
               {...itemProps}
-              layout={Layout.Row.Item.Default}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40}
               override={{
                 h: Size.n32,
                 gap: Space.n8,
@@ -82,10 +88,11 @@ export function DrawerProperties({
             {/* Content Panel */}
             <Frame
               {...panelProps}
-              layout={Layout.Stack.List.Default}
+              layout={Layout.Col.Left.Start}
+              spacing={Space.n8}
               h={Size.hug}
-              clip={false}
               override={{
+                clip: false,
                 pb: Space.n20,
                 pl: Space.n24,
                 gap: Space.n12,
@@ -121,7 +128,9 @@ function PropertyRow({
 }) {
   return (
     <Frame
-      layout={Layout.Row.Item.Default}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      minHeight={Size.n40}
       h={Size.hug}
       override={{ align: "start", gap: Space.n16 }}
     >
@@ -139,7 +148,8 @@ function PropertyRow({
       </Frame>
       {/* Value (Fill Width) */}
       <Frame
-        layout={Layout.Stack.Content.None}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n0}
         w={Size.fill}
         h={Size.hug}
         override={{ minWidth: Size.n0 }}

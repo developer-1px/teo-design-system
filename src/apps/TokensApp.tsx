@@ -1,6 +1,6 @@
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Text} from "../design-system/text/Text"
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout";
+import { Text } from "../design-system/text/Text";
 import {
   ContainerSize,
   ElevationScale,
@@ -16,8 +16,8 @@ import {
   SpaceScale,
   type SpaceToken,
   ZIndexScale,
-} from "../design-system/token/token.const.1tier"
-import {Radius2} from "../design-system/token/token.const.2tier"
+} from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Components ---
 
@@ -32,17 +32,17 @@ function ScaleVisualizer({
 }) {
   return (
     <Frame
-      layout={Layout.Row.Item.Default}
-      override={{ w: Size.fill, gap: Space.n24, align: "center" }}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      minHeight={Size.n40}
+      override={{ w: Size.fill, gap: Space.n24 }}
     >
       <Frame override={{ w: Size.n64 }}>
         <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
           {label}
         </Text.Card.Code>
       </Frame>
-      <Frame flex={1} override={{ minWidth: Size.n0 }}>
-        {children}
-      </Frame>
+      <Frame override={{ flex: 1, minWidth: Size.n0 }}>{children}</Frame>
       <Frame override={{ w: Size.n64, justify: "end" }}>
         <Text.Card.Code style={{ opacity: 0.3 }}>{value}</Text.Card.Code>
       </Frame>
@@ -52,7 +52,7 @@ function ScaleVisualizer({
 
 function SectionHeader({ title, desc }: { title: string; desc: string }) {
   return (
-    <Frame pack>
+    <Frame layout={Layout.Col.Center.Start} spacing={Space.n0}>
       <Frame
         override={{ gap: Space.n8, w: Size.fill, maxWidth: ContainerSize.n800 }}
       >
@@ -99,10 +99,13 @@ function ScrollContainer({
       style={{
         maskImage: "linear-gradient(to right, black 95%, transparent 100%)", // Prevent parent blowout
       }}
-      pack
+      layout={Layout.Col.Center.Start}
+      spacing={Space.n0}
     >
       <Frame
-        layout={Layout.Row.Item.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
         override={{ gap: Space.n24, minWidth: Size.hug }}
         {...props}
       >
@@ -114,10 +117,20 @@ function ScrollContainer({
 
 export function TokensApp() {
   return (
-    <Frame fill surface="base" scroll={"y"} override={{ align: "center" }}>
+    <Frame
+      surface="base"
+      scroll={"y"}
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill} override={{ p: Space.n0 }}
+    >
       <Frame
         override={{ w: Size.fill, maxWidth: ContainerSize.n1024, p: Space.n0 }}
-        layout={Layout.Row.AppContainer.Default}
+        layout={Layout.Row.Stretch.Start}
+        spacing={Space.n0}
+        w={Size.fill}
+        h={Size.fill}
       >
         <Frame
           override={{
@@ -130,7 +143,7 @@ export function TokensApp() {
         >
           {/* Header & Philosophy - Centered Prose */}
           <TextColumn gap={Space.n32}>
-            <Frame override={{ gap: Space.n8 }}>
+            <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
               <Text.Prose.Title variant="xl">
                 Design System Metrics
               </Text.Prose.Title>
@@ -144,13 +157,13 @@ export function TokensApp() {
 
             {/* Philosophy Cards - Stacked or Grid within Prose Width */}
             <Frame
-              layout={Layout.Row.Item.Default}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40}
               override={{ gap: Space.n24, w: Size.fill }}
             >
               <Frame
-                flex={1}
-                surface="sunken"
-                override={{ p: Space.n32, gap: Space.n12 }}
+                override={{ flex: 1, p: Space.n32, gap: Space.n12 }}
                 rounded={Radius2["2xl"]}
               >
                 <Text.Card.Title>The Whitelist Concept</Text.Card.Title>
@@ -161,9 +174,7 @@ export function TokensApp() {
               </Frame>
 
               <Frame
-                flex={1}
-                surface="sunken"
-                override={{ p: Space.n32, gap: Space.n12 }}
+                override={{ flex: 1, p: Space.n32, gap: Space.n12 }}
                 rounded={Radius2["2xl"]}
               >
                 <Text.Card.Title>The Meaning of 'n'</Text.Card.Title>
@@ -225,7 +236,8 @@ export function TokensApp() {
                     minHeight: `var(--size-n${val})`,
                   }}
                   rounded={Radius2.xl}
-                  pack
+                  layout={Layout.Col.Center.Start}
+                  spacing={Space.n0}
                 >
                   <Text.Card.Code
                     style={{ fontSize: "var(--font-size-n10)", opacity: 0.5 }}
@@ -245,7 +257,8 @@ export function TokensApp() {
                 <Frame
                   key={val}
                   surface="raised"
-                  layout={Layout.Center.Default}
+                  layout={Layout.Col.Center.Start}
+                  spacing={Space.n0}
                   override={{
                     w: Size.n96,
                     h: Size.n96,
@@ -273,7 +286,8 @@ export function TokensApp() {
                     backgroundColor: "white",
                     boxShadow: `var(--elevation-n${val})`,
                   }}
-                  layout={Layout.Center.Default}
+                  layout={Layout.Col.Center.Start}
+                  spacing={Space.n0}
                   override={{
                     w: Size.n96,
                     h: Size.n96,
@@ -316,7 +330,7 @@ export function TokensApp() {
                         zIndex: `var(--z-index-n${val})`,
                         top: `${i * 20}px`,
                         left: `${i * 40}px`,
-                        boxShadow: "var(--shadow-lg)",
+                        boxShadow: "var(--elevation-n2)",
                         border:
                           "var(--border-width-n1) solid var(--border-color)",
                       }}
@@ -336,7 +350,7 @@ export function TokensApp() {
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
               {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
-                <Frame key={val} override={{ gap: Space.n8 }}>
+                <Frame key={val} layout={Layout.Col.Left.Start} spacing={Space.n8}>
                   <Frame
                     surface="primary"
                     opacity={Opacity[`n${val}` as keyof typeof Opacity]}
@@ -357,7 +371,9 @@ export function TokensApp() {
                 {FontSizeScale.map((val) => (
                   <Frame
                     key={val}
-                    layout={Layout.Row.Item.Default}
+                    layout={Layout.Row.Middle.Center}
+                    spacing={Space.n12}
+                    minHeight={Size.n40}
                     override={{ align: "baseline" }}
                   >
                     <Frame override={{ w: Size.n64 }}>
@@ -365,7 +381,7 @@ export function TokensApp() {
                         n{val}
                       </Text.Card.Code>
                     </Frame>
-                    <Frame flex={1} override={{ minWidth: Size.n0 }}>
+                    <Frame override={{ flex: 1, minWidth: Size.n0 }}>
                       <Text
                         size={FontSize[`n${val}` as keyof typeof FontSize]}
                         style={{ color: "var(--text-primary)" }}

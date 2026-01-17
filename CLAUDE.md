@@ -4,16 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
+### Common Workflow
 - `npm run dev` - Start development server (port 5173)
+- `npm run typecheck` - Run TypeScript compiler check (fastest validation)
 - `npm run build` - Build production bundle (TypeScript compilation + Vite build)
+- `npm run preview` - Preview production build
+
+### Code Quality
 - `npm run lint` - Run Biome linter on all files
 - `npm run lint:design` - Run design system audit (checks for hardcoded pixels, rigid rows, tiny actions, floating flat surfaces)
 - `npm run format` - Format code with Biome
 - `npm run check` - Run Biome check and auto-fix issues
-- `npm run typecheck` - Run TypeScript compiler check
 - `npm run check:unused` - Find unused exports with ts-unused-exports
 - `npm run packages` - Full validation suite (lint + typecheck + build)
-- `npm run preview` - Preview production build
+
+### Before Committing
+Run these three commands to ensure code quality:
+```bash
+npm run typecheck  # Catch type errors
+npm run build      # Ensure production build works
+npm run lint       # Check code style
+```
 
 ## Project Overview
 
@@ -275,8 +286,9 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
   // Layout (2-Tier Semantic Presets - RECOMMENDED)
   layout={Layout.Stack.Content.Default}  // Use semantic layout presets
 
-  // Legacy Props (DEPRECATED - use 'override' instead)
-  // gap, flex, fill, grid are deprecated. Use 'layout' + 'override'
+  // Spacing (Unified) ⭐ NEW
+  spacing={Space.n12}  // Unified spacing: gap = spacing, p = spacing * 1.25
+                       // Example: spacing={Space.n12} → gap: 12px, padding: 15px
 
   // Visual
   surface="base"  // Background from surface tokens (base, raised, sunken, overlay, primary, selected)
@@ -291,10 +303,11 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
   maxWidth={Size.n1200}  // Max width
   ratio="16/9"    // Aspect ratio
 
-  // Overrides (1-Tier Tokens - use when layout presets are not enough)
+  // Overrides (1-Tier Tokens - use when fine-tuning is needed)
   override={{
-    gap: Space.n12,
-    p: Space.n16,
+    gap: Space.n12,    // Override gap independently
+    p: Space.n16,      // Override padding independently
+    px: Space.n8,      // Directional padding (px, py, pt, pb, pl, pr)
     row: true,
     align: "center",
     justify: "space-between",
@@ -309,10 +322,47 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
 />
 ```
 
-**IMPORTANT**: The Frame API has evolved to use a **2-Tier system**:
-- **Tier 1**: Semantic layout presets via `layout` prop (e.g., `Layout.Stack.Content.Default`)
-- **Tier 2**: Direct token control via `override` prop (e.g., `override={{ gap: Space.n12 }}`)
-- Legacy shorthand props (`gap`, `flex`, `fill`, `grid`) are deprecated
+**IMPORTANT**: The Frame API has evolved to use a **spacing unification system**:
+
+**Spacing Priority (from lowest to highest):**
+1. **Layout preset**: May include gap/padding defaults
+2. **spacing prop**: Unified spacing for consistent rhythm (`gap = spacing`, `p = spacing * 1.25`)
+3. **override prop**: Fine-tuning for exceptional cases
+
+**Spacing Prop Usage:**
+```tsx
+// ✅ Recommended: Use spacing for consistent rhythm
+<Frame spacing={Space.n12}>  // gap: 12px, padding: 15px (12 * 1.25)
+
+// ✅ Override when fine-tuning needed
+<Frame spacing={Space.n12} override={{ p: Space.n20 }}>  // gap: 12px, padding: 20px
+
+// ✅ Directional padding in override
+<Frame spacing={Space.n12} override={{ px: Space.n16, py: Space.n8 }}>
+
+// ❌ Deprecated: Don't use top-level gap/p props (removed in v7.8+)
+// <Frame gap={Space.n12} p={Space.n16}>  // This no longer works
+```
+
+**2-Tier System:**
+- **Tier 2 (Recommended)**: Semantic layout presets via `layout` prop (e.g., `Layout.Stack.Start.Gap12.Content.Default`)
+- **Tier 1 (Fine-tuning)**: Direct token control via `override` prop (e.g., `override={{ gap: Space.n12, p: Space.n16 }}`)
+- **Deprecated (Removed in v7.8)**: Top-level `gap`, `p`, `px`, `py`, `pt`, `pb`, `pl`, `pr` props - use `spacing` or `override` instead
+
+**Layout Naming Convention**:
+```
+Layout.{Type}.{Alignment}.{Gap}.{Context}.{Variant}
+       │      │           │     │         └─ Specific use case (Default, Tight, Loose, etc.)
+       │      │           │     └─────────── Purpose (Content, Actions, Header, etc.)
+       │      │           └───────────────── Gap size (Gap0, Gap4, Gap8, Gap12, Gap16, etc.)
+       │      └───────────────────────────── Alignment (Start, Center, End, Baseline, Stretch, Between)
+       └──────────────────────────────────── Layout type (Stack, Row, Grid)
+```
+
+**Examples**:
+- `Layout.Stack.Start.Gap12.Content.Default` - Vertical stack, top-aligned, 12px gap, content rhythm
+- `Layout.Row.Center.Gap8.Actions.Center` - Horizontal row, centered, 8px gap, button group
+- `Layout.Grid.Start.Gap12.Col240.Cards.Default` - Grid layout, 240px columns, 12px gap, card grid
 
 **Action Component:**
 ```tsx
@@ -343,42 +393,54 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
 />
 ```
 
-**Prose Components:**
+**Text Component Contexts:**
 ```tsx
-// Prose is accessed via Text.Prose namespace
-// Per conventions.md: ALWAYS use Text.Prose, not direct Prose imports
+// CRITICAL: Always access via Text namespace
+// NEVER import Card, Prose, Menu, Field, Table directly
 
 import { Text } from "../design-system/text/Text";
 
-// Title with variants (xl=h1, lg=h2, md=h3, sm=h4)
-<Text.Prose.Title variant="xl" style={{ textAlign: "center" }}>
-  Main Heading
-</Text.Prose.Title>
+// Text.Prose - Long-form reading content
+<Text.Prose.Title variant="xl">Main Heading</Text.Prose.Title>
+<Text.Prose.Body>Paragraph content with comfortable reading flow.</Text.Prose.Body>
 
-// Body text for paragraphs
-<Text.Prose.Body>
-  Paragraph content with comfortable reading flow.
-</Text.Prose.Body>
-
-// Other Text contexts: Card, Field, Menu, Table
+// Text.Card - Summarized information chunks
 <Text.Card.Title>Card Title</Text.Card.Title>
-<Text.Menu.Label>Menu Item</Text.Menu.Label>
+<Text.Card.Desc>Description text</Text.Card.Desc>
+
+// Text.Menu - Action items and navigation
+<Text.Menu.Item>Menu Item</Text.Menu.Item>
+<Text.Menu.Group>Section Header</Text.Menu.Group>
+
+// Text.Field - Form labels and values
+<Text.Field.Label>Email Address</Text.Field.Label>
+<Text.Field.Note>Helper text</Text.Field.Note>
+
+// Text.Table - Tabular data
+<Text.Table.Header>Column Header</Text.Table.Header>
+<Text.Table.Cell>Cell Value</Text.Table.Cell>
 ```
 
 ## Application Structure
 
 The project uses **React Router DOM** with a hash router to showcase multiple demo applications:
 
+### Design System Demos
 - **`/` (LandingApp)** - Landing page showcase
 - **`/tokens` (TokensApp)** - Design tokens reference and documentation
+- **`/text` (TextSystemApp)** - Typography system showcase
+- **`/surface` (SurfaceApp)** - Surface token demonstration
+- **`/layouts` (LayoutShowcaseApp)** - Layout preset examples
+
+### Application Demos
 - **`/slide` (SlideApp)** - Presentation tool interface (Figma/Canva-like)
 - **`/cms` (CMSApp)** - CMS/website builder interface
 - **`/crm` (CRMApp)** - CRM application with Tanstack Table integration
 - **`/mail` (MailApp)** - Mail client interface
 - **`/discord` (DiscordApp)** - Discord-like chat interface
 - **`/login` (LoginApp)** - Login/authentication interface
-- **`/surface` (SurfaceApp)** - Surface token demonstration
-- **`/text` (TextSystemApp)** - Typography system showcase
+- **`/agent-editor` (AgentEditorApp)** - Agent editor interface
+- **`/command-bar` (CommandBarDesignApp)** - Command palette design
 
 Each app demonstrates different design patterns and component compositions. The main `App.tsx` includes a floating navigation pill to switch between demos.
 
@@ -409,6 +471,38 @@ Demonstrates a CRM application with Tanstack Table integration:
   - `CRMDrawer` - Detail panel with properties and activity tabs
 - **Data Loading**: Dynamic dataset loading with `import.meta.glob` (supports Korean filenames)
 - **Auto Row IDs**: Generates unique `__rowId` for each data row to ensure stable keys
+
+## Layout Generation System
+
+**CRITICAL**: Layout presets are **auto-generated** from `layout.config.ts` via `scripts/generate-layout.ts`.
+
+### How It Works
+1. Define semantic layouts in `layout.config.ts`
+2. Run `npm run dev` or manually: `npx tsx scripts/generate-layout.ts`
+3. Generates `src/design-system/Frame/Layout/Layout.ts` with typed layout tree
+
+### Adding New Layouts
+```typescript
+// layout.config.ts
+export const LAYOUT_CONFIG = {
+  Stack: {
+    Start: {
+      Gap16: {
+        Content: {
+          Comfortable: { gap: Space.n16, p: Space.n20 }
+        }
+      }
+    }
+  }
+};
+```
+
+**Result**: `Layout.Stack.Start.Gap16.Content.Comfortable`
+
+### DO NOT Edit Layout.ts Directly
+- `Layout.ts` is auto-generated (has warning header)
+- Always modify `layout.config.ts` instead
+- Re-run generation script after changes
 
 ## Token System
 
@@ -499,21 +593,39 @@ Documentation files in `docs/claude/` use zero-padded number prefixes for sequen
 4. **Consult Conventions**: Reference `.agent/conventions.md` for the complete 3-Tier Intent System
 
 ### Common Mistakes to Avoid
-1. **Using Deprecated Props**: Don't use `gap`, `flex`, `fill`, `grid` directly on Frame. Use `layout` prop or `override`
-2. **Token Constants**: Always use token constants: `Space.n16`, not `p={16}` or hardcoded strings
-3. **Missing Surface Padding**: If Frame has `surface` prop, it should have padding via layout or override
+1. **Top-level Spacing Props (REMOVED)**: Don't use `gap`, `p`, `px`, `py` as top-level Frame props. Use `spacing` prop or `override={{ gap: ..., p: ... }}`
+   ```tsx
+   // ❌ Wrong (removed in v7.8)
+   <Frame gap={Space.n12} p={Space.n16}>
+
+   // ✅ Correct
+   <Frame spacing={Space.n12}>
+   // or
+   <Frame override={{ gap: Space.n12, p: Space.n16 }}>
+   ```
+2. **Token Constants**: Always use token constants: `Space.n16`, not `spacing={16}` or hardcoded strings
+3. **Missing Surface Padding**: If Frame has `surface` prop, it should have padding via `spacing` or `override`
 4. **Barrel Exports**: Never create index.ts files that re-export components
 5. **Direct Context Imports**: Always import via namespace (e.g., `Text.Card.Title`, not `Card.Title`)
 6. **Action Size**: Use T-shirt sizes (`size="sm"`), not numbers (`size={32}`)
+7. **Layout Path Errors**: Use the full Layout path (e.g., `Layout.Stack.Start.Gap12.Content.Default`, not `Layout.Stack.Content.Default`)
+8. **Wrong Text Components**: Use `Text.Menu.Group` for section headers, not `Text.Menu.Label`
 
 ### Token Quick Reference
 **Most Common Values**:
-- Spacing: `Space.n8` (8px), `Space.n12` (12px), `Space.n16` (16px), `Space.n24` (24px)
-- Size: `Size.n240` (240px sidebar), `Size.n680` (680px content), `Size.n1200` (1200px max)
-- Action size: `size="sm"` (32px), `size="md"` (40px), `size="lg"` (48px)
-- Icon size: `IconSize.n16`, `IconSize.n20`, `IconSize.n24`
-- Surfaces: `base`, `raised`, `sunken`, `overlay`, `primary`, `selected`
-- Radius: `Radius2.md`, `Radius2.lg`, `Radius2.round`, `Radius2.full`
+- **Spacing**: `Space.n8` (8px), `Space.n12` (12px), `Space.n16` (16px), `Space.n24` (24px), `Space.n32` (32px)
+- **Size**: `Size.n240` (240px), `Size.n320` (320px), `Size.n448` (448px), `Size.n640` (640px), `Size.fill`, `Size.screen`
+- **Container**: `ContainerSize.n640`, `ContainerSize.n768`, `ContainerSize.n1024`, `ContainerSize.n1280`
+- **Action size**: `size="sm"` (32px), `size="md"` (40px), `size="lg"` (48px)
+- **Icon size**: `IconSize.n16`, `IconSize.n20`, `IconSize.n24`, `IconSize.n32`
+- **Surfaces**: `ghost`, `base`, `raised`, `sunken`, `overlay`, `primary`, `selected`, `panel`
+- **Radius**: `Radius2.sm`, `Radius2.md`, `Radius2.lg`, `Radius2.full`
+- **Opacity**: `Opacity.n50`, `Opacity.n70`, `Opacity.n80`, `Opacity.n90`, `Opacity.n100`
+
+**Common Layout Presets**:
+- **Stack**: `Layout.Stack.Start.Gap12.Content.Default`, `Layout.Stack.Start.Gap8.Content.Tight`
+- **Row**: `Layout.Row.Center.Gap8.Actions.Center`, `Layout.Row.Baseline.Gap8.LabelValue.Default`
+- **Grid**: `Layout.Grid.Start.Gap12.Col240.Cards.Default`
 
 ### Debug Tools
 - **React Inspector**: Press `Cmd+Shift` during development to inspect components and copy code

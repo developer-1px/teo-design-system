@@ -1,17 +1,32 @@
-import {HelpCircle, Plus} from "lucide-react"
-import {useState} from "react"
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text"
-import {ContainerSize, FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
+import { HelpCircle, Plus } from "lucide-react";
+import { useState } from "react";
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text";
+import {
+  ContainerSize,
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function FAQBoardFooter() {
   return (
-    <Frame override={{ w: Size.fill }} surface="base">
+    <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
+      override={{ w: Size.fill }}
+      surface="base"
+    >
       <Frame
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n16}
         override={{
           w: Size.fill,
           py: Space.n96,
@@ -20,7 +35,11 @@ export function FAQBoardFooter() {
           maxWidth: ContainerSize.n768,
         }}
       >
-        <Frame override={{ gap: Space.n12, w: Size.fill, align: "center" }}>
+        <Frame
+          layout={Layout.Col.Center.Start}
+          spacing={Space.n16}
+          override={{ w: Size.fill, gap: Space.n12 }}
+        >
           <Text.Card.Note
             size={FontSize.n12}
             weight="bold"
@@ -59,12 +78,12 @@ export function FAQBoardFooter() {
             align: "center",
           }}
           surface="raised"
-          layout={Layout.Slots.Media.Default}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
         >
           <Frame
-            override={{ w: Size.n56, h: Size.n56, r: Radius2.full }}
+            override={{ w: Size.n56, h: Size.n56, r: Radius2.full, pack: true }}
             surface="sunken"
-            pack
           >
             <Icon
               src={HelpCircle}
@@ -72,7 +91,7 @@ export function FAQBoardFooter() {
               style={{ color: "var(--color-primary)" }}
             />
           </Frame>
-          <Frame override={{ gap: Space.n4 }}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n4}>
             <Text.Card.Title size={FontSize.n18} weight="bold">
               Still have questions?
             </Text.Card.Title>
@@ -80,7 +99,7 @@ export function FAQBoardFooter() {
               We're here to help. Contact our support team 24/7.
             </Text.Card.Desc>
           </Frame>
-          <Frame flex />
+          <Frame override={{ flex: 1 }} />
           <Action
             label="Chat with us"
             variant="surface"
@@ -114,8 +133,9 @@ function FAQRow({ q, a }: FAQRowProps) {
       onClick={() => setIsOpen(!isOpen)}
     >
       <Frame
-        layout={Layout.Row.LabelValue.Default}
-        override={{ w: Size.fill, align: "center" }}
+        layout={Layout.Row.Middle.Start}
+        spacing={Space.n8}
+        override={{ w: Size.fill }}
       >
         <Text.Card.Title size={FontSize.n16} weight="medium">
           {q}

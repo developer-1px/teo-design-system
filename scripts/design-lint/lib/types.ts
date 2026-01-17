@@ -21,8 +21,10 @@ export interface Issue {
   column: number;
   rule: string;
   message: string;
+  severity: "error" | "warn"; // default "error"
   code?: string;
   fixable?: boolean;
+  redundantKeys?: string[]; // For redundant override fix
 }
 
 /**
@@ -72,12 +74,12 @@ export interface TokenConversion {
 export interface BorderFixResult {
   fixable: boolean;
   borderType:
-    | "border"
-    | "borderTop"
-    | "borderBottom"
-    | "borderLeft"
-    | "borderRight"
-    | null;
+  | "border"
+  | "borderTop"
+  | "borderBottom"
+  | "borderLeft"
+  | "borderRight"
+  | null;
 }
 
 /**

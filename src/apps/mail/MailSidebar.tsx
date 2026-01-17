@@ -1,14 +1,27 @@
-import {useAtom, useAtomValue} from "jotai"
-import {AlertOctagon, Archive, Edit, FileText, Inbox, Send, Star, Trash2,} from "lucide-react"
+import { useAtom, useAtomValue } from "jotai";
+import {
+  AlertOctagon,
+  Archive,
+  Edit,
+  FileText,
+  Inbox,
+  Send,
+  Star,
+  Trash2,
+} from "lucide-react";
 
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text.tsx"
-import {IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {folderCountsAtom, selectedFolderAtom} from "./store"
-import type {MailFolder} from "./types"
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { folderCountsAtom, selectedFolderAtom } from "./store";
+import type { MailFolder } from "./types";
 
 const FOLDER_CONFIG: Array<{
   id: MailFolder;
@@ -45,11 +58,12 @@ export function MailSidebar() {
         interactive
         surface="raised"
         rounded={Radius2.md}
-        layout={Layout.Row.Item.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
         override={{
           p: Space.n8,
           gap: Space.n8,
-          align: "center",
           justify: "start",
         }}
         // Primary override style if needed for Compose, but "raised" is standard button now.
@@ -62,7 +76,7 @@ export function MailSidebar() {
       <Frame override={{ h: Size.n8 }} />
 
       {/* Folder List */}
-      <Frame layout={Layout.Stack.List.Default}>
+      <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
         {FOLDER_CONFIG.map((folder) => {
           const isActive = selectedFolder === folder.id;
           const count = folderCounts[folder.id];
@@ -74,12 +88,12 @@ export function MailSidebar() {
               interactive
               surface={isActive ? "raised" : "ghost"}
               rounded={Radius2.md}
-              layout={Layout.Row.Item.Default}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40}
               override={{
-                gap: Space.n12,
                 py: Space.n6,
                 px: Space.n8,
-                align: "center",
                 justify: "start",
                 w: Size.fill,
               }}
@@ -104,7 +118,7 @@ export function MailSidebar() {
               >
                 {folder.label}
               </Text.Menu.Item>
-              <Frame flex />
+              <Frame override={{ flex: 1 }} />
               {count > 0 && (
                 <Text.Card.Note
                   style={{

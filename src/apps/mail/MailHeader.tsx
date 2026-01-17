@@ -1,13 +1,18 @@
-import {useAtom} from "jotai"
-import {Menu, Search, Settings, User} from "lucide-react"
+import { useAtom } from "jotai";
+import { Menu, Search, Settings, User } from "lucide-react";
 
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text.tsx"
-import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {searchQueryAtom} from "./store"
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { searchQueryAtom } from "./store";
 
 export function MailHeader() {
   const [searchQuery, setSearchQuery] = useAtom(searchQueryAtom);
@@ -20,11 +25,17 @@ export function MailHeader() {
         px: Space.n20,
         borderBottom: true,
       }}
-      layout={Layout.Row.Header.Default}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      h={Size.n44}
       surface="base"
     >
       {/* Left: Logo and Menu */}
-      <Frame override={{ gap: Space.n12 }} layout={Layout.Row.Item.Default}>
+      <Frame
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40} override={{ px: Space.n16 }}
+      >
         <Frame
           as="button"
           interactive
@@ -36,8 +47,10 @@ export function MailHeader() {
         </Frame>
 
         <Frame
-          override={{ gap: Space.n8, align: "center" }}
-          layout={Layout.Row.Item.Default}
+          override={{ gap: Space.n8 }}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          minHeight={Size.n40}
         >
           <Icon
             src={Mail}
@@ -54,13 +67,13 @@ export function MailHeader() {
         rounded={Radius2.md}
         surface="sunken"
         interactive="text"
-        layout={Layout.Row.Toolbar.Compact}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n8}
+        h={Size.n36}
         override={{
           w: Size.n448,
           py: Space.n6,
           px: Space.n12,
-          gap: Space.n8,
-          align: "center",
         }}
       >
         <Icon
@@ -85,7 +98,7 @@ export function MailHeader() {
       </Frame>
 
       {/* Right: Profile and Settings */}
-      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
+      <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
         <Frame
           as="button"
           interactive
@@ -99,9 +112,8 @@ export function MailHeader() {
           as="button"
           interactive
           surface="base"
-          border
           rounded={Radius2.full}
-          override={{ p: Space.n8 }}
+          override={{ p: Space.n8, border: true }}
         >
           <Icon src={User} size={IconSize.n20} />
         </Frame>
@@ -123,6 +135,7 @@ function Mail({ ...props }) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      aria-hidden="true"
       {...props}
     >
       <rect width="20" height="16" x="2" y="4" rx="2" />

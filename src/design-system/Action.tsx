@@ -1,11 +1,13 @@
 import React from "react";
 import { Frame } from "./Frame/Frame.tsx";
+import { Layout } from "./Frame/Layout/Layout.ts";
 import { Icon } from "./Icon";
 import type { ActionVariant, JustifyToken, SurfaceToken } from "./lib/types.ts";
 import { Text } from "./text/Text.tsx";
 import {
   type IconSizeToken,
   type OpacityToken,
+  Size,
   Space,
   type SpaceToken,
 } from "./token/token.const.1tier";
@@ -129,14 +131,16 @@ export function Action({
 
   return (
     <Frame
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      minHeight={Size.n40}
       override={{
         p: finalP,
         gap: gap ?? Space.n4,
         opacity: opacity,
-        row: true,
-        align: "center",
         justify,
         r: finalRounded,
+        minHeight: 0,
       }}
       style={{
         width: typeof finalWidth === "number" ? `${finalWidth}px` : finalWidth,
@@ -146,17 +150,16 @@ export function Action({
         cursor: "pointer",
         color: finalVariant === "primary" ? "var(--primary-fg)" : "inherit",
         boxShadow: shadow
-          ? `var(--shadow-${shadow})`
+          ? `var(--elevation-${shadow.replace("Shadow.", "n")})` // Mapping might be needed if shadow was token
           : glow
             ? "0 0 12px -4px var(--primary-bg)"
             : undefined,
         ...styleOverride,
       }}
       as="button"
-      className={`action-base action-${finalVariant} ${className}`}
+      className={`frame action-base action-${finalVariant} ${className}`}
       title={tooltip}
       surface={surface}
-      pack
       {...props}
     >
       {icon && (

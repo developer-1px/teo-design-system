@@ -1,15 +1,28 @@
-import {useAtom, useAtomValue} from "jotai"
-import {Building2, CheckSquare, ChevronDown, Database, FolderKanban, LayoutGrid, Users,} from "lucide-react"
+import { useAtom, useAtomValue } from "jotai";
+import {
+  Building2,
+  CheckSquare,
+  ChevronDown,
+  Database,
+  FolderKanban,
+  LayoutGrid,
+  Users,
+} from "lucide-react";
 
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {ResizeHandle, useResizable} from "../../design-system/Resizable"
-import {Text} from "../../design-system/text/Text.tsx"
-import {IconSize, Size, type SizeToken, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {datasetsAtom, selectedDatasetAtom} from "./store"
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { ResizeHandle, useResizable } from "../../design-system/Resizable";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  IconSize,
+  Size,
+  type SizeToken,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { datasetsAtom, selectedDatasetAtom } from "./store";
 
 // Icon mapping
 const iconMap: Record<string, React.ElementType> = {
@@ -34,8 +47,7 @@ function Avatar({
     <Frame
       rounded={Radius2.full}
       style={{ backgroundColor: color }}
-      pack
-      override={{ w: size, h: size, align: "center" }}
+      override={{ w: size, h: size, align: "center", pack: true }}
     >
       <Text.Card.Note
         weight="bold"
@@ -69,13 +81,13 @@ function DatasetItem({
       onClick={onClick}
     >
       <Frame
-        layout={Layout.Row.Item.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
         override={{
-          gap: Space.n12,
           w: Size.fill,
           py: Space.n6,
           px: Space.n8,
-          align: "center",
         }}
       >
         <Icon
@@ -138,12 +150,14 @@ export function CRMSidebar() {
       >
         <Action variant="ghost" rounded={Radius2.sm} w="100%">
           <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ gap: Space.n12, p: Space.n4, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n12}
+            minHeight={Size.n40}
+            override={{ p: Space.n4 }}
           >
             <Avatar initial="D" color="black" size={Size.n20} />
             <Text.Menu.Item weight="bold">DataTable</Text.Menu.Item>
-            <Frame flex />
+            <Frame override={{ flex: 1 }} />
             <Icon src={ChevronDown} size={IconSize.n14} opacity={0.4} />
           </Frame>
         </Action>
@@ -165,10 +179,10 @@ export function CRMSidebar() {
         ))}
       </Frame>
 
-      <Frame flex />
+      <Frame override={{ flex: 1 }} />
 
       {/* Bottom Info */}
-      <Frame override={{ gap: Space.n4 }}>
+      <Frame layout={Layout.Col.Stretch.Start} spacing={Space.n4}>
         <Frame
           override={{ py: Space.n6, px: Space.n8 }}
           surface="sunken"

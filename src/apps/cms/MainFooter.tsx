@@ -1,14 +1,26 @@
-import {ArrowUpRight, Globe, MessageSquare, Sparkles} from "lucide-react"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text"
-import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
+import { ArrowUpRight, Globe, MessageSquare, Sparkles } from "lucide-react";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function MainFooter() {
   return (
-    <Frame override={{ w: Size.fill }} surface="sunken">
+    <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
+      override={{ w: Size.fill }}
+      surface="sunken"
+    >
       <Frame
         override={{
           w: Size.fill,
@@ -24,21 +36,28 @@ export function MainFooter() {
         }
       >
         <Frame
-          layout={Layout.Row.Header.Default}
-          override={{ w: Size.fill, justify: "between" }}
+          layout={Layout.Row.Middle.Between}
+          spacing={Space.n8}
+          override={{ w: Size.fill }}
         >
           <Frame
             override={{ gap: Space.n24 }}
             style={{ width: "35%" } as React.CSSProperties}
           >
             <Frame
-              layout={Layout.Row.Item.Tight}
-              override={{ gap: Space.n12, align: "center" }}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n8}
+              minHeight={Size.n32}
+              override={{ gap: Space.n12 }}
             >
               <Frame
-                override={{ w: Size.n40, h: Size.n40, r: Radius2.xl }}
+                override={{
+                  w: Size.n40,
+                  h: Size.n40,
+                  r: Radius2.xl,
+                  pack: true,
+                }}
                 surface="primary"
-                pack
               >
                 <Icon
                   src={Sparkles}
@@ -67,7 +86,8 @@ export function MainFooter() {
             </Text.Card.Desc>
             <Frame
               override={{ gap: Space.n16 }}
-              layout={Layout.Row.Actions.Default}
+              layout={Layout.Row.Middle.End}
+              spacing={Space.n8}
             >
               <Icon src={Globe} size={IconSize.n20} style={{ opacity: 0.4 }} />
               <Icon
@@ -84,7 +104,8 @@ export function MainFooter() {
           </Frame>
 
           <Frame
-            layout={Layout.Row.Actions.Default}
+            layout={Layout.Row.Middle.End}
+            spacing={Space.n8}
             override={{ gap: Space.n48, align: "start" }}
           >
             <FooterLinkColumn
@@ -103,7 +124,9 @@ export function MainFooter() {
         </Frame>
 
         <Frame
-          layout={Layout.Row.Header.Default}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          h={Size.n44}
           override={{
             pt: Space.n32,
             w: Size.fill,
@@ -119,7 +142,8 @@ export function MainFooter() {
           </Text.Card.Note>
           <Frame
             override={{ gap: Space.n16 }}
-            layout={Layout.Row.Actions.Default}
+            layout={Layout.Row.Middle.End}
+            spacing={Space.n8}
           >
             <Text.Card.Note
               size={FontSize.n13}
@@ -147,7 +171,7 @@ interface FooterLinkColumnProps {
 
 function FooterLinkColumn({ title, links }: FooterLinkColumnProps) {
   return (
-    <Frame override={{ gap: Space.n12 }}>
+    <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
       <Text.Card.Note
         size={FontSize.n11}
         weight="bold"

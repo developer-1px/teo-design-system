@@ -1,16 +1,16 @@
-import {useAtom, useAtomValue, useSetAtom} from "jotai"
-import {useEffect} from "react"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Size, Space} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {CRMDrawer} from "./CRMDrawer"
-import {CRMHeader} from "./CRMHeader"
-import {CRMSidebar} from "./CRMSidebar"
-import {CRMTable} from "./CRMTable"
-import {CRMToolbar} from "./CRMToolbar"
-import {loadDataset} from "./dataLoader"
-import {currentDataAtom, isLoadingAtom, selectedDatasetAtom} from "./store"
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useEffect } from "react";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { CRMDrawer } from "./CRMDrawer";
+import { CRMHeader } from "./CRMHeader";
+import { CRMSidebar } from "./CRMSidebar";
+import { CRMTable } from "./CRMTable";
+import { CRMToolbar } from "./CRMToolbar";
+import { loadDataset } from "./dataLoader";
+import { currentDataAtom, isLoadingAtom, selectedDatasetAtom } from "./store";
 
 export function CRMApp() {
   const selectedDataset = useAtomValue(selectedDatasetAtom);
@@ -32,18 +32,21 @@ export function CRMApp() {
   return (
     <Frame
       override={{ w: Size.screen, h: Size.screen }}
-      layout={Layout.Row.AppContainer.Default}
+      layout={Layout.Row.Stretch.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
       surface="base" // 1. Flat base foundation
     >
       {/* Sidebar: Sunken + Border Right */}
       <CRMSidebar />
 
       {/* Main Content Area: Flat, Border Separated */}
-      <Frame flex fill override={{ borderRight: true, minWidth: Size.n0 }}>
+      <Frame
+        override={{ fill: true, borderRight: true, minWidth: Size.n0, flex: 1 }}
+      >
         <Frame
-          flex
-          fill
-          clip
+          override={{ fill: true, clip: true, flex: 1 }}
           surface="base"
           style={{
             position: "relative",
@@ -52,12 +55,15 @@ export function CRMApp() {
           <CRMHeader />
           <CRMToolbar />
 
-          <Frame flex fill override={{ p: Space.n0 }}>
+          <Frame override={{ fill: true, p: Space.n0, flex: 1 }}>
             {isLoading ? (
               <Frame
-                fill
-                pack
-                override={{ align: "center", justify: "center" }}
+                override={{
+                  fill: true,
+                  pack: true,
+                  align: "center",
+                  justify: "center",
+                }}
               >
                 <Frame
                   override={{ w: Size.n24, h: Size.n24 }}

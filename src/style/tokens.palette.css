@@ -75,6 +75,10 @@
   --surface-primary-opacity-hover: 0.9;
   --surface-primary-opacity-active: 0.8;
 
+  /* Selected State */
+  --surface-selected-bg: var(--surface-sunken-bg);
+  --surface-selected-fg: var(--text-primary);
+
   --text-primary: #18181b;
   --text-body: #3f3f46;
   --text-subtle: #71717a;

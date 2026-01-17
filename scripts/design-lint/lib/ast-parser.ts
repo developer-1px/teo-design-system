@@ -56,6 +56,12 @@ export function extractFrameProps(
       } else if (Node.isPropertyAccessExpression(expression)) {
         // e.g., Layout.Stack.Content or Space.n12
         props[name] = expression.getText();
+      } else if (
+        name === "override" &&
+        Node.isObjectLiteralExpression(expression)
+      ) {
+        // Parse override object literal
+        props[name] = parseObjectLiteral(expression);
       } else {
         // Complex expression, store as text
         props[name] = expression.getText();
@@ -64,6 +70,48 @@ export function extractFrameProps(
   }
 
   return props;
+}
+
+/**
+ * Parse object literal expression to extract property values
+ * Used for parsing override prop
+ *
+ * @param objectLiteral - Object literal AST node
+ * @returns Parsed object with property values
+ */
+function parseObjectLiteral(objectLiteral: any): Record<string, any> {
+  const result: Record<string, any> = {};
+
+  for (const prop of objectLiteral.getProperties()) {
+    if (prop.getKind() !== SyntaxKind.PropertyAssignment) continue;
+
+    const propertyAssignment = prop.asKind(SyntaxKind.PropertyAssignment);
+    if (!propertyAssignment) continue;
+
+    const name = propertyAssignment.getName();
+    const initializer = propertyAssignment.getInitializer();
+
+    if (!initializer) continue;
+
+    // Get the value
+    if (Node.isStringLiteral(initializer)) {
+      result[name] = initializer.getLiteralValue();
+    } else if (Node.isNumericLiteral(initializer)) {
+      result[name] = initializer.getLiteralValue();
+    } else if (Node.isTrueLiteral(initializer)) {
+      result[name] = true;
+    } else if (Node.isFalseLiteral(initializer)) {
+      result[name] = false;
+    } else if (Node.isPropertyAccessExpression(initializer)) {
+      // e.g., Space.n12, Size.fill
+      result[name] = initializer.getText();
+    } else {
+      // Complex expression, store as text
+      result[name] = initializer.getText();
+    }
+  }
+
+  return result;
 }
 
 /**

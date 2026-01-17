@@ -73,19 +73,29 @@ export function ResizeHandle({
   };
 
   return (
-    <div
+    <button
+      type="button"
       style={{
         ...positionStyles,
         cursor,
         backgroundColor: "transparent",
+        border: "none",
+        padding: 0,
+        appearance: "none",
+        touchAction: "none",
       }}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       onMouseDown={onMouseDown}
       onDoubleClick={onDoubleClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          onDoubleClick?.();
+        }
+      }}
     >
       {/* Hover indicator line */}
       <div style={indicatorStyles} />
-    </div>
+    </button>
   );
 }

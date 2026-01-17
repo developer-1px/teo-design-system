@@ -1,13 +1,25 @@
-import {ChevronRight, FileText, Grid2X2, List, PanelLeft, Plus, Settings,} from "lucide-react"
-import {useState} from "react"
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {ResizeHandle, useResizable} from "../../design-system/Resizable"
-import {Text} from "../../design-system/text/Text"
-import {AspectRatio, FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
+import {
+  ChevronRight,
+  FileText,
+  Grid2X2,
+  PanelLeft,
+  Plus,
+  Settings,
+} from "lucide-react";
+import { useState } from "react";
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { ResizeHandle, useResizable } from "../../design-system/Resizable";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 interface CMSSidebarProps {
   isOpen: boolean;
@@ -15,8 +27,6 @@ interface CMSSidebarProps {
 }
 
 export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
-  const [viewMode, setViewMode] = useState<"bar" | "thumbnail">("thumbnail");
-
   // Resizable hook (only when open)
   const { size, resizeHandleProps } = useResizable({
     direction: "left",
@@ -31,7 +41,6 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
       override={{
         h: Size.fill,
         p: Space.n4,
-        gap: Space.n4,
         clip: true,
       }}
       style={{
@@ -44,13 +53,8 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         position: "relative",
       }}
       surface="sunken"
-      layout={Layout.Stack.List.Dense}
-      override={{
-        h: Size.fill,
-        p: Space.n4,
-        gap: Space.n4,
-        clip: true,
-      }}
+      layout={Layout.Col.Stretch.Start}
+      spacing={Space.n4}
     >
       {isOpen && <ResizeHandle direction="left" {...resizeHandleProps} />}
       {/* Toggle Button - Top Right */}
@@ -58,9 +62,9 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         override={{
           py: Space.n0,
           px: Space.n4,
-          justify: "end",
         }}
-        layout={Layout.Row.Header.Default}
+        layout={Layout.Row.Middle.End}
+        spacing={Space.n8}
       >
         <Action
           icon={PanelLeft}
@@ -74,79 +78,38 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
 
       {/* Content - Hidden when closed */}
       <Frame
-        override={{
-          gap: Space.n8,
-        }}
         style={{
           opacity: isOpen ? 1 : 0,
           transition: "opacity 0.2s",
           pointerEvents: isOpen ? "auto" : "none",
           display: isOpen ? "flex" : "none",
         }}
-        flex
+        override={{ flex: 1 }}
         scroll
+        layout={Layout.Col.Stretch.Start}
+        spacing={Space.n0}
       >
-        <Frame
-          layout={Layout.Row.Header.Default}
-          override={{
-            gap: Space.n8,
-            pt: Space.n0,
-            pr: Space.n8,
-            pb: Space.n8,
-            pl: Space.n8,
-            align: "center",
-          }}
-        >
-          <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ gap: Space.n8, align: "center" }}
-          >
-            <Text.Card.Note
-              weight="bold"
-              size={FontSize.n11}
-              style={{ color: "var(--text-tertiary)" }}
-            >
-              SECTIONS
-            </Text.Card.Note>
-            <Action
-              icon={Plus}
-              size="xs"
-              variant="ghost"
-              rounded={Radius2.full}
-              tooltip="Add Section"
-              onClick={() => console.log("Add Section")}
-            />
-          </Frame>
-          <Frame
-            override={{ gap: Space.n4, p: Space.n4 }}
-            rounded={Radius2.md}
-            layout={Layout.Row.Actions.Default}
-            surface="sunken"
-          >
-            <Action
-              icon={Grid2X2}
-              size="xs"
-              variant={viewMode === "thumbnail" ? "surface" : "ghost"}
-              rounded={Radius2.sm}
-              onClick={() => setViewMode("thumbnail")}
-            />
-            <Action
-              icon={List}
-              size="xs"
-              variant={viewMode === "bar" ? "surface" : "ghost"}
-              rounded={Radius2.sm}
-              onClick={() => setViewMode("bar")}
-            />
-          </Frame>
+        <SidebarSection title="PAGES" />
+        <Frame override={{ gap: Space.n2, px: Space.n8 }}>
+          <TreeItem label="Home" icon={FileText} level={0} active />
+          <TreeItem label="Features" icon={FileText} level={0} />
+          <TreeItem label="Pricing" icon={FileText} level={0} />
+          <TreeItem label="Blog" icon={FileText} level={0} collapsed>
+            <TreeItem label="2024 Design Trends" icon={FileText} level={1} />
+            <TreeItem label="Engineering Culture" icon={FileText} level={1} />
+          </TreeItem>
+          <TreeItem label="Contact" icon={FileText} level={0} />
         </Frame>
 
-        <Frame
-          override={{ gap: viewMode === "thumbnail" ? Space.n12 : Space.n4 }}
-        >
-          <LayerItem label="Hero Section" active viewMode={viewMode} />
-          <LayerItem label="Feature Grid" viewMode={viewMode} />
-          <LayerItem label="Testimonials" viewMode={viewMode} />
-          <LayerItem label="Footer" viewMode={viewMode} />
+        <Frame override={{ h: Size.n16 }} />
+
+        <SidebarSection title="COMPONENTS" />
+        <Frame override={{ gap: Space.n2, px: Space.n8 }}>
+          <TreeItem label="Navigation" icon={Grid2X2} level={0} />
+          <TreeItem label="Hero Section" icon={Grid2X2} level={0} />
+          <TreeItem label="Feature Grid" icon={Grid2X2} level={0} />
+          <TreeItem label="Testimonials" icon={Grid2X2} level={0} />
+          <TreeItem label="Footer" icon={Grid2X2} level={0} />
         </Frame>
       </Frame>
 
@@ -157,23 +120,22 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
           transition: "opacity 0.2s",
           display: isOpen ? "flex" : "none",
         }}
-        layout={Layout.Row.Item.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
         override={{
-          gap: Space.n12,
           p: Space.n12,
-          align: "center",
           border: true,
         }}
       >
         <Frame
-          override={{ w: Size.n32, h: Size.n32 }}
+          override={{ w: Size.n32, h: Size.n32, pack: true }}
           rounded={Radius2.full}
           surface="sunken"
-          pack
         >
           <Icon src={Settings} size={IconSize.n16} />
         </Frame>
-        <Frame override={{ gap: Space.n0 }}>
+        <Frame layout={Layout.Col.Left.Start} spacing={Space.n0}>
           <Text.Card.Title size={FontSize.n13} weight="medium">
             Site Settings
           </Text.Card.Title>
@@ -189,82 +151,111 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
   );
 }
 
-interface LayerItemProps {
-  label: string;
-  active?: boolean;
-  viewMode: "bar" | "thumbnail";
+function SidebarSection({ title }: { title: string }) {
+  return (
+    <Frame
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n8}
+      minHeight={Size.n32}
+      override={{ px: Space.n16, py: Space.n8 }}
+    >
+      <Text.Card.Note
+        weight="bold"
+        size={FontSize.n11}
+        style={{ color: "var(--text-tertiary)", letterSpacing: "0.05em" }}
+      >
+        {title}
+      </Text.Card.Note>
+      <Frame override={{ flex: 1 }} />
+      <Action icon={Plus} size="xs" variant="ghost" rounded={Radius2.sm} />
+    </Frame>
+  );
 }
 
-function LayerItem({ label, active, viewMode }: LayerItemProps) {
-  if (viewMode === "thumbnail") {
-    return (
-      <Frame override={{ gap: Space.n6, py: Space.n0, px: Space.n8 }}>
+interface TreeItemProps {
+  label: string;
+  icon: React.ElementType;
+  level: number;
+  active?: boolean;
+  collapsed?: boolean;
+  children?: React.ReactNode;
+}
+
+function TreeItem({
+  label,
+  icon: IconSrc,
+  level,
+  active,
+  collapsed,
+  children,
+}: TreeItemProps) {
+  const [isExpanded, setIsExpanded] = useState(!collapsed);
+
+  return (
+    <Frame layout={Layout.Col.Left.Start} spacing={Space.n0}>
+      <Frame
+        rounded={Radius2.sm}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n8}
+        surface={active ? "raised" : undefined}
+        style={{
+          paddingLeft: `calc(var(--space-n8) + ${level * 12}px)`,
+          backgroundColor: active ? "var(--surface-raised)" : "transparent",
+          color: active ? "var(--text-primary)" : "var(--text-secondary)",
+        }}
+        override={{
+          h: Size.n32,
+          gap: Space.n6,
+          cursor: "pointer",
+          w: Size.fill,
+        }}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <Frame
-          layout={Layout.Row.Meta.Default}
-          override={{ gap: Space.n8, align: "center" }}
-        >
-          <Icon src={FileText} size={IconSize.n10} style={{ opacity: 0.5 }} />
-          <Text.Card.Note
-            size={FontSize.n11}
-            weight={active ? "bold" : "medium"}
-          >
-            {label}
-          </Text.Card.Note>
-        </Frame>
-        <Frame
-          override={{ w: Size.fill, cursor: "pointer" }}
-          rounded={Radius2.md}
-          style={{
-            boxShadow: active ? "0 0 0 1.5px var(--text-primary)" : "none",
-            borderColor: active ? "var(--text-primary)" : "var(--border-color)",
-          }}
-          surface={active ? "base" : "sunken"}
-          pack
           override={{
-            border: true,
-            w: Size.fill,
-            cursor: "pointer",
-            ratio: AspectRatio.n16_9,
+            w: Size.n16,
+            h: Size.n16,
+            align: "center",
+            justify: "center",
           }}
         >
-          {active && (
+          {children ? (
+            <Icon
+              src={ChevronRight}
+              size={IconSize.n12}
+              style={{
+                transform: isExpanded ? "rotate(90deg)" : "none",
+                transition: "transform 0.2s",
+                opacity: 0.6,
+              }}
+            />
+          ) : (
             <Frame
-              override={{ w: Size.n8, h: Size.n8, shadow: "sm" }}
-              rounded={Radius2.full}
-              surface="primary"
+              override={{ w: Size.n4, h: Size.n4, r: Radius2.full }}
+              style={{
+                backgroundColor: active ? "var(--primary-bg)" : "transparent",
+              }}
             />
           )}
         </Frame>
-      </Frame>
-    );
-  }
 
-  return (
-    <Frame
-      rounded={Radius2.md}
-      layout={Layout.Row.Item.Default}
-      surface={active ? "raised" : undefined}
-      override={{
-        py: Space.n8,
-        px: Space.n12,
-        cursor: "pointer",
-        align: "center",
-      }}
-    >
-      <Frame
-        layout={Layout.Row.Item.Tight}
-        override={{ gap: Space.n8, align: "center" }}
-      >
-        <Icon src={FileText} size={IconSize.n14} style={{ opacity: 0.5 }} />
+        <Icon
+          src={IconSrc}
+          size={IconSize.n14}
+          style={{ opacity: active ? 1 : 0.7 }}
+        />
+
         <Text.Card.Title
           size={FontSize.n13}
-          weight={active ? "bold" : "medium"}
+          weight={active ? "medium" : "regular"}
+          style={{ flex: 1 }}
         >
           {label}
         </Text.Card.Title>
       </Frame>
-      {active && (
-        <Icon src={ChevronRight} size={IconSize.n12} style={{ opacity: 0.5 }} />
+
+      {isExpanded && children && (
+        <Frame override={{ w: Size.fill }}>{children}</Frame>
       )}
     </Frame>
   );

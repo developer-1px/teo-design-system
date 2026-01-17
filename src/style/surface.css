@@ -43,6 +43,12 @@
   /* Default cursor for interactive */
 }
 
+/* Selected State - applies to any surface */
+.frame.selected {
+  background-color: var(--surface-selected-bg);
+  color: var(--surface-selected-fg);
+}
+
 /* Explicit Interactive Modes */
 .frame.interactive-button {
   cursor: pointer;
@@ -165,7 +171,6 @@
 .cursor-grabbing {
   cursor: grabbing;
 }
-
 
 /* Border */
 .border-default {

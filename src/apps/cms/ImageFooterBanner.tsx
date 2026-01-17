@@ -1,15 +1,26 @@
-import {Cpu, Globe, Shield, Zap} from "lucide-react"
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text"
-import {FontSize, IconSize, Opacity, Size, Space, ZIndex,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
+import { Cpu, Globe, Shield, Zap } from "lucide-react";
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+  ZIndex,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function ImageFooterBanner() {
   return (
     <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
       override={{
         w: Size.fill,
         py: Space.n96,
@@ -26,9 +37,9 @@ export function ImageFooterBanner() {
             background: "linear-gradient(225deg, #1a1a1a, #000)",
             maxWidth: "var(--container-n1280)",
             margin: "0 auto",
+            overflow: "hidden",
           } as React.CSSProperties
         }
-        clip
       >
         {/* Visual texture */}
         <Frame
@@ -55,11 +66,12 @@ export function ImageFooterBanner() {
               margin: "0 auto",
             } as React.CSSProperties
           }
-          fill
+          layout={Layout.Col.Center.Start}
+          spacing={Space.n16}
           override={{
+            fill: true,
             p: Space.n24,
             gap: Space.n24,
-            align: "center",
             zIndex: ZIndex.n10,
           }}
         >
@@ -82,7 +94,8 @@ export function ImageFooterBanner() {
           </Text.Prose.Body>
           <Frame
             override={{ gap: Space.n16 }}
-            layout={Layout.Row.Actions.Default}
+            layout={Layout.Row.Middle.End}
+            spacing={Space.n8}
           >
             <Action
               label="Start for Free"
@@ -126,9 +139,11 @@ export function ImageFooterBanner() {
           TRUSTED WORLDWIDE
         </Text.Card.Note>
         <Frame
-          layout={Layout.Wrap.Chips.Loose}
-          wrap
+          layout={Layout.Row.Middle.Start}
+          wrap="wrap"
+          spacing={Space.n12}
           override={{
+            wrap: true,
             gap: Space.n48,
             py: Space.n0,
             px: Space.n24,
@@ -137,8 +152,9 @@ export function ImageFooterBanner() {
           }}
         >
           <Frame
-            layout={Layout.Row.Item.Tight}
-            override={{ gap: Space.n8, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32} override={{ px: Space.n12 }}
           >
             <Icon src={Zap} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -146,8 +162,9 @@ export function ImageFooterBanner() {
             </Text.Card.Title>
           </Frame>
           <Frame
-            layout={Layout.Row.Item.Tight}
-            override={{ gap: Space.n8, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32} override={{ px: Space.n12 }}
           >
             <Icon src={Globe} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -155,8 +172,9 @@ export function ImageFooterBanner() {
             </Text.Card.Title>
           </Frame>
           <Frame
-            layout={Layout.Row.Item.Tight}
-            override={{ gap: Space.n8, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32} override={{ px: Space.n12 }}
           >
             <Icon src={Shield} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -164,8 +182,9 @@ export function ImageFooterBanner() {
             </Text.Card.Title>
           </Frame>
           <Frame
-            layout={Layout.Row.Item.Tight}
-            override={{ gap: Space.n8, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32} override={{ px: Space.n12 }}
           >
             <Icon src={Cpu} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">

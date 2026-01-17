@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 function formatPropValue(value: any): string {
   if (typeof value === "string") return `"${value}"`;

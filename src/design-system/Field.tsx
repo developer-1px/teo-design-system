@@ -1,10 +1,10 @@
-import type React from "react"
-import {Frame} from "./Frame/Frame.tsx"
-import type {FrameOverrides} from "./Frame/FrameProps.ts"
+import type React from "react";
+import { Frame } from "./Frame/Frame.tsx";
+import type { FrameOverrides } from "./Frame/FrameProps.ts";
 
-import {Text} from "./text/Text.tsx"
-import {FontSize, Opacity, Size, Space} from "./token/token.const.1tier.ts"
-import {Radius2} from "./token/token.const.2tier.ts"
+import { Text } from "./text/Text.tsx";
+import { FontSize, Opacity, Size, Space } from "./token/token.const.1tier.ts";
+import { Radius2 } from "./token/token.const.2tier.ts";
 
 interface FieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -15,6 +15,7 @@ interface FieldProps
   flex?: boolean | number;
   inputStyle?: React.CSSProperties;
   override?: FrameOverrides;
+  children?: React.ReactNode;
 }
 
 export function Field({
@@ -23,12 +24,12 @@ export function Field({
   rightIcon,
   w = "100%",
   flex,
-  className = "",
   style,
   inputStyle,
   value,
   onChange,
   override,
+  children,
   ...props
 }: FieldProps) {
   const effW = flex ? undefined : w;
@@ -40,6 +41,7 @@ export function Field({
       surface="sunken"
       style={{
         width: effW,
+        transition: "all 0.15s ease",
         ...style,
       }}
       override={{
@@ -53,7 +55,6 @@ export function Field({
         ...override,
       }}
       rounded={Radius2.md}
-      className={className}
     >
       {icon && (
         <Frame
@@ -95,7 +96,7 @@ export function Field({
           minWidth: 0,
           flex: 1,
           color: "var(--text-primary)",
-          fontSize: "var(--font-size-n14)", // Default Input Size
+          fontSize: "var(--font-size-n11)", // Revert to n11 for compact UI
           height: "100%",
           ...inputStyle,
         }}
@@ -109,6 +110,7 @@ export function Field({
           {rightIcon}
         </Frame>
       )}
+      {children}
     </Frame>
   );
 }

@@ -1,5 +1,5 @@
-import type React from "react"
-import {IconSize, type IconSizeToken} from "./token/token.const.1tier"
+import type React from "react";
+import { IconSize, type IconSizeToken } from "./token/token.const.1tier";
 
 export interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, "ref"> {
   src: React.ElementType;

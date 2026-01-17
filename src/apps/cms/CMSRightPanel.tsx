@@ -1,29 +1,39 @@
-import {X} from "lucide-react"
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Text} from "../../design-system/text/Text"
-import {FontSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
+import { ChevronRight, X } from "lucide-react";
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function CMSRightPanel({ onClose }: { onClose: () => void }) {
   return (
     <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
       override={{
         w: Size.n320,
         gap: Space.n4,
         p: Space.n4,
-        h: Size.fill,
+        border: true,
       }}
       surface="sunken" // Match sidebar
       style={{
         transition: "width 0.3s ease",
       }}
-      override={{ border: true }}
     >
       <Frame
-        override={{ gap: Space.n12, p: Space.n4 }}
-        layout={Layout.Row.Header.Default}
+        override={{ p: Space.n4 }}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        h={Size.n44}
       >
         <Text.Card.Title size={FontSize.n14} weight="bold">
           Page Properties
@@ -39,43 +49,101 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
 
       <Frame
         scroll
-        flex
-        layout={Layout.Stack.Content.Loose}
-        override={{ p: Space.n4 }}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n0}
+        override={{ flex: 1 }}
       >
-        {/* Placeholder Content */}
-        <Frame layout={Layout.Stack.List.Dense}>
-          <Text.Card.Note>Title</Text.Card.Note>
-          <Frame
-            override={{ h: Size.n32, p: Space.n8 }}
-            rounded={Radius2.md}
-            style={{ background: "var(--surface-base)" }}
-          >
-            <Text.Prose.Body>Marketing Home</Text.Prose.Body>
-          </Frame>
-        </Frame>
+        <InspectorSection title="Identity">
+          <PropertyRow label="Title" value="Marketing Home" />
+          <PropertyRow label="Slug" value="/" />
+          <PropertyRow label="Status" value="Published" badge="success" />
+        </InspectorSection>
 
-        <Frame override={{ gap: Space.n4 }}>
-          <Text.Card.Note>Slug</Text.Card.Note>
-          <Frame
-            override={{ h: Size.n32, p: Space.n8 }}
-            rounded={Radius2.md}
-            style={{ background: "var(--surface-base)" }}
-          >
-            <Text.Prose.Body>/</Text.Prose.Body>
-          </Frame>
-        </Frame>
+        <InspectorSection title="SEO">
+          <PropertyRow label="Meta Title" value="Modern CMS..." />
+          <PropertyRow label="Description" value="The best..." multiline />
+          <PropertyRow label="Indexable" value="Yes" type="toggle" />
+        </InspectorSection>
 
-        <Frame override={{ gap: Space.n4 }}>
-          <Text.Card.Note>Description</Text.Card.Note>
+        <InspectorSection title="Appearance">
+          <PropertyRow label="Theme" value="Dark Mode" />
+          <PropertyRow label="Layout" value="Full Width" />
+        </InspectorSection>
+      </Frame>
+    </Frame>
+  );
+}
+
+function InspectorSection({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
+      override={{ borderBottom: true }}
+    >
+      <Frame
+        layout={Layout.Row.Middle.Between}
+        spacing={Space.n8}
+        override={{ p: Space.n12, h: Size.n40, cursor: "pointer" }}
+        surface="base" // Slightly darker header
+      >
+        <Text.Card.Title
+          size={FontSize.n12}
+          weight="bold"
+          style={{ textTransform: "uppercase", opacity: 0.7 }}
+        >
+          {title}
+        </Text.Card.Title>
+        <Icon
+          src={ChevronRight}
+          size={Size.n12}
+          style={{ opacity: 0.5, transform: "rotate(90deg)" }}
+        />
+      </Frame>
+      <Frame override={{ p: Space.n4, gap: Space.n2 }}>{children}</Frame>
+    </Frame>
+  );
+}
+
+function PropertyRow({ label, value, badge, multiline }: any) {
+  return (
+    <Frame
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n8}
+      override={{ p: Space.n8, h: multiline ? "auto" : Size.n32 }}
+    >
+      <Text.Card.Note style={{ width: "90px", color: "var(--text-secondary)" }}>
+        {label}
+      </Text.Card.Note>
+      <Frame override={{ flex: 1, justify: "end" }}>
+        {badge ? (
           <Frame
-            override={{ h: Size.n64, p: Space.n8 }}
-            rounded={Radius2.md}
-            style={{ background: "var(--surface-base)" }}
+            override={{ px: Space.n6, py: Space.n2, r: Radius2.sm }}
+            style={{
+              background: "var(--color-success-dim)",
+              color: "var(--color-success)",
+            }}
           >
-            <Text.Prose.Body>Main landing page...</Text.Prose.Body>
+            <Text.Card.Note weight="bold" size={FontSize.n11}>
+              {value}
+            </Text.Card.Note>
           </Frame>
-        </Frame>
+        ) : (
+          <Text.Prose.Body
+            size={FontSize.n13}
+            style={{ color: "var(--text-primary)", textAlign: "right" }}
+          >
+            {value}
+          </Text.Prose.Body>
+        )}
       </Frame>
     </Frame>
   );

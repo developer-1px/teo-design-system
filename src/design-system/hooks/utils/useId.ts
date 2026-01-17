@@ -1,4 +1,4 @@
-import {useId as useReactId} from "react"
+import { useId as useReactId } from "react";
 
 /**
  * Generate unique IDs for accessibility attributes

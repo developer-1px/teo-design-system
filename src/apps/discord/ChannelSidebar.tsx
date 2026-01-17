@@ -3,17 +3,22 @@
  * Displays server name, channels, and user profile
  */
 
-import {useAtom, useAtomValue} from "jotai"
-import {ChevronDown, Hash, Headphones, Settings, Volume2} from "lucide-react"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text.tsx"
-import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {getServerById} from "./mockData"
-import {selectedChannelIdAtom, selectedServerIdAtom} from "./store"
-import type {Channel} from "./types"
+import { useAtom, useAtomValue } from "jotai";
+import { ChevronDown, Hash, Headphones, Settings, Volume2 } from "lucide-react";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { getServerById } from "./mockData";
+import { selectedChannelIdAtom, selectedServerIdAtom } from "./store";
+import type { Channel } from "./types";
 
 function ChannelItem({
   channel,
@@ -26,7 +31,9 @@ function ChannelItem({
 }) {
   return (
     <Frame
-      layout={Layout.Row.Item.Tight}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n8}
+      minHeight={Size.n32}
       override={{
         px: Space.n8,
         py: Space.n6,
@@ -98,9 +105,10 @@ export function ChannelSidebar() {
     >
       {/* Server Header */}
       <Frame
-        layout={Layout.Row.Header.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        h={Size.n44}
         override={{
-          px: Space.n16,
           cursor: "pointer",
           shadow: "sm",
         }}
@@ -113,9 +121,10 @@ export function ChannelSidebar() {
 
       {/* Channels */}
       <Frame
-        flex
-        layout={Layout.Stack.Content.Scroll}
-        override={{ px: Space.n8, py: Space.n16 }}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n12}
+        scroll
+        override={{ px: Space.n8, py: Space.n16, flex: 1 }}
       >
         {categories.map((category) => {
           const categoryChannels = server.channels.filter(
@@ -123,10 +132,12 @@ export function ChannelSidebar() {
           );
 
           return (
-            <Frame key={category} layout={Layout.Stack.List.Dense}>
+            <Frame key={category} layout={Layout.Col.Left.Start} spacing={Space.n4}>
               {/* Category Header */}
               <Frame
-                layout={Layout.Row.Item.Tight}
+                layout={Layout.Row.Middle.Center}
+                spacing={Space.n8}
+                minHeight={Size.n32}
                 override={{ px: Space.n8, py: Space.n4 }}
               >
                 <Text
@@ -157,7 +168,9 @@ export function ChannelSidebar() {
 
       {/* User Profile (Bottom) */}
       <Frame
-        layout={Layout.Row.Item.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
         surface="sunken"
         override={{
           px: Space.n8,
@@ -176,7 +189,7 @@ export function ChannelSidebar() {
         >
           <Text size={FontSize.n14}>👤</Text>
         </Frame>
-        <Frame flex>
+        <Frame override={{ flex: 1 }}>
           <Text size={FontSize.n12} weight="bold">
             User
           </Text>
@@ -187,7 +200,11 @@ export function ChannelSidebar() {
             online
           </Text>
         </Frame>
-        <Frame layout={Layout.Row.Item.Compact}>
+        <Frame
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n4}
+          minHeight={Size.n24} override={{ px: Space.n8 }}
+        >
           <Icon
             src={Headphones}
             size={IconSize.n16}

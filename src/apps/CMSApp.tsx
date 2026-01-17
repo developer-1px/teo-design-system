@@ -1,24 +1,39 @@
-import {Download, Edit, Eye, Menu, Monitor, Play, Save, Smartphone, Tablet, Upload,} from "lucide-react"
-import {useState} from "react"
-import {Action} from "../design-system/Action"
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Overlay} from "../design-system/Overlay"
-import {ContainerSize, Size, Space,} from "../design-system/token/token.const.1tier"
-import {Radius2} from "../design-system/token/token.const.2tier"
+import {
+  Download,
+  Edit,
+  Eye,
+  Menu,
+  Monitor,
+  Play,
+  Save,
+  Smartphone,
+  Tablet,
+  Upload,
+} from "lucide-react";
+import { useState } from "react";
+import { Action } from "../design-system/Action";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Overlay } from "../design-system/Overlay";
+import {
+  ContainerSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // CMS Sections
-import {BodyContentSection} from "./cms/BodyContentSection"
-import {CMSDrawer} from "./cms/CMSDrawer"
-import {CMSRightPanel} from "./cms/CMSRightPanel"
-import {CMSSidebar} from "./cms/CMSSidebar"
-import {FAQBoardFooter} from "./cms/FAQBoardFooter"
-import {FeatureGridSection} from "./cms/FeatureGridSection"
-import {HeaderHero} from "./cms/HeaderHero"
-import {ImageFooterBanner} from "./cms/ImageFooterBanner"
-import {MainFooter} from "./cms/MainFooter"
-import {ScrollTabSection} from "./cms/ScrollTabSection"
-import {SiteHeader} from "./cms/SiteHeader"
+import { BodyContentSection } from "./cms/BodyContentSection";
+import { CMSDrawer } from "./cms/CMSDrawer";
+import { CMSRightPanel } from "./cms/CMSRightPanel";
+import { CMSSidebar } from "./cms/CMSSidebar";
+import { FAQBoardFooter } from "./cms/FAQBoardFooter";
+import { FeatureGridSection } from "./cms/FeatureGridSection";
+import { HeaderHero } from "./cms/HeaderHero";
+import { ImageFooterBanner } from "./cms/ImageFooterBanner";
+import { MainFooter } from "./cms/MainFooter";
+import { ScrollTabSection } from "./cms/ScrollTabSection";
+import { SiteHeader } from "./cms/SiteHeader";
 
 export function CMSApp() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -31,10 +46,12 @@ export function CMSApp() {
 
   return (
     <Frame
-      override={{ p: Space.n0, w: Size.screen, h: Size.screen }}
-      surface="sunken"
-      clip
-      layout={Layout.Row.AppContainer.Default}
+      override={{ clip: true }}
+      surface="base" // Base surface for the studio
+      layout={Layout.Row.Stretch.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
     >
       <CMSSidebar
         isOpen={isSidebarOpen}
@@ -42,30 +59,29 @@ export function CMSApp() {
       />
 
       {/* Main Content Area - Raised & Framed */}
+      {/* Infinite Canvas Area */}
       <Frame
-        fill
-        flex
-        override={{
-          shadow: "lg",
-          clip: true,
-        }}
-        rounded={Radius2["2xl"]}
-        surface="raised"
+        override={{ clip: true, flex: 1 }}
         style={{
-          margin: "var(--space-n4)",
-          marginLeft: isSidebarOpen ? "0" : "var(--space-n4)",
-          transition: "margin 0.3s ease",
-          position: "relative",
+          background:
+            "radial-gradient(circle, var(--border-color) 1px, transparent 1px) 0 0 / 24px 24px",
+          backgroundColor: "var(--surface-sunken)", // Darker/Sunken canvas
+          boxShadow: "inset 6px 0 24px -12px rgba(0,0,0,0.1)", // Inner shadow for depth
         }}
+        layout={Layout.Col.Stretch.Start}
+        spacing={Space.n0}
+        w={Size.fill}
+        h={Size.fill}
       >
         {/* Viewport Container */}
         <Frame
-          fill
-          scroll
           override={{
             pb: Space.n96,
           }}
-          layout={Layout.Center.Default}
+          scroll
+          layout={Layout.Col.Center.Start}
+          spacing={Space.n0}
+          h={Size.fill}
         >
           {/* Viewport Frame */}
           <Frame
@@ -77,20 +93,14 @@ export function CMSApp() {
                     ? ContainerSize.n768
                     : Size.fill,
               minHeight: Size.screen,
+              clip: true, // Ensure content doesn't bleed
             }}
-            surface="raised"
+            surface="base" // The "Page" itself
+            shadow="2xl" // Deep shadow for floating effect
             style={{
               transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-              borderLeft:
-                viewport !== "desktop"
-                  ? "1px solid var(--border-color)"
-                  : "none",
-              borderRight:
-                viewport !== "desktop"
-                  ? "1px solid var(--border-color)"
-                  : "none",
-              boxShadow:
-                viewport !== "desktop" ? "var(--elevation-n4)" : "none",
+              border: "1px solid var(--border-color)",
+              borderRadius: viewport !== "desktop" ? "24px" : "0", // Rounded when mobile/tablet
             }}
           >
             <SiteHeader isSidebarOpen={isSidebarOpen} />
@@ -138,19 +148,25 @@ function ViewportSelector({ viewport, setViewport }: ViewportSelectorProps) {
     <Overlay
       position="absolute"
       x="50%"
-      top="var(--space-n16)"
+      top="var(--space-n24)"
       zIndex={200}
       style={{ transform: "translateX(-50%)" }}
     >
       <Frame
-        surface="raised"
+        surface="overlay" // Glass-like surface
         rounded={Radius2.full}
-        layout={Layout.Row.Actions.Default}
-        override={{ p: Space.n6, gap: Space.n2, shadow: "xl", border: true }}
+        layout={Layout.Row.Middle.End}
+        spacing={Space.n8}
+        override={{ p: Space.n4, gap: Space.n2, border: true }}
+        style={{
+          backdropFilter: "blur(12px)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+          backgroundColor: "rgba(255, 255, 255, 0.5)", // More translucent
+        }}
       >
         <Action
           icon={Monitor}
-          variant={viewport === "desktop" ? "primary" : "ghost"}
+          variant={viewport === "desktop" ? "surface" : "ghost"}
           size="sm"
           rounded={Radius2.full}
           onClick={() => setViewport("desktop")}
@@ -158,7 +174,7 @@ function ViewportSelector({ viewport, setViewport }: ViewportSelectorProps) {
         />
         <Action
           icon={Tablet}
-          variant={viewport === "tablet" ? "primary" : "ghost"}
+          variant={viewport === "tablet" ? "surface" : "ghost"}
           size="sm"
           rounded={Radius2.full}
           onClick={() => setViewport("tablet")}
@@ -166,7 +182,7 @@ function ViewportSelector({ viewport, setViewport }: ViewportSelectorProps) {
         />
         <Action
           icon={Smartphone}
-          variant={viewport === "mobile" ? "primary" : "ghost"}
+          variant={viewport === "mobile" ? "surface" : "ghost"}
           size="sm"
           rounded={Radius2.full}
           onClick={() => setViewport("mobile")}
@@ -202,10 +218,16 @@ function BottomToolbar({
       style={{ transform: "translateX(-50%)" }}
     >
       <Frame
-        surface="raised"
+        surface="overlay" // Glass styling
         rounded={Radius2.full}
-        layout={Layout.Row.Actions.Default}
-        override={{ p: Space.n6, gap: Space.n4, shadow: "xl", border: true }}
+        layout={Layout.Row.Middle.End}
+        spacing={Space.n8}
+        override={{ p: Space.n6, gap: Space.n4, border: true }}
+        style={{
+          backdropFilter: "blur(12px)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
+        }}
       >
         {/* Edit Mode Toggle - Left */}
         <Action

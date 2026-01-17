@@ -1,30 +1,40 @@
-import {ArrowRight, Lock, Mail} from "lucide-react"
-import {useState} from "react"
-import {Action} from "../design-system/Action"
-import {Field} from "../design-system/Field"
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../design-system/Icon"
-import {Section} from "../design-system/Section"
-import {Switch} from "../design-system/Switch"
-import {Prose} from "../design-system/text/context/Prose"
-import {Text} from "../design-system/text/Text.tsx"
-import {ContainerSize, FontSize, IconSize, Size, Space,} from "../design-system/token/token.const.1tier"
-import {Radius2} from "../design-system/token/token.const.2tier"
+import { ArrowRight, Lock, Mail } from "lucide-react";
+import { useState } from "react";
+import { Action } from "../design-system/Action";
+import { Field } from "../design-system/Field";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout";
+import { Icon } from "../design-system/Icon";
+import { Section } from "../design-system/Section";
+import { Switch } from "../design-system/Switch";
+import { Prose } from "../design-system/text/context/Prose";
+import { Text } from "../design-system/text/Text.tsx";
+import {
+  ContainerSize,
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LoginApp() {
   const [rememberMe, setRememberMe] = useState(false);
   return (
-    <Frame fill layout={Layout.Row.AppContainer.Default}>
+    <Frame
+      layout={Layout.Row.Stretch.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
+    >
       {/* Left: Login Form */}
       {/* Left: Login Form */}
       <Frame
-        flex={1}
-        surface="base"
         override={{
           p: Space.n32,
           align: "center",
           justify: "center",
+          flex: 1,
         }}
       >
         <Frame
@@ -34,7 +44,7 @@ export function LoginApp() {
             gap: Space.n32,
           }}
         >
-          <Frame override={{ gap: Space.n8 }}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
             <Text size={FontSize.n28} weight="bold">
               Welcome back
             </Text>
@@ -43,8 +53,8 @@ export function LoginApp() {
             </Text>
           </Frame>
 
-          <Frame override={{ gap: Space.n20 }}>
-            <Frame override={{ gap: Space.n8 }}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n20}>
+            <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
               <Field
                 label="Email address"
                 placeholder="name@company.com"
@@ -58,9 +68,11 @@ export function LoginApp() {
               />
             </Frame>
 
-            <Frame layout={Layout.Row.LabelValue.Default}>
+            <Frame layout={Layout.Row.Middle.Start} spacing={Space.n8}>
               <Frame
-                layout={Layout.Row.Item.Tight}
+                layout={Layout.Row.Middle.Center}
+                spacing={Space.n8}
+                minHeight={Size.n32}
                 override={{ cursor: "pointer", gap: Space.n12 }}
                 onClick={() => setRememberMe(!rememberMe)}
               >
@@ -104,7 +116,8 @@ export function LoginApp() {
       <Section flex={1} surface="panel" border="left">
         <Frame
           override={{ p: Space.n48, align: "center", justify: "center" }}
-          fill
+          w={Size.fill}
+          h={Size.fill}
         >
           <Frame
             w={Size.fill}
@@ -130,7 +143,7 @@ export function LoginApp() {
               <Icon src={Lock} size={IconSize.n48} />
             </Frame>
 
-            <Frame override={{ gap: Space.n12 }}>
+            <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
               <Prose.Title variant="lg">
                 Secure & Minimal Design System
               </Prose.Title>
@@ -174,19 +187,21 @@ export function LoginApp() {
 function FeatureRow({ title, desc }: { title: string; desc: string }) {
   return (
     <Frame
-      layout={Layout.Row.Item.Default}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      minHeight={Size.n40}
       override={{ align: "start", gap: Space.n16 }}
     >
       <Frame
+        surface="sunken"
         override={{
           w: Size.n24,
           h: Size.n24,
           align: "center",
           justify: "center",
           r: Radius2.full,
+          flex: 0,
         }}
-        surface="sunken"
-        flex={0}
       >
         <Frame
           surface="primary"

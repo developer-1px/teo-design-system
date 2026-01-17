@@ -1,6 +1,6 @@
-import {useCallback, useRef} from "react"
-import {useControlledState} from "./utils/useControlledState"
-import {useId} from "./utils/useId"
+import { useCallback, useRef } from "react";
+import { useControlledState } from "./utils/useControlledState";
+import { useId } from "./utils/useId";
 
 /**
  * Options for useDropdown hook

@@ -1,10 +1,10 @@
-import {useState} from "react"
-import {Action} from "../../../design-system/Action"
-import {Frame} from "../../../design-system/Frame/Frame"
-import {Layout} from "../../../design-system/Frame/Layout/Layout"
-import {Text} from "../../../design-system/text/Text"
-import {Space} from "../../../design-system/token/token.const.1tier"
-import {Radius2} from "../../../design-system/token/token.const.2tier"
+import { useState } from "react";
+import { Action } from "../../../design-system/Action";
+import { Frame } from "../../../design-system/Frame/Frame";
+import { Layout } from "../../../design-system/Frame/Layout/Layout";
+import { Text } from "../../../design-system/text/Text";
+import { Size, Space } from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 interface JsonTreeProps {
   data: unknown;
@@ -28,7 +28,12 @@ export function JsonTree({
 
   if (!isComplex) {
     return (
-      <Frame layout={Layout.Row.Item.Default} gap={Space.n4}>
+      <Frame
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
+        override={{ gap: Space.n4 }}
+      >
         {name && (
           <Text.Field.Value
             style={{ color: "var(--text-tertiary)", whiteSpace: "nowrap" }}
@@ -53,7 +58,12 @@ export function JsonTree({
 
   if (isEmpty) {
     return (
-      <Frame layout={Layout.Row.Item.Default} gap={Space.n4}>
+      <Frame
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
+        override={{ gap: Space.n4 }}
+      >
         {name && (
           <Text.Field.Value style={{ color: "var(--text-tertiary)" }}>
             {name}:
@@ -67,11 +77,13 @@ export function JsonTree({
   }
 
   return (
-    <Frame layout={Layout.Stack.Content.None}>
+    <Frame layout={Layout.Col.Left.Start} spacing={Space.n0}>
       <Action onClick={() => setIsExpanded(!isExpanded)}>
         <Frame
-          layout={Layout.Row.Item.Default}
-          gap={Space.n4}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          minHeight={Size.n40}
+          override={{ gap: Space.n4 }}
           style={{ cursor: "pointer" }}
         >
           {/* Caret */}
@@ -113,7 +125,11 @@ export function JsonTree({
 
       {/* Children */}
       {isExpanded && (
-        <Frame layout={Layout.Stack.Content.None} override={{ pl: Space.n16 }}>
+        <Frame
+          layout={Layout.Col.Left.Start}
+          spacing={Space.n0}
+          override={{ pl: Space.n16 }}
+        >
           {keys.map((key) => {
             const value = (data as any)[key];
             return (

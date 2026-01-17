@@ -27,7 +27,7 @@ export function SegmentedControl<T extends string>({
     <Frame
       surface="sunken"
       override={{
-        r: Radius2.lg,
+        r: Radius2.md, // Match Field radius
         p: Space.n4,
         row: true,
         w: w,
@@ -44,7 +44,7 @@ export function SegmentedControl<T extends string>({
       <Frame
         surface="raised"
         override={{
-          r: Radius2.md,
+          r: Radius2.sm, // Inner radius slightly smaller
           shadow: "sm",
         }}
         style={
@@ -102,7 +102,7 @@ export function SegmentedControl<T extends string>({
             >
               {typeof option.label === "string" ? (
                 <Text
-                  size={FontSize.n12}
+                  size={FontSize.n11} // Match Field font size
                   weight={isSelected ? "bold" : "medium"}
                   color="inherit" // Inherit from Frame style
                 >

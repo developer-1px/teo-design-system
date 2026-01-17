@@ -1,6 +1,6 @@
-import {atom} from "jotai"
-import {getDatasetsMeta} from "./dataLoader"
-import type {DataRow, DatasetMeta} from "./types"
+import { atom } from "jotai";
+import { getDatasetsMeta } from "./dataLoader";
+import type { DataRow, DatasetMeta } from "./types";
 
 // Dynamically get available datasets from /data/crm/*.json
 const availableDatasets = getDatasetsMeta();

@@ -1,9 +1,12 @@
 import { Moon, Sun } from "lucide-react";
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
+import { AgentEditorApp } from "./apps/AgentEditorApp";
 import { CMSApp } from "./apps/CMSApp";
+import { CommandBarDesignApp } from "./apps/CommandBarDesignApp";
 import { CRMApp } from "./apps/crm/CRMApp.tsx";
 import { DiscordApp } from "./apps/DiscordApp";
 import { LandingApp } from "./apps/LandingApp";
+import { LayoutShowcaseApp } from "./apps/LayoutShowcaseApp";
 import { LoginApp } from "./apps/LoginApp";
 import { MailApp } from "./apps/MailApp";
 import { SlideApp } from "./apps/SlideApp";
@@ -51,7 +54,6 @@ function Navigation() {
   return (
     <Frame
       override={{
-        shadow: "xl",
         p: Space.n4,
         gap: Space.n4,
         zIndex: ZIndex.n200,
@@ -59,12 +61,17 @@ function Navigation() {
       rounded={Radius2.full}
       style={{ position: "fixed", bottom: 20, left: 20 }}
       surface="raised"
-      layout={Layout.Row.Toolbar.Default}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      h={Size.n40}
     >
       <NavItem to="/" label="Home" />
+      <NavItem to="/agent-editor" label="Agent" />
+      <NavItem to="/command-bar" label="CmdBar" />
       <NavItem to="/text" label="Text" />
       <NavItem to="/tokens" label="Tokens" />
       <NavItem to="/surface" label="Surface" />
+      <NavItem to="/layouts" label="Layouts" />
 
       <NavItem to="/slide" label="Slide" />
       <NavItem to="/cms" label="CMS" />
@@ -95,7 +102,8 @@ function ThemeToggleItem() {
         color: "var(--text-secondary)",
       }}
       onClick={toggleTheme}
-      surface="hover"
+      surface="base"
+      interactive
     >
       {isDark ? (
         <Icon src={Sun} size={IconSize.n16} />
@@ -113,9 +121,12 @@ function App() {
       <Frame override={{ minHeight: Size.screen }}>
         <Routes>
           <Route path="/" element={<LandingApp />} />
+          <Route path="/agent-editor" element={<AgentEditorApp />} />
+          <Route path="/command-bar" element={<CommandBarDesignApp />} />
           <Route path="/text" element={<TextSystemApp />} />
           <Route path="/tokens" element={<TokensApp />} />
           <Route path="/surface" element={<SurfaceApp />} />
+          <Route path="/layouts" element={<LayoutShowcaseApp />} />
           <Route path="/slide" element={<SlideApp />} />
 
           <Route path="/cms" element={<CMSApp />} />
@@ -123,7 +134,6 @@ function App() {
           <Route path="/mail" element={<MailApp />} />
           <Route path="/discord" element={<DiscordApp />} />
           <Route path="/login" element={<LoginApp />} />
-
         </Routes>
         <Navigation />
       </Frame>

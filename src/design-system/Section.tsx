@@ -17,7 +17,6 @@ interface SectionProps {
   h?: string | number;
   rounded?: Radius2Token;
   surface?: SurfaceToken;
-  shadow?: "sm" | "md" | "lg";
   flex?: boolean | number;
 }
 
@@ -28,7 +27,7 @@ export function Section({
   fill,
   ...props
 }: SectionProps) {
-  const { w, h, flex, rounded, shadow, style, border, ...rest } = props;
+  const { w, h, flex, rounded, style, border, ...rest } = props;
 
   // Border Logic
   const computedBorder: React.CSSProperties = {};
@@ -54,25 +53,23 @@ export function Section({
         flexDirection: "column",
         ...style,
       }}
-      clip
       override={{
         p: Space.n0,
         flex,
-        shadow,
         r: rounded,
+        clip: true,
       }}
       as="section"
       surface="base"
-      fill={fill}
       {...rest}
     >
       {(title || icon) && (
         <Frame
-          layout={Layout.Row.Item.Tight}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n8}
+          minHeight={Size.n32}
           override={{
-            gap: Space.n8,
             p: Space.n8,
-            align: "center",
             border: true,
           }}
         >
@@ -87,7 +84,14 @@ export function Section({
           </Text.Card.Note>
         </Frame>
       )}
-      <Frame override={{ minHeight: Size.n0 }} scroll fill flex>
+      <Frame
+        scroll
+        w={Size.fill}
+        h={Size.fill}
+        override={{ flex: 1 }}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n12}
+      >
         {children}
       </Frame>
     </Frame>

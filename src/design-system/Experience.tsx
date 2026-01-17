@@ -11,19 +11,14 @@ interface ExperienceProps {
   style?: React.CSSProperties;
 }
 
-export function Experience({
-  value,
-  children,
-  className = "",
-  style,
-}: ExperienceProps) {
+export function Experience({ value, children, style }: ExperienceProps) {
   return (
     <Frame
       override={{ w: Size.fill, h: Size.fill }}
       style={style}
-      className={className}
       data-experience={value}
-      fill
+      w={Size.fill}
+      h={Size.fill}
     >
       {children}
     </Frame>

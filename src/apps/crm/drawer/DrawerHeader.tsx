@@ -1,10 +1,15 @@
-import {ChevronsRight, MoreHorizontal} from "lucide-react"
-import {Action} from "../../../design-system/Action"
-import {Frame} from "../../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../../design-system/Frame/Layout/Layout.ts"
-import {Text} from "../../../design-system/text/Text.tsx"
-import {FontSize, Size, type SizeToken, Space,} from "../../../design-system/token/token.const.1tier"
-import {Radius2} from "../../../design-system/token/token.const.2tier"
+import { ChevronsRight, MoreHorizontal } from "lucide-react";
+import { Action } from "../../../design-system/Action";
+import { Frame } from "../../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { Text } from "../../../design-system/text/Text.tsx";
+import {
+  FontSize,
+  Size,
+  type SizeToken,
+  Space,
+} from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 function Avatar({
   initial,
@@ -19,8 +24,7 @@ function Avatar({
     <Frame
       rounded={Radius2.full}
       style={{ backgroundColor: color }}
-      pack
-      override={{ w: size, h: size, align: "center" }}
+      override={{ w: size, h: size, align: "center", pack: true }}
     >
       <Text.Card.Note
         size={FontSize.n12}
@@ -46,18 +50,20 @@ export function DrawerHeader({
 }) {
   return (
     <Frame
-      layout={Layout.Row.Header.Default}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      h={Size.n44}
       override={{
         h: Size.n64,
         py: Space.n0,
         px: Space.n24,
         borderBottom: true,
-        align: "center",
       }}
     >
       <Frame
-        layout={Layout.Row.Item.Default}
-        override={{ gap: Space.n12, align: "center" }}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40} override={{ px: Space.n16 }}
       >
         <Action icon={ChevronsRight} variant="ghost" onClick={onClose} />
         <Avatar initial={title[0]} color={avatarColor} size={Size.n32} />
@@ -68,7 +74,7 @@ export function DrawerHeader({
           </Text.Card.Note>
         </Frame>
       </Frame>
-      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
+      <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
         <Action icon={MoreHorizontal} variant="ghost" />
       </Frame>
     </Frame>

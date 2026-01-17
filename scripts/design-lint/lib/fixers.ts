@@ -2,7 +2,6 @@ import type {
   JsxAttribute,
   JsxOpeningElement,
   JsxSelfClosingElement,
-  TokenConversion,
 } from "./types";
 import { SyntaxKind } from "./types";
 export function fixStyleToOverride(
@@ -181,6 +180,73 @@ export function fixCenterToPack(
   const insertIndex = element.getAttributes().length;
   element.insertAttribute(insertIndex, {
     name: "pack",
+  });
+}
+
+/**
+ * Apply auto-fix: remove redundant override props that match layout preset values
+ * ⚠️ CRITICAL: NO STRING TEMPLATES - Use AST node manipulation only!
+ */
+export function fixRedundantOverride(
+  element: JsxOpeningElement | JsxSelfClosingElement,
+  redundantKeys: string[],
+): void {
+  const overrideAttr = element.getAttribute("override");
+  if (!overrideAttr) return;
+
+  // Step 1: Get override object AST
+  const initializer = overrideAttr.getInitializer();
+  const jsxExpression = initializer?.asKind(SyntaxKind.JsxExpression);
+  const objectLiteral = jsxExpression
+    ?.getExpression()
+    ?.asKind(SyntaxKind.ObjectLiteralExpression);
+
+  if (objectLiteral) {
+    // Step 2: Remove redundant properties
+    const properties = objectLiteral.getProperties();
+    for (const prop of properties) {
+      if (prop.getKind() === SyntaxKind.PropertyAssignment) {
+        const assignment = prop.asKind(SyntaxKind.PropertyAssignment);
+        const propName = assignment?.getName();
+
+        if (propName && redundantKeys.includes(propName)) {
+          assignment.remove();
+        }
+      }
+    }
+
+    // Step 3: If override is now empty, remove entire attribute
+    if (objectLiteral.getProperties().length === 0) {
+      overrideAttr.remove();
+    }
+  }
+}
+
+/**
+ * Apply auto-fix: convert override to layout prop
+ * ⚠️ CRITICAL: NO STRING TEMPLATES - Use AST node manipulation only!
+ */
+export async function fixOverrideToLayout(
+  element: JsxOpeningElement | JsxSelfClosingElement,
+  layoutPath: string,
+): Promise<void> {
+  const overrideAttr = element.getAttribute("override");
+  if (!overrideAttr) return;
+
+  // Step 1: Remove override attribute
+  overrideAttr.remove();
+
+  // Step 2: Ensure Layout import exists
+  const sourceFile = element.getSourceFile();
+  const { ensureLayoutImport } = await import("./import-manager");
+  ensureLayoutImport(sourceFile);
+
+  // Step 3: Add layout attribute with property access expression
+  // e.g., layout={Layout.Stack.Content.Default}
+  const insertIndex = element.getAttributes().length;
+  element.insertAttribute(insertIndex, {
+    name: "layout",
+    initializer: `{${layoutPath}}`,
   });
 }
 

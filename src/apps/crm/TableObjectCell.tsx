@@ -1,15 +1,19 @@
-import {useRef, useState} from "react"
-import {Frame} from "../../design-system/Frame/Frame"
-import {Layout} from "../../design-system/Frame/Layout/Layout"
-import {Overlay} from "../../design-system/Overlay"
-import {Text} from "../../design-system/text/Text"
-import {Space, ZIndex} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {JsonSmartView} from "./drawer/JsonSmartView"
+import { useRef, useState } from "react";
+import { Frame } from "../../design-system/Frame/Frame";
+import { Layout } from "../../design-system/Frame/Layout/Layout";
+import { Overlay } from "../../design-system/Overlay";
+import { Text } from "../../design-system/text/Text";
+import {
+  Size,
+  Space,
+  ZIndex,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { JsonSmartView } from "./drawer/JsonSmartView";
 
 export function TableObjectCell({ value }: { value: object | any[] }) {
   const [isOpen, setIsOpen] = useState(false);
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
@@ -20,7 +24,7 @@ export function TableObjectCell({ value }: { value: object | any[] }) {
   const count = keys.length;
   const label = isArray ? `${count} Items` : `${count} Props`;
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.stopPropagation(); // Prevent row selection
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
@@ -32,16 +36,31 @@ export function TableObjectCell({ value }: { value: object | any[] }) {
 
   return (
     <>
-      <div ref={triggerRef} onClick={handleClick} style={{ display: "flex" }}>
+      <button
+        type="button"
+        ref={triggerRef}
+        onClick={handleClick}
+        style={{
+          display: "flex",
+          cursor: "pointer",
+          border: "none",
+          background: "transparent",
+          padding: 0,
+          textAlign: "left",
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            handleClick(e);
+          }
+        }}
+      >
         <Frame
-          layout={Layout.Row.Item.Default}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n4}
+          minHeight={Size.n24}
           surface="sunken"
-          rounded={Radius2.sm}
-          override={{
-            px: Space.n8,
-            py: Space.n2,
-            cursor: "pointer",
-          }}
+          interactive
+          rounded={Radius2.sm} override={{ px: Space.n8 }}
         >
           <Text.Field.Value
             style={{
@@ -53,7 +72,7 @@ export function TableObjectCell({ value }: { value: object | any[] }) {
             {label}
           </Text.Field.Value>
         </Frame>
-      </div>
+      </button>
 
       {isOpen && (
         <Overlay
@@ -75,11 +94,8 @@ export function TableObjectCell({ value }: { value: object | any[] }) {
               p: Space.n16,
               // border is not a valid override, use style or specialized frame if needed.
               // actually Frame usually supports 'border' prop if it's the custom Frame, let's check FrameProps.
-              // FrameProps.ts says border: boolean | BorderToken.
-              // But lint said "border does not exist in type FrameOverrides".
-              // Ah, it's a direct prop, not in 'override'.
+              border: true,
             }}
-            border={true}
             style={
               {
                 boxShadow: "var(--shadow-floating)", // React.CSSProperties allows string for boxShadow

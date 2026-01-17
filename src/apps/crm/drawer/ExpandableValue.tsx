@@ -1,11 +1,11 @@
-import {useState} from "react"
-import {Action} from "../../../design-system/Action"
-import {Frame} from "../../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../../design-system/Frame/Layout/Layout.ts"
-import {Text} from "../../../design-system/text/Text.tsx"
-import {Size, Space} from "../../../design-system/token/token.const.1tier"
-import {Radius2} from "../../../design-system/token/token.const.2tier"
-import {JsonSmartView} from "./JsonSmartView"
+import { useState } from "react";
+import { Action } from "../../../design-system/Action";
+import { Frame } from "../../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { Text } from "../../../design-system/text/Text.tsx";
+import { Size, Space } from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
+import { JsonSmartView } from "./JsonSmartView";
 
 interface ExpandableValueProps {
   value: string;
@@ -49,7 +49,12 @@ export function ExpandableValue({
     const hasMore = rawValue.length > threshold;
 
     return (
-      <Frame layout={Layout.Wrap.Chips.Default} override={{ gap: Space.n4 }}>
+      <Frame
+        layout={Layout.Row.Middle.Start}
+        wrap="wrap"
+        spacing={Space.n8}
+        override={{ gap: Space.n4 }}
+      >
         {visibleItems.map((item, i) => (
           <Frame
             key={i}
@@ -98,7 +103,11 @@ export function ExpandableValue({
     isExpanded || !isLong ? value : `${value.slice(0, 60)}...`;
 
   return (
-    <Frame layout={Layout.Stack.Content.None} gap={Space.n4}>
+    <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      override={{ gap: Space.n4 }}
+    >
       <Text.Field.Value
         style={{
           color: empty ? "var(--text-tertiary)" : "var(--text-secondary)",

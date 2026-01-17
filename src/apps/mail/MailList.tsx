@@ -1,12 +1,17 @@
-import {useAtom, useAtomValue} from "jotai"
-import {Paperclip, Star} from "lucide-react"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text.tsx"
-import {FontSize, IconSize, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {filteredThreadsAtom, selectedThreadIdAtom} from "./store"
+import { useAtom, useAtomValue } from "jotai";
+import { Paperclip, Star } from "lucide-react";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { filteredThreadsAtom, selectedThreadIdAtom } from "./store";
 
 export function MailList() {
   const threads = useAtomValue(filteredThreadsAtom);
@@ -14,8 +19,15 @@ export function MailList() {
 
   if (threads.length === 0) {
     return (
-      <Frame fill pack layout={Layout.Center.Default}>
-        <Frame override={{ gap: Space.n8, align: "center" }}>
+      <Frame
+        layout={Layout.Col.Center.Start}
+        spacing={Space.n0}
+        override={{
+          w: Size.fill,
+          h: Size.fill,
+        }}
+      >
+        <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
           <Text.Card.Title style={{ color: "var(--text-secondary)" }}>
             No mail
           </Text.Card.Title>
@@ -28,7 +40,14 @@ export function MailList() {
   }
 
   return (
-    <Frame fill scroll override={{ p: Space.n0 }}>
+    <Frame
+      scroll
+      override={{
+        p: Space.n0,
+        w: Size.fill,
+        h: Size.fill,
+      }}
+    >
       {threads.map((thread) => {
         const isSelected = selectedThreadId === thread.id;
         const firstMail = thread.mails[0];
@@ -53,8 +72,9 @@ export function MailList() {
           >
             {/* Header Row */}
             <Frame
-              layout={Layout.Row.Item.Default}
-              override={{ align: "center" }}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40} override={{ px: Space.n16 }}
             >
               <Icon
                 src={Star}
@@ -99,8 +119,9 @@ export function MailList() {
 
             {/* Snippet */}
             <Frame
-              layout={Layout.Row.Item.Default}
-              override={{ align: "center" }}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40} override={{ px: Space.n16 }}
             >
               <Text.Card.Note
                 size={FontSize.n12}
@@ -125,7 +146,11 @@ export function MailList() {
 
             {/* Labels */}
             {thread.labels.length > 0 && (
-              <Frame layout={Layout.Wrap.Chips.Default}>
+              <Frame
+                layout={Layout.Row.Middle.Start}
+                wrap="wrap"
+                spacing={Space.n8}
+              >
                 {thread.labels.map((label) => (
                   <Frame
                     key={label}

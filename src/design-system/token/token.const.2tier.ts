@@ -12,8 +12,8 @@
  * ```
  */
 
-import type {Brand} from "./lib/brand"
-import {FontSize, IconSize, Radius, Size, Space} from "./token.const.1tier"
+import type { Brand } from "./lib/brand";
+import { FontSize, IconSize, Radius, Size, Space } from "./token.const.1tier";
 
 // ---------------------------------
 // Action Size
@@ -84,3 +84,9 @@ export const Radius2 = {
   "3xl": Radius.n24 as unknown as Radius2Token,
   full: Radius.n9999 as unknown as Radius2Token,
 } as const;
+
+// ---------------------------------
+// Shadow - DEPRECATED
+// ---------------------------------
+// Shadow tokens have been removed from the spec.
+// Use Elevation tokens directly in style={{ boxShadow: ... }} if needed.

@@ -10,23 +10,21 @@ export type RoundedToken =
   | "full";
 
 export type SurfaceToken =
+  | "ghost"
   | "base"
   | "raised"
   | "sunken"
   | "overlay"
   | "primary"
   | "selected"
-  | "page"
-  | "panel"
-  | "card"
-  | "hover"
-  | "ghost";
+  | "panel";
 
 export type ActionVariant = "ghost" | "surface" | "primary";
 
 export type FontWeight = "bold" | "regular" | "medium";
 
 export type AlignToken = "start" | "center" | "end" | "stretch" | "baseline";
+
 export type JustifyToken =
   | "start"
   | "center"
@@ -43,7 +41,6 @@ export type CursorToken =
   | "not-allowed"
   | "grab"
   | "grabbing";
-export type ShadowToken = "sm" | "md" | "lg" | "xl" | "2xl";
 
 // Re-export sizing tokens from source of truth
 import type {
@@ -53,7 +50,7 @@ import type {
   MaxWidthToken,
   WidthToken,
   ZIndexToken,
-} from "../token/token.const.1tier"
+} from "../token/token.const.1tier";
 
 export type {
   WidthToken,

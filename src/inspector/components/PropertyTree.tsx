@@ -1,10 +1,15 @@
-import {ChevronDown, ChevronRight} from "lucide-react"
-import React, {useState} from "react"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text"
-import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
+import { ChevronDown, ChevronRight } from "lucide-react";
+import React, { useState } from "react";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
 
 export function PropertyTree({
   label,
@@ -37,7 +42,8 @@ export function PropertyTree({
             paddingLeft: `${depth * 12 + 8}px`,
           } as React.CSSProperties
         }
-        layout={Layout.Row.LabelValue.Default}
+        layout={Layout.Row.Middle.Start}
+        spacing={Space.n8}
         surface={background}
       >
         <Text size={FontSize.n9} color="secondary">
@@ -76,14 +82,19 @@ export function PropertyTree({
             cursor: isEmpty ? "default" : "pointer",
           } as React.CSSProperties
         }
-        layout={Layout.Row.LabelValue.Default}
+        layout={Layout.Row.Middle.Start}
+        spacing={Space.n8}
         surface={background}
         onClick={(e) => {
           e.stopPropagation();
           if (!isEmpty) setIsOpen(!isOpen);
         }}
       >
-        <Frame layout={Layout.Row.Item.Default}>
+        <Frame
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          minHeight={Size.n40} override={{ px: Space.n16 }}
+        >
           {!isEmpty && (
             <Icon
               src={isOpen ? ChevronDown : ChevronRight}

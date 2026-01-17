@@ -3,16 +3,20 @@
  * Displays scrollable list of messages
  */
 
-import {useAtomValue} from "jotai"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Overlay} from "../../design-system/Overlay"
-import {Text} from "../../design-system/text/Text.tsx"
-import {FontSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {getChannelMessages} from "./mockData"
-import {selectedChannelIdAtom} from "./store"
-import type {Message} from "./types"
+import { useAtomValue } from "jotai";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Overlay } from "../../design-system/Overlay";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  FontSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { getChannelMessages } from "./mockData";
+import { selectedChannelIdAtom } from "./store";
+import type { Message } from "./types";
 
 function MessageItem({ message }: { message: Message }) {
   const formatTime = (date: Date) => {
@@ -36,9 +40,10 @@ function MessageItem({ message }: { message: Message }) {
 
   return (
     <Frame
-      layout={Layout.Row.Item.Default}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      minHeight={Size.n40}
       override={{
-        px: Space.n16,
         py: Space.n8,
         align: "start",
       }}
@@ -72,10 +77,16 @@ function MessageItem({ message }: { message: Message }) {
       </Frame>
 
       {/* Message Content */}
-      <Frame flex layout={Layout.Stack.Content.None}>
+      <Frame
+        override={{ flex: 1 }}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n0}
+      >
         {/* Header */}
         <Frame
-          layout={Layout.Row.Item.Compact}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n4}
+          minHeight={Size.n24}
           override={{ align: "baseline" }}
         >
           <Text size={FontSize.n14} weight="bold">
@@ -101,11 +112,11 @@ export function MessageList() {
   if (!selectedChannelId) {
     return (
       <Frame
-        flex
         override={{
           align: "center",
           justify: "center",
           p: Space.n16,
+          flex: 1,
         }}
       >
         <Text size={FontSize.n14} style={{ color: "var(--text-subtle)" }}>
@@ -120,11 +131,11 @@ export function MessageList() {
   if (messages.length === 0) {
     return (
       <Frame
-        flex
         override={{
           align: "center",
           justify: "center",
           p: Space.n16,
+          flex: 1,
         }}
       >
         <Text size={FontSize.n14} style={{ color: "var(--text-subtle)" }}>
@@ -136,9 +147,10 @@ export function MessageList() {
 
   return (
     <Frame
-      flex
-      layout={Layout.Stack.Content.Scroll}
-      override={{ py: Space.n16 }}
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n12}
+      scroll
+      override={{ py: Space.n16, flex: 1 }}
     >
       {messages.map((message) => (
         <MessageItem key={message.id} message={message} />

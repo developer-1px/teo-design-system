@@ -1,4 +1,4 @@
-import {useAtomValue} from "jotai"
+import { useAtomValue } from "jotai";
 import {
   Archive,
   ArrowLeft,
@@ -11,23 +11,35 @@ import {
   ReplyAll,
   Star,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
 
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text.tsx"
-import {FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {selectedThreadAtom} from "./store"
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { selectedThreadAtom } from "./store";
 
 export function MailDetail() {
   const selectedThread = useAtomValue(selectedThreadAtom);
 
   if (!selectedThread) {
     return (
-      <Frame fill pack layout={Layout.Center.Default}>
-        <Frame override={{ gap: Space.n8, align: "center" }}>
+      <Frame
+        layout={Layout.Col.Center.Start}
+        spacing={Space.n0}
+        override={{
+          w: Size.fill,
+          h: Size.fill,
+        }}
+      >
+        <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
           <Icon
             src={Inbox}
             size={IconSize.n64}
@@ -47,7 +59,13 @@ export function MailDetail() {
   const mail = selectedThread.mails[0];
 
   return (
-    <Frame fill override={{ p: Space.n0 }}>
+    <Frame
+      override={{
+        p: Space.n0,
+        w: Size.fill,
+        h: Size.fill,
+      }}
+    >
       {/* Toolbar */}
       <Frame
         override={{
@@ -57,7 +75,9 @@ export function MailDetail() {
           gap: Space.n8,
           borderBottom: true,
         }}
-        layout={Layout.Row.Toolbar.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        h={Size.n40}
       >
         <Frame
           as="button"
@@ -96,7 +116,7 @@ export function MailDetail() {
           <Icon src={MoreVertical} size={IconSize.n20} />
         </Frame>
 
-        <Frame flex />
+        <Frame override={{ flex: 1 }} />
 
         <Frame
           as="button"
@@ -120,16 +140,22 @@ export function MailDetail() {
 
       {/* Mail Content */}
       <Frame
-        fill
         scroll
-        override={{ p: Space.n24, gap: Space.n24 }}
-        layout={Layout.Stack.Content.Default}
+        override={{
+          p: Space.n24,
+          gap: Space.n24,
+          w: Size.fill,
+          h: Size.fill,
+        }}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n12}
       >
         {/* Subject */}
-        <Frame override={{ gap: Space.n12 }}>
+        <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
           <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n12}
+            minHeight={Size.n40} override={{ px: Space.n16 }}
           >
             <Text.Card.Title
               size={FontSize.n20}
@@ -153,7 +179,7 @@ export function MailDetail() {
 
           {/* Labels */}
           {selectedThread.labels.length > 0 && (
-            <Frame layout={Layout.Wrap.Chips.Default}>
+            <Frame layout={Layout.Row.Middle.Start} wrap="wrap" spacing={Space.n8}>
               {selectedThread.labels.map((label) => (
                 <Frame
                   key={label}
@@ -170,14 +196,17 @@ export function MailDetail() {
 
         {/* Sender Info */}
         <Frame
-          override={{ gap: Space.n12, align: "start" }}
-          layout={Layout.Row.Item.Default}
+          override={{ align: "start" }}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          minHeight={Size.n40}
         >
           <Frame
             override={{ w: Size.n40, h: Size.n40 }}
             rounded={Radius2.full}
             surface="raised"
-            pack
+            layout={Layout.Col.Center.Start}
+            spacing={Space.n0}
           >
             <Text.Card.Title
               weight="bold"
@@ -188,10 +217,15 @@ export function MailDetail() {
             </Text.Card.Title>
           </Frame>
 
-          <Frame override={{ gap: Space.n4 }} flex>
+          <Frame
+            override={{ flex: 1 }}
+            layout={Layout.Col.Left.Start}
+            spacing={Space.n4}
+          >
             <Frame
-              layout={Layout.Row.Item.Default}
-              override={{ align: "center" }}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40} override={{ px: Space.n16 }}
             >
               <Text.Card.Title
                 weight="bold"
@@ -228,7 +262,7 @@ export function MailDetail() {
         </Frame>
 
         {/* Mail Body */}
-        <Frame override={{ gap: Space.n16 }}>
+        <Frame layout={Layout.Col.Left.Start} spacing={Space.n16}>
           <Text.Field.Value
             size={FontSize.n14}
             style={{
@@ -243,7 +277,7 @@ export function MailDetail() {
 
         {/* Attachments */}
         {mail.hasAttachments && (
-          <Frame override={{ gap: Space.n8 }}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
             <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
               {mail.attachmentCount} Attachment
               {mail.attachmentCount !== 1 ? "s" : ""}
@@ -251,19 +285,19 @@ export function MailDetail() {
             <Frame
               rounded={Radius2.md}
               surface="raised"
-              layout={Layout.Row.Item.Default}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40}
               override={{
                 py: Space.n12,
                 px: Space.n12,
-                gap: Space.n12,
-                align: "center",
               }}
             >
               <Icon src={Paperclip} size={IconSize.n16} />
               <Text.Card.Note size={FontSize.n13}>
                 design-system-review.pdf
               </Text.Card.Note>
-              <Frame flex />
+              <Frame override={{ flex: 1 }} />
               <Text.Card.Note
                 size={FontSize.n11}
                 style={{ color: "var(--text-tertiary)" }}
@@ -275,12 +309,11 @@ export function MailDetail() {
         )}
 
         {/* Reply Actions */}
-        <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
+        <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
           <Frame
             as="button"
             interactive
             surface="base"
-            border
             rounded={Radius2.md}
             override={{
               py: Space.n8,
@@ -288,6 +321,7 @@ export function MailDetail() {
               gap: Space.n8,
               row: true,
               align: "center",
+              border: true,
             }}
           >
             <Icon src={Reply} size={IconSize.n16} />
@@ -297,7 +331,6 @@ export function MailDetail() {
             as="button"
             interactive
             surface="base"
-            border
             rounded={Radius2.md}
             override={{
               py: Space.n8,
@@ -305,6 +338,7 @@ export function MailDetail() {
               gap: Space.n8,
               row: true,
               align: "center",
+              border: true,
             }}
           >
             <Icon src={ReplyAll} size={IconSize.n16} />
@@ -314,7 +348,6 @@ export function MailDetail() {
             as="button"
             interactive
             surface="base"
-            border
             rounded={Radius2.md}
             override={{
               py: Space.n8,
@@ -322,6 +355,7 @@ export function MailDetail() {
               gap: Space.n8,
               row: true,
               align: "center",
+              border: true,
             }}
           >
             <Icon src={Forward} size={IconSize.n16} />
@@ -346,6 +380,7 @@ function Inbox({ ...props }) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      aria-hidden="true"
       {...props}
     >
       <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />

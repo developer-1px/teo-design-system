@@ -9,14 +9,14 @@ import {
   Square,
   Sun,
   Type,
-} from "lucide-react"
-import {Action} from "../design-system/Action"
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Overlay} from "../design-system/Overlay"
-import {Separator} from "../design-system/Separator"
-import {useTheme} from "../design-system/theme"
-import {IconSize, Radius2, Space} from "../design-system/token"
+} from "lucide-react";
+import { Action } from "../design-system/Action";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Overlay } from "../design-system/Overlay";
+import { Separator } from "../design-system/Separator";
+import { useTheme } from "../design-system/theme";
+import { IconSize, Radius2, Size, Space } from "../design-system/token";
 
 const BOTTOM_TOOLS = [
   { icon: MousePointer2, tooltip: "Move", variant: "surface" as const },
@@ -45,10 +45,15 @@ export function FloatingToolbar() {
     >
       <Frame
         rounded={Radius2.full}
-        layout={Layout.Row.Toolbar.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n8}
+        h={Size.n36}
         surface="base"
-        override={{ gap: Space.n4, p: Space.n4, shadow: "lg", align: "center" }}
-        border
+        override={{
+          gap: Space.n4,
+          p: Space.n4,
+          border: true,
+        }}
       >
         {BOTTOM_TOOLS.map((tool, i) =>
           tool.separator ? (

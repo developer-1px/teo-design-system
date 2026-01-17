@@ -1,9 +1,9 @@
-import {TableCell} from "./TableCell"
-import {TableEmpty} from "./TableEmpty"
-import {TableHead} from "./TableHead"
-import {TableHeader} from "./TableHeader"
-import {TableRoot} from "./TableRoot"
-import {TableRow} from "./TableRow"
+import { TableCell } from "./TableCell";
+import { TableEmpty } from "./TableEmpty";
+import { TableHead } from "./TableHead";
+import { TableHeader } from "./TableHeader";
+import { TableRoot } from "./TableRoot";
+import { TableRow } from "./TableRow";
 
 /**
  * Table component namespace structure

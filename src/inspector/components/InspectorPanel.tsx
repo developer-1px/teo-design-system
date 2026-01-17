@@ -10,18 +10,27 @@ import {
   Palette,
   Type,
   X,
-} from "lucide-react"
-import {useEffect, useRef, useState} from "react"
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Text} from "../../design-system/text/Text"
-import {FontSize, Space} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import type {ComponentStackItem} from "../lib/fiber-utils"
-import {generateJSX} from "../lib/inspector-utils"
-import {AppearanceControl, LayoutControl, SizingControl, TypographyControl,} from "./InspectorControls"
-import {PropertyTree} from "./PropertyTree"
+} from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Text } from "../../design-system/text/Text";
+import {
+  FontSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import type { ComponentStackItem } from "../lib/fiber-utils";
+import { generateJSX } from "../lib/inspector-utils";
+import {
+  AppearanceControl,
+  LayoutControl,
+  SizingControl,
+  TypographyControl,
+} from "./InspectorControls";
+import { PropertyTree } from "./PropertyTree";
 
 const SECTION_MAPPING: Record<string, string> = {
   // Layout (Inner Flow)
@@ -129,7 +138,9 @@ export function InspectorPanel({
 
     // Special handling for override object
     if (key === "override" && typeof value === "object" && value !== null) {
-      Object.entries(value).forEach(([k, v]) => processProp(k, v));
+      Object.entries(value).forEach(([k, v]) => {
+        processProp(k, v);
+      });
       return;
     }
 
@@ -172,7 +183,7 @@ export function InspectorPanel({
         }))
       : [];
 
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
     const clone = element.cloneNode(true) as HTMLElement;
     clone.innerHTML = "";
     const shell = clone.outerHTML;
@@ -185,7 +196,7 @@ export function InspectorPanel({
     navigator.clipboard.writeText(textToCopy).then(() => {
       onCopy("Full component info copied!");
     });
-  };
+  }, [element, name, props, stack, onCopy]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     isDragging.current = true;
@@ -223,7 +234,7 @@ export function InspectorPanel({
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [element, name, props, stack]);
+  }, [handleCopy]);
 
   const title = stack.length > 0 ? stack[0].name : "Element";
 
@@ -239,12 +250,12 @@ export function InspectorPanel({
     >
       <Frame
         override={{
-          shadow: "2xl",
           r: Radius2.lg,
           border: true,
         }}
         style={
           {
+            boxShadow: "var(--elevation-n5)",
             maxHeight: "80vh",
             width: 260,
           } as React.CSSProperties
@@ -264,13 +275,16 @@ export function InspectorPanel({
             userSelect: "none",
           }}
           surface="sunken"
-          layout={Layout.Row.Header.Default}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          h={Size.n44}
           onMouseDown={handleMouseDown}
         >
           <Frame
-            override={{ gap: Space.n6 }}
-            layout={Layout.Row.Item.Tight}
-            flex
+            override={{ gap: Space.n6, flex: 1 }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32}
           >
             <Lock size={12} className="text-primary" />
             <Text weight="bold" size={FontSize.n10}>
@@ -279,7 +293,8 @@ export function InspectorPanel({
           </Frame>
           <Frame
             override={{ gap: Space.n2 }}
-            layout={Layout.Row.Actions.Default}
+            layout={Layout.Row.Middle.End}
+            spacing={Space.n8}
           >
             <Action
               icon={Copy}
@@ -342,7 +357,9 @@ export function InspectorPanel({
                 key={section.section}
               >
                 <Frame
-                  layout={Layout.Row.Item.Tight}
+                  layout={Layout.Row.Middle.Center}
+                  spacing={Space.n8}
+                  minHeight={Size.n32}
                   override={{ gap: Space.n4, py: Space.n4 }}
                 >
                   <SectionIcon size={10} className="text-tertiary" />
@@ -370,8 +387,12 @@ export function InspectorPanel({
                   <TypographyControl props={section.items} />
                 ) : (
                   <Frame
-                    override={{ gap: Space.n0, r: Radius2.sm, border: true }}
-                    clip
+                    override={{
+                      gap: Space.n0,
+                      r: Radius2.sm,
+                      border: true,
+                      clip: true,
+                    }}
                   >
                     {Object.entries(section.items).map(([key, value], i) => (
                       <PropertyTree
@@ -400,7 +421,9 @@ export function InspectorPanel({
               key={section.title}
             >
               <Frame
-                layout={Layout.Row.Item.Tight}
+                layout={Layout.Row.Middle.Center}
+                spacing={Space.n8}
+                minHeight={Size.n32}
                 override={{ gap: Space.n4, py: Space.n4 }}
               >
                 <section.icon size={10} className="text-tertiary" />
@@ -417,8 +440,12 @@ export function InspectorPanel({
                 </Text>
               </Frame>
               <Frame
-                override={{ gap: Space.n0, r: Radius2.sm, border: true }}
-                clip
+                override={{
+                  gap: Space.n0,
+                  r: Radius2.sm,
+                  border: true,
+                  clip: true,
+                }}
               >
                 {Object.entries(section.data).map(([key, value], i) => (
                   <PropertyTree
@@ -444,7 +471,9 @@ export function InspectorPanel({
               }}
             >
               <Frame
-                layout={Layout.Row.Item.Tight}
+                layout={Layout.Row.Middle.Center}
+                spacing={Space.n8}
+                minHeight={Size.n32}
                 override={{ gap: Space.n4, py: Space.n4 }}
               >
                 <AppWindow size={10} className="text-tertiary" />
@@ -461,8 +490,12 @@ export function InspectorPanel({
                 </Text>
               </Frame>
               <Frame
-                override={{ gap: Space.n0, r: Radius2.sm, border: true }}
-                clip
+                override={{
+                  gap: Space.n0,
+                  r: Radius2.sm,
+                  border: true,
+                  clip: true,
+                }}
               >
                 {hierarchyStack.map((item, i) => (
                   <PropertyTree

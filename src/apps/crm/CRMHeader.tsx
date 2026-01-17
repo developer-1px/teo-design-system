@@ -1,29 +1,33 @@
-import {Globe, LayoutGrid, Plus, Search} from "lucide-react"
+import { Globe, LayoutGrid, Plus, Search } from "lucide-react";
 
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text.tsx"
-import {IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function CRMHeader() {
   return (
     <Frame
-      layout={Layout.Row.Header.Default}
-      surface="base"
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
       h={Size.n64}
       override={{
         py: Space.n0,
         px: Space.n20,
-        align: "center",
         borderBottom: true, // Continuous line with Sidebar
       }}
     >
       <Frame
-        layout={Layout.Row.Meta.Default}
-        override={{ gap: Space.n8, align: "center" }}
+        layout={Layout.Row.Middle.Start}
+        spacing={Space.n8}
+        override={{ align: "center" }}
       >
         <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
           Records
@@ -32,8 +36,9 @@ export function CRMHeader() {
           /
         </Text.Card.Note>
         <Frame
-          layout={Layout.Row.Meta.Default}
-          override={{ gap: Space.n8, align: "center" }}
+          layout={Layout.Row.Middle.Start}
+          spacing={Space.n8}
+          override={{ align: "center" }}
         >
           <Icon src={LayoutGrid} size={IconSize.n16} />
           <Text.Card.Title weight="bold">Deals</Text.Card.Title>
@@ -44,13 +49,13 @@ export function CRMHeader() {
       <Frame
         rounded={Radius2.md}
         surface="sunken"
-        layout={Layout.Row.Toolbar.Compact}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n8}
+        h={Size.n36}
         override={{
           w: Size.n384,
           py: Space.n6,
           px: Space.n12,
-          gap: Space.n8,
-          align: "center",
         }}
       >
         <Icon
@@ -68,7 +73,7 @@ export function CRMHeader() {
         >
           Search deals, companies...
         </Text.Field.Label>
-        <Frame flex />
+        <Frame override={{ flex: 1 }} />
         <Frame
           override={{
             px: Space.n4,
@@ -85,7 +90,7 @@ export function CRMHeader() {
         </Frame>
       </Frame>
 
-      <Frame override={{ gap: Space.n8 }} layout={Layout.Row.Actions.Default}>
+      <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
         <Action variant="surface" border icon={Globe} label="Share" />
         <Action variant="primary" icon={Plus} label="New Deal" />
       </Frame>

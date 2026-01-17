@@ -1,9 +1,14 @@
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import type {SurfaceToken} from "../design-system/lib/types.ts"
-import {Prose} from "../design-system/text/context/Prose.tsx"
-import {ContainerSize, Opacity, Size, Space,} from "../design-system/token/token.const.1tier.ts"
-import {Radius2} from "../design-system/token/token.const.2tier.ts"
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout";
+import type { SurfaceToken } from "../design-system/lib/types.ts";
+import { Prose } from "../design-system/text/context/Prose.tsx";
+import {
+  ContainerSize,
+  Opacity,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier.ts";
+import { Radius2 } from "../design-system/token/token.const.2tier.ts";
 
 const SURFACES: Array<{
   token: SurfaceToken;
@@ -84,7 +89,8 @@ function IntroductionPage() {
         scrollSnapStop: "always",
       }}
       surface="sunken"
-      layout={Layout.Center.Default}
+      layout={Layout.Col.Center.Start}
+      spacing={Space.n0}
       override={{ minHeight: Size.screen }}
     >
       <Frame
@@ -92,10 +98,11 @@ function IntroductionPage() {
           gap: Space.n24,
           maxWidth: ContainerSize.n768,
         }}
-        layout={Layout.Stack.Content.Loose}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n16}
       >
         {/* Title */}
-        <Frame layout={Layout.Stack.Content.Tight}>
+        <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
           <Prose.Title
             variant="xl"
             style={{
@@ -125,7 +132,7 @@ function IntroductionPage() {
           rounded={Radius2.xl}
           surface="base"
         >
-          <Frame layout={Layout.Stack.Content.Default}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
             <Prose.Title
               variant="md"
               style={{ fontSize: "32px", fontWeight: 600 }}
@@ -139,7 +146,7 @@ function IntroductionPage() {
             </Prose.Body>
           </Frame>
 
-          <Frame layout={Layout.Stack.Content.Default}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
             <Prose.Title
               variant="md"
               style={{ fontSize: "32px", fontWeight: 600 }}
@@ -155,13 +162,13 @@ function IntroductionPage() {
         </Frame>
 
         {/* Scroll Hint */}
-        <Frame layout={Layout.Center.Default}>
+        <Frame layout={Layout.Col.Center.Start} spacing={Space.n0}>
           <Frame
             override={{
-              gap: Space.n8,
               opacity: Opacity.n60,
             }}
-            layout={Layout.Stack.Content.Tight}
+            layout={Layout.Col.Left.Start}
+            spacing={Space.n8}
             style={{
               animation: "bounce 2s infinite",
             }}
@@ -206,7 +213,8 @@ function ShowcasePage() {
         scrollSnapStop: "always",
       }}
       surface="sunken"
-      layout={Layout.Center.Default}
+      layout={Layout.Col.Center.Start}
+      spacing={Space.n0}
       override={{
         gap: Space.n40,
         minHeight: Size.screen,
@@ -216,10 +224,11 @@ function ShowcasePage() {
         override={{
           gap: Space.n32,
         }}
-        layout={Layout.Stack.Content.Default}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n12}
       >
         {/* Title */}
-        <Frame layout={Layout.Stack.Content.Tight}>
+        <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
           <Prose.Title
             variant="xl"
             style={{
@@ -242,15 +251,14 @@ function ShowcasePage() {
 
         {/* Square Surface Cards */}
         <Frame
-          override={{
-            gap: Space.n16,
-          }}
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
             flexWrap: "wrap",
           }}
+          layout={Layout.Col.Left.Start}
+          spacing={Space.n16}
         >
           {SURFACES.map((item) => (
             <Frame
@@ -268,7 +276,8 @@ function ShowcasePage() {
                 flexDirection: "column",
                 cursor: "pointer",
               }}
-              pack
+              layout={Layout.Col.Center.Start}
+              spacing={Space.n0}
             >
               <Prose.Title
                 variant="sm"
@@ -284,7 +293,7 @@ function ShowcasePage() {
         </Frame>
 
         {/* Scroll Hint */}
-        <Frame layout={Layout.Center.Default}>
+        <Frame layout={Layout.Col.Center.Start} spacing={Space.n0}>
           <Prose.Note
             style={{ textAlign: "center", fontSize: "14px", opacity: 0.6 }}
           >
@@ -321,7 +330,8 @@ function SurfaceDetailPage({
         px: Space.n64,
         minHeight: Size.screen,
       }}
-      layout={Layout.Center.Default}
+      layout={Layout.Col.Center.Start}
+      spacing={Space.n0}
     >
       <Frame
         override={{
@@ -331,7 +341,7 @@ function SurfaceDetailPage({
         }}
       >
         {/* Page Number */}
-        <Frame layout={Layout.Center.Default}>
+        <Frame layout={Layout.Col.Center.Start} spacing={Space.n0}>
           <Prose.Code
             style={{
               fontSize: "12px",
@@ -345,14 +355,16 @@ function SurfaceDetailPage({
 
         {/* 2-Column Layout */}
         <Frame
-          layout={Layout.Row.Item.Default}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          minHeight={Size.n40}
           style={{
             animation: `fadeInUp 0.8s ease both`,
           }}
-          override={{ gap: Space.n64, align: "center" }}
+          override={{ gap: Space.n64 }}
         >
           {/* Left: Visual Sample */}
-          <Frame flex={1} override={{ gap: Space.n32, align: "center" }}>
+          <Frame override={{ flex: 1, gap: Space.n32, align: "center" }}>
             {/* Large Surface Preview */}
             <Frame
               surface={token}
@@ -367,7 +379,8 @@ function SurfaceDetailPage({
                 maxWidth: ContainerSize.n480,
                 p: Space.n32,
               }}
-              pack
+              layout={Layout.Col.Center.Start}
+              spacing={Space.n0}
             >
               <Prose.Code
                 style={{
@@ -381,9 +394,9 @@ function SurfaceDetailPage({
           </Frame>
 
           {/* Right: Description */}
-          <Frame flex={1} override={{ gap: Space.n40 }}>
+          <Frame override={{ flex: 1, gap: Space.n40 }}>
             {/* Title */}
-            <Frame override={{ gap: Space.n12 }}>
+            <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
               <Prose.Title
                 variant="xl"
                 style={{
@@ -405,7 +418,7 @@ function SurfaceDetailPage({
             </Frame>
 
             {/* Description */}
-            <Frame override={{ gap: Space.n16 }}>
+            <Frame layout={Layout.Col.Left.Start} spacing={Space.n16}>
               <Prose.Note
                 style={{
                   fontSize: "12px",
@@ -430,7 +443,7 @@ function SurfaceDetailPage({
             </Frame>
 
             {/* Usage */}
-            <Frame override={{ gap: Space.n16 }}>
+            <Frame layout={Layout.Col.Left.Start} spacing={Space.n16}>
               <Prose.Note
                 style={{
                   fontSize: "12px",
@@ -457,7 +470,7 @@ function SurfaceDetailPage({
 
         {/* Scroll Hint */}
         {pageNumber < 8 && (
-          <Frame layout={Layout.Center.Default}>
+          <Frame layout={Layout.Col.Center.Start} spacing={Space.n0}>
             <Prose.Note
               style={{
                 textAlign: "center",

@@ -418,7 +418,7 @@ export function Accordion({ items, ...options }: AccordionProps) {
   });
 
   return (
-    <Frame layout={Layout.Stack.Content.Default}>
+    <Frame layout={Layout.Stack.Start.Gap12.Content.Default}>
       {items.map((item) => (
         <Frame key={item.id}>
           <Action {...getItemProps(item.id)}>

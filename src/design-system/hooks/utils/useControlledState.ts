@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react"
+import { useCallback, useState } from "react";
 
 /**
  * Utility hook to handle both controlled and uncontrolled state patterns

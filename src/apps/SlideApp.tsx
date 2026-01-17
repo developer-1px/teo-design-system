@@ -1,38 +1,55 @@
-import {ChevronDown, Circle, Grid, Play, Plus, Share, Square, Type,} from "lucide-react"
-import {useState} from "react"
-import {FloatingToolbar} from "../components/FloatingToolbar"
-import {PropertiesPanel} from "../components/PropertiesPanel"
-import {SlidesPanel} from "../components/SlidesPanel"
-import {Action} from "../design-system/Action"
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../design-system/Icon"
-import {SegmentedControl} from "../design-system/SegmentedControl"
-import {Text} from "../design-system/text/Text"
-import {IconSize, Opacity, Radius2, Size, Space,} from "../design-system/token"
-import {ZIndex} from "../design-system/token/token.const.1tier"
+import {
+  ChevronDown,
+  Circle,
+  Grid,
+  Play,
+  Plus,
+  Share,
+  Square,
+  Type,
+} from "lucide-react";
+import { useState } from "react";
+import { FloatingToolbar } from "../components/FloatingToolbar";
+import { PropertiesPanel } from "../components/PropertiesPanel";
+import { SlidesPanel } from "../components/SlidesPanel";
+import { Action } from "../design-system/Action";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../design-system/Icon";
+import { SegmentedControl } from "../design-system/SegmentedControl";
+import { Text } from "../design-system/text/Text";
+import {
+  IconSize,
+  Opacity,
+  Radius2,
+  Size,
+  Space,
+} from "../design-system/token";
 
 export function SlideApp() {
   const [activeTool, setActiveTool] = useState("square");
   return (
-    <Frame fill surface="sunken" clip>
+    <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
+      surface="sunken"
+    >
       {/* 1. Global Header */}
       <Frame
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-        }}
+        // Header is now part of the flex column, no longer absolute
         override={{
-          zIndex: ZIndex.n10,
           borderBottom: true,
         }}
-        layout={Layout.Row.Header.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        h={Size.n44}
       >
         <Frame
-          layout={Layout.Row.Item.Default}
-          override={{ gap: Space.n12, align: "center" }}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          minHeight={Size.n40} override={{ px: Space.n16 }}
         >
           <Action
             icon={Grid}
@@ -42,8 +59,10 @@ export function SlideApp() {
             }
           />
           <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ gap: Space.n8, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n12}
+            minHeight={Size.n40}
+            override={{ gap: Space.n8 }}
           >
             <Text.Menu.Item style={{ fontWeight: 600 }}>
               Untitled Presentation
@@ -56,20 +75,17 @@ export function SlideApp() {
             />
           </Frame>
         </Frame>
-        <Frame
-          layout={Layout.Row.Actions.Default}
-          override={{ gap: Space.n8, align: "center" }}
-        >
+        <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
           <Frame
             rounded={Radius2.md}
-            layout={Layout.Row.Item.Compact}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n4}
+            minHeight={Size.n24}
             surface="overlay"
             override={{
-              gap: Space.n4,
               p: Space.n4,
-              shadow: "sm",
-              align: "center",
             }}
+            style={{ boxShadow: "var(--elevation-n1)" }}
           >
             <Frame
               override={{
@@ -110,39 +126,45 @@ export function SlideApp() {
 
       {/* Main Layout Area */}
       <Frame
-        override={{
-          pt: Space.n48,
-          gap: Space.n16,
-        }}
-        flex
-        layout={Layout.Row.AppContainer.Default}
-        fill
+        layout={Layout.Row.Stretch.Start}
+        spacing={Space.n16}
+        w={Size.fill}
+        h={Size.fill}
       >
         {/* 2. Left Sidebar (Slides Strip) */}
         <SlidesPanel />
 
         {/* 3. Central Canvas Area */}
         <Frame
-          style={{ position: "relative" }}
+          style={{ position: "relative", overflow: "hidden" }}
           rounded={Radius2.md}
-          flex
-          fill
-          clip
-          as="main"
-          layout={Layout.Center.Default}
+          override={{
+            w: Size.fill,
+            h: Size.fill,
+            flex: 1,
+          }}
         >
-          <Frame fill scroll layout={Layout.Center.Default}>
+          <Frame
+            scroll
+            layout={Layout.Col.Center.Start}
+            spacing={Space.n0}
+            h={Size.fill}
+          >
             <Frame
-              style={
-                { width: "80%", maxWidth: "var(--container-n1280)" } as any
-              }
-              override={{ shadow: "lg" }}
+              override={{
+                ratio: "16/9",
+              }}
+              style={{
+                boxShadow: "var(--elevation-n3)",
+                width: "80%",
+                maxWidth: "var(--container-n1280)",
+              }}
               rounded={Radius2["2xl"]}
               surface="base"
-              pack
-              ratio="16/9"
+              layout={Layout.Col.Center.Start}
+              spacing={Space.n0}
             >
-              <Frame override={{ gap: Space.n16, align: "center" }}>
+              <Frame layout={Layout.Col.Center.Start} spacing={Space.n16}>
                 <Text.Prose.Title variant="xl">
                   Minimal Design Kit
                 </Text.Prose.Title>
@@ -155,7 +177,8 @@ export function SlideApp() {
                 <Frame override={{ h: Size.n4 }} />
                 <Frame
                   override={{ gap: Space.n12 }}
-                  layout={Layout.Row.Actions.Center}
+                  layout={Layout.Row.Middle.Center}
+                  spacing={Space.n8}
                 >
                   <SegmentedControl
                     w={Size.n128} // Approx width for 3 items

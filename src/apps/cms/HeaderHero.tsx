@@ -1,12 +1,19 @@
-import {ArrowUpRight, Command, Sparkles} from "lucide-react"
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text"
-import {ContainerSize, FontSize, IconSize, Opacity, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {EditableWrapper} from "./EditableWrapper"
+import { ArrowUpRight, Command, Sparkles } from "lucide-react";
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text";
+import {
+  ContainerSize,
+  FontSize,
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { EditableWrapper } from "./EditableWrapper";
 
 export function HeaderHero() {
   return (
@@ -14,21 +21,20 @@ export function HeaderHero() {
       override={{ w: Size.fill, clip: true }}
       style={{ position: "relative" }}
       surface="base"
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
     >
       <Frame
+        layout={Layout.Col.Center.Start}
+        spacing={Space.n0}
+        h={Size.fill}
         override={{
-          w: Size.fill,
           py: Space.n88,
           px: Space.n24,
           gap: Space.n12,
         }}
-        style={
-          {
-            minHeight: "90vh",
-            maxWidth: "var(--container-n1280)",
-            margin: "0 auto",
-          } as React.CSSProperties
-        }
       >
         {/* Background Decoration */}
         <Frame
@@ -57,11 +63,13 @@ export function HeaderHero() {
         />
 
         <Frame
+          layout={Layout.Col.Left.Start}
+          spacing={Space.n16}
           override={{
+            align: "center",
             maxWidth: ContainerSize.n800,
             w: Size.fill,
             gap: Space.n24,
-            align: "center",
           }}
         >
           <Frame
@@ -70,10 +78,11 @@ export function HeaderHero() {
               py: Space.n4,
               px: Space.n12,
               gap: Space.n8,
-              align: "center",
             }}
             surface="raised"
-            layout={Layout.Row.Item.Compact}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n4}
+            minHeight={Size.n24}
           >
             <Icon
               src={Sparkles}
@@ -93,9 +102,20 @@ export function HeaderHero() {
           </Frame>
 
           <EditableWrapper style={{ width: "100%" }}>
-            <Text.Prose.Title variant="xl" style={{ textAlign: "center" }}>
+            <Text.Prose.Title
+              variant="2xl"
+              weight="bold"
+              style={{ textAlign: "center", lineHeight: "1.1" }}
+            >
               Build your dream site <br />
-              <span style={{ color: "var(--color-primary)" }}>
+              <span
+                style={{
+                  background:
+                    "linear-gradient(to right, var(--color-primary), var(--color-accent))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
                 pixel by pixel.
               </span>
             </Text.Prose.Title>
@@ -119,8 +139,9 @@ export function HeaderHero() {
           </Frame>
 
           <Frame
-            layout={Layout.Row.Actions.Default}
-            override={{ gap: Space.n12, align: "center" }}
+            layout={Layout.Row.Middle.End}
+            spacing={Space.n8}
+            override={{ gap: Space.n12 }}
           >
             <Action
               label="Start Creating"
@@ -157,99 +178,121 @@ export function HeaderHero() {
               marginTop: "var(--space-n64)",
               transform: "perspective(1000px) rotateX(5deg)",
               margin: "0 auto",
+              overflow: "hidden",
             } as React.CSSProperties
           }
           surface="raised"
-          clip
         >
           <Frame
             surface="raised"
-            layout={Layout.Row.Item.Tight}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32}
             override={{
               h: Size.n12,
               px: Space.n4,
               gap: Space.n2,
-              align: "center",
               border: true,
             }}
           >
             <Frame
               override={{ w: Size.n12, h: Size.n12, r: Radius2.full }}
-              surface="overlay"
+              style={{ background: "#FF5F57" }} // Mac Red
             />
             <Frame
               override={{ w: Size.n12, h: Size.n12, r: Radius2.full }}
-              surface="overlay"
+              style={{ background: "#FEBC2E" }} // Mac Yellow
             />
             <Frame
               override={{ w: Size.n12, h: Size.n12, r: Radius2.full }}
-              surface="overlay"
+              style={{ background: "#28C840" }} // Mac Green
             />
-            <Frame flex />
+            <Frame override={{ flex: 1 }} />
             <Icon src={Command} size={IconSize.n14} style={{ opacity: 0.3 }} />
           </Frame>
           <Frame
-            layout={Layout.Row.AppContainer.Default}
-            fill
-            override={{ justify: "start" }}
+            layout={Layout.Row.Stretch.Start}
+            spacing={Space.n0}
+            w={Size.fill}
+            h={Size.fill}
+            override={{ fill: true, clip: true }}
+            surface="base"
           >
+            {/* Sidebar Mockup */}
             <Frame
               override={{
                 w: Size.n64,
-                p: Space.n4,
-                gap: Space.n4,
-                border: true,
+                h: Size.fill,
+                borderRight: true,
+                p: Space.n8,
+                gap: Space.n6,
+                align: "center",
               }}
               surface="sunken"
             >
               <Frame
-                override={{ h: Size.n16, r: Radius2.full }}
-                style={{ width: "80%" } as React.CSSProperties}
+                override={{ w: Size.n32, h: Size.n32, r: Radius2.md }}
                 surface="overlay"
               />
               <Frame
-                override={{ h: Size.n4, r: Radius2.full }}
-                style={{ width: "60%" } as React.CSSProperties}
+                override={{ w: Size.n4, h: Size.n4, r: Radius2.full }}
                 surface="overlay"
               />
-              <Frame flex />
               <Frame
-                override={{ h: Size.n12, w: Size.fill, r: Radius2.lg }}
-                surface="raised"
+                override={{ w: Size.n4, h: Size.n4, r: Radius2.full }}
+                surface="overlay"
               />
             </Frame>
-            <Frame
-              override={{ p: Space.n12, gap: Space.n6 }}
-              flex
-              surface="base"
-              pack
-            >
+
+            {/* Main Content Mockup */}
+            <Frame override={{ flex: 1, p: Space.n16, gap: Space.n12 }}>
               <Frame
-                override={{
-                  w: Size.n32,
-                  h: Size.n32,
-                  shadow: "lg",
-                  r: Radius2["2xl"],
-                }}
+                override={{ w: Size.fill, h: Size.n32, r: Radius2.lg }}
                 surface="raised"
-                pack
+              />
+              <Frame
+                layout={Layout.Row.Middle.Center}
+                spacing={Space.n8}
+                override={{ w: Size.fill, pack: "start" }}
               >
-                <Icon
-                  src={Sparkles}
-                  size={IconSize.n20}
-                  style={{ color: "var(--color-primary)" }}
-                />
-              </Frame>
-              <Frame override={{ gap: Space.n4, align: "center" }}>
                 <Frame
-                  override={{ h: Size.n4, w: Size.n48, r: Radius2.full }}
-                  surface="overlay"
+                  override={{ flex: 1, h: Size.n64, r: Radius2.lg }}
+                  surface="raised"
                 />
                 <Frame
-                  override={{ h: Size.n4, w: Size.n72, r: Radius2.full }}
+                  override={{ flex: 1, h: Size.n64, r: Radius2.lg }}
                   surface="raised"
                 />
               </Frame>
+              <Frame
+                override={{ w: Size.fill, h: Size.n128, r: Radius2.lg }}
+                surface="raised"
+              />
+            </Frame>
+
+            {/* Right Panel Mockup */}
+            <Frame
+              override={{
+                w: Size.n48,
+                h: Size.fill,
+                borderLeft: true,
+                p: Space.n8,
+                gap: Space.n4,
+              }}
+              surface="sunken"
+            >
+              <Frame
+                override={{ w: Size.fill, h: Size.n4, r: Radius2.full }}
+                surface="overlay"
+              />
+              <Frame
+                override={{ w: Size.fill, h: Size.n4, r: Radius2.full }}
+                surface="overlay"
+              />
+              <Frame
+                override={{ w: Size.fill, h: Size.n4, r: Radius2.full }}
+                surface="overlay"
+              />
             </Frame>
           </Frame>
         </Frame>

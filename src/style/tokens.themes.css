@@ -44,4 +44,8 @@
   --control-border-focus: var(--primary-bg);
 
   --tab-bg-active: var(--surface-raised);
+
+  /* Selected State - Dark Mode */
+  --surface-selected-bg: var(--surface-raised);
+  --surface-selected-fg: var(--text-primary);
 }

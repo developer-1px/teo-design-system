@@ -47,7 +47,7 @@ export interface UseFuzzySearchOptions<T> {
 function calculateFuzzyScore(
   text: string,
   query: string,
-  caseSensitive: boolean = false
+  caseSensitive: boolean = false,
 ): { score: number; indices: number[] } {
   if (!query) {
     return { score: 1, indices: [] };
@@ -117,7 +117,10 @@ function calculateFuzzyScore(
   const gapPenalty = totalGap * 0.03;
 
   // Final score (clamped to 0-1)
-  const finalScore = Math.min(1, Math.max(0, baseScore + bonusScore - gapPenalty));
+  const finalScore = Math.min(
+    1,
+    Math.max(0, baseScore + bonusScore - gapPenalty),
+  );
 
   return { score: finalScore, indices };
 }
@@ -181,7 +184,11 @@ export function useFuzzySearch<T>({
 
     for (const item of items) {
       const text = getText(item);
-      const { score, indices } = calculateFuzzyScore(text, query, caseSensitive);
+      const { score, indices } = calculateFuzzyScore(
+        text,
+        query,
+        caseSensitive,
+      );
 
       // Only include matches above threshold
       if (score >= threshold) {
@@ -210,12 +217,12 @@ export function useFuzzySearch<T>({
 export function fuzzyMatch(
   text: string,
   query: string,
-  options?: { caseSensitive?: boolean; threshold?: number }
+  options?: { caseSensitive?: boolean; threshold?: number },
 ): boolean {
   const { score } = calculateFuzzyScore(
     text,
     query,
-    options?.caseSensitive ?? false
+    options?.caseSensitive ?? false,
   );
   return score >= (options?.threshold ?? 0.3);
 }
@@ -242,7 +249,7 @@ export function fuzzyMatch(
  */
 export function getHighlightedParts(
   text: string,
-  indices: number[]
+  indices: number[],
 ): Array<{ text: string; highlight: boolean }> {
   if (indices.length === 0) {
     return [{ text, highlight: false }];

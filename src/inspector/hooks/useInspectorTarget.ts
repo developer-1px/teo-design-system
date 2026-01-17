@@ -1,5 +1,10 @@
-import React, {useEffect, useState} from "react"
-import {type ComponentStackItem, findNearestHostNode, getFiberFromElement, getStackFromFiber,} from "../lib/fiber-utils"
+import React, { useEffect, useState } from "react";
+import {
+  type ComponentStackItem,
+  findNearestHostNode,
+  getFiberFromElement,
+  getStackFromFiber,
+} from "../lib/fiber-utils";
 
 export function useInspectorTarget(isActive: boolean, isLocked: boolean) {
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);

@@ -1,10 +1,14 @@
-import {ChevronDown, ChevronRight} from "lucide-react"
-import {useState} from "react"
-import {Frame} from "../../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../../design-system/Icon"
-import {Text} from "../../../design-system/text/Text.tsx"
-import {IconSize, Size, Space,} from "../../../design-system/token/token.const.1tier"
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { Frame } from "../../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../../design-system/Icon";
+import { Text } from "../../../design-system/text/Text.tsx";
+import {
+  IconSize,
+  Size,
+  Space,
+} from "../../../design-system/token/token.const.1tier";
 
 export interface PropertySectionProps {
   title: string;
@@ -31,14 +35,15 @@ export function PropertySection({
   const indentSize = level * 16;
 
   return (
-    <Frame layout={Layout.Stack.Content.Default}>
+    <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
       {/* Section Header - clickable to expand/collapse */}
       <Frame
-        layout={Layout.Row.Item.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
         override={{
           minHeight: Size.n32,
           gap: Space.n8,
-          align: "center",
           cursor: "pointer",
         }}
         onClick={() => setExpanded(!expanded)}
@@ -91,7 +96,8 @@ export function PropertySection({
       {/* Section Content - shown when expanded */}
       {expanded && (
         <Frame
-          layout={Layout.Stack.List.Default}
+          layout={Layout.Col.Left.Start}
+          spacing={Space.n8}
           style={{
             paddingLeft: `${indentSize + 8}px`,
           }}

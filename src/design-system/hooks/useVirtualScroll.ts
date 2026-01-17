@@ -33,7 +33,7 @@ export interface VirtualScrollRange {
  */
 export interface UseVirtualScrollReturn {
   /** Ref to attach to the scrollable container */
-  containerRef: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
   /** Range of items to render */
   range: VirtualScrollRange;
   /** Total height of all items (for scrollbar sizing) */
@@ -102,7 +102,7 @@ export function useVirtualScroll({
   // Calculate total height of all items
   const totalHeight = useMemo(
     () => itemCount * itemHeight,
-    [itemCount, itemHeight]
+    [itemCount, itemHeight],
   );
 
   // Calculate visible range
@@ -111,7 +111,7 @@ export function useVirtualScroll({
     const startIndex = Math.floor(scrollTop / itemHeight);
     const endIndex = Math.min(
       itemCount - 1,
-      Math.ceil((scrollTop + containerHeight) / itemHeight)
+      Math.ceil((scrollTop + containerHeight) / itemHeight),
     );
 
     // Apply overscan
@@ -133,7 +133,7 @@ export function useVirtualScroll({
       setScrollTop(newScrollTop);
       onScroll?.(newScrollTop);
     },
-    [onScroll]
+    [onScroll],
   );
 
   // Attach scroll listener
@@ -153,7 +153,7 @@ export function useVirtualScroll({
 
       const targetScrollTop = Math.max(
         0,
-        Math.min(index * itemHeight, totalHeight - containerHeight)
+        Math.min(index * itemHeight, totalHeight - containerHeight),
       );
 
       container.scrollTo({
@@ -161,7 +161,7 @@ export function useVirtualScroll({
         behavior,
       });
     },
-    [itemHeight, totalHeight, containerHeight]
+    [itemHeight, totalHeight, containerHeight],
   );
 
   return {
@@ -191,7 +191,7 @@ export function useVirtualScroll({
  */
 export function getVirtualItemStyle(
   index: number,
-  itemHeight: number
+  itemHeight: number,
 ): React.CSSProperties {
   return {
     position: "absolute",
@@ -212,7 +212,7 @@ export function getVirtualItemStyle(
  */
 export function isItemVisible(
   index: number,
-  range: VirtualScrollRange
+  range: VirtualScrollRange,
 ): boolean {
   return index >= range.startIndex && index <= range.endIndex;
 }

@@ -4,18 +4,21 @@
  * Built with MDK Design System presets and tokens
  */
 
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Space} from "../design-system/token/token.const.1tier"
-import {ChannelSidebar} from "./discord/ChannelSidebar"
-import {MemberList} from "./discord/MemberList"
-import {MessageArea} from "./discord/MessageArea"
-import {ServerList} from "./discord/ServerList"
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Size, Space } from "../design-system/token/token.const.1tier";
+import { ChannelSidebar } from "./discord/ChannelSidebar";
+import { MemberList } from "./discord/MemberList";
+import { MessageArea } from "./discord/MessageArea";
+import { ServerList } from "./discord/ServerList";
 
 export function DiscordApp() {
   return (
     <Frame
-      layout={Layout.Row.AppContainer.Default}
+      layout={Layout.Row.Stretch.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
       surface="base"
       override={{ p: Space.n0, w: Size.screen, h: Size.screen }}
     >

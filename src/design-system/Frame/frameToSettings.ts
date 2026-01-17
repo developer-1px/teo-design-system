@@ -1,8 +1,8 @@
-import type React from "react"
-import type {SurfaceToken} from "../lib/types.ts"
-import type {BorderWidthToken, Radius2Token, ZIndexToken} from "../token"
-import {Radius2, Size, type SizeKey} from "../token" // Import Size for token lookup
-import type {FrameOverrides} from "./FrameProps.ts"
+import type React from "react";
+import type { SurfaceToken } from "../lib/types.ts";
+import type { BorderWidthToken, Radius2Token, ZIndexToken } from "../token";
+import { Radius2, Size, type SizeKey } from "../token"; // Import Size for token lookup
+import type { FrameOverrides } from "./FrameProps.ts";
 
 // Internal type for frameToSettings - includes top-level only props
 type FrameSettingsInput = FrameOverrides & {
@@ -13,6 +13,7 @@ type FrameSettingsInput = FrameOverrides & {
   z?: ZIndexToken;
   zIndex?: ZIndexToken;
   interactive?: boolean | "button" | "text";
+  selected?: boolean;
 };
 
 export function frameToSettings(props: FrameSettingsInput): {
@@ -21,10 +22,10 @@ export function frameToSettings(props: FrameSettingsInput): {
 } {
   const classes: string[] = [];
 
-  // Helper to remove undefined keys
+  // Helper to remove undefined and empty string keys
   const cleanStyles = (styles: React.CSSProperties) => {
     return Object.fromEntries(
-      Object.entries(styles).filter(([_, v]) => v !== undefined),
+      Object.entries(styles).filter(([_, v]) => v !== undefined && v !== ""),
     ) as React.CSSProperties;
   };
 
@@ -52,13 +53,15 @@ export function frameToSettings(props: FrameSettingsInput): {
   };
 
   // ---------------------------------------------------------------------------
-  // 1. Layout Context (Direction)
+  // 1. Layout Context (Direction) & Overrides
   // ---------------------------------------------------------------------------
   if (props.grid) {
     classes.push("grid");
   } else if (props.row) {
     classes.push("hbox");
   } else {
+    // Default or explicit vbox
+    // Check if layout implies row? FrameOverrides.row is used.
     classes.push("vbox");
   }
 
@@ -70,27 +73,19 @@ export function frameToSettings(props: FrameSettingsInput): {
   // 2. Packing & Alignment
   // ---------------------------------------------------------------------------
 
-  // Pack: prefer 'pack' prop, fallback to 'justify' shim
+  // Align
+  if (props.align) classes.push(`align(${props.align})`);
+
+  // Pack: Only supported in Override now
   if (props.pack !== undefined) {
-    if (props.pack === true) classes.push("pack");
+    if (props.pack === true || props.pack === "center")
+      classes.push("pack"); // pack=true means center center
     else if (typeof props.pack === "string")
       classes.push(`pack(${props.pack})`);
   } else if (props.justify) {
-    // Legacy mapping: justify="between" -> pack("space")
-    const map: Record<string, string> = {
-      between: "space",
-      around: "space",
-      evenly: "space",
-      center: "center",
-      start: "start",
-      end: "end",
-    };
-    const val = map[props.justify] || props.justify;
-    classes.push(`pack(${val})`);
+    // Direct mapping for justify if provided (though strict layout prefers pack)
+    classes.push(`pack(${props.justify})`);
   }
-
-  // Align
-  if (props.align) classes.push(`align(${props.align})`);
 
   // ---------------------------------------------------------------------------
   // 3. Sizing (Hybrid Strategy: Class + Style)
@@ -103,21 +98,25 @@ export function frameToSettings(props: FrameSettingsInput): {
 
   // -- Width --
   if (typeof wVal === "number") {
+    // Raw Number -> Style
     classes.push("w(fixed)");
     styles.width = `${wVal}px`;
   } else if (wVal === "fill") {
     classes.push("w(fill)");
+    // Fallback for non-flex parents (like root).
+    // Safe because flex-basis or align-self: stretch overrides this in flex containers.
+    styles.width = "100%";
   } else if (wVal === "hug") {
     classes.push("w(hug)");
   } else if (wVal === "100vw" || wVal === "screen") {
     classes.push("w(screen)");
   } else if (typeof wVal === "string") {
-    // If it's a CSS variable (from token) or arbitrary string
+    // Token (var) OR Raw String (50%)
     classes.push("w(fixed)");
     styles.width = wVal;
   }
 
-  // -- MaxWidth (Added) --
+  // -- MaxWidth --
   if (props.maxWidth !== undefined) {
     classes.push("max-w(fixed)");
     const maxWVal = resolveSizing(props.maxWidth, "width");
@@ -134,6 +133,8 @@ export function frameToSettings(props: FrameSettingsInput): {
     styles.height = `${hVal}px`;
   } else if (hVal === "fill") {
     classes.push("h(fill)");
+    // Fallback for non-flex parents.
+    styles.height = "100%";
   } else if (hVal === "hug") {
     classes.push("h(hug)");
   } else if (hVal === "100vh" || hVal === "screen") {
@@ -141,20 +142,6 @@ export function frameToSettings(props: FrameSettingsInput): {
   } else if (typeof hVal === "string") {
     classes.push("h(fixed)");
     styles.height = hVal;
-  }
-
-  // -- Legacy Prop: fill --
-  // fill={true} => implies filling parent in ALL directions contextually
-  if (props.fill) {
-    classes.push("w(fill)");
-    classes.push("h(fill)");
-  }
-
-  // -- Legacy Prop: flex --
-  if (props.flex === true) {
-    styles.flex = 1;
-  } else if (typeof props.flex === "number") {
-    styles.flex = props.flex;
   }
 
   // -- Min/Max Sizes --
@@ -191,11 +178,21 @@ export function frameToSettings(props: FrameSettingsInput): {
   }
 
   // Padding
-  styles.padding = props.p;
-  styles.paddingTop = props.pt ?? props.py;
-  styles.paddingBottom = props.pb ?? props.py;
-  styles.paddingLeft = props.pl ?? props.px;
-  styles.paddingRight = props.pr ?? props.px;
+  // Use shorthand if all sides are the same, otherwise use individual properties
+  if (props.p !== undefined) {
+    styles.padding = props.p;
+  } else {
+    // Only set individual padding properties if they have values
+    const pt = props.pt ?? props.py;
+    const pb = props.pb ?? props.py;
+    const pl = props.pl ?? props.px;
+    const pr = props.pr ?? props.px;
+
+    if (pt !== undefined) styles.paddingTop = pt;
+    if (pb !== undefined) styles.paddingBottom = pb;
+    if (pl !== undefined) styles.paddingLeft = pl;
+    if (pr !== undefined) styles.paddingRight = pr;
+  }
 
   // Gap
   styles.gap = props.gap;
@@ -228,7 +225,7 @@ export function frameToSettings(props: FrameSettingsInput): {
   if (props.zIndex) styles.zIndex = props.zIndex;
 
   // ---------------------------------------------------------------------------
-  // 6. Return
+  // 6. Interactive & Selected States
   // ---------------------------------------------------------------------------
   if (props.interactive) {
     classes.push("interactive");
@@ -237,6 +234,13 @@ export function frameToSettings(props: FrameSettingsInput): {
     }
   }
 
+  if (props.selected) {
+    classes.push("selected");
+  }
+
+  // ---------------------------------------------------------------------------
+  // 7. Return
+  // ---------------------------------------------------------------------------
   return {
     className: classes.join(" "),
     style: cleanStyles(styles),

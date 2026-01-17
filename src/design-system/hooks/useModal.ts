@@ -1,7 +1,7 @@
-import {useCallback, useEffect, useRef} from "react"
-import {useFocusTrap} from "./utils/useFocusTrap"
-import {useId} from "./utils/useId"
-import {useScrollLock} from "./utils/useScrollLock"
+import { useCallback, useEffect, useRef } from "react";
+import { useFocusTrap } from "./utils/useFocusTrap";
+import { useId } from "./utils/useId";
+import { useScrollLock } from "./utils/useScrollLock";
 
 /**
  * Options for useModal hook

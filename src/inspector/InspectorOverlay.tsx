@@ -1,16 +1,21 @@
-import {Copy, Lock, Unlock} from "lucide-react"
-import type React from "react"
-import {useState} from "react"
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../design-system/Icon"
-import {Overlay} from "../design-system/Overlay"
-import {Text} from "../design-system/text/Text.tsx"
-import {FontSize, IconSize, Size, Space,} from "../design-system/token/token.const.1tier"
-import {Radius2} from "../design-system/token/token.const.2tier"
-import {InspectorPanel} from "./components/InspectorPanel"
-import {useInspectorHotkeys} from "./hooks/useInspectorHotkeys"
-import {useInspectorTarget} from "./hooks/useInspectorTarget"
+import { Copy, Lock, Unlock } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../design-system/Icon";
+import { Overlay } from "../design-system/Overlay";
+import { Text } from "../design-system/text/Text.tsx";
+import {
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
+import { InspectorPanel } from "./components/InspectorPanel";
+import { useInspectorHotkeys } from "./hooks/useInspectorHotkeys";
+import { useInspectorTarget } from "./hooks/useInspectorTarget";
 
 export function InspectorOverlay() {
   const [isActive, setIsActive] = useState(false);
@@ -132,7 +137,8 @@ export function InspectorOverlay() {
               r: Radius2.full,
             }}
             surface="primary"
-            layout={Layout.Row.Meta.Default}
+            layout={Layout.Row.Middle.Start}
+            spacing={Space.n8}
           >
             {isLocked ? (
               <Icon
@@ -205,7 +211,8 @@ export function InspectorOverlay() {
                     targetRect.top < 30 ? "4px" : undefined,
                 }}
                 // 24px
-                layout={Layout.Row.Meta.Default}
+                layout={Layout.Row.Middle.Start}
+                spacing={Space.n8}
               >
                 <Text
                   size={FontSize.n9}
@@ -261,12 +268,12 @@ export function InspectorOverlay() {
             override={{
               py: Space.n4,
               px: Space.n12,
-              gap: Space.n8,
               shadow: "lg",
               r: Radius2.md,
             }}
             surface="primary"
-            layout={Layout.Row.Meta.Default}
+            layout={Layout.Row.Middle.Start}
+            spacing={Space.n8}
           >
             <Icon
               src={Copy}

@@ -1,14 +1,19 @@
-import {Frame} from "../../../design-system/Frame/Frame"
-import {Layout} from "../../../design-system/Frame/Layout/Layout"
-import {Text} from "../../../design-system/text/Text"
-import {Space} from "../../../design-system/token/token.const.1tier"
-import {Radius2} from "../../../design-system/token/token.const.2tier"
+import { Frame } from "../../../design-system/Frame/Frame";
+import { Layout } from "../../../design-system/Frame/Layout/Layout";
+import { Text } from "../../../design-system/text/Text";
+import { Space } from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 function SmartValueRenderer({ value }: { value: unknown }) {
   // Array -> Chips
   if (Array.isArray(value)) {
     return (
-      <Frame layout={Layout.Wrap.Chips.Default} gap={Space.n4}>
+      <Frame
+        layout={Layout.Row.Middle.Start}
+        wrap="wrap"
+        spacing={Space.n8}
+        override={{ gap: Space.n4 }}
+      >
         {value.map((item, i) => (
           <Frame
             key={i}
@@ -55,14 +60,21 @@ export function JsonPropertyGrid({ data }: { data: Record<string, any> }) {
 
   return (
     <Frame
-      layout={Layout.Grid.Cards.Compact}
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n8}
       override={{
+        grid: true,
         gap: Space.n12,
         columns: "repeat(auto-fill, minmax(140px, 1fr))",
       }}
     >
       {entries.map(([key, value]) => (
-        <Frame key={key} layout={Layout.Stack.Content.Tight} gap={Space.n2}>
+        <Frame
+          key={key}
+          layout={Layout.Col.Left.Start}
+          spacing={Space.n8}
+          override={{ gap: Space.n2 }}
+        >
           <Text.Field.Label
             style={{ color: "var(--text-tertiary)", fontSize: "11px" }}
           >

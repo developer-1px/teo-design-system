@@ -146,10 +146,10 @@ function collectProps(line, node) {
 
   // Detect size values
   const sizeMatch = line.match(SIZE_VALUE_REGEX);
-  if (sizeMatch) node.sizes.push(parseInt(sizeMatch[1]));
+  if (sizeMatch) node.sizes.push(parseInt(sizeMatch[1], 10));
 
   const tokenMatch = line.match(SIZE_TOKEN_REGEX);
-  if (tokenMatch) node.sizes.push(parseInt(tokenMatch[1]));
+  if (tokenMatch) node.sizes.push(parseInt(tokenMatch[1], 10));
 }
 
 function runComponentChecks(node, issues) {

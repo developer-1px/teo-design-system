@@ -1,5 +1,5 @@
-import type {LucideIcon} from "lucide-react"
-import {Layers} from "lucide-react"
+import type { LucideIcon } from "lucide-react";
+import { Layers } from "lucide-react";
 
 /**
  * Type guard to check if value is a nested object (not null, not array, not primitive)

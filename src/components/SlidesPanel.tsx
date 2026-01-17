@@ -1,8 +1,8 @@
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Section} from "../design-system/Section"
-import {Text} from "../design-system/text/Text"
-import {Radius2, Size, Space} from "../design-system/token"
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Section } from "../design-system/Section";
+import { Text } from "../design-system/text/Text";
+import { Radius2, Size, Space } from "../design-system/token";
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -13,42 +13,52 @@ export function SlidesPanel() {
       w={Size.n160}
       surface="base"
       rounded={Radius2.md}
-      shadow="sm"
+      style={{ boxShadow: "var(--elevation-n1)" }}
     >
       <Frame
-        override={{ minHeight: Size.n0, align: "stretch" }}
-        layout={Layout.Stack.List.Dense}
-        scroll
         surface="sunken"
-        flex
-        fill
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n4}
+        override={{
+          flex: 1,
+          minHeight: Size.n0,
+          scroll: true,
+          align: "stretch",
+          p: Space.n8, // Padding around the list
+        }}
+        w={Size.fill}
+        h={Size.fill}
       >
         {slides.map((num) => (
           <Frame
-            override={{ gap: Space.n4, p: Space.n8, border: num === 1 }}
             key={num}
+            rounded={Radius2.md}
+            layout={Layout.Row.Middle.Start}
+            spacing={Space.n8}
+            override={{
+              p: Space.n8,
+              border: num === 1,
+              gap: Space.n4, // Keep tight gap from original design
+            }}
           >
-            <Frame
-              layout={Layout.Row.LabelValue.Default}
-              override={{ gap: Space.n4 }}
+            <Text.Card.Note
+              style={{
+                color: num === 1 ? "var(--text-white)" : "var(--text-subtle)",
+              }}
             >
-              <Text.Card.Note
-                style={{
-                  color: num === 1 ? "var(--text-white)" : "var(--text-subtle)",
-                }}
-              >
-                {num}
-              </Text.Card.Note>
-              <Frame
-                override={{ w: Size.fill }}
-                rounded={Radius2.md}
-                ratio="16/9"
-                surface="raised"
-                flex
-                pack
-                clip
-              />
-            </Frame>
+              {num}
+            </Text.Card.Note>
+            <Frame
+              surface="raised"
+              override={{
+                w: Size.fill,
+                ratio: "16/9",
+                clip: true,
+                align: "center",
+                justify: "center",
+                flex: 1,
+              }}
+            />
           </Frame>
         ))}
       </Frame>

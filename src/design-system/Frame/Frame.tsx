@@ -1,44 +1,37 @@
-import type React from "react"
+import type React from "react";
 
-import type {FrameOverrides, FrameProps} from "./FrameProps.ts"
-import {frameToSettings} from "./frameToSettings.ts"
-
-import {resolveLayout} from "./Layout/Layout.ts"
+import type { FrameProps } from "./FrameProps.ts";
+import { frameToSettings } from "./frameToSettings.ts";
 
 export function Frame({
   children,
   as: Component = "div",
-  className = "",
   style,
 
   // --- Preset Props (2-Tier Semantic) ---
   // Layout (Flow)
   layout,
-
-  row,
   wrap,
-  pack,
-
-  // @deprecated
-  gap, // @deprecated
-  grid, // @deprecated
-  fill, // @deprecated
-  flex, // @deprecated
 
   // Sizing (Constraints)
   w,
   h,
+  minWidth,
+  minHeight,
   maxWidth,
-  ratio,
+  maxHeight,
 
   // Appearance (Visuals)
   surface,
   opacity,
 
-  clip,
   scroll,
   interactive,
   rounded,
+  selected,
+
+  // Spacing (Unified)
+  spacing,
 
   // Overrides (1-Tier Tokens)
   override,
@@ -52,67 +45,57 @@ export function Frame({
   // ---------------------------------------------------------------------------
   // 1. Resolve Presets (Layout Token)
   // ---------------------------------------------------------------------------
-  const layoutSettings = layout ? resolveLayout(layout) : {};
+  // MDK v7.7 Strict: Layout is the Source of Truth. No resolving needed.
+  const layoutSettings = layout || ({} as any);
 
   // ---------------------------------------------------------------------------
-  // 2. Resolve Overrides (Standard < Layout < Override)
+  // 2. Auto-resolve Surface for Interactive Elements
   // ---------------------------------------------------------------------------
-  const combinedOverride: FrameOverrides = {
-    ...layoutSettings.override,
+  // If interactive but no surface specified, default to ghost
+  const resolvedSurface =
+    surface !== undefined ? surface : interactive ? "ghost" : undefined;
+
+  // ---------------------------------------------------------------------------
+  // 3. Construct Settings Input (The "Source of Truth")
+  // ---------------------------------------------------------------------------
+  // Priority: Layout Preset < Top-Level Props < Overrides
+  const settingsInput = {
+    ...layoutSettings,
+
+    // Top-Level Props (Explicit overrides for Layout)
+    ...(wrap !== undefined && { wrap }),
+    ...(w !== undefined && { w }),
+    ...(h !== undefined && { h }),
+    ...(minWidth !== undefined && { minWidth }),
+    ...(minHeight !== undefined && { minHeight }),
+    ...(maxWidth !== undefined && { maxWidth }),
+    ...(maxHeight !== undefined && { maxHeight }),
+    ...(scroll !== undefined && { scroll }),
+    ...(opacity !== undefined && { opacity }),
+    ...(resolvedSurface !== undefined && { surface: resolvedSurface }),
+    ...(interactive !== undefined && { interactive }),
+    ...(rounded !== undefined && { rounded }),
+    ...(selected !== undefined && { selected }),
+
+    // Top-Level Spacing (Unified)
+    // spacing → gap = spacing * 1, p = spacing * 1.25
+    ...(spacing !== undefined && {
+      gap: spacing,
+      p: `calc(${spacing} * 1.25)` as any, // CSS calc for padding
+    }),
+
+    // Ad-hoc Overrides (Highest Priority)
     ...override,
   };
 
   // ---------------------------------------------------------------------------
-  // 3. Flatten Props (Explicit > Undefined)
-  // ---------------------------------------------------------------------------
-  // Collect explicit props to ensure they override presets
-  const explicitProps: FrameOverrides = {
-    // Layout
-    row,
-    gap,
-    pack,
-    grid,
-    wrap,
-    flex,
-    scroll,
-    // Sizing
-    w,
-    h,
-    fill,
-    maxWidth,
-
-    ratio,
-    // Appearance (Partial) - some are top-level only
-    clip,
-    opacity,
-  };
-
-  // Clean undefined values
-  const cleanExplicitProps = Object.fromEntries(
-    Object.entries(explicitProps).filter(([_, v]) => v !== undefined),
-  );
-
-  // ---------------------------------------------------------------------------
-  // 4. Construct Settings Input (The "Source of Truth")
-  // ---------------------------------------------------------------------------
-  const settingsInput = {
-    ...layoutSettings,
-    ...cleanExplicitProps,
-    ...combinedOverride, // Valid 1-Tier tokens
-    // Top-level only Appearance props
-    ...(surface !== undefined && { surface }),
-    ...(interactive !== undefined && { interactive }),
-    ...(rounded !== undefined && { rounded }),
-  };
-
-  // ---------------------------------------------------------------------------
-  // 5. Calculate CSS (Classes & Vars)
+  // 3. Calculate CSS (Classes & Vars)
   // ---------------------------------------------------------------------------
   const { className: settingsClass, style: settingsVars } =
     frameToSettings(settingsInput);
 
   // ---------------------------------------------------------------------------
-  // 6. Compute Final Style (Restricted Style Injection)
+  // 4. Compute Final Style (Restricted Style Injection)
   // ---------------------------------------------------------------------------
   const computedStyle: React.CSSProperties = {
     // A. Dynamic Layout Logic
@@ -122,19 +105,19 @@ export function Frame({
 
     aspectRatio: settingsInput.ratio,
 
-    // D. Injected Variables
+    // B. Injected Variables
     ...settingsVars,
 
-    // E. Layout Override Style (e.g. from preset)
+    // C. Layout Override Style (e.g. from preset)
     ...((layoutSettings.style || {}) as React.CSSProperties),
 
-    // F. User Restricted Style (Escape Hatch)
+    // D. User Restricted Style (Escape Hatch)
     ...style,
   };
 
   return (
     <Component
-      className={`frame ${settingsClass} ${className}`}
+      className={`frame ${settingsClass}`}
       style={computedStyle}
       title={title}
       {...domProps}

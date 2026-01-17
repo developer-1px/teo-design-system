@@ -1,34 +1,44 @@
-import {Check, MessageSquare, Zap} from "lucide-react"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../../design-system/Icon"
-import {Text} from "../../design-system/text/Text"
-import {ContainerSize, FontSize, IconSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
+import { Check, MessageSquare, Zap } from "lucide-react";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { Text } from "../../design-system/text/Text";
+import {
+  ContainerSize,
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 export function BodyContentSection() {
   return (
     <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
       override={{
         w: Size.fill,
         py: Space.n96,
         px: Space.n24,
+        pack: true,
+        border: true,
       }}
       surface="sunken"
-      pack
-      border={true}
     >
       <Frame
-        layout={Layout.Row.Item.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
         override={{
           gap: Space.n48,
           w: Size.fill,
-          align: "center",
           maxWidth: ContainerSize.n1280,
         }}
       >
         <Frame override={{ gap: Space.n24 }} style={{ width: "50%" }}>
-          <Frame override={{ gap: Space.n8 }}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
             <Text.Card.Note
               size={FontSize.n14}
               weight="bold"
@@ -36,17 +46,26 @@ export function BodyContentSection() {
             >
               THE PROCESS
             </Text.Card.Note>
-            <Text.Prose.Title variant="lg">
-              Unleash your <br /> internal creative.
+            <Text.Prose.Title variant="xl" weight="bold">
+              Unleash your <br />
+              <span style={{ color: "var(--text-tertiary)" }}>
+                inner creative.
+              </span>
             </Text.Prose.Title>
           </Frame>
 
-          <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
+          <Text.Prose.Body
+            style={{
+              color: "var(--text-secondary)",
+              fontSize: "1.125rem",
+              lineHeight: "1.6",
+            }}
+          >
             Workflow shouldn't be a bottleneck. Our platform allows developers
             to focus on logic while designers handle the visuals.
           </Text.Prose.Body>
 
-          <Frame override={{ gap: Space.n12 }}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
             <CheckItem
               title="Pure Token-based design"
               desc="Align with your existing CSS/Tailwind system effortlessly."
@@ -62,9 +81,10 @@ export function BodyContentSection() {
           </Frame>
         </Frame>
 
-        <Frame flex pack>
+        <Frame override={{ pack: true, flex: 1 }}>
           <Frame
-            override={{ w: Size.n160, h: Size.n208, shadow: "2xl" }}
+            override={{ w: Size.n160, h: Size.n208 }}
+            shadow="2xl"
             rounded={Radius2["3xl"]}
             style={{ position: "relative" }}
             surface="raised"
@@ -74,10 +94,10 @@ export function BodyContentSection() {
               override={{
                 w: Size.n64,
                 h: Size.n64,
-                shadow: "lg",
                 p: Space.n24,
                 gap: Space.n16,
               }}
+              shadow="lg"
               rounded={Radius2["2xl"]}
               style={{
                 position: "absolute",
@@ -91,7 +111,7 @@ export function BodyContentSection() {
                 size={IconSize.n32}
                 style={{ color: "var(--color-warning)" }}
               />
-              <Frame override={{ gap: Space.n8 }}>
+              <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
                 <Frame
                   override={{ h: Size.n12, w: Size.fill }}
                   rounded={Radius2.full}
@@ -111,43 +131,47 @@ export function BodyContentSection() {
               override={{
                 w: Size.n80,
                 h: Size.n80,
-                shadow: "lg",
                 p: Space.n24,
                 gap: Space.n16,
+                border: true,
               }}
+              shadow="2xl"
               rounded={Radius2["2xl"]}
               style={{
                 position: "absolute",
                 bottom: "var(--space-n40)",
                 right: "calc(-1 * var(--space-n40))",
+                backdropFilter: "blur(12px)",
+                background: "rgba(255, 255, 255, 0.8)", // Glass effect
               }}
-              surface="raised"
+              surface="overlay"
             >
               <Icon
                 src={MessageSquare}
                 size={IconSize.n32}
                 style={{ color: "var(--color-primary)" }}
               />
-              <Frame override={{ gap: Space.n12 }}>
+              <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
                 <Frame
-                  layout={Layout.Row.Item.Compact}
-                  override={{ gap: Space.n4, align: "center" }}
+                  layout={Layout.Row.Middle.Center}
+                  spacing={Space.n4}
+                  minHeight={Size.n24} override={{ px: Space.n8 }}
                 >
                   <Frame
                     override={{ w: Size.n8, h: Size.n8 }}
                     rounded={Radius2.full}
-                    surface="overlay"
+                    surface="primary"
                   />
                   <Frame
-                    override={{ w: Size.n24, h: Size.n16 }}
+                    override={{ w: Size.n24, h: Size.n4 }}
                     rounded={Radius2.full}
-                    surface="overlay"
+                    surface="sunken"
                   />
                 </Frame>
                 <Frame
-                  override={{ w: Size.fill, h: Size.n16 }}
+                  override={{ w: Size.fill, h: Size.n4 }}
                   rounded={Radius2.full}
-                  surface="raised"
+                  surface="sunken"
                 />
               </Frame>
             </Frame>
@@ -166,19 +190,20 @@ interface CheckItemProps {
 function CheckItem({ title, desc }: CheckItemProps) {
   return (
     <Frame
-      layout={Layout.Row.Item.Default}
-      override={{ gap: Space.n12, align: "start" }}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      minHeight={Size.n40}
+      override={{ align: "start" }}
     >
       <Frame
-        override={{ w: Size.n20, h: Size.n20 }}
+        override={{ w: Size.n20, h: Size.n20, pack: true }}
         rounded={Radius2.full}
         style={{ marginTop: "var(--space-n4)" }}
         surface="primary"
-        pack
       >
         <Icon src={Check} size={IconSize.n12} style={{ color: "white" }} />
       </Frame>
-      <Frame override={{ gap: Space.n4 }}>
+      <Frame layout={Layout.Col.Left.Start} spacing={Space.n4}>
         <Text.Card.Title size={FontSize.n16} weight="bold">
           {title}
         </Text.Card.Title>

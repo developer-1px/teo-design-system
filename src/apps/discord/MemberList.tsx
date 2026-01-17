@@ -3,16 +3,20 @@
  * Displays online/offline members on the right sidebar
  */
 
-import {useAtomValue} from "jotai"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Overlay} from "../../design-system/Overlay"
-import {Text} from "../../design-system/text/Text.tsx"
-import {FontSize, Size, Space,} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
-import {mockMembers} from "./mockData"
-import {showMemberListAtom} from "./store"
-import type {Member} from "./types"
+import { useAtomValue } from "jotai";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Overlay } from "../../design-system/Overlay";
+import { Text } from "../../design-system/text/Text.tsx";
+import {
+  FontSize,
+  Size,
+  Space,
+} from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
+import { mockMembers } from "./mockData";
+import { showMemberListAtom } from "./store";
+import type { Member } from "./types";
 
 function MemberItem({ member }: { member: Member }) {
   const getStatusColor = (status: Member["status"]) => {
@@ -30,7 +34,9 @@ function MemberItem({ member }: { member: Member }) {
 
   return (
     <Frame
-      layout={Layout.Row.Item.Default}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n12}
+      minHeight={Size.n40}
       override={{
         px: Space.n8,
         py: Space.n4,
@@ -67,7 +73,7 @@ function MemberItem({ member }: { member: Member }) {
       </Frame>
 
       {/* Member Info */}
-      <Frame flex>
+      <Frame override={{ flex: 1 }}>
         <Text size={FontSize.n12} weight="medium">
           {member.name}
         </Text>
@@ -104,13 +110,14 @@ export function MemberList() {
       }}
     >
       <Frame
-        flex
-        layout={Layout.Stack.Content.Scroll}
-        override={{ px: Space.n8, py: Space.n16 }}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n12}
+        scroll
+        override={{ px: Space.n8, py: Space.n16, flex: 1 }}
       >
         {/* Online Members */}
         {onlineMembers.length > 0 && (
-          <Frame layout={Layout.Stack.List.Dense}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n4}>
             <Frame override={{ px: Space.n8, py: Space.n4 }}>
               <Text
                 size={FontSize.n10}
@@ -131,7 +138,7 @@ export function MemberList() {
 
         {/* Offline Members */}
         {offlineMembers.length > 0 && (
-          <Frame layout={Layout.Stack.List.Dense}>
+          <Frame layout={Layout.Col.Left.Start} spacing={Space.n4}>
             <Frame override={{ px: Space.n8, py: Space.n4 }}>
               <Text
                 size={FontSize.n10}

@@ -18,6 +18,7 @@ export function TeoLogo({
       className={className}
       style={{ display: "block", width: "auto", ...style }}
       aria-label="teo.v logo"
+      role="img"
     >
       <g
         stroke="currentColor"

@@ -22,6 +22,18 @@ export type {
   UseDropdownReturn,
 } from "./useDropdown";
 export { useDropdown } from "./useDropdown";
+// Advanced Hooks (Phase 3)
+export type {
+  FuzzyMatch,
+  UseFuzzySearchOptions,
+} from "./useFuzzySearch";
+export {
+  fuzzyMatch,
+  getHighlightedParts,
+  useFuzzySearch,
+} from "./useFuzzySearch";
+export type { HotKeyHandler, HotKeyMap, UseHotKeysOptions } from "./useHotKeys";
+export { formatKeyCombo, getModifierLabel, useHotKeys } from "./useHotKeys";
 export type {
   BackdropProps,
   CloseButtonProps,
@@ -32,6 +44,11 @@ export type {
   UseModalReturn,
 } from "./useModal";
 export { useModal } from "./useModal";
+export type {
+  UseNavigationOptions,
+  UseNavigationReturn,
+} from "./useNavigation";
+export { useNavigation } from "./useNavigation";
 export type {
   TabListProps,
   TabPanelProps,
@@ -48,31 +65,19 @@ export type {
   UseTooltipReturn,
 } from "./useTooltip";
 export { useTooltip } from "./useTooltip";
-
-// Utility Hooks
-export { useControlledState } from "./utils/useControlledState";
-export type { UseFocusTrapOptions } from "./utils/useFocusTrap";
-export { useFocusTrap } from "./utils/useFocusTrap";
-export { useId } from "./utils/useId";
-export { useScrollLock } from "./utils/useScrollLock";
-
-// Advanced Hooks (Phase 3)
-export type {
-  FuzzyMatch,
-  UseFuzzySearchOptions,
-} from "./useFuzzySearch";
-export {
-  useFuzzySearch,
-  fuzzyMatch,
-  getHighlightedParts,
-} from "./useFuzzySearch";
 export type {
   UseVirtualScrollOptions,
   UseVirtualScrollReturn,
   VirtualScrollRange,
 } from "./useVirtualScroll";
 export {
-  useVirtualScroll,
   getVirtualItemStyle,
   isItemVisible,
+  useVirtualScroll,
 } from "./useVirtualScroll";
+// Utility Hooks
+export { useControlledState } from "./utils/useControlledState";
+export type { UseFocusTrapOptions } from "./utils/useFocusTrap";
+export { useFocusTrap } from "./utils/useFocusTrap";
+export { useId } from "./utils/useId";
+export { useScrollLock } from "./utils/useScrollLock";

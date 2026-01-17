@@ -11,7 +11,7 @@ import type { Issue } from "./design-lint/lib/types";
 
 const FIX_MODE = process.argv.includes("--fix");
 
-function run() {
+async function run() {
   console.log(
     `🔍 Starting TypeScript-based Design Lint${FIX_MODE ? " (Auto-fix mode)" : ""}...\\n`,
   );
@@ -31,7 +31,7 @@ function run() {
 
   for (const sourceFile of sourceFiles) {
     const filePath = sourceFile.getFilePath();
-    const issues = analyzeFile(project, filePath);
+    const issues = await analyzeFile(project, filePath);
 
     if (issues.length > 0) {
       allIssues.push(...issues);
@@ -40,10 +40,23 @@ function run() {
       console.log(`📄 ${relativePath}`);
 
       for (const issue of issues) {
-        const prefix =
-          issue.fixable && FIX_MODE ? "✓" : issue.fixable ? "🔧" : "  ";
+        const isError = issue.severity === "error";
+        const icon =
+          issue.fixable && FIX_MODE
+            ? "✓"
+            : issue.fixable
+              ? "🔧"
+              : isError
+                ? "❌"
+                : "⚠️";
+
+        // Color coding based on severity
+        // standard console logs don't support colors easily without recursive unicode, 
+        // but we can distinguish by symbol.
+        const severityLabel = isError ? "" : " [WARN]";
+
         console.log(
-          `   ${prefix} L${issue.line} [${issue.rule}]: ${issue.message}`,
+          `   ${icon} L${issue.line} [${issue.rule}]${severityLabel}: ${issue.message}`,
         );
         if (issue.code) {
           console.log(`      Code: ${issue.code}`);
@@ -68,7 +81,11 @@ function run() {
 
   const remainingIssues = allIssues.filter(
     (issue) => !issue.fixable || !FIX_MODE,
-  ).length;
+  );
+
+  const errorCount = remainingIssues.filter(i => i.severity === "error").length;
+  const warnCount = remainingIssues.filter(i => i.severity !== "error").length;
+
   const fixableIssues = allIssues.filter(
     (issue) => issue.fixable && !FIX_MODE,
   ).length;
@@ -77,17 +94,19 @@ function run() {
   console.log(`   Total issues: ${allIssues.length}`);
   if (FIX_MODE) {
     console.log(`   Fixed: ${fixedCount}`);
-    console.log(`   Remaining: ${remainingIssues}`);
+    console.log(`   Remaining Errors: ${errorCount}`);
+    console.log(`   Remaining Warnings: ${warnCount}`);
   } else {
     console.log(`   Auto-fixable: ${fixableIssues} (run with --fix to apply)`);
-    console.log(`   Manual fixes needed: ${remainingIssues}`);
+    console.log(`   Errors: ${errorCount}`);
+    console.log(`   Warnings: ${warnCount}`);
   }
 
-  // Exit with error code if issues found (and not all fixed)
-  if (!FIX_MODE && allIssues.length > 0) {
+  // Exit with error code ONLY if there are remaining ERRORS (not warnings)
+  if (!FIX_MODE && errorCount > 0) {
     process.exit(1);
   }
-  if (FIX_MODE && remainingIssues > 0) {
+  if (FIX_MODE && errorCount > 0) {
     process.exit(1);
   }
 }

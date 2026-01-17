@@ -8,21 +8,34 @@ import {
   PenTool,
   Type,
   Zap,
-} from "lucide-react"
-import {Action} from "../design-system/Action"
-import {Experience} from "../design-system/Experience"
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../design-system/Icon"
-import {TeoLogo} from "../design-system/TeoLogo"
-import {Text} from "../design-system/text/Text"
-import {IconSize, Size, Space, ZIndex,} from "../design-system/token/token.const.1tier"
-import {Radius2} from "../design-system/token/token.const.2tier"
+} from "lucide-react";
+import { Action } from "../design-system/Action";
+import { Experience } from "../design-system/Experience";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../design-system/Icon";
+import { TeoLogo } from "../design-system/TeoLogo";
+import { Text } from "../design-system/text/Text";
+import {
+  IconSize,
+  Size,
+  Space,
+  ZIndex,
+} from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 export function LandingApp() {
   return (
     <Experience value="landing">
-      <Frame override={{ p: Space.n0 }} fill surface="base" scroll>
+      <Frame
+        override={{
+          p: Space.n0,
+          w: Size.fill,
+          h: Size.fill,
+        }}
+        surface="base"
+        scroll
+      >
         {/* Navigation */}
         <Frame
           style={{
@@ -35,13 +48,12 @@ export function LandingApp() {
             px: Space.n24,
             zIndex: ZIndex.n100,
           }}
-          layout={Layout.Row.Header.Sticky}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          h={Size.n44}
         >
           <TeoLogo height={24} />
-          <Frame
-            override={{ gap: Space.n8 }}
-            layout={Layout.Row.Actions.Default}
-          >
+          <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
             <Action label="Documentation" variant="ghost" />
             <Action label="Components" variant="ghost" />
             <Action label="Download" variant="primary" />
@@ -60,15 +72,14 @@ export function LandingApp() {
           <Frame
             rounded={Radius2.full}
             surface="sunken"
-            layout={Layout.Row.Item.Tight}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32}
             override={{
               py: Space.n4,
-              px: Space.n12,
-              gap: Space.n8,
               cursor: "pointer",
-              align: "center",
+              border: true,
             }}
-            border
           >
             <Icon
               src={Zap}
@@ -108,7 +119,8 @@ export function LandingApp() {
               px: Space.n0,
               pb: Space.n0,
             }}
-            layout={Layout.Row.Actions.Center}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
           >
             {/* Main CTA */}
             <Action
@@ -264,14 +276,17 @@ export function LandingApp() {
           />
           <Frame
             override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
-            layout={Layout.Row.Header.Default}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n12}
+            h={Size.n44}
           >
             <Text.Card.Note>
               © 2026 Minimal Design Kit. All rights reserved.
             </Text.Card.Note>
             <Frame
               override={{ gap: Space.n16 }}
-              layout={Layout.Row.Actions.Default}
+              layout={Layout.Row.Middle.End}
+              spacing={Space.n8}
             >
               <Text.Card.Note style={{ cursor: "pointer" }}>
                 Twitter
@@ -301,17 +316,26 @@ function FeatureCard({
 }) {
   return (
     <Frame
-      override={{ p: Space.n24, gap: Space.n16 }}
       rounded={Radius2["2xl"]}
       surface="sunken"
-      border
+      override={{
+        p: Space.n24,
+        gap: Space.n16,
+        border: true,
+      }}
     >
       <Frame
-        override={{ w: Size.n40, h: Size.n40, p: Space.n8, shadow: "sm" }}
+        override={{
+          w: Size.n40,
+          h: Size.n40,
+          p: Space.n8,
+          border: true,
+        }}
+        style={{ boxShadow: "var(--elevation-n1)" }}
         rounded={Radius2.xl}
         surface="base"
-        pack
-        border
+        layout={Layout.Col.Center.Start}
+        spacing={Space.n0}
       >
         <Icon
           src={IconSrc}
@@ -319,7 +343,7 @@ function FeatureCard({
           style={{ color: "var(--text-primary)" }}
         />
       </Frame>
-      <Frame override={{ gap: Space.n8 }}>
+      <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
         <Text.Card.Title>{title}</Text.Card.Title>
         <Text.Card.Desc>{description}</Text.Card.Desc>
       </Frame>

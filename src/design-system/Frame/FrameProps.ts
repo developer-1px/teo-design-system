@@ -17,6 +17,7 @@ import type {
   SpaceToken,
   WidthToken,
 } from "../token";
+
 import type { LayoutToken } from "./Layout/Layout.ts";
 
 // --- 1. PRESET PROPS (2-Tier / Semantic) ---
@@ -26,42 +27,10 @@ interface FramePresetProps {
   // 1. Layout (Inner Flow)
   // How children are arranged
   layout?: LayoutToken;
-
-  row?: boolean;
-  wrap?: boolean;
-  pack?: boolean;
-
-  grid?: boolean;
-  gap?: SpaceToken;
+  wrap?: boolean | "wrap" | "nowrap" | "wrap-reverse";
 
   // 2. Sizing (Outer Constraints)
   // How this frame sizes itself
-  w?: WidthToken;
-  h?: HeightToken;
-  ratio?: string;
-
-  maxWidth?: MaxWidthToken;
-
-  fill?: boolean;
-  flex?: boolean | number | string;
-
-  // 3. Appearance (Visual Decoration)
-  // Visual style without affecting layout flow
-  surface?: SurfaceToken;
-  rounded?: Radius2Token | boolean;
-  interactive?: boolean | "button" | "text";
-
-  // 4. Decoration (Visual)
-  opacity?: OpacityToken;
-  clip?: boolean;
-  scroll?: boolean | "x" | "y";
-}
-
-// --- 2. OVERRIDES (Strict 1-Tier Tokens) ---
-// Used inside 'override={{ ... }}' prop
-// Use this when you need specific Tokens not exposed by top-level props
-export interface FrameOverrides {
-  // Layout
   w?: WidthToken;
   h?: HeightToken;
 
@@ -69,6 +38,37 @@ export interface FrameOverrides {
   minHeight?: HeightToken;
   maxWidth?: MaxWidthToken;
   maxHeight?: MaxHeightToken;
+
+  // 3. Appearance (Visual Decoration)
+  // Visual style without affecting layout flow
+  surface?: SurfaceToken;
+  interactive?: boolean | "button" | "text";
+  selected?: boolean;
+
+  rounded?: Radius2Token | boolean;
+
+  // 4. Decoration (Visual)
+  opacity?: OpacityToken;
+  scroll?: boolean | "x" | "y";
+  shadow?: "sm" | "md" | "lg" | "xl" | "2xl";
+
+  // 5. Spacing (Unified)
+  // Single spacing prop: gap = spacing, p = spacing * 1.25
+  spacing?: SpaceToken;
+}
+
+// --- 2. OVERRIDES (Strict 1-Tier Tokens) ---
+// Used inside 'override={{ ... }}' prop
+// Use this when you need specific Tokens not exposed by top-level props
+export interface FrameOverrides {
+  // Layout
+  w?: WidthToken | number | string;
+  h?: HeightToken | number | string;
+
+  minWidth?: WidthToken | number | string;
+  minHeight?: HeightToken | number | string;
+  maxWidth?: MaxWidthToken | number | string;
+  maxHeight?: MaxHeightToken | number | string;
 
   // Grid
   grid?: boolean;
@@ -120,6 +120,7 @@ export interface FrameOverrides {
   // Visual
   opacity?: OpacityToken;
   ratio?: string;
+  shadow?: "sm" | "md" | "lg" | "xl" | "2xl";
 
   zIndex?: ZIndexToken;
   className?: string;
@@ -148,6 +149,8 @@ export interface FrameProps
    * Prevents usage of restricted CSS properties like margin, padding, width, height, etc.
    */
   style?: React.CSSProperties;
+
+  className?: string;
 
   children?: React.ReactNode;
 }

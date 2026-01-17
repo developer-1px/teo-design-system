@@ -5,16 +5,16 @@ import {
   getSortedRowModel,
   type SortingState,
   useReactTable,
-} from "@tanstack/react-table"
-import {useAtom, useAtomValue} from "jotai"
-import {useMemo, useState} from "react"
+} from "@tanstack/react-table";
+import { useAtom, useAtomValue } from "jotai";
+import { useMemo, useState } from "react";
 
-import {Table} from "../../ui/table/Table"
-import {formatColumnLabel} from "./dataLoader"
-import {formatForTable} from "./drawer/nestedValueFormatter"
-import {currentDataAtom, selectedRowIdAtom} from "./store"
-import {TableObjectCell} from "./TableObjectCell" // Import new component
-import type {DataRow} from "./types"
+import { Table } from "../../ui/table/Table";
+import { formatColumnLabel } from "./dataLoader";
+import { formatForTable } from "./drawer/nestedValueFormatter";
+import { currentDataAtom, selectedRowIdAtom } from "./store";
+import { TableObjectCell } from "./TableObjectCell"; // Import new component
+import type { DataRow } from "./types";
 
 function formatCellValue(value: unknown): string {
   if (Array.isArray(value)) {
@@ -22,7 +22,7 @@ function formatCellValue(value: unknown): string {
   }
   if (typeof value === "object" && value !== null) {
     // Just return Object count/type for cleanliness in table
-    return Object.keys(value).length + " Props";
+    return `${Object.keys(value).length} Props`;
   }
 
   return formatForTable(value, {

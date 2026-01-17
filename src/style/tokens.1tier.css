@@ -4,7 +4,6 @@
  */
 
 :root {
-
   /* Space */
   --space-n0: 0px;
   --space-n1: 1px;
@@ -243,23 +242,22 @@
   --elevation-n12: 12;
 
   /* AspectRatio */
-  --aspect-ratio-n1_1: 1/1;
-  --aspect-ratio-n4_3: 4/3;
-  --aspect-ratio-n3_4: 3/4;
-  --aspect-ratio-n16_9: 16/9;
-  --aspect-ratio-n9_16: 9/16;
-  --aspect-ratio-n21_9: 21/9;
-  --aspect-ratio-n2_1: 2/1;
-  --aspect-ratio-n3_2: 3/2;
-  --aspect-ratio-n2_3: 2/3;
-  --aspect-ratio-n5_4: 5/4;
-  --aspect-ratio-n4_5: 4/5;
+  --aspect-ratio-n1_1: 1 / 1;
+  --aspect-ratio-n4_3: 4 / 3;
+  --aspect-ratio-n3_4: 3 / 4;
+  --aspect-ratio-n16_9: 16 / 9;
+  --aspect-ratio-n9_16: 9 / 16;
+  --aspect-ratio-n21_9: 21 / 9;
+  --aspect-ratio-n2_1: 2 / 1;
+  --aspect-ratio-n3_2: 3 / 2;
+  --aspect-ratio-n2_3: 2 / 3;
+  --aspect-ratio-n5_4: 5 / 4;
+  --aspect-ratio-n4_5: 4 / 5;
 
   /* Size Keywords */
-  --size-// full: initial;
-  --size-// REMOVED: Use Size.full (100%) or w=100% (Fixed)
-  screen: initial;
-  --size-hug: initial;
+  /* full: initial; -- REMOVED: Use Size.full (100%) or w=100% (Fixed) */
+  --size-screen: 100vh;
+  --size-hug: fit-content;
   --size-fill: initial;
   --size-fit: fit-content;
   --size-auto: auto;

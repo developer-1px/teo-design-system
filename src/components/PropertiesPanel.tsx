@@ -13,21 +13,26 @@ import {
   Plus,
   Settings,
   Sun,
-} from "lucide-react"
-import type React from "react"
-import {useState} from "react"
-import {Action} from "../design-system/Action"
-import {Field} from "../design-system/Field"
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {useAccordion, useDropdown, useTabs} from "../design-system/hooks"
-import {Icon} from "../design-system/Icon"
-import {Overlay} from "../design-system/Overlay"
-import {Section} from "../design-system/Section"
-import {Separator} from "../design-system/Separator"
-import {Text} from "../design-system/text/Text"
-import {IconSize, Opacity, Size, Space,} from "../design-system/token/token.const.1tier"
-import {Radius2} from "../design-system/token/token.const.2tier"
+} from "lucide-react";
+import type React from "react";
+import { useState } from "react";
+import { Action } from "../design-system/Action";
+import { Field } from "../design-system/Field";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout";
+import { useAccordion, useDropdown, useTabs } from "../design-system/hooks";
+import { Icon } from "../design-system/Icon";
+import { Overlay } from "../design-system/Overlay";
+import { Section } from "../design-system/Section";
+import { Separator } from "../design-system/Separator";
+import { Text } from "../design-system/text/Text";
+import {
+  IconSize,
+  Opacity,
+  Size,
+  Space,
+} from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Data ---
 
@@ -73,15 +78,21 @@ const PropertySection = ({
   const panelProps = getPanelProps(id);
 
   return (
-    <Frame override={{ gap: Space.n8 }}>
+    <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
       {/* Collapsible Header */}
       <Frame
         {...itemProps}
-        override={{ px: Space.n8, cursor: "pointer" }}
-        layout={Layout.Row.Actions.Between}
+        override={{ cursor: "pointer", w: "100%" }}
+        layout={Layout.Row.Middle.Between}
+        spacing={Space.n8}
         onClick={itemProps.onToggle}
       >
-        <Frame override={{ gap: Space.n6 }} layout={Layout.Row.Item.Default}>
+        <Frame
+          override={{ gap: Space.n6 }}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          minHeight={Size.n40}
+        >
           <Icon
             src={itemProps.expanded ? ChevronDown : ChevronRight}
             size={IconSize.n12}
@@ -104,11 +115,12 @@ const PropertySection = ({
         {...panelProps}
         override={{
           gap: Space.n4,
-          pt: Space.n0,
+          pl: Space.n8,
           pr: Space.n8,
           pb: Space.n8,
-          pl: Space.n8,
         }}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n4}
       >
         {children}
       </Frame>
@@ -126,11 +138,12 @@ const TransformField = ({
   value: string;
   onChange: (val: string) => void;
 }) => (
-  <Frame flex>
+  <Frame override={{ flex: 1, minWidth: Size.n0 }}>
     <Field
       label={label}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      override={{ py: Space.n4 }} // Compact padding
     />
   </Frame>
 );
@@ -177,7 +190,12 @@ export function PropertiesPanel() {
   });
 
   return (
-    <Section w={Size.n256} surface="base" rounded={Radius2.lg} shadow="sm">
+    <Section
+      w={Size.n256}
+      surface="base"
+      rounded={Radius2.lg}
+      style={{ boxShadow: "var(--elevation-n1)" }}
+    >
       {/* Tabs */}
       <Frame
         {...getTabListProps()}
@@ -185,12 +203,15 @@ export function PropertiesPanel() {
           p: Space.n4,
           gap: Space.n4,
           h: Size.n40,
+          border: true,
         }}
+        w={Size.fill} // Ensure tabs expanded to full width
         style={{
           borderColor: "var(--border-color)",
         }}
-        layout={Layout.Row.Toolbar.Compact}
-        override={{ border: true }}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n8}
+        h={Size.n36}
       >
         {tabs.map((tab) => {
           const tabProps = getTabProps(tab);
@@ -201,6 +222,7 @@ export function PropertiesPanel() {
               key={tab}
               {...tabProps}
               flex
+              w="auto"
               variant="ghost"
               style={{
                 backgroundColor: isSelected
@@ -225,19 +247,29 @@ export function PropertiesPanel() {
       </Frame>
 
       <Frame
-        override={{ p: Space.n8, gap: Space.n8, minHeight: Size.n0 }}
+        override={{
+          p: Space.n8,
+          minHeight: Size.n0,
+          flex: 1,
+          gap: Space.n8, // Override Gap12 to Gap8
+        }}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n12}
         scroll
-        flex
-        fill
       >
         {/* Alignment */}
         <Frame
-          style={{
-            gap: "1px",
-          }} // 1px style override
-          layout={Layout.Row.Toolbar.Default}
+          // Toolbar alignment row
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n12}
+          h={Size.n40}
           surface="sunken"
-          override={{ border: true, p: "1px" as any }}
+          rounded={Radius2.md}
+          override={{
+            border: true,
+            p: Space.n4, // Reduce padding
+            gap: Space.n1,
+          }}
         >
           {ALIGNMENT_TOOLS.map((tool, i) =>
             isSeparator(tool) ? (
@@ -259,10 +291,12 @@ export function PropertiesPanel() {
         <Separator />
 
         {/* Transform */}
-        <Frame override={{ gap: Space.n8 }}>
+        <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
           <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ gap: Space.n8, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32}
+            override={{ gap: Space.n8 }}
           >
             <TransformField
               label="X"
@@ -277,8 +311,10 @@ export function PropertiesPanel() {
             <Frame override={{ w: Size.n24 }} />
           </Frame>
           <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ gap: Space.n8, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32}
+            override={{ gap: Space.n8 }}
           >
             <TransformField
               label="W"
@@ -290,7 +326,9 @@ export function PropertiesPanel() {
               value={transform.h}
               onChange={(v) => updateTransform("h", v)}
             />
-            <Frame override={{ w: Size.n24 }} pack>
+            <Frame
+              override={{ w: Size.n24, align: "center", justify: "center" }}
+            >
               <Action
                 icon={Lock}
                 iconSize={IconSize.n10}
@@ -300,8 +338,10 @@ export function PropertiesPanel() {
             </Frame>
           </Frame>
           <Frame
-            layout={Layout.Row.Item.Default}
-            override={{ gap: Space.n8, align: "center" }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
+            minHeight={Size.n32}
+            override={{ gap: Space.n8 }}
           >
             <TransformField
               label="°"
@@ -325,10 +365,7 @@ export function PropertiesPanel() {
           getItemProps={getItemProps}
           getPanelProps={getPanelProps}
         >
-          <Frame
-            layout={Layout.Row.LabelValue.Default}
-            override={{ gap: Space.n12 }}
-          >
+          <Frame layout={Layout.Row.Middle.Start} spacing={Space.n8}>
             <Field
               value="Normal"
               rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
@@ -350,7 +387,7 @@ export function PropertiesPanel() {
         >
           <Frame override={{ gap: Space.n6 }}>
             {/* Font Family Dropdown */}
-            <Frame override={{ position: "relative" }}>
+            <Frame style={{ position: "relative" }}>
               <Field
                 {...fontFamily.getToggleButtonProps()}
                 value={fontFamily.selectedItem ?? "Inter"}
@@ -368,10 +405,10 @@ export function PropertiesPanel() {
                 >
                   <Frame
                     {...fontFamily.getMenuProps()}
-                    override={{ gap: Space.n1 }}
+                    override={{ gap: Space.n1, border: true }}
+                    style={{ boxShadow: "var(--elevation-n2)" }}
                     surface="overlay"
                     rounded={Radius2.md}
-                    override={{ shadow: "md", border: true }}
                   >
                     {fontFamilies.map((item, index) => (
                       <Frame
@@ -384,7 +421,7 @@ export function PropertiesPanel() {
                         }}
                         surface={
                           fontFamily.selectedItem === item
-                            ? "selected"
+                            ? "raised"
                             : undefined
                         }
                         style={{
@@ -404,16 +441,19 @@ export function PropertiesPanel() {
 
             <Frame
               override={{ gap: Space.n8 }}
-              layout={Layout.Row.Item.Default}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n8}
+              minHeight={Size.n32}
             >
               {/* Font Weight Dropdown */}
-              <Frame override={{ position: "relative" }} flex>
-                <Field
-                  {...fontWeight.getToggleButtonProps()}
-                  value={fontWeight.selectedItem ?? "Regular"}
-                  rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
-                  flex
-                />
+              <Field
+                {...fontWeight.getToggleButtonProps()}
+                value={fontWeight.selectedItem ?? "Regular"}
+                rightIcon={<Icon src={ChevronDown} size={IconSize.n10} />}
+                flex
+                override={{ flex: 1 }} // Explicit flex to match previous behavior
+                style={{ position: "relative" }}
+              >
                 {fontWeight.isOpen && (
                   <Overlay
                     position="absolute"
@@ -426,10 +466,10 @@ export function PropertiesPanel() {
                   >
                     <Frame
                       {...fontWeight.getMenuProps()}
-                      override={{ gap: Space.n1 }}
+                      override={{ gap: Space.n1, border: true }}
+                      style={{ boxShadow: "var(--elevation-n2)" }}
                       surface="overlay"
                       rounded={Radius2.md}
-                      override={{ shadow: "md", border: true }}
                     >
                       {fontWeights.map((item, index) => (
                         <Frame
@@ -442,7 +482,7 @@ export function PropertiesPanel() {
                           }}
                           surface={
                             fontWeight.selectedItem === item
-                              ? "selected"
+                              ? "raised"
                               : undefined
                           }
                           style={{
@@ -458,24 +498,30 @@ export function PropertiesPanel() {
                     </Frame>
                   </Overlay>
                 )}
-              </Frame>
+              </Field>
               <Field value="42" w={Size.n48} />
             </Frame>
             <Frame
               override={{ gap: Space.n8 }}
-              layout={Layout.Row.Item.Default}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n8}
+              minHeight={Size.n32}
             >
               <Field label="LH" value="Auto" flex />
               <Field label="LS" value="0%" flex />
             </Frame>
             <Frame
-              rounded={Radius2.md}
-              style={{
-                gap: "1px",
-              }}
-              layout={Layout.Row.Toolbar.Compact}
+              // Inner toolbar for alignment
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n8}
+              h={Size.n36}
               surface="sunken"
-              override={{ border: true, p: "1px" as any }}
+              rounded={Radius2.md}
+              override={{
+                border: true,
+                p: Space.n4,
+                gap: Space.n1,
+              }}
             >
               {[
                 AlignLeft,
@@ -488,7 +534,7 @@ export function PropertiesPanel() {
                   key={i}
                   icon={Icon}
                   iconSize={IconSize.n12}
-                  surface={i === 0 ? "selected" : undefined}
+                  surface={i === 0 ? "raised" : undefined}
                   rounded={Radius2.md}
                   size="xs"
                   flex
@@ -508,14 +554,13 @@ export function PropertiesPanel() {
             value="F4F4F5"
             icon={
               <Frame
-                override={{}}
+                override={{ border: true }}
                 rounded={Radius2.full}
                 style={{
                   width: "10px",
                   height: "10px",
                 }}
                 surface="base"
-                border
               />
             }
             rightIcon={
@@ -547,7 +592,9 @@ export function PropertiesPanel() {
               rightIcon={
                 <Frame
                   override={{ gap: Space.n8 }}
-                  layout={Layout.Row.Item.Default}
+                  layout={Layout.Row.Middle.Center}
+                  spacing={Space.n8}
+                  minHeight={Size.n32}
                 >
                   <Text.Card.Note style={{ fontSize: "12px" }}>
                     100%
@@ -566,8 +613,10 @@ export function PropertiesPanel() {
               }
             />
             <Frame
-              layout={Layout.Row.Item.Default}
-              override={{ gap: Space.n8, align: "center" }}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n8}
+              minHeight={Size.n32}
+              override={{ gap: Space.n8 }}
             >
               <Field value="1.5" w={Size.n48} />
               <Field

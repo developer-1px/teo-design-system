@@ -27,7 +27,7 @@ import type {
   SizeToken,
   SpaceToken,
   ZIndexToken,
-} from "./lib/brand.ts"
+} from "./lib/brand.ts";
 
 // Re-export branded types for consumer convenience
 export type {

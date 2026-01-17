@@ -1,14 +1,21 @@
-import {FileText, Globe, Monitor} from "lucide-react"
-import type React from "react"
-import {useState} from "react"
-import {Action} from "../design-system/Action"
-import {Experience, type ExperienceType} from "../design-system/Experience"
-import {Frame} from "../design-system/Frame/Frame.tsx"
-import {Layout} from "../design-system/Frame/Layout/Layout.ts"
-import {Icon} from "../design-system/Icon"
-import {Text} from "../design-system/text/Text"
-import {ContainerSize, FontSize, IconSize, Size, Space, ZIndex,} from "../design-system/token/token.const.1tier"
-import {Radius2} from "../design-system/token/token.const.2tier"
+import { FileText, Globe, Monitor } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
+import { Action } from "../design-system/Action";
+import { Experience, type ExperienceType } from "../design-system/Experience";
+import { Frame } from "../design-system/Frame/Frame.tsx";
+import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../design-system/Icon";
+import { Text } from "../design-system/text/Text";
+import {
+  ContainerSize,
+  FontSize,
+  IconSize,
+  Size,
+  Space,
+  ZIndex,
+} from "../design-system/token/token.const.1tier";
+import { Radius2 } from "../design-system/token/token.const.2tier";
 
 /* 
   Text System Showcase
@@ -28,7 +35,8 @@ export function TextSystemApp() {
           h: Size.screen,
         }}
         surface="base"
-        layout={Layout.Stack.Content.None}
+        layout={Layout.Col.Left.Start}
+        spacing={Space.n0}
       >
         {/* Floating Experience Switcher */}
         <Frame
@@ -38,16 +46,17 @@ export function TextSystemApp() {
               top: 24,
               left: "50%",
               transform: "translateX(-50%)",
+              boxShadow: "var(--elevation-n4)",
             } as React.CSSProperties
           }
           override={{
-            shadow: "lg",
             p: Space.n4,
             zIndex: ZIndex.n100,
             r: Radius2.full,
           }}
           surface="raised" // Added surface
-          layout={Layout.Row.Actions.Center}
+          layout={Layout.Row.Middle.Center}
+          spacing={Space.n8}
         >
           <ExperienceButton
             active={experience === "landing"}
@@ -82,12 +91,14 @@ export function TextSystemApp() {
             minHeight: Size.screen, // Changed to minHeight
             p: Space.n40,
           }}
-          layout={Layout.Center.Default}
+          layout={Layout.Col.Center.Start}
+          spacing={Space.n0}
         >
           <Frame
             maxWidth={ContainerSize.n800}
             override={{ gap: Space.n32, w: Size.fill }}
-            layout={Layout.Center.Default}
+            layout={Layout.Col.Center.Start}
+            spacing={Space.n0}
           >
             <Frame
               style={
@@ -111,7 +122,7 @@ export function TextSystemApp() {
               />
             </Frame>
 
-            <Frame override={{ gap: Space.n16, align: "center" }}>
+            <Frame layout={Layout.Col.Center.Start} spacing={Space.n16}>
               <Text.Prose.Title
                 variant="xl"
                 style={{
@@ -138,7 +149,9 @@ export function TextSystemApp() {
 
             {/* Hierarchy Visualization */}
             <Frame
-              layout={Layout.Row.Item.Default}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40}
               style={{ marginTop: Space.n8 } as React.CSSProperties}
               override={{ gap: Space.n0 }}
             >
@@ -150,18 +163,20 @@ export function TextSystemApp() {
               ].map((layer, i) => (
                 <Frame
                   key={i}
-                  layout={Layout.Row.Item.Default}
-                  override={{ gap: Space.n0, align: "center" }}
+                  layout={Layout.Row.Middle.Center}
+                  spacing={Space.n12}
+                  minHeight={Size.n40}
+                  override={{ gap: Space.n0 }}
                 >
                   <Frame
                     override={{
                       py: Space.n16,
                       px: Space.n24,
-                      shadow: "sm",
                       gap: Space.n4,
                       w: Size.n160,
                       r: Radius2.xl,
                     }}
+                    style={{ boxShadow: "var(--elevation-n1)" }}
                     surface="raised"
                   >
                     <Text.Card.Note
@@ -245,7 +260,9 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
-            layout={Layout.Wrap.Chips.Default}
+            layout={Layout.Row.Middle.Start}
+            wrap="wrap"
+            spacing={Space.n8}
             override={{ gap: Space.n32, justify: "center" }}
           >
             <Frame
@@ -253,17 +270,18 @@ export function TextSystemApp() {
                 p: Space.n24,
                 gap: Space.n12,
                 w: Size.n320,
-                shadow: "sm",
                 r: Radius2.xl,
                 border: true,
               }}
+              style={{ boxShadow: "var(--elevation-n2)" }}
               surface="raised"
             >
               <Frame
                 override={{ w: Size.n40, h: Size.n40, r: Radius2.lg }}
                 style={{ marginBottom: Space.n2 } as React.CSSProperties}
                 surface="sunken"
-                pack
+                layout={Layout.Col.Center.Start}
+                spacing={Space.n0}
               >
                 <Icon src={Globe} size={IconSize.n40} />
               </Frame>
@@ -273,7 +291,8 @@ export function TextSystemApp() {
                 gateway.
               </Text.Card.Desc>
               <Frame
-                layout={Layout.Row.Actions.Between}
+                layout={Layout.Row.Middle.Between}
+                spacing={Space.n8}
                 style={{ marginTop: Space.n4 } as React.CSSProperties}
               >
                 <Text.Card.Note style={{ opacity: 0.6 }}>
@@ -288,17 +307,18 @@ export function TextSystemApp() {
                 p: Space.n24,
                 gap: Space.n12,
                 w: Size.n320,
-                shadow: "sm",
                 r: Radius2.xl,
                 border: true,
               }}
+              style={{ boxShadow: "var(--elevation-n2)" }}
               surface="raised"
             >
               <Frame
                 override={{ w: Size.n40, h: Size.n40, r: Radius2.lg }}
                 style={{ marginBottom: Space.n2 } as React.CSSProperties}
                 surface="sunken"
-                pack
+                layout={Layout.Col.Center.Start}
+                spacing={Space.n0}
               >
                 <Icon src={FileText} size={IconSize.n40} />
               </Frame>
@@ -307,7 +327,8 @@ export function TextSystemApp() {
                 Quarterly financial analysis and growth projections.
               </Text.Card.Desc>
               <Frame
-                layout={Layout.Row.Actions.Between}
+                layout={Layout.Row.Middle.Between}
+                spacing={Space.n8}
                 style={{ marginTop: Space.n4 } as React.CSSProperties}
               >
                 <Text.Card.Note style={{ opacity: 0.6 }}>Draft</Text.Card.Note>
@@ -341,7 +362,7 @@ export function TextSystemApp() {
               Account Settings
             </Text.Prose.Title>
 
-            <Frame override={{ gap: Space.n16 }}>
+            <Frame layout={Layout.Col.Left.Start} spacing={Space.n16}>
               <Frame override={{ gap: Space.n6 }}>
                 <Text.Field.Label>Display Name</Text.Field.Label>
                 <Frame
@@ -400,7 +421,8 @@ export function TextSystemApp() {
             </Frame>
 
             <Frame
-              layout={Layout.Row.Actions.Default}
+              layout={Layout.Row.Middle.End}
+              spacing={Space.n8}
               override={{ gap: Space.n12, justify: "end" }}
               style={{ marginTop: Space.n4 } as React.CSSProperties}
             >
@@ -431,27 +453,27 @@ export function TextSystemApp() {
               border: true,
             }}
             surface="raised"
-            clip
+            style={{ overflow: "hidden" }}
           >
             <Frame
               override={{
                 py: Space.n12,
-                px: Space.n16,
-                borderBottom: true,
               }}
-              layout={Layout.Row.Item.Default}
+              layout={Layout.Row.Middle.Center}
+              spacing={Space.n12}
+              minHeight={Size.n40}
               surface="sunken"
             >
-              <Frame flex={2}>
+              <Frame override={{ flex: 2 }}>
                 <Text.Table.Head>User</Text.Table.Head>
               </Frame>
-              <Frame flex={1}>
+              <Frame override={{ flex: 1 }}>
                 <Text.Table.Head>Role</Text.Table.Head>
               </Frame>
-              <Frame flex={1}>
+              <Frame override={{ flex: 1 }}>
                 <Text.Table.Head>Status</Text.Table.Head>
               </Frame>
-              <Frame flex={1} override={{ align: "end" }}>
+              <Frame override={{ flex: 1, align: "end" }}>
                 <Text.Table.Head>Activity</Text.Table.Head>
               </Frame>
             </Frame>
@@ -469,6 +491,7 @@ export function TextSystemApp() {
                 role: "Editor",
                 status: "Offline",
                 date: "1d ago",
+                time: "1d ago", // adding missing property logic if needed but map relies on user object
               },
               {
                 name: "Charlie Kim",
@@ -487,16 +510,16 @@ export function TextSystemApp() {
             ].map((user, i) => (
               <Frame
                 key={i}
-                layout={Layout.Row.Item.Default}
-                surface="hover"
+                layout={Layout.Row.Middle.Center}
+                spacing={Space.n12}
+                minHeight={Size.n40}
+                surface="sunken"
                 override={{
                   py: Space.n12,
-                  px: Space.n16,
-                  align: "center",
                   borderBottom: true,
                 }}
               >
-                <Frame override={{ gap: Space.n2 }} flex={2}>
+                <Frame override={{ gap: Space.n2, flex: 2 }}>
                   <Text.Table.Cell style={{ fontWeight: 500 }}>
                     {user.name}
                   </Text.Table.Cell>
@@ -504,10 +527,10 @@ export function TextSystemApp() {
                     {user.email}
                   </Text.Table.Cell>
                 </Frame>
-                <Frame flex={1}>
+                <Frame override={{ flex: 1 }}>
                   <Text.Table.Cell>{user.role}</Text.Table.Cell>
                 </Frame>
-                <Frame flex={1}>
+                <Frame override={{ flex: 1 }}>
                   <Frame
                     style={{
                       display: "inline-flex",
@@ -528,7 +551,7 @@ export function TextSystemApp() {
                     {user.status}
                   </Frame>
                 </Frame>
-                <Frame flex={1} override={{ align: "end" }}>
+                <Frame override={{ flex: 1, align: "end" }}>
                   <Text.Table.Cell
                     style={{
                       opacity: 0.5,
@@ -554,7 +577,9 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
-            layout={Layout.Row.Item.Default}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n12}
+            minHeight={Size.n40}
             override={{ gap: Space.n48, align: "start" }}
           >
             {/* Sidebar Menu Style */}
@@ -590,10 +615,10 @@ export function TextSystemApp() {
                 w: Size.n448,
                 p: Space.n4,
                 gap: Space.n4,
-                shadow: "lg",
                 r: Radius2.xl,
                 border: true,
               }}
+              style={{ boxShadow: "var(--elevation-n4)" }}
               surface="raised"
             >
               <MenuItem>View Details</MenuItem>
@@ -630,8 +655,6 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
         r: Radius2.full,
         py: Space.n8,
         px: Space.n16,
-        gap: Space.n8,
-        align: "center",
       }}
       style={{
         color: active ? "var(--primary-fg)" : "var(--text-secondary)",
@@ -639,8 +662,10 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
         transition: "all 0.2s",
       }}
       onClick={onClick}
-      surface={active ? "primary" : "hover"}
-      layout={Layout.Row.Item.Tight}
+      surface={active ? "primary" : undefined}
+      layout={Layout.Row.Middle.Center}
+      spacing={Space.n8}
+      minHeight={Size.n32}
     >
       <Icon src={IconSrc} size={IconSize.n14} />
       <Text.Menu.Item>{label}</Text.Menu.Item>
@@ -651,15 +676,18 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
 function ShowcaseSection({ title, description, code, children }: any) {
   return (
     <Frame
+      override={{ w: Size.fill, minHeight: Size.screen }}
+      layout={Layout.Row.Stretch.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
       style={
         {
           scrollSnapAlign: "start",
           flexShrink: 0,
+          overflow: "hidden",
         } as React.CSSProperties
       }
-      override={{ w: Size.fill, minHeight: Size.screen }}
-      layout={Layout.Row.AppContainer.Default}
-      clip
     >
       {/* Left: Code & Context */}
       <Frame
@@ -667,7 +695,7 @@ function ShowcaseSection({ title, description, code, children }: any) {
         surface="sunken"
         override={{ p: Space.n24, justify: "center", border: true }}
       >
-        <Frame override={{ gap: Space.n16 }}>
+        <Frame layout={Layout.Col.Left.Start} spacing={Space.n16}>
           <Text.Prose.Title style={{ fontSize: FontSize.n36 }}>
             {title}
           </Text.Prose.Title>
@@ -700,9 +728,10 @@ function ShowcaseSection({ title, description, code, children }: any) {
               "radial-gradient(circle at center, var(--surface-base) 0%, var(--surface-sunken) 100%)",
           } as React.CSSProperties
         }
-        flex={1}
+        override={{ flex: 1 }}
         surface="base"
-        pack
+        layout={Layout.Col.Center.Start}
+        spacing={Space.n0}
       >
         {children}
       </Frame>
@@ -718,7 +747,7 @@ function MenuItem({ children, active, style, ...props }: any) {
         px: Space.n12,
         r: Radius2.lg,
       }}
-      surface={active ? "selected" : "hover"}
+      surface={active ? "selected" : "sunken"}
       cursor="pointer"
       {...props}
     >

@@ -1,6 +1,6 @@
-import {Calendar, Globe, Hash, Mail, User} from "lucide-react"
-import type {DataRow} from "../types"
-import {formatForDrawer} from "./nestedValueFormatter"
+import { Calendar, Globe, Hash, Mail, User } from "lucide-react";
+import type { DataRow } from "../types";
+import { formatForDrawer } from "./nestedValueFormatter";
 
 // Icon mapping for common field types
 const FIELD_ICON_MAP: Record<string, React.ElementType> = {

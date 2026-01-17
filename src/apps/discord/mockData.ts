@@ -2,7 +2,7 @@
  * Discord Mock App Data
  */
 
-import type {Member, Message, Server} from "./types"
+import type { Member, Message, Server } from "./types";
 
 export const mockServers: Server[] = [
   {

@@ -1,15 +1,20 @@
-import {Frame} from "../../../design-system/Frame/Frame"
-import {Layout} from "../../../design-system/Frame/Layout/Layout"
-import {Text} from "../../../design-system/text/Text"
-import {Size, Space} from "../../../design-system/token/token.const.1tier"
-import {Radius2} from "../../../design-system/token/token.const.2tier"
+import { Frame } from "../../../design-system/Frame/Frame";
+import { Layout } from "../../../design-system/Frame/Layout/Layout";
+import { Text } from "../../../design-system/text/Text";
+import { Size, Space } from "../../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 // Helper for cell values
 function SmartCellRenderer({ value }: { value: unknown }) {
   // Array -> Chips
   if (Array.isArray(value)) {
     return (
-      <Frame layout={Layout.Wrap.Chips.Default} gap={Space.n4}>
+      <Frame
+        layout={Layout.Row.Middle.Start}
+        wrap="wrap"
+        spacing={Space.n8}
+        override={{ gap: Space.n4 }}
+      >
         {value.map((item, i) => (
           <Frame
             key={i}
@@ -54,9 +59,11 @@ export function JsonTable({ data }: { data: Record<string, any>[] }) {
   // Derive columns from the first few items to ensure coverage, or just the first one?
   // Let's take all unique keys from the first 5 items to be safe but efficient.
   const allKeys = new Set<string>();
-  data
-    .slice(0, 5)
-    .forEach((item) => Object.keys(item).forEach((k) => allKeys.add(k)));
+  data.slice(0, 5).forEach((item) => {
+    Object.keys(item).forEach((k) => {
+      allKeys.add(k);
+    });
+  });
   const columns = Array.from(allKeys);
 
   return (

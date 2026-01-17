@@ -1,6 +1,6 @@
-import {useCallback, useMemo} from "react"
-import {useControlledState} from "./utils/useControlledState"
-import {useId} from "./utils/useId"
+import { useCallback, useMemo } from "react";
+import { useControlledState } from "./utils/useControlledState";
+import { useId } from "./utils/useId";
 
 /**
  * Options for useAccordion hook
@@ -130,7 +130,7 @@ export function useAccordion(options: UseAccordionOptions): UseAccordionReturn {
   const [expandedSet, setExpandedSet] = useControlledState<Set<string>>(
     controlledSet,
     new Set(defaultExpanded),
-    (newSet) => onChange?.(Array.from(newSet)),
+    (newSet) => onChange?.(Array.from(newSet || [])),
   );
 
   /**
@@ -138,25 +138,23 @@ export function useAccordion(options: UseAccordionOptions): UseAccordionReturn {
    */
   const toggle = useCallback(
     (id: string) => {
-      setExpandedSet((prev) => {
-        const next = new Set(prev);
+      const next = new Set(expandedSet);
 
-        if (next.has(id)) {
-          // Collapse
-          next.delete(id);
-        } else {
-          // Expand
-          if (!allowMultiple) {
-            // Single mode: close all others
-            next.clear();
-          }
-          next.add(id);
+      if (next.has(id)) {
+        // Collapse
+        next.delete(id);
+      } else {
+        // Expand
+        if (!allowMultiple) {
+          // Single mode: close all others
+          next.clear();
         }
+        next.add(id);
+      }
 
-        return next;
-      });
+      setExpandedSet(next);
     },
-    [allowMultiple, setExpandedSet],
+    [allowMultiple, expandedSet, setExpandedSet],
   );
 
   /**
@@ -164,15 +162,13 @@ export function useAccordion(options: UseAccordionOptions): UseAccordionReturn {
    */
   const expand = useCallback(
     (id: string) => {
-      setExpandedSet((prev) => {
-        if (prev.has(id)) return prev;
+      if (expandedSet.has(id)) return;
 
-        const next = allowMultiple ? new Set(prev) : new Set<string>();
-        next.add(id);
-        return next;
-      });
+      const next = allowMultiple ? new Set(expandedSet) : new Set<string>();
+      next.add(id);
+      setExpandedSet(next);
     },
-    [allowMultiple, setExpandedSet],
+    [allowMultiple, expandedSet, setExpandedSet],
   );
 
   /**
@@ -180,15 +176,13 @@ export function useAccordion(options: UseAccordionOptions): UseAccordionReturn {
    */
   const collapse = useCallback(
     (id: string) => {
-      setExpandedSet((prev) => {
-        if (!prev.has(id)) return prev;
+      if (!expandedSet.has(id)) return;
 
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
+      const next = new Set(expandedSet);
+      next.delete(id);
+      setExpandedSet(next);
     },
-    [setExpandedSet],
+    [expandedSet, setExpandedSet],
   );
 
   /**

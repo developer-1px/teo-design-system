@@ -1,6 +1,6 @@
-import {JsonPropertyGrid} from "./JsonPropertyGrid"
-import {JsonTable} from "./JsonTable"
-import {JsonTree} from "./JsonTree"
+import { JsonPropertyGrid } from "./JsonPropertyGrid";
+import { JsonTable } from "./JsonTable";
+import { JsonTree } from "./JsonTree";
 
 interface JsonSmartViewProps {
   data: unknown;

@@ -1,12 +1,13 @@
-import {Action} from "../../../design-system/Action"
-import {Frame} from "../../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../../design-system/Frame/Layout/Layout.ts"
-import {Size, Space} from "../../../design-system/token/token.const.1tier"
+import { Action } from "../../../design-system/Action";
+import { Frame } from "../../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { Size, Space } from "../../../design-system/token/token.const.1tier";
 
 export function DrawerFooter({ onClose }: { onClose: () => void }) {
   return (
     <Frame
-      layout={Layout.Row.Actions.Default}
+      layout={Layout.Row.Middle.End}
+      spacing={Space.n8}
       surface="sunken"
       override={{
         h: Size.n56,

@@ -1,8 +1,8 @@
-import {Action} from "../../design-system/Action"
-import {Frame} from "../../design-system/Frame/Frame.tsx"
-import {Layout} from "../../design-system/Frame/Layout/Layout.ts"
-import {Size, Space} from "../../design-system/token/token.const.1tier"
-import {Radius2} from "../../design-system/token/token.const.2tier"
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Size, Space } from "../../design-system/token/token.const.1tier";
+import { Radius2 } from "../../design-system/token/token.const.2tier";
 
 const TABS = [
   "Overview",
@@ -24,13 +24,17 @@ const TABS = [
 export function ScrollTabSection() {
   return (
     <Frame
+      layout={Layout.Col.Left.Start}
+      spacing={Space.n0}
+      w={Size.fill}
+      h={Size.fill}
       override={{
         w: Size.fill,
-        py: Space.n12,
+        py: Space.n8,
         px: Space.n0,
+        borderBottom: true,
       }}
-      surface="base"
-      border={true}
+      surface="sunken"
     >
       <Frame
         override={{
@@ -46,7 +50,9 @@ export function ScrollTabSection() {
           scrollbarWidth: "none",
           WebkitOverflowScrolling: "touch",
         }}
-        layout={Layout.Row.Item.Default}
+        layout={Layout.Row.Middle.Center}
+        spacing={Space.n12}
+        minHeight={Size.n40}
         scroll
       >
         {TABS.map((tab, i) => (
