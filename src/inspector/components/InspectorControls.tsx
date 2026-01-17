@@ -35,8 +35,7 @@ const ControlLabel = ({
   <Frame
     layout={Layout.Row.Middle.Center}
     spacing={Space.n8}
-    minHeight={Size.n32}
-    override={{ gap: Space.n2 }}
+    override={{ minHeight: Size.n32, gap: Space.n2 }}
     style={{ minWidth: "60px" } as any}
   >
     {Icon && <Icon size={10} className="text-tertiary" />}
@@ -64,17 +63,16 @@ const ValueBox = ({
       flex: true,
       justify: "between",
       gap: Space.n2,
+      minHeight: Size.n40,
     }}
     surface="base"
     layout={Layout.Row.Middle.Center}
     spacing={Space.n12}
-    minHeight={Size.n40}
   >
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n8}
-      minHeight={Size.n32}
-      override={{ gap: Space.n2 }}
+      override={{ minHeight: Size.n32, gap: Space.n2 }}
     >
       {Icon && <Icon size={10} className="text-tertiary" />}
       {label && (
@@ -119,14 +117,12 @@ export const LayoutControl = ({ props }: { props: Record<string, any> }) => {
       <Frame
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
-        override={{ justify: "between", gap: Space.n2 }}
+        override={{ minHeight: Size.n40, justify: "between", gap: Space.n2 }}
       >
         <Frame
-          override={{ gap: Space.n1 }}
           layout={Layout.Row.Middle.Center}
           spacing={Space.n8}
-          minHeight={Size.n32}
+          override={{ gap: Space.n1, minHeight: Size.n32 }}
         >
           <Frame
             override={{ p: Space.n1, r: Radius2.sm, border: true }}
@@ -185,8 +181,7 @@ export const LayoutControl = ({ props }: { props: Record<string, any> }) => {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40}
-            override={{ justify: "center" }}
+            override={{ minHeight: Size.n40, justify: "center" }}
           >
             <Text size={FontSize.n9} color="tertiary">
               {py || padding || "-"}
@@ -195,9 +190,13 @@ export const LayoutControl = ({ props }: { props: Record<string, any> }) => {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40}
             override={
-              { justify: "between", align: "center", width: "100%" } as any
+              {
+                minHeight: Size.n40,
+                justify: "between",
+                align: "center",
+                width: "100%",
+              } as any
             }
           >
             <Text size={FontSize.n9} color="tertiary">
@@ -211,8 +210,7 @@ export const LayoutControl = ({ props }: { props: Record<string, any> }) => {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40}
-            override={{ justify: "center" }}
+            override={{ minHeight: Size.n40, justify: "center" }}
           >
             <Text size={FontSize.n9} color="tertiary">
               {py || padding || "-"}
@@ -246,8 +244,7 @@ export const SizingControl = ({ props }: { props: Record<string, any> }) => {
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
-          override={{ gap: Space.n2 }}
+          override={{ minHeight: Size.n40, gap: Space.n2 }}
         >
           {fill && (
             <Frame
@@ -297,15 +294,13 @@ export const AppearanceControl = ({
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
-          override={{ justify: "between" }}
+          override={{ minHeight: Size.n40, justify: "between" }}
         >
           <ControlLabel icon={Square}>Surface</ControlLabel>
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32}
-            override={{ gap: Space.n2 }}
+            override={{ minHeight: Size.n32, gap: Space.n2 }}
           >
             <div
               style={{
@@ -330,8 +325,8 @@ export const AppearanceControl = ({
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
           override={{
+            minHeight: Size.n40,
             justify: "between",
             p: Space.n2,
             r: Radius2.sm,
@@ -346,8 +341,8 @@ export const AppearanceControl = ({
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
           override={{
+            minHeight: Size.n40,
             justify: "between",
             p: Space.n2,
             r: Radius2.sm,

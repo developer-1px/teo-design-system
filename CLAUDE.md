@@ -300,17 +300,18 @@ All design tokens are defined in `src/design-system/tokens.css` using CSS custom
   // Sizing
   w={Size.n240}   // Width using Size tokens
   h={Size.n640}   // Height using Size tokens
-  maxWidth={Size.n1200}  // Max width
   ratio="16/9"    // Aspect ratio
 
   // Overrides (1-Tier Tokens - use when fine-tuning is needed)
   override={{
-    gap: Space.n12,    // Override gap independently
-    p: Space.n16,      // Override padding independently
-    px: Space.n8,      // Directional padding (px, py, pt, pb, pl, pr)
+    gap: Space.n12,        // Override gap independently
+    p: Space.n16,          // Override padding independently
+    px: Space.n8,          // Directional padding (px, py, pt, pb, pl, pr)
     row: true,
     align: "center",
     justify: "space-between",
+    minHeight: Size.n40,   // Size constraints (min/max)
+    maxWidth: Size.n1200,  // Size constraints (min/max)
     // ... other 1-tier tokens
   }}
 

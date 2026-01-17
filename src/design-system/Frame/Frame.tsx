@@ -16,10 +16,6 @@ export function Frame({
   // Sizing (Constraints)
   w,
   h,
-  minWidth,
-  minHeight,
-  maxWidth,
-  maxHeight,
 
   // Appearance (Visuals)
   surface,
@@ -66,10 +62,6 @@ export function Frame({
     ...(wrap !== undefined && { wrap }),
     ...(w !== undefined && { w }),
     ...(h !== undefined && { h }),
-    ...(minWidth !== undefined && { minWidth }),
-    ...(minHeight !== undefined && { minHeight }),
-    ...(maxWidth !== undefined && { maxWidth }),
-    ...(maxHeight !== undefined && { maxHeight }),
     ...(scroll !== undefined && { scroll }),
     ...(opacity !== undefined && { opacity }),
     ...(resolvedSurface !== undefined && { surface: resolvedSurface }),

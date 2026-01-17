@@ -31,8 +31,7 @@ export function JsonTree({
       <Frame
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
-        override={{ gap: Space.n4 }}
+        override={{ gap: Space.n4, minHeight: Size.n40 }}
       >
         {name && (
           <Text.Field.Value
@@ -61,8 +60,7 @@ export function JsonTree({
       <Frame
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
-        override={{ gap: Space.n4 }}
+        override={{ gap: Space.n4, minHeight: Size.n40 }}
       >
         {name && (
           <Text.Field.Value style={{ color: "var(--text-tertiary)" }}>
@@ -82,8 +80,7 @@ export function JsonTree({
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
-          override={{ gap: Space.n4 }}
+          override={{ gap: Space.n4, minHeight: Size.n40 }}
           style={{ cursor: "pointer" }}
         >
           {/* Caret */}

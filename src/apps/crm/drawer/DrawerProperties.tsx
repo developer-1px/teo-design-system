@@ -41,14 +41,18 @@ export function DrawerProperties({
         const panelProps = getPanelProps(groupId);
 
         return (
-          <Frame key={groupId} layout={Layout.Col.Left.Start} spacing={Space.n0}>
+          <Frame
+            key={groupId}
+            layout={Layout.Col.Left.Start}
+            spacing={Space.n0}
+          >
             {/* Header / Trigger */}
             <Frame
               {...itemProps}
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40}
               override={{
+                minHeight: Size.n40,
                 h: Size.n32,
                 gap: Space.n8,
                 cursor: "pointer",
@@ -130,9 +134,8 @@ function PropertyRow({
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
       h={Size.hug}
-      override={{ align: "start", gap: Space.n16 }}
+      override={{ minHeight: Size.n40, align: "start", gap: Space.n16 }}
     >
       {/* Key (Fixed Width) */}
       <Frame override={{ w: Size.n128 }}>

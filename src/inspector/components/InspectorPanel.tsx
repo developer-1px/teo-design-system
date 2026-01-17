@@ -281,10 +281,9 @@ export function InspectorPanel({
           onMouseDown={handleMouseDown}
         >
           <Frame
-            override={{ gap: Space.n6, flex: 1 }}
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32}
+            override={{ gap: Space.n6, flex: 1, minHeight: Size.n32 }}
           >
             <Lock size={12} className="text-primary" />
             <Text weight="bold" size={FontSize.n10}>
@@ -359,8 +358,7 @@ export function InspectorPanel({
                 <Frame
                   layout={Layout.Row.Middle.Center}
                   spacing={Space.n8}
-                  minHeight={Size.n32}
-                  override={{ gap: Space.n4, py: Space.n4 }}
+                  override={{ minHeight: Size.n32, gap: Space.n4, py: Space.n4 }}
                 >
                   <SectionIcon size={10} className="text-tertiary" />
                   <Text
@@ -423,8 +421,7 @@ export function InspectorPanel({
               <Frame
                 layout={Layout.Row.Middle.Center}
                 spacing={Space.n8}
-                minHeight={Size.n32}
-                override={{ gap: Space.n4, py: Space.n4 }}
+                override={{ minHeight: Size.n32, gap: Space.n4, py: Space.n4 }}
               >
                 <section.icon size={10} className="text-tertiary" />
                 <Text
@@ -473,8 +470,7 @@ export function InspectorPanel({
               <Frame
                 layout={Layout.Row.Middle.Center}
                 spacing={Space.n8}
-                minHeight={Size.n32}
-                override={{ gap: Space.n4, py: Space.n4 }}
+                override={{ minHeight: Size.n32, gap: Space.n4, py: Space.n4 }}
               >
                 <AppWindow size={10} className="text-tertiary" />
                 <Text

@@ -34,11 +34,6 @@ interface FramePresetProps {
   w?: WidthToken;
   h?: HeightToken;
 
-  minWidth?: WidthToken;
-  minHeight?: HeightToken;
-  maxWidth?: MaxWidthToken;
-  maxHeight?: MaxHeightToken;
-
   // 3. Appearance (Visual Decoration)
   // Visual style without affecting layout flow
   surface?: SurfaceToken;
