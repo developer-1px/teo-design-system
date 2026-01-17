@@ -94,9 +94,9 @@ export function CMSApp() {
                     : Size.fill,
               minHeight: Size.screen,
               clip: true, // Ensure content doesn't bleed
+              shadow: "2xl", // Deep shadow for floating effect
             }}
             surface="base" // The "Page" itself
-            shadow="2xl" // Deep shadow for floating effect
             style={{
               transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               border: "1px solid var(--border-color)",

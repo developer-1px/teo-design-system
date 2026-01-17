@@ -45,7 +45,6 @@ interface FramePresetProps {
   // 4. Decoration (Visual)
   opacity?: OpacityToken;
   scroll?: boolean | "x" | "y";
-  shadow?: "sm" | "md" | "lg" | "xl" | "2xl";
 
   // 5. Spacing (Unified)
   // Single spacing prop: gap = spacing, p = spacing * 1.25

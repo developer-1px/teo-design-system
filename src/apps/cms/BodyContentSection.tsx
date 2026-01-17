@@ -83,8 +83,7 @@ export function BodyContentSection() {
 
         <Frame override={{ pack: true, flex: 1 }}>
           <Frame
-            override={{ w: Size.n160, h: Size.n208 }}
-            shadow="2xl"
+            override={{ w: Size.n160, h: Size.n208, shadow: "2xl" }}
             rounded={Radius2["3xl"]}
             style={{ position: "relative" }}
             surface="raised"
@@ -96,8 +95,8 @@ export function BodyContentSection() {
                 h: Size.n64,
                 p: Space.n24,
                 gap: Space.n16,
+                shadow: "lg",
               }}
-              shadow="lg"
               rounded={Radius2["2xl"]}
               style={{
                 position: "absolute",
@@ -134,8 +133,8 @@ export function BodyContentSection() {
                 p: Space.n24,
                 gap: Space.n16,
                 border: true,
+                shadow: "2xl",
               }}
-              shadow="2xl"
               rounded={Radius2["2xl"]}
               style={{
                 position: "absolute",
@@ -155,7 +154,7 @@ export function BodyContentSection() {
                 <Frame
                   layout={Layout.Row.Middle.Center}
                   spacing={Space.n4}
-                  minHeight={Size.n24} override={{ px: Space.n8 }}
+                  override={{ px: Space.n8, minHeight: Size.n24 }}
                 >
                   <Frame
                     override={{ w: Size.n8, h: Size.n8 }}
@@ -192,8 +191,7 @@ function CheckItem({ title, desc }: CheckItemProps) {
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
-      override={{ align: "start" }}
+      override={{ align: "start", minHeight: Size.n40 }}
     >
       <Frame
         override={{ w: Size.n20, h: Size.n20, pack: true }}
