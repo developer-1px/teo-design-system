@@ -1,7 +1,7 @@
 
 import React, { useMemo, useRef, useEffect } from "react";
 // import { Frame } from "./Frame/Frame";
-import { useHeadlessTable, type TableOptions } from "./hooks/useHeadlessTable";
+import { useHeadlessTable, type TableOptions } from "./hooks/data/useHeadlessTable";
 // import { useHotKeys } from "./hooks/useHotKeys";
 
 // Types

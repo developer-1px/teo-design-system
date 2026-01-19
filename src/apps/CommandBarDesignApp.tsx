@@ -12,9 +12,9 @@ import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import {
   getHighlightedParts,
   useFuzzySearch,
-} from "../design-system/hooks/useFuzzySearch";
-import { formatKeyCombo, useHotKeys } from "../design-system/hooks/useHotKeys";
-import { useNavigation } from "../design-system/hooks/useNavigation";
+} from "../design-system/hooks/search/useFuzzySearch";
+import { formatKeyCombo, useHotKeys } from "../design-system/hooks/interaction/useHotKeys";
+import { useNavigation } from "../design-system/hooks/interaction/useNavigation";
 import { Icon } from "../design-system/Icon.tsx";
 import { Text } from "../design-system/text/Text.tsx";
 import {

@@ -6,7 +6,7 @@
 import { Clock, FileCode } from "lucide-react";
 import { Frame } from "../../design-system/Frame/Frame.tsx";
 import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { useNavigation } from "../../design-system/hooks/useNavigation.ts";
+import { useNavigation } from "../../design-system/hooks/interaction/useNavigation";
 import { Icon } from "../../design-system/Icon.tsx";
 import { Text } from "../../design-system/text/Text.tsx";
 import {

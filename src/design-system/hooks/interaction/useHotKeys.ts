@@ -5,7 +5,7 @@ import {
   getModifierLabel as getModLabel,
   formatKeyCombo as fmtKeyCombo,
   type ParsedKey
-} from "./utils/keyUtils";
+} from "../lib/keyUtils";
 
 /**
  * Hot key handler function

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useControlledState } from "./utils/useControlledState";
-import { useId } from "./utils/useId";
+import { useControlledState } from "../primitives/useControlledState";
+import { useId } from "../primitives/useId";
 
 /**
  * Tooltip placement options

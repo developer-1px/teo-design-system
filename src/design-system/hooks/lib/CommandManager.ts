@@ -1,4 +1,4 @@
-import { type ParsedKey, parseKeyCombo, matchesKeyCombo } from "../utils/keyUtils";
+import { type ParsedKey, parseKeyCombo, matchesKeyCombo } from "./keyUtils";
 
 export interface KeyBinding {
     key: string;

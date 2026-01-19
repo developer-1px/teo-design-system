@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from "react";
-import { CommandManager, type KeyBinding, type CommandHandler } from "./logic/CommandManager";
+import { CommandManager, type KeyBinding, type CommandHandler } from "../lib/CommandManager";
 
 // Type re-exports for consumer convenience
 export type { KeyBinding, CommandHandler };
