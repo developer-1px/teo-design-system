@@ -31,10 +31,8 @@ export function LandingApp() {
         override={{
           p: Space.n0,
           w: Size.fill,
-          h: Size.fill,
         }}
         surface="base"
-        scroll
       >
         {/* Navigation */}
         <Frame
@@ -74,11 +72,11 @@ export function LandingApp() {
             surface="sunken"
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32}
             override={{
               py: Space.n4,
               cursor: "pointer",
               border: true,
+              minHeight: Size.n32,
             }}
           >
             <Icon

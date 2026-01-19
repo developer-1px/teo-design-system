@@ -615,3 +615,32 @@ Complete 3-Tier specification details:
 **"See the Intent, Control the Component"**
 
 *Intent를 보고, Component를 제어하라*
+
+## 16. Headless Architecture & Message-Driven Communication
+
+### Core Philosophy: "Logic First, UI Optional"
+
+We aim for a strict separation of UI and Logic layers. The business logic must be fully functional even without any UI attached ("Headless").
+
+### Principles
+
+1.  **UI-Agnostic Logic**:
+    *   Logic hooks (e.g., `useHeadlessTable`, `useCommandSystem`) must NOT depend on UI implementation details.
+    *   They should be testable and usable in a non-GUI environment (e.g., CLI, tests, background processes).
+
+2.  **Message/Command Driven**:
+    *   **Avoid** direct coupling via `refs` or deeply drilled callback handlers where possible.
+    *   **Prefer** communication via Messages or Commands.
+        *   UI emits a **Command** (Intent to do something).
+        *   Logic processes the Command and updates **State**.
+        *   UI reflects the new State.
+    *   *Example*: Instead of calling `tableRef.current.scrollTo(row)`, dispatch a `SelectCommand({ row })` which updates state, and let the UI reactively scroll.
+
+3.  **Event-Based Architecture**:
+    *   Decouple trigger sources (Keyboard, Mouse, Network) from Business Logic.
+    *   Use an intermediary (like `useCommandSystem`) to translate raw events into semantic actions.
+
+### Implementation Checklist
+- [ ] Can this hook/logic be used in a pure Node.js script? (Mocking React hooks if needed)
+- [ ] Are we exposing "Actions/Commands" rather than "Setters"?
+- [ ] Is the keyboard/mouse handling abstracted away from the core business logic?

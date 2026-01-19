@@ -16,52 +16,48 @@ const SURFACES: Array<{
   description: string;
   usage: string;
 }> = [
-  {
-    token: "ghost",
-    name: "Ghost",
-    description: "투명한 배경 레이어",
-    usage: "아이콘 버튼, 고스트 버튼",
-  },
-  {
-    token: "base",
-    name: "Base",
-    description: "기본 배경 레이어",
-    usage: "카드, 패널, 다이얼로그 등 주요 컨텐츠 영역",
-  },
-  {
-    token: "sunken",
-    name: "Sunken",
-    description: "음각 효과의 낮은 레이어",
-    usage: "앱 전체 배경, Well 영역, 입력 필드",
-  },
-  {
-    token: "raised",
-    name: "Raised",
-    description: "부각된 높은 레이어",
-    usage: "플로팅 툴바, 드롭다운 메뉴",
-  },
-  {
-    token: "overlay",
-    name: "Overlay",
-    description: "최상단 오버레이",
-    usage: "모달, 토스트, 팝오버",
-  },
-  {
-    token: "primary",
-    name: "Primary",
-    description: "강조 액센트 레이어",
-    usage: "주요 액션 버튼, 선택된 상태",
-  },
-];
+    {
+      token: "ghost",
+      name: "Ghost",
+      description: "투명한 배경 레이어",
+      usage: "아이콘 버튼, 고스트 버튼",
+    },
+    {
+      token: "base",
+      name: "Base",
+      description: "기본 배경 레이어",
+      usage: "카드, 패널, 다이얼로그 등 주요 컨텐츠 영역",
+    },
+    {
+      token: "sunken",
+      name: "Sunken",
+      description: "음각 효과의 낮은 레이어",
+      usage: "앱 전체 배경, Well 영역, 입력 필드",
+    },
+    {
+      token: "raised",
+      name: "Raised",
+      description: "부각된 높은 레이어",
+      usage: "플로팅 툴바, 드롭다운 메뉴",
+    },
+    {
+      token: "overlay",
+      name: "Overlay",
+      description: "최상단 오버레이",
+      usage: "모달, 토스트, 팝오버",
+    },
+    {
+      token: "primary",
+      name: "Primary",
+      description: "강조 액센트 레이어",
+      usage: "주요 액션 버튼, 선택된 상태",
+    },
+  ];
 
 export function SurfaceApp() {
   return (
     <Frame
-      style={{
-        overflowY: "scroll",
-        scrollSnapType: "y mandatory",
-      }}
-      override={{ h: Size.screen }}
+      override={{ minHeight: Size.screen }}
     >
       {/* Page 1: Surface Concept Introduction */}
       <IntroductionPage />
@@ -357,11 +353,10 @@ function SurfaceDetailPage({
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
           style={{
             animation: `fadeInUp 0.8s ease both`,
           }}
-          override={{ gap: Space.n64 }}
+          override={{ gap: Space.n64, minHeight: Size.n40 }}
         >
           {/* Left: Visual Sample */}
           <Frame override={{ flex: 1, gap: Space.n32, align: "center" }}>

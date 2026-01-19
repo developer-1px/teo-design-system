@@ -38,11 +38,8 @@ export function LoginApp() {
         }}
       >
         <Frame
-          w={Size.fill}
-          maxWidth={ContainerSize.n480} // Standardized to n480 (prev 400px)
-          override={{
-            gap: Space.n32,
-          }}
+          w={Size.fill} // Standardized to n480 (prev 400px)
+          override={{ gap: Space.n32, maxWidth: ContainerSize.n480 }}
         >
           <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
             <Text size={FontSize.n28} weight="bold">
@@ -72,8 +69,11 @@ export function LoginApp() {
               <Frame
                 layout={Layout.Row.Middle.Center}
                 spacing={Space.n8}
-                minHeight={Size.n32}
-                override={{ cursor: "pointer", gap: Space.n12 }}
+                override={{
+                  cursor: "pointer",
+                  gap: Space.n12,
+                  minHeight: Size.n32,
+                }}
                 onClick={() => setRememberMe(!rememberMe)}
               >
                 <Switch checked={rememberMe} onChange={setRememberMe} />
@@ -121,17 +121,14 @@ export function LoginApp() {
         >
           <Frame
             w={Size.fill}
-            maxWidth={ContainerSize.n480}
-            override={{
-              gap: Space.n32,
-            }}
+            override={{ gap: Space.n32, maxWidth: ContainerSize.n480 }}
           >
             {/* Hero Icon */}
             <Frame
               override={{
                 w: Size.n96,
                 h: Size.n96,
-                shadow: "xl",
+                elevation: "n4",
                 align: "center",
                 justify: "center",
                 border: true,
@@ -189,8 +186,7 @@ function FeatureRow({ title, desc }: { title: string; desc: string }) {
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
-      override={{ align: "start", gap: Space.n16 }}
+      override={{ align: "start", gap: Space.n16, minHeight: Size.n40 }}
     >
       <Frame
         surface="sunken"

@@ -40,14 +40,14 @@ export function Switch({ checked = false, onChange, disabled }: SwitchProps) {
           r: Radius2.full,
           w: Size.n20,
           h: Size.n20,
-          shadow: "sm",
+          elevation: "n1",
         }}
         style={{
           transition: "transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1)", // Smooth spring-like ease
           transform: checked ? "translateX(20px)" : "translateX(0)",
         }}
-        // Remove shadow prop if it conflicts or ensure it works.
-        // Frame supports shadow via override or className.
+      // Remove shadow prop if it conflicts or ensure it works.
+      // Frame supports shadow via override or className.
       />
     </Frame>
   );

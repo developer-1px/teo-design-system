@@ -9,7 +9,11 @@ interface TableEmptyProps {
 
 export function TableEmpty({ message = "No data available" }: TableEmptyProps) {
   return (
-    <Frame layout={Layout.Col.Center.Start} spacing={Space.n16} override={{ p: Space.n24 }}>
+    <Frame
+      layout={Layout.Col.Center.Start}
+      spacing={Space.n16}
+      override={{ p: Space.n24 }}
+    >
       <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
         {message}
       </Text.Card.Note>

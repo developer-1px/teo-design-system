@@ -34,8 +34,7 @@ function ScaleVisualizer({
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
-      override={{ w: Size.fill, gap: Space.n24 }}
+      override={{ w: Size.fill, gap: Space.n24, minHeight: Size.n40 }}
     >
       <Frame override={{ w: Size.n64 }}>
         <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>
@@ -105,8 +104,7 @@ function ScrollContainer({
       <Frame
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
-        override={{ gap: Space.n24, minWidth: Size.hug }}
+        override={{ gap: Space.n24, minWidth: Size.hug, minHeight: Size.n40 }}
         {...props}
       >
         {children}
@@ -119,11 +117,10 @@ export function TokensApp() {
   return (
     <Frame
       surface="base"
-      scroll={"y"}
       layout={Layout.Col.Left.Start}
       spacing={Space.n0}
       w={Size.fill}
-      h={Size.fill} override={{ p: Space.n0 }}
+      override={{ p: Space.n0 }}
     >
       <Frame
         override={{ w: Size.fill, maxWidth: ContainerSize.n1024, p: Space.n0 }}
@@ -159,8 +156,7 @@ export function TokensApp() {
             <Frame
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40}
-              override={{ gap: Space.n24, w: Size.fill }}
+              override={{ gap: Space.n24, w: Size.fill, minHeight: Size.n40 }}
             >
               <Frame
                 override={{ flex: 1, p: Space.n32, gap: Space.n12 }}
@@ -350,7 +346,11 @@ export function TokensApp() {
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
               {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
-                <Frame key={val} layout={Layout.Col.Left.Start} spacing={Space.n8}>
+                <Frame
+                  key={val}
+                  layout={Layout.Col.Left.Start}
+                  spacing={Space.n8}
+                >
                   <Frame
                     surface="primary"
                     opacity={Opacity[`n${val}` as keyof typeof Opacity]}
@@ -373,8 +373,7 @@ export function TokensApp() {
                     key={val}
                     layout={Layout.Row.Middle.Center}
                     spacing={Space.n12}
-                    minHeight={Size.n40}
-                    override={{ align: "baseline" }}
+                    override={{ align: "baseline", minHeight: Size.n40 }}
                   >
                     <Frame override={{ w: Size.n64 }}>
                       <Text.Card.Code style={{ color: "var(--text-tertiary)" }}>

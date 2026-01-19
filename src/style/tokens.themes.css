@@ -46,6 +46,6 @@
   --tab-bg-active: var(--surface-raised);
 
   /* Selected State - Dark Mode */
-  --surface-selected-bg: var(--surface-raised);
+  --surface-selected-bg: rgba(129, 140, 248, 0.15);
   --surface-selected-fg: var(--text-primary);
 }

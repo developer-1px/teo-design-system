@@ -74,12 +74,12 @@ export interface TokenConversion {
 export interface BorderFixResult {
   fixable: boolean;
   borderType:
-  | "border"
-  | "borderTop"
-  | "borderBottom"
-  | "borderLeft"
-  | "borderRight"
-  | null;
+    | "border"
+    | "borderTop"
+    | "borderBottom"
+    | "borderLeft"
+    | "borderRight"
+    | null;
 }
 
 /**

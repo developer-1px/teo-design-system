@@ -121,3 +121,182 @@ button {
     transform: rotate(360deg);
   }
 }
+
+/* --- Frame Utilities (Restored) --- */
+
+/* Layout */
+.vbox {
+  display: flex;
+  flex-direction: column;
+}
+
+.hbox {
+  display: flex;
+  flex-direction: row;
+}
+
+.grid {
+  display: grid;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.nowrap {
+  flex-wrap: nowrap;
+}
+
+/* Dimensions */
+.w\(fill\) {
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+.h\(fill\) {
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+.w\(hug\) {
+  width: max-content;
+}
+
+.h\(hug\) {
+  height: max-content;
+}
+
+.w\(screen\) {
+  width: 100vw;
+}
+
+.h\(screen\) {
+  height: 100vh;
+}
+
+.w\(fixed\) {
+  flex: 0 0 auto;
+}
+
+.h\(fixed\) {
+  flex: 0 0 auto;
+}
+
+/* Scroll / Overflow */
+.scroll {
+  overflow: auto;
+}
+
+.scroll-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.scroll-y {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.clip {
+  overflow: hidden;
+}
+
+.overflow-visible {
+  overflow: visible;
+}
+
+/* Alignment (Flex/Grid) */
+/* Pack (Justify) */
+.pack\(center\) {
+  justify-content: center;
+}
+
+.pack\(start\) {
+  justify-content: flex-start;
+}
+
+.pack\(end\) {
+  justify-content: flex-end;
+}
+
+.pack\(justify\) {
+  justify-content: space-between;
+}
+
+.pack {
+  justify-content: center;
+}
+
+/* Align (Items) */
+.align\(center\) {
+  align-items: center;
+}
+
+.align\(start\) {
+  align-items: flex-start;
+}
+
+.align\(end\) {
+  align-items: flex-end;
+}
+
+.align\(baseline\) {
+  align-items: baseline;
+}
+
+.align\(stretch\) {
+  align-items: stretch;
+}
+
+/* Surface Colors */
+.surface-base {
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+}
+
+.surface-sunken {
+  background-color: var(--surface-sunken);
+}
+
+.surface-raised {
+  background-color: var(--surface-raised);
+}
+
+.surface-overlay {
+  background-color: var(--surface-overlay);
+}
+
+.surface-primary {
+  background-color: var(--primary-bg);
+  color: var(--primary-fg);
+}
+
+/* Interaction */
+.interactive {
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.interactive:hover {
+  opacity: 0.8;
+}
+
+.interactive:active {
+  opacity: 0.6;
+}
+
+.interactive-button {
+  cursor: pointer;
+}
+
+.interactive-text {
+  cursor: text;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.selected {
+  outline: 2px solid var(--primary-bg);
+}

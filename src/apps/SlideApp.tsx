@@ -49,7 +49,7 @@ export function SlideApp() {
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40} override={{ px: Space.n16 }}
+          override={{ px: Space.n16, minHeight: Size.n40 }}
         >
           <Action
             icon={Grid}
@@ -61,8 +61,7 @@ export function SlideApp() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40}
-            override={{ gap: Space.n8 }}
+            override={{ gap: Space.n8, minHeight: Size.n40 }}
           >
             <Text.Menu.Item style={{ fontWeight: 600 }}>
               Untitled Presentation
@@ -80,11 +79,8 @@ export function SlideApp() {
             rounded={Radius2.md}
             layout={Layout.Row.Middle.Center}
             spacing={Space.n4}
-            minHeight={Size.n24}
             surface="overlay"
-            override={{
-              p: Space.n4,
-            }}
+            override={{ p: Space.n4, minHeight: Size.n24 }}
             style={{ boxShadow: "var(--elevation-n1)" }}
           >
             <Frame

@@ -42,11 +42,7 @@ function MessageItem({ message }: { message: Message }) {
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
-      override={{
-        py: Space.n8,
-        align: "start",
-      }}
+      override={{ py: Space.n8, align: "start", minHeight: Size.n40 }}
     >
       {/* Avatar */}
       <Frame
@@ -86,8 +82,7 @@ function MessageItem({ message }: { message: Message }) {
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n4}
-          minHeight={Size.n24}
-          override={{ align: "baseline" }}
+          override={{ align: "baseline", minHeight: Size.n24 }}
         >
           <Text size={FontSize.n14} weight="bold">
             {message.author.name}

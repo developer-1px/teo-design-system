@@ -76,6 +76,15 @@ export {
   useVirtualScroll,
 } from "./useVirtualScroll";
 // Utility Hooks
+export { useClipboard } from "./useClipboard";
+export type { UseClipboardReturn } from "./useClipboard";
+export { useHistory } from "./useHistory";
+export type { UseHistoryReturn } from "./useHistory";
+export { useSelection } from "./useSelection";
+export type { UseSelectionReturn } from "./useSelection";
+export { useHeadlessTable } from "./useHeadlessTable";
+export type { HeadlessTableReturn, TableOptions } from "./useHeadlessTable";
+export { useClickOutside } from "./utils/useClickOutside";
 export { useControlledState } from "./utils/useControlledState";
 export type { UseFocusTrapOptions } from "./utils/useFocusTrap";
 export { useFocusTrap } from "./utils/useFocusTrap";

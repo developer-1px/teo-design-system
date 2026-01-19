@@ -50,7 +50,7 @@ export function MessageInput() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40} override={{ px: Space.n16 }}
+            override={{ px: Space.n16, minHeight: Size.n40 }}
           >
             {/* Add Attachment */}
             <Frame

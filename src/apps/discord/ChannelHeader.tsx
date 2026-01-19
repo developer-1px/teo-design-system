@@ -45,14 +45,14 @@ export function ChannelHeader() {
       surface="base"
       override={{
         borderBottom: true,
-        shadow: "sm",
+        elevation: "n1",
       }}
     >
       {/* Channel Info */}
       <Frame
         layout={Layout.Row.Middle.Center}
         spacing={Space.n8}
-        minHeight={Size.n32} override={{ px: Space.n12 }}
+        override={{ px: Space.n12, minHeight: Size.n32 }}
       >
         <Icon
           src={Hash}
@@ -68,17 +68,17 @@ export function ChannelHeader() {
       <Frame
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40} override={{ px: Space.n16 }}
+        override={{ px: Space.n16, minHeight: Size.n40 }}
       >
         {/* Search */}
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n8}
-          minHeight={Size.n32}
           override={{
             px: Space.n8,
             py: Space.n4,
             cursor: "pointer",
+            minHeight: Size.n32,
           }}
           surface="sunken"
           rounded={Radius2.sm}

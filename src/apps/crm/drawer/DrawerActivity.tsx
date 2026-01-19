@@ -37,7 +37,7 @@ function ActivityItem({
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40} override={{ px: Space.n16 }}
+      override={{ px: Space.n16, minHeight: Size.n40 }}
     >
       <Frame
         override={{ w: Size.n24, h: Size.n24, pack: true }}
@@ -54,7 +54,7 @@ function ActivityItem({
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n8}
-          minHeight={Size.n32} override={{ px: Space.n12 }}
+          override={{ px: Space.n12, minHeight: Size.n32 }}
         >
           <Text.Card.Title size={FontSize.n13}>{user}</Text.Card.Title>
           <Text.Card.Note>{action}</Text.Card.Note>

@@ -33,11 +33,11 @@ function ChannelItem({
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n8}
-      minHeight={Size.n32}
       override={{
         px: Space.n8,
         py: Space.n6,
         cursor: "pointer",
+        minHeight: Size.n32,
       }}
       surface={isSelected ? "selected" : undefined}
       rounded={Radius2.sm}
@@ -110,7 +110,7 @@ export function ChannelSidebar() {
         h={Size.n44}
         override={{
           cursor: "pointer",
-          shadow: "sm",
+          elevation: "n1",
         }}
       >
         <Text size={FontSize.n14} weight="bold">
@@ -132,13 +132,16 @@ export function ChannelSidebar() {
           );
 
           return (
-            <Frame key={category} layout={Layout.Col.Left.Start} spacing={Space.n4}>
+            <Frame
+              key={category}
+              layout={Layout.Col.Left.Start}
+              spacing={Space.n4}
+            >
               {/* Category Header */}
               <Frame
                 layout={Layout.Row.Middle.Center}
                 spacing={Space.n8}
-                minHeight={Size.n32}
-                override={{ px: Space.n8, py: Space.n4 }}
+                override={{ px: Space.n8, py: Space.n4, minHeight: Size.n32 }}
               >
                 <Text
                   size={FontSize.n10}
@@ -170,12 +173,8 @@ export function ChannelSidebar() {
       <Frame
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
         surface="sunken"
-        override={{
-          px: Space.n8,
-          py: Space.n8,
-        }}
+        override={{ px: Space.n8, py: Space.n8, minHeight: Size.n40 }}
       >
         <Frame
           override={{
@@ -203,7 +202,7 @@ export function ChannelSidebar() {
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n4}
-          minHeight={Size.n24} override={{ px: Space.n8 }}
+          override={{ px: Space.n8, minHeight: Size.n24 }}
         >
           <Icon
             src={Headphones}

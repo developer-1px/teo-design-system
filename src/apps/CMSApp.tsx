@@ -94,7 +94,7 @@ export function CMSApp() {
                     : Size.fill,
               minHeight: Size.screen,
               clip: true, // Ensure content doesn't bleed
-              shadow: "2xl", // Deep shadow for floating effect
+              elevation: "n5", // Deep shadow for floating effect
             }}
             surface="base" // The "Page" itself
             style={{

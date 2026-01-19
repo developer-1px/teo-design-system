@@ -154,7 +154,7 @@ export function ImageFooterBanner() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32} override={{ px: Space.n12 }}
+            override={{ px: Space.n12, minHeight: Size.n32 }}
           >
             <Icon src={Zap} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -164,7 +164,7 @@ export function ImageFooterBanner() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32} override={{ px: Space.n12 }}
+            override={{ px: Space.n12, minHeight: Size.n32 }}
           >
             <Icon src={Globe} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -174,7 +174,7 @@ export function ImageFooterBanner() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32} override={{ px: Space.n12 }}
+            override={{ px: Space.n12, minHeight: Size.n32 }}
           >
             <Icon src={Shield} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">
@@ -184,7 +184,7 @@ export function ImageFooterBanner() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32} override={{ px: Space.n12 }}
+            override={{ px: Space.n12, minHeight: Size.n32 }}
           >
             <Icon src={Cpu} size={IconSize.n24} />
             <Text.Card.Title size={FontSize.n16} weight="bold">

@@ -155,7 +155,7 @@ export function MailDetail() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40} override={{ px: Space.n16 }}
+            override={{ px: Space.n16, minHeight: Size.n40 }}
           >
             <Text.Card.Title
               size={FontSize.n20}
@@ -179,7 +179,11 @@ export function MailDetail() {
 
           {/* Labels */}
           {selectedThread.labels.length > 0 && (
-            <Frame layout={Layout.Row.Middle.Start} wrap="wrap" spacing={Space.n8}>
+            <Frame
+              layout={Layout.Row.Middle.Start}
+              wrap="wrap"
+              spacing={Space.n8}
+            >
               {selectedThread.labels.map((label) => (
                 <Frame
                   key={label}
@@ -196,10 +200,9 @@ export function MailDetail() {
 
         {/* Sender Info */}
         <Frame
-          override={{ align: "start" }}
+          override={{ align: "start", minHeight: Size.n40 }}
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
         >
           <Frame
             override={{ w: Size.n40, h: Size.n40 }}
@@ -225,7 +228,7 @@ export function MailDetail() {
             <Frame
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40} override={{ px: Space.n16 }}
+              override={{ px: Space.n16, minHeight: Size.n40 }}
             >
               <Text.Card.Title
                 weight="bold"
@@ -287,11 +290,7 @@ export function MailDetail() {
               surface="raised"
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40}
-              override={{
-                py: Space.n12,
-                px: Space.n12,
-              }}
+              override={{ py: Space.n12, px: Space.n12, minHeight: Size.n40 }}
             >
               <Icon src={Paperclip} size={IconSize.n16} />
               <Text.Card.Note size={FontSize.n13}>

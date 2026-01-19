@@ -88,10 +88,9 @@ const PropertySection = ({
         onClick={itemProps.onToggle}
       >
         <Frame
-          override={{ gap: Space.n6 }}
+          override={{ gap: Space.n6, minHeight: Size.n40 }}
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
         >
           <Icon
             src={itemProps.expanded ? ChevronDown : ChevronRight}
@@ -295,8 +294,7 @@ export function PropertiesPanel() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32}
-            override={{ gap: Space.n8 }}
+            override={{ gap: Space.n8, minHeight: Size.n32 }}
           >
             <TransformField
               label="X"
@@ -313,8 +311,7 @@ export function PropertiesPanel() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32}
-            override={{ gap: Space.n8 }}
+            override={{ gap: Space.n8, minHeight: Size.n32 }}
           >
             <TransformField
               label="W"
@@ -340,8 +337,7 @@ export function PropertiesPanel() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32}
-            override={{ gap: Space.n8 }}
+            override={{ gap: Space.n8, minHeight: Size.n32 }}
           >
             <TransformField
               label="°"
@@ -440,10 +436,9 @@ export function PropertiesPanel() {
             </Frame>
 
             <Frame
-              override={{ gap: Space.n8 }}
+              override={{ gap: Space.n8, minHeight: Size.n32 }}
               layout={Layout.Row.Middle.Center}
               spacing={Space.n8}
-              minHeight={Size.n32}
             >
               {/* Font Weight Dropdown */}
               <Field
@@ -502,10 +497,9 @@ export function PropertiesPanel() {
               <Field value="42" w={Size.n48} />
             </Frame>
             <Frame
-              override={{ gap: Space.n8 }}
+              override={{ gap: Space.n8, minHeight: Size.n32 }}
               layout={Layout.Row.Middle.Center}
               spacing={Space.n8}
-              minHeight={Size.n32}
             >
               <Field label="LH" value="Auto" flex />
               <Field label="LS" value="0%" flex />
@@ -591,10 +585,9 @@ export function PropertiesPanel() {
               }
               rightIcon={
                 <Frame
-                  override={{ gap: Space.n8 }}
+                  override={{ gap: Space.n8, minHeight: Size.n32 }}
                   layout={Layout.Row.Middle.Center}
                   spacing={Space.n8}
-                  minHeight={Size.n32}
                 >
                   <Text.Card.Note style={{ fontSize: "12px" }}>
                     100%
@@ -615,8 +608,7 @@ export function PropertiesPanel() {
             <Frame
               layout={Layout.Row.Middle.Center}
               spacing={Space.n8}
-              minHeight={Size.n32}
-              override={{ gap: Space.n8 }}
+              override={{ gap: Space.n8, minHeight: Size.n32 }}
             >
               <Field value="1.5" w={Size.n48} />
               <Field

@@ -1,6 +1,6 @@
+import { checkDesignHints } from "./rules/design-hints";
 import { checkFrameDesignRules } from "./rules/frame-design-rules";
 import { checkFrameStyleUsage } from "./rules/frame-style-usage";
-import { checkDesignHints } from "./rules/design-hints";
 import { checkOverrideToLayout } from "./rules/override-to-layout";
 import { checkRedundantOverride } from "./rules/redundant-override";
 import type { ComputedCSS, FrameProps, Issue, Project } from "./types";

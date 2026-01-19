@@ -60,11 +60,11 @@ export function MailSidebar() {
         rounded={Radius2.md}
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
         override={{
           p: Space.n8,
           gap: Space.n8,
           justify: "start",
+          minHeight: Size.n40,
         }}
         // Primary override style if needed for Compose, but "raised" is standard button now.
         // Assuming we want strict raised button behavior.
@@ -90,12 +90,12 @@ export function MailSidebar() {
               rounded={Radius2.md}
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40}
               override={{
                 py: Space.n6,
                 px: Space.n8,
                 justify: "start",
                 w: Size.fill,
+                minHeight: Size.n40,
               }}
               onClick={() => setSelectedFolder(folder.id)}
             >

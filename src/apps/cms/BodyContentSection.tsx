@@ -83,7 +83,7 @@ export function BodyContentSection() {
 
         <Frame override={{ pack: true, flex: 1 }}>
           <Frame
-            override={{ w: Size.n160, h: Size.n208, shadow: "2xl" }}
+            override={{ w: Size.n160, h: Size.n208, elevation: "n5" }}
             rounded={Radius2["3xl"]}
             style={{ position: "relative" }}
             surface="raised"
@@ -95,7 +95,7 @@ export function BodyContentSection() {
                 h: Size.n64,
                 p: Space.n24,
                 gap: Space.n16,
-                shadow: "lg",
+                elevation: "n3",
               }}
               rounded={Radius2["2xl"]}
               style={{
@@ -133,7 +133,7 @@ export function BodyContentSection() {
                 p: Space.n24,
                 gap: Space.n16,
                 border: true,
-                shadow: "2xl",
+                elevation: "n5",
               }}
               rounded={Radius2["2xl"]}
               style={{

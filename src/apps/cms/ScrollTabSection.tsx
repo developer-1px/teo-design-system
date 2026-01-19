@@ -43,6 +43,7 @@ export function ScrollTabSection() {
           py: Space.n0,
           px: Space.n24,
           justify: "center",
+          minHeight: Size.n40,
         }}
         style={{
           // Hide scrollbar for cleaner look but keep functionality
@@ -52,7 +53,6 @@ export function ScrollTabSection() {
         }}
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
         scroll
       >
         {TABS.map((tab, i) => (

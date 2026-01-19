@@ -51,7 +51,7 @@ async function run() {
                 : "⚠️";
 
         // Color coding based on severity
-        // standard console logs don't support colors easily without recursive unicode, 
+        // standard console logs don't support colors easily without recursive unicode,
         // but we can distinguish by symbol.
         const severityLabel = isError ? "" : " [WARN]";
 
@@ -83,8 +83,12 @@ async function run() {
     (issue) => !issue.fixable || !FIX_MODE,
   );
 
-  const errorCount = remainingIssues.filter(i => i.severity === "error").length;
-  const warnCount = remainingIssues.filter(i => i.severity !== "error").length;
+  const errorCount = remainingIssues.filter(
+    (i) => i.severity === "error",
+  ).length;
+  const warnCount = remainingIssues.filter(
+    (i) => i.severity !== "error",
+  ).length;
 
   const fixableIssues = allIssues.filter(
     (issue) => issue.fixable && !FIX_MODE,

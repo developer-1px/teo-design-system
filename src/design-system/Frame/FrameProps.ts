@@ -114,7 +114,7 @@ export interface FrameOverrides {
   // Visual
   opacity?: OpacityToken;
   ratio?: string;
-  shadow?: "sm" | "md" | "lg" | "xl" | "2xl";
+  elevation?: "n0" | "n1" | "n2" | "n3" | "n4" | "n5";
 
   zIndex?: ZIndexToken;
   className?: string;
@@ -122,10 +122,10 @@ export interface FrameOverrides {
 
 export interface FrameProps
   extends Omit<
-      React.HTMLAttributes<HTMLElement>,
-      "title" | "color" | "style" | "className"
-    >,
-    FramePresetProps {
+    React.HTMLAttributes<HTMLElement>,
+    "title" | "color" | "style" | "className"
+  >,
+  FramePresetProps {
   as?: React.ElementType;
 
   /**

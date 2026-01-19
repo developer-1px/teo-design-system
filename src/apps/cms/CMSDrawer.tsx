@@ -33,7 +33,7 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
           override={{
             w: Size.n512,
             h: Size.screen,
-            shadow: "2xl",
+            elevation: "n5",
             borderLeft: true,
           }}
           surface="base"

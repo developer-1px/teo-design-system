@@ -137,7 +137,8 @@ export function AgentEditorApp() {
       spacing={Space.n0}
       w={Size.fill}
       h={Size.fill}
-      surface="base" override={{ p: Space.n8 }}
+      surface="base"
+      override={{ p: Space.n8 }}
     >
       {/* Header */}
       <Frame

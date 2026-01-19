@@ -121,10 +121,10 @@ function CommandItem({
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
       interactive
       selected={isActive}
-      onClick={onClick} override={{ px: Space.n16 }}
+      onClick={onClick}
+      override={{ px: Space.n16, minHeight: Size.n40 }}
     >
       <Frame
         override={{
@@ -174,11 +174,7 @@ function CommandInput({
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
-      override={{
-        p: Space.n16,
-        borderBottom: true,
-      }}
+      override={{ p: Space.n16, borderBottom: true, minHeight: Size.n40 }}
     >
       <Frame override={{ w: Size.n16, h: Size.n16, opacity: Opacity.n50 }}>
         <Icon src={Search} />
@@ -353,12 +349,8 @@ export function CommandBarDesignApp() {
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
           surface="sunken"
-          override={{
-            py: Space.n8,
-            gap: Space.n8,
-          }}
+          override={{ py: Space.n8, gap: Space.n8, minHeight: Size.n40 }}
         >
           <Text variant="caption-sm">Search by</Text>
           <Frame override={{ opacity: Opacity.n50 }}>

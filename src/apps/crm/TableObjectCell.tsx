@@ -57,10 +57,10 @@ export function TableObjectCell({ value }: { value: object | any[] }) {
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n4}
-          minHeight={Size.n24}
           surface="sunken"
           interactive
-          rounded={Radius2.sm} override={{ px: Space.n8 }}
+          rounded={Radius2.sm}
+          override={{ px: Space.n8, minHeight: Size.n24 }}
         >
           <Text.Field.Value
             style={{

@@ -52,7 +52,8 @@ function checkFrameDesignRules(
 
   // Rule 3: Hardcoded background (detect style={{ background: ... }})
   const styleAttr = element.getAttribute("style");
-  if (styleAttr && styleAttr.getKind() === 267) { // SyntaxKind.JsxAttribute = 267
+  if (styleAttr && styleAttr.getKind() === 267) {
+    // SyntaxKind.JsxAttribute = 267
     // Cast strict type
     const styleObj = parseStyleObject(styleAttr as any);
     if (

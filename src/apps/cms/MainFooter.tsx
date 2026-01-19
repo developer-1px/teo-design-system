@@ -47,8 +47,7 @@ export function MainFooter() {
             <Frame
               layout={Layout.Row.Middle.Center}
               spacing={Space.n8}
-              minHeight={Size.n32}
-              override={{ gap: Space.n12 }}
+              override={{ gap: Space.n12, minHeight: Size.n32 }}
             >
               <Frame
                 override={{

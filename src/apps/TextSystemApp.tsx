@@ -95,8 +95,11 @@ export function TextSystemApp() {
           spacing={Space.n0}
         >
           <Frame
-            maxWidth={ContainerSize.n800}
-            override={{ gap: Space.n32, w: Size.fill }}
+            override={{
+              gap: Space.n32,
+              w: Size.fill,
+              maxWidth: ContainerSize.n800,
+            }}
             layout={Layout.Col.Center.Start}
             spacing={Space.n0}
           >
@@ -151,9 +154,8 @@ export function TextSystemApp() {
             <Frame
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40}
               style={{ marginTop: Space.n8 } as React.CSSProperties}
-              override={{ gap: Space.n0 }}
+              override={{ gap: Space.n0, minHeight: Size.n40 }}
             >
               {[
                 { title: "Experience", desc: "Global Scale", icon: Globe },
@@ -165,8 +167,7 @@ export function TextSystemApp() {
                   key={i}
                   layout={Layout.Row.Middle.Center}
                   spacing={Space.n12}
-                  minHeight={Size.n40}
-                  override={{ gap: Space.n0 }}
+                  override={{ gap: Space.n0, minHeight: Size.n40 }}
                 >
                   <Frame
                     override={{
@@ -223,10 +224,13 @@ export function TextSystemApp() {
   Scales automatically with Experience.
 </Text.Prose.Body>`}
         >
-          <Frame
-            maxWidth={ContainerSize.n640} // Approx 600px
+          <Frame // Approx 600px
             style={{ textAlign: "left" } as React.CSSProperties}
-            override={{ gap: Space.n24, w: Size.fill }}
+            override={{
+              gap: Space.n24,
+              w: Size.fill,
+              maxWidth: ContainerSize.n640,
+            }}
           >
             <Text.Prose.Title>Context: Prose</Text.Prose.Title>
             <Text.Prose.Body>
@@ -446,22 +450,19 @@ export function TextSystemApp() {
 </Frame>`}
         >
           <Frame
-            maxWidth={ContainerSize.n800}
             override={{
               w: Size.fill,
               r: Radius2.xl,
               border: true,
+              maxWidth: ContainerSize.n800,
             }}
             surface="raised"
             style={{ overflow: "hidden" }}
           >
             <Frame
-              override={{
-                py: Space.n12,
-              }}
+              override={{ py: Space.n12, minHeight: Size.n40 }}
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40}
               surface="sunken"
             >
               <Frame override={{ flex: 2 }}>
@@ -512,11 +513,11 @@ export function TextSystemApp() {
                 key={i}
                 layout={Layout.Row.Middle.Center}
                 spacing={Space.n12}
-                minHeight={Size.n40}
                 surface="sunken"
                 override={{
                   py: Space.n12,
                   borderBottom: true,
+                  minHeight: Size.n40,
                 }}
               >
                 <Frame override={{ gap: Space.n2, flex: 2 }}>
@@ -570,7 +571,7 @@ export function TextSystemApp() {
         <ShowcaseSection
           title="Context: Menu"
           description="Navigation lists and action groups."
-          code={`<Frame override={{ w: "200px", shadow: "lg" }}  surface="overlay" >
+          code={`<Frame override={{ w: "200px", elevation: "n3" }}  surface="overlay" >
   <Text.Menu.Group>Account</Text.Menu.Group>
   <Text.Menu.Item>Profile</Text.Menu.Item>
   <Text.Menu.Item>Settings</Text.Menu.Item>
@@ -579,8 +580,7 @@ export function TextSystemApp() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40}
-            override={{ gap: Space.n48, align: "start" }}
+            override={{ gap: Space.n48, align: "start", minHeight: Size.n40 }}
           >
             {/* Sidebar Menu Style */}
             <Frame
@@ -655,6 +655,7 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
         r: Radius2.full,
         py: Space.n8,
         px: Space.n16,
+        minHeight: Size.n32,
       }}
       style={{
         color: active ? "var(--primary-fg)" : "var(--text-secondary)",
@@ -665,7 +666,6 @@ function ExperienceButton({ active, onClick, icon: IconSrc, label }: any) {
       surface={active ? "primary" : undefined}
       layout={Layout.Row.Middle.Center}
       spacing={Space.n8}
-      minHeight={Size.n32}
     >
       <Icon src={IconSrc} size={IconSize.n14} />
       <Text.Menu.Item>{label}</Text.Menu.Item>

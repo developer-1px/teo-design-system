@@ -1,54 +1,160 @@
-import { Moon, Sun } from "lucide-react";
-import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import { HashRouter, Link, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Bot,
+  FileCode,
+  FileText,
+  Home,
+  LogIn,
+  Mail,
+  MessageSquare,
+  Moon,
+  Presentation,
+  Sun,
+  Table as TableIcon,
+  Users,
+} from "lucide-react";
+
 import { AgentEditorApp } from "./apps/AgentEditorApp";
 import { CMSApp } from "./apps/CMSApp";
-import { CommandBarDesignApp } from "./apps/CommandBarDesignApp";
-import { CRMApp } from "./apps/crm/CRMApp.tsx";
+import { DesignSystemApp } from "./apps/DesignSystemApp";
 import { DiscordApp } from "./apps/DiscordApp";
-import { LandingApp } from "./apps/LandingApp";
-import { LayoutShowcaseApp } from "./apps/LayoutShowcaseApp";
 import { LoginApp } from "./apps/LoginApp";
 import { MailApp } from "./apps/MailApp";
 import { SlideApp } from "./apps/SlideApp";
-import { SurfaceApp } from "./apps/SurfaceApp";
-import { TextSystemApp } from "./apps/TextSystemApp";
-import { TokensApp } from "./apps/TokensApp";
-import { Frame } from "./design-system/Frame/Frame.tsx";
-import { Layout } from "./design-system/Frame/Layout/Layout.ts";
-import { Icon } from "./design-system/Icon";
-import { Text } from "./design-system/text/Text.tsx";
-import { useTheme } from "./design-system/theme";
+import { TableApp } from "./apps/TableApp";
+import { CRMApp } from "./apps/crm/CRMApp";
 
+import { Frame } from "./design-system/Frame/Frame";
+import { Layout } from "./design-system/Frame/Layout/Layout";
+import { Icon } from "./design-system/Icon";
+import { Text } from "./design-system/text/Text";
+import { useTheme } from "./design-system/theme";
+import { Radius2 } from "./design-system/token/token.const.2tier";
 import {
   FontSize,
   IconSize,
+  Radius,
   Size,
   Space,
   ZIndex,
 } from "./design-system/token/token.const.1tier";
-import { Radius2 } from "./design-system/token/token.const.2tier";
+
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
 
-function NavItem({ to, label }: { to: string; label: string }) {
+function NavItem({
+  to,
+  label,
+  icon: IconComponent,
+}: {
+  to: string;
+  label: string;
+  icon: React.ElementType;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
   return (
-    <NavLink to={to} style={{ textDecoration: "none" }}>
-      {({ isActive }) => (
+    <Link
+      to={to}
+      style={{ position: "relative", textDecoration: "none" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <Frame
+        w={Size.n32}
+        h={Size.n32}
+        layout={Layout.Row.Middle.Center}
+        rounded={Radius2.md}
+        style={{
+          color: isActive || hovered ? "var(--text-primary)" : "var(--text-tertiary)",
+          backgroundColor: isActive || hovered ? "var(--surface-sunken)" : "transparent",
+          transition: "all 0.2s ease",
+        }}
+      >
+        <Icon src={IconComponent} size={IconSize.n20} />
+      </Frame>
+
+      {hovered && (
         <Frame
-          override={{ py: Space.n6, px: Space.n14, cursor: "pointer" }}
-          rounded={Radius2.full}
-          style={{
-            color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+          override={{
+            p: Space.n4,
+            px: Space.n8,
+            zIndex: ZIndex.n200,
           }}
-          surface={isActive ? "sunken" : undefined}
+          rounded={Radius2.sm}
+          style={{
+            backgroundColor: "var(--surface-inverse)",
+            color: "var(--text-inverse)",
+            position: "absolute",
+            bottom: "100%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            marginBottom: "8px",
+            whiteSpace: "nowrap",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+            pointerEvents: "none",
+          }}
         >
-          <Text size={FontSize.n12} weight={isActive ? "bold" : "medium"}>
-            {label}
-          </Text>
+          <Text size={FontSize.n12}>{label}</Text>
         </Frame>
       )}
-    </NavLink>
+    </Link>
   );
 }
+
+function ThemeToggleItem() {
+  const { toggleTheme, theme } = useTheme();
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <Frame
+      onClick={toggleTheme}
+      w={Size.n32}
+      h={Size.n32}
+      layout={Layout.Row.Middle.Center}
+      rounded={Radius2.md}
+      style={{
+        cursor: "pointer",
+        color: hovered ? "var(--text-primary)" : "var(--text-tertiary)",
+        backgroundColor: hovered ? "var(--surface-sunken)" : "transparent",
+        transition: "all 0.2s ease",
+        position: "relative",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <Icon src={theme === "light" ? Moon : Sun} size={IconSize.n20} />
+      {hovered && (
+        <Frame
+          override={{
+            p: Space.n4,
+            px: Space.n8,
+            zIndex: ZIndex.n200,
+          }}
+          rounded={Radius2.sm}
+          style={{
+            backgroundColor: "var(--surface-inverse)",
+            color: "var(--text-inverse)",
+            position: "absolute",
+            bottom: "100%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            marginBottom: "8px",
+            whiteSpace: "nowrap",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+            pointerEvents: "none",
+          }}
+        >
+          <Text size={FontSize.n12}>Toggle Theme</Text>
+        </Frame>
+      )}
+    </Frame>
+  );
+}
+
+import { CodeNotebookApp } from "./apps/CodeNotebook/CodeNotebookApp";
 
 function Navigation() {
   return (
@@ -56,60 +162,35 @@ function Navigation() {
       override={{
         p: Space.n4,
         gap: Space.n4,
-        zIndex: ZIndex.n200,
+        zIndex: ZIndex.n100,
       }}
       rounded={Radius2.full}
-      style={{ position: "fixed", bottom: 20, left: 20 }}
+      style={{ position: "fixed", bottom: 20, left: "50%", transform: "translateX(-50%)" }}
       surface="raised"
       layout={Layout.Row.Middle.Center}
-      spacing={Space.n12}
       h={Size.n40}
     >
-      <NavItem to="/" label="Home" />
-      <NavItem to="/agent-editor" label="Agent" />
-      <NavItem to="/command-bar" label="CmdBar" />
-      <NavItem to="/text" label="Text" />
-      <NavItem to="/tokens" label="Tokens" />
-      <NavItem to="/surface" label="Surface" />
-      <NavItem to="/layouts" label="Layouts" />
+      <NavItem to="/" label="Design System" icon={Home} />
+      <NavItem to="/table" label="Table" icon={TableIcon} />
+      <NavItem to="/cms" label="CMS" icon={FileText} />
+      <NavItem to="/crm" label="CRM" icon={Users} />
+      <NavItem to="/notebook" label="Code" icon={FileCode} />
 
-      <NavItem to="/slide" label="Slide" />
-      <NavItem to="/cms" label="CMS" />
-      <NavItem to="/crm" label="CRM" />
-      <NavItem to="/mail" label="Mail" />
-      <NavItem to="/discord" label="Discord" />
-      <NavItem to="/login" label="Login" />
+      <Frame
+        style={{ width: 1, height: 16, background: "var(--border-subtle)" }}
+      />
+      <NavItem to="/agent-editor" label="Agent" icon={Bot} />
+
+      <Frame
+        style={{ width: 1, height: 16, background: "var(--border-subtle)" }}
+      />
+
+      <NavItem to="/slide" label="Slide" icon={Presentation} />
+      <NavItem to="/mail" label="Mail" icon={Mail} />
+      <NavItem to="/discord" label="Discord" icon={MessageSquare} />
+      <NavItem to="/login" label="Login" icon={LogIn} />
 
       <ThemeToggleItem />
-    </Frame>
-  );
-}
-
-function ThemeToggleItem() {
-  const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
-
-  return (
-    <Frame
-      override={{
-        p: Space.n8,
-        cursor: "pointer",
-        align: "center",
-        justify: "center",
-      }}
-      rounded={Radius2.full}
-      style={{
-        color: "var(--text-secondary)",
-      }}
-      onClick={toggleTheme}
-      surface="base"
-      interactive
-    >
-      {isDark ? (
-        <Icon src={Sun} size={IconSize.n16} />
-      ) : (
-        <Icon src={Moon} size={IconSize.n16} />
-      )}
     </Frame>
   );
 }
@@ -120,13 +201,10 @@ function App() {
       <InspectorOverlay />
       <Frame override={{ minHeight: Size.screen }}>
         <Routes>
-          <Route path="/" element={<LandingApp />} />
+          <Route path="/" element={<DesignSystemApp />} />
+          <Route path="/table" element={<TableApp />} />
           <Route path="/agent-editor" element={<AgentEditorApp />} />
-          <Route path="/command-bar" element={<CommandBarDesignApp />} />
-          <Route path="/text" element={<TextSystemApp />} />
-          <Route path="/tokens" element={<TokensApp />} />
-          <Route path="/surface" element={<SurfaceApp />} />
-          <Route path="/layouts" element={<LayoutShowcaseApp />} />
+
           <Route path="/slide" element={<SlideApp />} />
 
           <Route path="/cms" element={<CMSApp />} />
@@ -134,6 +212,7 @@ function App() {
           <Route path="/mail" element={<MailApp />} />
           <Route path="/discord" element={<DiscordApp />} />
           <Route path="/login" element={<LoginApp />} />
+          <Route path="/notebook" element={<CodeNotebookApp />} />
         </Routes>
         <Navigation />
       </Frame>

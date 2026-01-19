@@ -1,4 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
+import {
+  parseKeyCombo,
+  matchesKeyCombo,
+  getModifierLabel as getModLabel,
+  formatKeyCombo as fmtKeyCombo,
+  type ParsedKey
+} from "./utils/keyUtils";
 
 /**
  * Hot key handler function
@@ -7,13 +14,6 @@ export type HotKeyHandler = (event: KeyboardEvent) => void;
 
 /**
  * Hot key map: key combination → handler
- *
- * Key format examples:
- * - "cmd+k" → Command (macOS) / Ctrl (Windows/Linux) + K
- * - "cmd+shift+p" → Command/Ctrl + Shift + P
- * - "escape" → Escape key
- * - "/" → Slash key
- * - "alt+enter" → Alt + Enter
  */
 export type HotKeyMap = Record<string, HotKeyHandler>;
 
@@ -31,158 +31,21 @@ export interface UseHotKeysOptions {
   scoped?: boolean;
 }
 
-/**
- * Parsed key combination
- */
-interface ParsedKey {
-  key: string;
-  cmd: boolean;
-  ctrl: boolean;
-  shift: boolean;
-  alt: boolean;
-}
-
-/**
- * Check if running on macOS
- */
-const isMac = (): boolean => {
-  return (
-    typeof window !== "undefined" &&
-    /Mac|iPhone|iPad|iPod/.test(navigator.platform)
-  );
-};
-
-/**
- * Parse key combination string
- *
- * @param combo - Key combination string (e.g., "cmd+k", "ctrl+shift+p")
- * @returns Parsed key object
- *
- * @example
- * ```tsx
- * parseKeyCombo("cmd+k")
- * // { key: "k", cmd: true, ctrl: false, shift: false, alt: false }
- *
- * parseKeyCombo("ctrl+shift+p")
- * // { key: "p", cmd: false, ctrl: true, shift: true, alt: false }
- * ```
- */
-function parseKeyCombo(combo: string): ParsedKey {
-  const parts = combo.toLowerCase().split("+");
-  const key = parts[parts.length - 1];
-
-  return {
-    key,
-    cmd: parts.includes("cmd") || parts.includes("command"),
-    ctrl: parts.includes("ctrl") || parts.includes("control"),
-    shift: parts.includes("shift"),
-    alt: parts.includes("alt") || parts.includes("option"),
-  };
-}
-
-/**
- * Check if keyboard event matches key combination
- *
- * @param event - Keyboard event
- * @param parsed - Parsed key combination
- * @returns Whether event matches the key combo
- */
-function matchesKeyCombo(event: KeyboardEvent, parsed: ParsedKey): boolean {
-  const eventKey = event.key.toLowerCase();
-
-  // Handle special keys
-  const normalizedEventKey =
-    {
-      escape: "escape",
-      enter: "enter",
-      " ": "space",
-      arrowup: "up",
-      arrowdown: "down",
-      arrowleft: "left",
-      arrowright: "right",
-    }[eventKey] || eventKey;
-
-  const normalizedParsedKey =
-    {
-      esc: "escape",
-      return: "enter",
-    }[parsed.key] || parsed.key;
-
-  // Check if keys match
-  if (normalizedEventKey !== normalizedParsedKey) {
-    return false;
-  }
-
-  // Check modifiers
-  const mac = isMac();
-
-  // On Mac: cmd maps to metaKey, On Windows/Linux: cmd maps to ctrlKey
-  const cmdPressed = mac ? event.metaKey : event.ctrlKey;
-  const ctrlPressed = event.ctrlKey;
-  const shiftPressed = event.shiftKey;
-  const altPressed = event.altKey;
-
-  // If "cmd" is specified, check platform-specific modifier
-  if (parsed.cmd && !cmdPressed) return false;
-  if (!parsed.cmd && parsed.ctrl && !ctrlPressed) return false;
-  if (parsed.shift && !shiftPressed) return false;
-  if (parsed.alt && !altPressed) return false;
-
-  // Check for unwanted modifiers
-  if (!parsed.cmd && !parsed.ctrl && (event.metaKey || (event.ctrlKey && !mac)))
-    return false;
-  if (!parsed.shift && shiftPressed) return false;
-  if (!parsed.alt && altPressed) return false;
-
-  return true;
+export interface UseHotKeysReturn {
+  onKeyDown: (event: React.KeyboardEvent | KeyboardEvent) => void;
 }
 
 /**
  * Global hot keys hook
  *
  * Registers global keyboard shortcuts with declarative API.
- * Supports key combinations, conditional activation, and platform-specific modifiers.
- *
- * Features:
- * - Declarative key map: `{ "cmd+k": handler }`
- * - Platform support: "cmd" → ⌘ on macOS, Ctrl on Windows/Linux
- * - Conditional activation via `enabled` option
- * - Form tag detection (skip input/textarea by default)
- * - Automatic cleanup on unmount
- *
- * @param keyMap - Key combination → handler map
- * @param options - Hot keys configuration
- *
- * @example
- * ```tsx
- * // Global shortcuts
- * useHotKeys({
- *   "cmd+k": () => openCommandPalette(),
- *   "cmd+/": () => toggleSidebar(),
- *   "escape": () => closeModal(),
- * });
- *
- * // Conditional shortcuts
- * useHotKeys({
- *   "cmd+enter": () => submit(),
- *   "cmd+s": () => save(),
- * }, {
- *   enabled: isModalOpen,
- *   preventDefault: true,
- * });
- *
- * // Allow on form inputs
- * useHotKeys({
- *   "cmd+enter": () => submitForm(),
- * }, {
- *   enableOnFormTags: true,
- * });
- * ```
+ * 
+ * Now uses shared `keyUtils` for parsing logic.
  */
 export function useHotKeys(
   keyMap: HotKeyMap,
   options: UseHotKeysOptions = {},
-): void {
+): UseHotKeysReturn {
   const {
     enabled = true,
     preventDefault = true,
@@ -202,10 +65,10 @@ export function useHotKeys(
     parsedKeysRef.current = parsed;
   }, [keyMap]);
 
-  useEffect(() => {
-    if (!enabled || !scoped) return;
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent | KeyboardEvent) => {
+      if (!enabled) return;
 
-    const handleKeyDown = (event: KeyboardEvent) => {
       // Check if target is form element
       const target = event.target as HTMLElement;
       const isFormInput =
@@ -222,79 +85,38 @@ export function useHotKeys(
         const parsed = parsedKeysRef.current.get(combo);
         if (!parsed) continue;
 
+        // @ts-ignore - Compatible interface between React/Native events for our usage
         if (matchesKeyCombo(event, parsed)) {
           if (preventDefault) {
             event.preventDefault();
           }
+          // @ts-ignore
           handler(event);
           break; // Only trigger first match
         }
       }
-    };
+    },
+    [enabled, enableOnFormTags, keyMap, preventDefault]
+  );
 
+  useEffect(() => {
+    if (!scoped) return;
+
+    // Legacy behavior: attach to window if 'scoped' (now interpreted as "global listener active") is true
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [enabled, scoped, keyMap, preventDefault, enableOnFormTags]);
+  }, [scoped, handleKeyDown]);
+
+  return { onKeyDown: handleKeyDown };
 }
 
 /**
- * Get platform-specific modifier key label
- *
- * @returns "⌘" on macOS, "Ctrl" on Windows/Linux
- *
- * @example
- * ```tsx
- * const mod = getModifierLabel();
- * console.log(`${mod}+K`); // "⌘+K" on Mac, "Ctrl+K" on Windows
- * ```
+ * Re-export utilities for backward compatibility
  */
 export function getModifierLabel(): string {
-  return isMac() ? "⌘" : "Ctrl";
+  return getModLabel();
 }
 
-/**
- * Format key combination for display
- *
- * @param combo - Key combination string (e.g., "cmd+k")
- * @returns Formatted string (e.g., "⌘K" on macOS, "Ctrl+K" on Windows)
- *
- * @example
- * ```tsx
- * formatKeyCombo("cmd+k");         // "⌘K" (macOS) or "Ctrl+K" (Windows)
- * formatKeyCombo("cmd+shift+p");   // "⌘⇧P" (macOS) or "Ctrl+Shift+P" (Windows)
- * formatKeyCombo("escape");        // "Esc"
- * ```
- */
 export function formatKeyCombo(combo: string): string {
-  const parsed = parseKeyCombo(combo);
-  const parts: string[] = [];
-
-  if (parsed.cmd) {
-    parts.push(isMac() ? "⌘" : "Ctrl");
-  }
-  if (parsed.ctrl && !parsed.cmd) {
-    parts.push("Ctrl");
-  }
-  if (parsed.alt) {
-    parts.push(isMac() ? "⌥" : "Alt");
-  }
-  if (parsed.shift) {
-    parts.push(isMac() ? "⇧" : "Shift");
-  }
-
-  // Format key name
-  const keyMap: Record<string, string> = {
-    escape: "Esc",
-    enter: "↵",
-    space: "Space",
-    up: "↑",
-    down: "↓",
-    left: "←",
-    right: "→",
-  };
-
-  const keyLabel = keyMap[parsed.key] || parsed.key.toUpperCase();
-  parts.push(keyLabel);
-
-  return parts.join(isMac() ? "" : "+");
+  return fmtKeyCombo(combo);
 }

@@ -67,11 +67,7 @@ export function Section({
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n8}
-          minHeight={Size.n32}
-          override={{
-            p: Space.n8,
-            border: true,
-          }}
+          override={{ p: Space.n8, border: true, minHeight: Size.n32 }}
         >
           <Text.Card.Note
             style={{

@@ -83,11 +83,11 @@ function DatasetItem({
       <Frame
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
         override={{
           w: Size.fill,
           py: Space.n6,
           px: Space.n8,
+          minHeight: Size.n40,
         }}
       >
         <Icon
@@ -152,8 +152,7 @@ export function CRMSidebar() {
           <Frame
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40}
-            override={{ p: Space.n4 }}
+            override={{ p: Space.n4, minHeight: Size.n40 }}
           >
             <Avatar initial="D" color="black" size={Size.n20} />
             <Text.Menu.Item weight="bold">DataTable</Text.Menu.Item>

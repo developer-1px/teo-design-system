@@ -76,7 +76,7 @@ const SECTION_MAPPING: Record<string, string> = {
   borderLeft: "Appearance",
   borderWidth: "Appearance",
   r: "Appearance",
-  shadow: "Appearance",
+  elevation: "Appearance",
   cursor: "Appearance",
   zIndex: "Appearance",
 
@@ -178,9 +178,9 @@ export function InspectorPanel({
   const hierarchyStack =
     stack && stack.length > 0
       ? stack.map((item, i) => ({
-          key: `${i + 1}`,
-          value: `${item.fileName}:${item.lineNumber}(${item.name})`,
-        }))
+        key: `${i + 1}`,
+        value: `${item.fileName}:${item.lineNumber}(${item.name})`,
+      }))
       : [];
 
   const handleCopy = useCallback(() => {

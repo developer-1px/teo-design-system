@@ -46,8 +46,7 @@ export function SiteHeader({
         <Frame
           layout={Layout.Row.Middle.Center}
           spacing={Space.n12}
-          minHeight={Size.n40}
-          override={{ gap: Space.n8 }}
+          override={{ gap: Space.n8, minHeight: Size.n40 }}
         >
           <Frame
             override={{

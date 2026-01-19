@@ -10,7 +10,7 @@
  */
 
 import path from "node:path";
-import { Project, type JsxAttribute, SyntaxKind } from "ts-morph";
+import { type JsxAttribute, Project, SyntaxKind } from "ts-morph";
 
 const FIX_MODE = process.argv.includes("--fix");
 const DEBUG = process.env.DEBUG_MIGRATE === "1";
@@ -59,7 +59,11 @@ if (DEBUG) {
 interface MigrationIssue {
   file: string;
   line: number;
-  type: "gap-to-spacing" | "p-to-spacing" | "complex-padding" | "gap-p-conflict";
+  type:
+    | "gap-to-spacing"
+    | "p-to-spacing"
+    | "complex-padding"
+    | "gap-p-conflict";
   before: string;
   after: string;
 }
@@ -104,11 +108,13 @@ function analyzeJsxElement(element: any): MigrationIssue[] {
   }
 
   // Skip if already has spacing
-  if (attributes.some((a: any) => {
-    if (a.getKind() !== SyntaxKind.JsxAttribute) return false;
-    const nameNode = (a as JsxAttribute).getNameNode();
-    return nameNode.getText() === "spacing";
-  })) {
+  if (
+    attributes.some((a: any) => {
+      if (a.getKind() !== SyntaxKind.JsxAttribute) return false;
+      const nameNode = (a as JsxAttribute).getNameNode();
+      return nameNode.getText() === "spacing";
+    })
+  ) {
     return issues;
   }
 
@@ -197,7 +203,9 @@ function analyzeJsxElement(element: any): MigrationIssue[] {
         const pValue = pAttr.getInitializer()?.getText().replace(/[{}]/g, "");
         if (overrideAttr) {
           // Merge with existing override (complex - skip for now, manual fix)
-          console.log(`⚠️  Manual fix needed at ${filePath}:${line} - complex override merge`);
+          console.log(
+            `⚠️  Manual fix needed at ${filePath}:${line} - complex override merge`,
+          );
         } else {
           const attributes = element.getAttributes();
 
@@ -215,7 +223,9 @@ function analyzeJsxElement(element: any): MigrationIssue[] {
 
   // Case 4: Directional padding (px, py, etc.) → move to override
   else if (paddingDirections.length > 0) {
-    const paddingProps = paddingDirections.map((a) => a.getNameNode().getText()).join(", ");
+    const paddingProps = paddingDirections
+      .map((a) => a.getNameNode().getText())
+      .join(", ");
     const before = `${paddingProps}={...}`;
     const after = `override={{ ${paddingProps}: ... }}`;
 
@@ -252,7 +262,9 @@ function analyzeJsxElement(element: any): MigrationIssue[] {
       }
 
       if (overrideAttr) {
-        console.log(`⚠️  Manual fix needed at ${filePath}:${line} - complex override merge`);
+        console.log(
+          `⚠️  Manual fix needed at ${filePath}:${line} - complex override merge`,
+        );
       } else {
         const attributes = element.getAttributes();
         element.insertAttribute(attributes.length, {
@@ -275,16 +287,17 @@ async function run() {
     tsConfigFilePath: path.join(process.cwd(), "tsconfig.app.json"),
   });
 
-  const sourceFiles = project.getSourceFiles([
-    "src/**/*.tsx",
-    "src/**/*.ts",
-  ]);
+  const sourceFiles = project.getSourceFiles(["src/**/*.tsx", "src/**/*.ts"]);
 
   const allIssues: MigrationIssue[] = [];
 
   for (const sourceFile of sourceFiles) {
-    const jsxElements = sourceFile.getDescendantsOfKind(SyntaxKind.JsxOpeningElement);
-    const selfClosingElements = sourceFile.getDescendantsOfKind(SyntaxKind.JsxSelfClosingElement);
+    const jsxElements = sourceFile.getDescendantsOfKind(
+      SyntaxKind.JsxOpeningElement,
+    );
+    const selfClosingElements = sourceFile.getDescendantsOfKind(
+      SyntaxKind.JsxSelfClosingElement,
+    );
 
     for (const element of [...jsxElements, ...selfClosingElements]) {
       const issues = analyzeJsxElement(element);

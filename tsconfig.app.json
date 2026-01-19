@@ -16,6 +16,20 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Path Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@hooks/*": ["./src/design-system/hooks/*"],
+      "@hooks/components/*": ["./src/design-system/hooks/components/*"],
+      "@hooks/data/*": ["./src/design-system/hooks/data/*"],
+      "@hooks/interaction/*": ["./src/design-system/hooks/interaction/*"],
+      "@hooks/state/*": ["./src/design-system/hooks/state/*"],
+      "@hooks/search/*": ["./src/design-system/hooks/search/*"],
+      "@hooks/primitives/*": ["./src/design-system/hooks/primitives/*"],
+      "@hooks/lib/*": ["./src/design-system/hooks/lib/*"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

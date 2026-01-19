@@ -117,7 +117,7 @@ export function InspectorOverlay() {
           pointerEvents: isLocked ? "none" : "auto", // Allow clicking through when locked (except panel)
         }}
         onClick={handleClick}
-        onKeyDown={() => {}}
+        onKeyDown={() => { }}
       >
         {/* Top Status Badge - Compact */}
         <Overlay
@@ -133,7 +133,7 @@ export function InspectorOverlay() {
               py: Space.n2,
               px: Space.n8,
               gap: Space.n6,
-              shadow: "lg",
+              elevation: "n3",
               r: Radius2.full,
             }}
             surface="primary"
@@ -201,7 +201,7 @@ export function InspectorOverlay() {
                   px: Space.n6,
                   h: Size.n16,
                   gap: Space.n4,
-                  shadow: "sm",
+                  elevation: "n1",
                   r: Radius2.sm,
                 }}
                 style={{
@@ -268,7 +268,7 @@ export function InspectorOverlay() {
             override={{
               py: Space.n4,
               px: Space.n12,
-              shadow: "lg",
+              elevation: "n3",
               r: Radius2.md,
             }}
             surface="primary"

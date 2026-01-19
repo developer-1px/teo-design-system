@@ -218,9 +218,10 @@ export function frameToSettings(props: FrameSettingsInput): {
   else if (props.scroll === "x") classes.push("scroll-x");
   else if (props.scroll === "y") classes.push("scroll-y");
 
-  // Cursor & Shadow
+  // Cursor & Elevation
   if (props.cursor) classes.push(`cursor-${props.cursor}`);
   if (props.opacity) styles.opacity = props.opacity;
+  if (props.elevation) styles.boxShadow = `var(--elevation-${props.elevation})`;
   if (props.z) styles.zIndex = props.z;
   if (props.zIndex) styles.zIndex = props.zIndex;
 

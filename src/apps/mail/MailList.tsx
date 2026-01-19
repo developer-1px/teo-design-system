@@ -74,7 +74,7 @@ export function MailList() {
             <Frame
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40} override={{ px: Space.n16 }}
+              override={{ px: Space.n16, minHeight: Size.n40 }}
             >
               <Icon
                 src={Star}
@@ -121,7 +121,7 @@ export function MailList() {
             <Frame
               layout={Layout.Row.Middle.Center}
               spacing={Space.n12}
-              minHeight={Size.n40} override={{ px: Space.n16 }}
+              override={{ px: Space.n16, minHeight: Size.n40 }}
             >
               <Text.Card.Note
                 size={FontSize.n12}

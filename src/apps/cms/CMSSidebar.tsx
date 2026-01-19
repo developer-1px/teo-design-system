@@ -122,11 +122,7 @@ export function CMSSidebar({ isOpen, onToggle }: CMSSidebarProps) {
         }}
         layout={Layout.Row.Middle.Center}
         spacing={Space.n12}
-        minHeight={Size.n40}
-        override={{
-          p: Space.n12,
-          border: true,
-        }}
+        override={{ p: Space.n12, border: true, minHeight: Size.n40 }}
       >
         <Frame
           override={{ w: Size.n32, h: Size.n32, pack: true }}
@@ -156,8 +152,7 @@ function SidebarSection({ title }: { title: string }) {
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n8}
-      minHeight={Size.n32}
-      override={{ px: Space.n16, py: Space.n8 }}
+      override={{ px: Space.n16, py: Space.n8, minHeight: Size.n32 }}
     >
       <Text.Card.Note
         weight="bold"

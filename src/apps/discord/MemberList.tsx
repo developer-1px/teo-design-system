@@ -36,11 +36,11 @@ function MemberItem({ member }: { member: Member }) {
     <Frame
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
       override={{
         px: Space.n8,
         py: Space.n4,
         cursor: "pointer",
+        minHeight: Size.n40,
       }}
       rounded={Radius2.sm}
     >

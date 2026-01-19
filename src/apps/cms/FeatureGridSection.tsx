@@ -77,10 +77,9 @@ export function FeatureGridSection() {
         <Frame override={{ gap: Space.n16, w: Size.fill }}>
           {/* Row 1 */}
           <Frame
-            override={{ gap: Space.n16, wrap: true }}
+            override={{ gap: Space.n16, wrap: true, minHeight: Size.n40 }}
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40}
           >
             <FeatureCardLarge
               icon={Zap}
@@ -99,10 +98,9 @@ export function FeatureGridSection() {
 
           {/* Row 2 */}
           <Frame
-            override={{ gap: Space.n16, wrap: true }}
+            override={{ gap: Space.n16, wrap: true, minHeight: Size.n40 }}
             layout={Layout.Row.Middle.Center}
             spacing={Space.n12}
-            minHeight={Size.n40}
           >
             <FeatureCardLarge
               icon={Shield}
@@ -198,10 +196,9 @@ function FeatureCardLarge({
     <Frame
       rounded={Radius2["2xl"]}
       surface="raised" // Keep raised for importance
-      override={{ clip: true, flex, border: true }}
+      override={{ clip: true, flex, border: true, minHeight: Size.n40 }}
       layout={Layout.Row.Middle.Center}
       spacing={Space.n12}
-      minHeight={Size.n40}
     >
       <Frame
         override={{
@@ -262,7 +259,7 @@ function FeatureCardLarge({
               w: Size.n160,
               h: Size.n160,
               border: true,
-              shadow: "2xl",
+              elevation: "n5",
               r: Radius2.lg, // Use specific radius token
             }}
             style={{

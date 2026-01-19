@@ -78,11 +78,11 @@ export function HeaderHero() {
               py: Space.n4,
               px: Space.n12,
               gap: Space.n8,
+              minHeight: Size.n24,
             }}
             surface="raised"
             layout={Layout.Row.Middle.Center}
             spacing={Space.n4}
-            minHeight={Size.n24}
           >
             <Icon
               src={Sparkles}
@@ -187,12 +187,12 @@ export function HeaderHero() {
             surface="raised"
             layout={Layout.Row.Middle.Center}
             spacing={Space.n8}
-            minHeight={Size.n32}
             override={{
               h: Size.n12,
               px: Space.n4,
               gap: Space.n2,
               border: true,
+              minHeight: Size.n32,
             }}
           >
             <Frame

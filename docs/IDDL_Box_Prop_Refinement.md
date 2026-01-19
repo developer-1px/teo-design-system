@@ -141,3 +141,36 @@ type BoxProps = {
 ```
 
 **결론:** `spacing`을 `gap`과 `padding`으로 다시 쪼개는 것이 "단순함"을 약간 희생하더라도 "예측 가능성"을 훨씬 높여줍니다. 그리고 `placement` 키워드를 좀 더 Flexbox 패턴에 맞게 구체화하면 AI가 코드를 짤 때 실수를 덜 할 것입니다.
+
+---
+
+## 6. Ghost Surface의 Selected 상태 정의 (Visual Logic)
+
+`surface="ghost"`는 평소에 투명하지만, `selected={true}`일 때의 동작이 모호할 수 있습니다. 이를 위한 명세가 필요합니다.
+
+### 🔴 문제점 (Ambiguity)
+- `ghost` 버튼이 선택되었을 때, `default`가 되어야 하는가? 아니면 `subtle`이 되어야 하는가? 아니면 `brand` 컬러를 써야 하는가?
+- 만약 투명한 상태로 아이콘 색만 바뀐다면, 그것은 `surface`가 아니라 `text/icon`의 영역입니다.
+
+### ✅ 디자인 명세 제안 (Refined Spec)
+`ghost` 서피스는 **"상태가 활성화되면(Selected) 물질(Matter)이 된다"**는 규칙을 제안합니다.
+
+| State | Appearance | Token Mapping (Example) | 비고 |
+|:---:|:---|:---|:---|
+| **Default** | 투명 (Invisible) | `bg-transparent` | 아이콘/텍스트만 보임 |
+| **Hover** | 옅은 배경 (Subtle) | `bg-neutral-subtle-hover` | 마우스 올리면 영역 인지 |
+| **Selected** | **짙은 배경 (Solid/Subtle)** | `bg-neutral-subtle-selected` | **"눌린 상태" 시각화 필수** |
+| **Seld. + Hover** | 더 짙은 배경 | `bg-neutral-subtle-selected-hover` | 선택된 상태에서의 호버 |
+
+- **동작 원칙:** `selected={true}`인 `ghost`는 더 이상 "유령"이 아닙니다. 시각적으로 공간을 점유해야 합니다.
+- **Tone 연동:** `tone="brand"` + `selected` 시 Primary Color 배경(soft/subtle variant) 사용을 강제하여 "활성화됨"을 명확히 합니다.
+
+**구현 레퍼런스:**
+```tsx
+// Ghost Selected 상태의 실제 렌더링
+<Box surface="ghost" selected> 
+  {/* 실제 렌더링 결과 미리보기 */}
+  <div style={{ backgroundColor: 'var(--color-neutral-subtle-selected)' }} />
+</Box>
+```
+이 규칙을 통해 "Ghost는 선택되면 Subtle이 된다"는 공식이 성립하며, 디자인 시스템의 예측 가능성이 높아집니다.

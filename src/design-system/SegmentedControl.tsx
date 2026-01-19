@@ -45,7 +45,7 @@ export function SegmentedControl<T extends string>({
         surface="raised"
         override={{
           r: Radius2.sm, // Inner radius slightly smaller
-          shadow: "sm",
+          elevation: "n1",
         }}
         style={
           {
