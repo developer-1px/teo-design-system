@@ -4,7 +4,6 @@
  */
 
 import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Size } from "../../design-system/token/token.const.1tier";
 import { ChannelHeader } from "./ChannelHeader";
 import { MessageInput } from "./MessageInput";
 import { MessageList } from "./MessageList";

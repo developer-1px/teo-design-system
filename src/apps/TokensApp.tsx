@@ -1,5 +1,4 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout";
 import { Text } from "../design-system/text/Text";
 import {
   ContainerSize,
@@ -17,7 +16,6 @@ import {
   type SpaceToken,
   ZIndexScale,
 } from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
 
 // --- Components ---
 

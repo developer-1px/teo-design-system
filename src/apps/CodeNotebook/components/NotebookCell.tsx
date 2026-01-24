@@ -1,7 +1,4 @@
-import { Frame } from "../../../design-system/Frame/Frame";
 import { Text } from "../../../design-system/text/Text";
-import { Space } from "../../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../../design-system/token/token.const.2tier";
 import type { Cell } from "../utils/notebookParser";
 
 interface NotebookCellProps {
@@ -45,10 +42,12 @@ export function NotebookCell({ cell }: NotebookCellProps) {
         <Frame
             override={{
                 p: Space.n16,
-                bg: "surface-canvas",
-                border: "1px solid var(--surface-border)"
             }}
-            radius={Radius2.md}
+            style={{
+                border: "1px solid var(--surface-border)",
+                backgroundColor: "var(--surface-canvas)"
+            }}
+            rounded={Radius2.md}
         >
             <pre style={{ margin: 0, fontFamily: "monospace", fontSize: 13, overflowX: "auto" }}>
                 <code dangerouslySetInnerHTML={{ __html: highlightSyntax(cell.content) }} />

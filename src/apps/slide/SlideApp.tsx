@@ -9,22 +9,22 @@ import {
   Type,
 } from "lucide-react";
 import { useState } from "react";
-import { FloatingToolbar } from "../components/FloatingToolbar";
-import { PropertiesPanel } from "../components/PropertiesPanel";
-import { SlidesPanel } from "../components/SlidesPanel";
-import { Action } from "../design-system/Action";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../design-system/Icon";
-import { SegmentedControl } from "../design-system/SegmentedControl";
-import { Text } from "../design-system/text/Text";
+import { FloatingToolbar } from "./components/FloatingToolbar";
+import { PropertiesPanel } from "./components/PropertiesPanel";
+import { SlidesPanel } from "./components/SlidesPanel";
+import { Action } from "../../design-system/Action";
+import { Frame } from "../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Icon } from "../../design-system/Icon";
+import { SegmentedControl } from "../../design-system/SegmentedControl";
+import { Text } from "../../design-system/text/Text";
 import {
   IconSize,
   Opacity,
   Radius2,
   Size,
   Space,
-} from "../design-system/token";
+} from "../../design-system/token";
 
 export function SlideApp() {
   const [activeTool, setActiveTool] = useState("square");

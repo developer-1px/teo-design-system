@@ -1,8 +1,7 @@
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Section } from "../design-system/Section";
-import { Text } from "../design-system/text/Text";
-import { Radius2, Size, Space } from "../design-system/token";
+import { Frame } from "../../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { Section } from "../../../design-system/Section";
+import { Text } from "../../../design-system/text/Text";
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 12 }, (_, i) => i + 1);

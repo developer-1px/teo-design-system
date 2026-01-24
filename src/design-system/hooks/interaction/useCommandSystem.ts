@@ -3,7 +3,7 @@ import { CommandManager, type KeyBinding, type CommandHandler } from "../lib/Com
 
 // Type re-exports for consumer convenience
 export type { KeyBinding, CommandHandler };
-export type CommandRegistry = Record<string, CommandHandler>;
+export type CommandRegistry<T extends string = string> = Record<T, CommandHandler>;
 export type Context = Record<string, any>;
 
 export interface UseCommandSystemOptions {
@@ -21,16 +21,16 @@ export interface UseCommandSystemOptions {
  * 2. Logic (Command Registry)
  * 3. State (Context)
  */
-export function useCommandSystem(
-    keybindings: KeyBinding[],
-    registry: CommandRegistry,
+export function useCommandSystem<T extends string = string>(
+    keybindings: KeyBinding<T>[],
+    registry: CommandRegistry<T>,
     context: Context = {},
     options: UseCommandSystemOptions = {}
 ) {
     const { enabled = true, preventDefault = true } = options;
 
     // 1. Stable Manager Instance
-    const manager = useMemo(() => new CommandManager(), []);
+    const manager = useMemo(() => new CommandManager<T>(), []);
 
     // 2. Sync Logic (Registry & Keybindings)
     // We assume these change infrequently, but we sync them if they do.

@@ -1,11 +1,43 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import Inspector from "vite-plugin-react-inspector";
+import AutoImport from "unplugin-auto-import/vite";
 import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), Inspector()],
+  plugins: [
+    react(),
+    Inspector(),
+    AutoImport({
+      imports: [
+        "react",
+        {
+          "@/design-system/Frame/Frame": ["Frame"],
+          "@/design-system/Frame/Layout/Layout": ["Layout"],
+          "@/design-system/token": [
+            "Space",
+            "Radius",
+            "Radius2",
+            "IconSize",
+            "Size",
+            "ContainerSize",
+            "BorderWidth",
+            "FontSize",
+            "LineHeight",
+            "AspectRatio",
+            "Elevation",
+            "Opacity",
+            "ZIndex",
+            "ActionSize",
+            "ButtonSize",
+            "InputSize",
+          ],
+        },
+      ],
+      dts: "./auto-imports.d.ts",
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

@@ -14,6 +14,12 @@ interface UseGridSelectionOptions {
     rows: number;
     cols: number;
     loop?: boolean;
+    // Controlled State
+    value?: {
+        cursor: CellPosition;
+        selection: SelectionRange | null;
+    };
+    onChange?: (cursor: CellPosition, selection: SelectionRange | null) => void;
 }
 
 interface UseGridSelectionReturn {
@@ -23,6 +29,8 @@ interface UseGridSelectionReturn {
     setCursorAndSelection: (row: number, col: number, range: SelectionRange) => void;
     moveCursor: (rowDelta: number, colDelta: number, expandSelection?: boolean) => void;
     setSelection: (range: SelectionRange | null) => void;
+    selectRow: (row: number, expandSelection?: boolean) => void;
+    selectColumn: (col: number, expandSelection?: boolean) => void;
     selectAll: () => void;
     getNormalizedRange: () => { startRow: number; endRow: number; startCol: number; endCol: number };
 }
@@ -35,26 +43,39 @@ export function useGridSelection({
     rows,
     cols,
     loop = false,
+    value,
+    onChange
 }: UseGridSelectionOptions): UseGridSelectionReturn {
-    const [cursor, setCursorState] = useState<CellPosition>({ row: 0, col: 0 });
-    const [selection, setSelectionState] = useState<SelectionRange | null>(null);
+    // Internal state (used if uncontrolled)
+    const [internalCursor, setInternalCursor] = useState<CellPosition>({ row: 0, col: 0 });
+    const [internalSelection, setInternalSelection] = useState<SelectionRange | null>(null);
+
+    const isControlled = value !== undefined;
+    const cursor = isControlled ? value.cursor : internalCursor;
+    const selection = isControlled ? value.selection : internalSelection;
 
     // Helper to ensure bounds
     const clamp = (val: number, max: number) => Math.max(0, Math.min(val, max));
 
+    const updateState = useCallback((c: CellPosition, s: SelectionRange | null) => {
+        if (!isControlled) {
+            setInternalCursor(c);
+            setInternalSelection(s);
+        }
+        onChange?.(c, s);
+    }, [isControlled, onChange]);
+
     const setCursor = useCallback((row: number, col: number) => {
         const r = clamp(row, rows - 1);
         const c = clamp(col, cols - 1);
-        setCursorState({ row: r, col: c });
-        setSelectionState(null);
-    }, [rows, cols]);
+        updateState({ row: r, col: c }, null);
+    }, [rows, cols, updateState]);
 
     const setCursorAndSelection = useCallback((row: number, col: number, range: SelectionRange) => {
         const r = clamp(row, rows - 1);
         const c = clamp(col, cols - 1);
-        setCursorState({ row: r, col: c });
-        setSelectionState(range);
-    }, [rows, cols]);
+        updateState({ row: r, col: c }, range);
+    }, [rows, cols, updateState]);
 
     const moveCursor = useCallback(
         (rowDelta: number, colDelta: number, expandSelection = false) => {
@@ -78,29 +99,58 @@ export function useGridSelection({
             }
 
             const newCursor = { row: newRow, col: newCol };
-            setCursorState(newCursor);
 
             // Selection Logic
+            let newSelection = null;
             if (expandSelection) {
                 // anchor is existing anchor (start) or previous cursor (if starting selection)
                 const anchor = selection ? selection.start : cursor;
-                setSelectionState({
+                newSelection = {
                     start: anchor,
                     end: newCursor
-                });
-            } else {
-                setSelectionState(null);
+                };
             }
+
+            updateState(newCursor, newSelection);
         },
-        [cursor, selection, rows, cols, loop] // Removed clamp dependency as it is internal constant-ish function or we can move it out
+        [cursor, selection, rows, cols, loop, updateState]
     );
 
     const selectAll = useCallback(() => {
-        setSelectionState({
-            start: { row: 0, col: 0 },
-            end: { row: rows - 1, col: cols - 1 }
-        });
-    }, [rows, cols]);
+        updateState(
+            cursor, // keep cursor? or move to 0,0? usually keep cursor but select all
+            {
+                start: { row: 0, col: 0 },
+                end: { row: rows - 1, col: cols - 1 }
+            }
+        );
+    }, [rows, cols, cursor, updateState]);
+
+    const setSelection = useCallback((range: SelectionRange | null) => {
+        updateState(cursor, range);
+    }, [cursor, updateState]);
+
+    const selectRow = useCallback((row: number, expandSelection = false) => {
+        const r = clamp(row, rows - 1);
+        const anchor = expandSelection && selection ? selection.start.row : r;
+        const newCursor = { row: r, col: cols - 1 };
+        const newSelection = {
+            start: { row: anchor, col: 0 },
+            end: { row: r, col: cols - 1 }
+        };
+        updateState(newCursor, newSelection);
+    }, [rows, cols, selection, updateState]);
+
+    const selectColumn = useCallback((col: number, expandSelection = false) => {
+        const c = clamp(col, cols - 1);
+        const anchor = expandSelection && selection ? selection.start.col : c;
+        const newCursor = { row: rows - 1, col: c };
+        const newSelection = {
+            start: { row: 0, col: anchor },
+            end: { row: rows - 1, col: c }
+        };
+        updateState(newCursor, newSelection);
+    }, [rows, cols, selection, updateState]);
 
     // Helper for range normalization
     const getNormalizedRange = useCallback(() => {
@@ -118,7 +168,9 @@ export function useGridSelection({
         setCursor,
         setCursorAndSelection,
         moveCursor,
-        setSelection: setSelectionState,
+        setSelection,
+        selectRow,
+        selectColumn,
         selectAll,
         getNormalizedRange
     };

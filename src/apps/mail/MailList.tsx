@@ -10,7 +10,6 @@ import {
   Size,
   Space,
 } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { filteredThreadsAtom, selectedThreadIdAtom } from "./store";
 
 export function MailList() {

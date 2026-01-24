@@ -1,6 +1,4 @@
 import { useRef, useState } from "react";
-import { Frame } from "../../design-system/Frame/Frame";
-import { Layout } from "../../design-system/Frame/Layout/Layout";
 import { Overlay } from "../../design-system/Overlay";
 import { Text } from "../../design-system/text/Text";
 import {
@@ -8,7 +6,6 @@ import {
   Space,
   ZIndex,
 } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { JsonSmartView } from "./drawer/JsonSmartView";
 
 export function TableObjectCell({ value }: { value: object | any[] }) {

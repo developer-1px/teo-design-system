@@ -1,8 +1,8 @@
 import { type ParsedKey, parseKeyCombo, matchesKeyCombo } from "./keyUtils";
 
-export interface KeyBinding {
+export interface KeyBinding<T extends string = string> {
     key: string;
-    command: string;
+    command: T;
     when?: string;
     args?: any;
 }
@@ -14,9 +14,9 @@ export type CommandHandler = (args?: any) => void;
  * 
  * Manages commands, keybindings, and context evaluation in a framework-agnostic way.
  */
-export class CommandManager {
+export class CommandManager<T extends string = string> {
     private registry: Record<string, CommandHandler> = {};
-    private keybindings: KeyBinding[] = [];
+    private keybindings: KeyBinding<T>[] = [];
     private context: Record<string, any> = {};
     private parsedKeys: Map<string, ParsedKey> = new Map();
 
@@ -27,14 +27,14 @@ export class CommandManager {
     /**
      * Register multiple commands
      */
-    setRegistry(registry: Record<string, CommandHandler>) {
+    setRegistry(registry: Record<T, CommandHandler>) {
         this.registry = registry;
     }
 
     /**
      * Update keybindings and cache parsed keys
      */
-    setKeybindings(bindings: KeyBinding[]) {
+    setKeybindings(bindings: KeyBinding<T>[]) {
         this.keybindings = bindings;
         this.parsedKeys.clear();
 
@@ -56,7 +56,7 @@ export class CommandManager {
     /**
      * Execute a command by ID
      */
-    executeCommand(commandId: string, args?: any) {
+    executeCommand(commandId: T | "type", args?: any) {
         const handler = this.registry[commandId];
         if (handler) {
             handler(args);

@@ -21,7 +21,6 @@ import {
   Size,
   Space,
 } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
 import type { ComponentStackItem } from "../lib/fiber-utils";
 import { generateJSX } from "../lib/inspector-utils";
 import {

@@ -99,4 +99,9 @@
   --focus-ring: 0 0 0 1px rgba(24, 24, 27, 0.4);
 
   --text-secondary: var(--text-body);
+
+  /* Tones (Warning/Highlight) */
+  --tone-warning-bg: #fef08a;
+  --tone-warning-bg-low: #fef9c3;
+  --tone-warning-border: #facc15;
 }

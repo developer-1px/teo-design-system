@@ -2,6 +2,7 @@ import type React from "react";
 
 import type { FrameProps } from "./FrameProps.ts";
 import { frameToSettings } from "./frameToSettings.ts";
+import { useNavState } from "../context/NavContext";
 
 export function Frame({
   children,
@@ -25,6 +26,8 @@ export function Frame({
   interactive,
   rounded,
   selected,
+  focused,
+  navId,
 
   // Spacing (Unified)
   spacing,
@@ -52,7 +55,14 @@ export function Frame({
     surface !== undefined ? surface : interactive ? "ghost" : undefined;
 
   // ---------------------------------------------------------------------------
-  // 3. Construct Settings Input (The "Source of Truth")
+  // 3. Indirect Connection (Navigation Context)
+  // ---------------------------------------------------------------------------
+  const nav = useNavState(navId);
+  const finalSelected = selected ?? nav.isSelected;
+  const finalFocused = focused ?? nav.isFocused;
+
+  // ---------------------------------------------------------------------------
+  // 4. Construct Settings Input (The "Source of Truth")
   // ---------------------------------------------------------------------------
   // Priority: Layout Preset < Top-Level Props < Overrides
   const settingsInput = {
@@ -67,7 +77,8 @@ export function Frame({
     ...(resolvedSurface !== undefined && { surface: resolvedSurface }),
     ...(interactive !== undefined && { interactive }),
     ...(rounded !== undefined && { rounded }),
-    ...(selected !== undefined && { selected }),
+    ...(finalSelected !== undefined && { selected: finalSelected }),
+    ...(finalFocused !== undefined && { focused: finalFocused }),
 
     // Top-Level Spacing (Unified)
     // spacing → gap = spacing * 1, p = spacing * 1.25

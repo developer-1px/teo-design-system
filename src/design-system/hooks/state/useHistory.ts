@@ -17,7 +17,9 @@ export interface UseHistoryReturn<T> {
     /** Current state */
     state: T;
     /** Set new state (pushes to history) */
-    set: (newState: T) => void;
+    set: (newState: T | ((prev: T) => T)) => void;
+    /** Replace current state (does not push to history) */
+    replace: (newState: T | ((prev: T) => T)) => void;
     /** Reset state (clears history) */
     reset: (newState: T) => void;
     /** Undo last change */
@@ -38,11 +40,19 @@ export interface UseHistoryReturn<T> {
 
 // Action types
 type Action<T> =
-    | { type: "SET"; payload: T; capacity: number }
+    | { type: "SET"; payload: T | ((prev: T) => T); capacity: number }
+    | { type: "REPLACE"; payload: T | ((prev: T) => T) }
     | { type: "RESET"; payload: T }
     | { type: "UNDO" }
     | { type: "REDO" }
     | { type: "CLEAR" };
+
+// Helper to resolve functional state
+function resolveState<T>(payload: T | ((prev: T) => T), current: T): T {
+    return typeof payload === "function"
+        ? (payload as (prev: T) => T)(current)
+        : payload;
+}
 
 // State structure
 interface HistoryState<T> {
@@ -60,9 +70,10 @@ function historyReducer<T>(state: HistoryState<T>, action: Action<T>): HistorySt
     switch (action.type) {
         case "SET": {
             const { payload, capacity } = action;
+            const newPresent = resolveState(payload, present);
 
             // Don't modify if state hasn't changed (shallow comparison)
-            if (payload === present) return state;
+            if (newPresent === present) return state;
 
             const newPast = [...past, present];
 
@@ -73,10 +84,17 @@ function historyReducer<T>(state: HistoryState<T>, action: Action<T>): HistorySt
 
             return {
                 past: newPast,
-                present: payload,
+                present: newPresent,
                 future: [], // Clearing future on new change is standard behavior
             };
         }
+
+        case "REPLACE":
+            return {
+                past,
+                present: resolveState(action.payload, present),
+                future, // Keep future to allow "soft" updates (like selection change) without breaking data redo
+            };
 
         case "RESET":
             return {
@@ -139,7 +157,7 @@ function historyReducer<T>(state: HistoryState<T>, action: Action<T>): HistorySt
 export function useHistory<T>({
     initialState,
     capacity = 50,
-}: UseHistoryOptions<T>): UseHistoryReturn<T> {
+}: UseHistoryOptions<T>): UseHistoryReturn<T> & { replace: (newState: T) => void } {
     const [historyState, dispatch] = useReducer(historyReducer<T>, {
         past: [],
         present: initialState,
@@ -147,11 +165,15 @@ export function useHistory<T>({
     });
 
     const set = useCallback(
-        (newState: T) => {
+        (newState: T | ((prev: T) => T)) => {
             dispatch({ type: "SET", payload: newState, capacity });
         },
         [capacity]
     );
+
+    const replace = useCallback((newState: T | ((prev: T) => T)) => {
+        dispatch({ type: "REPLACE", payload: newState });
+    }, []);
 
     const reset = useCallback((newState: T) => {
         dispatch({ type: "RESET", payload: newState });
@@ -172,6 +194,7 @@ export function useHistory<T>({
     return {
         state: historyState.present,
         set,
+        replace,
         reset,
         undo,
         redo,

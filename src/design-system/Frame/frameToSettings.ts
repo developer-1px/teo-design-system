@@ -14,6 +14,7 @@ type FrameSettingsInput = FrameOverrides & {
   zIndex?: ZIndexToken;
   interactive?: boolean | "button" | "text";
   selected?: boolean;
+  focused?: boolean;
 };
 
 export function frameToSettings(props: FrameSettingsInput): {
@@ -237,6 +238,10 @@ export function frameToSettings(props: FrameSettingsInput): {
 
   if (props.selected) {
     classes.push("selected");
+  }
+
+  if (props.focused) {
+    classes.push("focused");
   }
 
   // ---------------------------------------------------------------------------

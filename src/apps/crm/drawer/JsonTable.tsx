@@ -1,8 +1,4 @@
-import { Frame } from "../../../design-system/Frame/Frame";
-import { Layout } from "../../../design-system/Frame/Layout/Layout";
 import { Text } from "../../../design-system/text/Text";
-import { Size, Space } from "../../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 // Helper for cell values
 function SmartCellRenderer({ value }: { value: unknown }) {

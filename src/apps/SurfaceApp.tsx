@@ -1,5 +1,4 @@
 import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout";
 import type { SurfaceToken } from "../design-system/lib/types.ts";
 import { Prose } from "../design-system/text/context/Prose.tsx";
 import {
@@ -8,7 +7,6 @@ import {
   Size,
   Space,
 } from "../design-system/token/token.const.1tier.ts";
-import { Radius2 } from "../design-system/token/token.const.2tier.ts";
 
 const SURFACES: Array<{
   token: SurfaceToken;

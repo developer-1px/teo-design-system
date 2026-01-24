@@ -24,7 +24,6 @@ import {
   Size,
   Space,
 } from "../design-system/token/token.const.1tier.ts";
-import { Radius2 } from "../design-system/token/token.const.2tier.ts";
 
 // --- Mock Data ---
 const COMMANDS = [

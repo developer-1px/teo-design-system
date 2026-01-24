@@ -1,8 +1,5 @@
 // ... imports same
 import { useState, useEffect } from "react";
-import { Frame } from "../../design-system/Frame/Frame";
-import { Layout } from "../../design-system/Frame/Layout/Layout";
-import { Space } from "../../design-system/token/token.const.1tier";
 import { parseSourceToCells, type Cell } from "./utils/notebookParser";
 import { NotebookCell } from "./components/NotebookCell";
 import { CodeNotebookHeader } from "./components/CodeNotebookHeader";

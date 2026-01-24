@@ -16,23 +16,21 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { Action } from "../design-system/Action";
-import { Field } from "../design-system/Field";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout";
-import { useAccordion, useDropdown, useTabs } from "../design-system/hooks";
-import { Icon } from "../design-system/Icon";
-import { Overlay } from "../design-system/Overlay";
-import { Section } from "../design-system/Section";
-import { Separator } from "../design-system/Separator";
-import { Text } from "../design-system/text/Text";
+import { Action } from "../../../design-system/Action";
+import { Field } from "../../../design-system/Field";
+import { Frame } from "../../../design-system/Frame/Frame.tsx";
+import { useAccordion, useDropdown, useTabs } from "../../../design-system/hooks";
+import { Icon } from "../../../design-system/Icon";
+import { Overlay } from "../../../design-system/Overlay";
+import { Section } from "../../../design-system/Section";
+import { Separator } from "../../../design-system/Separator";
+import { Text } from "../../../design-system/text/Text";
 import {
   IconSize,
   Opacity,
   Size,
   Space,
-} from "../design-system/token/token.const.1tier";
-import { Radius2 } from "../design-system/token/token.const.2tier";
+} from "../../../design-system/token/token.const.1tier";
 
 // --- Data ---
 

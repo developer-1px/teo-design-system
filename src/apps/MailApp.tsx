@@ -5,7 +5,6 @@
 
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Size, Space } from "../design-system/token/token.const.1tier";
 import { MailDetail } from "./mail/MailDetail";
 import { MailHeader } from "./mail/MailHeader";
 import { MailList } from "./mail/MailList";

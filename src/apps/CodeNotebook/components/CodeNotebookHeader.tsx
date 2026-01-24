@@ -1,11 +1,7 @@
 import { Play, Save, Share2, FileCode } from "lucide-react";
 import { Action } from "../../../design-system/Action";
-import { Frame } from "../../../design-system/Frame/Frame";
-import { Layout } from "../../../design-system/Frame/Layout/Layout";
 import { Icon } from "../../../design-system/Icon";
 import { Text } from "../../../design-system/text/Text";
-import { IconSize, Size, Space } from "../../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../../design-system/token/token.const.2tier";
 
 export function CodeNotebookHeader() {
     return (

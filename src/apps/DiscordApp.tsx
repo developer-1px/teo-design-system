@@ -6,7 +6,6 @@
 
 import { Frame } from "../design-system/Frame/Frame.tsx";
 import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Size, Space } from "../design-system/token/token.const.1tier";
 import { ChannelSidebar } from "./discord/ChannelSidebar";
 import { MemberList } from "./discord/MemberList";
 import { MessageArea } from "./discord/MessageArea";

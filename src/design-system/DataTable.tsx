@@ -1,5 +1,5 @@
 
-import React, { useMemo, useRef, useEffect } from "react";
+import React, { useMemo, useEffect } from "react";
 // import { Frame } from "./Frame/Frame";
 import { useHeadlessTable, type TableOptions } from "./hooks/data/useHeadlessTable";
 // import { useHotKeys } from "./hooks/useHotKeys";
@@ -18,11 +18,15 @@ interface DataTableProps<T> extends Omit<TableOptions<T>, 'columns'> {
     className?: string;
 }
 
+import { useEditorInput } from "./hooks/interaction/useEditorInput";
+import { useBrowserShortcut } from "./hooks/interaction/useBrowserShortcut";
+import { Layer } from "./Overlay";
+
 // Editor Component
 const CellEditor = ({
     value,
     onCommit,
-    // onCancel,
+    onCancel,
     autoFocus
 }: {
     value: any;
@@ -30,18 +34,15 @@ const CellEditor = ({
     onCancel: () => void;
     autoFocus?: boolean;
 }) => {
-    const ref = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        if (autoFocus && ref.current) {
-            ref.current.focus();
-            ref.current.select();
-        }
-    }, [autoFocus]);
+    const { inputProps } = useEditorInput<HTMLInputElement>({
+        onCommit,
+        onCancel,
+        autoFocus
+    });
 
     return (
         <input
-            ref={ref}
+            {...inputProps}
             defaultValue={value}
             style={{
                 width: "100%",
@@ -53,22 +54,6 @@ const CellEditor = ({
                 font: "inherit",
                 padding: "0 8px", // match cell padding
             }}
-            onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                    e.preventDefault(); // prevent newline if generic input
-                    onCommit(ref.current?.value);
-                }
-                else if (e.key === "Escape") {
-                    // handled by parent or here? headless hook handles escape usually via global but local is safer
-                    // onCancel();
-                    // Actually hook handles it on container, but input captures focus.
-                    // Let's forward to hook via specialized handler or just bubble?
-                    // The hook's gridProps.onKeyDown might not fire if input stops propagation?
-                    // Actually input should handle it.
-                    // e.stopPropagation(); 
-                }
-            }}
-            onBlur={() => onCommit(ref.current?.value)}
         />
     );
 };
@@ -91,11 +76,13 @@ export function DataTable<T extends Record<string, any>>({
     });
 
     const {
-        state: { cursor, selection, data: tableData },
+        state: { cursor, data: tableData, getNormalizedRange },
         gridProps,
         getCellProps,
         actions
     } = table;
+
+    const { startRow, endRow, startCol, endCol } = getNormalizedRange();
 
     // Grid Template
     const gridTemplateColumns = useMemo(() => {
@@ -144,7 +131,78 @@ export function DataTable<T extends Record<string, any>>({
                 container.scrollLeft += (cellRect.right - visibleRight);
             }
         }
-    }, [cursor, gridProps.ref]); // Re-run when cursor moves
+    }, [cursor, gridProps.ref, table.state.search.isSearching]); // Re-run when cursor moves or search toggles
+
+    // Local Search State
+    const [localQuery, setLocalQuery] = React.useState("");
+    const [suggestions, setSuggestions] = React.useState<string[]>([]);
+    const [activeSuggestion, setActiveSuggestion] = React.useState(-1);
+
+    // Sync local query when search opens/closes
+    useEffect(() => {
+        if (table.state.search.isSearching) {
+            setLocalQuery(table.state.search.query);
+        } else {
+            setLocalQuery("");
+            setSuggestions([]);
+        }
+    }, [table.state.search.isSearching, table.state.search.query]);
+
+    // Autocomplete Logic
+    const handleSearchChange = (value: string) => {
+        setLocalQuery(value);
+        setActiveSuggestion(-1);
+
+        if (!value.trim()) {
+            setSuggestions([]);
+            return;
+        }
+
+        // Get unique values from data that match
+        const matches = new Set<string>();
+        for (const row of tableData) {
+            for (const col of columnDefs) {
+                const val = String(row[col.key]);
+                if (val.toLowerCase().includes(value.toLowerCase())) {
+                    matches.add(val);
+                    if (matches.size >= 5) break; // Limit to 5 suggestions
+                }
+            }
+            if (matches.size >= 5) break;
+        }
+        setSuggestions(Array.from(matches));
+    };
+
+    const commitSearch = (query: string) => {
+        table.actions.setSearchQuery(query);
+        setSuggestions([]);
+        // gridProps.ref.current?.focus(); // Keep focus in input? No, typically Keep focus in input for next/prev.
+    };
+
+    // Shortcut Overrides (Cmd+F, Cmd+G)
+    useBrowserShortcut({
+        "cmd+f": () => {
+            actions.openSearch();
+            gridProps.ref.current?.focus();
+        },
+        "cmd+g": () => actions.findNext(),
+        "cmd+shift+g": () => actions.findPrev()
+    });
+
+    // Substring Highlighting Helper
+    const HighlightedText = ({ text, query }: { text: string, query: string }) => {
+        if (!query) return <>{text}</>;
+        const parts = text.split(new RegExp(`(${query})`, "gi"));
+        return (
+            <>
+                {parts.map((part, i) =>
+                    part.toLowerCase() === query.toLowerCase()
+                        ? <span key={i} style={{ background: "var(--tone-warning-bg)", color: "var(--text-primary)" }}>{part}</span>
+                        : part
+                )}
+            </>
+        );
+    };
 
     return (
         <div
@@ -163,14 +221,134 @@ export function DataTable<T extends Record<string, any>>({
                 fontSize: "13px",
             }}
         >
+            {/* Find UI */}
+            {table.state.search.isSearching && (
+                <div
+                    className="mdk-find-ui"
+                    style={{
+                        padding: "8px 12px",
+                        background: "var(--surface-sunken-bg)",
+                        borderBottom: "1px solid var(--border-color)",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px",
+                        fontSize: "12px",
+                        position: "sticky",
+                        top: 0,
+                        zIndex: Layer.Flat
+                    }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", flex: 1 }}>
+                        <span style={{ color: "var(--text-secondary)" }}>Find:</span>
+                        <div style={{ position: "relative", flex: 1 }}>
+                            <input
+                                autoFocus
+                                value={localQuery}
+                                onChange={(e) => handleSearchChange(e.target.value)}
+                                onKeyDown={(e) => {
+                                    e.stopPropagation();
+                                    if (e.key === "Enter") {
+                                        if (activeSuggestion >= 0 && suggestions[activeSuggestion]) {
+                                            const val = suggestions[activeSuggestion];
+                                            setLocalQuery(val);
+                                            commitSearch(val);
+                                        } else {
+                                            if (e.shiftKey) table.actions.findPrev();
+                                            else {
+                                                // If query changed, commit it first
+                                                if (localQuery !== table.state.search.query) {
+                                                    commitSearch(localQuery);
+                                                } else {
+                                                    table.actions.findNext();
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (e.key === "ArrowDown") {
+                                        e.preventDefault();
+                                        setActiveSuggestion(prev => Math.min(prev + 1, suggestions.length - 1));
+                                    }
+                                    if (e.key === "ArrowUp") {
+                                        e.preventDefault();
+                                        setActiveSuggestion(prev => Math.max(prev - 1, -1));
+                                    }
+                                    if (e.key === "Escape") {
+                                        if (suggestions.length > 0) setSuggestions([]);
+                                        else table.actions.closeSearch();
+                                    }
+                                }}
+                                style={{
+                                    background: "var(--surface-sunken-bg)",
+                                    border: "1px solid var(--border-color)",
+                                    borderRadius: "4px",
+                                    padding: "4px 8px",
+                                    color: "var(--text-primary)",
+                                    outline: "none",
+                                    width: "100%",
+                                    fontSize: "12px"
+                                }}
+                                placeholder="Type to search..."
+                            />
+                            {/* Autocomplete Dropdown */}
+                            {suggestions.length > 0 && (
+                                <div style={{
+                                    position: "absolute",
+                                    top: "100%",
+                                    left: 0,
+                                    width: "100%",
+                                    background: "var(--surface-overlay-bg)",
+                                    border: "1px solid var(--border-color)",
+                                    borderRadius: "4px",
+                                    marginTop: "4px",
+                                    boxShadow: "var(--surface-overlay-shadow)",
+                                    zIndex: Layer.Raised,
+                                    maxHeight: "200px",
+                                    overflowY: "auto"
+                                }}>
+                                    {suggestions.map((s, i) => (
+                                        <div
+                                            key={i}
+                                            onClick={() => {
+                                                setLocalQuery(s);
+                                                commitSearch(s);
+                                            }}
+                                            style={{
+                                                padding: "6px 8px",
+                                                cursor: "pointer",
+                                                background: i === activeSuggestion ? "var(--control-bg-hover)" : "transparent",
+                                                color: "var(--text-primary)",
+                                                fontSize: "12px"
+                                            }}
+                                            onMouseEnter={() => setActiveSuggestion(i)}
+                                        >
+                                            <HighlightedText text={s} query={localQuery} />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div style={{ color: "var(--text-secondary)", minWidth: "60px", textAlign: "right" }}>
+                        {table.state.search.matches.length > 0
+                            ? `${table.state.search.activeIndex + 1} of ${table.state.search.matches.length}`
+                            : table.state.search.query ? "0 of 0" : ""}
+                    </div>
+                    <div style={{ display: "flex", gap: "2px" }}>
+                        <button onClick={() => table.actions.findPrev()} style={{ padding: "2px 6px", cursor: "pointer", background: "none", border: "1px solid var(--border-color)", borderRadius: "4px", color: "var(--text-primary)" }}>↑</button>
+                        <button onClick={() => table.actions.findNext()} style={{ padding: "2px 6px", cursor: "pointer", background: "none", border: "1px solid var(--border-color)", borderRadius: "4px", color: "var(--text-primary)" }}>↓</button>
+                    </div>
+                    <button onClick={() => table.actions.closeSearch()} style={{ padding: "2px 6px", cursor: "pointer", background: "none", border: "none", color: "var(--text-secondary)", fontSize: "14px" }}>✕</button>
+                </div>
+            )}
+
             {/* Header */}
             <div
+                className="mdk-table-header"
                 style={{
                     display: "grid",
                     gridTemplateColumns,
                     position: "sticky",
-                    top: 0,
-                    zIndex: 10,
+                    top: table.state.search.isSearching ? "36px" : 0,
+                    zIndex: Layer.Flat,
                     background: "var(--surface-sunken-bg)",
                     borderBottom: "1px solid var(--border-color)",
                     userSelect: "none",
@@ -183,22 +361,35 @@ export function DataTable<T extends Record<string, any>>({
                     background: "var(--surface-sunken-bg)",
                 }} />
 
-                {columnDefs.map((col, i) => (
-                    <div
-                        key={col.key}
-                        style={{
-                            padding: "8px 12px",
-                            borderRight: i < columnDefs.length - 1 ? "1px solid var(--border-color)" : "none",
-                            fontWeight: 500,
-                            color: "var(--text-body)",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis"
-                        }}
-                    >
-                        {col.title}
-                    </div>
-                ))}
+                {columnDefs.map((col, i) => {
+                    const isColSelected = i >= startCol && i <= endCol;
+
+                    return (
+                        <div
+                            key={col.key}
+                            onMouseDown={(e) => {
+                                if (gridProps.ref.current) {
+                                    gridProps.ref.current.focus({ preventScroll: true });
+                                }
+                                actions.selectColumn(i, e.shiftKey);
+                            }}
+                            style={{
+                                padding: "8px 12px",
+                                borderRight: i < columnDefs.length - 1 ? "1px solid var(--border-color)" : "none",
+                                fontWeight: 500,
+                                color: isColSelected ? "var(--primary-bg)" : "var(--text-body)",
+                                background: isColSelected ? "var(--primary-bg-subtle)" : "var(--surface-sunken-bg)",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                cursor: "pointer",
+                                transition: "all 0.1s ease"
+                            }}
+                        >
+                            {col.title}
+                        </div>
+                    );
+                })}
             </div>
 
             {/* Body */}
@@ -217,18 +408,28 @@ export function DataTable<T extends Record<string, any>>({
                                 background: "transparent"
                             }}
                         >
-                            {/* Row Number */}
-                            <div style={{
-                                padding: "0 8px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                background: "var(--surface-sunken-bg)",
-                                borderRight: "1px solid var(--border-color)",
-                                color: "var(--text-body)",
-                                fontSize: "11px",
-                                userSelect: "none"
-                            }}>
+                            {/* Row Number (Row Header) */}
+                            <div
+                                onMouseDown={(e) => {
+                                    if (gridProps.ref.current) {
+                                        gridProps.ref.current.focus({ preventScroll: true });
+                                    }
+                                    actions.selectRow(rIdx, e.shiftKey);
+                                }}
+                                style={{
+                                    padding: "0 8px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    background: (rIdx >= startRow && rIdx <= endRow) ? "var(--primary-bg-subtle)" : "var(--surface-sunken-bg)",
+                                    borderRight: "1px solid var(--border-color)",
+                                    color: (rIdx >= startRow && rIdx <= endRow) ? "var(--primary-bg)" : "var(--text-body)",
+                                    fontSize: "11px",
+                                    userSelect: "none",
+                                    cursor: "pointer",
+                                    transition: "all 0.1s ease"
+                                }}
+                            >
                                 {rIdx + 1}
                             </div>
 
@@ -237,6 +438,8 @@ export function DataTable<T extends Record<string, any>>({
                                 const isCursor = cellState["data-cursor"];
                                 const isSelected = cellState["data-selected"];
                                 const isEditing = cellState["data-editing"];
+                                const isMatch = cellState["data-search-match"];
+                                const isActiveMatch = cellState["data-search-active"];
 
                                 // @ts-ignore
                                 const value = row[col.key];
@@ -255,22 +458,35 @@ export function DataTable<T extends Record<string, any>>({
                                         key={col.key}
                                         data-cursor={isCursor || undefined}
                                         data-selected={isSelected || undefined}
+                                        data-copied={cellState["data-copied"] || undefined}
                                         data-editing={isEditing || undefined}
+                                        data-search-match={isMatch || undefined}
+                                        data-search-active={isActiveMatch || undefined}
                                         onMouseDown={handleMouseDown}
                                         onDoubleClick={cellState.onDoubleClick}
                                         style={{
                                             position: "relative",
                                             padding: isEditing ? 0 : "8px 12px",
                                             borderRight: cIdx < columnDefs.length - 1 ? "1px solid var(--border-color)" : "none",
-                                            background: isSelected ? "var(--surface-selected-bg)" : "transparent",
-                                            color: isSelected ? "var(--surface-selected-fg)" : "inherit",
+                                            background: isActiveMatch
+                                                ? "var(--tone-warning-bg)"
+                                                : isMatch
+                                                    ? "var(--tone-warning-bg-low)"
+                                                    : isSelected
+                                                        ? "var(--surface-selected-bg)"
+                                                        : "transparent",
+                                            color: isSelected && !isMatch && !isActiveMatch ? "var(--surface-selected-fg)" : "inherit",
                                             whiteSpace: "nowrap",
                                             overflow: "hidden",
                                             textOverflow: "ellipsis",
                                             cursor: "default",
-                                            outline: isCursor ? "2px solid var(--text-primary)" : "none",
+                                            outline: isActiveMatch
+                                                ? "2px solid var(--tone-warning-border)"
+                                                : isCursor
+                                                    ? "2px solid var(--text-primary)"
+                                                    : "none",
                                             outlineOffset: "-2px",
-                                            zIndex: isCursor ? 2 : 1,
+                                            zIndex: isActiveMatch || isCursor ? 2 : 1,
                                         }}
                                     >
                                         {isEditing ? (
@@ -278,18 +494,19 @@ export function DataTable<T extends Record<string, any>>({
                                                 value={value}
                                                 autoFocus
                                                 onCommit={(val) => {
-                                                    actions.commitEditing(val);
-                                                    // Restore focus to grid after editing
-                                                    gridProps.ref.current?.focus({ preventScroll: true });
+                                                    actions.setEditValue(val);
+                                                    actions.commitEditing();
                                                 }}
                                                 onCancel={() => {
                                                     actions.cancelEditing();
-                                                    // Restore focus to grid after cancel
-                                                    gridProps.ref.current?.focus({ preventScroll: true });
                                                 }}
                                             />
                                         ) : (
-                                            col.render ? col.render(value, row) : value
+                                            isMatch ? (
+                                                <HighlightedText text={String(value)} query={table.state.search.query} />
+                                            ) : (
+                                                col.render ? col.render(value, row) : value
+                                            )
                                         )}
                                     </div>
                                 );

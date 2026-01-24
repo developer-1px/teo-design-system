@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "name": "Enterprise License",
+    "company": "Acme Corp",
+    "stage": "Negotiation",
+    "value": 120000,
+    "owner": "Sarah A.",
+    "closeDate": "2024-10-24",
+    "avatarColor": "#E11D48"
+  },
+  {
+    "id": "2",
+    "name": "Q4 Expansion",
+    "company": "Linear Orbit",
+    "stage": "Qualified",
+    "value": 45000,
+    "owner": "Mike R.",
+    "closeDate": "2024-11-12",
+    "avatarColor": "#2563EB"
+  },
+  {
+    "id": "3",
+    "name": "Startup Plan",
+    "company": "Vercel",
+    "stage": "Proposal",
+    "value": 12000,
+    "owner": "John D.",
+    "closeDate": "2024-10-30",
+    "avatarColor": "#000000"
+  },
+  {
+    "id": "4",
+    "name": "Global Rollout",
+    "company": "Stripe",
+    "stage": "Lead",
+    "value": 250000,
+    "owner": "Sarah A.",
+    "closeDate": "2024-12-15",
+    "avatarColor": "#6366F1"
+  },
+  {
+    "id": "5",
+    "name": "Security Add-on",
+    "company": "Raycast",
+    "stage": "Closed",
+    "value": 8500,
+    "owner": "Mike R.",
+    "closeDate": "2024-09-28",
+    "avatarColor": "#DC2626"
+  },
+  {
+    "id": "6",
+    "name": "Design Systems",
+    "company": "Figma",
+    "stage": "Negotiation",
+    "value": 85000,
+    "owner": "John D.",
+    "closeDate": "2024-11-01",
+    "avatarColor": "#10B981"
+  }
+]

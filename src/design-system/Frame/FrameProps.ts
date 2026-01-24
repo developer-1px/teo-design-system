@@ -39,6 +39,8 @@ interface FramePresetProps {
   surface?: SurfaceToken;
   interactive?: boolean | "button" | "text";
   selected?: boolean;
+  focused?: boolean;
+  navId?: string;
 
   rounded?: Radius2Token | boolean;
 

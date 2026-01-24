@@ -3,6 +3,17 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import type { SpaceToken, ZIndexToken } from "./token/token.const.1tier";
 
+// Z-Index System (1-Tier)
+// Standardized layers to ensure proper stacking contexts without magic numbers
+export const Layer = {
+  Base: 0,
+  Flat: 10,       // Sticky headers, table inputs
+  Raised: 100,    // Cards, Dropdowns (Local)
+  Overlay: 200,   // Modals, Dialogs
+  Pop: 300,       // Tooltips, Toasts
+  Max: 9999       // Dragging items
+} as const;
+
 export interface OverlayProps {
   children: React.ReactNode;
 
@@ -37,7 +48,7 @@ export function Overlay({
   left,
   right,
   bottom,
-  zIndex = 100, // Default high z-index
+  zIndex = Layer.Raised, // Default to Raised layer
   onDismiss,
   clickOutsideToDismiss = true,
   blockInteraction = false,

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "1",
+    "name": "Sarah Anderson",
+    "email": "sarah.a@acme.com",
+    "phone": "+1 (555) 123-4567",
+    "company": "Acme Corp",
+    "role": "VP of Engineering",
+    "avatarColor": "#E11D48"
+  },
+  {
+    "id": "2",
+    "name": "Mike Rodriguez",
+    "email": "mike.r@linear.io",
+    "phone": "+1 (555) 234-5678",
+    "company": "Linear Orbit",
+    "role": "CTO",
+    "avatarColor": "#2563EB"
+  },
+  {
+    "id": "3",
+    "name": "John Davis",
+    "email": "john.d@vercel.com",
+    "phone": "+1 (555) 345-6789",
+    "company": "Vercel",
+    "role": "Head of Sales",
+    "avatarColor": "#000000"
+  },
+  {
+    "id": "4",
+    "name": "Emma Wilson",
+    "email": "emma.w@stripe.com",
+    "phone": "+1 (555) 456-7890",
+    "company": "Stripe",
+    "role": "Director of Partnerships",
+    "avatarColor": "#6366F1"
+  },
+  {
+    "id": "5",
+    "name": "Alex Chen",
+    "email": "alex.c@raycast.com",
+    "phone": "+49 (30) 123-4567",
+    "company": "Raycast",
+    "role": "CEO",
+    "avatarColor": "#DC2626"
+  },
+  {
+    "id": "6",
+    "name": "Lisa Thompson",
+    "email": "lisa.t@figma.com",
+    "phone": "+1 (555) 567-8901",
+    "company": "Figma",
+    "role": "Enterprise Sales Lead",
+    "avatarColor": "#10B981"
+  },
+  {
+    "id": "7",
+    "name": "David Park",
+    "email": "david.p@notion.so",
+    "phone": "+1 (555) 678-9012",
+    "company": "Notion",
+    "role": "Product Manager",
+    "avatarColor": "#8B5CF6"
+  },
+  {
+    "id": "8",
+    "name": "Rachel Green",
+    "email": "rachel.g@acme.com",
+    "phone": "+1 (555) 789-0123",
+    "company": "Acme Corp",
+    "role": "Senior Developer",
+    "avatarColor": "#EF4444"
+  }
+]

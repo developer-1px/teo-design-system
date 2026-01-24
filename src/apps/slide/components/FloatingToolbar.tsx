@@ -10,13 +10,12 @@ import {
   Sun,
   Type,
 } from "lucide-react";
-import { Action } from "../design-system/Action";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Overlay } from "../design-system/Overlay";
-import { Separator } from "../design-system/Separator";
-import { useTheme } from "../design-system/theme";
-import { IconSize, Radius2, Size, Space } from "../design-system/token";
+import { Action } from "../../../design-system/Action";
+import { Frame } from "../../../design-system/Frame/Frame.tsx";
+import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { Overlay } from "../../../design-system/Overlay";
+import { Separator } from "../../../design-system/Separator";
+import { useTheme } from "../../../design-system/theme";
 
 const BOTTOM_TOOLS = [
   { icon: MousePointer2, tooltip: "Move", variant: "surface" as const },

@@ -2,7 +2,7 @@ import type { DataRow, DatasetMeta } from "./types";
 
 // Load all JSON files from data/crm directory using Vite's import.meta.glob
 const dataFiles = import.meta.glob<{ default: DataRow[] }>(
-  "/src/data/crm/*.json",
+  "./data/*.json",
   {
     eager: false,
   },
@@ -48,7 +48,7 @@ export function getDatasetsMeta(): DatasetMeta[] {
   return Object.keys(dataFiles)
     .map((path) => {
       // Extract filename without path and extension
-      // "/src/data/crm/deals.json" -> "deals"
+      // "./data/deals.json" -> "deals"
       const match = path.match(/\/([^/]+)\.json$/);
       const name = match?.[1];
 
@@ -71,7 +71,7 @@ export function getDatasetsMeta(): DatasetMeta[] {
  * @returns Promise resolving to the dataset array with __rowId added
  */
 export async function loadDataset(datasetName: string): Promise<DataRow[]> {
-  const path = `/src/data/crm/${datasetName}.json`;
+  const path = `./data/${datasetName}.json`;
 
   const loader = dataFiles[path];
 

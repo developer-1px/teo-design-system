@@ -9,7 +9,7 @@ import {
 import { useAtom, useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
 
-import { Table } from "../../ui/table/Table";
+// import { Table } from "../../ui/table/Table";
 import { formatColumnLabel } from "./dataLoader";
 import { formatForTable } from "./drawer/nestedValueFormatter";
 import { currentDataAtom, selectedRowIdAtom } from "./store";
@@ -33,6 +33,51 @@ function formatCellValue(value: unknown): string {
   });
 }
 
+const Table = {
+  Root: ({ children, ...props }: any) => <table className="mdk-table" style={{ width: '100%', borderCollapse: 'collapse' }} {...props}>{children}</table>,
+  Header: ({ children, ...props }: any) => <thead {...props}>{children}</thead>,
+  Head: ({ children, sortable, sorted, onSort, ...props }: any) => (
+    <th
+      style={{
+        textAlign: 'left',
+        padding: '12px',
+        borderBottom: '1px solid var(--border-color)',
+        cursor: sortable ? 'pointer' : 'default',
+        userSelect: 'none'
+      }}
+      onClick={sortable ? onSort : undefined}
+      {...props}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        {children}
+        {sorted === 'asc' && <span>↑</span>}
+        {sorted === 'desc' && <span>↓</span>}
+      </div>
+    </th>
+  ),
+  Row: ({ children, selected, ...props }: any) => (
+    <tr
+      style={{
+        background: selected ? 'var(--surface-selected-bg)' : 'transparent',
+        cursor: props.onClick ? 'pointer' : 'default'
+      }}
+      {...props}
+    >
+      {children}
+    </tr>
+  ),
+  Cell: ({ children, ...props }: any) => (
+    <td style={{ padding: '12px', borderBottom: '1px solid var(--border-color)' }} {...props}>
+      {children}
+    </td>
+  ),
+  Empty: ({ message }: { message: string }) => (
+    <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+      {message}
+    </div>
+  )
+};
+
 export function CRMTable() {
   const data = useAtomValue(currentDataAtom);
   const [selectedRowId, setSelectedRowId] = useAtom(selectedRowIdAtom);
@@ -45,8 +90,6 @@ export function CRMTable() {
     const firstRow = data[0];
     const keys = Object.keys(firstRow).filter((key) => key !== "__rowId");
 
-    // accessorKey and header are already defined above implicitly by the map structure
-    // but wait, I see I pasted the key/header TWICE in the previous edit.
     return keys.map((key) => ({
       accessorKey: key,
       header: formatColumnLabel(key),

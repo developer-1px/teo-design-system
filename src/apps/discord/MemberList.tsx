@@ -13,7 +13,6 @@ import {
   Size,
   Space,
 } from "../../design-system/token/token.const.1tier";
-import { Radius2 } from "../../design-system/token/token.const.2tier";
 import { mockMembers } from "./mockData";
 import { showMemberListAtom } from "./store";
 import type { Member } from "./types";

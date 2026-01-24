@@ -298,5 +298,12 @@ button {
 }
 
 .selected {
+  background-color: var(--surface-selected-bg) !important;
+  color: var(--text-primary);
+}
+
+.focused {
   outline: 2px solid var(--primary-bg);
+  outline-offset: 2px;
+  z-index: 10;
 }

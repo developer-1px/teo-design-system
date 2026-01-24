@@ -1,0 +1,196 @@
+[
+  {
+    "id": "1",
+    "name": "Acme Corp",
+    "industry": "Technology",
+    "employees": 250,
+    "revenue": 15000000,
+    "website": "acme.com",
+    "founded": "2018",
+    "status": "Active",
+    "address": {
+      "street": "123 Market Street",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "United States",
+      "postalCode": "94103"
+    },
+    "contact": {
+      "email": "hello@acme.com",
+      "phone": "+1 (555) 123-4567",
+      "fax": "+1 (555) 123-4568"
+    },
+    "metadata": {
+      "source": "Direct Sales",
+      "tags": ["Enterprise", "Technology", "VIP"],
+      "lastUpdated": "2024-03-15",
+      "accountManager": "John Smith"
+    }
+  },
+  {
+    "id": "2",
+    "name": "Linear Orbit",
+    "industry": "SaaS",
+    "employees": 85,
+    "revenue": 8500000,
+    "website": "linearorbit.io",
+    "founded": "2020",
+    "status": "Active",
+    "contacts": [
+      {
+        "name": "John Doe",
+        "role": "CEO",
+        "email": "john@linearorbit.io"
+      },
+      {
+        "name": "Jane Smith",
+        "role": "CTO",
+        "email": "jane@linearorbit.io"
+      }
+    ],
+    "address": {
+      "street": "456 Broadway",
+      "city": "New York",
+      "state": "NY",
+      "country": "United States"
+    },
+    "metadata": {
+      "tags": ["SaaS", "B2B", "Growth"],
+      "tier": "Enterprise",
+      "integrations": ["Slack", "GitHub", "Jira"]
+    }
+  },
+  {
+    "id": "3",
+    "name": "Vercel",
+    "industry": "Infrastructure",
+    "employees": 180,
+    "revenue": 12000000,
+    "website": "vercel.com",
+    "founded": "2015",
+    "location": "Remote"
+  },
+  {
+    "id": "4",
+    "name": "Stripe",
+    "industry": "Fintech",
+    "employees": 8000,
+    "revenue": 7400000000,
+    "website": "stripe.com",
+    "founded": "2010",
+    "status": "Active",
+    "address": {
+      "street": "510 Townsend Street",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "United States",
+      "postalCode": "94103"
+    },
+    "contact": {
+      "email": "support@stripe.com",
+      "phone": "+1 (888) 926-2289"
+    },
+    "metadata": {
+      "source": "Inbound",
+      "tags": ["Fintech", "Global", "Public"],
+      "lastUpdated": "2024-03-18"
+    }
+  },
+  {
+    "id": "5",
+    "name": "Raycast",
+    "industry": "Productivity",
+    "employees": 45,
+    "revenue": 3200000,
+    "website": "raycast.com",
+    "founded": "2019",
+    "location": "Berlin, Germany"
+  },
+  {
+    "id": "6",
+    "name": "Figma",
+    "industry": "Design Tools",
+    "employees": 800,
+    "revenue": 400000000,
+    "website": "figma.com",
+    "founded": "2012",
+    "status": "Active",
+    "headquarters": {
+      "address": {
+        "street": "760 Market Street",
+        "suite": "Floor 10",
+        "city": "San Francisco",
+        "state": "CA",
+        "country": "United States",
+        "postalCode": "94102"
+      },
+      "timezone": "America/Los_Angeles",
+      "coordinates": {
+        "lat": 37.7858,
+        "lng": -122.4064
+      }
+    },
+    "contacts": [
+      {
+        "name": "Dylan Field",
+        "role": "CEO",
+        "email": "dylan@figma.com",
+        "phone": "+1 (555) 900-0001"
+      },
+      {
+        "name": "Evan Wallace",
+        "role": "CTO",
+        "email": "evan@figma.com",
+        "phone": "+1 (555) 900-0002"
+      },
+      {
+        "name": "Sarah Park",
+        "role": "VP Sales",
+        "email": "sarah@figma.com"
+      }
+    ],
+    "departments": [
+      {
+        "name": "Engineering",
+        "headcount": 400,
+        "budget": 50000000
+      },
+      {
+        "name": "Sales",
+        "headcount": 200,
+        "budget": 30000000
+      },
+      {
+        "name": "Marketing",
+        "headcount": 100,
+        "budget": 20000000
+      }
+    ],
+    "metadata": {
+      "tags": ["Design", "Collaboration", "Enterprise", "Public"],
+      "certifications": ["SOC 2", "ISO 27001", "GDPR"],
+      "partnerships": [
+        {
+          "partner": "Adobe",
+          "type": "Acquisition",
+          "date": "2022-09-15"
+        },
+        {
+          "partner": "Microsoft",
+          "type": "Integration",
+          "date": "2023-01-20"
+        }
+      ]
+    }
+  },
+  {
+    "id": "7",
+    "name": "Notion",
+    "industry": "Productivity",
+    "employees": 400,
+    "revenue": 150000000,
+    "website": "notion.so",
+    "founded": "2013",
+    "location": "San Francisco, CA"
+  }
+]
