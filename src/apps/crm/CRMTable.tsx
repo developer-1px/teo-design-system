@@ -123,22 +123,24 @@ export function CRMTable() {
       {/* Header */}
       {table.getHeaderGroups().map((headerGroup) => (
         <Table.Header key={headerGroup.id}>
-          {headerGroup.headers.map((header) => {
-            const sortState = header.column.getIsSorted();
-            return (
-              <Table.Head
-                key={header.id}
-                sortable={header.column.getCanSort()}
-                sorted={sortState || false}
-                onSort={() => header.column.toggleSorting()}
-              >
-                {flexRender(
-                  header.column.columnDef.header,
-                  header.getContext(),
-                )}
-              </Table.Head>
-            );
-          })}
+          <tr>
+            {headerGroup.headers.map((header) => {
+              const sortState = header.column.getIsSorted();
+              return (
+                <Table.Head
+                  key={header.id}
+                  sortable={header.column.getCanSort()}
+                  sorted={sortState || false}
+                  onSort={() => header.column.toggleSorting()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </Table.Head>
+              );
+            })}
+          </tr>
         </Table.Header>
       ))}
 

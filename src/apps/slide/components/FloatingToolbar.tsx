@@ -1,3 +1,4 @@
+
 import {
   Circle,
   Image as ImageIcon,
@@ -10,15 +11,17 @@ import {
   Sun,
   Type,
 } from "lucide-react";
-import { Action } from "../../../design-system/Action";
-import { Frame } from "../../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
-import { Overlay } from "../../../design-system/Overlay";
-import { Separator } from "../../../design-system/Separator";
-import { useTheme } from "../../../design-system/theme";
+import { Action } from "@/design-system/Action";
+import { useTheme } from "@/design-system/theme";
+
+// Temporary: importing Token to not break if Action used it, but Action is reusable.
+// Actually Action is from legacy design system but it renders a Frame.
+// I should ideally replace Action too, but for now I can wrap it or use it if it produces a button.
+// The user said "remove legacy design". 
+// So I will replace Action with the .icon-btn class or similar.
 
 const BOTTOM_TOOLS = [
-  { icon: MousePointer2, tooltip: "Move", variant: "surface" as const },
+  { icon: MousePointer2, tooltip: "Move", active: true },
   { icon: LayoutTemplate, tooltip: "Slides" },
   { separator: true },
   { icon: Square, tooltip: "Frame" },
@@ -28,57 +31,41 @@ const BOTTOM_TOOLS = [
   { icon: ImageIcon, tooltip: "Resources" },
   { separator: true },
   { icon: MessageSquare, tooltip: "Comment" },
-  { separator: true },
 ];
 
 export function FloatingToolbar() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <Overlay
-      position="absolute"
-      bottom={5}
-      x="50%"
-      zIndex={100}
-      style={{ transform: "translateX(-50%)" }}
-    >
-      <Frame
-        rounded={Radius2.full}
-        layout={Layout.Row.Middle.Center}
-        spacing={Space.n8}
-        h={Size.n36}
-        surface="base"
-        override={{
-          gap: Space.n4,
-          p: Space.n4,
-          border: true,
-        }}
+    <div className="floating-toolbar">
+      {BOTTOM_TOOLS.map((tool, i) =>
+        tool.separator ? (
+          <div key={i} className="toolbar-separator" />
+        ) : (
+          <button
+            key={i}
+            className="icon-btn"
+            style={{
+              width: 36,
+              height: 36,
+              backgroundColor: tool.active ? "var(--surface-sunken)" : "transparent",
+              color: tool.active ? "var(--text-primary)" : "inherit"
+            }}
+            title={tool.tooltip}
+          >
+            <tool.icon size={18} />
+          </button>
+        )
+      )}
+      <div className="toolbar-separator" />
+      <button
+        className="icon-btn"
+        style={{ width: 36, height: 36 }}
+        onClick={toggleTheme}
+        title="Toggle Theme"
       >
-        {BOTTOM_TOOLS.map((tool, i) =>
-          tool.separator ? (
-            <Separator key={i} orientation="vertical" length={Space.n16} />
-          ) : (
-            <Action
-              key={i}
-              icon={tool.icon}
-              iconSize={IconSize.n18}
-              variant={tool.variant}
-              rounded={Radius2.full}
-              tooltip={tool.tooltip}
-              size="sm"
-            />
-          ),
-        )}
-        <Action
-          icon={theme === "light" ? Moon : Sun}
-          iconSize={IconSize.n18}
-          rounded={Radius2.full}
-          onClick={toggleTheme}
-          tooltip="Toggle Theme"
-          w={6}
-          h={6}
-        />
-      </Frame>
-    </Overlay>
+        {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+      </button>
+    </div>
   );
 }
