@@ -1,77 +1,49 @@
 import { ChevronRight, X } from "lucide-react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Overlay } from "../../design-system/Overlay";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import "./CMSApp.legacy.css";
 
 export function CMSDrawer({ onClose }: { onClose: () => void }) {
   return (
     <>
-      {/* Drawer */}
-      <Overlay
-        position="fixed"
-        right="0"
-        y="0"
-        zIndex={301}
+      {/* Drawer Overlay/Container */}
+      <div
         style={{
-          height: "100vh",
-          animation: "slideInRight 0.3s ease-out",
+          position: 'fixed',
+          right: 0,
+          top: 0,
+          height: '100vh',
+          zIndex: 301,
+          animation: 'slideInRight 0.3s ease-out',
+          display: 'flex'
         }}
       >
-        <Frame
-          layout={Layout.Col.Left.Start}
-          spacing={Space.n0}
-          override={{
-            w: Size.n512,
-            h: Size.screen,
-            elevation: "n5",
-            borderLeft: true,
-          }}
-          surface="base"
-        >
+        <div style={{
+          width: 512,
+          height: '100%',
+          backgroundColor: 'var(--surface-base)',
+          borderLeft: '1px solid var(--border-color)',
+          boxShadow: 'var(--elevation-n5)',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
           {/* Header */}
-          <Frame
-            override={{
-              py: Space.n12,
-              px: Space.n16,
-              borderBottom: true,
-              h: Size.n48,
-            }}
-            layout={Layout.Row.Middle.Between}
-            spacing={Space.n8}
-          >
-            <Text
-              size={FontSize.n14}
-              weight="bold"
-              style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
-            >
+          <div style={{
+            height: 48,
+            padding: '0 16px',
+            borderBottom: '1px solid var(--border-color)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <span style={{ fontSize: 14, fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Options
-            </Text>
-            <Action
-              icon={X}
-              variant="ghost"
-              size="sm"
-              iconSize={IconSize.n16}
-              onClick={onClose}
-              rounded={Radius2.full}
-            />
-          </Frame>
+            </span>
+            <button className="icon-btn" onClick={onClose}>
+              <X size={16} />
+            </button>
+          </div>
 
           {/* Content */}
-          <Frame
-            layout={Layout.Col.Left.Start}
-            spacing={Space.n0}
-            override={{ flex: 1 }}
-            scroll
-          >
+          <div style={{ flex: 1, overflowY: 'auto' }}>
             <InspectorSection title="General Settings">
               <PropertyRow
                 label="Auto-Save"
@@ -85,9 +57,9 @@ export function CMSDrawer({ onClose }: { onClose: () => void }) {
               <PropertyRow label="Debug Mode" value="Off" />
               <PropertyRow label="API Key" value="sk-..." />
             </InspectorSection>
-          </Frame>
-        </Frame>
-      </Overlay>
+          </div>
+        </div>
+      </div>
 
       <style>
         {`
@@ -114,71 +86,51 @@ function InspectorSection({
   children: React.ReactNode;
 }) {
   return (
-    <Frame
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n0}
-      w={Size.fill}
-      h={Size.fill}
-      override={{ borderBottom: true }}
-    >
-      <Frame
-        layout={Layout.Row.Middle.Between}
-        spacing={Space.n8}
-        override={{ p: Space.n12, h: Size.n40, cursor: "pointer" }}
-        surface="base"
-      >
-        <Text.Card.Title
-          size={FontSize.n12}
-          weight="bold"
-          style={{ textTransform: "uppercase", opacity: 0.7 }}
-        >
+    <div style={{ borderBottom: '1px solid var(--border-color)' }}>
+      <div style={{
+        padding: 12, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', userSelect: 'none'
+      }}>
+        <span style={{ fontSize: 12, fontWeight: 'bold', textTransform: 'uppercase', opacity: 0.7 }}>
           {title}
-        </Text.Card.Title>
-        <Icon
-          src={ChevronRight}
-          size={Size.n12}
-          style={{ opacity: 0.5, transform: "rotate(90deg)" }}
-        />
-      </Frame>
-      <Frame override={{ p: Space.n4, gap: Space.n2 }}>{children}</Frame>
-    </Frame>
+        </span>
+        <ChevronRight size={12} style={{ opacity: 0.5, transform: "rotate(90deg)" }} />
+      </div>
+      <div style={{ padding: 4, display: 'flex', flexDirection: 'column', gap: 2 }}>{children}</div>
+    </div>
   );
 }
 
 function PropertyRow({ label, value, badge, multiline }: any) {
   return (
-    <Frame
-      layout={Layout.Row.Middle.Center}
-      spacing={Space.n8}
-      override={{ p: Space.n8, h: multiline ? "auto" : Size.n32 }}
-    >
-      <Text.Card.Note
-        style={{ width: "120px", color: "var(--text-secondary)" }}
-      >
+    <div style={{
+      padding: 8,
+      minHeight: multiline ? 'auto' : 32,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8
+    }}>
+      <span style={{ width: 120, fontSize: 13, color: "var(--text-secondary)" }}>
         {label}
-      </Text.Card.Note>
-      <Frame override={{ flex: 1, justify: "end" }}>
+      </span>
+      <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
         {badge ? (
-          <Frame
-            override={{ px: Space.n6, py: Space.n2, r: Radius2.sm }}
-            style={{
-              background: "var(--color-success-dim)",
-              color: "var(--color-success)",
-            }}
-          >
-            <Text.Card.Note weight="bold" size={FontSize.n11}>
-              {value}
-            </Text.Card.Note>
-          </Frame>
-        ) : (
-          <Text.Prose.Body
-            size={FontSize.n13}
-            style={{ color: "var(--text-primary)", textAlign: "right" }}
+          <div style={{
+            padding: '2px 6px',
+            borderRadius: 4,
+            background: "var(--color-success-dim)",
+            color: "var(--color-success)",
+            fontSize: 11,
+            fontWeight: 'bold'
+          }}
           >
             {value}
-          </Text.Prose.Body>
+          </div>
+        ) : (
+          <span style={{ fontSize: 13, color: "var(--text-primary)", textAlign: "right" }}>
+            {value}
+          </span>
         )}
-      </Frame>
-    </Frame>
+      </div>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Action } from "../../../design-system/Action";
-import { Text } from "../../../design-system/text/Text";
+import { Action } from "@/design-system/Action";
+import { Text } from "@/design-system/text/Text";
+import { Radius2 } from "@/design-system/token/radius2";
 
 interface JsonTreeProps {
   data: unknown;

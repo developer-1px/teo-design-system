@@ -12,15 +12,15 @@ import {
   X,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../../design-system/text/Text";
+import { Action } from "@/design-system/Action";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
+import { Text } from "@/design-system/text/Text";
 import {
   FontSize,
   Size,
   Space,
-} from "../../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
 import type { ComponentStackItem } from "../lib/fiber-utils";
 import { generateJSX } from "../lib/inspector-utils";
 import {
@@ -30,6 +30,7 @@ import {
   TypographyControl,
 } from "./InspectorControls";
 import { PropertyTree } from "./PropertyTree";
+import { Radius2 } from "@/design-system/token/radius2";
 
 const SECTION_MAPPING: Record<string, string> = {
   // Layout (Inner Flow)
@@ -137,7 +138,7 @@ export function InspectorPanel({
 
     // Special handling for override object
     if (key === "override" && typeof value === "object" && value !== null) {
-      Object.entries(value).forEach(([k, v]) => {
+      Object.entries(value).forEach(([k, v]: any) => {
         processProp(k, v);
       });
       return;
@@ -149,14 +150,14 @@ export function InspectorPanel({
     }
   };
 
-  Object.entries(props).forEach(([key, value]) => {
+  Object.entries(props).forEach(([key, value]: any) => {
     processProp(key, value);
   });
 
   // Prepare renderable list
   const properties = Object.entries(sections)
-    .filter(([_, items]) => Object.keys(items).length > 0)
-    .map(([section, items]) => ({
+    .filter(([_, items]: any) => Object.keys(items).length > 0)
+    .map(([section, items]: any) => ({
       section,
       items, // Keep as object for custom controls
     }));
@@ -176,7 +177,7 @@ export function InspectorPanel({
   // Add Hierarchy
   const hierarchyStack =
     stack && stack.length > 0
-      ? stack.map((item, i) => ({
+      ? stack.map((item: any, i: any) => ({
         key: `${i + 1}`,
         value: `${item.fileName}:${item.lineNumber}(${item.name})`,
       }))
@@ -300,7 +301,7 @@ export function InspectorPanel({
               size="xs"
               iconSize={12}
               tooltip="Copy HTML"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleCopy();
               }}
@@ -311,7 +312,7 @@ export function InspectorPanel({
               size="xs"
               iconSize={12}
               tooltip="Close Inspector"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 onClose();
               }}
@@ -340,7 +341,7 @@ export function InspectorPanel({
           </Frame>
 
           {/* Properties Sections */}
-          {properties.map((section) => {
+          {properties.map((section: any) => {
             const SectionIcon = SECTION_ICONS[section.section] || Layers;
 
             return (
@@ -391,7 +392,7 @@ export function InspectorPanel({
                       clip: true,
                     }}
                   >
-                    {Object.entries(section.items).map(([key, value], i) => (
+                    {Object.entries(section.items).map(([key, value]: any, i: any) => (
                       <PropertyTree
                         key={key}
                         label={key}
@@ -406,7 +407,7 @@ export function InspectorPanel({
           })}
 
           {/* Raw Sections (Override & Style) */}
-          {rawSections.map((section) => (
+          {rawSections.map((section: any) => (
             <Frame
               override={{
                 gap: Space.n2,
@@ -443,7 +444,7 @@ export function InspectorPanel({
                   clip: true,
                 }}
               >
-                {Object.entries(section.data).map(([key, value], i) => (
+                {Object.entries(section.data).map(([key, value]: any, i: any) => (
                   <PropertyTree
                     key={key}
                     label={key}
@@ -492,7 +493,7 @@ export function InspectorPanel({
                   clip: true,
                 }}
               >
-                {hierarchyStack.map((item, i) => (
+                {hierarchyStack.map((item: any, i: any) => (
                   <PropertyTree
                     key={item.key}
                     label={item.key}

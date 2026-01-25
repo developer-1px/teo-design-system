@@ -9,341 +9,132 @@ import {
   Type,
   Zap,
 } from "lucide-react";
-import { Action } from "../design-system/Action";
-import { Experience } from "../design-system/Experience";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../design-system/Icon";
-import { TeoLogo } from "../design-system/TeoLogo";
-import { Text } from "../design-system/text/Text";
-import {
-  IconSize,
-  Size,
-  Space,
-  ZIndex,
-} from "../design-system/token/token.const.1tier";
+import { Action } from "@/design-system/Action";
+import { Radius2 } from "@/design-system/token/radius2";
+import { Space } from "@/design-system/token/token.const.1tier";
+import * as styles from "./LandingApp.css";
 
 export function LandingApp() {
   return (
-    <Experience value="landing">
-      <Frame
-        override={{
-          p: Space.n0,
-          w: Size.fill,
-        }}
-        surface="base"
-      >
-        {/* Navigation */}
-        <Frame
-          style={{
-            position: "sticky",
-            top: 0,
-            borderBottom: "1px solid var(--border-subtle)",
-          }}
-          override={{
-            py: Space.n20,
-            px: Space.n24,
-            zIndex: ZIndex.n100,
-          }}
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-          h={Size.n44}
-        >
-          <TeoLogo height={24} />
-          <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
-            <Action label="Documentation" variant="ghost" />
-            <Action label="Components" variant="ghost" />
-            <Action label="Download" variant="primary" />
-          </Frame>
-        </Frame>
+    <div className={styles.root}>
+      {/* Navigation - Removed in favor of Global Top Menu */}
 
-        {/* Hero Section */}
-        <Frame
-          override={{
-            py: Space.n128,
-            px: Space.n24,
-            gap: Space.n24,
-            align: "center",
-          }}
-        >
-          <Frame
-            rounded={Radius2.full}
-            surface="sunken"
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n8}
-            override={{
-              py: Space.n4,
-              cursor: "pointer",
-              border: true,
-              minHeight: Size.n32,
-            }}
-          >
-            <Icon
-              src={Zap}
-              size={IconSize.n12}
-              style={{ fill: "currentColor", color: "var(--text-tertiary)" }}
-            />
-            <Text.Card.Note
-              style={{ fontWeight: 600, color: "var(--text-secondary)" }}
-            >
-              New: Layout Engine v2.0
-            </Text.Card.Note>
-          </Frame>
+      {/* Hero Section */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroBadge}>
+          <Zap size={12} fill="currentColor" />
+          <span>New: Layout Engine v2.0</span>
+        </div>
 
-          <Text.Prose.Title
-            variant="xl"
-            style={{ maxWidth: 800, textAlign: "center" }}
-          >
-            Build faster with the Teo's Minimal Design Kit
-          </Text.Prose.Title>
+        <h1 className={styles.heroTitle}>
+          Build faster with the Teo's Minimal Design Kit
+        </h1>
 
-          <Text.Prose.Body
-            style={{
-              maxWidth: 600,
-              fontSize: "1.125rem",
-              textAlign: "center",
-              color: "var(--text-secondary)",
-            }}
-          >
-            A collection of high-quality, accessible, and performant React
-            components crafted for modern web applications.
-          </Text.Prose.Body>
+        <p className={styles.heroDesc}>
+          A collection of high-quality, accessible, and performant React components crafted for modern web applications.
+        </p>
 
-          <Frame
-            override={{
-              gap: Space.n12,
-              pt: Space.n32,
-              px: Space.n0,
-              pb: Space.n0,
-            }}
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n8}
-          >
-            {/* Main CTA */}
-            <Action
-              variant="primary"
-              rounded={Radius2.full}
-              py={Space.n12}
-              px={Space.n20}
-              gap={Space.n8}
-            >
-              <Text.Menu.Item style={{ color: "white", fontWeight: 600 }}>
-                Get Started
-              </Text.Menu.Item>
-              <Icon
-                src={ArrowRight}
-                size={IconSize.n16}
-                style={{ color: "white" }}
-              />
-            </Action>
+        <div className={styles.heroActions}>
+          <Action variant="primary" rounded={Radius2.full} py={Space.n12} px={Space.n24}>
+            <span style={{ fontWeight: 600 }}>Get Started</span>
+            <ArrowRight size={16} />
+          </Action>
+          <Action variant="surface" rounded={Radius2.full} py={Space.n12} px={Space.n24} border>
+            <span style={{ fontWeight: 600 }}>View Components</span>
+          </Action>
+        </div>
+      </section>
 
-            {/* Secondary CTA */}
-            <Action
-              variant="surface"
-              rounded={Radius2.full}
-              py={Space.n12}
-              px={Space.n20}
-              gap={Space.n8}
-              border
-            >
-              <Text.Menu.Item
-                style={{ color: "var(--text-secondary)", fontWeight: 600 }}
-              >
-                View Components
-              </Text.Menu.Item>
-            </Action>
-          </Frame>
-        </Frame>
+      {/* Why Section */}
+      <section className={styles.whySection}>
+        <h2 className={styles.whyTitle}>왜 만들었는가?</h2>
+        <p className={styles.whyText}>
+          프론트엔드 디자인은 결국 '수렴진화'하고 있으며, 그 최종 형태는
+          불필요한 장식이 배제된 채 오직 기능과 의도만이 남는 것이라 믿습니다.
+          <br /><br />
+          우리는 복잡한 설정 없이도 <strong style={{ color: "var(--text-primary)" }}>Web Application</strong>의
+          본질을 완벽하게 구현할 수 있는, 가장 순수하고 효율적인 디자인 도구를 지향합니다.
+          <br /><br />
+          <strong style={{ color: "var(--text-primary)" }}>이것이 바로 Minimal Design Kit가 추구하는 방향입니다.</strong>
+        </p>
+      </section>
 
-        {/* Why Section */}
-        <Frame
-          override={{
-            gap: Space.n24,
-            py: Space.n96,
-            px: Space.n24,
-            align: "center",
-          }}
-        >
-          <Text.Prose.Title variant="lg" style={{ textAlign: "center" }}>
-            왜 만들었는가?
-          </Text.Prose.Title>
-          <Text.Prose.Body
-            style={{
-              maxWidth: 800,
-              fontSize: "1.25rem",
-              textAlign: "center",
-              color: "var(--text-secondary)",
-            }}
-          >
-            프론트엔드 디자인은 결국 '수렴진화'하고 있으며, 그 최종 형태는
-            불필요한 장식이 배제된 채 오직 기능과 의도만이 남는 것이라 믿습니다.{" "}
-            <br />
-            우리는 복잡한 설정 없이도{" "}
-            <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>
-              Web Application
-            </span>
-            의 본질을 완벽하게 구현할 수 있는, <br />
-            가장 순수하고 효율적인 디자인 도구를 지향합니다. <br />
-            <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>
-              이것이 바로 Minimal Design Kit가 추구하는 방향입니다.
-            </span>
-          </Text.Prose.Body>
-        </Frame>
+      {/* Features Grid */}
+      <section className={styles.featuresSection}>
+        <div className={styles.featuresHeader}>
+          <h2 style={{ fontSize: "32px", fontWeight: 700, marginBottom: "8px" }}>Everything you need</h2>
+          <p style={{ fontSize: "18px", color: "var(--text-secondary)" }}>Comprehensive primitives for any layout.</p>
+        </div>
 
-        {/* Features Grid */}
-        <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n48 }}>
-          <Frame
-            override={{
-              gap: Space.n16,
-              pb: Space.n32,
-              pt: Space.n0,
-              px: Space.n0,
-              align: "center",
-            }}
-          >
-            <Text.Prose.Title variant="lg">
-              Everything you need
-            </Text.Prose.Title>
-            <Text.Prose.Body style={{ color: "var(--text-secondary)" }}>
-              Comprehensive primitives for any layout.
-            </Text.Prose.Body>
-          </Frame>
-
-          <Frame
-            style={{
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              maxWidth: 1200,
-              margin: "0 auto",
-            }}
-            override={{
-              gap: Space.n16,
-              grid: true,
-              w: Size.fill,
-            }}
-          >
-            <FeatureCard
-              icon={Type}
-              title="Text"
-              description="Semantic typography system based on 4-level hierarchy: Experience > Context > Slot > Variant."
-            />
-            <FeatureCard
-              icon={Layers}
-              title="Surface"
-              description="Intelligent layering system (Base, Sunken, Raised, Overlay) that manages depth and hierarchy."
-            />
-            <FeatureCard
-              icon={PanelTop}
-              title="Section"
-              description="Layout partitioning components that handle content width, spacing, and alignment automatically."
-            />
-            <FeatureCard
-              icon={Component}
-              title="Overlay"
-              description="Floating context managers for Dialogs, Menus, and Tooltips with z-index discipline."
-            />
-            <FeatureCard
-              icon={Zap}
-              title="Experience"
-              description="Global context scaler that adapts all child spacing and typography (App, Landing, Document)."
-            />
-            <FeatureCard
-              icon={LayoutTemplate}
-              title="Frame"
-              description="The universal layout primitive. Flexbox/Grid wrapper with zero-runtime token resolution."
-            />
-            <FeatureCard
-              icon={PenTool}
-              title="Field"
-              description="Input primitive for forms. Manages labels, values, and notes with semantic precision."
-            />
-            <FeatureCard
-              icon={MousePointerClick}
-              title="Action"
-              description="Interactive primitive for buttons and links. Handles states, variants, and icon composition."
-            />
-          </Frame>
-        </Frame>
-
-        {/* Footer */}
-        <Frame override={{ py: Space.n96, px: Space.n24, gap: Space.n16 }}>
-          <Frame
-            style={{ height: "1px" }}
-            override={{ w: Size.fill }}
-            surface="sunken"
+        <div className={styles.featuresGrid}>
+          <FeatureCard
+            icon={Type}
+            title="Text"
+            desc="Semantic typography system based on 4-level hierarchy: Experience > Context > Slot > Variant."
           />
-          <Frame
-            override={{ pt: Space.n32, pb: Space.n0, px: Space.n0 }}
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n12}
-            h={Size.n44}
-          >
-            <Text.Card.Note>
-              © 2026 Minimal Design Kit. All rights reserved.
-            </Text.Card.Note>
-            <Frame
-              override={{ gap: Space.n16 }}
-              layout={Layout.Row.Middle.End}
-              spacing={Space.n8}
-            >
-              <Text.Card.Note style={{ cursor: "pointer" }}>
-                Twitter
-              </Text.Card.Note>
-              <Text.Card.Note style={{ cursor: "pointer" }}>
-                GitHub
-              </Text.Card.Note>
-              <Text.Card.Note style={{ cursor: "pointer" }}>
-                Discord
-              </Text.Card.Note>
-            </Frame>
-          </Frame>
-        </Frame>
-      </Frame>
-    </Experience>
+          <FeatureCard
+            icon={Layers}
+            title="Surface"
+            desc="Intelligent layering system (Base, Sunken, Raised, Overlay) that manages depth and hierarchy."
+          />
+          <FeatureCard
+            icon={PanelTop}
+            title="Section"
+            desc="Layout partitioning components that handle content width, spacing, and alignment automatically."
+          />
+          <FeatureCard
+            icon={Component}
+            title="Overlay"
+            desc="Floating context managers for Dialogs, Menus, and Tooltips with z-index discipline."
+          />
+          <FeatureCard
+            icon={Zap}
+            title="Experience"
+            desc="Global context scaler that adapts all child spacing and typography (App, Landing, Document)."
+          />
+          <FeatureCard
+            icon={LayoutTemplate}
+            title="Frame"
+            desc="The universal layout primitive. Flexbox/Grid wrapper with zero-runtime token resolution."
+          />
+          <FeatureCard
+            icon={PenTool}
+            title="Field"
+            desc="Input primitive for forms. Manages labels, values, and notes with semantic precision."
+          />
+          <FeatureCard
+            icon={MousePointerClick}
+            title="Action"
+            desc="Interactive primitive for buttons and links. Handles states, variants, and icon composition."
+          />
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <p style={{ fontSize: "14px", color: "var(--text-secondary)" }}>
+          © 2026 Minimal Design Kit. All rights reserved.
+        </p>
+        <div className={styles.footerLinks}>
+          <span className={styles.footerLink}>Twitter</span>
+          <span className={styles.footerLink}>GitHub</span>
+          <span className={styles.footerLink}>Discord</span>
+        </div>
+      </footer>
+    </div>
   );
 }
 
-function FeatureCard({
-  icon: IconSrc,
-  title,
-  description,
-}: {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-}) {
+function FeatureCard({ icon: Icon, title, desc }: { icon: any, title: string, desc: string }) {
   return (
-    <Frame
-      rounded={Radius2["2xl"]}
-      surface="sunken"
-      override={{
-        p: Space.n24,
-        gap: Space.n16,
-        border: true,
-      }}
-    >
-      <Frame
-        override={{
-          w: Size.n40,
-          h: Size.n40,
-          p: Space.n8,
-          border: true,
-        }}
-        style={{ boxShadow: "var(--elevation-n1)" }}
-        rounded={Radius2.xl}
-        surface="base"
-        layout={Layout.Col.Center.Start}
-        spacing={Space.n0}
-      >
-        <Icon
-          src={IconSrc}
-          size={IconSize.n24}
-          style={{ color: "var(--text-primary)" }}
-        />
-      </Frame>
-      <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
-        <Text.Card.Title>{title}</Text.Card.Title>
-        <Text.Card.Desc>{description}</Text.Card.Desc>
-      </Frame>
-    </Frame>
-  );
+    <div className={styles.featureCard}>
+      <div className={styles.featureIcon}>
+        <Icon size={24} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <h3 className={styles.featureTitle}>{title}</h3>
+        <p className={styles.featureDesc}>{desc}</p>
+      </div>
+    </div>
+  )
 }

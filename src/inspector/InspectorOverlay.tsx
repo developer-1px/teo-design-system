@@ -1,20 +1,21 @@
 import { Copy, Lock, Unlock } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../design-system/Icon";
-import { Overlay } from "../design-system/Overlay";
-import { Text } from "../design-system/text/Text.tsx";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
+import { Icon } from "@/design-system/Icon";
+import { Overlay } from "@/design-system/Overlay";
+import { Text } from "@/design-system/text/Text.tsx";
 import {
   FontSize,
   IconSize,
   Size,
   Space,
-} from "../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
 import { InspectorPanel } from "./components/InspectorPanel";
 import { useInspectorHotkeys } from "./hooks/useInspectorHotkeys";
 import { useInspectorTarget } from "./hooks/useInspectorTarget";
+import { Radius2 } from "@/design-system/token/radius2";
 
 export function InspectorOverlay() {
   const [isActive, setIsActive] = useState(false);

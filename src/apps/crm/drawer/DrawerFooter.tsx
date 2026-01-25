@@ -1,6 +1,6 @@
-import { Action } from "../../../design-system/Action";
-import { Frame } from "../../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
+import { Action } from "@/design-system/Action";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
 
 export function DrawerFooter({ onClose }: { onClose: () => void }) {
   return (

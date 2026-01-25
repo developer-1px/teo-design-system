@@ -1,24 +1,26 @@
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
+import path from "path";
+import AutoImport from "unplugin-auto-import/vite";
 import { defineConfig } from "vite";
 import Inspector from "vite-plugin-react-inspector";
-import AutoImport from "unplugin-auto-import/vite";
-import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    Inspector(),
+    vanillaExtractPlugin(),
+    // Inspector(),
     AutoImport({
       imports: [
         "react",
         {
           "@/design-system/Frame/Frame": ["Frame"],
           "@/design-system/Frame/Layout/Layout": ["Layout"],
-          "@/design-system/token": [
+          // Keep legacy imports working for now
+          "@/legacy-design-system/token": [
             "Space",
             "Radius",
-            "Radius2",
             "IconSize",
             "Size",
             "ContainerSize",
@@ -29,9 +31,6 @@ export default defineConfig({
             "Elevation",
             "Opacity",
             "ZIndex",
-            "ActionSize",
-            "ButtonSize",
-            "InputSize",
           ],
         },
       ],
@@ -40,15 +39,17 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      "@/design-system": path.resolve(__dirname, "./src/legacy-design-system"),
       "@": path.resolve(__dirname, "./src"),
-      "@hooks": path.resolve(__dirname, "./src/design-system/hooks"),
-      "@hooks/components": path.resolve(__dirname, "./src/design-system/hooks/components"),
-      "@hooks/data": path.resolve(__dirname, "./src/design-system/hooks/data"),
-      "@hooks/interaction": path.resolve(__dirname, "./src/design-system/hooks/interaction"),
-      "@hooks/state": path.resolve(__dirname, "./src/design-system/hooks/state"),
-      "@hooks/search": path.resolve(__dirname, "./src/design-system/hooks/search"),
-      "@hooks/primitives": path.resolve(__dirname, "./src/design-system/hooks/primitives"),
-      "@hooks/lib": path.resolve(__dirname, "./src/design-system/hooks/lib"),
+      // New Alias
+      "@ui": path.resolve(__dirname, "./src/ui"),
+      // Legacy Alias redirection
+      "@design-system": path.resolve(__dirname, "./src/legacy-design-system"),
+      "@hooks": path.resolve(__dirname, "./src/legacy-design-system/hooks"),
     },
+  },
+  server: {
+    port: 5555,
+    strictPort: true,
   },
 });

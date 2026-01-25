@@ -1,5 +1,5 @@
 import React from "react";
-import { useHeadlessCalendar } from "../design-system/hooks/data/useHeadlessCalendar";
+import { useHeadlessCalendar } from "@/design-system/hooks/data/useHeadlessCalendar";
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];

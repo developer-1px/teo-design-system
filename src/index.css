@@ -1,3 +1,13 @@
+@import "./style/tokens.1tier.css";
+@import "./style/tokens.palette.css";
+@import "./style/tokens.typography.css";
+@import "./style/tokens.components.css";
+@import "./style/tokens.experiences.css";
+@import "./style/tokens.themes.css";
+@import "./style/frame.css";
+@import "./style/surface.css";
+@import "./style/table.css";
+
 * {
   box-sizing: border-box;
   margin: 0;

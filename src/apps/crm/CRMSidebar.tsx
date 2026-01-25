@@ -9,19 +9,20 @@ import {
   Users,
 } from "lucide-react";
 
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { ResizeHandle, useResizable } from "../../design-system/Resizable";
-import { Text } from "../../design-system/text/Text.tsx";
+import { Action } from "@/design-system/Action";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
+import { Icon } from "@/design-system/Icon";
+import { ResizeHandle, useResizable } from "@/design-system/Resizable";
+import { Text } from "@/design-system/text/Text.tsx";
 import {
   IconSize,
   Size,
   type SizeToken,
   Space,
-} from "../../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
 import { datasetsAtom, selectedDatasetAtom } from "./store";
+import { Radius2 } from "@/design-system/token/radius2";
 
 // Icon mapping
 const iconMap: Record<string, React.ElementType> = {

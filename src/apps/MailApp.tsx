@@ -3,52 +3,32 @@
  * Gmail-inspired mail client using MDK Design System
  */
 
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
 import { MailDetail } from "./mail/MailDetail";
 import { MailHeader } from "./mail/MailHeader";
 import { MailList } from "./mail/MailList";
 import { MailSidebar } from "./mail/MailSidebar";
+import * as styles from "./mail/Mail.css";
 
 export function MailApp() {
   return (
-    <Frame
-      layout={Layout.Row.Stretch.Start}
-      spacing={Space.n0}
-      w={Size.fill}
-      h={Size.fill}
-      surface="base"
-      override={{ p: Space.n0 }}
-    >
+    <div className={styles.shell}>
       {/* Left Sidebar */}
       <MailSidebar />
 
       {/* Main Content Area */}
-      <Frame
-        override={{ flex: 1 }}
-        style={{ position: "relative" }}
-        w={Size.fill}
-        h={Size.fill}
-      >
+      <div className={styles.main}>
         {/* Header */}
         <MailHeader />
 
         {/* Mail List and Detail split view */}
-        <Frame override={{ flex: 1 }} w={Size.fill} h={Size.fill}>
+        <div className={styles.content}>
           {/* Mail List - Middle column */}
-          <Frame
-            override={{ w: Size.n384, minWidth: Size.n320, borderRight: true }}
-            h={Size.fill}
-          >
-            <MailList />
-          </Frame>
+          <MailList />
 
           {/* Mail Detail - Right column */}
-          <Frame override={{ flex: 1 }} w={Size.fill} h={Size.fill}>
-            <MailDetail />
-          </Frame>
-        </Frame>
-      </Frame>
-    </Frame>
+          <MailDetail />
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,10 +1,10 @@
 import { useCallback } from "react";
-import { Frame } from "../../design-system/Frame/Frame";
-import { Text } from "../../design-system/text/Text";
-import { Size, Space } from "../../design-system/token/token.const.1tier";
-import { useEventSourcingHistory } from "../../design-system/hooks/state/useEventSourcingHistory";
-import { useHybridClipboard } from "../../design-system/hooks/state/useHybridClipboard";
-import { useOSShortcuts } from "../../design-system/hooks/interaction/useOSShortcuts";
+import { Frame } from "@/design-system/Frame/Frame";
+import { Text } from "@/design-system/text/Text";
+import { Size, Space } from "@/design-system/token/token.const.1tier";
+import { useEventSourcingHistory } from "@/design-system/hooks/state/useEventSourcingHistory";
+import { useHybridClipboard } from "@/design-system/hooks/state/useHybridClipboard";
+import { useOSShortcuts } from "@/design-system/hooks/interaction/useOSShortcuts";
 import { playgroundReducer } from "./reducer";
 import {
     INITIAL_PLAYGROUND_STATE,
@@ -14,6 +14,7 @@ import {
     type Shape,
     type TodoItem,
 } from "./types";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
 
 /**
  * Playground App
@@ -215,8 +216,7 @@ export function PlaygroundApp() {
             {/* Header */}
             <Frame
                 spacing={Space.n12}
-                override={{ row: true }}
-                surface="raised"
+                surface="raised" layout={Layout.Row}
             >
                 <Text.Card.Title>Playground</Text.Card.Title>
                 <Text.Card.Desc>

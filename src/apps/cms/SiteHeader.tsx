@@ -1,13 +1,6 @@
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  Size,
-  Space,
-  ZIndex,
-} from "../../design-system/token/token.const.1tier";
+import { Hexagon } from "lucide-react";
+import { EditableWrapper } from "./EditableWrapper";
+import * as styles from "./SiteHeader.css";
 
 export interface SiteHeaderProps {
   isSidebarOpen?: boolean;
@@ -19,93 +12,34 @@ export function SiteHeader({
   onToggleSidebar: _onToggleSidebar,
 }: SiteHeaderProps) {
   return (
-    <Frame
-      layout={Layout.Row.Middle.Center}
-      spacing={Space.n12}
-      h={Size.n44}
-      style={{ position: "sticky", top: 0, zIndex: 10 }}
-      surface="base"
-      override={{
-        w: Size.fill,
-        zIndex: ZIndex.n100,
-        border: true,
-      }}
-    >
-      <Frame
-        style={
-          {
-            maxWidth: "var(--container-n1280)",
-            padding: "0 var(--space-n24)",
-          } as React.CSSProperties
-        }
-        layout={Layout.Row.Middle.Between}
-        spacing={Space.n8}
-        override={{ w: Size.fill }}
-      >
-        <Frame
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-          override={{ gap: Space.n8, minHeight: Size.n40 }}
-        >
-          <Frame
-            override={{
-              w: Size.n32,
-              h: Size.n32,
-              r: Radius2.lg,
-              border: true,
-            }}
-            style={{ boxShadow: "var(--elevation-n1)" }}
-            surface="primary"
-            layout={Layout.Col.Center.Start}
-            spacing={Space.n0}
-          >
-            <Text.Card.Title
-              size={FontSize.n16}
-              weight="bold"
-              style={{ color: "white" }}
-            >
-              M
-            </Text.Card.Title>
-          </Frame>
-          <Text.Card.Title size={FontSize.n18} weight="bold">
-            Minimal
-          </Text.Card.Title>
-        </Frame>
+    <header className={styles.siteHeader}>
+      {/* Brand */}
+      <div className={styles.brandSection}>
+        <div className={styles.logoWrapper}>
+          <Hexagon size={18} fill="currentColor" />
+        </div>
+        <EditableWrapper>
+          <span className={styles.brandName}>Minimal</span>
+        </EditableWrapper>
+      </div>
 
-        <Frame
-          layout={Layout.Row.Middle.End}
-          spacing={Space.n8}
-          override={{ gap: Space.n32, flex: 1 }}
-        >
-          <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
-            <Action label="Features" variant="ghost" rounded={Radius2.md} />
-            <Action label="Pricing" variant="ghost" rounded={Radius2.md} />
-            <Action label="Resources" variant="ghost" rounded={Radius2.md} />
-          </Frame>
+      {/* Nav */}
+      <div className={styles.navSection}>
+        <nav className={styles.navLinks}>
+          {['Features', 'Pricing', 'Resources'].map(item => (
+            <button key={item} className={styles.navLink}>
+              {item}
+            </button>
+          ))}
+        </nav>
 
-          <Frame
-            layout={Layout.Row.Middle.Between}
-            spacing={Space.n8}
-            override={{ gap: Space.n12 }}
-          >
-            <Action
-              label="Log in"
-              variant="ghost"
-              h={Size.n36}
-              px={Space.n16}
-              rounded={Radius2.md}
-            />
-            <Action
-              label="Get Started"
-              variant="primary"
-              h={Size.n36}
-              px={Space.n20}
-              rounded={Radius2.full}
-              glow
-            />
-          </Frame>
-        </Frame>
-      </Frame>
-    </Frame>
+        <div className={styles.divider} />
+
+        <div className={styles.actionSection}>
+          <button className={styles.loginBtn}>Log in</button>
+          <button className={styles.ctaBtn}>Get Started</button>
+        </div>
+      </div>
+    </header>
   );
 }

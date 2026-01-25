@@ -1,10 +1,11 @@
 import { LAYOUT_CONFIG } from "../../layout.config";
-import { Text } from "../design-system/text/Text";
+import { Text } from "@/design-system/text/Text";
 import {
   FontSize,
   Size,
   Space,
-} from "../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
+import { Radius2 } from "@/design-system/token/radius2";
 
 function getLayoutToken(pathSegments: readonly string[]) {
   let current: any = Layout;

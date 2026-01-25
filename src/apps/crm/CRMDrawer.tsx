@@ -1,10 +1,10 @@
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 
-import { Divider } from "../../design-system/Divider";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { ResizeHandle, useResizable } from "../../design-system/Resizable";
+import { Divider } from "@/design-system/Divider";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
+import { ResizeHandle, useResizable } from "@/design-system/Resizable";
 import { formatColumnLabel } from "./dataLoader";
 import { DrawerActivity } from "./drawer/DrawerActivity";
 import { DrawerFooter } from "./drawer/DrawerFooter";

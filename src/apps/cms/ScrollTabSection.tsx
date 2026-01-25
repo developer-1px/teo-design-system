@@ -1,68 +1,23 @@
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-
-const TABS = [
-  "Overview",
-  "Analytics",
-  "Reports",
-  "Settings",
-  "Users",
-  "Billing",
-  "Email",
-  "Notifications",
-  "Integrations",
-  "API",
-  "Support",
-  "Security",
-  "Audit Log",
-  "Appearance",
-];
+import { EditableWrapper } from "./EditableWrapper";
+import * as styles from "./ScrollTabSection.css";
 
 export function ScrollTabSection() {
+  const tabs = ["Overview", "Features", "Pricing", "Testimonials", "FAQ"];
+
   return (
-    <Frame
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n0}
-      w={Size.fill}
-      h={Size.fill}
-      override={{
-        w: Size.fill,
-        py: Space.n8,
-        px: Space.n0,
-        borderBottom: true,
-      }}
-      surface="sunken"
-    >
-      <Frame
-        override={{
-          gap: Space.n8,
-          w: Size.fill,
-          py: Space.n0,
-          px: Space.n24,
-          justify: "center",
-          minHeight: Size.n40,
-        }}
-        style={{
-          // Hide scrollbar for cleaner look but keep functionality
-          msOverflowStyle: "none",
-          scrollbarWidth: "none",
-          WebkitOverflowScrolling: "touch",
-        }}
-        layout={Layout.Row.Middle.Center}
-        spacing={Space.n12}
-        scroll
-      >
-        {TABS.map((tab, i) => (
-          <Action
-            key={tab}
-            label={tab}
-            variant={i === 0 ? "primary" : "ghost"}
-            rounded={Radius2.full}
-            h="action"
-          />
+    <section className={styles.container}>
+      <div className={styles.tabList}>
+        {tabs.map((tab, index) => (
+          <EditableWrapper key={tab}>
+            <div
+              className={styles.tabItem}
+              data-active={index === 0}
+            >
+              {tab}
+            </div>
+          </EditableWrapper>
         ))}
-      </Frame>
-    </Frame>
+      </div>
+    </section>
   );
 }

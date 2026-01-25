@@ -1,14 +1,15 @@
 import { ChevronsRight, MoreHorizontal } from "lucide-react";
-import { Action } from "../../../design-system/Action";
-import { Frame } from "../../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../../../design-system/text/Text.tsx";
+import { Action } from "@/design-system/Action";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
+import { Text } from "@/design-system/text/Text.tsx";
 import {
   FontSize,
   Size,
   type SizeToken,
   Space,
-} from "../../../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
+import { Radius2 } from "@/design-system/token/radius2";
 
 function Avatar({
   initial,

@@ -1,49 +1,31 @@
-# Design Guidelines: Grid & Subgrid Layout System
+# Project Rules & Conventions
 
-## Core Philosophy
-We are shifting away from arbitrary Flexbox nesting towards a structured **CSS Grid & Subgrid** architecture. This ensures strict alignment of visual "Key Lines" (e.g., labels, input fields, icons) across deeply nested components.
+## 1. Design & Styling Rules (Strict)
 
-## Rules
+### 1.1. Tech Stack
+*   **Mandatory:** **Vanilla Extract** (Zero-runtime, type-safe CSS).
+    *   Use `recipe` variants for component states.
+    *   Use `sprinkles` (or equivalent type-safe utility) for atomic styles if needed.
+*   **Banned:**
+    *   Inline styles (`style={{ ... }}`).
+    *   Classic `.css` / `.scss` files (except global reset).
+    *   Runtime CSS-in-JS (styled-components, emotion).
+*   **Mandatory:** Strict adherence to **Design Tokens** (colors, spacing, typography) and **Surface System**.
 
-### 1. Layout Engine
-- **Primary**: Use `display: grid` for all structured layouts.
-- **Alignment**: Use `subgrid` to pass column definitions down to children.
-- **Flexbox**: Restricted to simple, 1-dimensional "stacking" where valid alignment is not required (e.g., tag lists, pure centering).
+### 1.2. Layout Strategy (The "Alignment Litmus Test")
+*   **Grid First Philosophy:** Default to CSS Grid for almost all structural layouts (Pages, Containers, Cards, Blogs).
+*   **Subgrid Mandatory:**
+    *   **Rule:** If internal children of a component need to align with internal children of *another* instance of that component (e.g., Menu items, Tables, Property Panels), you **MUST** use `subgrid`.
+*   **Flex Restricted:**
+    *   **Allowed ONLY** for:
+        *   Content-dependent sizing (where Grid is too rigid).
+        *   Wrapping elements (e.g., a tag cloud with `gap`).
+        *   Simple 1D groupings where alignment with siblings is not required.
 
-### 2. Key Line Consistency
-- Define the master grid at the **Container** level (e.g., Panel, Window).
-- Child components (Sections, Rows) must align to this master grid.
-- **Anti-Pattern**: Do NOT create independent flex layouts for each row requiring width synchronization (e.g., setting `width: 80px` on all labels manually).
+## 2. Core Directive: Semantic HTML
+*   **Rule:** Do NOT use `Frame`, `Text` components.
+*   **Standard:** Use Semantic HTML (`div`, `section`, `h1`, `button`) combined with Vanilla Extract classes.
+*   **Why:** AI Agents and LLMs work best with standard HTML/CSS.
 
-### 3. Property Panel Specifics
-- **Structure**: The Inspector/Property panel must use a permanent multi-column grid.
-  - Example: `[Label] [Input] [Unit/Icon]` or `[Label] [Field-A] [Label] [Field-B]`.
-- **Implementation**:
-  - Parent: `grid-template-columns: var(--grid-keyline-label) 1fr var(--grid-keyline-action);`
-  - Child Row: `grid-column: 1 / -1; display: grid; grid-template-columns: subgrid;`
-
-### 4. Spacing
-- Use `gap` controls in Grid instead of margins.
-- Vertical rhythm must be consistent.
-
-## Example Code
-
-```css
-/* Master Container */
-.properties-panel {
-  display: grid;
-  /* Define the rigid skeleton of the UI */
-  grid-template-columns: 80px 1fr 24px; 
-  gap: 8px 12px;
-}
-
-/* Child Section/Row */
-.prop-group {
-  /* Span full width of parent */
-  grid-column: 1 / -1;
-  
-  /* Inherit the parent's columns */
-  display: grid;
-  grid-template-columns: subgrid;
-}
-```
+## 3. Workflow Rules
+- **PRD 작성 시 규칙:** 사용자의 답변에 항상 '5 Whys' 기법을 적용하여 근본 원인을 파악하기 전까지는 다음 섹션으로 넘어가지 말 것.

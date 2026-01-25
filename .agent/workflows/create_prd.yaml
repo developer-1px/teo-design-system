@@ -1,0 +1,38 @@
+name: "Create MECE PRD"
+description: "새로운 기능을 위한 PRD 초안을 생성하고, 'Why' 질문을 통해 내용을 구체화합니다."
+triggers:
+  - "PRD 만들자"
+  - "PRD 작성해줘"
+  - "New PRD"
+
+steps:
+  - name: "Ask Topic"
+    type: "input"
+    message: "어떤 기능에 대한 PRD를 작성할까요? (예: Visual CMS)"
+    variable: "topic"
+
+  - name: "Generate Filename"
+    type: "llm"
+    instruction: |
+      '${topic}'을 기반으로 kebab-case 형태의 파일명을 생성해. 
+      확장자는 .prd.md 로 끝나야 해. (예: visual-cms.prd.md)
+      경로는 /docs/ 하위에 위치해야 해.
+      오직 전체 파일 경로만 출력해.
+    output_variable: "filepath"
+
+  - name: "Create File"
+    type: "action"
+    action: "file.create"
+    params:
+      path: "${filepath}"
+      template: ".agent/templates/prd_template.md"
+
+  - name: "Start Interview Mode"
+    type: "chat"
+    instruction: |
+      이제 '${filepath}' 파일을 열고 내용을 채워나갈 거야.
+      너의 역할:
+      1. 까다로운 PM이 되어 사용자가 대충 말한 내용을 MECE하게 정리해서 파일에 업데이트해.
+      2. 가장 중요한 규칙: 각 항목을 작성할 때마다 "Why?"(왜 필요한지, 왜 이 방식인지)를 집요하게 물어봐. 
+      3. 사용자가 논리적으로 대답하지 못하면 넘어가지 마.
+      이제 파일이 생성되었음을 알리고 첫 번째 질문(Problem Statement)부터 시작해.

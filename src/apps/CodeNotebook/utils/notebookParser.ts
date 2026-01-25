@@ -30,7 +30,7 @@ export function parseSourceToCells(source: string): Cell[] {
 
     let inBlockComment = false;
 
-    lines.forEach((line, index) => {
+    lines.forEach((line, _index) => {
         const trimmed = line.trim();
 
         // 1. Handle Block Comments Start

@@ -1,16 +1,13 @@
 import { useAtom, useAtomValue } from "jotai";
 import { Paperclip, Star } from "lucide-react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
+import { Icon } from "@/design-system/Icon";
+import { Text } from "@/design-system/text/Text.tsx";
 import {
   FontSize,
   IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
 import { filteredThreadsAtom, selectedThreadIdAtom } from "./store";
+import * as styles from "./Mail.css";
 
 export function MailList() {
   const threads = useAtomValue(filteredThreadsAtom);
@@ -18,63 +15,33 @@ export function MailList() {
 
   if (threads.length === 0) {
     return (
-      <Frame
-        layout={Layout.Col.Center.Start}
-        spacing={Space.n0}
-        override={{
-          w: Size.fill,
-          h: Size.fill,
-        }}
-      >
-        <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
+      <div className={styles.mailList} style={{ alignItems: "center", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
           <Text.Card.Title style={{ color: "var(--text-secondary)" }}>
             No mail
           </Text.Card.Title>
           <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
             Your mailbox is empty
           </Text.Card.Note>
-        </Frame>
-      </Frame>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Frame
-      scroll
-      override={{
-        p: Space.n0,
-        w: Size.fill,
-        h: Size.fill,
-      }}
-    >
+    <div className={styles.mailList}>
       {threads.map((thread) => {
         const isSelected = selectedThreadId === thread.id;
         const firstMail = thread.mails[0];
 
         return (
-          <Frame
+          <div
             key={thread.id}
-            interactive
-            surface={isSelected ? "sunken" : "base"}
-            override={{
-              py: Space.n12,
-              px: Space.n16,
-              gap: Space.n8,
-              borderBottom: true, // Frame override handles the structure
-            }}
-            style={{
-              // Reserve border space when not selected (sunken creates 1px border)
-              border: isSelected ? undefined : "1px solid transparent",
-              borderBottomColor: "var(--border-color)", // Ensure bottom separator is visible
-            }}
+            className={styles.mailItem({ selected: isSelected, read: thread.isRead })}
             onClick={() => setSelectedThreadId(thread.id)}
           >
             {/* Header Row */}
-            <Frame
-              layout={Layout.Row.Middle.Center}
-              spacing={Space.n12}
-              override={{ px: Space.n16, minHeight: Size.n40 }}
-            >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", minHeight: "24px" }}>
               <Icon
                 src={Star}
                 size={IconSize.n16}
@@ -101,7 +68,7 @@ export function MailList() {
               >
                 {formatDate(thread.lastMailDate)}
               </Text.Card.Note>
-            </Frame>
+            </div>
 
             {/* Subject */}
             <Text.Card.Title
@@ -117,11 +84,7 @@ export function MailList() {
             </Text.Card.Title>
 
             {/* Snippet */}
-            <Frame
-              layout={Layout.Row.Middle.Center}
-              spacing={Space.n12}
-              override={{ px: Space.n16, minHeight: Size.n40 }}
-            >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <Text.Card.Note
                 size={FontSize.n12}
                 style={{
@@ -141,21 +104,20 @@ export function MailList() {
                   style={{ color: "var(--text-tertiary)" }}
                 />
               )}
-            </Frame>
+            </div>
 
             {/* Labels */}
             {thread.labels.length > 0 && (
-              <Frame
-                layout={Layout.Row.Middle.Start}
-                wrap="wrap"
-                spacing={Space.n8}
-              >
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                 {thread.labels.map((label) => (
-                  <Frame
+                  <div
                     key={label}
-                    override={{ py: Space.n2, px: Space.n6 }}
-                    rounded={Radius2.sm}
-                    surface="raised"
+                    style={{
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                      backgroundColor: "rgba(0,0,0,0.05)",
+                      border: "1px solid rgba(0,0,0,0.1)",
+                    }}
                   >
                     <Text.Card.Note
                       size={FontSize.n10}
@@ -163,14 +125,14 @@ export function MailList() {
                     >
                       {label}
                     </Text.Card.Note>
-                  </Frame>
+                  </div>
                 ))}
-              </Frame>
+              </div>
             )}
-          </Frame>
+          </div>
         );
       })}
-    </Frame>
+    </div>
   );
 }
 

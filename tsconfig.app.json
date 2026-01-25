@@ -26,29 +26,17 @@
       "@/*": [
         "./src/*"
       ],
+      "@/design-system/*": [
+        "./src/legacy-design-system/*"
+      ],
+      "@design-system/*": [
+        "./src/legacy-design-system/*"
+      ],
+      "@ui/*": [
+        "./src/ui/*"
+      ],
       "@hooks/*": [
-        "./src/design-system/hooks/*"
-      ],
-      "@hooks/components/*": [
-        "./src/design-system/hooks/components/*"
-      ],
-      "@hooks/data/*": [
-        "./src/design-system/hooks/data/*"
-      ],
-      "@hooks/interaction/*": [
-        "./src/design-system/hooks/interaction/*"
-      ],
-      "@hooks/state/*": [
-        "./src/design-system/hooks/state/*"
-      ],
-      "@hooks/search/*": [
-        "./src/design-system/hooks/search/*"
-      ],
-      "@hooks/primitives/*": [
-        "./src/design-system/hooks/primitives/*"
-      ],
-      "@hooks/lib/*": [
-        "./src/design-system/hooks/lib/*"
+        "./src/legacy-design-system/hooks/*"
       ]
     },
     /* Linting */

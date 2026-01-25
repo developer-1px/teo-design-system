@@ -1,12 +1,13 @@
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import type { SurfaceToken } from "../design-system/lib/types.ts";
-import { Prose } from "../design-system/text/context/Prose.tsx";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import type { SurfaceToken } from "@/design-system/lib/types.ts";
+import { Prose } from "@/design-system/text/context/Prose.tsx";
 import {
   ContainerSize,
   Opacity,
   Size,
   Space,
-} from "../design-system/token/token.const.1tier.ts";
+} from "@/design-system/token/token.const.1tier.ts";
+import { Radius2 } from "@/design-system/token/radius2";
 
 const SURFACES: Array<{
   token: SurfaceToken;

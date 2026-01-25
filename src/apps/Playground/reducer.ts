@@ -1,4 +1,4 @@
-import type { HistoryEvent } from "../../design-system/hooks/state/useEventSourcingHistory";
+import type { HistoryEvent } from "@/design-system/hooks/state/useEventSourcingHistory";
 import type {
     PlaygroundState,
     PlaygroundEventType,

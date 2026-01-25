@@ -1,0 +1,58 @@
+# Project Essence PRD (project-essence.prd.md)
+
+## 1. Problem Statement & Intent (Why)
+
+### Core Problem (Why)
+* **AI의 UI 수정에 따른 로직 파괴:** 향후 코딩은 AI가 주도하게 되는데, AI가 UI(View)를 수정할 때마다 **긴밀하게 결합된 기능(Logic)까지 함께 수정되거나 파괴**되는 문제가 발생한다.
+* **기본기(Functional)와 표현(Visual)의 충돌:** 기능(Undo, Keyboard, Focus)은 불변에 가깝지만, UI는 가장 빈번하게 변한다. 이 둘이 섞여 있으면 UI 수정이 기능 결함을 유발한다.
+* **신뢰성 붕괴:** 로직이 UI에 종속되어 있으면, 디자인 변경 시마다 ⌘Z, ⌘F 같은 기본 행동이 깨지며 사용자 신뢰를 잃는다.
+
+## 1.1 Intent (의도/방향)
+* **AI-Proof Headless Architecture:** "AI가 UI를 마음대로 고쳐도 기능은 절대 고장 나지 않는" 구조를 만든다.
+* **Extreme Decoupling:** 화면(UI)과 로직(Headless)을 완전히 분리한다. 모든 기능은 Core Layer(Headless Hooks/Logic)에 존재하고, UI는 이를 연동(Bind)만 한다.
+* **Core Layer as a Safety Net:** AI가 UI 코드를 엎어버리고 새로 짜더라도, Core Layer의 훅만 다시 연결하면 모든 고급 인터랙션(단축키, undo, 드래그 등)이 즉시 복구되도록 한다.
+
+## 2. Target Audience (Who)
+* **Primary User: AI Agent (The Builder)**
+    * AI가 코드를 작성할 때 "생각 없이 UI를 바꿔도" 안전해야 한다.
+    * AI가 로직을 실수로 건드리지 못하도록, 로직은 별도의 격리된 레이어(Headless)에 숨겨져 있어야 한다.
+* **Secondary User: End User**
+    * 언제나 견고하고 일관된 사용성(OS 수준의 UX)을 제공받는 수혜자.
+* **Tertiary User: Human Architect**
+    * AI가 망가뜨리지 못하는 Core Layer를 설계하고 유지 보수하는 관리자.
+
+## 3. Strategic Pillars (The 3 Axes of Development)
+
+### Axis 1: AI One-Shot Design System (Visual Consistency)
+* **Goal:** AI가 디자인을 수행할 때, 고민 없이 "One-Shot"으로 결과물을 만들어도 디자인 일관성과 심미성이 보장되는 체계.
+* **Key Components:**
+    * Design Tokens & Surface System (Vanilla Extract)
+    * Layout Rules (Grid/Subgrid Preference)
+    * Component Composition Patterns
+
+### Axis 2: OS-Level Standard Hooks (Interaction Foundation)
+* **Goal:** 엑셀, 노션 등 상용 어플리케이션이 제공하는 당연한 기본 기능들을 "그냥 가져다 쓰면 되는" 훅으로 제공.
+* **Key Components:**
+    * `useCopyPaste`, `useUndoRedo`, `useFind`, `useSelection`.
+    * `useKeyboardNavigation`, `useCursorMovement`.
+
+### Axis 3: Action-Field-Option Layer (Headless Middleware)
+* **Goal:** UI와 로직을 완전히 분리하여, AI가 UI를 파괴해도 비즈니스 로직은 살아남는 "Action/Field/Option" 기반의 Headless 개발 계층.
+* **Key Components:**
+    * **Action:** 사용자의 의도(Intent)를 캡슐화한 커맨드 단위.
+    * **Field:** UI에 바인딩될 순수 데이터(Data Model).
+    * **Option:** 비즈니스 로직과 제약 조건(Constraints).
+    * 이 3가지를 조합해 "서비스 로직"을 먼저 완성하고, UI는 이를 소비(Consume)만 한다.
+
+### 3.4 Architecture Constraints
+* **View is Output:** View는 로직을 가지지 않으며, 오직 전달받은 데이터(String/JSON)를 렌더링하는 역할만 수행한다.
+* **Centralized Event/Command:** 모든 이벤트는 중앙에서 관리되며, '메시지/커맨드' 형태로 변환되어 처리된다. 화면 업데이트 역시 커맨드에 의한 데이터 전달로만 이루어진다.
+
+## 4. Success Metrics (How)
+* **Key Metric 1: View Purity (Pure Function)**
+    * View 컴포넌트는 오직 'Props(Data/State)'와 'Emit(Command)'만 가져야 한다.
+    * 비즈니스 로직이 View 내부에 존재하면 실패로 간주한다.
+* **Key Metric 2: Headless Testability**
+    * UI 없이 콘솔(Node.js) 환경에서 모든 사용자 시나리오(입력 -> 커맨드 -> 상태변화 -> 뷰 데이터 생성)가 검증 가능해야 한다.
+* **Key Metric 3: AI-Resistant Stability**
+    * AI가 View 코드를 완전히 삭제하고 새로 작성해도, Core Layer와 연결만 하면 이전과 동일한 기능이 즉시 동작해야 한다.

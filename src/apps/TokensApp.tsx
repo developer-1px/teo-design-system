@@ -1,5 +1,5 @@
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Text } from "../design-system/text/Text";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Text } from "@/design-system/text/Text";
 import {
   ContainerSize,
   ElevationScale,
@@ -15,7 +15,8 @@ import {
   SpaceScale,
   type SpaceToken,
   ZIndexScale,
-} from "../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
+import { Radius2 } from "@/design-system/token/radius2";
 
 // --- Components ---
 
@@ -136,45 +137,67 @@ export function TokensApp() {
             minWidth: Size.n0,
           }}
         >
-          {/* Header & Philosophy - Centered Prose */}
-          <TextColumn gap={Space.n32}>
-            <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
-              <Text.Prose.Title variant="xl">
-                Design System Metrics
-              </Text.Prose.Title>
+          {/* Header & Philosophy */}
+          <TextColumn gap={Space.n40}>
+            <Frame layout={Layout.Col.Left.Start} spacing={Space.n16}>
+              <Frame layout={Layout.Row.Middle.Start} spacing={Space.n12}>
+                <Frame surface="primary" override={{ p: Space.n8, r: Radius.n8 }}>
+                  <Text.Card.Code style={{ color: "white" }}>V</Text.Card.Code>
+                </Frame>
+                <Text.Prose.Title variant="xl">
+                  Vanilla-Native Architecture
+                </Text.Prose.Title>
+              </Frame>
               <Text.Prose.Body
                 variant="lg"
-                style={{ color: "var(--text-secondary)" }}
+                style={{ color: "var(--text-secondary)", maxWidth: "48ch" }}
               >
-                The physics and constraints of our digital universe.
+                We shifted from utility-first to <b>Type-Safe Fidelity</b>.
+                Using Vanilla Extract, we enforce design tokens at the compiler level,
+                eliminating AI hallucinations.
               </Text.Prose.Body>
             </Frame>
 
-            {/* Philosophy Cards - Stacked or Grid within Prose Width */}
+            {/* Philosophy Cards */}
             <Frame
-              layout={Layout.Row.Middle.Center}
-              spacing={Space.n12}
-              override={{ gap: Space.n24, w: Size.fill, minHeight: Size.n40 }}
+              layout={Layout.Row.Stretch.Start}
+              spacing={Space.n0}
+              override={{ gap: Space.n24, w: Size.fill }}
             >
               <Frame
                 override={{ flex: 1, p: Space.n32, gap: Space.n12 }}
-                rounded={Radius2["2xl"]}
+                rounded={Radius2.xl}
+                surface="sunken"
+                style={{ border: "1px solid var(--surface-border)" }}
               >
-                <Text.Card.Title>The Whitelist Concept</Text.Card.Title>
+                <Text.Card.Title>Zero-Runtime</Text.Card.Title>
                 <Text.Card.Desc>
-                  We explicitly <b>whitelist</b> allowed values to enforce
-                  rhythm. No magic numbers allowed.
+                  Styles are static CSS. No JS calculation overhead during render.
                 </Text.Card.Desc>
               </Frame>
 
               <Frame
                 override={{ flex: 1, p: Space.n32, gap: Space.n12 }}
-                rounded={Radius2["2xl"]}
+                rounded={Radius2.xl}
+                surface="sunken"
+                style={{ border: "1px solid var(--surface-border)" }}
               >
-                <Text.Card.Title>The Meaning of 'n'</Text.Card.Title>
+                <Text.Card.Title>Type-Safe Recipes</Text.Card.Title>
                 <Text.Card.Desc>
-                  <b>'n'</b> represents an abstract numeric scale, decoupling
-                  logic from raw pixels.
+                  Variants are typed unions (e.g., <code>'primary' | 'secondary'</code>).
+                  Invalid props are build errors.
+                </Text.Card.Desc>
+              </Frame>
+
+              <Frame
+                override={{ flex: 1, p: Space.n32, gap: Space.n12 }}
+                rounded={Radius2.xl}
+                surface="sunken"
+                style={{ border: "1px solid var(--surface-border)" }}
+              >
+                <Text.Card.Title>The Whitelist</Text.Card.Title>
+                <Text.Card.Desc>
+                  No magic numbers. We use <b>Space Scale</b> and <b>Size Scale</b> strictly.
                 </Text.Card.Desc>
               </Frame>
             </Frame>
@@ -189,7 +212,7 @@ export function TokensApp() {
             {/* Spacing is vertical list, fits well in prose width */}
             <TextColumn>
               <Frame override={{ gap: Space.n12, w: Size.fill }}>
-                {SpaceScale.map((val) => (
+                {SpaceScale.map((val: any) => (
                   <ScaleVisualizer
                     key={val}
                     label={`n${val}`}
@@ -218,7 +241,7 @@ export function TokensApp() {
             />
             {/* Scrollable Container breaking prose width constraints */}
             <ScrollContainer>
-              {SizeScale.map((val) => (
+              {SizeScale.map((val: any) => (
                 <Frame
                   key={val}
                   surface="overlay"
@@ -247,7 +270,7 @@ export function TokensApp() {
           <Frame override={{ w: Size.fill, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Radius" desc="Softness of shapes." />
             <ScrollContainer>
-              {RadiusScale.map((val) => (
+              {RadiusScale.map((val: any) => (
                 <Frame
                   key={val}
                   surface="raised"
@@ -273,7 +296,7 @@ export function TokensApp() {
               desc="Depth, Shadow, and Z-axis hierarchy."
             />
             <ScrollContainer>
-              {ElevationScale.map((val) => (
+              {ElevationScale.map((val: any) => (
                 <Frame
                   key={val}
                   style={{
@@ -315,7 +338,7 @@ export function TokensApp() {
                   }}
                   override={{ w: Size.fill, h: Size.fill }}
                 >
-                  {ZIndexScale.filter((_, i) => i % 2 === 0).map((val, i) => (
+                  {ZIndexScale.filter((_: any, i: any) => i % 2 === 0).map((val: any, i: any) => (
                     <Frame
                       key={val}
                       surface="base"
@@ -343,7 +366,7 @@ export function TokensApp() {
           <Frame override={{ w: Size.fill, gap: Space.n32, minWidth: Size.n0 }}>
             <SectionHeader title="Opacity" desc="Transparency levels." />
             <ScrollContainer>
-              {OpacityScale.filter((x) => x % 10 === 0).map((val) => (
+              {OpacityScale.filter((x: any) => x % 10 === 0).map((val: any) => (
                 <Frame
                   key={val}
                   layout={Layout.Col.Left.Start}
@@ -366,7 +389,7 @@ export function TokensApp() {
             <SectionHeader title="Font Size" desc="Typography scale." />
             <TextColumn>
               <Frame override={{ gap: Space.n16, w: Size.fill }}>
-                {FontSizeScale.map((val) => (
+                {FontSizeScale.map((val: any) => (
                   <Frame
                     key={val}
                     layout={Layout.Row.Middle.Center}

@@ -1,41 +1,23 @@
 import { ChevronDown, ChevronRight, X } from "lucide-react";
-import "./CMSApp.css";
+import * as styles from "./CMSRightPanel.styles";
+import { useState } from "react";
 
 export function CMSRightPanel({ onClose }: { onClose: () => void }) {
   return (
-    <aside className="cms-right-panel">
+    <aside className={styles.panel}>
       {/* Header */}
-      <header
-        style={{
-          height: 44,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 12px",
-          borderBottom: "1px solid var(--border-color)",
-        }}
-      >
-        <span style={{ fontSize: 14, fontWeight: 600 }}>Page Properties</span>
+      <header className={styles.header}>
+        <span className={styles.headerTitle}>Page Properties</span>
         <button
           onClick={onClose}
-          style={{
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 4,
-            borderRadius: "50%",
-            color: "var(--text-secondary)",
-          }}
+          className={styles.closeBtn}
         >
           <X size={16} />
         </button>
       </header>
 
       {/* Inspector Grid Content */}
-      <div className="cms-inspector-grid">
+      <div className={styles.grid}>
         <InspectorSection title="Identity" expanded={true}>
           <PropertyRow label="Title" value="Marketing Home" />
           <PropertyRow label="Slug" value="/" />
@@ -60,16 +42,18 @@ export function CMSRightPanel({ onClose }: { onClose: () => void }) {
 function InspectorSection({
   title,
   children,
-  expanded = true,
+  expanded: defaultExpanded = true,
 }: {
   title: string;
   children: React.ReactNode;
   expanded?: boolean;
 }) {
+  const [expanded, setExpanded] = useState(defaultExpanded);
+
   return (
-    <div className="cms-inspector-section">
-      <div className="cms-section-header">
-        <span className="cms-section-title">{title}</span>
+    <div className={styles.section}>
+      <div className={styles.sectionHeader} onClick={() => setExpanded(!expanded)}>
+        <span className={styles.sectionTitle}>{title}</span>
         {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
       </div>
       {expanded && children}
@@ -79,14 +63,14 @@ function InspectorSection({
 
 function PropertyRow({ label, value, badge }: { label: string; value: string; badge?: string }) {
   return (
-    <div className="cms-prop-row">
-      <label className="cms-prop-label">{label}</label>
-      <div className="cms-prop-value">
+    <div className={styles.propRow}>
+      <label className={styles.propLabel}>{label}</label>
+      <div className={styles.propValue}>
         {badge ? (
-          <span className={`cms-badge ${badge}`}>{value}</span>
+          <span className={`${styles.badge} ${badge === 'success' ? styles.badgeSuccess : ''}`}>{value}</span>
         ) : (
-          <div className="cms-input-wrapper">
-            <input className="cms-native-input" defaultValue={value} />
+          <div className={styles.inputWrapper}>
+            <input className={styles.nativeInput} defaultValue={value} />
           </div>
         )}
       </div>

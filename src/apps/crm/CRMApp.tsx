@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
 import { CRMDrawer } from "./CRMDrawer";
 import { CRMHeader } from "./CRMHeader";
 import { CRMSidebar } from "./CRMSidebar";
@@ -9,6 +9,7 @@ import { CRMTable } from "./CRMTable";
 import { CRMToolbar } from "./CRMToolbar";
 import { loadDataset } from "./dataLoader";
 import { currentDataAtom, isLoadingAtom, selectedDatasetAtom } from "./store";
+import { Radius2 } from "@/design-system/token/radius2";
 
 export function CRMApp() {
   const selectedDataset = useAtomValue(selectedDatasetAtom);

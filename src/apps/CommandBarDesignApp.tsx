@@ -7,23 +7,24 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
-import { Frame } from "../design-system/Frame/Frame.tsx";
-import { Layout } from "../design-system/Frame/Layout/Layout.ts";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
 import {
   getHighlightedParts,
   useFuzzySearch,
-} from "../design-system/hooks/search/useFuzzySearch";
-import { formatKeyCombo, useHotKeys } from "../design-system/hooks/interaction/useHotKeys";
-import { useNavigation } from "../design-system/hooks/interaction/useNavigation";
-import { Icon } from "../design-system/Icon.tsx";
-import { Text } from "../design-system/text/Text.tsx";
+} from "@/design-system/hooks/search/useFuzzySearch";
+import { formatKeyCombo, useHotKeys } from "@/design-system/hooks/interaction/useHotKeys";
+import { useNavigation } from "@/design-system/hooks/interaction/useNavigation";
+import { Icon } from "@/design-system/Icon.tsx";
+import { Text } from "@/design-system/text/Text.tsx";
 import {
   ContainerSize,
   IconSize,
   Opacity,
   Size,
   Space,
-} from "../design-system/token/token.const.1tier.ts";
+} from "@/design-system/token/token.const.1tier.ts";
+import { Radius2 } from "@/design-system/token/radius2";
 
 // --- Mock Data ---
 const COMMANDS = [

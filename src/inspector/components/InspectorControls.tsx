@@ -13,12 +13,13 @@ import {
   Type,
 } from "lucide-react";
 import type React from "react";
-import { Text } from "../../design-system/text/Text";
+import { Text } from "@/design-system/text/Text";
 import {
   FontSize,
   Size,
   Space,
-} from "../../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
+import { Radius2 } from "@/design-system/token/radius2";
 
 // --- Visual Helpers ---
 

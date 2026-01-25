@@ -8,31 +8,31 @@ export {}
 declare global {
   const ActionSize: typeof import('@/design-system/token').ActionSize
   const Activity: typeof import('react').Activity
-  const AspectRatio: typeof import('@/design-system/token').AspectRatio
-  const BorderWidth: typeof import('@/design-system/token').BorderWidth
+  const AspectRatio: typeof import('@/legacy-design-system/token').AspectRatio
+  const BorderWidth: typeof import('@/legacy-design-system/token').BorderWidth
   const ButtonSize: typeof import('@/design-system/token').ButtonSize
   const Color: typeof import('@/design-system/token').Color
-  const ContainerSize: typeof import('@/design-system/token').ContainerSize
+  const ContainerSize: typeof import('@/legacy-design-system/token').ContainerSize
   const Duration: typeof import('@/design-system/token').Duration
   const Ease: typeof import('@/design-system/token').Ease
-  const Elevation: typeof import('@/design-system/token').Elevation
+  const Elevation: typeof import('@/legacy-design-system/token').Elevation
   const Font: typeof import('@/design-system/token').Font
-  const FontSize: typeof import('@/design-system/token').FontSize
+  const FontSize: typeof import('@/legacy-design-system/token').FontSize
   const Fragment: typeof import('react').Fragment
   const Frame: typeof import('@/design-system/Frame/Frame').Frame
-  const IconSize: typeof import('@/design-system/token').IconSize
+  const IconSize: typeof import('@/legacy-design-system/token').IconSize
   const InputSize: typeof import('@/design-system/token').InputSize
   const Layout: typeof import('@/design-system/Frame/Layout/Layout').Layout
-  const LineHeight: typeof import('@/design-system/token').LineHeight
-  const Opacity: typeof import('@/design-system/token').Opacity
-  const Radius: typeof import('@/design-system/token').Radius
+  const LineHeight: typeof import('@/legacy-design-system/token').LineHeight
+  const Opacity: typeof import('@/legacy-design-system/token').Opacity
+  const Radius: typeof import('@/legacy-design-system/token').Radius
   const Radius2: typeof import('@/design-system/token').Radius2
   const Shadow: typeof import('@/design-system/token').Shadow
-  const Size: typeof import('@/design-system/token').Size
-  const Space: typeof import('@/design-system/token').Space
+  const Size: typeof import('@/legacy-design-system/token').Size
+  const Space: typeof import('@/legacy-design-system/token').Space
   const Stroke: typeof import('@/design-system/token').Stroke
   const Suspense: typeof import('react').Suspense
-  const ZIndex: typeof import('@/design-system/token').ZIndex
+  const ZIndex: typeof import('@/legacy-design-system/token').ZIndex
   const cache: typeof import('react').cache
   const cacheSignal: typeof import('react').cacheSignal
   const createContext: typeof import('react').createContext

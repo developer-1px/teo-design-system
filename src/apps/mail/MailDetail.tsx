@@ -11,34 +11,25 @@ import {
   ReplyAll,
   Star,
   Trash2,
+  Inbox
 } from "lucide-react";
 
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text.tsx";
+import { Icon } from "@/design-system/Icon";
+import { Text } from "@/design-system/text/Text.tsx";
 import {
   FontSize,
   IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
 import { selectedThreadAtom } from "./store";
+import * as styles from "./Mail.css";
 
 export function MailDetail() {
   const selectedThread = useAtomValue(selectedThreadAtom);
 
   if (!selectedThread) {
     return (
-      <Frame
-        layout={Layout.Col.Center.Start}
-        spacing={Space.n0}
-        override={{
-          w: Size.fill,
-          h: Size.fill,
-        }}
-      >
-        <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
+      <div className={styles.mailDetail} style={{ alignItems: "center", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
           <Icon
             src={Inbox}
             size={IconSize.n64}
@@ -50,112 +41,45 @@ export function MailDetail() {
           <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
             Select a mail to view
           </Text.Card.Note>
-        </Frame>
-      </Frame>
+        </div>
+      </div>
     );
   }
 
   const mail = selectedThread.mails[0];
 
   return (
-    <Frame
-      override={{
-        p: Space.n0,
-        w: Size.fill,
-        h: Size.fill,
-      }}
-    >
+    <div className={styles.mailDetail}>
       {/* Toolbar */}
-      <Frame
-        override={{
-          h: Size.n48,
-          py: Space.n0,
-          px: Space.n16,
-          gap: Space.n8,
-          borderBottom: true,
-        }}
-        layout={Layout.Row.Middle.Center}
-        spacing={Space.n12}
-        h={Size.n40}
-      >
-        <Frame
-          as="button"
-          interactive
-          surface="ghost"
-          rounded={Radius2.md}
-          override={{ p: Space.n8 }}
-        >
+      <div className={styles.detailToolbar}>
+        <button className={styles.iconButton}>
           <Icon src={ArrowLeft} size={IconSize.n20} />
-        </Frame>
-        <Frame
-          as="button"
-          interactive
-          surface="ghost"
-          rounded={Radius2.md}
-          override={{ p: Space.n8 }}
-        >
+        </button>
+        <button className={styles.iconButton}>
           <Icon src={Archive} size={IconSize.n20} />
-        </Frame>
-        <Frame
-          as="button"
-          interactive
-          surface="ghost"
-          rounded={Radius2.md}
-          override={{ p: Space.n8 }}
-        >
+        </button>
+        <button className={styles.iconButton}>
           <Icon src={Trash2} size={IconSize.n20} />
-        </Frame>
-        <Frame
-          as="button"
-          interactive
-          surface="ghost"
-          rounded={Radius2.md}
-          override={{ p: Space.n8 }}
-        >
+        </button>
+        <button className={styles.iconButton}>
           <Icon src={MoreVertical} size={IconSize.n20} />
-        </Frame>
+        </button>
 
-        <Frame override={{ flex: 1 }} />
+        <div style={{ flex: 1 }} />
 
-        <Frame
-          as="button"
-          interactive
-          surface="ghost"
-          rounded={Radius2.md}
-          override={{ p: Space.n8 }}
-        >
+        <button className={styles.iconButton}>
           <Icon src={ChevronLeft} size={IconSize.n20} />
-        </Frame>
-        <Frame
-          as="button"
-          interactive
-          surface="ghost"
-          rounded={Radius2.md}
-          override={{ p: Space.n8 }}
-        >
+        </button>
+        <button className={styles.iconButton}>
           <Icon src={ChevronRight} size={IconSize.n20} />
-        </Frame>
-      </Frame>
+        </button>
+      </div>
 
       {/* Mail Content */}
-      <Frame
-        scroll
-        override={{
-          p: Space.n24,
-          gap: Space.n24,
-          w: Size.fill,
-          h: Size.fill,
-        }}
-        layout={Layout.Col.Left.Start}
-        spacing={Space.n12}
-      >
+      <div className={styles.detailContent}>
         {/* Subject */}
-        <Frame layout={Layout.Col.Left.Start} spacing={Space.n12}>
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n12}
-            override={{ px: Space.n16, minHeight: Size.n40 }}
-          >
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <Text.Card.Title
               size={FontSize.n20}
               weight="bold"
@@ -174,41 +98,40 @@ export function MailDetail() {
                 cursor: "pointer",
               }}
             />
-          </Frame>
+          </div>
 
           {/* Labels */}
           {selectedThread.labels.length > 0 && (
-            <Frame
-              layout={Layout.Row.Middle.Start}
-              wrap="wrap"
-              spacing={Space.n8}
-            >
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
               {selectedThread.labels.map((label) => (
-                <Frame
+                <div
                   key={label}
-                  override={{ py: Space.n4, px: Space.n8 }}
-                  rounded={Radius2.sm}
-                  surface="raised"
+                  style={{
+                    padding: "4px 8px",
+                    borderRadius: "4px",
+                    backgroundColor: "rgba(0,0,0,0.05)",
+                    border: "1px solid rgba(0,0,0,0.1)",
+                  }}
                 >
                   <Text.Card.Note size={FontSize.n11}>{label}</Text.Card.Note>
-                </Frame>
+                </div>
               ))}
-            </Frame>
+            </div>
           )}
-        </Frame>
+        </div>
 
         {/* Sender Info */}
-        <Frame
-          override={{ align: "start", minHeight: Size.n40 }}
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-        >
-          <Frame
-            override={{ w: Size.n40, h: Size.n40 }}
-            rounded={Radius2.full}
-            surface="raised"
-            layout={Layout.Col.Center.Start}
-            spacing={Space.n0}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "9999px",
+              backgroundColor: "rgba(0,0,0,0.05)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
             <Text.Card.Title
               weight="bold"
@@ -217,18 +140,10 @@ export function MailDetail() {
             >
               {mail.from.name[0]}
             </Text.Card.Title>
-          </Frame>
+          </div>
 
-          <Frame
-            override={{ flex: 1 }}
-            layout={Layout.Col.Left.Start}
-            spacing={Space.n4}
-          >
-            <Frame
-              layout={Layout.Row.Middle.Center}
-              spacing={Space.n12}
-              override={{ px: Space.n16, minHeight: Size.n40 }}
-            >
+          <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <Text.Card.Title
                 weight="bold"
                 size={FontSize.n14}
@@ -247,24 +162,18 @@ export function MailDetail() {
                   minute: "2-digit",
                 })}
               </Text.Card.Note>
-            </Frame>
+            </div>
             <Text.Card.Note
               size={FontSize.n12}
               style={{ color: "var(--text-secondary)" }}
             >
               {mail.from.email}
             </Text.Card.Note>
-            <Text.Card.Note
-              size={FontSize.n12}
-              style={{ color: "var(--text-tertiary)" }}
-            >
-              to {mail.to.join(", ")}
-            </Text.Card.Note>
-          </Frame>
-        </Frame>
+          </div>
+        </div>
 
         {/* Mail Body */}
-        <Frame layout={Layout.Col.Left.Start} spacing={Space.n16}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <Text.Field.Value
             size={FontSize.n14}
             style={{
@@ -275,114 +184,57 @@ export function MailDetail() {
           >
             {mail.body}
           </Text.Field.Value>
-        </Frame>
+        </div>
 
         {/* Attachments */}
         {mail.hasAttachments && (
-          <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
               {mail.attachmentCount} Attachment
               {mail.attachmentCount !== 1 ? "s" : ""}
             </Text.Card.Note>
-            <Frame
-              rounded={Radius2.md}
-              surface="raised"
-              layout={Layout.Row.Middle.Center}
-              spacing={Space.n12}
-              override={{ py: Space.n12, px: Space.n12, minHeight: Size.n40 }}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "12px",
+                gap: "12px",
+                borderRadius: "12px",
+                backgroundColor: "rgba(0,0,0,0.02)",
+                border: "1px solid rgba(0,0,0,0.08)",
+              }}
             >
               <Icon src={Paperclip} size={IconSize.n16} />
               <Text.Card.Note size={FontSize.n13}>
                 design-system-review.pdf
               </Text.Card.Note>
-              <Frame override={{ flex: 1 }} />
+              <div style={{ flex: 1 }} />
               <Text.Card.Note
                 size={FontSize.n11}
                 style={{ color: "var(--text-tertiary)" }}
               >
                 2.4 MB
               </Text.Card.Note>
-            </Frame>
-          </Frame>
+            </div>
+          </div>
         )}
 
         {/* Reply Actions */}
-        <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
-          <Frame
-            as="button"
-            interactive
-            surface="base"
-            rounded={Radius2.md}
-            override={{
-              py: Space.n8,
-              px: Space.n12,
-              gap: Space.n8,
-              row: true,
-              align: "center",
-              border: true,
-            }}
-          >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "flex-end" }}>
+          <button className={styles.iconButton} style={{ width: "auto", padding: "0 12px", gap: "8px", border: "1px solid rgba(0,0,0,0.1)" }}>
             <Icon src={Reply} size={IconSize.n16} />
             <Text.Menu.Item weight="medium">Reply</Text.Menu.Item>
-          </Frame>
-          <Frame
-            as="button"
-            interactive
-            surface="base"
-            rounded={Radius2.md}
-            override={{
-              py: Space.n8,
-              px: Space.n12,
-              gap: Space.n8,
-              row: true,
-              align: "center",
-              border: true,
-            }}
-          >
+          </button>
+          <button className={styles.iconButton} style={{ width: "auto", padding: "0 12px", gap: "8px", border: "1px solid rgba(0,0,0,0.1)" }}>
             <Icon src={ReplyAll} size={IconSize.n16} />
             <Text.Menu.Item weight="medium">Reply All</Text.Menu.Item>
-          </Frame>
-          <Frame
-            as="button"
-            interactive
-            surface="base"
-            rounded={Radius2.md}
-            override={{
-              py: Space.n8,
-              px: Space.n12,
-              gap: Space.n8,
-              row: true,
-              align: "center",
-              border: true,
-            }}
-          >
+          </button>
+          <button className={styles.iconButton} style={{ width: "auto", padding: "0 12px", gap: "8px", border: "1px solid rgba(0,0,0,0.1)" }}>
             <Icon src={Forward} size={IconSize.n16} />
             <Text.Menu.Item weight="medium">Forward</Text.Menu.Item>
-          </Frame>
-        </Frame>
-      </Frame>
-    </Frame>
-  );
-}
-
-// Helper Inbox icon
-function Inbox({ ...props }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
-      <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
-    </svg>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

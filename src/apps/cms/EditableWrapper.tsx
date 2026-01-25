@@ -1,34 +1,30 @@
 import { useState } from "react";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Overlay } from "../../design-system/Overlay";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import "./CMSApp.legacy.css";
 
 export interface EditableWrapperProps {
   children: React.ReactNode;
   onEdit?: () => void;
   style?: React.CSSProperties;
+  className?: string;
 }
 
 export function EditableWrapper({
   children,
   onEdit,
   style,
+  className,
 }: EditableWrapperProps) {
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <Frame
-      override={{ cursor: "text" }}
+    <div
+      className={className}
       style={{
         position: "relative",
+        cursor: "text",
         outline: isHovered
-          ? "var(--space-n2) solid var(--primary-bg)"
-          : "var(--space-n2) solid transparent",
-        outlineOffset: "var(--space-n2)",
+          ? "2px solid var(--primary-bg)"
+          : "2px solid transparent",
+        outlineOffset: "2px",
         ...style,
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -39,26 +35,23 @@ export function EditableWrapper({
       }}
     >
       {isHovered && (
-        <Overlay position="absolute" y={-10} x={-2} zIndex={50}>
-          <Frame
-            override={{ py: Space.n0, px: Space.n6, h: Size.n4, pack: true }}
-            rounded={Radius2.sm}
-            surface="primary"
-          >
-            <Text.Card.Note
-              size={FontSize.n10}
-              weight="bold"
-              style={{
-                color: "inherit",
-                lineHeight: 1,
-              }}
-            >
-              EDIT
-            </Text.Card.Note>
-          </Frame>
-        </Overlay>
+        <div style={{
+          position: 'absolute',
+          top: -20,
+          left: 0,
+          zIndex: 50,
+          backgroundColor: 'var(--primary-bg)',
+          color: 'white',
+          padding: '2px 6px',
+          borderRadius: 4,
+          fontSize: 10,
+          fontWeight: 'bold',
+          lineHeight: 1
+        }}>
+          EDIT
+        </div>
       )}
       {children}
-    </Frame>
+    </div>
   );
 }

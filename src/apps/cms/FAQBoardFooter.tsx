@@ -1,165 +1,42 @@
-import { HelpCircle, Plus } from "lucide-react";
-import { useState } from "react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  ContainerSize,
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-} from "../../design-system/token/token.const.1tier";
+import { EditableWrapper } from "./EditableWrapper";
+import * as styles from "./FAQBoardFooter.css";
+
+const FAQS = [
+  {
+    q: "Do I need coding skills to use this?",
+    a: "No! The visual editor allows you to build pages without writing a single line of code. However, developers can easily extend functionality."
+  },
+  {
+    q: " Can I export the code?",
+    a: "Yes. You can export your project as a standard React, Vue, or HTML/CSS application at any time."
+  },
+  {
+    q: "Is there a free trial?",
+    a: "We offer a generous free tier for personal projects. For teams, we offer a 14-day free trial of our Pro plan."
+  }
+];
 
 export function FAQBoardFooter() {
   return (
-    <Frame
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n0}
-      w={Size.fill}
-      h={Size.fill}
-      override={{ w: Size.fill }}
-      surface="base"
-    >
-      <Frame
-        layout={Layout.Col.Left.Start}
-        spacing={Space.n16}
-        override={{
-          w: Size.fill,
-          py: Space.n96,
-          px: Space.n24,
-          gap: Space.n48,
-          maxWidth: ContainerSize.n768,
-        }}
-      >
-        <Frame
-          layout={Layout.Col.Center.Start}
-          spacing={Space.n16}
-          override={{ w: Size.fill, gap: Space.n12 }}
-        >
-          <Text.Card.Note
-            size={FontSize.n12}
-            weight="bold"
-            style={{ color: "var(--text-primary)", letterSpacing: "0.05em" }}
-          >
-            SUPPORT
-          </Text.Card.Note>
-          <Text.Prose.Title variant="lg">Common questions</Text.Prose.Title>
-        </Frame>
+    <section className={styles.container}>
+      <div className={styles.header}>
+        <EditableWrapper>
+          <h2 className={styles.title}>Frequently Asked Questions</h2>
+        </EditableWrapper>
+      </div>
 
-        <Frame override={{ w: Size.fill, gap: Space.n0 }}>
-          <FAQRow
-            q="How secure is my data?"
-            a="We use industry-standard encryption and SOC2 certification to ensure your data stays protected at all times."
-          />
-          <FAQRow
-            q="Can I export code for local hosting?"
-            a="Yes, you can export your site as a static bundle and host it anywhere you like."
-          />
-          <FAQRow
-            q="Do you support custom domains?"
-            a="Absolutely. You can connect any domain you own with a single click."
-          />
-          <FAQRow
-            q="Is there a limit on bandwidth?"
-            a="Our Enterprise plans offer unlimited bandwidth, while Pro plans have generous limits."
-          />
-        </Frame>
-
-        <Frame
-          override={{
-            r: Radius2["2xl"],
-            p: Space.n32,
-            w: Size.fill,
-            gap: Space.n24,
-            align: "center",
-          }}
-          surface="raised"
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-        >
-          <Frame
-            override={{ w: Size.n56, h: Size.n56, r: Radius2.full, pack: true }}
-            surface="sunken"
-          >
-            <Icon
-              src={HelpCircle}
-              size={IconSize.n24}
-              style={{ color: "var(--color-primary)" }}
-            />
-          </Frame>
-          <Frame layout={Layout.Col.Left.Start} spacing={Space.n4}>
-            <Text.Card.Title size={FontSize.n18} weight="bold">
-              Still have questions?
-            </Text.Card.Title>
-            <Text.Card.Desc size={FontSize.n14}>
-              We're here to help. Contact our support team 24/7.
-            </Text.Card.Desc>
-          </Frame>
-          <Frame override={{ flex: 1 }} />
-          <Action
-            label="Chat with us"
-            variant="surface"
-            h={Size.n44}
-            px={Space.n24}
-            rounded={Radius2.lg}
-          />
-        </Frame>
-      </Frame>
-    </Frame>
-  );
-}
-
-interface FAQRowProps {
-  q: string;
-  a: string;
-}
-
-function FAQRow({ q, a }: FAQRowProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <Frame
-      override={{
-        w: Size.fill,
-        py: Space.n24,
-        px: Space.n0,
-        gap: Space.n16,
-        cursor: "pointer",
-        border: true,
-      }}
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <Frame
-        layout={Layout.Row.Middle.Start}
-        spacing={Space.n8}
-        override={{ w: Size.fill }}
-      >
-        <Text.Card.Title size={FontSize.n16} weight="medium">
-          {q}
-        </Text.Card.Title>
-        <Icon
-          src={Plus}
-          size={IconSize.n20}
-          style={{
-            transform: isOpen ? "rotate(45deg)" : "none",
-            opacity: 0.4,
-          }}
-        />
-      </Frame>
-      {isOpen && (
-        <Frame
-          override={{
-            pt: Space.n0,
-            pr: Space.n32,
-            pb: Space.n16,
-            pl: Space.n0,
-          }}
-        >
-          <Text.Prose.Body style={{ opacity: 0.8 }}>{a}</Text.Prose.Body>
-        </Frame>
-      )}
-    </Frame>
+      <div className={styles.faqList}>
+        {FAQS.map((item, i) => (
+          <div key={i} className={styles.faqItem}>
+            <EditableWrapper>
+              <h3 className={styles.question}>{item.q}</h3>
+            </EditableWrapper>
+            <EditableWrapper>
+              <p className={styles.answer}>{item.a}</p>
+            </EditableWrapper>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

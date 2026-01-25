@@ -8,19 +8,25 @@ import {
     Type,
 } from "lucide-react";
 import { useState } from "react";
-import { Icon } from "../design-system/Icon";
-import { Text } from "../design-system/text/Text";
+import { Icon } from "@/design-system/Icon";
+import { Text } from "@/design-system/text/Text";
 import {
     IconSize,
     Size,
     Space,
-} from "../design-system/token/token.const.1tier";
+    ZIndex
+} from "@/design-system/token/token.const.1tier";
+import { Radius2 } from "@/design-system/token/radius2";
 import { CommandBarDesignApp } from "./CommandBarDesignApp";
 import { LandingApp } from "./LandingApp";
 import { LayoutShowcaseApp } from "./LayoutShowcaseApp";
 import { SurfaceApp } from "./SurfaceApp";
 import { TextSystemApp } from "./TextSystemApp";
 import { TokensApp } from "./TokensApp";
+
+// Import Layout from where it's defined or use constant if imported
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts"; // Assuming path
+import { Frame } from "@/design-system/Frame/Frame.tsx";
 
 type View = "home" | "tokens" | "surface" | "text" | "layout" | "command-bar";
 
@@ -38,31 +44,31 @@ export function DesignSystemApp() {
 
     return (
         <Frame
-            layout={Layout.Row.Stretch.Start}
+            layout={Layout.Col.Stretch.Start}
             spacing={Space.n0}
             w={Size.fill}
             h={Size.screen}
             surface="base"
         >
-            {/* Sidebar */}
+            {/* Top Navigation Bar */}
             <Frame
                 override={{
-                    w: Size.n256,
-                    h: Size.fill,
-                    borderRight: true,
-                    p: Space.n16,
-                    gap: Space.n8,
+                    w: Size.fill,
+                    h: Size.n56,
+                    borderBottom: true,
+                    px: Space.n24,
+                    zIndex: ZIndex.n100,
+                }}
+                style={{
+                    position: "sticky",
+                    top: 0
                 }}
                 surface="sunken"
-                layout={Layout.Col.Left.Start}
+                layout={Layout.Row.Middle.Between}
                 spacing={Space.n0}
             >
-                <Frame
-                    layout={Layout.Row.Middle.Start}
-                    spacing={Space.n12}
-                    override={{ px: Space.n12, py: Space.n16 }}
-                    style={{ marginBottom: "var(--space-n16)" }}
-                >
+                {/* Logo & Brand */}
+                <Frame layout={Layout.Row.Middle.Start} spacing={Space.n12}>
                     <Frame
                         rounded={Radius2.md}
                         surface="primary"
@@ -76,57 +82,42 @@ export function DesignSystemApp() {
                     </Text.Menu.Item>
                 </Frame>
 
-                <Frame
-                    override={{ flex: 1, w: Size.fill, gap: Space.n4 }}
-                    style={{ overflowY: "auto" }}
-                >
-                    <SidebarItem
-                        icon={Home}
+                {/* Nav Links */}
+                <Frame layout={Layout.Row.Middle.Center} spacing={Space.n4}>
+                    <TopNavItem
                         label="Home"
                         active={activeView === "home"}
                         onClick={() => setActiveView("home")}
                     />
-
-                    <SidebarGroup label="Foundations" />
-                    <SidebarItem
-                        icon={Palette}
+                    <TopNavItem
                         label="Tokens"
                         active={activeView === "tokens"}
                         onClick={() => setActiveView("tokens")}
                     />
-                    <SidebarItem
-                        icon={Layers}
+                    <TopNavItem
                         label="Surface"
                         active={activeView === "surface"}
                         onClick={() => setActiveView("surface")}
                     />
-                    <SidebarItem
-                        icon={Type}
-                        label="Text System"
+                    <TopNavItem
+                        label="Text"
                         active={activeView === "text"}
                         onClick={() => setActiveView("text")}
                     />
-                    <SidebarItem
-                        icon={LayoutIcon}
+                    <TopNavItem
                         label="Layout"
                         active={activeView === "layout"}
                         onClick={() => setActiveView("layout")}
                     />
-
-                    <SidebarGroup label="Patterns" />
-                    <SidebarItem
-                        icon={Command}
-                        label="Command Bar"
+                    <TopNavItem
+                        label="Patterns"
                         active={activeView === "command-bar"}
                         onClick={() => setActiveView("command-bar")}
                     />
                 </Frame>
 
-                {/* Footer info */}
-                <Frame
-                    override={{ pt: Space.n16, borderTop: true, w: Size.fill }}
-                    layout={Layout.Col.Center.Start}
-                >
+                {/* Right Side (Version or Theme toggle placeholder) */}
+                <Frame layout={Layout.Row.Middle.End}>
                     <Text.Card.Note style={{ opacity: 0.5 }}>v10.6.1</Text.Card.Note>
                 </Frame>
             </Frame>
@@ -135,25 +126,31 @@ export function DesignSystemApp() {
             <Frame
                 override={{
                     flex: 1,
-                    h: Size.fill,
-                    minWidth: Size.n0, // Prevent flex blowout
+                    w: Size.fill,
+                    minWidth: Size.n0,
                 }}
-                style={{ overflow: "hidden" }}
+                style={{ overflow: "hidden" }} // Allow internal scroll
                 surface="base"
             >
+                {/* 
+                   If views have their own internal scroll (like LandingApp does), 
+                   we should let them handle it. 
+                   If LandingApp expects to be full page scroll, we might need overflow-y: auto here 
+                   OR inside LandingApp. 
+                   Ref: LandingApp.css.ts sets overflowY: "auto" on root.
+                   So we just provide the container.
+                 */}
                 {views[activeView]}
             </Frame>
         </Frame>
     );
 }
 
-function SidebarItem({
-    icon: IconSrc,
+function TopNavItem({
     label,
     active,
     onClick,
 }: {
-    icon: React.ElementType;
     label: string;
     active: boolean;
     onClick: () => void;
@@ -162,44 +159,20 @@ function SidebarItem({
         <Frame
             onClick={onClick}
             interactive
-            rounded={Radius2.md}
+            rounded={Radius2.full}
             surface={active ? "selected" : undefined}
             override={{
-                w: Size.fill,
-                px: Space.n12,
+                px: Space.n16,
                 py: Space.n8,
                 cursor: "pointer",
             }}
-            layout={Layout.Row.Middle.Start}
-            spacing={Space.n12}
-            style={{
-                color: active ? "var(--text-primary)" : "var(--text-secondary)",
-            }}
+            layout={Layout.Row.Middle.Center}
+            spacing={Space.n8}
         >
-            <Icon
-                src={IconSrc}
-                size={IconSize.n16}
-                style={{ opacity: active ? 1 : 0.7 }}
-            />
-            <Text.Menu.Item style={{ fontWeight: active ? 500 : 400 }}>
-                {label}
-            </Text.Menu.Item>
-        </Frame>
-    );
-}
-
-function SidebarGroup({ label }: { label: string }) {
-    return (
-        <Frame override={{ px: Space.n12, py: Space.n8 }} style={{ marginTop: "var(--space-n16)" }}>
-            <Text.Menu.Item
-                style={{
-                    fontSize: "11px",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
-                    color: "var(--text-tertiary)",
-                    fontWeight: 600,
-                }}
-            >
+            <Text.Menu.Item style={{
+                fontWeight: active ? 600 : 500,
+                color: active ? "var(--text-primary)" : "var(--text-secondary)"
+            }}>
                 {label}
             </Text.Menu.Item>
         </Frame>

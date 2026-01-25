@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Action } from "../../../design-system/Action";
-import { Frame } from "../../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../../design-system/Frame/Layout/Layout.ts";
-import { Text } from "../../../design-system/text/Text.tsx";
+import { Action } from "@/design-system/Action";
+import { Frame } from "@/design-system/Frame/Frame.tsx";
+import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
+import { Text } from "@/design-system/text/Text.tsx";
 import { JsonSmartView } from "./JsonSmartView";
+import { Radius2 } from "@/design-system/token/radius2";
 
 interface ExpandableValueProps {
   value: string;

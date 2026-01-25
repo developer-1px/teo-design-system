@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
-import { Overlay } from "../../design-system/Overlay";
-import { Text } from "../../design-system/text/Text";
+import { Overlay } from "@/design-system/Overlay";
+import { Text } from "@/design-system/text/Text";
 import {
   Size,
   Space,
   ZIndex,
-} from "../../design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
 import { JsonSmartView } from "./drawer/JsonSmartView";
+import { Radius2 } from "@/design-system/token/radius2";
 
 export function TableObjectCell({ value }: { value: object | any[] }) {
   const [isOpen, setIsOpen] = useState(false);

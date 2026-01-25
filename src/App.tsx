@@ -1,50 +1,53 @@
 import { useState, useMemo, useEffect } from "react";
 import { HashRouter, Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import {
-  Bot,
+
   FileCode,
   FileText,
   Home,
   Keyboard,
-  LogIn,
+
   Mail,
-  MessageSquare,
+
   Moon,
   Presentation,
+  HelpCircle,
   Sun,
   Table as TableIcon,
   Users,
 } from "lucide-react";
 
-import { AgentEditorApp } from "./apps/AgentEditorApp";
+
 import { CMSApp } from "./apps/CMSApp";
 import { DesignSystemApp } from "./apps/DesignSystemApp";
-import { DiscordApp } from "./apps/DiscordApp";
-import { LoginApp } from "./apps/LoginApp";
+
 import { MailApp } from "./apps/MailApp";
 import { SlideApp } from "./apps/slide/SlideApp";
 import { TableApp } from "./apps/TableApp";
+import { WhyApp } from "./apps/WhyApp";
 import { CRMApp } from "./apps/crm/CRMApp";
 
-import { Icon } from "./design-system/Icon";
-import { Text } from "./design-system/text/Text";
-import { useTheme } from "./design-system/theme";
+import { Icon } from "@/design-system/Icon";
+import { Text } from "@/design-system/text/Text";
+import { useTheme } from "@/design-system/theme";
 import {
   FontSize,
   IconSize,
   Size,
   Space,
   ZIndex,
-} from "./design-system/token/token.const.1tier";
+} from "@/design-system/token/token.const.1tier";
+import { Radius2 } from "@/design-system/token/radius2";
 
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
 import { CodeNotebookApp } from "./apps/CodeNotebook/CodeNotebookApp";
 import { CalendarApp } from "./apps/CalendarApp";
 
-import { CommandPalette, type PaletteItem } from "./design-system/CommandPalette/CommandPalette";
-import { useCommandSystem } from "./design-system/hooks/interaction/useCommandSystem";
-import { SystemCommand } from "./design-system/hooks/interaction/commands";
+import { CommandPalette, type PaletteItem } from "@/design-system/CommandPalette/CommandPalette";
+import { useCommandSystem } from "@/design-system/hooks/interaction/useCommandSystem";
+import { SystemCommand } from "@/design-system/hooks/interaction/commands";
 import { PlaygroundApp } from "./apps/Playground/PlaygroundApp";
+import GridPlayground from "./apps/GridPlayground";
 
 function NavItem({
   to,
@@ -183,16 +186,12 @@ function Navigation() {
       <Frame
         style={{ width: 1, height: 16, background: "var(--border-subtle)" }}
       />
-      <NavItem to="/agent-editor" label="Agent" icon={Bot} />
 
-      <Frame
-        style={{ width: 1, height: 16, background: "var(--border-subtle)" }}
-      />
 
       <NavItem to="/slide" label="Slide" icon={Presentation} />
       <NavItem to="/mail" label="Mail" icon={Mail} />
-      <NavItem to="/discord" label="Discord" icon={MessageSquare} />
-      <NavItem to="/login" label="Login" icon={LogIn} />
+      <NavItem to="/why" label="Why?" icon={HelpCircle} />
+
 
       <ThemeToggleItem />
     </Frame>
@@ -281,16 +280,17 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<DesignSystemApp />} />
         <Route path="/table" element={<TableApp />} />
-        <Route path="/agent-editor" element={<AgentEditorApp />} />
+
         <Route path="/slide" element={<SlideApp />} />
         <Route path="/cms" element={<CMSApp />} />
         <Route path="/crm" element={<CRMApp />} />
         <Route path="/mail" element={<MailApp />} />
-        <Route path="/discord" element={<DiscordApp />} />
-        <Route path="/login" element={<LoginApp />} />
+        <Route path="/why" element={<WhyApp />} />
+
         <Route path="/notebook" element={<CodeNotebookApp />} />
         <Route path="/calendar" element={<CalendarApp />} />
         <Route path="/playground" element={<PlaygroundApp />} />
+        <Route path="/grid" element={<GridPlayground />} />
       </Routes>
       <Navigation />
     </Frame>

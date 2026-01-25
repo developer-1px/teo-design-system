@@ -1,197 +1,23 @@
-import { Cpu, Globe, Shield, Zap } from "lucide-react";
-import { Action } from "../../design-system/Action";
-import { Frame } from "../../design-system/Frame/Frame.tsx";
-import { Layout } from "../../design-system/Frame/Layout/Layout.ts";
-import { Icon } from "../../design-system/Icon";
-import { Text } from "../../design-system/text/Text";
-import {
-  FontSize,
-  IconSize,
-  Opacity,
-  Size,
-  Space,
-  ZIndex,
-} from "../../design-system/token/token.const.1tier";
+import { ArrowRight } from "lucide-react";
+import { EditableWrapper } from "./EditableWrapper";
+import * as styles from "./ImageFooterBanner.css";
 
 export function ImageFooterBanner() {
   return (
-    <Frame
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n0}
-      w={Size.fill}
-      h={Size.fill}
-      override={{
-        w: Size.fill,
-        py: Space.n96,
-        px: Space.n24,
-        border: true,
-      }}
-      surface="base"
-    >
-      <Frame
-        override={{ w: Size.fill, h: Size.n128, r: Radius2["3xl"] }}
-        style={
-          {
-            position: "relative",
-            background: "linear-gradient(225deg, #1a1a1a, #000)",
-            maxWidth: "var(--container-n1280)",
-            margin: "0 auto",
-            overflow: "hidden",
-          } as React.CSSProperties
-        }
-      >
-        {/* Visual texture */}
-        <Frame
-          override={{
-            opacity: Opacity.n10,
-            w: Size.fill,
-            h: Size.fill,
-          }}
-          style={
-            {
-              position: "absolute",
-              backgroundImage:
-                "radial-gradient(circle at center, #fff 1px, transparent 1px)",
-              backgroundSize: "32px 32px",
-            } as React.CSSProperties
-          }
-        />
-
-        <Frame
-          style={
-            {
-              maxWidth: "var(--container-n640)",
-              position: "relative",
-              margin: "0 auto",
-            } as React.CSSProperties
-          }
-          layout={Layout.Col.Center.Start}
-          spacing={Space.n16}
-          override={{
-            fill: true,
-            p: Space.n24,
-            gap: Space.n24,
-            zIndex: ZIndex.n10,
-          }}
-        >
-          <Text.Prose.Title
-            variant="xl"
-            style={{ color: "white", textAlign: "center" }}
-          >
-            Ready to elevate <br /> your web presence?
-          </Text.Prose.Title>
-          <Text.Prose.Body
-            size={FontSize.n16}
-            style={{
-              color: "white",
-              textAlign: "center",
-              opacity: Opacity.n60,
-            }}
-          >
-            Join 2,000+ companies building high-performance marketing sites with
-            our Visual Engine.
-          </Text.Prose.Body>
-          <Frame
-            override={{ gap: Space.n16 }}
-            layout={Layout.Row.Middle.End}
-            spacing={Space.n8}
-          >
-            <Action
-              label="Start for Free"
-              variant="primary"
-              size="lg"
-              glow
-              h={Size.n56}
-              px={Space.n32}
-              rounded={Radius2.full}
-            />
-            <Action
-              label="Browse Templates"
-              variant="surface"
-              size="lg"
-              h={Size.n56}
-              px={Space.n32}
-              rounded={Radius2.full}
-            />
-          </Frame>
-        </Frame>
-      </Frame>
-
-      {/* Partner Logos */}
-      <Frame
-        override={{
-          gap: Space.n32,
-          pt: Space.n48,
-          pb: Space.n24,
-          align: "center",
-        }}
-      >
-        <Text.Card.Note
-          size={FontSize.n12}
-          weight="bold"
-          style={{
-            color: "var(--text-tertiary)",
-            opacity: Opacity.n50,
-            letterSpacing: "0.05em",
-          }}
-        >
-          TRUSTED WORLDWIDE
-        </Text.Card.Note>
-        <Frame
-          layout={Layout.Row.Middle.Start}
-          wrap="wrap"
-          spacing={Space.n12}
-          override={{
-            wrap: true,
-            gap: Space.n48,
-            py: Space.n0,
-            px: Space.n24,
-            opacity: Opacity.n40,
-            justify: "center",
-          }}
-        >
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n8}
-            override={{ px: Space.n12, minHeight: Size.n32 }}
-          >
-            <Icon src={Zap} size={IconSize.n24} />
-            <Text.Card.Title size={FontSize.n16} weight="bold">
-              Bolt
-            </Text.Card.Title>
-          </Frame>
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n8}
-            override={{ px: Space.n12, minHeight: Size.n32 }}
-          >
-            <Icon src={Globe} size={IconSize.n24} />
-            <Text.Card.Title size={FontSize.n16} weight="bold">
-              Stripe
-            </Text.Card.Title>
-          </Frame>
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n8}
-            override={{ px: Space.n12, minHeight: Size.n32 }}
-          >
-            <Icon src={Shield} size={IconSize.n24} />
-            <Text.Card.Title size={FontSize.n16} weight="bold">
-              Linear
-            </Text.Card.Title>
-          </Frame>
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n8}
-            override={{ px: Space.n12, minHeight: Size.n32 }}
-          >
-            <Icon src={Cpu} size={IconSize.n24} />
-            <Text.Card.Title size={FontSize.n16} weight="bold">
-              Vercel
-            </Text.Card.Title>
-          </Frame>
-        </Frame>
-      </Frame>
-    </Frame>
+    <section className={styles.container}>
+      <div className={styles.content}>
+        <EditableWrapper>
+          <h2 className={styles.title}>Ready to transform your workflow?</h2>
+        </EditableWrapper>
+        <EditableWrapper>
+          <p className={styles.subtitle}>
+            Join thousands of teams building the next generation of web applications.
+          </p>
+        </EditableWrapper>
+        <button className={styles.button}>
+          Start Building Now <ArrowRight size={18} style={{ marginLeft: 8 }} />
+        </button>
+      </div>
+    </section>
   );
 }
