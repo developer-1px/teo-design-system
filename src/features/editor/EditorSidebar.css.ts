@@ -6,6 +6,7 @@ export const sidebar = style([
     surface('subtle'),
     {
         gridColumn: '1',
+        gridRow: '1',
         borderRight: `1px solid ${vars.color.gray200}`,
         display: 'flex',
         flexDirection: 'column',

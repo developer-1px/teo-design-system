@@ -13,7 +13,7 @@ export const navContainer = style([
         paddingTop: vars.spacing[16],
         gap: vars.spacing[16],
         borderRight: `1px solid ${vars.color.gray200}`,
-        zIndex: 100,
+        zIndex: vars.zIndices.floating,
     }
 ]);
 

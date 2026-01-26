@@ -12,8 +12,8 @@ export const row = style({
     paddingRight: vars.spacing[16],
     backgroundColor: vars.surface.base.bg, // Default white
     ':hover': {
-        boxShadow: vars.shadow.depth1,
-        zIndex: 1, // Lift on hover
+        boxShadow: vars.shadow.raised,
+        zIndex: vars.zIndices.elevated, // Lift on hover
         borderBottomColor: 'transparent', // visual lift
     }
 });

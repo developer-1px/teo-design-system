@@ -18,5 +18,5 @@ export const mailContent = style({
     borderTopLeftRadius: vars.spacing[16],
     marginRight: vars.spacing[8],
     marginBottom: vars.spacing[8],
-    boxShadow: vars.shadow.depth1,
+    boxShadow: vars.shadow.raised,
 });

@@ -1,0 +1,62 @@
+/* Global debug mode overlay style */
+body.debug-mode-active {
+  cursor: crosshair;
+}
+
+/* Highlight inspector elements on hover */
+/* Removed legacy outline in favor of InspectorOverlay */
+/* 
+body.debug-mode-active *[data-react-inspector]:hover {
+    outline: 2px solid #ef4444 !important;
+    outline-offset: -2px;
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    position: relative;
+    z-index: 9999;
+} 
+*/
+
+/* Toast Notification */
+.debug-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1f2937;
+  /* Gray-800 */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 14px;
+  z-index: 10000;
+  pointer-events: none;
+  animation: slideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.debug-toast-icon {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  /* Green-500 */
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

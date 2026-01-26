@@ -23,7 +23,7 @@ export const composeBtn = style([
         gap: vars.spacing[12],
         borderRadius: '16px',
         border: 'none',
-        boxShadow: vars.shadow.depth1,
+        boxShadow: vars.shadow.raised,
         marginLeft: vars.spacing[8],
         marginBottom: vars.spacing[16],
         cursor: 'pointer',
@@ -31,7 +31,7 @@ export const composeBtn = style([
         fontWeight: 500,
         transition: 'box-shadow 0.2s',
         ':hover': {
-            boxShadow: vars.shadow.depth2,
+            boxShadow: vars.shadow.overlay,
         }
     }
 ]);

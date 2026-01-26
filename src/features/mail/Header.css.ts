@@ -45,7 +45,7 @@ export const searchBar = style([
         transition: 'background-color 0.2s, box-shadow 0.2s',
         ':focus-within': {
             backgroundColor: vars.color.white,
-            boxShadow: vars.shadow.depth1,
+            boxShadow: vars.shadow.raised,
         }
     }
 ]);

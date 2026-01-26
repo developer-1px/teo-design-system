@@ -57,3 +57,20 @@ export const chatPanel = style([
         flexDirection: 'column',
     }
 ]);
+
+export const resizer = style({
+    gridColumn: '1',
+    gridRow: '1',
+    justifySelf: 'end', // Position at the right edge of column 1
+    width: '4px', // Hit area
+    height: '100%',
+    cursor: 'col-resize',
+    zIndex: 10,
+    backgroundColor: 'transparent',
+    transition: 'background-color 0.2s',
+    ':hover': {
+        backgroundColor: vars.color.blue500, // Visual feedback
+    },
+    // Make it overlay the border
+    marginRight: '-2px',
+});

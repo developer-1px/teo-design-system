@@ -1,0 +1,53 @@
+---
+title: CSS Architecture Matrix
+order: 5
+---
+
+# 🏛️ The Ultimate CSS Architecture Matrix
+
+> **"구조는 일관성을 만들고, 일관성은 속도가 된다."**
+
+이 매트릭스는 우리 디자인 시스템을 지탱하는 **8개의 절대 기둥(MECE)**입니다.
+단순한 스타일 가이드가 아니라, 모든 UI 컴포넌트가 반드시 따라야 할 **"설계 법전"**입니다.
+
+---
+
+## 🏗️ 1st Tier: The Foundation (물리적 뼈대)
+
+1티어는 객체의 물리적 실존을 정의합니다. 객체는 공간을 점유하고(Sizing), 배치되며(Layout), 꾸며집니다(Surface).
+
+| 계층 | 대분류 | 설계 주안점 (MECE) | 세부 속성 (Advanced) | 대표적 이름 (Semantic Scale) |
+| --- | --- | --- | --- | --- |
+| **1티어** | **Layout: External** | 부모/형제와의 관계 속 **내 지분** | `flex-basis/grow/shrink`, `grid-area`, `align-self`, `margin: auto` | `Main`, `Side`, `Full`, `Narrow`, `Auto` |
+| **1티어** | **Layout: Internal** | 자식들을 통제하는 **수용 규칙** | `display`, `flex-flow`, `gap`, `justify/align-items`, **`overflow`** | `Stack`, `Group`, `Grid`, `Wrap`, `Gap-less` |
+| **1티어** | **Spacing & Rhythm** | 공간의 **숨통과 부드러움** | `padding`, `gap`, **`line-height`**, **`border-radius`** | `Compact`, `Default`, `Relaxed`, `Sharp`, `Rounded` |
+| **1티어** | **Sizing & Box** | 객체가 점유하는 **물리적 부피** | `width/height`, `max-size`, **`aspect-ratio`**, `border-width` | `Fixed`, `Fluid`, `Hug`, `Fill` |
+| **1티어** | **Overlay & Stack** | 평면을 벗어난 **독립 좌표** | `position`, `z-index`, `isolation`, **`opacity (layer)`** | `Base`, `Elevated`, `Floating`, `Modal`, `Sticky` |
+| **1티어** | **Surface & Theme** | **색상, 톤, 피부 가공** | **`color`**, **`bg-color`**, **`mix-blend-mode`**, `shadow`, `filter` | **`Ghost`, `Sunken`, `Subtle`, `Raised`, `Primary`** |
+| **1티어** | **Typography** | 정보 전달의 **순수 뼈대** | `font-size/family/weight`, `letter-spacing`, `text-align` | `Display`, `Heading`, `Body`, `Caption`, `Label` |
+
+---
+
+## 🎥 2nd Tier: The Interaction (시간축)
+
+2티어는 정적인 1티어 요소들이 시간의 흐름(Interaction)에 따라 어떻게 변화하는지를 정의합니다.
+
+| 계층 | 대분류 | 설계 주안점 (MECE) | 세부 속성 (Advanced) | 대표적 이름 (Semantic Scale) |
+| --- | --- | --- | --- | --- |
+| **2티어** | **Motion** | 상태 변화 사이의 **시간축** | **`transition`**, **`animation`**, `will-change`, `transform` | `Instant`, `Smooth`, `Elastic`, `Bouncy`, `Fade` |
+
+---
+
+## 🚦 Implementation Status Board
+
+이 매트릭스는 현재 구현 상태를 추적하는 **대시보드** 역할을 합니다.
+
+- [ ] **Layout System**: `Stack`, `Grid` 컴포넌트 구현 필요
+- [x] **Surface System**: `vars.surface`, `SurfaceShowcase` 완료 ([문서 보기](/docs/surface))
+- [x] **Typography System**: `vars.font`, `TypographyShowcase` 완료 ([문서 보기](/docs/typography))
+- [ ] **Motion System**: 아직 정의되지 않음
+
+> [!TIP]
+> **설계 원칙:**
+> "External Layout(내 지분)"은 컴포넌트 자신이 결정하지 않고, **부모(Container)**가 결정하도록 위임합니다.
+> 반면 "Internal Layout(수용 규칙)"은 컴포넌트 **자신**이 완벽하게 통제해야 합니다.

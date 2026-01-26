@@ -7,9 +7,13 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import remarkGfm from 'remark-gfm';
 
+import { inspectorPlugin } from './vite-plugins/inspector';
+import inspectorBabelPlugin from './vite-plugins/babel-inspector';
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    inspectorPlugin(),
     {
       enforce: 'pre',
       ...mdx({
@@ -17,7 +21,11 @@ export default defineConfig({
         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm]
       })
     },
-    react(),
+    react({
+      babel: {
+        plugins: [inspectorBabelPlugin]
+      }
+    }),
     vanillaExtractPlugin()
   ],
 })

@@ -55,9 +55,21 @@ export const vars = createThemeContract({
         input: { bg: null, border: null, shadow: null, text: null, hoverBg: null },
         ghost: { bg: null, border: null, shadow: null, text: null, hoverBg: null },
     },
+    zIndices: {
+        base: null,
+        elevated: null,
+        floating: null,
+        modal: null,
+        popover: null,
+        toast: null,
+        max: null,
+    },
     shadow: {
-        depth1: null,
-        depth2: null,
+        flat: null,
+        raised: null,
+        overlay: null,
+        modal: null,
+        popover: null,
     }
 });
 
@@ -162,9 +174,27 @@ export const lightTheme = createTheme(vars, {
             hoverBg: 'rgba(60,64,67,0.08)',
         }
     },
+    zIndices: {
+        base: '0',
+        elevated: '10',
+        floating: '100',
+        modal: '1000',
+        popover: '1100',
+        toast: '10000',
+        max: '2147483647',
+    },
     shadow: {
-        depth1: '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
-        depth2: '0 4px 6px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15)',
+        // Elevation System: Ambient + Key Shadow
+        // Level 0
+        flat: 'none',
+        // Level 1: Cards, buttons (0px 1px 3px rgba(0,0,0,0.12), 0px 1px 2px rgba(0,0,0,0.24))
+        raised: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+        // Level 2: Dropdowns, Menus
+        overlay: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+        // Level 3: Modals
+        modal: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
+        // Level 4: Popovers, Toasts
+        popover: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
     }
 });
 
@@ -223,8 +253,20 @@ export const darkTheme = createTheme(vars, {
             hoverBg: 'rgba(232, 234, 237, 0.08)',
         }
     },
+    zIndices: {
+        base: '0',
+        elevated: '10',
+        floating: '100',
+        modal: '1000',
+        popover: '1100',
+        toast: '10000',
+        max: '2147483647',
+    },
     shadow: {
-        depth1: '0 1px 2px 0 rgba(0,0,0,0.5)',
-        depth2: '0 4px 8px 0 rgba(0,0,0,0.5)',
+        flat: 'none',
+        raised: '0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.7)',
+        overlay: '0 3px 6px rgba(0,0,0,0.6), 0 3px 6px rgba(0,0,0,0.7)',
+        modal: '0 10px 20px rgba(0,0,0,0.7), 0 6px 6px rgba(0,0,0,0.8)',
+        popover: '0 14px 28px rgba(0,0,0,0.8), 0 10px 10px rgba(0,0,0,0.8)',
     }
 });
