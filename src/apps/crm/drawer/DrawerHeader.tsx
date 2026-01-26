@@ -1,39 +1,21 @@
 import { ChevronsRight, MoreHorizontal } from "lucide-react";
-import { Action } from "@/design-system/Action";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { Text } from "@/design-system/text/Text.tsx";
-import {
-  FontSize,
-  Size,
-  type SizeToken,
-  Space,
-} from "@/design-system/token/token.const.1tier";
-import { Radius2 } from "@/design-system/token/radius2";
+import { Action } from "@/ui/primitives/Action";
+import * as styles from "../CRMDrawer.css";
 
 function Avatar({
   initial,
   color,
-  size = Size.n32,
 }: {
   initial: string;
   color: string;
-  size?: SizeToken;
 }) {
   return (
-    <Frame
-      rounded={Radius2.full}
+    <div
+      className={styles.avatar}
       style={{ backgroundColor: color }}
-      override={{ w: size, h: size, align: "center", pack: true }}
     >
-      <Text.Card.Note
-        size={FontSize.n12}
-        weight="bold"
-        style={{ color: "white" }}
-      >
-        {initial}
-      </Text.Card.Note>
-    </Frame>
+      {initial}
+    </div>
   );
 }
 
@@ -49,34 +31,16 @@ export function DrawerHeader({
   onClose: () => void;
 }) {
   return (
-    <Frame
-      layout={Layout.Row.Middle.Center}
-      spacing={Space.n12}
-      h={Size.n44}
-      override={{
-        h: Size.n64,
-        py: Space.n0,
-        px: Space.n24,
-        borderBottom: true,
-      }}
-    >
-      <Frame
-        layout={Layout.Row.Middle.Center}
-        spacing={Space.n12}
-        override={{ px: Space.n16, minHeight: Size.n40 }}
-      >
+    <div className={styles.header}>
+      <div className={styles.headerContent}>
         <Action icon={ChevronsRight} variant="ghost" onClick={onClose} />
-        <Avatar initial={title[0]} color={avatarColor} size={Size.n32} />
-        <Frame>
-          <Text.Card.Title weight="bold">{title}</Text.Card.Title>
-          <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
-            {subtitle}
-          </Text.Card.Note>
-        </Frame>
-      </Frame>
-      <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
-        <Action icon={MoreHorizontal} variant="ghost" />
-      </Frame>
-    </Frame>
+        <Avatar initial={title[0]} color={avatarColor} />
+        <div className={styles.textMeta}>
+          <span className={styles.title}>{title}</span>
+          <span className={styles.subtitle}>{subtitle}</span>
+        </div>
+      </div>
+      <Action icon={MoreHorizontal} variant="ghost" />
+    </div>
   );
 }

@@ -8,10 +8,11 @@ import {
 } from "lucide-react";
 
 // Hook Import
-import { useHeadlessTable } from "@/legacy-design-system/hooks/data/useHeadlessTable";
+import { useHeadlessTable } from "@/design-system/hooks/data/useHeadlessTable";
 
 // New UI Components
 import { Table, TableHeader, HeaderCell, TableRow, TableCell, TableInput } from "@/ui/table/Table";
+import { HookShowcasePanel } from "./table/HookShowcasePanel";
 import * as styles from "./TableApp.css";
 
 // 1. Data Model
@@ -136,115 +137,119 @@ export function TableApp() {
     const gridTemplateColumns = "60px " + COLUMNS.map(() => "minmax(150px, 1fr)").join(" ");
 
     return (
-        <div className={styles.container}>
-            {/* Toolbar */}
-            <div className={styles.toolbar}>
-                <div className={styles.titleGroup}>
-                    <strong>Rule Engine</strong>
-                    <div className={styles.divider} />
-                    <button className={styles.actionButton} onClick={actions.undo}>
-                        <Undo2 size={16} />
-                    </button>
-                    <button className={styles.actionButton} onClick={actions.redo}>
-                        <Redo2 size={16} />
-                    </button>
-                    <div className={styles.divider} />
-                    <button className={styles.actionButton} onClick={actions.openSearch}>
-                        <Search size={16} />
-                    </button>
+        <div className={styles.pageContainer}>
+            <HookShowcasePanel />
+
+            <div className={styles.container}>
+                {/* Toolbar */}
+                <div className={styles.toolbar}>
+                    <div className={styles.titleGroup}>
+                        <strong>Rule Engine</strong>
+                        <div className={styles.divider} />
+                        <button className={styles.actionButton} onClick={actions.undo}>
+                            <Undo2 size={16} />
+                        </button>
+                        <button className={styles.actionButton} onClick={actions.redo}>
+                            <Redo2 size={16} />
+                        </button>
+                        <div className={styles.divider} />
+                        <button className={styles.actionButton} onClick={actions.openSearch}>
+                            <Search size={16} />
+                        </button>
+                    </div>
+
+                    {search.isSearching && (
+                        <div className={styles.searchContainer}>
+                            <Search size={14} />
+                            <input
+                                className={styles.searchInput}
+                                autoFocus
+                                placeholder="Find..."
+                                value={search.query}
+                                onChange={(e) => actions.setSearchQuery(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" && !e.shiftKey) actions.findNext();
+                                    if (e.key === "Enter" && e.shiftKey) actions.findPrev();
+                                    if (e.key === "Escape") actions.closeSearch();
+                                }}
+                            />
+                            <span className={styles.searchCounter}>
+                                {search.matches.length > 0 ? `${search.activeIndex + 1}/${search.matches.length}` : "No results"}
+                            </span>
+                            <ChevronDown size={12} style={{ cursor: "pointer" }} onClick={actions.closeSearch} />
+                        </div>
+                    )}
                 </div>
 
-                {search.isSearching && (
-                    <div className={styles.searchContainer}>
-                        <Search size={14} />
-                        <input
-                            className={styles.searchInput}
-                            autoFocus
-                            placeholder="Find..."
-                            value={search.query}
-                            onChange={(e) => actions.setSearchQuery(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter" && !e.shiftKey) actions.findNext();
-                                if (e.key === "Enter" && e.shiftKey) actions.findPrev();
-                                if (e.key === "Escape") actions.closeSearch();
-                            }}
-                        />
-                        <span className={styles.searchCounter}>
-                            {search.matches.length > 0 ? `${search.activeIndex + 1}/${search.matches.length}` : "No results"}
-                        </span>
-                        <ChevronDown size={12} style={{ cursor: "pointer" }} onClick={actions.closeSearch} />
-                    </div>
-                )}
-            </div>
+                {/* Grid Container */}
+                <Table
+                    {...gridProps}
+                    columnsTemplate={gridTemplateColumns}
+                    style={{ flex: 1 }} // Take remaining height
+                >
+                    {/* Header Row */}
+                    <TableHeader>
+                        <HeaderCell>#</HeaderCell>
+                        {COLUMNS.map((col, i) => (
+                            <HeaderCell key={col} style={{ borderBottom: cursor.col === i ? "2px solid #000" : undefined }}>
+                                {col.toUpperCase()}
+                            </HeaderCell>
+                        ))}
+                    </TableHeader>
 
-            {/* Grid Container */}
-            <Table
-                {...gridProps}
-                columnsTemplate={gridTemplateColumns}
-                style={{ flex: 1 }} // Take remaining height
-            >
-                {/* Header Row */}
-                <TableHeader>
-                    <HeaderCell>#</HeaderCell>
-                    {COLUMNS.map((col, i) => (
-                        <HeaderCell key={col} style={{ borderBottom: cursor.col === i ? "2px solid #000" : undefined }}>
-                            {col.toUpperCase()}
-                        </HeaderCell>
+                    {/* Data Rows */}
+                    {data.map((row, rIdx) => (
+                        <TableRow key={row.id} selected={rIdx === cursor.row}>
+                            {/* Row Header */}
+                            <HeaderCell>{rIdx + 1}</HeaderCell>
+
+                            {/* Cells */}
+                            {COLUMNS.map((col, cIdx) => {
+                                const isFocused = cursor.row === rIdx && cursor.col === cIdx;
+                                const isEditActive = editing.active && isFocused;
+                                const cellProps = getCellProps(rIdx, cIdx);
+                                const isSel = isSelected(rIdx, cIdx);
+                                const isCp = isCopied(rIdx, cIdx); // Note: Current TableCell doesn't support 'copied' style prop yet, but can update Table.css.ts if needed.
+                                const isMatch = search.matches.some(m => m.row === rIdx && m.col === cIdx);
+                                const isMatchActive = isMatch && search.activeIndex !== -1 && search.matches[search.activeIndex]?.row === rIdx && search.matches[search.activeIndex]?.col === cIdx;
+
+                                return (
+                                    <TableCell
+                                        key={cIdx}
+                                        focused={isFocused}
+                                        selected={isSel}
+                                        match={isMatch}
+                                        activeMatch={isMatchActive}
+                                        editing={isEditActive}
+                                        copied={isCp}
+                                        data-cursor={isFocused}
+                                        /* Pass down event handlers from hook */
+                                        onMouseDown={(e) => {
+                                            // Enforce Focus on Grid Container
+                                            if (gridProps.ref.current) {
+                                                gridProps.ref.current.focus({ preventScroll: true });
+                                            }
+                                            cellProps.onClick(e);
+                                        }}
+                                        onDoubleClick={cellProps.onDoubleClick as any}
+                                    >
+                                        {isEditActive ? (
+                                            <TableInput
+                                                autoFocus
+                                                value={editing.value}
+                                                onChange={(e) => actions.setEditValue(e.target.value)}
+                                                onBlur={() => actions.commitEditing({ refocus: false })}
+                                            />
+                                        ) : (
+                                            renderValue(row[col], col)
+                                        )}
+                                    </TableCell>
+                                );
+                            })}
+                        </TableRow>
                     ))}
-                </TableHeader>
-
-                {/* Data Rows */}
-                {data.map((row, rIdx) => (
-                    <TableRow key={row.id} selected={rIdx === cursor.row}>
-                        {/* Row Header */}
-                        <HeaderCell>{rIdx + 1}</HeaderCell>
-
-                        {/* Cells */}
-                        {COLUMNS.map((col, cIdx) => {
-                            const isFocused = cursor.row === rIdx && cursor.col === cIdx;
-                            const isEditActive = editing.active && isFocused;
-                            const cellProps = getCellProps(rIdx, cIdx);
-                            const isSel = isSelected(rIdx, cIdx);
-                            const isCp = isCopied(rIdx, cIdx); // Note: Current TableCell doesn't support 'copied' style prop yet, but can update Table.css.ts if needed.
-                            const isMatch = search.matches.some(m => m.row === rIdx && m.col === cIdx);
-                            const isMatchActive = isMatch && search.activeIndex !== -1 && search.matches[search.activeIndex]?.row === rIdx && search.matches[search.activeIndex]?.col === cIdx;
-
-                            return (
-                                <TableCell
-                                    key={cIdx}
-                                    focused={isFocused}
-                                    selected={isSel}
-                                    match={isMatch}
-                                    activeMatch={isMatchActive}
-                                    editing={isEditActive}
-                                    copied={isCp}
-                                    data-cursor={isFocused}
-                                    /* Pass down event handlers from hook */
-                                    onMouseDown={(e) => {
-                                        // Enforce Focus on Grid Container
-                                        if (gridProps.ref.current) {
-                                            gridProps.ref.current.focus({ preventScroll: true });
-                                        }
-                                        cellProps.onClick(e);
-                                    }}
-                                    onDoubleClick={cellProps.onDoubleClick as any}
-                                >
-                                    {isEditActive ? (
-                                        <TableInput
-                                            autoFocus
-                                            value={editing.value}
-                                            onChange={(e) => actions.setEditValue(e.target.value)}
-                                            onBlur={() => actions.commitEditing({ refocus: false })}
-                                        />
-                                    ) : (
-                                        renderValue(row[col], col)
-                                    )}
-                                </TableCell>
-                            );
-                        })}
-                    </TableRow>
-                ))}
-            </Table>
+                </Table>
+            </div>
         </div>
     );
 }

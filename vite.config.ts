@@ -1,3 +1,4 @@
+import mdx from "@mdx-js/rollup";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -8,6 +9,7 @@ import Inspector from "vite-plugin-react-inspector";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    { enforce: 'pre', ...mdx({ providerImportSource: "@mdx-js/react" }) },
     react(),
     vanillaExtractPlugin(),
     // Inspector(),
@@ -15,8 +17,8 @@ export default defineConfig({
       imports: [
         "react",
         {
-          "@/design-system/Frame/Frame": ["Frame"],
-          "@/design-system/Frame/Layout/Layout": ["Layout"],
+          "@/legacy-design-system/Frame/Frame": ["Frame"],
+          "@/legacy-design-system/Frame/Layout/Layout": ["Layout"],
           // Keep legacy imports working for now
           "@/legacy-design-system/token": [
             "Space",
@@ -39,13 +41,14 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@/design-system": path.resolve(__dirname, "./src/legacy-design-system"),
+      "@/design-system": path.resolve(__dirname, "./src/design-system"),
+      "@legacy-design-system": path.resolve(__dirname, "./src/legacy-design-system"),
       "@": path.resolve(__dirname, "./src"),
       // New Alias
       "@ui": path.resolve(__dirname, "./src/ui"),
       // Legacy Alias redirection
-      "@design-system": path.resolve(__dirname, "./src/legacy-design-system"),
-      "@hooks": path.resolve(__dirname, "./src/legacy-design-system/hooks"),
+      "@design-system": path.resolve(__dirname, "./src/design-system"),
+      "@hooks": path.resolve(__dirname, "./src/design-system/hooks"),
     },
   },
   server: {

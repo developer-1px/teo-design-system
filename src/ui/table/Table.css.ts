@@ -14,7 +14,8 @@ export const tableContainer = style(utils.styled.grid({
         overflow: "auto",
         minHeight: 0,
         borderRadius: vars.radius.n24, // Enforce rounded corners (Refactor UI Components)
-        ...utils.surface.base,
+        backgroundColor: vars.color.surface,
+        color: vars.color.text,
         fontFamily: "ui-sans-serif, system-ui, sans-serif",
         fontSize: "13px",
     }
@@ -42,7 +43,9 @@ export const headerCell = style(utils.styled.flex({
         fontWeight: 600,
         alignItems: "center",
         cursor: "pointer",
-        ...utils.text.truncate,
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
         backgroundColor: vars.color.surface,
     }
 }));
@@ -97,7 +100,9 @@ export const cell = recipe({
             alignItems: "center",
             position: "relative",
             outline: "none",
-            ...utils.text.truncate,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
         }
     }),
     variants: {

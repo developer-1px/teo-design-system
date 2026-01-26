@@ -19,10 +19,10 @@ declare global {
   const Font: typeof import('@/design-system/token').Font
   const FontSize: typeof import('@/legacy-design-system/token').FontSize
   const Fragment: typeof import('react').Fragment
-  const Frame: typeof import('@/design-system/Frame/Frame').Frame
+  const Frame: typeof import('@/legacy-design-system/Frame/Frame').Frame
   const IconSize: typeof import('@/legacy-design-system/token').IconSize
   const InputSize: typeof import('@/design-system/token').InputSize
-  const Layout: typeof import('@/design-system/Frame/Layout/Layout').Layout
+  const Layout: typeof import('@/legacy-design-system/Frame/Layout/Layout').Layout
   const LineHeight: typeof import('@/legacy-design-system/token').LineHeight
   const Opacity: typeof import('@/legacy-design-system/token').Opacity
   const Radius: typeof import('@/legacy-design-system/token').Radius

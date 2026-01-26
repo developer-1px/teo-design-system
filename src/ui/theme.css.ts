@@ -1,92 +1,28 @@
-import { createThemeContract, createGlobalTheme } from "@vanilla-extract/css";
+import { vars as dsVars } from "../design-system/theme.css";
 
-export const vars = createThemeContract({
-    color: {
-        primary: "color-primary",
-        background: "color-background",
-        surface: "color-surface",
-        text: "color-text",
-        textSecondary: "color-text-secondary",
-        textTertiary: "color-text-tertiary",
-        textInverse: "color-text-inverse",
-        border: "color-border",
-        overlay: "color-overlay",
-        warning: "color-warning",
-        // Add more specific colors as needed from legacy tokens
-    },
-    space: {
-        n0: "space-n0",
-        n1: "space-n1",
-        n2: "space-n2",
-        n4: "space-n4",
-        n8: "space-n8",
-        n12: "space-n12",
-        n16: "space-n16",
-        n20: "space-n20",
-        n24: "space-n24",
-        n32: "space-n32",
-        n40: "space-n40",
-        n48: "space-n48",
-        n64: "space-n64",
-    },
-    radius: {
-        n0: "radius-n0",
-        n2: "radius-n2",
-        n4: "radius-n4",
-        n8: "radius-n8",
-        n12: "radius-n12",
-        n16: "radius-n16",
-        n24: "radius-n24",
-        full: "radius-full",
-    },
-    shadow: {
-        n1: "shadow-n1",
-        n2: "shadow-n2",
-        n3: "shadow-n3",
-    },
-});
+// Compatibility Adapter
+// Maps legacy "ui/theme.css" tokens to the new "design-system/theme.css" structure.
+// This ensures existing components continue to work while we transition to the new system.
 
-export const requestRoot = createGlobalTheme(":root", vars, {
+export const vars = {
+    space: dsVars.space,
+    radius: dsVars.radius,
+    font: dsVars.font,
+    // Map legacy 'shadow' to new 'elevation'
+    shadow: dsVars.elevation,
+
+    // Map legacy flat color structure to new nested structure
     color: {
-        primary: "#18181b",
-        background: "#ffffff",
-        surface: "#f9f9fb",
-        text: "#18181b",
-        textSecondary: "#666666",
-        textTertiary: "#999999",
-        textInverse: "#ffffff",
-        border: "rgba(0, 0, 0, 0.08)",
-        overlay: "rgba(255, 255, 255, 0.5)",
-        warning: "#FEBC2E",
-    },
-    space: {
-        n0: "0px",
-        n1: "1px",
-        n2: "2px",
-        n4: "4px",
-        n8: "8px",
-        n12: "12px",
-        n16: "16px",
-        n20: "20px",
-        n24: "24px",
-        n32: "32px",
-        n40: "40px",
-        n48: "48px",
-        n64: "64px",
-    },
-    radius: {
-        n0: "0px",
-        n2: "2px",
-        n4: "4px",
-        n8: "8px",
-        n12: "12px",
-        n16: "16px",
-        n24: "24px",
-        full: "9999px",
-    },
-    shadow: {
-        n1: "0 1px 2px 0 rgba(0, 0, 0, 0.02)",
-        n2: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
-        n3: "0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.04)",
-    },
-});
+        primary: dsVars.color.surface.primary,
+        background: dsVars.color.surface.page,
+        surface: dsVars.color.surface.panel, // Mapping 'surface' to 'panel' for general containers
+        text: dsVars.color.text.primary,
+        textSecondary: dsVars.color.text.secondary,
+        textTertiary: dsVars.color.text.tertiary,
+        textInverse: dsVars.color.text.inverse,
+        border: dsVars.color.border.default,
+        overlay: dsVars.color.surface.overlay,
+        warning: dsVars.color.tone.warning.border,
+        // Add any missing specific mappings as discovered
+    }
+};

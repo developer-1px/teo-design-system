@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import { styled, surface } from "../../ui/utils.css";
+import { styled } from "../../ui/utils.css";
 import { vars } from "../../ui/theme.css";
 import { globalStyle } from "@vanilla-extract/css";
 
@@ -25,7 +25,7 @@ export const sidebar = style(styled.flex({
     layout: {
         flexDirection: "column",
         borderRight: `1px solid ${vars.color.border}`,
-        ...surface.sunken,
+        backgroundColor: vars.color.surface, // sunken
         padding: vars.space.n8,
         gap: vars.space.n8,
     }
@@ -103,7 +103,7 @@ export const header = style(styled.flex({
         borderBottom: `1px solid ${vars.color.border}`,
         alignItems: "center",
         justifyContent: "space-between",
-        ...surface.base,
+        backgroundColor: vars.color.surface, // base
         gap: vars.space.n12,
     }
 }));
@@ -112,7 +112,7 @@ export const searchBar = style(styled.flex({
     layout: {
         height: vars.space.n40,
         padding: `0 ${vars.space.n12}`,
-        ...surface.sunken,
+        backgroundColor: vars.color.background, // sunken usually darker or lighter? let's use background or surface
         borderRadius: vars.radius.n12,
         alignItems: "center",
         gap: vars.space.n8,

@@ -12,36 +12,37 @@ import { useState } from "react";
 import { FloatingToolbar } from "./components/FloatingToolbar";
 import { PropertiesPanel } from "./components/PropertiesPanel";
 import { SlidesPanel } from "./components/SlidesPanel";
-import "./SlideApp.css";
+import * as styles from "./SlideApp.css";
 
 // Temporary minimal Token usage until components are fully refactored
-import { SegmentedControl } from "@/design-system/SegmentedControl";
-import { Icon } from "@/design-system/Icon";
-import { Action } from "@/design-system/Action";
+import { SegmentedControl } from "@/ui/SegmentedControl/SegmentedControl";
+import { Icon } from "@/ui/primitives/Icon";
+import { Action } from "@/ui/primitives/Action";
 
 export function SlideApp() {
   const [activeTool, setActiveTool] = useState("square");
 
   return (
-    <div className="slide-app">
+    <div className={styles.app}>
       {/* Header */}
-      <header className="slide-header">
-        <div className="slide-header-left">
-          <button className="icon-btn" style={{ width: 32, height: 32 }}>
+      <header className={styles.header}>
+        <div className={styles.headerLeft}>
+          <button className={styles.iconBtn} style={{ width: 32, height: 32 }}>
             <Grid size={18} />
           </button>
-          <div className="slide-title-group">
-            <span className="slide-title">Untitled Presentation</span>
-            <button className="icon-btn" style={{ width: 20, height: 20, opacity: 0.5 }}>
+          <div className={styles.titleGroup}>
+            <span className={styles.title}>Untitled Presentation</span>
+            <button className={styles.iconBtn} style={{ width: 20, height: 20, opacity: 0.5 }}>
               <ChevronDown size={12} />
             </button>
           </div>
         </div>
 
-        <div className="slide-header-right">
+        <div className={styles.headerRight}>
           <div className="avatar-group">
-            <div style={{ width: 24, height: 24, borderRadius: "50%", background: "var(--surface-overlay)" }} />
-            <button className="icon-btn" style={{ width: 20, height: 20 }}>
+            {/* TODO: Refactor AvatarGroup */}
+            <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#E5E5E5" }} />
+            <button className={styles.iconBtn} style={{ width: 20, height: 20 }}>
               <Plus size={12} />
             </button>
           </div>
@@ -62,14 +63,16 @@ export function SlideApp() {
       </header>
 
       {/* Main Content */}
-      <main className="slide-main">
-        <SlidesPanel />
+      <main className={styles.main}>
+        <div className={styles.slidesPanel}>
+          <SlidesPanel />
+        </div>
 
-        <div className="slide-canvas-area">
-          <div className="slide-canvas">
-            <div className="slide-canvas-content">
-              <h1 className="slide-hero-text">Minimal Design Kit</h1>
-              <p className="slide-sub-text">Refined & Polished UI.</p>
+        <div className={styles.canvasArea}>
+          <div className={styles.canvas}>
+            <div className={styles.canvasContent}>
+              <h1 className={styles.heroText}>Minimal Design Kit</h1>
+              <p className={styles.subText}>Refined & Polished UI.</p>
 
               <div style={{ marginTop: 24 }}>
                 <SegmentedControl
@@ -86,10 +89,13 @@ export function SlideApp() {
           </div>
         </div>
 
-        <PropertiesPanel />
+        <div className={styles.propertiesPanel}>
+          <PropertiesPanel />
+        </div>
       </main>
 
       <FloatingToolbar />
     </div>
   );
 }
+

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { vars } from "@/ui/theme.css";
+import { vars } from "../../design-system/theme.css";
 import * as utils from "@/ui/utils.css";
 
 // 1. Container
@@ -25,7 +25,7 @@ export const header = style(utils.createFlex({
 export const title = style({
     fontSize: "32px",
     fontWeight: 700,
-    color: vars.color.text,
+    color: vars.color.text.primary,
 });
 
 // 3. FAQ List
@@ -47,20 +47,20 @@ export const faqItem = style(utils.createFlex({
     display: "flex",
     flexDirection: "column",
     padding: vars.space.n24,
-    backgroundColor: vars.color.surface,
+    backgroundColor: vars.color.surface.card,
     borderRadius: vars.radius.n8,
-    border: `1px solid ${vars.color.border}`,
+    border: `1px solid ${vars.color.border.default}`,
 }));
 
 export const question = style({
     fontSize: "18px",
     fontWeight: 600,
-    color: vars.color.text,
+    color: vars.color.text.primary,
     marginBottom: vars.space.n8,
 });
 
 export const answer = style({
     fontSize: "16px",
     lineHeight: 1.6,
-    color: vars.color.textSecondary,
+    color: vars.color.text.secondary,
 });

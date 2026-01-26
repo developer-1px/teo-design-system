@@ -2,16 +2,13 @@ import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-import { Frame } from "@/design-system/Frame/Frame";
-import { Layout } from "@/design-system/Frame/Layout/Layout";
-import { Text } from "@/design-system/text/Text";
 import {
     ContainerSize,
     Radius,
     Size,
     Space,
-} from "@/design-system/token/token.const.1tier";
-import { Radius2 } from "@/design-system/token/radius2";
+} from "@/legacy-design-system/token/token.const.1tier";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 export function WhyApp() {
     const [content, setContent] = useState("");
@@ -23,56 +20,68 @@ export function WhyApp() {
     }, []);
 
     return (
-        <Frame
-            surface="base"
-            layout={Layout.Col.Center.Start}
-            w={Size.fill}
-            h={Size.fill}
-            scroll="y"
-            override={{ pb: Space.n96 }}
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                width: "100%",
+                height: "100%",
+                overflowY: "auto",
+                backgroundColor: "var(--surface-base)",
+                paddingBottom: Space.n96,
+            }}
         >
-            <Frame
-                layout={Layout.Col.Left.Start}
-                override={{
-                    w: Size.fill,
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    width: "100%",
                     maxWidth: ContainerSize.n800,
-                    p: Space.n40,
+                    padding: Space.n40,
                     gap: Space.n24,
                 }}
             >
-                <Frame surface="primary" override={{ p: Space.n8, r: Radius.n8 }}>
-                    <Text.Card.Code style={{ color: "white" }}>Why?</Text.Card.Code>
-                </Frame>
+                <div style={{ backgroundColor: "var(--surface-primary)", padding: Space.n8, borderRadius: Radius.n8 }}>
+                    <span style={{ color: "white", fontFamily: "monospace", fontSize: "14px" }}>Why?</span>
+                </div>
 
                 <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
                         h1: ({ children }) => (
-                            <Text.Prose.Title
-                                variant="xl"
-                                style={{ marginTop: "var(--space-n32)", marginBottom: "var(--space-n16)" }}
+                            <h1
+                                style={{
+                                    marginTop: "var(--space-n32)",
+                                    marginBottom: "var(--space-n16)",
+                                    fontSize: "32px",
+                                    fontWeight: 700,
+                                    color: "var(--text-primary)"
+                                }}
                             >
                                 {children}
-                            </Text.Prose.Title>
+                            </h1>
                         ),
                         h2: ({ children }) => (
-                            <Frame override={{ w: Size.fill, gap: Space.n16 }} style={{ marginTop: "var(--space-n32)", marginBottom: "var(--space-n16)" }}>
-                                <Frame surface="overlay" style={{ height: 1, width: "100%" }} />
-                                <Text.Prose.Title variant="lg">{children}</Text.Prose.Title>
-                            </Frame>
+                            <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: Space.n16, marginTop: "var(--space-n32)", marginBottom: "var(--space-n16)" }}>
+                                <div style={{ height: 1, width: "100%", backgroundColor: "var(--surface-overlay)" }} />
+                                <h2 style={{ fontSize: "24px", fontWeight: 600, color: "var(--text-primary)" }}>{children}</h2>
+                            </div>
                         ),
                         h3: ({ children }) => (
-                            <Text.Prose.Title variant="md" style={{ marginTop: "var(--space-n24)", marginBottom: "var(--space-n8)" }}>
+                            <h3 style={{ marginTop: "var(--space-n24)", marginBottom: "var(--space-n8)", fontSize: "20px", fontWeight: 600, color: "var(--text-primary)" }}>
                                 {children}
-                            </Text.Prose.Title>
+                            </h3>
                         ),
                         p: ({ children }) => (
-                            <Text.Prose.Body
-                                variant="lg"
-                                style={{ color: "var(--text-secondary)", lineHeight: 1.6 }}
+                            <p
+                                style={{ color: "var(--text-secondary)", lineHeight: 1.6, fontSize: "16px" }}
                             >
                                 {children}
-                            </Text.Prose.Body>
+                            </p>
                         ),
                         ul: ({ children }) => (
                             <ul style={{ paddingLeft: "var(--space-n24)", margin: 0, display: "flex", flexDirection: "column", gap: "var(--space-n8)" }}>
@@ -80,8 +89,8 @@ export function WhyApp() {
                             </ul>
                         ),
                         li: ({ children }) => (
-                            <li style={{ color: "var(--text-secondary)" }}>
-                                <Text.Prose.Body variant="lg">{children}</Text.Prose.Body>
+                            <li style={{ color: "var(--text-secondary)", fontSize: "16px" }}>
+                                {children}
                             </li>
                         ),
                         code: ({ children }) => (
@@ -99,15 +108,20 @@ export function WhyApp() {
                             </code>
                         ),
                         table: ({ children }) => (
-                            <Frame
-                                override={{ w: Size.fill }}
-                                style={{ marginTop: "var(--space-n24)", marginBottom: "var(--space-n24)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-n8)", overflow: "hidden" }}
-                                rounded={Radius2.lg}
+                            <div
+                                style={{
+                                    width: "100%",
+                                    marginTop: "var(--space-n24)",
+                                    marginBottom: "var(--space-n24)",
+                                    border: "1px solid var(--border-subtle)",
+                                    borderRadius: "var(--radius-n8)",
+                                    overflow: "hidden"
+                                }}
                             >
                                 <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
                                     {children}
                                 </table>
-                            </Frame>
+                            </div>
                         ),
                         thead: ({ children }) => (
                             <thead style={{ backgroundColor: "var(--surface-sunken)" }}>
@@ -115,30 +129,35 @@ export function WhyApp() {
                             </thead>
                         ),
                         th: ({ children }) => (
-                            <th style={{ padding: "12px 16px", borderBottom: "1px solid var(--border-subtle)", fontWeight: 600 }}>
-                                <Text.Card.Code>{children}</Text.Card.Code>
+                            <th style={{ padding: "12px 16px", borderBottom: "1px solid var(--border-subtle)", fontWeight: 600, color: "var(--text-primary)", fontSize: "14px", fontFamily: "monospace" }}>
+                                {children}
                             </th>
                         ),
                         td: ({ children }) => (
                             <td style={{ padding: "12px 16px", borderBottom: "1px solid var(--border-subtle)" }}>
-                                <Text.Prose.Body variant="md">{children}</Text.Prose.Body>
+                                <span style={{ fontSize: "16px", color: "var(--text-secondary)" }}>{children}</span>
                             </td>
                         ),
                         blockquote: ({ children }) => (
-                            <Frame
-                                surface="sunken"
-                                rounded={Radius2.md}
-                                override={{ p: Space.n16, w: Size.fill }}
-                                style={{ borderLeft: "4px solid var(--surface-primary)", marginTop: "var(--space-n16)", marginBottom: "var(--space-n16)" }}
+                            <div
+                                style={{
+                                    backgroundColor: "var(--surface-sunken)",
+                                    borderRadius: Radius2.md,
+                                    padding: Space.n16,
+                                    width: "100%",
+                                    borderLeft: "4px solid var(--surface-primary)",
+                                    marginTop: "var(--space-n16)",
+                                    marginBottom: "var(--space-n16)"
+                                }}
                             >
                                 {children}
-                            </Frame>
+                            </div>
                         )
                     }}
                 >
                     {content}
                 </ReactMarkdown>
-            </Frame>
-        </Frame>
+            </div>
+        </div>
     );
 }

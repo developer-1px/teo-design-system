@@ -1,15 +1,13 @@
 import { ChevronDown, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { Icon } from "@/design-system/Icon";
-import { Text } from "@/design-system/text/Text";
+import { Icon } from "@/ui/primitives/Icon";
 import {
   FontSize,
   IconSize,
   Size,
   Space,
-} from "@/design-system/token/token.const.1tier";
+} from "@/legacy-design-system/token/token.const.1tier";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 export function PropertyTree({
   label,
@@ -28,72 +26,75 @@ export function PropertyTree({
   const isEmpty = isObject && Object.keys(value).length === 0;
   const isArray = Array.isArray(value);
 
+  const baseStyle: React.CSSProperties = {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: Space.n2,
+    paddingBottom: Space.n2,
+    paddingLeft: Space.n6,
+    paddingRight: Space.n6,
+    borderBottom: "1px solid var(--border-subtle)",
+    backgroundColor: background === "sunken" ? "var(--surface-sunken)" : "var(--surface-base)",
+    gap: Space.n8,
+  };
+
   // Primitive Render
   if (!isObject) {
     return (
-      <Frame
-        override={{
-          py: Space.n2,
-          px: Space.n6,
-          border: true,
+      <div
+        style={{
+          ...baseStyle,
+          paddingLeft: `${depth * 12 + 8}px`,
         }}
-        style={
-          {
-            paddingLeft: `${depth * 12 + 8}px`,
-          } as React.CSSProperties
-        }
-        layout={Layout.Row.Middle.Start}
-        spacing={Space.n8}
-        surface={background}
       >
-        <Text size={FontSize.n9} color="secondary">
+        <span style={{ fontSize: FontSize.n9, color: "var(--text-secondary)" }}>
           {label}
-        </Text>
-        <Text
-          size={FontSize.n9}
-          mono
+        </span>
+        <span
           style={{
+            fontSize: FontSize.n9,
+            fontFamily: "monospace",
             maxWidth: "140px",
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
             textAlign: "right",
+            color: "var(--text-tertiary)",
+            marginLeft: "auto"
           }}
           title={String(value)}
         >
           {String(value)}
-        </Text>
-      </Frame>
+        </span>
+      </div>
     );
   }
 
   // Nested Render
   return (
     <>
-      <Frame
-        override={{
-          py: Space.n2,
-          px: Space.n6,
-          border: true,
+      <div
+        style={{
+          ...baseStyle,
+          paddingLeft: `${depth * 12 + 8}px`,
+          cursor: isEmpty ? "default" : "pointer",
         }}
-        style={
-          {
-            paddingLeft: `${depth * 12 + 8}px`,
-            cursor: isEmpty ? "default" : "pointer",
-          } as React.CSSProperties
-        }
-        layout={Layout.Row.Middle.Start}
-        spacing={Space.n8}
-        surface={background}
         onClick={(e) => {
           e.stopPropagation();
           if (!isEmpty) setIsOpen(!isOpen);
         }}
       >
-        <Frame
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-          override={{ px: Space.n16, minHeight: Size.n40 }}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: Space.n12,
+            paddingLeft: Space.n16,
+            minHeight: Size.n40,
+            flex: 1
+          }}
         >
           {!isEmpty && (
             <Icon
@@ -102,19 +103,19 @@ export function PropertyTree({
               style={{ color: "var(--text-tertiary)" }}
             />
           )}
-          {isEmpty && <Frame override={{ w: Size.n12, h: Size.n12 }} />}{" "}
+          {isEmpty && <div style={{ width: Size.n12, height: Size.n12 }} />}{" "}
           {/* Spacer */}
-          <Text size={FontSize.n9} color="secondary">
+          <span style={{ fontSize: FontSize.n9, color: "var(--text-secondary)" }}>
             {label}
-          </Text>
-        </Frame>
-        <Text size={FontSize.n9} color="tertiary" mono>
+          </span>
+        </div>
+        <span style={{ fontSize: FontSize.n9, color: "var(--text-tertiary)", fontFamily: "monospace" }}>
           {isArray ? `Array(${value.length})` : "{...}"}
-        </Text>
-      </Frame>
+        </span>
+      </div>
 
       {isOpen && !isEmpty && (
-        <Frame>
+        <div>
           {Object.entries(value).map(([k, v]) => (
             <PropertyTree
               key={k}
@@ -124,7 +125,7 @@ export function PropertyTree({
               background={background} // Inherit bg or toggle? Keep simple for now
             />
           ))}
-        </Frame>
+        </div>
       )}
     </>
   );

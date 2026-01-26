@@ -1,8 +1,8 @@
 import { Play, Save, Share2, FileCode } from "lucide-react";
-import { Action } from "@/design-system/Action";
-import { Icon } from "@/design-system/Icon";
-import { Text } from "@/design-system/text/Text";
-import { Radius2 } from "@/design-system/token/radius2";
+import { Action } from "@/ui/primitives/Action";
+import { Icon } from "@/ui/primitives/Icon";
+import { Text } from "@/legacy-design-system/text/Text";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 export function CodeNotebookHeader() {
     return (

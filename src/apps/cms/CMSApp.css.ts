@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { vars } from "@/ui/theme.css";
-import * as utils from "@/ui/utils.css";
+// import { surface } from "@/design-system/surfaces.css"; // Surface requires recipe pattern, not mixin spread
 
 // 1. App Shell (Root)
 // Grid: Sidebar (Auto) | Main (1fr) | RightPanel (Auto)
@@ -12,7 +12,8 @@ export const app = style({
     width: "100%",
     height: "100%",
     overflow: "hidden",
-    ...utils.surface.base,
+    backgroundColor: vars.color.surface.page,
+    color: vars.color.text.primary,
     fontFamily: "ui-sans-serif, system-ui, sans-serif",
 });
 
@@ -44,12 +45,13 @@ export const canvasScroll = style({
 // 4. Viewport Frame
 export const viewportFrame = recipe({
     base: {
-        ...utils.surface.base,
-        boxShadow: vars.shadow.n3,
+        backgroundColor: vars.color.surface.sunken, // Subtle gray
+        color: vars.color.text.primary,
+        boxShadow: vars.shadow.n3, // Keeping shadow to distinguish from background
         transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         minHeight: "100vh",
         position: "relative",
-        border: `1px solid ${vars.color.border}`,
+        border: "none", // Requested: no border
         // Master Grid & Container Query Root
         display: "grid",
         gridTemplateColumns: `repeat(12, minmax(0, 1fr))`, // Explicitly matching utils
@@ -126,12 +128,14 @@ export const iconBtn = recipe({
     base: {
         width: "32px",
         height: "32px",
-        ...utils.layout.flexCenter,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         borderRadius: "4px",
         background: "transparent",
         border: "none",
         cursor: "pointer",
-        color: vars.color.text, // Secondary?
+        color: vars.color.text.secondary, // Secondary?
         opacity: 0.7,
         transition: "all 0.2s",
         selectors: {

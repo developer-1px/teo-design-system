@@ -1,6 +1,6 @@
-import { Text } from "@/design-system/text/Text";
+import { Text } from "@/legacy-design-system/text/Text";
 import type { Cell } from "../utils/notebookParser";
-import { Radius2 } from "@/design-system/token/radius2";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 interface NotebookCellProps {
     cell: Cell;

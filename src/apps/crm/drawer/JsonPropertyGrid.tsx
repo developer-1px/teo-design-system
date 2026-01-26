@@ -1,5 +1,5 @@
-import { Text } from "@/design-system/text/Text";
-import { Radius2 } from "@/design-system/token/radius2";
+import { Text } from "@/legacy-design-system/text/Text";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 function SmartValueRenderer({ value }: { value: unknown }) {
   // Array -> Chips

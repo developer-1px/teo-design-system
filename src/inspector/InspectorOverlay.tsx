@@ -1,21 +1,16 @@
 import { Copy, Lock, Unlock } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { Icon } from "@/design-system/Icon";
-import { Overlay } from "@/design-system/Overlay";
-import { Text } from "@/design-system/text/Text.tsx";
+import { Icon } from "@/ui/primitives/Icon";
 import {
   FontSize,
   IconSize,
-  Size,
   Space,
-} from "@/design-system/token/token.const.1tier";
+} from "@/legacy-design-system/token/token.const.1tier";
 import { InspectorPanel } from "./components/InspectorPanel";
 import { useInspectorHotkeys } from "./hooks/useInspectorHotkeys";
 import { useInspectorTarget } from "./hooks/useInspectorTarget";
-import { Radius2 } from "@/design-system/token/radius2";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 export function InspectorOverlay() {
   const [isActive, setIsActive] = useState(false);
@@ -115,53 +110,48 @@ export function InspectorOverlay() {
           height: "100vh",
           zIndex: 10000,
           pointerEvents: isLocked ? "none" : "auto", // Allow clicking through when locked (except panel)
+          background: "transparent",
+          border: "none",
+          padding: 0,
+          cursor: "default"
         }}
         onClick={handleClick}
         onKeyDown={() => { }}
       >
         {/* Top Status Badge - Compact */}
-        <Overlay
-          position="fixed"
-          y="2px"
-          x="50%"
-          zIndex={10002}
-          style={{ transform: "translateX(-50%)", pointerEvents: "auto" }}
-          clickOutsideToDismiss={false}
+        <div
+          style={{
+            position: "fixed",
+            top: "2px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 10002,
+            pointerEvents: "auto",
+            display: "flex",
+            alignItems: "center",
+            gap: Space.n6,
+            padding: `${Space.n2} ${Space.n8}`,
+            backgroundColor: "var(--surface-primary)",
+            color: "var(--primary-fg)",
+            borderRadius: Radius2.full,
+            boxShadow: "var(--elevation-n3)",
+          }}
         >
-          <Frame
-            override={{
-              py: Space.n2,
-              px: Space.n8,
-              gap: Space.n6,
-              elevation: "n3",
-              r: Radius2.full,
+          <Icon
+            src={isLocked ? Lock : Unlock}
+            size={IconSize.n10}
+            style={{ color: "var(--primary-fg)" }}
+          />
+          <span
+            style={{
+              fontSize: FontSize.n9,
+              fontWeight: "bold",
+              color: "var(--primary-fg)"
             }}
-            surface="primary"
-            layout={Layout.Row.Middle.Start}
-            spacing={Space.n8}
           >
-            {isLocked ? (
-              <Icon
-                src={Lock}
-                size={IconSize.n10}
-                style={{ color: "var(--primary-fg)" }}
-              />
-            ) : (
-              <Icon
-                src={Unlock}
-                size={IconSize.n10}
-                style={{ color: "var(--primary-fg)" }}
-              />
-            )}
-            <Text
-              size={FontSize.n9}
-              weight="bold"
-              style={{ color: "var(--primary-fg)" }}
-            >
-              {isLocked ? "LOCKED" : "INSPECT"}
-            </Text>
-          </Frame>
-        </Overlay>
+            {isLocked ? "LOCKED" : "INSPECT"}
+          </span>
+        </div>
 
         {/* Highlight Box */}
         {targetRect && (
@@ -186,49 +176,44 @@ export function InspectorOverlay() {
             }}
           >
             {/* Label Tag - Compact */}
-            <Overlay
-              position="absolute"
-              y={targetRect.top < 30 ? "0px" : "-25px"} // Flip inside if no space above
-              x="-1px"
-              zIndex={1}
+            <div
               style={{
+                position: "absolute",
+                top: targetRect.top < 30 ? "0px" : "-25px",
+                left: "-1px",
+                zIndex: 1,
                 pointerEvents: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: Space.n4,
+                padding: `0 ${Space.n6}`,
+                height: Size.n16,
+                backgroundColor: "var(--link-color)",
+                borderRadius: Radius2.sm,
+                borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
+                borderBottomRightRadius: targetRect.top < 30 ? "4px" : undefined,
+                boxShadow: "var(--elevation-n1)",
               }}
             >
-              <Frame
-                override={{
-                  py: Space.n0,
-                  px: Space.n6,
-                  h: Size.n16,
-                  gap: Space.n4,
-                  elevation: "n1",
-                  r: Radius2.sm,
-                }}
+              <span
                 style={{
-                  backgroundColor: "var(--link-color)",
-                  borderBottomLeftRadius: targetRect.top < 30 ? 0 : undefined,
-                  borderBottomRightRadius:
-                    targetRect.top < 30 ? "4px" : undefined,
+                  fontSize: FontSize.n9,
+                  fontWeight: "bold",
+                  color: "white"
                 }}
-                // 24px
-                layout={Layout.Row.Middle.Start}
-                spacing={Space.n8}
               >
-                <Text
-                  size={FontSize.n9}
-                  weight="bold"
-                  style={{ color: "white" }}
-                >
-                  {targetName}
-                </Text>
-                <Text
-                  size={FontSize.n9}
-                  style={{ color: "white", opacity: 0.8 }}
-                >
-                  {Math.round(targetRect.width)}×{Math.round(targetRect.height)}
-                </Text>
-              </Frame>
-            </Overlay>
+                {targetName}
+              </span>
+              <span
+                style={{
+                  fontSize: FontSize.n9,
+                  color: "white",
+                  opacity: 0.8
+                }}
+              >
+                {Math.round(targetRect.width)}×{Math.round(targetRect.height)}
+              </span>
+            </div>
           </div>
         )}
       </button>
@@ -256,39 +241,37 @@ export function InspectorOverlay() {
 
       {/* Notification Toast - Compact */}
       {notification && (
-        <Overlay
-          position="fixed"
-          bottom={4}
-          x="50%"
-          zIndex={10005}
-          style={{ transform: "translateX(-50%)" }}
-          clickOutsideToDismiss={false}
+        <div
+          style={{
+            position: "fixed",
+            bottom: 4,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 10005,
+            display: "flex",
+            alignItems: "center",
+            gap: Space.n8,
+            padding: `${Space.n4} ${Space.n12}`,
+            backgroundColor: "var(--surface-primary)",
+            borderRadius: Radius2.md,
+            boxShadow: "var(--elevation-n3)",
+          }}
         >
-          <Frame
-            override={{
-              py: Space.n4,
-              px: Space.n12,
-              elevation: "n3",
-              r: Radius2.md,
+          <Icon
+            src={Copy}
+            size={IconSize.n12}
+            style={{ color: "var(--primary-fg)" }}
+          />
+          <span
+            style={{
+              fontSize: FontSize.n9,
+              fontWeight: "medium",
+              color: "var(--primary-fg)"
             }}
-            surface="primary"
-            layout={Layout.Row.Middle.Start}
-            spacing={Space.n8}
           >
-            <Icon
-              src={Copy}
-              size={IconSize.n12}
-              style={{ color: "var(--primary-fg)" }}
-            />
-            <Text
-              size={FontSize.n9}
-              weight="medium"
-              style={{ color: "var(--primary-fg)" }}
-            >
-              {notification}
-            </Text>
-          </Frame>
-        </Overlay>
+            {notification}
+          </span>
+        </div>
       )}
     </>
   );

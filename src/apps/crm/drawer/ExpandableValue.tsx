@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { Action } from "@/design-system/Action";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { Text } from "@/design-system/text/Text.tsx";
+// Action removed
 import { JsonSmartView } from "./JsonSmartView";
-import { Radius2 } from "@/design-system/token/radius2";
+import * as styles from "./ExpandableValue.css";
 
 interface ExpandableValueProps {
   value: string;
@@ -23,11 +20,7 @@ export function ExpandableValue({
   // Handle null/undefined
   if (empty || rawValue === null || rawValue === undefined) {
     return (
-      <Text.Field.Value
-        style={{ color: "var(--text-tertiary)", fontSize: "12px" }}
-      >
-        —
-      </Text.Field.Value>
+      <span className={styles.emptyText}>—</span>
     );
   }
 
@@ -48,46 +41,25 @@ export function ExpandableValue({
     const hasMore = rawValue.length > threshold;
 
     return (
-      <Frame
-        layout={Layout.Row.Middle.Start}
-        wrap="wrap"
-        spacing={Space.n8}
-        override={{ gap: Space.n4 }}
-      >
+      <div className={styles.tagContainer}>
         {visibleItems.map((item, i) => (
-          <Frame
-            key={i}
-            override={{ px: Space.n8, py: Space.n2 }}
-            surface="sunken"
-            rounded={Radius2.sm}
-          >
-            <Text.Field.Value
-              style={{ fontSize: "12px", color: "var(--text-secondary)" }}
-            >
+          <div key={i} className={styles.tag}>
+            <span className={styles.textValue} style={{ fontSize: "12px" }}>
               {String(item)}
-            </Text.Field.Value>
-          </Frame>
+            </span>
+          </div>
         ))}
         {hasMore && (
-          <Action onClick={() => setIsExpanded(!isExpanded)}>
-            <Frame
-              w={Size.hug}
-              override={{ px: Space.n8, py: Space.n2 }}
-              surface="sunken"
-              rounded={Radius2.sm}
-              style={{ cursor: "pointer" }}
-            >
-              <Text.Field.Value
-                style={{ fontSize: "11px", color: "var(--primary-text)" }}
-              >
-                {isExpanded
-                  ? "Show Less"
-                  : `+${rawValue.length - threshold} more`}
-              </Text.Field.Value>
-            </Frame>
-          </Action>
+          <button
+            className={styles.showMoreButton}
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded
+              ? "Show Less"
+              : `+${rawValue.length - threshold} more`}
+          </button>
         )}
-      </Frame>
+      </div>
     );
   }
 
@@ -102,43 +74,22 @@ export function ExpandableValue({
     isExpanded || !isLong ? value : `${value.slice(0, 60)}...`;
 
   return (
-    <Frame
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n0}
-      override={{ gap: Space.n4 }}
-    >
-      <Text.Field.Value
-        style={{
-          color: empty ? "var(--text-tertiary)" : "var(--text-secondary)",
-          fontSize: "12px",
-          lineHeight: "1.5",
-          wordBreak: "break-all",
-        }}
-      >
+    <div className={styles.container}>
+      <span className={styles.textValue}>
         {displayValue}
-      </Text.Field.Value>
+      </span>
       {isLong && (
-        <Action onClick={() => setIsExpanded(!isExpanded)}>
-          <Frame
-            w={Size.hug}
-            override={{ px: Space.n8, py: Space.n2 }}
-            surface="sunken"
-            rounded={Radius2.sm}
-            style={{ cursor: "pointer" }}
-          >
-            <Text.Field.Value
-              style={{ fontSize: "11px", color: "var(--primary-text)" }}
-            >
-              {isExpanded ? "Show Less" : "Show More"}
-            </Text.Field.Value>
-          </Frame>
-        </Action>
+        <button
+          className={styles.showMoreButton}
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          {isExpanded ? "Show Less" : "Show More"}
+        </button>
       )}
-    </Frame>
+    </div>
   );
 }
 
-// Keep export for compatibility but no-op or simplify if used elsewhere
 export function parseValueIntoParts(value: string, _rawValue: unknown) {
   return [{ type: "text" as const, content: value }];
 }

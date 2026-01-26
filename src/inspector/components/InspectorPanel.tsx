@@ -12,15 +12,13 @@ import {
   X,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Action } from "@/design-system/Action";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { Text } from "@/design-system/text/Text";
+import { Action } from "@/ui/primitives/Action";
 import {
   FontSize,
   Size,
   Space,
-} from "@/design-system/token/token.const.1tier";
+} from "@/legacy-design-system/token/token.const.1tier";
+import { Copy as CopyIcon } from "lucide-react";
 import type { ComponentStackItem } from "../lib/fiber-utils";
 import { generateJSX } from "../lib/inspector-utils";
 import {
@@ -30,7 +28,7 @@ import {
   TypographyControl,
 } from "./InspectorControls";
 import { PropertyTree } from "./PropertyTree";
-import { Radius2 } from "@/design-system/token/radius2";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 const SECTION_MAPPING: Record<string, string> = {
   // Layout (Inner Flow)
@@ -246,266 +244,287 @@ export function InspectorPanel({
         left: position.x,
         zIndex: 10003,
         pointerEvents: "auto",
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: Radius2.lg,
+        border: "1px solid var(--border-subtle)",
+        boxShadow: "var(--elevation-n5)",
+        maxHeight: "80vh",
+        width: 260,
+        backgroundColor: "var(--surface-base)",
       }}
     >
-      <Frame
-        override={{
-          r: Radius2.lg,
-          border: true,
+      {/* Header */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingTop: Space.n2,
+          paddingBottom: Space.n2,
+          paddingLeft: Space.n4,
+          paddingRight: Space.n4,
+          borderBottom: "1px solid var(--border-subtle)",
+          cursor: "grab",
+          userSelect: "none",
+          backgroundColor: "var(--surface-sunken)", // sunken
+          height: Size.n44,
         }}
-        style={
-          {
-            boxShadow: "var(--elevation-n5)",
-            maxHeight: "80vh",
-            width: 260,
-          } as React.CSSProperties
-        }
-        surface="base"
+        onMouseDown={handleMouseDown}
       >
-        {/* Header */}
-        <Frame
-          override={{
-            py: Space.n0,
-            px: Space.n4,
-            justify: "between",
-            border: true,
-          }}
+        <div
           style={{
-            cursor: "grab",
-            userSelect: "none",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: Space.n6,
+            flex: 1,
+            minHeight: Size.n32
           }}
-          surface="sunken"
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-          h={Size.n44}
-          onMouseDown={handleMouseDown}
         >
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n8}
-            override={{ gap: Space.n6, flex: 1, minHeight: Size.n32 }}
-          >
-            <Lock size={12} className="text-primary" />
-            <Text weight="bold" size={FontSize.n10}>
-              {title}
-            </Text>
-          </Frame>
-          <Frame
-            override={{ gap: Space.n2 }}
-            layout={Layout.Row.Middle.End}
-            spacing={Space.n8}
-          >
-            <Action
-              icon={Copy}
-              variant="ghost"
-              size="xs"
-              iconSize={12}
-              tooltip="Copy HTML"
-              onClick={(e: any) => {
-                e.stopPropagation();
-                handleCopy();
-              }}
-            />
-            <Action
-              icon={X}
-              variant="ghost"
-              size="xs"
-              iconSize={12}
-              tooltip="Close Inspector"
-              onClick={(e: any) => {
-                e.stopPropagation();
-                onClose();
-              }}
-            />
-          </Frame>
-        </Frame>
+          <Lock size={12} className="text-primary" />
+          <span style={{ fontWeight: "bold", fontSize: FontSize.n10, color: "var(--text-primary)" }}>
+            {title}
+          </span>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: Space.n2,
+          }}
+        >
+          <Action
+            icon={CopyIcon}
+            variant="ghost"
+            size="xs"
+            iconSize={12}
+            tooltip="Copy HTML"
+            onClick={(e: any) => {
+              e.stopPropagation();
+              handleCopy();
+            }}
+          />
+          <Action
+            icon={X}
+            variant="ghost"
+            size="xs"
+            iconSize={12}
+            tooltip="Close Inspector"
+            onClick={(e: any) => {
+              e.stopPropagation();
+              onClose();
+            }}
+          />
+        </div>
+      </div>
 
-        {/* Content */}
-        <Frame override={{ py: Space.n8, px: Space.n0 }} scroll>
-          {/* File Path */}
-          <Frame
-            override={{
-              pt: Space.n0,
-              pr: Space.n8,
-              pb: Space.n8,
-              pl: Space.n8,
+      {/* Content */}
+      <div style={{ overflowY: "auto", paddingBottom: Space.n8 }}>
+        {/* File Path */}
+        <div
+          style={{
+            padding: Space.n8,
+            paddingTop: Space.n8,
+            paddingBottom: Space.n8,
+          }}
+        >
+          <span
+            style={{
+              fontSize: FontSize.n13,
+              color: "var(--text-tertiary)",
+              wordBreak: "break-all"
             }}
           >
-            <Text
-              size={FontSize.n13}
-              color="tertiary"
-              style={{ wordBreak: "break-all" }}
-            >
-              {name}
-            </Text>
-          </Frame>
+            {name}
+          </span>
+        </div>
 
-          {/* Properties Sections */}
-          {properties.map((section: any) => {
-            const SectionIcon = SECTION_ICONS[section.section] || Layers;
+        {/* Properties Sections */}
+        {properties.map((section: any) => {
+          const SectionIcon = SECTION_ICONS[section.section] || Layers;
 
-            return (
-              <Frame
-                override={{
-                  gap: Space.n2,
-                  pt: Space.n0,
-                  pr: Space.n8,
-                  pb: Space.n8,
-                  pl: Space.n8,
-                }}
-                key={section.section}
-              >
-                <Frame
-                  layout={Layout.Row.Middle.Center}
-                  spacing={Space.n8}
-                  override={{ minHeight: Size.n32, gap: Space.n4, py: Space.n4 }}
-                >
-                  <SectionIcon size={10} className="text-tertiary" />
-                  <Text
-                    weight="bold"
-                    size={FontSize.n9}
-                    color="tertiary"
-                    style={{
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    {section.section}
-                  </Text>
-                </Frame>
-
-                {/* Visual Controls */}
-                {section.section === "Layout" ? (
-                  <LayoutControl props={section.items} />
-                ) : section.section === "Sizing" ? (
-                  <SizingControl props={section.items} />
-                ) : section.section === "Appearance" ? (
-                  <AppearanceControl props={section.items} />
-                ) : section.section === "Typography" ? (
-                  <TypographyControl props={section.items} />
-                ) : (
-                  <Frame
-                    override={{
-                      gap: Space.n0,
-                      r: Radius2.sm,
-                      border: true,
-                      clip: true,
-                    }}
-                  >
-                    {Object.entries(section.items).map(([key, value]: any, i: any) => (
-                      <PropertyTree
-                        key={key}
-                        label={key}
-                        value={value}
-                        background={i % 2 === 0 ? "base" : "sunken"}
-                      />
-                    ))}
-                  </Frame>
-                )}
-              </Frame>
-            );
-          })}
-
-          {/* Raw Sections (Override & Style) */}
-          {rawSections.map((section: any) => (
-            <Frame
-              override={{
+          return (
+            <div
+              key={section.section}
+              style={{
+                display: "flex",
+                flexDirection: "column",
                 gap: Space.n2,
-                pt: Space.n0,
-                pr: Space.n8,
-                pb: Space.n8,
-                pl: Space.n8,
+                paddingLeft: Space.n8,
+                paddingRight: Space.n8,
+                paddingBottom: Space.n8
               }}
-              key={section.title}
             >
-              <Frame
-                layout={Layout.Row.Middle.Center}
-                spacing={Space.n8}
-                override={{ minHeight: Size.n32, gap: Space.n4, py: Space.n4 }}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: Space.n4,
+                  minHeight: Size.n32,
+                  paddingTop: Space.n4,
+                  paddingBottom: Space.n4
+                }}
               >
-                <section.icon size={10} className="text-tertiary" />
-                <Text
-                  weight="bold"
-                  size={FontSize.n9}
-                  color="tertiary"
+                <SectionIcon size={10} className="text-tertiary" />
+                <span
                   style={{
+                    fontWeight: "bold",
+                    fontSize: FontSize.n9,
+                    color: "var(--text-tertiary)",
                     textTransform: "uppercase",
                     letterSpacing: "0.05em",
                   }}
                 >
-                  {section.title}
-                </Text>
-              </Frame>
-              <Frame
-                override={{
-                  gap: Space.n0,
-                  r: Radius2.sm,
-                  border: true,
-                  clip: true,
-                }}
-              >
-                {Object.entries(section.data).map(([key, value]: any, i: any) => (
-                  <PropertyTree
-                    key={key}
-                    label={key}
-                    value={value}
-                    background={i % 2 === 0 ? "base" : "sunken"}
-                  />
-                ))}
-              </Frame>
-            </Frame>
-          ))}
+                  {section.section}
+                </span>
+              </div>
 
-          {/* Hierarchy */}
-          {hierarchyStack.length > 0 && (
-            <Frame
-              override={{
-                gap: Space.n2,
-                pt: Space.n0,
-                pr: Space.n8,
-                pb: Space.n8,
-                pl: Space.n8,
-              }}
-            >
-              <Frame
-                layout={Layout.Row.Middle.Center}
-                spacing={Space.n8}
-                override={{ minHeight: Size.n32, gap: Space.n4, py: Space.n4 }}
-              >
-                <AppWindow size={10} className="text-tertiary" />
-                <Text
-                  weight="bold"
-                  size={FontSize.n9}
-                  color="tertiary"
+              {/* Visual Controls */}
+              {section.section === "Layout" ? (
+                <LayoutControl props={section.items} />
+              ) : section.section === "Sizing" ? (
+                <SizingControl props={section.items} />
+              ) : section.section === "Appearance" ? (
+                <AppearanceControl props={section.items} />
+              ) : section.section === "Typography" ? (
+                <TypographyControl props={section.items} />
+              ) : (
+                <div
                   style={{
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
+                    borderRadius: Radius2.sm,
+                    border: "1px solid var(--border-subtle)",
+                    overflow: "hidden"
                   }}
                 >
-                  Hierarchy
-                </Text>
-              </Frame>
-              <Frame
-                override={{
-                  gap: Space.n0,
-                  r: Radius2.sm,
-                  border: true,
-                  clip: true,
+                  {Object.entries(section.items).map(([key, value]: any, i: any) => (
+                    <PropertyTree
+                      key={key}
+                      label={key}
+                      value={value}
+                      background={i % 2 === 0 ? "base" : "sunken"}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* Raw Sections (Override & Style) */}
+        {rawSections.map((section: any) => (
+          <div
+            key={section.title}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: Space.n2,
+              paddingLeft: Space.n8,
+              paddingRight: Space.n8,
+              paddingBottom: Space.n8
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: Space.n4,
+                minHeight: Size.n32,
+                paddingTop: Space.n4,
+                paddingBottom: Space.n4
+              }}
+            >
+              <section.icon size={10} className="text-tertiary" />
+              <span
+                style={{
+                  fontWeight: "bold",
+                  fontSize: FontSize.n9,
+                  color: "var(--text-tertiary)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
                 }}
               >
-                {hierarchyStack.map((item: any, i: any) => (
-                  <PropertyTree
-                    key={item.key}
-                    label={item.key}
-                    value={item.value}
-                    background={i % 2 === 0 ? "base" : "sunken"}
-                  />
-                ))}
-              </Frame>
-            </Frame>
-          )}
-        </Frame>
-      </Frame>
+                {section.title}
+              </span>
+            </div>
+            <div
+              style={{
+                borderRadius: Radius2.sm,
+                border: "1px solid var(--border-subtle)",
+                overflow: "hidden"
+              }}
+            >
+              {Object.entries(section.data).map(([key, value]: any, i: any) => (
+                <PropertyTree
+                  key={key}
+                  label={key}
+                  value={value}
+                  background={i % 2 === 0 ? "base" : "sunken"}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* Hierarchy */}
+        {hierarchyStack.length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: Space.n2,
+              paddingLeft: Space.n8,
+              paddingRight: Space.n8,
+              paddingBottom: Space.n8
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: Space.n4,
+                minHeight: Size.n32,
+                paddingTop: Space.n4,
+                paddingBottom: Space.n4
+              }}
+            >
+              <AppWindow size={10} className="text-tertiary" />
+              <span
+                style={{
+                  fontWeight: "bold",
+                  fontSize: FontSize.n9,
+                  color: "var(--text-tertiary)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                Hierarchy
+              </span>
+            </div>
+            <div
+              style={{
+                borderRadius: Radius2.sm,
+                border: "1px solid var(--border-subtle)",
+                overflow: "hidden"
+              }}
+            >
+              {hierarchyStack.map((item: any, i: any) => (
+                <PropertyTree
+                  key={item.key}
+                  label={item.key}
+                  value={item.value}
+                  background={i % 2 === 0 ? "base" : "sunken"}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

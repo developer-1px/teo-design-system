@@ -1,4 +1,3 @@
-
 import {
   AlignCenter,
   AlignJustify,
@@ -7,25 +6,18 @@ import {
   ChevronDown,
   ChevronRight,
   CornerUpRight,
-  Eye,
-  Lock,
-  Minus,
-  MoreHorizontal,
   Plus,
-  Settings,
-  Sun,
 } from "lucide-react";
-import { useState } from "react";
-import { useAccordion, useTabs } from "@/design-system/hooks"; // Keeping headless logic
+import { useAccordion, useTabs } from "@/design-system/hooks";
+import * as styles from "../SlideApp.css";
 
 // Minimal Input Component adapted for Grid
-const GridInput = ({ label, value, readOnly, fullWidth }: { label?: string; value: string; readOnly?: boolean; fullWidth?: boolean }) => (
+// Renders 2 elements: Label and Input wrapper
+const GridInput = ({ label, value, readOnly, fullWidth, span }: { label?: string; value: string; readOnly?: boolean; fullWidth?: boolean; span?: number }) => (
   <>
-    {label && <label className="grid-label">{label}</label>}
-    <div className={`grid-value ${fullWidth ? 'full-width' : ''}`} style={fullWidth ? { gridColumn: '2 / -1' } : {}}>
-      <div className="input-wrapper">
-        <input className="native-input" defaultValue={value} readOnly={readOnly} />
-      </div>
+    {label && <label className={styles.label} style={fullWidth ? { gridColumn: "1" } : {}}>{label}</label>}
+    <div className={styles.inputWrapper} style={fullWidth ? { gridColumn: "2 / -1" } : span ? { gridColumn: `span ${span}` } : {}}>
+      <input className={styles.input} defaultValue={value} readOnly={readOnly} />
     </div>
   </>
 );
@@ -42,29 +34,47 @@ const ALIGNMENT_TOOLS = [
 
 export function PropertiesPanel() {
   const tabs = ["DESIGN", "ANIMATE"];
-  const { selectedTab, getTabListProps, getTabProps } = useTabs({
+  const { selectedTab, getTabProps } = useTabs({
     tabs,
     defaultTab: "DESIGN",
   });
 
   const sections = ["LAYER", "TEXT", "FILL", "STROKE", "EFFECTS", "EXPORT"];
-  const { getItemProps, getPanelProps } = useAccordion({
+  const { getItemProps } = useAccordion({
     items: sections,
     defaultExpanded: ["LAYER", "TEXT", "FILL"],
     allowMultiple: true,
   });
 
   return (
-    <aside className="slide-panel-right">
+    <div className={styles.panelRoot}>
       {/* Tabs */}
-      <div className="props-tabs" {...getTabListProps()}>
+      <div className={styles.panelTabs}>
         {tabs.map(tab => {
           const { onClick } = getTabProps(tab);
+          const isActive = selectedTab === tab;
           return (
             <button
               key={tab}
-              className={`props-tab ${selectedTab === tab ? 'active' : ''}`}
               onClick={onClick}
+              className={styles.propHeader}
+              style={{
+                flex: 1, // Reset flex since it's now grid item? No, propHeader is style({...}).
+                // Actually tabs are in 1fr 1fr grid. Button should fill.
+                // propHeader has width:100% implicitly? No.
+                // I will use inline style for simple fill + active state border.
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                borderBottom: isActive ? "2px solid black" : "2px solid transparent",
+                color: isActive ? "black" : "gray",
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                fontWeight: 500,
+                fontSize: 12
+              }}
             >
               {tab}
             </button>
@@ -72,137 +82,67 @@ export function PropertiesPanel() {
         })}
       </div>
 
-      <div className="props-content">
-        {/* Alignment Toolbar - Custom Row */}
-        <div className="alignment-row">
+      <div className={styles.panelScroll}>
+        {/* Alignment Toolbar */}
+        <div className={styles.alignmentBar}>
           {ALIGNMENT_TOOLS.map((tool: any, i) => (
             tool.separator ? (
-              <div key={i} className="divider-v" style={{ height: 16 }} />
+              <div key={i} className={styles.toolbarSeparator} style={{ height: 16, margin: "auto" }} />
             ) : (
-              <button key={i} className={`icon-btn ${tool.active ? 'active' : ''}`} style={{ width: 24, height: 24 }} title={tool.label}>
-                <tool.icon size={12} style={{ transform: tool.rotation ? `rotate(${tool.rotation}deg)` : undefined }} />
+              <button key={i} className={`${styles.iconBtn} ${tool.active ? 'active' : ''}`} style={{ width: "100%", aspectRatio: "1" }} title={tool.label}>
+                <tool.icon size={14} style={{ transform: tool.rotation ? `rotate(${tool.rotation}deg)` : undefined }} />
               </button>
             )
           ))}
         </div>
 
-        <div className="divider-h" />
+        <div className={styles.divider} />
 
-        {/* Transform Section - Uses Master Grid */}
-        <div className="prop-row">
-          <GridInput label="X" value="400" />
-          <GridInput label="Y" value="225" />
-          <div /> {/* Suffix spacer */}
-        </div>
-        <div className="prop-row">
-          <GridInput label="W" value="800" />
-          <GridInput label="H" value="450" />
-          <button className="icon-btn" style={{ width: 24, padding: 0, justifySelf: "center" }}><Lock size={12} /></button>
-        </div>
-        <div className="prop-row">
-          <GridInput label="°" value="0" />
-          <GridInput label="R" value="0" />
-          <div />
-        </div>
+        {/* Transform Section - Direct Items in Panel Grid */}
+        <GridInput label="X" value="400" />
+        <GridInput label="Y" value="225" />
+        <GridInput label="W" value="800" />
+        <GridInput label="H" value="450" />
+        <GridInput label="°" value="0" />
+        <GridInput label="R" value="0" />
 
-        <div className="divider-h" />
+        <div className={styles.divider} />
 
-        {/* Layer Section */}
-        <div className="prop-section">
-          <div className="prop-header" onClick={getItemProps("LAYER").onToggle}>
-            <div className="prop-title">
-              {getItemProps("LAYER").expanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-              LAYER
+        {/* Sections */}
+        {sections.map(section => (
+          <div key={section} style={{ display: "contents" }}>
+            <div className={styles.propHeader} onClick={getItemProps(section).onToggle}>
+              <div className={styles.titleGroup}>
+                {getItemProps(section).expanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+                {section}
+              </div>
+              <Plus size={12} style={{ opacity: 0.5 }} />
             </div>
-            <Plus size={12} style={{ opacity: 0.5 }} />
+            {getItemProps(section).expanded && (
+              <div className={styles.sectionBody}>
+                {/* Replicating subgrid behavior or just using the grid directly for items */}
+                {section === "TEXT" ? (
+                  <>
+                    <div style={{ gridColumn: '1 / -1', display: 'flex' }}>
+                      {/* Font Family - Spans Full Row */}
+                      <div className={styles.inputWrapper}>
+                        <input className={styles.input} defaultValue="Inter" />
+                        <ChevronDown size={10} style={{ opacity: 0.5 }} />
+                      </div>
+                    </div>
+                    <GridInput label="S" value="Regular" fullWidth />
+                    <GridInput label="Px" value="42" />
+                    <div /> {/* Spacer for 4th col */}
+                  </>
+                ) : (
+                  <GridInput label="Val" value="Normal" fullWidth />
+                )}
+              </div>
+            )}
+            <div className={styles.divider} />
           </div>
-          {getItemProps("LAYER").expanded && (
-            <div className="prop-body">
-              <div className="prop-row">
-                {/* Manually placing items in grid cells for irregular layout */}
-                <div className="grid-value" style={{ gridColumn: '1 / 4' }}>
-                  <div className="input-wrapper">
-                    <input className="native-input" defaultValue="Normal" readOnly />
-                    <ChevronDown size={10} style={{ opacity: 0.5 }} />
-                  </div>
-                </div>
-                <div className="grid-value" style={{ gridColumn: '4 / -1' }}>
-                  <div className="input-wrapper">
-                    <Eye size={10} style={{ marginRight: 6, opacity: 0.5 }} />
-                    <input className="native-input" defaultValue="100%" readOnly />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="divider-h" />
-
-        {/* Text Section */}
-        <div className="prop-section">
-          <div className="prop-header" onClick={getItemProps("TEXT").onToggle}>
-            <div className="prop-title">
-              {getItemProps("TEXT").expanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-              TEXT
-            </div>
-            <Plus size={12} style={{ opacity: 0.5 }} />
-          </div>
-          {getItemProps("TEXT").expanded && (
-            <div className="prop-body">
-              {/* Full width font family */}
-              <div className="prop-row">
-                <div className="grid-value" style={{ gridColumn: '1 / -1' }}>
-                  <div className="input-wrapper">
-                    <input className="native-input" defaultValue="Inter" readOnly />
-                    <ChevronDown size={10} style={{ opacity: 0.5 }} />
-                  </div>
-                </div>
-              </div>
-              <div className="prop-row">
-                <div className="grid-value" style={{ gridColumn: '1 / 4' }}>
-                  <div className="input-wrapper">
-                    <input className="native-input" defaultValue="Regular" readOnly />
-                    <ChevronDown size={10} style={{ opacity: 0.5 }} />
-                  </div>
-                </div>
-                <GridInput value="42" readOnly />
-                <div />
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="divider-h" />
-
-        {/* Fill Section */}
-        <div className="prop-section">
-          <div className="prop-header" onClick={getItemProps("FILL").onToggle}>
-            <div className="prop-title">
-              {getItemProps("FILL").expanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
-              FILL
-            </div>
-            <Plus size={12} style={{ opacity: 0.5 }} />
-          </div>
-          {getItemProps("FILL").expanded && (
-            <div className="prop-body">
-              <div className="prop-row">
-                <div style={{ width: 24, height: 24, border: "1px solid var(--border-color)", borderRadius: 4, background: "#F4F4F5", gridColumn: '1' }} />
-                <div className="grid-value" style={{ gridColumn: '2 / 5' }}>
-                  <div className="input-wrapper">
-                    <input className="native-input" defaultValue="F4F4F5" readOnly />
-                    <span style={{ fontSize: 10, color: "var(--text-tertiary)" }}>100%</span>
-                  </div>
-                </div>
-                <div style={{ gridColumn: '5', justifySelf: 'center' }}>
-                  <button className="icon-btn" style={{ width: 24, padding: 0 }}><Minus size={12} /></button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
+        ))}
       </div>
-    </aside>
+    </div>
   );
 }

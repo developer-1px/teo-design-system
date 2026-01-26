@@ -27,16 +27,19 @@
         "./src/*"
       ],
       "@/design-system/*": [
+        "./src/design-system/*"
+      ],
+      "@legacy-design-system/*": [
         "./src/legacy-design-system/*"
       ],
       "@design-system/*": [
-        "./src/legacy-design-system/*"
+        "./src/design-system/*"
       ],
       "@ui/*": [
         "./src/ui/*"
       ],
       "@hooks/*": [
-        "./src/legacy-design-system/hooks/*"
+        "./src/design-system/hooks/*"
       ]
     },
     /* Linting */

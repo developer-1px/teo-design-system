@@ -1,18 +1,19 @@
+import * as styles from "../SlideApp.css";
 
 export function SlidesPanel() {
   const slides = Array.from({ length: 8 }, (_, i) => i + 1);
 
   return (
-    <aside className="slide-panel">
-      <div className="panel-header">LAYERS</div>
-      <div className="slides-list">
+    <div style={{ display: "contents" }}>
+      <div className={styles.propHeader} style={{ paddingLeft: 16 }}>LAYERS</div>
+      <div className={styles.slidesList}>
         {slides.map((num) => (
-          <div key={num} className={`slide-thumb-item ${num === 1 ? 'active' : ''}`}>
-            <span className="slide-num">{num}</span>
-            <div className="slide-thumb-preview" />
+          <div key={num} className={`${styles.slideItem} ${num === 1 ? 'active' : ''}`}>
+            <span className={styles.slideNum}>{num}</span>
+            <div className={styles.slidePreview} />
           </div>
         ))}
       </div>
-    </aside>
+    </div>
   );
 }

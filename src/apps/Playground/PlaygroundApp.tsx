@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { Frame } from "@/design-system/Frame/Frame";
-import { Text } from "@/design-system/text/Text";
-import { Size, Space } from "@/design-system/token/token.const.1tier";
+import { Frame } from "@/legacy-design-system/Frame/Frame";
+import { Text } from "@/legacy-design-system/text/Text";
+import { Size, Space } from "@/legacy-design-system/token/token.const.1tier";
 import { useEventSourcingHistory } from "@/design-system/hooks/state/useEventSourcingHistory";
 import { useHybridClipboard } from "@/design-system/hooks/state/useHybridClipboard";
 import { useOSShortcuts } from "@/design-system/hooks/interaction/useOSShortcuts";
@@ -14,7 +14,7 @@ import {
     type Shape,
     type TodoItem,
 } from "./types";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
+import { Layout } from "@/legacy-design-system/Frame/Layout/Layout.ts";
 
 /**
  * Playground App

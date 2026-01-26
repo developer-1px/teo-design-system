@@ -1,10 +1,8 @@
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 
-import { Divider } from "@/design-system/Divider";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { ResizeHandle, useResizable } from "@/design-system/Resizable";
+import { Divider } from "@/ui/Divider";
+import { ResizeHandle, useResizable } from "@/ui/Resizable";
 import { formatColumnLabel } from "./dataLoader";
 import { DrawerActivity } from "./drawer/DrawerActivity";
 import { DrawerFooter } from "./drawer/DrawerFooter";
@@ -17,6 +15,7 @@ import {
 } from "./drawer/drawerUtils";
 import { currentDataAtom, selectedRowIdAtom } from "./store";
 import type { DataRow } from "./types";
+import * as styles from "./CRMDrawer.css";
 
 export function CRMDrawer() {
   const data = useAtomValue(currentDataAtom);
@@ -31,7 +30,7 @@ export function CRMDrawer() {
   // Resizable hook
   const { size, resizeHandleProps } = useResizable({
     direction: "right",
-    defaultSize: 6,
+    defaultSize: 320, // defaultSize legacy was 6? wait, code said 6? typo? 320.
     minSize: 320,
     maxSize: 1000,
     storageKey: "crm-drawer-width",
@@ -54,24 +53,13 @@ export function CRMDrawer() {
   }
 
   return (
-    <Frame
-      override={{
-        borderLeft: true, // Flat separation
-        zIndex: ZIndex.n100,
-      }}
+    <div
+      className={styles.drawer}
       style={{
-        width: `${size}px`,
-        boxShadow: "var(--elevation-n5)", // Critical focus level
-        position: "absolute",
-        top: 0,
-        right: 0,
-        bottom: 0,
-        // Drawer Animation: Slide in from right
-        transition: "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)", // Smooth "iOS-like" ease
+        width: size,
         transform: isVisible ? "translateX(0)" : "translateX(100%)",
-        pointerEvents: isVisible ? "auto" : "none", // Prevent interaction when hidden
+        pointerEvents: isVisible ? "auto" : "none",
       }}
-      surface="base" // Tone match with Main Area
     >
       <ResizeHandle direction="right" {...resizeHandleProps} />
       {displayRow ? (
@@ -83,13 +71,8 @@ export function CRMDrawer() {
             onClose={handleClose}
           />
 
-          <Frame
-            layout={Layout.Col.Left.Start}
-            spacing={Space.n12}
-            scroll
-            override={{ fill: true }}
-          >
-            <Frame override={{ p: Space.n24, gap: Space.n32 }}>
+          <div className={styles.content}>
+            <div className={styles.section}>
               <DrawerProperties
                 entries={Object.entries(displayRow).filter(
                   ([key]) => !key.startsWith("_") && key !== "avatarColor",
@@ -101,12 +84,12 @@ export function CRMDrawer() {
               <Divider />
 
               <DrawerActivity />
-            </Frame>
-          </Frame>
+            </div>
+          </div>
 
           <DrawerFooter onClose={handleClose} />
         </>
       ) : null}
-    </Frame>
+    </div>
   );
 }

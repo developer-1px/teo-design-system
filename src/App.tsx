@@ -1,20 +1,18 @@
 import { useState, useMemo, useEffect } from "react";
 import { HashRouter, Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import {
-
   FileCode,
   FileText,
   Home,
   Keyboard,
-
   Mail,
-
   Moon,
   Presentation,
   HelpCircle,
   Sun,
   Table as TableIcon,
   Users,
+  LayoutGrid,
 } from "lucide-react";
 
 
@@ -26,24 +24,18 @@ import { SlideApp } from "./apps/slide/SlideApp";
 import { TableApp } from "./apps/TableApp";
 import { WhyApp } from "./apps/WhyApp";
 import { CRMApp } from "./apps/crm/CRMApp";
+import { DocsApp } from "@/apps/DocsApp/DocsApp";
 
-import { Icon } from "@/design-system/Icon";
-import { Text } from "@/design-system/text/Text";
+import { Icon } from "@/ui/primitives/Icon";
 import { useTheme } from "@/design-system/theme";
-import {
-  FontSize,
-  IconSize,
-  Size,
-  Space,
-  ZIndex,
-} from "@/design-system/token/token.const.1tier";
-import { Radius2 } from "@/design-system/token/radius2";
+import { vars } from "@/design-system/theme.css.ts";
 
 import { InspectorOverlay } from "./inspector/InspectorOverlay";
+import { MainApp } from "./apps/MainApp/MainApp";
 import { CodeNotebookApp } from "./apps/CodeNotebook/CodeNotebookApp";
 import { CalendarApp } from "./apps/CalendarApp";
 
-import { CommandPalette, type PaletteItem } from "@/design-system/CommandPalette/CommandPalette";
+import { CommandPalette, type PaletteItem } from "@/ui/CommandPalette/CommandPalette";
 import { useCommandSystem } from "@/design-system/hooks/interaction/useCommandSystem";
 import { SystemCommand } from "@/design-system/hooks/interaction/commands";
 import { PlaygroundApp } from "./apps/Playground/PlaygroundApp";
@@ -69,43 +61,42 @@ function NavItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Frame
-        w={Size.n32}
-        h={Size.n32}
-        layout={Layout.Row.Middle.Center}
-        rounded={Radius2.md}
+      <div
         style={{
-          color: isActive || hovered ? "var(--text-primary)" : "var(--text-tertiary)",
-          backgroundColor: isActive || hovered ? "var(--surface-sunken)" : "transparent",
+          width: vars.space.n32,
+          height: vars.space.n32,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: vars.radius.n12, // MD
+          color: isActive || hovered ? vars.color.text.primary : vars.color.text.tertiary,
+          backgroundColor: isActive || hovered ? vars.color.surface.sunken : "transparent",
           transition: "all 0.2s ease",
         }}
       >
-        <Icon src={IconComponent} size={IconSize.n20} />
-      </Frame>
+        <Icon src={IconComponent} size={20} />
+      </div>
 
       {hovered && (
-        <Frame
-          override={{
-            p: Space.n4,
-            px: Space.n8,
-            zIndex: ZIndex.n200,
-          }}
-          rounded={Radius2.sm}
+        <div
           style={{
-            backgroundColor: "var(--surface-inverse)",
-            color: "var(--text-inverse)",
+            padding: `${vars.space.n4} ${vars.space.n8}`,
+            zIndex: 200,
+            borderRadius: vars.radius.n6,
+            backgroundColor: vars.color.text.primary, // Inverse roughly
+            color: vars.color.text.inverse,
             position: "absolute",
             bottom: "100%",
             left: "50%",
             transform: "translateX(-50%)",
             marginBottom: "8px",
             whiteSpace: "nowrap",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+            boxShadow: vars.elevation.n2,
             pointerEvents: "none",
           }}
         >
-          <Text size={FontSize.n12}>{label}</Text>
-        </Frame>
+          <span style={{ fontSize: vars.font.size.n12 }}>{label}</span>
+        </div>
       )}
     </Link>
   );
@@ -116,75 +107,82 @@ function ThemeToggleItem() {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <Frame
+    <div
       onClick={toggleTheme}
-      w={Size.n32}
-      h={Size.n32}
-      layout={Layout.Row.Middle.Center}
-      rounded={Radius2.md}
       style={{
+        width: vars.space.n32,
+        height: vars.space.n32,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: vars.radius.n12,
         cursor: "pointer",
-        color: hovered ? "var(--text-primary)" : "var(--text-tertiary)",
-        backgroundColor: hovered ? "var(--surface-sunken)" : "transparent",
+        color: hovered ? vars.color.text.primary : vars.color.text.tertiary,
+        backgroundColor: hovered ? vars.color.surface.sunken : "transparent",
         transition: "all 0.2s ease",
         position: "relative",
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Icon src={theme === "light" ? Moon : Sun} size={IconSize.n20} />
+      <Icon src={theme === "light" ? Moon : Sun} size={20} />
       {hovered && (
-        <Frame
-          override={{
-            p: Space.n4,
-            px: Space.n8,
-            zIndex: ZIndex.n200,
-          }}
-          rounded={Radius2.sm}
+        <div
           style={{
-            backgroundColor: "var(--surface-inverse)",
-            color: "var(--text-inverse)",
+            padding: `${vars.space.n4} ${vars.space.n8}`,
+            zIndex: 200,
+            borderRadius: vars.radius.n6,
+            backgroundColor: vars.color.text.primary,
+            color: vars.color.text.inverse,
             position: "absolute",
             bottom: "100%",
             left: "50%",
             transform: "translateX(-50%)",
             marginBottom: "8px",
             whiteSpace: "nowrap",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+            boxShadow: vars.elevation.n2,
             pointerEvents: "none",
           }}
         >
-          <Text size={FontSize.n12}>Toggle Theme</Text>
-        </Frame>
+          <span style={{ fontSize: vars.font.size.n12 }}>Toggle Theme</span>
+        </div>
       )}
-    </Frame>
+    </div>
   );
 }
 
 function Navigation() {
   return (
-    <Frame
-      override={{
-        p: Space.n4,
-        gap: Space.n4,
-        zIndex: ZIndex.n100,
+    <div
+      style={{
+        padding: vars.space.n4,
+        gap: vars.space.n4,
+        zIndex: 100,
+        borderRadius: vars.radius.full,
+        position: "fixed",
+        bottom: 20,
+        left: "50%",
+        transform: "translateX(-50%)",
+        backgroundColor: vars.color.surface.raised,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: vars.space.n40,
+        boxShadow: vars.elevation.n3,
       }}
-      rounded={Radius2.full}
-      style={{ position: "fixed", bottom: 20, left: "50%", transform: "translateX(-50%)" }}
-      surface="raised"
-      layout={Layout.Row.Middle.Center}
-      h={Size.n40}
     >
-      <NavItem to="/" label="Design System" icon={Home} />
+      <NavItem to="/" label="Home" icon={Home} />
+      <NavItem to="/design-system" label="Design System" icon={LayoutGrid} />
       <NavItem to="/table" label="Table" icon={TableIcon} />
       <NavItem to="/calendar" label="Calendar" icon={FileText} />
+      <NavItem to="/docs" label="Docs" icon={FileText} />
       <NavItem to="/cms" label="CMS" icon={FileText} />
       <NavItem to="/crm" label="CRM" icon={Users} />
       <NavItem to="/notebook" label="Code" icon={FileCode} />
       <NavItem to="/playground" label="Playground" icon={Keyboard} />
 
-      <Frame
-        style={{ width: 1, height: 16, background: "var(--border-subtle)" }}
+      <div
+        style={{ width: 1, height: 16, background: vars.color.border.subtle }}
       />
 
 
@@ -194,7 +192,7 @@ function Navigation() {
 
 
       <ThemeToggleItem />
-    </Frame>
+    </div>
   );
 }
 
@@ -206,10 +204,17 @@ function AppContent() {
   const paletteItems: PaletteItem[] = useMemo(() => [
     {
       id: "nav-home",
-      label: "Go to Design System",
-      description: "Overview of components and tokens",
+      label: "Go to Dashboard",
+      description: "Main application hub",
       icon: Home,
       onSelect: () => navigate("/")
+    },
+    {
+      id: "nav-ds",
+      label: "Design System",
+      description: "Overview of components and tokens",
+      icon: LayoutGrid,
+      onSelect: () => navigate("/design-system")
     },
     {
       id: "nav-table",
@@ -268,8 +273,12 @@ function AppContent() {
   }, [onKeyDown]);
 
   return (
-    <Frame
-      override={{ minHeight: Size.screen }}
+    <div
+      style={{
+        minHeight: "100vh",
+        outline: "none"
+      }}
+      tabIndex={-1}
       onKeyDown={onKeyDown}
     >
       <CommandPalette
@@ -278,13 +287,16 @@ function AppContent() {
         items={paletteItems}
       />
       <Routes>
-        <Route path="/" element={<DesignSystemApp />} />
+        <Route path="/" element={<MainApp />} />
+        <Route path="/design-system" element={<DesignSystemApp />} />
         <Route path="/table" element={<TableApp />} />
 
         <Route path="/slide" element={<SlideApp />} />
         <Route path="/cms" element={<CMSApp />} />
         <Route path="/crm" element={<CRMApp />} />
         <Route path="/mail" element={<MailApp />} />
+        <Route path="/mail" element={<MailApp />} />
+        <Route path="/docs/*" element={<DocsApp />} />
         <Route path="/why" element={<WhyApp />} />
 
         <Route path="/notebook" element={<CodeNotebookApp />} />
@@ -293,7 +305,7 @@ function AppContent() {
         <Route path="/grid" element={<GridPlayground />} />
       </Routes>
       <Navigation />
-    </Frame>
+    </div>
   );
 }
 

@@ -1,4 +1,3 @@
-
 import {
   Circle,
   Image as ImageIcon,
@@ -11,14 +10,8 @@ import {
   Sun,
   Type,
 } from "lucide-react";
-import { Action } from "@/design-system/Action";
 import { useTheme } from "@/design-system/theme";
-
-// Temporary: importing Token to not break if Action used it, but Action is reusable.
-// Actually Action is from legacy design system but it renders a Frame.
-// I should ideally replace Action too, but for now I can wrap it or use it if it produces a button.
-// The user said "remove legacy design". 
-// So I will replace Action with the .icon-btn class or similar.
+import * as styles from "../SlideApp.css";
 
 const BOTTOM_TOOLS = [
   { icon: MousePointer2, tooltip: "Move", active: true },
@@ -37,29 +30,27 @@ export function FloatingToolbar() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="floating-toolbar">
+    <div className={styles.floatingToolbar}>
       {BOTTOM_TOOLS.map((tool, i) =>
         tool.separator ? (
-          <div key={i} className="toolbar-separator" />
+          <div key={i} className={styles.toolbarSeparator} />
         ) : (
           <button
             key={i}
-            className="icon-btn"
+            className={`${styles.iconBtn} ${tool.active ? 'active' : ''}`}
             style={{
               width: 36,
               height: 36,
-              backgroundColor: tool.active ? "var(--surface-sunken)" : "transparent",
-              color: tool.active ? "var(--text-primary)" : "inherit"
             }}
             title={tool.tooltip}
           >
-            <tool.icon size={18} />
+            {tool.icon && <tool.icon size={18} />}
           </button>
         )
       )}
-      <div className="toolbar-separator" />
+      <div className={styles.toolbarSeparator} />
       <button
-        className="icon-btn"
+        className={styles.iconBtn}
         style={{ width: 36, height: 36 }}
         onClick={toggleTheme}
         title="Toggle Theme"

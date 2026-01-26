@@ -1,16 +1,11 @@
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { useAccordion } from "@/design-system/hooks";
-import { Icon } from "@/design-system/Icon";
-import { Text } from "@/design-system/text/Text.tsx";
-import {
-  IconSize,
-  Size,
-  Space,
-} from "@/design-system/token/token.const.1tier";
+import { useAccordion } from "@/design-system/hooks/components/useAccordion";
+// Updated Accordion path assumed correct based on move
+import { Icon } from "@/ui/primitives/Icon";
 import { ExpandableValue } from "./ExpandableValue.tsx";
 import { groupEntries } from "./PropertyGroup.tsx";
+import { vars } from "@/design-system/theme.css.ts";
+import * as styles from "./DrawerProperties.css";
 
 export function DrawerProperties({
   entries,
@@ -34,88 +29,70 @@ export function DrawerProperties({
   });
 
   return (
-    <Frame layout={Layout.Col.Left.Start} spacing={Space.n8}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: vars.space.n8 }}>
       {groups.map((group, groupIndex) => {
         const groupId = `${group.title}-${groupIndex}`;
         const itemProps = getItemProps(groupId);
         const panelProps = getPanelProps(groupId);
 
         return (
-          <Frame
-            key={groupId}
-            layout={Layout.Col.Left.Start}
-            spacing={Space.n0}
-          >
+          <div key={groupId} style={{ display: 'flex', flexDirection: 'column' }}>
             {/* Header / Trigger */}
-            <Frame
-              {...itemProps}
-              layout={Layout.Row.Middle.Center}
-              spacing={Space.n12}
-              override={{
-                minHeight: Size.n40,
-                h: Size.n32,
-                gap: Space.n8,
-                cursor: "pointer",
-                px: Space.n8,
-              }}
+            <div
+              className={styles.groupHeader}
               style={{
                 backgroundColor: itemProps.expanded
-                  ? "var(--surface-raised)"
+                  ? vars.color.surface.raised
                   : "transparent",
-                transition: "all 0.15s ease",
               }}
               onClick={itemProps.onToggle}
             >
               <Icon
                 src={itemProps.expanded ? ChevronDown : ChevronRight}
-                size={IconSize.n14}
-                style={{ color: "var(--text-tertiary)" }}
+                size={14}
+                style={{ color: vars.color.text.tertiary }}
               />
               <Icon
                 src={group.icon}
-                size={IconSize.n14}
-                style={{ color: "var(--text-tertiary)" }}
+                size={14}
+                style={{ color: vars.color.text.tertiary }}
               />
-              <Text.Menu.Group
+              <span
                 style={{
                   color: itemProps.expanded
-                    ? "var(--text-primary)"
-                    : "var(--text-tertiary)",
+                    ? vars.color.text.primary
+                    : vars.color.text.tertiary,
                   fontSize: "12px",
                   fontWeight: itemProps.expanded ? 600 : 500,
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase"
                 }}
               >
-                {group.title.toUpperCase()}
-              </Text.Menu.Group>
-            </Frame>
+                {group.title}
+              </span>
+            </div>
 
             {/* Content Panel */}
-            <Frame
-              {...panelProps}
-              layout={Layout.Col.Left.Start}
-              spacing={Space.n8}
-              h={Size.hug}
-              override={{
-                clip: false,
-                pb: Space.n20,
-                pl: Space.n24,
-                gap: Space.n12,
-              }}
-            >
-              {group.entries.map((entry) => (
-                <PropertyRow
-                  key={entry.key}
-                  label={formatColumnLabel(entry.key)}
-                  value={formatValue(entry.value)}
-                  rawValue={entry.value}
-                  empty={!entry.value}
-                />
-              ))}
-            </Frame>
-          </Frame>
+            {itemProps.expanded && (
+              <div
+                className={styles.groupPanel}
+                {...panelProps}
+              >
+                {group.entries.map((entry) => (
+                  <PropertyRow
+                    key={entry.key}
+                    label={formatColumnLabel(entry.key)}
+                    value={formatValue(entry.value)}
+                    rawValue={entry.value}
+                    empty={!entry.value}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         );
       })}
-    </Frame>
+    </div>
   );
 }
 
@@ -131,34 +108,24 @@ function PropertyRow({
   empty?: boolean;
 }) {
   return (
-    <Frame
-      layout={Layout.Row.Middle.Center}
-      spacing={Space.n12}
-      h={Size.hug}
-      override={{ minHeight: Size.n40, align: "start", gap: Space.n16 }}
-    >
+    <div className={styles.propertyRow}>
       {/* Key (Fixed Width) */}
-      <Frame override={{ w: Size.n128 }}>
-        <Text.Field.Label
+      <div style={{ width: 128, flexShrink: 0 }}>
+        <span
           style={{
-            color: "var(--text-tertiary)",
+            color: vars.color.text.tertiary,
             fontSize: "12px",
             lineHeight: "1.5",
+            fontWeight: 500,
           }}
         >
           {label}
-        </Text.Field.Label>
-      </Frame>
+        </span>
+      </div>
       {/* Value (Fill Width) */}
-      <Frame
-        layout={Layout.Col.Left.Start}
-        spacing={Space.n0}
-        w={Size.fill}
-        h={Size.hug}
-        override={{ minWidth: Size.n0 }}
-      >
+      <div style={{ flex: 1, minWidth: 0 }}>
         <ExpandableValue value={value} rawValue={rawValue} empty={empty} />
-      </Frame>
-    </Frame>
+      </div>
+    </div>
   );
 }

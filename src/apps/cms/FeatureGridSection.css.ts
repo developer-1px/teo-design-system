@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { vars } from "@/ui/theme.css";
+import { vars } from "../../design-system/theme.css";
 import * as utils from "@/ui/utils.css";
 
 // 1. Section Container
@@ -24,12 +24,12 @@ export const header = style(utils.createFlex({
 export const title = style({
     fontSize: "32px",
     fontWeight: 700,
-    color: vars.color.text,
+    color: vars.color.text.primary,
 });
 
 export const subtitle = style({
     fontSize: "18px",
-    color: vars.color.textSecondary,
+    color: vars.color.text.secondary,
     lineHeight: 1.6,
 });
 
@@ -73,8 +73,8 @@ export const card = style(utils.createFlex({
     gap: vars.space.n16,
     padding: vars.space.n24,
     borderRadius: vars.radius.n8,
-    backgroundColor: vars.color.surface,
-    border: `1px solid ${vars.color.border}`,
+    backgroundColor: vars.color.surface.card,
+    border: `1px solid ${vars.color.border.default}`,
     transition: "transform 0.2s, box-shadow 0.2s",
     textDecoration: "none",
     color: "inherit",
@@ -82,8 +82,8 @@ export const card = style(utils.createFlex({
     selectors: {
         "&:hover": {
             transform: "translateY(-4px)",
-            boxShadow: vars.shadow.n2,
-            borderColor: vars.color.primary,
+            boxShadow: vars.elevation.n2,
+            borderColor: vars.color.surface.primary,
         }
     }
 }));
@@ -95,20 +95,20 @@ export const iconWrapper = style(utils.createFlex({
     width: "48px",
     height: "48px",
     borderRadius: vars.radius.n8,
-    backgroundColor: vars.color.surface, // sunken?
-    color: vars.color.primary,
+    backgroundColor: vars.color.surface.card, // sunken?
+    color: vars.color.surface.primary,
     marginBottom: vars.space.n8,
-    border: `1px solid ${vars.color.border}`,
+    border: `1px solid ${vars.color.border.default}`,
 }));
 
 export const cardTitle = style({
     fontSize: "18px",
     fontWeight: 600,
-    color: vars.color.text,
+    color: vars.color.text.primary,
 });
 
 export const cardText = style({
     fontSize: "15px",
     lineHeight: 1.6,
-    color: vars.color.textSecondary,
+    color: vars.color.text.secondary,
 });

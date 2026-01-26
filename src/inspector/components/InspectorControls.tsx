@@ -13,13 +13,12 @@ import {
   Type,
 } from "lucide-react";
 import type React from "react";
-import { Text } from "@/design-system/text/Text";
 import {
   FontSize,
   Size,
   Space,
-} from "@/design-system/token/token.const.1tier";
-import { Radius2 } from "@/design-system/token/radius2";
+} from "@/legacy-design-system/token/token.const.1tier";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 // --- Visual Helpers ---
 
@@ -30,17 +29,23 @@ const ControlLabel = ({
   children: React.ReactNode;
   icon?: any;
 }) => (
-  <Frame
-    layout={Layout.Row.Middle.Center}
-    spacing={Space.n8}
-    override={{ minHeight: Size.n32, gap: Space.n2 }}
-    style={{ minWidth: "60px" } as any}
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      gap: Space.n2,
+      minHeight: Size.n32,
+      minWidth: "60px",
+      paddingLeft: Space.n8,
+      paddingRight: Space.n8,
+    }}
   >
-    {Icon && <Icon size={10} className="text-tertiary" />}
-    <Text size={FontSize.n9} color="tertiary">
+    {Icon && <Icon size={10} style={{ color: "var(--text-tertiary)" }} />}
+    <span style={{ fontSize: FontSize.n9, color: "var(--text-tertiary)" }}>
       {children}
-    </Text>
-  </Frame>
+    </span>
+  </div>
 );
 
 const ValueBox = ({
@@ -52,45 +57,52 @@ const ValueBox = ({
   label?: string;
   icon?: any;
 }) => (
-  <Frame
-    override={{
-      r: Radius2.sm,
-      border: true,
-      px: Space.n2,
-      py: Space.n2,
-      flex: true,
-      justify: "between",
-      gap: Space.n2,
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: Space.n12,
+      borderRadius: Radius2.sm,
+      border: "1px solid var(--border-subtle)",
+      paddingLeft: Space.n2,
+      paddingRight: Space.n2,
+      paddingTop: Space.n2,
+      paddingBottom: Space.n2,
+      flex: 1,
       minHeight: Size.n40,
+      backgroundColor: "var(--surface-base)",
     }}
-    surface="base"
-    layout={Layout.Row.Middle.Center}
-    spacing={Space.n12}
   >
-    <Frame
-      layout={Layout.Row.Middle.Center}
-      spacing={Space.n8}
-      override={{ minHeight: Size.n32, gap: Space.n2 }}
-    >
-      {Icon && <Icon size={10} className="text-tertiary" />}
-      {label && (
-        <Text size={FontSize.n9} color="tertiary">
-          {label}
-        </Text>
-      )}
-    </Frame>
-    <Text
-      size={FontSize.n9}
-      mono
+    <div
       style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: Space.n2,
+        minHeight: Size.n32,
+      }}
+    >
+      {Icon && <Icon size={10} style={{ color: "var(--text-tertiary)" }} />}
+      {label && (
+        <span style={{ fontSize: FontSize.n9, color: "var(--text-tertiary)" }}>
+          {label}
+        </span>
+      )}
+    </div>
+    <span
+      style={{
+        fontSize: FontSize.n9,
+        fontFamily: "monospace",
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
       }}
     >
       {String(value)}
-    </Text>
-  </Frame>
+    </span>
+  </div>
 );
 
 // --- Layout Control (Flex logic imitation) ---
@@ -106,49 +118,73 @@ export const LayoutControl = ({ props }: { props: Record<string, any> }) => {
   const py = props.py;
 
   return (
-    <Frame
-      style={{ width: "100%" } as any}
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n4}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: Space.n4,
+        width: "100%",
+      }}
     >
       {/* Direction & Flow */}
-      <Frame
-        layout={Layout.Row.Middle.Center}
-        spacing={Space.n12}
-        override={{ minHeight: Size.n40, justify: "between", gap: Space.n2 }}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: Space.n2,
+          minHeight: Size.n40,
+          width: "100%"
+        }}
       >
-        <Frame
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n8}
-          override={{ gap: Space.n1, minHeight: Size.n32 }}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: Space.n1,
+            minHeight: Size.n32,
+          }}
         >
-          <Frame
-            override={{ p: Space.n1, r: Radius2.sm, border: true }}
-            surface={isRow ? "sunken" : "base"}
+          <div
+            style={{
+              padding: Space.n1,
+              borderRadius: Radius2.sm,
+              border: "1px solid var(--border-subtle)",
+              backgroundColor: isRow ? "var(--surface-sunken)" : "var(--surface-base)",
+              display: "flex"
+            }}
           >
             <ArrowRight
               size={12}
-              className={isRow ? "text-primary" : "text-tertiary"}
+              style={{ color: isRow ? "var(--text-primary)" : "var(--text-tertiary)" }}
             />
-          </Frame>
-          <Frame
-            override={{ p: Space.n1, r: Radius2.sm, border: true }}
-            surface={isCol ? "sunken" : "base"}
+          </div>
+          <div
+            style={{
+              padding: Space.n1,
+              borderRadius: Radius2.sm,
+              border: "1px solid var(--border-subtle)",
+              backgroundColor: isCol ? "var(--surface-sunken)" : "var(--surface-base)",
+              display: "flex"
+            }}
           >
             <ArrowDown
               size={12}
-              className={isCol ? "text-primary" : "text-tertiary"}
+              style={{ color: isCol ? "var(--text-primary)" : "var(--text-tertiary)" }}
             />
-          </Frame>
-        </Frame>
+          </div>
+        </div>
 
         {/* Gap Display */}
         {gap && <ValueBox value={gap} icon={AlignHorizontalSpaceBetween} />}
-      </Frame>
+      </div>
 
       {/* Alignment Matrix (Simplified to text/icon row) */}
       {(props.align || props.justify) && (
-        <Frame override={{ grid: true, columns: "1fr 1fr", gap: Space.n2 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: Space.n2, width: "100%" }}>
           {props.align && (
             <ValueBox label="Align" value={props.align} icon={AlignCenter} />
           )}
@@ -159,64 +195,76 @@ export const LayoutControl = ({ props }: { props: Record<string, any> }) => {
               icon={AlignCenter}
             />
           )}
-        </Frame>
+        </div>
       )}
 
       {/* Padding Box Model */}
       {(padding || px || py) && (
-        <Frame
-          layout={Layout.Col.Left.Start}
-          spacing={Space.n0}
-          override={{
-            p: Space.n2,
-            r: Radius2.sm,
-            border: true,
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
             gap: Space.n1,
-            align: "center",
+            padding: Space.n2,
+            borderRadius: Radius2.sm,
+            border: "1px solid var(--border-subtle)",
+            backgroundColor: "var(--surface-sunken)",
+            width: "100%"
           }}
-          surface="sunken"
         >
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n12}
-            override={{ minHeight: Size.n40, justify: "center" }}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: Space.n12,
+              minHeight: Size.n40,
+              width: "100%"
+            }}
           >
-            <Text size={FontSize.n9} color="tertiary">
+            <span style={{ fontSize: FontSize.n9, color: "var(--text-tertiary)" }}>
               {py || padding || "-"}
-            </Text>
-          </Frame>
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n12}
-            override={
-              {
-                minHeight: Size.n40,
-                justify: "between",
-                align: "center",
-                width: "100%",
-              } as any
-            }
+            </span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: Space.n12,
+              minHeight: Size.n40,
+              width: "100%",
+            }}
           >
-            <Text size={FontSize.n9} color="tertiary">
+            <span style={{ fontSize: FontSize.n9, color: "var(--text-tertiary)" }}>
               {px || padding || "-"}
-            </Text>
-            <Box size={12} className="text-tertiary" />
-            <Text size={FontSize.n9} color="tertiary">
+            </span>
+            <Box size={12} style={{ color: "var(--text-tertiary)" }} />
+            <span style={{ fontSize: FontSize.n9, color: "var(--text-tertiary)" }}>
               {px || padding || "-"}
-            </Text>
-          </Frame>
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n12}
-            override={{ minHeight: Size.n40, justify: "center" }}
+            </span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: Space.n12,
+              minHeight: Size.n40,
+              width: "100%"
+            }}
           >
-            <Text size={FontSize.n9} color="tertiary">
+            <span style={{ fontSize: FontSize.n9, color: "var(--text-tertiary)" }}>
               {py || padding || "-"}
-            </Text>
-          </Frame>
-        </Frame>
+            </span>
+          </div>
+        </div>
       )}
-    </Frame>
+    </div>
   );
 };
 
@@ -228,34 +276,45 @@ export const SizingControl = ({ props }: { props: Record<string, any> }) => {
   const fill = props.fill;
 
   return (
-    <Frame
-      style={{ width: "100%" } as any}
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n4}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: Space.n4,
+        width: "100%",
+      }}
     >
-      <Frame override={{ grid: true, columns: "1fr 1fr", gap: Space.n2 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: Space.n2, width: "100%" }}>
         <ValueBox label="W" value={w || "Auto"} icon={Move} />
         <ValueBox label="H" value={h || "Auto"} icon={Move} />
-      </Frame>
+      </div>
 
       {(flex || fill) && (
-        <Frame
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-          override={{ minHeight: Size.n40, gap: Space.n2 }}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: Space.n2,
+            minHeight: Size.n40,
+            width: "100%"
+          }}
         >
           {fill && (
-            <Frame
-              override={{
-                px: Space.n2,
-                py: Space.n1,
-                r: Radius2.sm,
-                border: true,
+            <div
+              style={{
+                paddingLeft: Space.n2,
+                paddingRight: Space.n2,
+                paddingTop: Space.n1,
+                paddingBottom: Space.n1,
+                borderRadius: Radius2.sm,
+                border: "1px solid var(--border-subtle)",
+                backgroundColor: "var(--surface-sunken)",
               }}
-              surface="sunken"
             >
-              <Text size={FontSize.n9}>Fill</Text>
-            </Frame>
+              <span style={{ fontSize: FontSize.n9 }}>Fill</span>
+            </div>
           )}
           {flex && (
             <ValueBox
@@ -264,9 +323,9 @@ export const SizingControl = ({ props }: { props: Record<string, any> }) => {
               icon={Maximize}
             />
           )}
-        </Frame>
+        </div>
       )}
-    </Frame>
+    </div>
   );
 };
 
@@ -283,22 +342,35 @@ export const AppearanceControl = ({
   const opacity = props.opacity;
 
   return (
-    <Frame
-      style={{ width: "100%" } as any}
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n4}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: Space.n4,
+        width: "100%",
+      }}
     >
       {surface && (
-        <Frame
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-          override={{ minHeight: Size.n40, justify: "between" }}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            minHeight: Size.n40,
+            width: "100%"
+          }}
         >
           <ControlLabel icon={Square}>Surface</ControlLabel>
-          <Frame
-            layout={Layout.Row.Middle.Center}
-            spacing={Space.n8}
-            override={{ minHeight: Size.n32, gap: Space.n2 }}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: Space.n2,
+              minHeight: Size.n32
+            }}
           >
             <div
               style={{
@@ -306,54 +378,59 @@ export const AppearanceControl = ({
                 height: 12,
                 borderRadius: 2,
                 background:
-                  "var(--surface-base)" /* Approximation for visual or use token */,
+                  "var(--surface-base)",
               }}
             />
-            <Text size={FontSize.n9}>{surface}</Text>
-          </Frame>
-        </Frame>
+            <span style={{ fontSize: FontSize.n9 }}>{surface}</span>
+          </div>
+        </div>
       )}
 
-      <Frame override={{ grid: true, columns: "1fr 1fr", gap: Space.n2 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: Space.n2, width: "100%" }}>
         {r && <ValueBox label="R" value={r} icon={CornerUpRight} />}
         {opacity && <ValueBox label="Op" value={opacity} icon={Minus} />}
-      </Frame>
+      </div>
 
       {border && (
-        <Frame
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-          override={{
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: Space.n2,
+            borderRadius: Radius2.sm,
+            border: "1px solid var(--border-subtle)",
             minHeight: Size.n40,
-            justify: "between",
-            p: Space.n2,
-            r: Radius2.sm,
-            border: true,
+            width: "100%"
           }}
         >
           <ControlLabel icon={Square}>Border</ControlLabel>
-          <Text size={FontSize.n9}>{props.borderWidth || "1px"}</Text>
-        </Frame>
+          <span style={{ fontSize: FontSize.n9 }}>{props.borderWidth || "1px"}</span>
+        </div>
       )}
       {shadow && (
-        <Frame
-          layout={Layout.Row.Middle.Center}
-          spacing={Space.n12}
-          override={{
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: Space.n2,
+            borderRadius: Radius2.sm,
+            border: "1px solid var(--border-subtle)",
+            backgroundColor: "var(--surface-base)",
             minHeight: Size.n40,
-            justify: "between",
-            p: Space.n2,
-            r: Radius2.sm,
-            border: true,
+            width: "100%"
           }}
         >
           <ControlLabel icon={Box /* Shadow icon substitute */}>
             Shadow
           </ControlLabel>
-          <Text size={FontSize.n9}>{shadow}</Text>
-        </Frame>
+          <span style={{ fontSize: FontSize.n9 }}>{shadow}</span>
+        </div>
       )}
-    </Frame>
+    </div>
   );
 };
 
@@ -371,16 +448,20 @@ export const TypographyControl = ({
   if (!size && !weight && !color) return null;
 
   return (
-    <Frame
-      style={{ width: "100%" } as any}
-      layout={Layout.Col.Left.Start}
-      spacing={Space.n4}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: Space.n4,
+        width: "100%",
+      }}
     >
-      <Frame override={{ grid: true, columns: "1fr 1fr", gap: Space.n2 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: Space.n2, width: "100%" }}>
         {size && <ValueBox label="Size" value={size} icon={Type} />}
         {weight && <ValueBox label="Weight" value={weight} icon={Type} />}
-      </Frame>
+      </div>
       {color && <ValueBox label="Color" value={color} icon={Palette} />}
-    </Frame>
+    </div>
   );
 };

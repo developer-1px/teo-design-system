@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
 import { Menu, Search, Settings, User, Mail } from "lucide-react";
 
-import { Icon } from "@/design-system/Icon";
-import { Text } from "@/design-system/text/Text.tsx";
-import { IconSize } from "@/design-system/token/token.const.1tier";
+import { Icon } from "@/ui/primitives/Icon";
+import { Text } from "@/legacy-design-system/text/Text.tsx";
+import { IconSize } from "@/legacy-design-system/token/token.const.1tier";
 import { searchQueryAtom } from "./store";
 import * as styles from "./Mail.css";
 

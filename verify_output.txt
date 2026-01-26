@@ -1,0 +1,61 @@
+✅ Server already running on port 5555.
+Checking route: http://localhost:5555/
+✅ / passed.
+Checking route: http://localhost:5555/#/table
+✅ /#/table passed.
+Checking route: http://localhost:5555/#/agent-editor
+✅ /#/agent-editor passed.
+Checking route: http://localhost:5555/#/slide
+✅ /#/slide passed.
+Checking route: http://localhost:5555/#/cms
+✅ /#/cms passed.
+Checking route: http://localhost:5555/#/crm
+❌ Errors found on /#/crm:
+   [Console Error] Received `%s` for a non-boolean attribute `%s`.
+
+If you want to write it to the DOM, pass a string instead: %s="%s" or %s={value.toString()}. true border border true border
+   [Console Error] Received `%s` for a non-boolean attribute `%s`.
+
+If you want to write it to the DOM, pass a string instead: %s="%s" or %s={value.toString()}. true interactive interactive true interactive
+Checking route: http://localhost:5555/#/mail
+✅ /#/mail passed.
+Checking route: http://localhost:5555/#/discord
+✅ /#/discord passed.
+Checking route: http://localhost:5555/#/login
+✅ /#/login passed.
+Checking route: http://localhost:5555/#/notebook
+❌ Errors found on /#/notebook:
+   [Uncaught Exception] Cannot read properties of undefined (reading 'Body')
+TypeError: Cannot read properties of undefined (reading 'Body')
+    at CodeNotebookHeader (http://localhost:5555/src/apps/CodeNotebook/components/CodeNotebookHeader.tsx:48:47)
+    at Object.react_stack_bottom_frame (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:18509:20)
+    at renderWithHooks (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:5654:24)
+    at updateFunctionComponent (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:7475:21)
+    at beginWork (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:8525:20)
+    at runWithFiberInDEV (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:997:72)
+    at performUnitOfWork (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:12561:98)
+    at workLoopSync (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:12424:43)
+    at renderRootSync (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:12408:13)
+    at performWorkOnRoot (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:11827:37)
+Checking route: http://localhost:5555/#/calendar
+✅ /#/calendar passed.
+Checking route: http://localhost:5555/#/playground
+❌ Errors found on /#/playground:
+   [Uncaught Exception] Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+Check the render method of `PlaygroundApp`.
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+Check the render method of `PlaygroundApp`.
+    at createFiberFromTypeAndProps (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:3741:30)
+    at createFiberFromElement (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:3754:16)
+    at createChild (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:4747:32)
+    at reconcileChildrenArray (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:4965:26)
+    at reconcileChildFibersImpl (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:5171:88)
+    at http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:5237:35
+    at reconcileChildren (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:7182:53)
+    at beginWork (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:8701:104)
+    at runWithFiberInDEV (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:997:72)
+    at performUnitOfWork (http://localhost:5555/node_modules/.vite/deps/react-dom_client.js?v=66ee32fc:12561:98)
+Checking route: http://localhost:5555/#/grid
+✅ /#/grid passed.

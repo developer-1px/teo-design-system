@@ -1,15 +1,15 @@
 import { User } from "lucide-react";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { Icon } from "@/design-system/Icon";
-import { Text } from "@/design-system/text/Text.tsx";
+import { Frame } from "@/legacy-design-system/Frame/Frame.tsx";
+import { Layout } from "@/legacy-design-system/Frame/Layout/Layout.ts";
+import { Icon } from "@/ui/primitives/Icon";
+import { Text } from "@/legacy-design-system/text/Text.tsx";
 import {
   FontSize,
   IconSize,
   Size,
   Space,
-} from "@/design-system/token/token.const.1tier";
-import { Radius2 } from "@/design-system/token/radius2";
+} from "@/legacy-design-system/token/token.const.1tier";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 export function DrawerActivity() {
   return (

@@ -1,0 +1,27 @@
+---
+title: Interaction Core
+description: The OS-standard interaction hooks provided by the Headless layer.
+---
+
+import useShortcutsSource from "@/design-system/hooks/interaction/useBrowserShortcut.ts?raw";
+
+# Interaction Core
+
+The **Interaction Core** provides the fundamental hooks for keyboard shortcuts, command palette, and focus management.
+
+## useBrowserShortcut
+
+A robust hook for handling keyboard shortcuts with platform-agnostic modifier support (e.g., `Meta` on Mac, `Ctrl` on Windows).
+
+### Usage
+
+```tsx
+useBrowserShortcut({
+  "Meta+k": () => togglePalette(),
+  "Escape": () => closeAll(),
+});
+```
+
+### Source Code
+
+<SourceViewer title="useBrowserShortcut.ts" raw={useShortcutsSource} />

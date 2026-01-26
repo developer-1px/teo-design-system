@@ -1,5 +1,5 @@
 import type { StyleRule } from "@vanilla-extract/css";
-import { vars } from "./theme.css";
+import { vars } from "../design-system/theme.css";
 
 // -----------------------------------------------------------------------------
 // Type Enforcements
@@ -19,17 +19,6 @@ type GridContainerProps =
     | "columnGap"
     | "rowGap";
 
-// Properties exclusive to Flex containers
-/*
-type FlexContainerProps =
-    | "flexDirection"
-    | "flexWrap"
-    | "flexFlow"
-    | "justifyContent"
-    | "alignItems"
-    | "alignContent";
-*/
-
 // Properties exclusive to Grid Items (children)
 type GridItemProps =
     | "gridColumn"
@@ -39,18 +28,7 @@ type GridItemProps =
     | "alignSelf"
     | "placeSelf";
 
-// Properties exclusive to Flex Items (children)
-/*
-type FlexItemProps =
-    | "flex"
-    | "flexGrow"
-    | "flexShrink"
-    | "flexBasis"
-    | "alignSelf";
-*/
-
 // 1. Strict Grid Style: Can contain Grid props, CANNOT contain Flex container props
-// (Note: align-items/justify-content apply to Grid too, so we only ban specific flex ones like flex-direction)
 type StrictGridStyle = Omit<CSSProperties, "flexDirection" | "flexWrap" | "flexFlow"> & {
     display: "grid" | "inline-grid";
 };
@@ -78,22 +56,12 @@ type PositioningProps = Pick<CSSProperties, GridItemProps | "margin" | "marginBo
 type LayoutProps = Omit<CSSProperties, GridItemProps>; // Everything else
 
 export const styled = {
-    /**
-     * Creates a style with strict separation between parent positioning and internal layout.
-     * @param params.parent Properties determining how this element is positioned in its parent (Grid Item props, margins, dimensions)
-     * @param params.layout Properties determining how this element behaves internally (display, children layout, colors, padding)
-     */
     box: (params: { parent?: PositioningProps, layout?: LayoutProps }): StyleRule => {
         return {
             ...params.parent,
             ...params.layout
         } as StyleRule;
     },
-
-    /**
-     * Creates a Flex Container that is also a positioned item.
-     * Forces 'display: flex'
-     */
     flex: (params: { parent?: PositioningProps, layout?: Omit<LayoutProps, "display"> & { display?: never } }): StyleRule => {
         return {
             ...params.parent,
@@ -101,11 +69,6 @@ export const styled = {
             ...params.layout
         } as StyleRule;
     },
-
-    /**
-     * Creates a Grid Container that is also a positioned item.
-     * Forces 'display: grid'
-     */
     grid: (params: { parent?: PositioningProps, layout?: Omit<LayoutProps, "display"> & { display?: never } }): StyleRule => {
         return {
             ...params.parent,
@@ -116,54 +79,8 @@ export const styled = {
 };
 
 // -----------------------------------------------------------------------------
-// Mixins
-// -----------------------------------------------------------------------------
-
-export const text = {
-    truncate: {
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-    } as const,
-};
-
-export const surface = {
-    // 1. Base: The default app background
-    base: {
-        background: vars.color.background,
-        color: vars.color.text,
-    } as const,
-
-    // 2. Paper/Card: Elevated surface with border and subtle shadow
-    card: {
-        background: vars.color.surface,
-        color: vars.color.text,
-        border: `1px solid ${vars.color.border}`,
-        boxShadow: vars.shadow.n1,
-    } as const,
-
-    // 3. Sunken: For inputs, sidebars, or emphasized areas
-    sunken: {
-        background: vars.color.surface, // or a darker/lighter token if available
-        color: vars.color.text,
-        border: `1px solid ${vars.color.border}`,
-    } as const,
-
-    // 4. Raised: For floating elements, dropdowns, etc.
-    raised: {
-        background: vars.color.surface,
-        color: vars.color.text,
-        border: `1px solid ${vars.color.border}`,
-        boxShadow: vars.shadow.n2,
-    } as const,
-
-    // 5. Highlight: Interactive hover state
-    highlight: {
-        background: "rgba(0, 0, 0, 0.04)",
-    } as const,
-};
-
 // 4. Specialized Grid Factories
+// -----------------------------------------------------------------------------
 
 // 4.1 Master Layout Grid (12 Columns)
 const COL_12 = 12;
@@ -227,28 +144,51 @@ export const gridTable = {
     } as const
 };
 
-// Layout Mixins
-export const layout = {
-    flexCenter: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    } as const,
-    flexRow: {
-        display: "flex",
-        alignItems: "center",
-    } as const,
-    absoluteFull: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-    } as const,
-    // Deprecated in favor of grid12.subgrid, but kept for compatibility
-    gridSubgrid: {
-        display: "grid",
-        gridTemplateColumns: "subgrid",
-        gridColumn: "1 / -1",
-    } as const
-};
+// -----------------------------------------------------------------------------
+// 5. Named Grid Factory
+// -----------------------------------------------------------------------------
+
+/**
+ * Creates a type-safe named grid container and assignment utility.
+ * Enforces usage of named slots (grid-area) instead of column/row numbers.
+ * 
+ * @example
+ * const layout = createNamedGrid({
+ *   areas: ["header", "sidebar", "content"],
+ *   columns: "240px 1fr",
+ *   template: `
+ *     "header header"
+ *     "sidebar content"
+ *   `
+ * });
+ * 
+ * const headerStyle = style(layout.assign("header")); // OK
+ * const invalidStyle = style(layout.assign("footer")); // TS Error
+ */
+export function createNamedGrid<Area extends string>(config: {
+    areas: readonly Area[];
+    columns?: string | string[];
+    rows?: string | string[];
+    templateAreas: string[];
+    gap?: keyof typeof vars.space | string;
+}) {
+    const { columns, rows, templateAreas, gap } = config;
+
+    return {
+        // Container style
+        container: {
+            display: "grid",
+            gridTemplateColumns: Array.isArray(columns) ? columns.join(" ") : columns,
+            gridTemplateRows: Array.isArray(rows) ? rows.join(" ") : rows,
+            gridTemplateAreas: templateAreas.map(row => `"${row}"`).join("\n"),
+            gap: gap,
+        } as StyleRule,
+
+        // Item assigner (Typed to Area)
+        assign: (area: Area): StyleRule => {
+            return {
+                gridArea: area
+            } as StyleRule;
+        }
+    };
+}

@@ -1,61 +1,77 @@
 import { Globe, LayoutGrid, Plus, Search } from "lucide-react";
 
-import { Action } from "@/design-system/Action";
-import { Frame } from "@/design-system/Frame/Frame.tsx";
-import { Layout } from "@/design-system/Frame/Layout/Layout.ts";
-import { Icon } from "@/design-system/Icon";
-import { Text } from "@/design-system/text/Text.tsx";
+import { Action } from "@/ui/primitives/Action";
+import { Icon } from "@/ui/primitives/Icon";
 import {
   IconSize,
   Size,
   Space,
-} from "@/design-system/token/token.const.1tier";
-import { Radius2 } from "@/design-system/token/radius2";
+} from "@/legacy-design-system/token/token.const.1tier";
+import { Radius2 } from "@/legacy-design-system/token/radius2";
 
 export function CRMHeader() {
   return (
-    <Frame
-      layout={Layout.Row.Middle.Center}
-      spacing={Space.n12}
-      h={Size.n64}
-      override={{
-        py: Space.n0,
-        px: Space.n20,
-        borderBottom: true, // Continuous line with Sidebar
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: Space.n12,
+        height: Size.n64,
+        paddingTop: Space.n0,
+        paddingBottom: Space.n0,
+        paddingLeft: Space.n20,
+        paddingRight: Space.n20,
+        borderBottom: "1px solid var(--border-subtle)",
+        backgroundColor: "var(--surface-base)",
       }}
     >
-      <Frame
-        layout={Layout.Row.Middle.Start}
-        spacing={Space.n8}
-        override={{ align: "center" }}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          gap: Space.n8,
+        }}
       >
-        <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
+        <span style={{ color: "var(--text-tertiary)", fontSize: "12px" }}>
           Records
-        </Text.Card.Note>
-        <Text.Card.Note style={{ color: "var(--text-tertiary)" }}>
+        </span>
+        <span style={{ color: "var(--text-tertiary)", fontSize: "12px" }}>
           /
-        </Text.Card.Note>
-        <Frame
-          layout={Layout.Row.Middle.Start}
-          spacing={Space.n8}
-          override={{ align: "center" }}
+        </span>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: Space.n8,
+          }}
         >
           <Icon src={LayoutGrid} size={IconSize.n16} />
-          <Text.Card.Title weight="bold">Deals</Text.Card.Title>
-        </Frame>
-      </Frame>
+          <span style={{ fontWeight: 700, fontSize: "16px", color: "var(--text-primary)" }}>Deals</span>
+        </div>
+      </div>
 
       {/* Global Search */}
-      <Frame
-        rounded={Radius2.md}
-        surface="sunken"
-        layout={Layout.Row.Middle.Center}
-        spacing={Space.n8}
-        h={Size.n36}
-        override={{
-          w: Size.n384,
-          py: Space.n6,
-          px: Space.n12,
+      <div
+        style={{
+          borderRadius: Radius2.md,
+          backgroundColor: "var(--surface-sunken)",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: Space.n8,
+          height: Size.n36,
+          width: Size.n384,
+          paddingTop: Space.n6,
+          paddingBottom: Space.n6,
+          paddingLeft: Space.n12,
+          paddingRight: Space.n12,
         }}
       >
         <Icon
@@ -63,37 +79,40 @@ export function CRMHeader() {
           size={IconSize.n14}
           style={{ color: "var(--text-tertiary)" }}
         />
-        <Text.Field.Label
-          flex
+        <input
           style={{
+            flex: 1,
             border: "none",
             background: "none",
             color: "var(--text-tertiary)",
+            fontSize: "14px",
+            outline: "none",
+          }}
+          placeholder="Search deals, companies..."
+        />
+        <div style={{ flex: 1 }} />
+        <div
+          style={{
+            paddingLeft: Space.n4,
+            paddingRight: Space.n4,
+            paddingTop: Space.n2,
+            paddingBottom: Space.n2,
+            borderRadius: Radius2.sm,
+            backgroundColor: "var(--surface-raised)",
           }}
         >
-          Search deals, companies...
-        </Text.Field.Label>
-        <Frame override={{ flex: 1 }} />
-        <Frame
-          override={{
-            px: Space.n4,
-            py: Space.n2,
-          }}
-          rounded={Radius2.sm}
-          surface="raised"
-        >
-          <Text.Card.Note
+          <span
             style={{ color: "var(--text-tertiary)", fontSize: "10px" }}
           >
             ⌘K
-          </Text.Card.Note>
-        </Frame>
-      </Frame>
+          </span>
+        </div>
+      </div>
 
-      <Frame layout={Layout.Row.Middle.End} spacing={Space.n8}>
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: Space.n8, marginLeft: "auto" }}>
         <Action variant="surface" border icon={Globe} label="Share" />
         <Action variant="primary" icon={Plus} label="New Deal" />
-      </Frame>
-    </Frame>
+      </div>
+    </div>
   );
 }

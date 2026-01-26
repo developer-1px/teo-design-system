@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import { vars } from "@/ui/theme.css";
+import { vars } from "../../design-system/theme.css";
 import * as utils from "@/ui/utils.css";
 
 
@@ -35,9 +35,9 @@ export const badge = style(utils.styled.flex({
         height: "28px",
         padding: `0 ${vars.space.n12}`,
         borderRadius: vars.radius.full,
-        backgroundColor: vars.color.overlay,
-        border: `1px solid ${vars.color.primary}`,
-        color: vars.color.primary,
+        backgroundColor: vars.color.surface.overlay,
+        border: `1px solid ${vars.color.surface.primary}`,
+        color: vars.color.surface.primary,
         fontSize: "11px",
         fontWeight: 700,
         textTransform: "uppercase",
@@ -56,12 +56,12 @@ export const title = style(utils.styled.box({
         fontWeight: 800,
         lineHeight: 1.05,
         letterSpacing: "-0.03em",
-        color: vars.color.text,
+        color: vars.color.text.primary,
     }
 }));
 
 export const titleGradient = style({
-    background: `linear-gradient(to right bottom, ${vars.color.primary}, ${vars.color.textSecondary})`,
+    background: `linear-gradient(to right bottom, ${vars.color.surface.primary}, ${vars.color.text.secondary})`,
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
 });
@@ -75,7 +75,7 @@ export const description = style(utils.styled.box({
         textAlign: "center",
         fontSize: "20px",
         lineHeight: 1.6,
-        color: vars.color.textSecondary,
+        color: vars.color.text.secondary,
     }
 }));
 
@@ -110,8 +110,8 @@ export const button = recipe({
     variants: {
         variant: {
             primary: {
-                backgroundColor: vars.color.primary,
-                color: vars.color.background,
+                backgroundColor: vars.color.surface.primary,
+                color: vars.color.surface.page,
                 selectors: {
                     "&:hover": {
                         opacity: 0.9,
@@ -121,12 +121,12 @@ export const button = recipe({
             },
             secondary: {
                 backgroundColor: "transparent",
-                borderColor: vars.color.border,
-                color: vars.color.text,
+                borderColor: vars.color.border.default,
+                color: vars.color.text.primary,
                 selectors: {
                     "&:hover": {
-                        backgroundColor: vars.color.surface,
-                        borderColor: vars.color.text,
+                        backgroundColor: vars.color.surface.panel,
+                        borderColor: vars.color.text.primary,
                     }
                 }
             }
@@ -153,10 +153,10 @@ export const visualFrame = style(utils.styled.flex({
     layout: {
         flexDirection: "column",
         aspectRatio: "16/10",
-        backgroundColor: vars.color.surface,
+        backgroundColor: vars.color.surface.card,
         borderRadius: vars.radius.n24,
-        border: `1px solid ${vars.color.border}`,
-        boxShadow: vars.shadow.n3,
+        border: `1px solid ${vars.color.border.default}`,
+        boxShadow: vars.elevation.n3,
         overflow: "hidden",
         position: "relative",
     }
@@ -165,11 +165,11 @@ export const visualFrame = style(utils.styled.flex({
 export const browserHeader = style(utils.styled.flex({
     layout: {
         height: "40px",
-        borderBottom: `1px solid ${vars.color.border}`,
+        borderBottom: `1px solid ${vars.color.border.default}`,
         alignItems: "center",
         padding: `0 ${vars.space.n16}`,
         gap: vars.space.n8,
-        backgroundColor: vars.color.surface,
+        backgroundColor: vars.color.surface.panel,
     }
 }));
 
@@ -177,7 +177,7 @@ export const dot = style({
     width: "10px",
     height: "10px",
     borderRadius: "50%",
-    backgroundColor: vars.color.border, // Placeholder color
+    backgroundColor: vars.color.border.default, // Placeholder color
     selectors: {
         "&:nth-child(1)": { backgroundColor: "#FF5F57" },
         "&:nth-child(2)": { backgroundColor: "#FEBC2E" },
