@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Mail, Code2 } from 'lucide-react';
+import { Mail, Code2, Book } from 'lucide-react';
 import * as styles from './GlobalNav.css';
 
 export function GlobalNav() {
@@ -7,6 +7,7 @@ export function GlobalNav() {
         <nav className={styles.navContainer}>
             <NavItem to="/mail" icon={Mail} label="Mail" />
             <NavItem to="/editor" icon={Code2} label="Editor" />
+            <NavItem to="/docs/prd" icon={Book} label="Docs" />
         </nav>
     );
 }

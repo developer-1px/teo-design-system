@@ -1,0 +1,36 @@
+---
+title: Surface Examples
+order: 2
+---
+
+import { SurfaceShowcase } from '../components/docs/SurfaceShowcase';
+
+# Surface Examples
+
+이 페이지는 **MDX 내부에서 React Component를 직접 렌더링**하는 예시입니다.
+Design Token(`vars.surface`)이 실제 UI에서 어떻게 보이는지 실시간으로 확인할 수 있습니다.
+
+## Live Showcase
+
+아래 컴포넌트는 `SurfaceShowcase.tsx`를 import하여 렌더링한 결과입니다.
+테마 스위처를 눌러 Dark Mode에서의 변화를 확인해보세요.
+
+<div style={{ padding: '20px', backgroundColor: 'rgba(0,0,0,0.02)', borderRadius: '8px', marginTop: '20px' }}>
+    <SurfaceShowcase />
+</div>
+
+## Code Usage
+
+```tsx
+// SurfaceShowcase.css.ts
+export const cardSurface = style({
+    backgroundColor: vars.surface.card.bg,
+    border: vars.surface.card.border,
+    boxShadow: vars.surface.card.shadow,
+    color: vars.surface.card.text,
+});
+```
+
+> [!NOTE]
+> 이 문서는 `src/docs/surface-examples.mdx` 파일로 관리됩니다.
+> 코드를 수정하면 즉시 이 화면에 반영됩니다. (HMR)

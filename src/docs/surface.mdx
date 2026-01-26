@@ -1,0 +1,60 @@
+---
+title: Surface System
+order: 1
+---
+
+# Surface System
+
+`Surface`는 디자인 시스템에서 가장 기초가 되는 "배경"과 그 위에 올라가는 "계층(Layer)"을 정의합니다.
+이 시스템은 단순한 배경색이 아니라, **배경색(bg) + 테두리(border) + 그림자(shadow) + 텍스트 색상(text)** 이 하나의 세트로 동작하는 **Contract**입니다.
+
+## Concepts
+
+### 1. Base
+가장 바닥이 되는 레이어입니다. 일반적으로 전체 앱의 배경이나 기본 컨테이너의 배경으로 사용됩니다.
+*   **Usage:** `App Background`, `Main Layout`
+
+### 2. Subtle
+Base보다는 약간 구분이 필요한, 은은한 배경입니다. 사이드바나 보조 영역에 주로 쓰입니다.
+*   **Usage:** `Sidebar`, `Toolbar`, `Section Divider`
+
+### 3. Card
+명확한 컨텐츠 영역을 구분할 때 사용합니다. Card는 보통 Border나 Shadow를 동반하여 Base/Subtle 위에서 "떠있는" 느낌을 줍니다.
+*   **Usage:** `Dialog`, `Popover`, `Content Card`
+
+### 4. Input / Highlight / Ghost
+특수한 목적을 가진 Surface들입니다.
+*   **Input:** 입력 필드 전용
+*   **Highlight:** 강조 영역 (Selected state 등)
+*   **Ghost:** 평소엔 투명하지만 호버 시 나타나는 인터랙티브 요소
+
+## Usage
+
+```typescript
+import { vars } from '../styles/vars.css';
+import { style } from '@vanilla-extract/css';
+
+// 1. Using Base Surface
+export const appContainer = style({
+  backgroundColor: vars.surface.base.bg,
+  color: vars.surface.base.text,
+});
+
+// 2. Using Card Surface (Includes border & shadow automatically)
+export const card = style({
+  backgroundColor: vars.surface.card.bg,
+  border: vars.surface.card.border,
+  boxShadow: vars.surface.card.shadow,
+});
+```
+
+## Tokens Inspection
+
+| Token | Light Mode | Dark Mode | Reference |
+| :--- | :--- | :--- | :--- |
+| **base** | White | #202124 | `vars.surface.base` |
+| **subtle** | #f6f8fc | #202124 | `vars.surface.subtle` |
+| **card** | White (with Border) | #303134 | `vars.surface.card` |
+
+> [!TIP]
+> Surface 토큰을 사용할 때는 `bg`만 쓰는 것보단, `text` 색상까지 함께 사용하여 명암비(Contrast)를 보장하는 것이 좋습니다.
