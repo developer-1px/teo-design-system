@@ -22,23 +22,23 @@ export const contentWrapper = style({
 
 export const header = style({
     marginBottom: vars.spacing[48],
-    textAlign: 'center',
+    // textAlign: 'center', // Left align
 });
 
 export const title = style([
     typography.h1,
     {
         marginBottom: vars.spacing[16],
-        textAlign: 'center', // Override prose default if needed
+        // textAlign: 'center', // Removed to align with Prose left-alignment
     }
 ]);
 
 export const subtitle = style([
-    typography.body, // Use pure body styles without margins
+    typography.body,
     {
         fontSize: vars.fontSize.lg,
         color: vars.color.gray600,
-        textAlign: 'center',
+        // textAlign: 'center', // Removed
     }
 ]);
 
