@@ -1,19 +1,20 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
+import { surface } from '../../styles/utils.css';
 
-export const drawer = style({
-    backgroundColor: vars.color.white, // Explicit solid color, not surface.base which might depend on context
-    height: '100%',
-    width: '320px',
-    maxWidth: '80vw',
-    boxShadow: vars.shadow.overlay,
-    borderLeft: '1px solid rgba(0,0,0,0.1)', // Explicit border
-    padding: vars.spacing[24],
-    display: 'flex',
-    flexDirection: 'column',
-    gap: vars.spacing[16],
-    color: vars.surface.base.text,
-});
+export const drawer = style([
+    surface('card'),
+    {
+        height: '100%',
+        width: '600px',
+        maxWidth: '90vw',
+        padding: vars.spacing[24],
+        display: 'flex',
+        flexDirection: 'column',
+        gap: vars.spacing[16],
+        boxShadow: vars.shadow.overlay,
+    }
+]);
 
 export const header = style({
     display: 'flex',

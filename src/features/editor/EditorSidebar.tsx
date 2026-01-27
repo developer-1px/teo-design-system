@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronRight, FileCode, Folder, FolderOpen, FileJson, FileType } from 'lucide-react';
 import * as styles from './EditorSidebar.css';
 import { useMemo, useState } from 'react';
+import { vars } from '../../styles/vars.css';
 
 type FileNode = {
     name: string;
@@ -58,7 +59,7 @@ export function EditorSidebar() {
     return (
         <aside className={styles.sidebar}>
             <div className={styles.header}>EXPLORER</div>
-            <div style={{ paddingBottom: '20px' }}>
+            <div style={{ paddingBottom: vars.spacing[20] }}>
                 <FolderItem name="vanilla-extract-agent" defaultOpen>
                     {sortNodes(fileTree.children).map(node => (
                         <RecursiveNode key={node.path} node={node} />
@@ -92,35 +93,42 @@ function FolderItem({ name, children, defaultOpen = false }: { name: string, chi
     const [isOpen, setIsOpen] = useState(defaultOpen);
 
     return (
-        <div style={{ marginLeft: '12px' }}>
+        <div>
             <div
-                className={styles.fileItem}
+                className={styles.folderHeader}
                 onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
-                style={{ opacity: 0.9, gap: '6px' }}
             >
-                {isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                {isOpen ? <FolderOpen size={14} color="#FBBF24" fill="#FBBF24" fillOpacity={0.2} /> : <Folder size={14} color="#FBBF24" fill="#FBBF24" fillOpacity={0.2} />}
-                <span style={{ fontWeight: 600, fontSize: '13px' }}>{name}</span>
+                {isOpen ? <ChevronDown size={14} color={vars.color.gray600} /> : <ChevronRight size={14} color={vars.color.gray600} />}
+                <div style={{ width: 4 }} />
+                {isOpen ?
+                    <FolderOpen size={14} color={vars.color.gray800} fill={vars.color.gray800} fillOpacity={0.2} /> :
+                    <Folder size={14} color={vars.color.gray800} fill={vars.color.gray800} fillOpacity={0.2} />
+                }
+                <div style={{ width: 6 }} />
+                <span>{name}</span>
             </div>
-            {isOpen && <div style={{ borderLeft: '1px solid rgba(0,0,0,0.06)', marginLeft: '6px' }}>{children}</div>}
+            {isOpen && <div className={styles.folderContent}>{children}</div>}
         </div>
     );
 }
 
 function FileItem({ name, active }: { name: string, active?: boolean }) {
     const getIcon = (name: string) => {
-        if (name.endsWith('.tsx') || name.endsWith('.ts')) return <FileCode size={14} color="#60A5FA" />;
-        if (name.endsWith('.css.ts')) return <FileType size={14} color="#EC4899" />; // Vanilla
-        if (name.endsWith('.json')) return <FileJson size={14} color="#FCD34D" />;
-        return <FileCode size={14} color="#9CA3AF" />;
+        if (name.endsWith('.tsx') || name.endsWith('.ts')) return <FileCode size={14} color={vars.color.gray600} />;
+        if (name.endsWith('.css.ts')) return <FileType size={14} color={vars.color.gray600} />;
+        if (name.endsWith('.json')) return <FileJson size={14} color={vars.color.gray600} />;
+        return <FileCode size={14} color={vars.color.gray300} />;
     };
 
     return (
         <div
             className={`${styles.fileItem} ${active ? styles.activeFile : ''}`}
-            style={{ paddingLeft: '28px', gap: '8px' }}
         >
+            <div style={{ width: 14 }} />
+            {/* Indent to match chevron */}
+            <div style={{ width: 4 }} />
             {getIcon(name)}
+            <div style={{ width: 8 }} />
             <span>{name}</span>
         </div>
     );

@@ -12,21 +12,21 @@ export function ChatPanel() {
 
             <div className={styles.messageList}>
                 <div className={styles.aiMessage}>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '4px', opacity: 0.7, fontSize: '11px' }}>
+                    <div style={{ display: 'flex', gap: vars.spacing[8], alignItems: 'center', marginBottom: vars.spacing[4], opacity: 0.7, fontSize: vars.fontSize.xs }}>
                         <Bot size={12} /> Antigravity
                     </div>
                     Hello! I'm ready to help you specific with your coding task.
                 </div>
 
                 <div className={styles.userMessage}>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '4px', opacity: 0.7, fontSize: '11px', justifyContent: 'flex-end' }}>
+                    <div style={{ display: 'flex', gap: vars.spacing[8], alignItems: 'center', marginBottom: vars.spacing[4], opacity: 0.7, fontSize: vars.fontSize.xs, justifyContent: 'flex-end' }}>
                         User <User size={12} />
                     </div>
                     Can you explain how the surface system works?
                 </div>
 
                 <div className={styles.aiMessage}>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '4px', opacity: 0.7, fontSize: '11px' }}>
+                    <div style={{ display: 'flex', gap: vars.spacing[8], alignItems: 'center', marginBottom: vars.spacing[4], opacity: 0.7, fontSize: vars.fontSize.xs }}>
                         <Bot size={12} /> Antigravity
                     </div>
                     The Surface System uses <code>vars.css.ts</code> to define semantic tokens for background, border, and shadow. It ensures consistent theming across light and dark modes.
@@ -42,11 +42,11 @@ export function ChatPanel() {
                     />
                     <button style={{
                         position: 'absolute',
-                        right: '8px',
-                        bottom: '8px',
+                        right: vars.spacing[8],
+                        bottom: vars.spacing[8],
                         border: 'none',
                         background: 'transparent',
-                        color: vars.color.blue500,
+                        color: vars.border.interactive,
                         cursor: 'pointer'
                     }}>
                         <Send size={16} />

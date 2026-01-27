@@ -4,7 +4,7 @@ import { vars } from '../../styles/vars.css';
 
 // TODO: Fix live import. using static string for now to unblock build.
 // There is a conflict between vanilla-extract plugin and vite raw loader for .css.ts files.
-const varsSource = `import { createThemeContract, createTheme } from '@vanilla-extract/css';
+const varsSource = `import { createThemeContract, createTheme } from '@vanilla-extract` + `/css';
 
 // 1. Define the shape of our theme (Contract)
 export const vars = createThemeContract({

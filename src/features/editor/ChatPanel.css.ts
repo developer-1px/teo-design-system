@@ -6,7 +6,7 @@ export const panel = style([
     surface('subtle'),
     {
         gridColumn: '3',
-        borderLeft: `1px solid ${vars.color.gray200}`,
+        borderLeft: `1px solid ${vars.border.default}`,
         display: 'flex',
         flexDirection: 'column',
     }
@@ -17,10 +17,10 @@ export const header = style({
     display: 'flex',
     alignItems: 'center',
     padding: `0 ${vars.spacing[16]}`,
-    fontSize: '11px',
-    fontWeight: 700,
+    fontSize: vars.fontSize.xs,
+    fontWeight: vars.weight.bold,
     color: vars.color.gray600,
-    borderBottom: `1px solid ${vars.color.gray200}`,
+    borderBottom: `1px solid ${vars.border.default}`,
     justifyContent: 'space-between',
 });
 
@@ -35,9 +35,9 @@ export const messageList = style({
 
 export const messageBase = style({
     padding: vars.spacing[12],
-    borderRadius: '12px',
-    fontSize: '13px',
-    lineHeight: '1.4',
+    borderRadius: vars.borderRadius.lg,
+    fontSize: vars.fontSize.sm,
+    lineHeight: vars.lineHeight.snug,
     maxWidth: '90%',
 });
 
@@ -46,24 +46,23 @@ export const aiMessage = style([
     surface('card'),
     {
         alignSelf: 'flex-start',
-        borderTopLeftRadius: '2px',
+        borderTopLeftRadius: vars.borderRadius.sm,
     }
 ]);
 
 export const userMessage = style([
     messageBase,
-    surface('highlight'),
+    surface('highlight'), // This should provide the green tint
     {
         alignSelf: 'flex-end',
-        borderTopRightRadius: '2px',
-        backgroundColor: vars.color.blue50, // Force light blue for user message in light mode
-        color: vars.color.gray800,
+        borderTopRightRadius: vars.borderRadius.sm,
+        // No hardcoded blue bg
     }
 ]);
 
 export const inputArea = style({
     padding: vars.spacing[16],
-    borderTop: `1px solid ${vars.color.gray200}`,
+    borderTop: `1px solid ${vars.border.default}`,
     backgroundColor: vars.surface.base.bg,
 });
 
@@ -72,13 +71,13 @@ export const input = style([
     {
         width: '100%',
         padding: vars.spacing[12],
-        borderRadius: '8px',
-        fontSize: '13px',
+        borderRadius: vars.borderRadius.md,
+        fontSize: vars.fontSize.sm,
         fontFamily: 'inherit',
         resize: 'none',
         minHeight: '40px',
         ':focus': {
-            outline: `1px solid ${vars.color.blue500}`,
+            outline: `1px solid ${vars.border.interactive}`,
             backgroundColor: vars.surface.base.bg,
         }
     }

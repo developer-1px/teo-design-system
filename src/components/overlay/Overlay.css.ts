@@ -19,9 +19,9 @@ export const backdrop = style({
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.02)', // Minimal dimming
     zIndex: 0, // Base layer of the overlay
-    backdropFilter: 'blur(2px)', // Optional: nice glass effect
+    backdropFilter: 'none', // Removed distraction
 });
 
 export const container = styleVariants({

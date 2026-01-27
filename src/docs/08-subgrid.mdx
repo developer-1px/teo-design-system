@@ -1,0 +1,98 @@
+---
+title: CSS Subgrid Patterns
+order: 8
+category: Design System
+---
+
+# CSS Subgrid Patterns
+
+`subgrid`는 부모 그리드의 트랙(행/열)을 자식 요소가 그대로 상속받아 사용하는 강력한 기능입니다.
+복잡한 중첩 구조에서도 라인을 완벽하게 맞출 수 있어 시각적 조화(Visual Harmony)를 이루는 데 필수적입니다.
+
+## Why Subgrid?
+
+기존의 Grid/Flex 중첩은 각자가 독립적인 레이아웃 컨텍스트를 가집니다.
+때문에 **"서로 다른 카드에 있는 제목의 높이를 똑같이 맞추기"**같은 작업이 매우 어렵거나 불가능했습니다.
+
+Subgrid를 사용하면 자식 요소가 부모(또는 조상)의 그리드 트랙을 직접 참조하므로, 구조적 깊이에 상관없이 정렬을 맞출 수 있습니다.
+
+## Use Cases
+
+### 1. Card Layout Alignment
+
+여러 카드가 나열되어 있을 때, 내부 컨텐츠(제목, 본문, 푸터)의 높이가 제각각이라도 같은 행(Row)에 있는 요소끼리 줄을 맞출 수 있습니다.
+
+```tsx
+// Parent Grid
+display: 'grid',
+gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+gap: '24px'
+
+// Card (Child)
+display: 'grid',
+gridTemplateRows: 'subgrid', // 높이 트랙을 부모로부터 상속 (실제로는 부모가 spanning 해야 함)
+```
+
+> [!NOTE]
+> Card 예제는 보통 부모 그리드에서 `grid-template-rows`를 명시적으로 제어하거나, 카드가 `grid-row: span 3` 처럼 여러 트랙을 차지하도록 설정해야 `subgrid`가 유효합니다.
+
+### 2. Form Layouts
+
+Label과 Input이 서로 다른 컨테이너에 있어도, 전체 폼의 라벨 너비를 통일할 수 있습니다.
+
+### 3. Complex Data Grids
+
+헤더와 데이터 행이 별도 컴포넌트여도 컬럼 너비를 공유할 수 있습니다.
+
+## Recipe: Subgrid in Vanilla Extract
+
+Subgrid를 쉽게 사용하기 위한 레시피입니다.
+
+```typescript
+import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
+
+// 1. Utility Style
+export const subgrid = style({
+  display: 'grid',
+  gridTemplateColumns: 'subgrid',
+  gridTemplateRows: 'subgrid'
+});
+
+// 2. Axis-Specific
+export const subgridAxis = recipe({
+  variants: {
+    axis: {
+      x: { gridTemplateColumns: 'subgrid' },
+      y: { gridTemplateRows: 'subgrid' },
+      both: { 
+        gridTemplateColumns: 'subgrid',
+        gridTemplateRows: 'subgrid'
+      }
+    }
+  },
+  defaultVariants: {
+    axis: 'both'
+  }
+});
+```
+
+## Code Example
+
+```typescript
+// styles.css.ts
+import { style } from '@vanilla-extract/css';
+
+export const parent = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 2fr 1fr',
+  gap: '16px'
+});
+
+export const childItem = style({
+  // 이 요소의 자식들은 부모(parent)의 3개 컬럼을 그대로 사용함
+  display: 'grid',
+  gridColumn: '1 / -1',
+  gridTemplateColumns: 'subgrid',
+});
+```

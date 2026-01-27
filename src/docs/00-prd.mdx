@@ -1,0 +1,67 @@
+---
+title: Project PRD
+order: 0
+category: Reading material
+---
+
+# PRD: AI-Native Design System (Project Antigravity)
+
+> **"AI에게 디자인 감각을 코드로 이식합니다."**
+
+## 1. Core Mission & Philosophy
+
+이 프로젝트의 본질은 단순한 웹앱 개발이 아닙니다.
+**AI Agent가 디자인 감각이 없어도, 고품질의 일관된 UI를 기계적으로 생산할 수 있는 환경(Environment)을 구축하고 검증하는 것 **을 목표로 합니다.
+
+*   **Human Role:**미적 기준(Aesthetics)과 제약 조건(Guardrails)을 설계합니다.
+*   **AI Role:**설계된 제약 안에서 무한한 변형을 구현(Implementation)합니다.
+
+## 2. Problem Definition
+
+### 2.1. "The Freedom Paradox"
+AI 모델(LLM)은 자유도가 주어지면 필연적으로 **"디자인 엔트로피"**를 증가시킵니다.
+*   미묘하게 다른 Hex Color 코드를 남발합니다.
+*   의도치 않은 1px 어긋남이 발생합니다.
+*   모바일 대응을 누락하기도 합니다.
+
+### 2.2. "The Context Blindness"
+AI는 프로젝트 전체의 맥락을 모른 채 편협한 시각으로 코드를 작성하는 경향이 있습니다.
+*   기존 컴포넌트(`Button`)가 있는데도 `div`로 버튼을 또 만듭니다.
+*   Tailwind의 `w-64` 같은 매직 넘버를 사용합니다.
+
+## 3. Solution: "Type-Safety as a Design Guardrail"
+
+우리는 **vanilla-extract**를 통해 디자인을 **컴파일 가능한 코드(TypeScript)**의 영역으로 끌어들입니다.
+
+### 3.1. 컴파일 에러 = 디자인 피드백
+잘못된 컬러(`color: "red"`)를 사용하면 **빌드 자체가 안 됩니다 **.
+AI는 컴파일 에러를 보고 "아, 이 색은 쓸 수 없구나"라고 인식하고, 정의된 토큰(`vars.color.red500`)으로 스스로 수정하게 됩니다.
+
+### 3.2. Token System = Automated Design Decisions
+*   **Spacing:** 4px 그리드 시스템을 강제합니다 (`vars.spacing`)
+*   **Color:**시맨틱 컬러 토큰을 강제합니다 (`vars.surface`, `vars.text`)
+*   **Typography:**계층화된 폰트 시스템을 강제합니다 (`vars.font`)
+
+## 4. Scope: Proof of Concepts (PoC)
+
+이 가설을 증명하기 위해, 가장 복잡도가 높은 UI 패턴들을 직접 구현(Dogfooding)하며 검증합니다.
+
+*   **📧 Mail Client (Outlook/Gmail Clone):**밀도 높은 정보 처리와 복잡한 레이아웃을 검증합니다.
+*   **📝 Editor (Notion Style):**텍스트 편집, 미려한 타이포그래피, 마이크로 인터랙션을 검증합니다.
+*   **📊 Admin Dashboard:**데이터 시각화, 대량의 데이터 처리, CRUD 패턴을 검증합니다.
+*   **🏗️ Builder (No-Code Tool):**드래그 앤 드롭과 복잡한 상태 관리 패턴을 검증합니다.
+
+## 5. Documentation as Ground Truth
+
+이 `docs` 사이트의 역할은 단순한 설명서가 아닙니다.
+**"AI가 이 문서를 읽고 학습하여(In-Context Learning), 스스로 올바른 코드를 생성하게 만드는 지식 베이스"**입니다.
+따라서 모든 문서는 **기계 가독성(Machine Readability)**과 **명확한 패턴(Pattern Clarity)**을 최우선으로 작성됩니다.
+
+---
+
+## 6. Success Metrics
+
+1.  **Zero-Hallucination:** AI가 존재하지 않는 스타일 속성이나 값을 사용했을 때, TS 컴파일러가 100% 잡아내는가?
+2.  **Aesthetic Consistency:** AI가 만든 결과물이 별도의 수정 없이도 "디자이너가 만진 것처럼" 보이는가?
+3.  **Self-Correction:**에러 발생 시 AI가 스스로 올바른 토큰을 찾아 수정할 수 있는가?
+

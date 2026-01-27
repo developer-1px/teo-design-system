@@ -7,25 +7,31 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import remarkGfm from 'remark-gfm';
 
+
 import { inspectorPlugin } from './vite-plugins/inspector';
 import inspectorBabelPlugin from './vite-plugins/babel-inspector';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    inspectorPlugin(),
-    {
-      enforce: 'pre',
-      ...mdx({
-        providerImportSource: "@mdx-js/react",
-        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm]
-      })
-    },
-    react({
-      babel: {
-        plugins: [inspectorBabelPlugin]
-      }
-    }),
-    vanillaExtractPlugin()
-  ],
+export default defineConfig(async () => {
+  const rehypeHighlight = (await import('rehype-highlight')).default;
+
+  return {
+    plugins: [
+      inspectorPlugin(),
+      {
+        enforce: 'pre',
+        ...mdx({
+          providerImportSource: "@mdx-js/react",
+          remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
+          rehypePlugins: [rehypeHighlight]
+        })
+      },
+      react({
+        babel: {
+          plugins: [inspectorBabelPlugin]
+        }
+      }),
+      vanillaExtractPlugin()
+    ],
+  }
 })

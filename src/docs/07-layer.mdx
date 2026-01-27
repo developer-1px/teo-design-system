@@ -1,0 +1,240 @@
+---
+title: Layer System
+order: 7
+category: Design System
+---
+
+import { useState } from 'react';
+import { Modal } from '../components/overlay/Modal';
+import { Drawer } from '../components/overlay/Drawer';
+import { Floating } from '../components/overlay/Floating';
+import { ToastContainer, useToast } from '../components/overlay/Toast';
+import { Tooltip } from '../components/overlay/Tooltip';
+import { ContextMenu, ContextMenuItem, ContextMenuSeparator } from '../components/overlay/ContextMenu';
+import { vars } from '../styles/vars.css';
+
+# Layer System (Z-Axis)
+
+**Layer System**은 화면의 **Z축(깊이)**과 **위치(Positioning)**를 관장하는 1티어 아키텍처입니다.
+전통적인 "Overlay" 개념을 확장하여, 문서의 흐름(Flow)에서 벗어난 모든 요소를 통합 관리합니다.
+
+## 1. Philosophy: Depth & Flow
+
+UI 요소는 크게 두 가지로 나뉩니다.
+1. **In-Flow**: 문서의 흐름을 따르는 요소 (Static, Relative)
+2. **Out-of-Flow (Layers)**: 흐름을 벗어나거나, 새로운 층을 형성하는 요소
+
+우리는 Out-of-Flow 요소를 두 가지 목적에 따라 분류합니다.
+
+## 2. Layer Classification (MECE)
+
+모든 Layer 요소는 **Flow(흐름)**와 **Interaction(상호작용)**을 기준으로 MECE하게 분류됩니다.
+
+| 구분 | **Non-Blocking** (흐름 유지) | **Blocking** (흐름 차단) |
+| :--- | :--- | :--- |
+| **In-Flow**<br/>(Layout-bound) | **Sticky Header**<br/>- 스크롤 흐름을 따름<br/>- 컨텐츠 위에 뜸 (Elevated) | *(해당 없음)*<br/>- 흐름을 따르면서 차단하는 UI는 존재하지 않음 |
+| **Out-of-Flow**<br/>(Global/Anchor) | **Toast / FAB**<br/>- 화면 절대 좌표에 존재<br/>- 작업 방해 안 함<br/><br/>**Tooltip**<br/>- 특정 요소에 앵커링<br/>- 정보만 제공 | **Modal / Dialog**<br/>- 배경을 차단하고 독점<br/><br/>**Drawer**<br/>- 측면에서 나와 독점<br/><br/>**Popover**<br/>- 로직적으로 차단 (Light Dismiss) |
+
+---
+
+## 3. Positioning Layers (Non-Blocking)
+
+이 레이어들은 사용자의 작업을 방해하지 않고 보조하거나 유도합니다.
+
+### Sticky (Hybrid)
+Sticky는 **Layout(In-Flow)**이면서 **Layer(Elevated)**인 특수한 형태입니다.
+스크롤 흐름에 묶여 있지만, 시각적으로는 상위 계층을 점유합니다.
+
+```typescript
+export const stickyHeader = style({
+    position: 'sticky',
+    top: 0,
+    zIndex: vars.zIndices.elevated, // 10
+    boxShadow: vars.shadow.raised
+});
+```
+
+### Floating / Fixed
+화면의 절대적인 위치(Fixed)를 점유하지만, 메인 컨텐츠 소비를 막지 않습니다. (예: Toast, FAB)
+
+---
+
+### Component Mapping
+
+| Component | Type | Characteristics | Z-Index |
+| :--- | :--- | :--- | :--- |
+| **Modal** | Global Blocking | 중앙 집중, 배경 차단 (Critical Action) | `modal` (1000) |
+| **Drawer** | Global Blocking | 측면 확장, 네비게이션/설정 | `modal` (1000) |
+| **Sheet** | Global Blocking | 하단/상단에서 진입 (Mobile-friendly Modal) | `modal` (1000) |
+| **Banner** | Positioning | 상단 고정 시스템 메시지 (Persistent) | `elevated` (10) |
+| **Spotlight** | Contextual Blocking | 특정 요소를 강조하고 나머지 차단 (Tutorial) | `modal` (1000) |
+| **Backdrop** | Global Blocking | 시각적 격리층 (Scrim) | `modal - 1` |
+| **Popover** | Local Blocking | 버튼에 종속된 메뉴 (Light Dismiss) | `popover` (1100) |
+| **Drag Ghost** | Positioning | 마우스 커서 추적 (Dnd) | `toast` (10000) |
+
+## 5. Universal Layer Patterns
+
+### Sheets (Bottom / Top)
+모바일 환경에서 Modal을 대체하는 패턴입니다. 한 손 조작이 용이하며, 제스처로 닫을 수 있습니다.
+
+### System Banners
+Sticky Header와 유사하지만, "컨텐츠"가 아닌 "시스템 상태"를 알립니다. 스크롤과 무관하게 최상단에 고정될 수도 있습니다.
+
+### Spotlight (Coachmark)
+튜토리얼이나 온보딩 시 특정 버튼만 남기고 나머지를 어둡게 처리합니다. "구멍 뚫린 Overlay"라고 볼 수 있습니다.
+
+---
+
+---
+
+## 5. Design Tokens
+
+### Z-Index Scale
+
+| Token | Value | Usage |
+| :--- | :--- | :--- |
+| `base` | 0 | 기본 컨텐츠 |
+| `elevated` | 10 | Sticky Element |
+| `floating` | 100 | Low-priority Floaters |
+| `modal` | 1000 | Dialog, Drawer |
+| `popover` | 1100 | Tooltip, Menu, Popover |
+| `toast` | 10000 | 최상위 알림 |
+
+### Elevation (Shadow)
+
+그림자는 Layer의 높이(Depth)를 표현하는 핵심 수단입니다.
+
+| Token | Depth | Usage |
+| :--- | :--- | :--- |
+| `flat` | 0dp | Default |
+| `raised` | 2dp | Cards, Sticky Headers |
+| `overlay` | 4dp | Dropdowns, Menus |
+| `modal` | 8dp | Modals, Drawers |
+| `popover` | 16dp | Tooltips, Operations |
+
+export const ElevationShowcase = () => {
+    const levels = ['flat', 'raised', 'overlay', 'modal', 'popover'];
+    return (
+        <div style={{ display: 'flex', gap: '32px', padding: '40px 20px', background: '#f5f5f5', borderRadius: '8px', overflowX: 'auto', marginBottom: '40px' }}>
+            {levels.map(level => (
+                <div key={level} style={{ 
+                    width: '100px', 
+                    height: '100px', 
+                    background: 'white', 
+                    borderRadius: '12px',
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    boxShadow: vars.shadow[level],
+                    transition: 'box-shadow 0.3s',
+                    flexShrink: 0
+                }}>
+                    <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>{level}</span>
+                    <span style={{ fontSize: '10px', color: '#999', marginTop: '4px' }}>
+                         {level === 'flat' ? '0dp' : 
+                          level === 'raised' ? '2dp' : 
+                          level === 'overlay' ? '4dp' : 
+                          level === 'modal' ? '8dp' : '16dp'}
+                    </span>
+                </div>
+            ))}
+        </div>
+    );
+};
+
+<ElevationShowcase />
+
+---
+
+## 6. Live Examples
+
+### Modal & Drawer
+<div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+    {(() => {
+        const [m, setM] = useState(false);
+        const [d, setD] = useState(false);
+        return (
+            <>
+                <button onClick={() => setM(true)}>Open Modal</button>
+                <Modal isOpen={m} onClose={() => setM(false)} title="Layer: Modal">
+                    <p>This is a Semantic Overlay (Blocking).</p>
+                </Modal>
+                
+                <button onClick={() => setD(true)}>Open Drawer</button>
+                <Drawer isOpen={d} onClose={() => setD(false)} title="Layer: Drawer">
+                    <p>This is a Side Layer.</p>
+                </Drawer>
+            </>
+        );
+    })()}
+</div>
+
+### Positioning Layer (Toast)
+<div style={{ marginBottom: '20px' }}>
+    {(() => {
+        const { toasts, addToast, removeToast } = useToast();
+        return (
+            <>
+                <button onClick={() => addToast('Layer System Activated')}>Trigger Toast</button>
+                <ToastContainer toasts={toasts} onRemove={removeToast} />
+            </>
+        );
+    })()}
+</div>
+
+### Contextual Utils (Tooltip & Popover)
+<div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px' }}>
+    {/* Tooltip Example */}
+    <Tooltip text="This is a purely CSS-based tooltip">
+        <button style={{ background: '#eee', border: 'none', padding: '8px 12px', borderRadius: '4px' }}>
+            Hover Me (Tooltip)
+        </button>
+    </Tooltip>
+
+    {/* Popover Example */}
+    {(() => {
+        const [show, setShow] = useState(false);
+        return (
+            <Floating 
+                visible={show} 
+                content={
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <strong>Popover Content</strong>
+                        <span style={{ fontSize: '12px', color: '#666' }}>Interactive content goes here.</span>
+                        <button onClick={() => setShow(false)} style={{ fontSize: '11px' }}>Close</button>
+                    </div>
+                }
+            >
+                <button 
+                    onClick={() => setShow(!show)}
+                    style={{ background: vars.surface.card.bg, border: vars.surface.card.border, padding: '8px 12px', borderRadius: '4px' }}
+                >
+                    Click Me (Floating Popover)
+                </button>
+            </Floating>
+        );
+    })()}
+</div>
+
+### Context Menu (Right Click)
+<div style={{ marginBottom: '40px', padding: '40px', background: '#f9f9f9', border: '1px dashed #ccc', borderRadius: '8px', textAlign: 'center' }}>
+    <ContextMenu 
+        trigger={
+            <span style={{ color: '#555', fontSize: '14px' }}>
+                Right-click anywhere in this area to see the custom context menu.
+            </span>
+        }
+        items={
+            <>
+                <ContextMenuItem onClick={() => alert('Cut')}>Cut</ContextMenuItem>
+                <ContextMenuItem onClick={() => alert('Copy')}>Copy</ContextMenuItem>
+                <ContextMenuItem onClick={() => alert('Paste')}>Paste</ContextMenuItem>
+                <ContextMenuSeparator />
+                <ContextMenuItem style={{ color: vars.color.red500 }} onClick={() => alert('Delete')}>
+                    Delete
+                </ContextMenuItem>
+            </>
+        }
+    />
+</div>

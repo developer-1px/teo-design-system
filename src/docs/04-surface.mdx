@@ -1,12 +1,15 @@
 ---
 title: Surface System
-order: 2
+order: 4
+category: Design System
 ---
+
+import { SurfaceShowcase } from '../components/docs/SurfaceShowcase';
 
 # Surface System
 
 `Surface`는 디자인 시스템에서 가장 기초가 되는 "배경"과 그 위에 올라가는 "계층(Layer)"을 정의합니다.
-이 시스템은 단순한 배경색이 아니라, **배경색(bg) + 테두리(border) + 그림자(shadow) + 텍스트 색상(text)** 이 하나의 세트로 동작하는 **Contract**입니다.
+이 시스템은 단순한 배경색이 아니라, **배경색(bg) + 테두리(border) + 그림자(shadow) + 텍스트 색상(text)**이 하나의 세트로 동작하는 **Contract**입니다.
 
 ## Concepts
 
@@ -24,28 +27,33 @@ Base보다는 약간 구분이 필요한, 은은한 배경입니다. 사이드�
 
 ### 4. Input / Highlight / Ghost
 특수한 목적을 가진 Surface들입니다.
-*   **Input:** 입력 필드 전용
-*   **Highlight:** 강조 영역 (Selected state 등)
-*   **Ghost:** 평소엔 투명하지만 호버 시 나타나는 인터랙티브 요소
+*   **Input:**입력 필드 전용
+*   **Highlight:**강조 영역 (Selected state 등)
+*   **Ghost:**평소엔 투명하지만 호버 시 나타나는 인터랙티브 요소
 
 ## Usage
+
+우리는 **Utility Function**을 사용하여 일관된 스타일링을 강제합니다.
+`vars`를 직접 호출하는 것보다 `surface()` 헬퍼를 사용하는 것이 권장됩니다.
 
 ```typescript
 import { vars } from '../styles/vars.css';
 import { style } from '@vanilla-extract/css';
+import { surface } from '../styles/utils.css';
 
 // 1. Using Base Surface
+// surface()는 bg, color, border, shadow를 한 번에 적용합니다.
 export const appContainer = style({
-  backgroundColor: vars.surface.base.bg,
-  color: vars.surface.base.text,
+    ...surface('base'),
+    color: vars.color.gray800 // 텍스트 컬러 오버라이드 (Optional)
 });
 
 // 2. Using Card Surface (Includes border & shadow automatically)
 export const card = style({
-  backgroundColor: vars.surface.card.bg,
-  border: vars.surface.card.border,
-  boxShadow: vars.surface.card.shadow,
+    ...surface('card'), // bg + border + shadow + default text color
+    padding: vars.spacing[16]
 });
+
 ```
 
 ## Tokens Inspection
@@ -56,5 +64,13 @@ export const card = style({
 | **subtle** | #f6f8fc | #202124 | `vars.surface.subtle` |
 | **card** | White (with Border) | #303134 | `vars.surface.card` |
 
-> [!TIP]
-> Surface 토큰을 사용할 때는 `bg`만 쓰는 것보단, `text` 색상까지 함께 사용하여 명암비(Contrast)를 보장하는 것이 좋습니다.
+
+
+## Live Showcase
+
+아래 컴포넌트는 `SurfaceShowcase.tsx`를 렌더링한 결과입니다.
+테마 스위처를 눌러 Dark Mode에서의 변화를 확인해보세요.
+
+<div style={{ padding: '20px', backgroundColor: 'rgba(0,0,0,0.02)', borderRadius: '8px', marginTop: '20px' }}>
+    <SurfaceShowcase />
+</div>

@@ -7,9 +7,11 @@ export const sidebar = style([
     {
         gridColumn: '1',
         gridRow: '1',
-        borderRight: `1px solid ${vars.color.gray200}`,
+        borderRight: `1px solid ${vars.border.default}`,
         display: 'flex',
         flexDirection: 'column',
+        height: '100%',
+        overflowY: 'auto'
     }
 ]);
 
@@ -18,10 +20,10 @@ export const header = style({
     display: 'flex',
     alignItems: 'center',
     padding: `0 ${vars.spacing[16]}`,
-    fontSize: '11px',
-    fontWeight: 700,
+    fontSize: vars.fontSize.xs,
+    fontWeight: vars.weight.bold,
     color: vars.color.gray600,
-    letterSpacing: '0.5px',
+    letterSpacing: vars.letterSpacing.wide,
 });
 
 export const fileItem = style([
@@ -30,30 +32,39 @@ export const fileItem = style([
         display: 'flex',
         alignItems: 'center',
         height: '28px',
-        padding: `0 ${vars.spacing[16]}`,
-        gap: vars.spacing[8],
-        fontSize: '13px',
+        padding: `0 ${vars.spacing[8]}`,
+        fontSize: vars.fontSize.sm,
         cursor: 'pointer',
-        color: vars.color.gray800,
+        color: vars.surface.base.text,
         textDecoration: 'none',
         borderLeft: '2px solid transparent',
+        width: '100%',
     }
 ]);
 
 export const activeFile = style([
     surface('highlight'),
     {
-        borderLeft: `2px solid ${vars.color.blue500}`, // Active Application like indicator
+        borderLeft: `2px solid ${vars.border.interactive}`,
     }
 ]);
 
-export const folder = style({
-    fontWeight: 700,
-    color: vars.color.gray800,
-    display: 'flex',
-    alignItems: 'center',
-    height: '28px',
-    padding: `0 ${vars.spacing[8]}`,
-    fontSize: '13px',
-    gap: vars.spacing[4],
+export const folderHeader = style([
+    surface('ghost'),
+    {
+        display: 'flex',
+        alignItems: 'center',
+        height: '28px',
+        padding: `0 ${vars.spacing[8]}`,
+        cursor: 'pointer',
+        color: vars.surface.base.text,
+        fontWeight: vars.weight.medium,
+        fontSize: vars.fontSize.sm,
+    }
+]);
+
+export const folderContent = style({
+    marginLeft: vars.spacing[12],
+    borderLeft: `1px solid ${vars.border.subtle}`,
+    paddingLeft: vars.spacing[4],
 });

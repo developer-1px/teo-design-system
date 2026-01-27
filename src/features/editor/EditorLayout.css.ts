@@ -14,7 +14,7 @@ export const fileTree = style([
     surface('subtle'),
     {
         gridColumn: '1',
-        borderRight: `1px solid ${vars.color.gray200}`,
+        borderRight: `1px solid ${vars.border.default}`,
         padding: vars.spacing[8],
     }
 ]);
@@ -30,21 +30,23 @@ export const codeSurface = style([
     surface('base'),
     {
         gridRow: '1',
-        borderBottom: `1px solid ${vars.color.gray200}`,
+        borderBottom: `1px solid ${vars.border.default}`,
         padding: vars.spacing[16],
-        fontFamily: 'monospace',
+        fontFamily: vars.font.code,
     }
 ]);
 
 export const terminal = style([
-    surface('card'), // Or specific terminal surface? Card is ok for now. 
+    surface('card'),
     {
         gridRow: '2',
-        backgroundColor: vars.color.gray800, // Always dark? Or theme dependent?
-        color: vars.color.white,
+        backgroundColor: vars.color.gray800,
+        color: vars.color.gray100,
         padding: vars.spacing[12],
-        fontFamily: 'monospace',
-        fontSize: '13px',
+        fontFamily: vars.font.code,
+        fontSize: vars.fontSize.xs,
+        border: 'none',
+        borderRadius: 0,
     }
 ]);
 
@@ -52,7 +54,7 @@ export const chatPanel = style([
     surface('subtle'),
     {
         gridColumn: '3',
-        borderLeft: `1px solid ${vars.color.gray200}`,
+        borderLeft: `1px solid ${vars.border.default}`,
         display: 'flex',
         flexDirection: 'column',
     }
@@ -65,11 +67,11 @@ export const resizer = style({
     width: '4px', // Hit area
     height: '100%',
     cursor: 'col-resize',
-    zIndex: 10,
+    zIndex: vars.zIndices.elevated,
     backgroundColor: 'transparent',
     transition: 'background-color 0.2s',
     ':hover': {
-        backgroundColor: vars.color.blue500, // Visual feedback
+        backgroundColor: vars.border.interactive,
     },
     // Make it overlay the border
     marginRight: '-2px',

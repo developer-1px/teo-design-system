@@ -7,7 +7,7 @@ export function ThemeToggle() {
 
     return (
         <button className={styles.toggleBtn} onClick={toggleTheme} title="Toggle Theme">
-            {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
+            {theme === 'light' ? <Moon size={18} strokeWidth={2} /> : <Sun size={18} strokeWidth={2} />}
         </button>
     );
 }

@@ -16,7 +16,7 @@ export const codeArea = style([
     typography({ variant: 'code', size: 'md' }),
     {
         gridRow: '1',
-        borderBottom: `1px solid ${vars.color.gray200}`,
+        borderBottom: `1px solid ${vars.border.default}`,
         padding: vars.spacing[16],
         overflow: 'auto',
     }
@@ -37,11 +37,13 @@ export const terminal = style([
     typography({ variant: 'code', size: 'sm' }), // Console size
     {
         gridRow: '2',
-        backgroundColor: '#1e1e1e',
-        color: '#cccccc',
+        backgroundColor: vars.color.gray800,
+        color: vars.color.gray200,
         padding: 0,
         display: 'flex',
         flexDirection: 'column',
+        borderRadius: 0,
+        border: 'none',
     }
 ]);
 
@@ -50,18 +52,25 @@ export const terminalHeader = style({
     display: 'flex',
     alignItems: 'center',
     padding: `0 ${vars.spacing[16]}`,
-    borderBottom: '1px solid #333',
-    fontWeight: 700,
-    fontSize: '11px',
+    borderBottom: `1px solid ${vars.border.strong}`,
+    fontWeight: vars.weight.bold,
+    fontSize: vars.fontSize.xs,
     gap: vars.spacing[16],
     textTransform: 'uppercase',
-    color: '#cccccc',
+    color: vars.color.gray300,
 });
 
 export const terminalBody = style({
     flex: 1,
     padding: vars.spacing[12],
-    fontFamily: 'Menlo, Monaco, monospace',
-    fontSize: '12px',
+    fontFamily: vars.font.code,
+    fontSize: vars.fontSize.sm,
     overflowY: 'auto',
+});
+
+export const activeTerminalTab = style({
+    backgroundColor: vars.color.gray200,
+    color: vars.color.gray800,
+    borderRadius: vars.borderRadius.sm,
+    padding: `${vars.spacing[4]} ${vars.spacing[8]}`,
 });

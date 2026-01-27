@@ -1,19 +1,20 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
+import { surface } from '../../styles/utils.css';
 
-export const modal = style({
-    backgroundColor: vars.color.white, // Explicit solid color
-    borderRadius: '12px',
-    boxShadow: vars.shadow.modal,
-    border: '1px solid rgba(0,0,0,0.1)',
-    minWidth: '400px',
-    maxWidth: '90vw',
-    padding: vars.spacing[24],
-    display: 'flex',
-    flexDirection: 'column',
-    gap: vars.spacing[16],
-    color: vars.surface.base.text,
-});
+export const modal = style([
+    surface('card'),
+    {
+        borderRadius: '12px',
+        boxShadow: vars.shadow.modal,
+        minWidth: '400px',
+        maxWidth: '90vw',
+        padding: vars.spacing[24],
+        display: 'flex',
+        flexDirection: 'column',
+        gap: vars.spacing[16],
+    }
+]);
 
 export const header = style({
     display: 'flex',

@@ -1,5 +1,6 @@
 import * as styles from './EditorSurface.css';
 
+
 export function EditorSurface() {
     return (
         <main className={styles.container}>
@@ -13,16 +14,16 @@ export function EditorSurface() {
 
             <div className={styles.terminal}>
                 <div className={styles.terminalHeader}>
-                    <span style={{ borderBottom: '1px solid white' }}>Terminal</span>
-                    <span style={{ opacity: 0.5 }}>Output</span>
-                    <span style={{ opacity: 0.5 }}>Debug Console</span>
+                    <span className={styles.activeTerminalTab}>Terminal</span>
+                    <span>Output</span>
+                    <span>Debug Console</span>
                 </div>
                 <div className={styles.terminalBody}>
-                    <div style={{ color: '#4caf50' }}>➜  fusion-hypernova git:(main) <span style={{ color: '#cccccc' }}>npm run dev</span></div>
+                    <div>➜  fusion-hypernova git:(main) <span>npm run dev</span></div>
                     <br />
                     <div>  VITE v4.4.9  ready in 250 ms</div>
                     <br />
-                    <div>  ➜  Local:   <span style={{ color: '#42a5f5' }}>http://localhost:5173/</span></div>
+                    <div>  ➜  Local:   <span>http://localhost:5173/</span></div>
                     <div>  ➜  Network: use --host to expose</div>
                 </div>
             </div>

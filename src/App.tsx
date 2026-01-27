@@ -1,42 +1,51 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { RootLayout } from './layouts/RootLayout';
 import { DocsLayout } from './layouts/DocsLayout';
+import 'highlight.js/styles/github-dark.css';
 import { MailPage } from './features/mail/MailPage';
 import { EditorPage } from './features/editor/EditorPage';
-import WhyVanillaExtract from './docs/why-vanilla-extract.mdx';
-import PRD from './docs/prd.mdx';
-import SurfaceDoc from './docs/surface.mdx';
-import SurfaceExamples from './docs/surface-examples.mdx';
-import Typography from './docs/typography.mdx';
-import Architecture from './docs/architecture-matrix.mdx';
-import OverlayDoc from './docs/overlay.mdx';
+import { SlidesPage } from './features/slides/SlidesPage';
+import BuilderPage from './features/admin/BuilderPage';
+import { DashboardPage } from './features/admin/DashboardPage';
+import { ListPage } from './features/admin/ListPage';
+import { AdminLayout } from './features/admin/AdminLayout';
 import './App.css'; // Just for global side effects
 
-function AppContent() {
-  const { themeClass } = useTheme();
+// Auto-import all MDX files
+const mdxPages = import.meta.glob('/src/docs/*.mdx', { eager: true });
 
+const docsRoutes = Object.keys(mdxPages).map((path) => {
+  const slug = path.split('/').pop()?.replace('.mdx', '');
+  const Component = (mdxPages[path] as any).default;
+  return { path: slug, Component };
+}).sort((a, b) => (a.path || '').localeCompare(b.path || ''));
+
+function AppContent() {
   return (
-    <div className={themeClass}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<RootLayout />}>
-            <Route index element={<Navigate to="/mail" replace />} />
-            <Route path="mail" element={<MailPage />} />
-            <Route path="editor" element={<EditorPage />} />
-            <Route path="docs" element={<DocsLayout />}>
-              <Route path="why-vanilla-extract" element={<WhyVanillaExtract />} />
-              <Route path="prd" element={<PRD />} />
-              <Route path="surface" element={<SurfaceDoc />} />
-              <Route path="surface-examples" element={<SurfaceExamples />} />
-              <Route path="typography" element={<Typography />} />
-              <Route path="architecture-matrix" element={<Architecture />} />
-              <Route path="overlay" element={<OverlayDoc />} />
-            </Route>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<RootLayout />}>
+          <Route index element={<Navigate to="/mail" replace />} />
+          <Route path="mail" element={<MailPage />} />
+          <Route path="editor" element={<EditorPage />} />
+          <Route path="slides" element={<SlidesPage />} />
+          <Route path="admin" element={<AdminLayout />}>
+            <Route index element={<ListPage />} />
+            <Route path="builder" element={<BuilderPage />} />
           </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="docs" element={<DocsLayout />}>
+            {docsRoutes.length > 0 && (
+              <Route index element={<Navigate to={docsRoutes[0].path!} replace />} />
+            )}
+            {docsRoutes.map(({ path, Component }) => (
+              <Route key={path} path={path} element={<Component />} />
+            ))}
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

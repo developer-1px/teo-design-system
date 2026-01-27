@@ -1,0 +1,410 @@
+---
+title: Why Vanilla Extract?
+order: 1
+category: Reading material
+---
+
+# AI 시대의 CSS, 왜 vanilla-extract인가
+
+---
+
+## 1. 시작: AI와 함께 코딩하면서 마주친 문제
+
+Agent 기반 코딩이 미래라고 생각했습니다. 직접 AI와 함께 개발을 시작했지만, 곧 벽에 부딪혔습니다.
+
+**AI가 만든 디자인에는 일관성이 없었습니다.**
+
+같은 버튼인데 색상이 미묘하게 다르고, 간격이 중구난방이었습니다. 키라인이 맞지 않아 매번 결과물이 새로 만드는 것처럼 느껴졌습니다.
+
+자연스럽게 **"값을 제한하면 되지 않을까?"**라는 생각에 도달했습니다. 디자인 토큰을 정의하고, 정해진 값만 쓰게 만들면 일관성이 유지될 것이라 생각했습니다.
+
+그런데 역설적인 일이 벌어졌습니다. 제한을 걸수록 **AI의 디자인 능력이 떨어졌습니다.**
+
+---
+
+## 2. 기존 도구들의 한계
+
+### Tailwind CSS: 학습된 관성을 이길 수 없다
+
+Tailwind의 `p-4`는 16px입니다. AI는 이미 `4 = 16px`로 학습되어 있습니다.
+
+제가 base를 수정해서 `p-4 = 12px`로 바꿔도, AI는 관성적으로 `p-4`가 16px인 것처럼 디자인했습니다. 설정 파일을 아무리 바꿔도 소용없었습니다. **문자열이라 에러가 나지 않으니 **, AI는 무엇이 틀렸는지조차 알지 못했습니다.
+
+```javascript
+// tailwind.config.js에서 spacing을 바꿔도
+// AI는 여전히 p-4 = 16px로 생각하고 디자인합니다
+```
+
+### CSS-in-JS: 의외로 잘 못한다
+
+styled-components, Emotion 같은 런타임 CSS-in-JS를 시도해봤지만, 예상외로 AI가 이것들을 잘 다루지 못했습니다. 문법의 자유도가 높아서인지, 일관된 패턴으로 코드를 생성하는 데 어려움을 겪었습니다.
+
+### 컴포넌트 Props 기반: inline-style로의 탈출
+
+Chakra UI 스타일로 컴포넌트에 props를 전달하는 방식도 사용해 보았습니다. 문제는 AI가 제가 만든 컴포넌트의 세계를 완전히 이해하지 못한다는 점이었습니다. 학습되지 않은 커스텀 시스템을 다루는 데에는 한계가 있었습니다.
+
+결국 AI는 **inline-style로 탈출 **했습니다.
+
+```jsx
+// AI가 이렇게 작성해버립니다
+<div style={{ padding: 16, marginTop: 8, backgroundColor: '#3b82f6' }}>
+```
+
+inline-style은 CSS의 가장 큰 한계입니다. hover, active, media query를 사용할 수 없어, 현대 웹 UI를 만들기에는 치명적인 제약이 있습니다.
+
+---
+
+## 3. 발견: AI가 잘하는 것에서 시작하자
+
+고민 끝에 관점을 바꾸었습니다.
+
+**"AI를 내 시스템에 맞추려 하지 말고, AI가 잘하는 것에서 시작하자."**
+
+AI가 가장 잘하는 것은 **HTML + CSS**입니다. 학습 데이터가 압도적으로 많기 때문입니다. AI에게 자유롭게 바닐라 CSS를 쓰게 하면 디자인 퀄리티가 가장 높습니다.
+
+하지만 바닐라 CSS에는 근본적인 문제가 있습니다.
+
+- **글로벌 네임스페이스 **: 클래스명 충돌 문제
+- **타입 안전성 없음 **: 오타나 잘못된 값을 잡을 수 없음
+- **Dead Code**: 사용하지 않는 스타일 추적의 어려움
+
+그래서 찾은 답이 **vanilla-extract**였습니다.
+
+> TypeScript 기반이면서, 바닐라 CSS에 가장 가까운 것입니다.
+
+---
+
+## 4. vanilla-extract란 무엇인가
+
+### 핵심 철학: Zero-runtime CSS in TypeScript
+
+vanilla-extract는 **TypeScript를 CSS 전처리기로 사용 **합니다. `.css.ts` 파일에 스타일을 작성하면, 빌드 타임에 정적 CSS 파일이 생성되며 런타임 비용이 전혀 없습니다.
+
+```typescript
+// styles.css.ts
+import { style } from '@vanilla-extract/css';
+
+export const button = style({
+  backgroundColor: 'blue',
+  padding: 10,
+  ':hover': {
+    transform: 'scale(1.05)'
+  }
+});
+```
+
+빌드 결과:
+
+```css
+.styles_button__1h3k2j {
+  background-color: blue;
+  padding: 10px;
+}
+.styles_button__1h3k2j:hover {
+  transform: scale(1.05);
+}
+```
+
+**결과물은 그냥 평범한(vanilla) CSS 파일 **입니다. 특별한 런타임도, 프레임워크 종속성도 없습니다.
+
+### 왜 "vanilla"인가
+
+"vanilla"는 "순수한", "기본의"라는 뜻입니다.
+
+- 프레임워크에 종속되지 않습니다 (React, Vue, Svelte 모두 가능)
+- 출력물이 순수한 CSS입니다
+- 표준 CSS 기능만 사용합니다
+
+---
+
+## 5. vanilla-extract의 핵심 기능
+
+### 5.1 타입 안전한 스타일링
+
+모든 CSS 속성과 값에 대해 TypeScript가 타입 체크를 수행합니다.
+
+```typescript
+export const box = style({
+  display: 'flexx',  // ❌ 타입 에러: 'flexx'는 없는 값
+  padding: 10,
+  color: vars.colors.primaryy  // ❌ 타입 에러: 'primaryy'는 없는 속성
+});
+```
+
+**AI에게 이것이 왜 중요할까요?**
+
+Tailwind에서 잘못된 클래스를 쓰면 에러가 나지 않습니다. AI는 무엇이 틀렸는지 모릅니다. 하지만 vanilla-extract는 TypeScript 에러가 발생합니다. **이 에러가 AI에게 확실한 넛지(Nudge)가 됩니다.** "이 부분이 틀렸으니 고치라"고 명확한 피드백을 주는 셈입니다.
+
+### 5.2 로컬 스코프
+
+클래스명에 자동으로 고유한 해시가 붙습니다.
+
+```typescript
+export const title = style({ fontSize: 24 });
+// → .styles_title__1h3k2j
+```
+
+글로벌 네임스페이스 문제가 사라집니다. 다른 파일에서 같은 이름을 써도 충돌하지 않습니다.
+
+### 5.3 테마 시스템과 디자인 토큰
+
+```typescript
+// 테마 계약 정의
+const themeContract = createThemeContract({
+  color: {
+    primary: null,
+    secondary: null,
+    base: null,
+    subtle: null
+  }
+});
+
+// 라이트 테마
+export const lightTheme = createTheme(themeContract, {
+  color: {
+    primary: '#3b82f6',
+    secondary: '#64748b',
+    base: '#ffffff',
+    subtle: '#f8fafc'
+  }
+});
+
+// 다크 테마
+export const darkTheme = createTheme(themeContract, {
+  color: {
+    primary: '#60a5fa',
+    secondary: '#94a3b8',
+    base: '#0f172a',
+    subtle: '#1e293b'
+  }
+});
+```
+
+**AI에게 이것이 왜 중요할까요?**
+
+색상을 `vars.color.primary`로만 쓰게 하면, AI가 임의의 색상 코드를 사용할 수 없습니다. 타입 시스템이 이를 강제하기 때문입니다. 자연스럽게 일관성이 유지됩니다.
+
+### 5.4 CSS Variables 활용
+
+```typescript
+const accentColor = createVar();
+
+export const lightMode = style({
+  vars: { [accentColor]: 'blue' }
+});
+
+export const darkMode = style({
+  vars: { [accentColor]: 'cyan' }
+});
+
+export const text = style({
+  color: accentColor  // 컨텍스트에 따라 변함
+});
+```
+
+스코프된 CSS 변수를 생성하고, 컨텍스트에 따라 다른 값을 할당할 수 있습니다. 런타임에 동적으로 변경하는 것도 가능합니다.
+
+### 5.5 Sprinkles: 타입 안전한 유틸리티 클래스
+
+```typescript
+import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
+
+const sprinkles = createSprinkles(
+  defineProperties({
+    properties: {
+      display: ['flex', 'grid', 'block'],
+      padding: { sm: '4px', md: '8px', lg: '16px' }
+    },
+    conditions: {
+      mobile: {},
+      desktop: { '@media': '(min-width: 1024px)' }
+    }
+  })
+);
+
+// 사용
+<div className={sprinkles({ 
+  display: 'grid',
+  padding: { mobile: 'sm', desktop: 'lg' } 
+})} />
+```
+
+Tailwind처럼 유틸리티 클래스를 사용하되, **TypeScript 타입 체크가 지원됩니다.**잘못된 값을 사용하면 컴파일 에러가 발생합니다.
+
+### 5.6 Recipes: 변형 관리
+
+```typescript
+import { recipe } from '@vanilla-extract/recipes';
+
+export const button = recipe({
+  base: {
+    borderRadius: 4,
+    fontWeight: 'bold'
+  },
+  variants: {
+    color: {
+      primary: { backgroundColor: vars.color.primary },
+      danger: { backgroundColor: vars.color.danger }
+    },
+    size: {
+      sm: { padding: 8, fontSize: 14 },
+      lg: { padding: 16, fontSize: 18 }
+    }
+  },
+  defaultVariants: {
+    color: 'primary',
+    size: 'sm'
+  }
+});
+
+// 사용
+<button className={button({ color: 'danger', size: 'lg' })} />
+```
+
+컴포넌트 변형을 타입 안전하게 정의할 수 있습니다.
+
+---
+
+## 6. 왜 vanilla-extract가 AI 개발에 적합한가
+
+### 6.1 AI가 이미 알고 있는 패턴
+
+커스텀 TypeScript 타입을 만들면 AI가 처음 보는 것이라 학습에 시간이 걸립니다. 하지만 vanilla-extract의 패턴들—`style()`, `vars.colors.primary`, `recipe()`—은 AI가 이미 학습한 패턴입니다.
+
+Gemini에게 직접 확인해본 결과, 환각일 수도 있지만 반복적으로 잘 동작했고, Tailwind보다 만족스러웠습니다.
+
+### 6.2 TypeScript 에러 = AI 피드백 루프
+
+```
+AI가 코드 생성 
+    ↓
+TypeScript 에러 발생 
+    ↓
+AI가 에러 메시지 확인 
+    ↓
+AI가 스스로 수정
+```
+
+Tailwind에서는 잘못된 클래스를 써도 아무 일도 일어나지 않습니다. 반면 vanilla-extract에서는 타입 에러가 즉각적인 피드백이 됩니다. **AI Agent에게는 이 피드백 루프가 핵심입니다.**
+
+### 6.3 제한과 자유의 균형
+
+| 영역 | 접근 방식 |
+|------|----------|
+| 색상/톤 | 디자인 토큰으로 **타입 강제 ** |
+| 레이아웃 | grid 유도 (lint + 프롬프트) |
+| 간격 | **자유롭게 **열어둠 |
+
+모든 것을 제한하면 AI의 디자인 능력이 떨어집니다. 반대로 모든 것을 열어두면 일관성이 무너집니다.
+
+vanilla-extract는 **타입 시스템으로 중요한 것만 강제 **하고, 나머지는 열어둘 수 있습니다. 색상은 토큰으로 제한하되, 간격은 자유롭게 두는 식입니다. AI가 17px 같은 말도 안 되는 값을 사용하지는 않기 때문입니다.
+
+### 6.4 inline-style 탈출
+
+AI가 컴포넌트 시스템을 이해하지 못하면 inline-style로 도피하는 경향이 있습니다. 하지만 inline-style은 hover나 media query를 사용할 수 없다는 한계가 있습니다.
+
+vanilla-extract는 이 문제를 해결합니다. TypeScript 파일에서 스타일을 정의하지만, **결과물은 진짜 CSS 파일 **이기 때문입니다. pseudo-class, media query, container query 모두 지원합니다.
+
+---
+
+## 7. vanilla-extract 기능 전체 정리
+
+### Core API
+
+| API | 설명 |
+|-----|------|
+| `style` | 로컬 스코프 클래스 생성 |
+| `styleVariants` | 스타일 변형 그룹화 |
+| `createVar` | 스코프된 CSS 변수 생성 |
+| `fallbackVar` | CSS 변수 폴백 값 |
+| `createTheme` | 테마 생성 (클래스 + 변수 객체) |
+| `createThemeContract` | 테마 계약 정의 |
+| `keyframes` | @keyframes 애니메이션 |
+| `fontFace` | @font-face 정의 |
+| `layer` | CSS @layer 생성 |
+| `createContainer` | Container Query용 컨테이너 |
+
+### Global API
+
+| API | 설명 |
+|-----|------|
+| `globalStyle` | 전역 스타일 정의 |
+| `createGlobalTheme` | :root 등에 전역 테마 |
+| `globalKeyframes` | 전역 애니메이션 |
+
+### 확장 패키지
+
+| 패키지 | 설명 |
+|--------|------|
+| **Sprinkles** | 타입 안전한 atomic CSS 유틸리티 |
+| **Recipes** | 멀티 변형 컴포넌트 스타일 |
+| **Dynamic** | 런타임 CSS 변수 조작 |
+| **CSS Utils** | calc() 체이닝 유틸리티 |
+
+### 지원 기능
+
+- pseudo-class (`:hover`, `:focus`, `:nth-child`)
+- pseudo-element (`::before`, `::after`)
+- media query (`@media`)
+- container query (`@container`)
+- feature query (`@supports`)
+- CSS layers (`@layer`)
+
+---
+
+## 8. CSS 도구 선택의 Trade-off
+
+| 도구 | 디자인 퀄리티 | 타입 강제 | AI 학습도 | 비고 |
+|------|-------------|----------|----------|------|
+| HTML + CSS | ⭐⭐⭐ | ❌ | ⭐⭐⭐ | 기준점 |
+| Tailwind | ⭐⭐⭐ | ❌ | ⭐⭐⭐ | 설정 변경 시 AI 관성 문제 |
+| CSS Modules | ⭐⭐⭐ | △ | ⭐⭐⭐ | 값 타입 강제 없음 |
+| vanilla-extract | ⭐⭐? | ⭐⭐⭐ | ⭐⭐ | 검증 중 |
+| StyleX | ⭐⭐? | ⭐⭐⭐ | ⭐ | 결정론적 병합 |
+
+---
+
+## 9. 아직은 실험 단계
+
+솔직히 말하면, 이건 아직 **가설 **입니다.
+
+검증된 것:
+- Gemini가 vanilla-extract 패턴을 어느 정도 이해합니다.
+- TypeScript 에러가 AI 피드백으로 잘 작동합니다.
+- Tailwind보다 체감상 만족스럽습니다.
+
+검증 안 된 것:
+- 장기적으로 디자인 퀄리티가 유지되는지 여부
+- 수정 시 일관성이 쉽게 무너지지 않는지 여부
+- 다른 대안(StyleX 등)과 비교했을 때 확실히 나은지 여부
+
+**실패 기준 **도 정해두었습니다:
+1. 디자인 퀄리티가 HTML+CSS 대비 떨어질 경우
+2. 수정 시 일관성이 쉽게 무너질 경우
+
+실패한다면 **CSS Modules**가 대안이 될 것입니다. AI가 확실히 잘 알고, 문법이 진짜 CSS이며, inline-style의 한계도 벗어날 수 있기 때문입니다.
+
+---
+
+## 10. 결론: AI가 잘하는 것에서 시작하자
+
+기술의 우수성이 정답이 아닙니다.
+
+vanilla-extract가 TypeScript 기반이라 타입 안전하고, Zero-runtime이라 성능이 좋다는 건 맞습니다. 하지만 AI 시대에 중요한 건 다른 것입니다.
+
+**"AI가 이것을 잘 쓸 수 있느냐."**
+
+AI는 학습한 것을 잘합니다. 새로운 걸 가르치려면 비용이 듭니다. 완전히 커스텀한 시스템을 만들면 AI가 처음부터 배워야 합니다.
+
+vanilla-extract는 그 균형점에 있습니다:
+- AI가 아는 패턴 (CSS 객체 문법, 테마 변수)
+- 타입 시스템의 강제력 (피드백 루프)
+- 바닐라 CSS의 표현력 (pseudo-class, media query)
+
+아직 실험 단계지만, 방향은 이것입니다.
+
+> **AI를 내 시스템에 맞추려 하지 말고, AI가 잘하는 것 위에 최소한의 구조를 얹어야 합니다.**
+
+---
+
+*이 글은 AI 기반 개발 환경에서 CSS 도구를 선택하는 과정을 기록한 것입니다. vanilla-extract가 정답이라고 주장하는 것이 아니라, 왜 이 도구를 실험하게 되었는지의 맥락을 공유합니다.*

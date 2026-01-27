@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { lightTheme, darkTheme } from '../styles/vars.css';
 
 type Theme = 'light' | 'dark';
@@ -20,6 +20,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     };
 
     const themeClass = theme === 'light' ? lightTheme : darkTheme;
+
+    // Sync theme to body so Portals (Modals/Drawers) get the vars
+    useEffect(() => {
+        document.body.className = themeClass;
+        // Optionally preserve other classes if needed, but here we assume body just needs theme
+    }, [themeClass]);
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme, themeClass }}>
