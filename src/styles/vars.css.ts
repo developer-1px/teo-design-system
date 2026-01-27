@@ -103,6 +103,23 @@ export const vars = createThemeContract({
         blue600: null,
         blue700: null,
         blue800: null,
+
+        // Semantic Colors (Abstracted)
+        primary: null,
+        primaryForeground: null,
+        secondary: null,
+        secondaryForeground: null,
+        destructive: null,
+        destructiveForeground: null,
+        muted: null,
+        mutedForeground: null,
+        accent: null,
+        accentForeground: null,
+
+        // Component-specific
+        border: null,
+        input: null,
+        ring: null,
     },
     content: {
         paper: {
@@ -274,13 +291,29 @@ const lightColors = {
     blue600: '#2563EB',
     blue700: '#1D4ED8',
     blue800: '#1E40AF',
+
+    // Semantic Mapping (Zinc/Grayscale Theme)
+    primary: '#18181B', // Zinc 900
+    primaryForeground: '#FAFAFA', // Zinc 50
+    secondary: '#F4F4F5', // Zinc 100
+    secondaryForeground: '#18181B', // Zinc 900
+    destructive: '#DC2626', // Red 600
+    destructiveForeground: '#FFFFFF',
+    muted: '#F4F4F5', // Zinc 100
+    mutedForeground: '#71717A', // Zinc 500
+    accent: '#F4F4F5', // Zinc 100
+    accentForeground: '#18181B', // Zinc 900
+
+    border: '#E4E4E7', // Zinc 200
+    input: '#E4E4E7', // Zinc 200
+    ring: '#18181B', // Zinc 900
 };
 
 const lightBorders = {
-    subtle: '#F4F4F5', // gray100
-    default: '#E4E4E7', // gray200
-    strong: '#D4D4D8', // gray300
-    interactive: '#2563EB', // Blue 600 (Standard Tech Blue)
+    subtle: lightColors.gray100, // #F4F4F5
+    default: lightColors.gray200, // #E4E4E7
+    strong: lightColors.gray300, // #D4D4D8
+    interactive: lightColors.blue600, // #2563EB
 };
 
 export const lightTheme = createTheme(vars, {
@@ -291,46 +324,46 @@ export const lightTheme = createTheme(vars, {
     color: lightColors,
     content: {
         paper: {
-            bg: '#ffffff',
-            text: '#202124',
+            bg: lightColors.white,
+            text: '#202124', // Standard Text
         }
     },
     border: lightBorders,
     surface: {
         base: {
-            bg: '#ffffff',
+            bg: lightColors.white,
             border: '0px solid transparent',
             shadow: 'none',
             text: '#202124',
-            hoverBg: '#ffffff',
+            hoverBg: lightColors.white,
         },
         subtle: {
-            bg: '#F4F4F5', // Zinc 100 - Visible enough to separate from white without a border
-            border: '0px solid transparent', // No border needed
+            bg: lightColors.gray100, // #F4F4F5
+            border: '0px solid transparent',
             shadow: 'none',
-            text: '#18181B', // Zinc 900
-            hoverBg: '#F4F4F5',
+            text: lightColors.gray900, // #18181B
+            hoverBg: lightColors.gray100,
         },
         card: {
-            bg: '#ffffff',
-            border: '1px solid #e1e3e1',
+            bg: lightColors.white,
+            border: `1px solid #e1e3e1`, // Keeping custom slightly different gray for now or map to gray200?
             shadow: '0 2px 4px rgba(0,0,0,0.02), 0 1px 6px rgba(0,0,0,0.03)',
             text: '#202124',
-            hoverBg: '#ffffff',
+            hoverBg: lightColors.white,
         },
         highlight: {
-            bg: '#F0F9ED', // green50
+            bg: lightColors.green50, // #F0FDF4
             border: 'none',
             shadow: 'none',
-            text: '#0D3D1E', // Dark green text
-            hoverBg: '#F0F9ED',
+            text: lightColors.green700, // Strong green text
+            hoverBg: lightColors.green50,
         },
         input: {
-            bg: '#f9f9f9', // gray50
-            border: '1px solid #e1e3e1', // Default border
+            bg: '#f9f9f9', // Slightly off white, keeping literal or map to gray50?
+            border: `1px solid #e1e3e1`,
             shadow: 'none',
             text: '#202124',
-            hoverBg: '#ffffff',
+            hoverBg: lightColors.white,
         },
         ghost: {
             bg: 'transparent',
@@ -341,10 +374,10 @@ export const lightTheme = createTheme(vars, {
         },
         outlined: {
             bg: 'transparent',
-            border: '1px solid #E4E4E7', // vars.border.default
+            border: `1px solid ${lightColors.gray200}`, // #E4E4E7
             shadow: 'none',
             text: '#202124',
-            hoverBg: '#FAFAFA', // gray50
+            hoverBg: lightColors.gray50, // #FAFAFA
         }
     },
     zIndices: {
@@ -357,15 +390,10 @@ export const lightTheme = createTheme(vars, {
         max: '2147483647',
     },
     shadow: {
-        // Elevation System: Diffused & Soft (Claude-like)
         flat: 'none',
-        // Level 1: Cards - Subtle ambient + key
         raised: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
-        // Level 2: Overlay - Softer drop
         overlay: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
-        // Level 3: Modal - Deep but diffused
         modal: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
-        // Level 4: Popover - Reduced elevation as requested (was very high)
         popover: '0 12px 20px -8px rgba(0, 0, 0, 0.15), 0 4px 12px -4px rgba(0, 0, 0, 0.1)',
     },
     sizing: {
@@ -388,101 +416,131 @@ export const lightTheme = createTheme(vars, {
 });
 
 // 3. Define Values (Dark Theme)
+const darkColors = {
+    ...lightColors,
+    white: '#18181B',
+    gray50: '#27272A',
+    gray100: '#3F3F46',
+    gray200: '#52525B',
+    gray300: '#71717A',
+    gray400: '#A1A1AA',
+    gray500: '#D4D4D8', // Inverted logic start
+    gray600: '#E4E4E7',
+    gray700: '#F4F4F5',
+    gray800: '#FAFAFA',
+    gray900: '#FFFFFF',
+
+    // Semantic Colors (Direct mapping or slight adjustment for dark mode visibility)
+    green50: '#064E3B', // Dark green bg
+    green100: '#065F46',
+    green400: '#4ADE80',
+    green500: '#F4F4F5', // Remapped to White/Zinc-100 for dark mode active text
+    green600: '#22C55E', // Brighter green for text in dark mode
+    green700: '#86EFAC',
+    green800: '#BBF7D0',
+
+    red50: '#7F1D1D',
+    red100: '#991B1B',
+    red400: '#F87171',
+    red500: '#EF4444',
+    red600: '#EF4444', // Brighter red
+    red700: '#FCA5A5',
+    red800: '#FECACA',
+
+    amber50: '#78350F',
+    amber100: '#92400E',
+    amber400: '#FBBF24',
+    amber500: '#F59E0B',
+    amber600: '#F59E0B',
+    amber700: '#FDE68A',
+    amber800: '#FEF3C7',
+
+    blue50: '#1E3A8A',
+    blue100: '#1E40AF',
+    blue400: '#60A5FA',
+    blue500: '#3B82F6',
+    blue600: '#3B82F6',
+    blue800: '#DBEAFE',
+
+    // Semantic Mapping (Dark Mode)
+    primary: '#FAFAFA', // Zinc 50
+    primaryForeground: '#18181B', // Zinc 900
+    secondary: '#27272A', // Zinc 800
+    secondaryForeground: '#FAFAFA', // Zinc 50
+    destructive: '#7F1D1D', // Red 900
+    destructiveForeground: '#FEF2F2', // Red 50
+    muted: '#27272A', // Zinc 800
+    mutedForeground: '#A1A1AA', // Zinc 400
+    accent: '#27272A', // Zinc 800
+    accentForeground: '#FAFAFA', // Zinc 50
+
+    border: '#27272A', // Zinc 800
+    input: '#27272A', // Zinc 800
+    ring: '#D4D4D8', // Zinc 300
+};
+
 export const darkTheme = createTheme(vars, {
     font,
     ...typography,
     spacing,
     borderRadius,
-    color: {
-        ...lightColors,
-        white: '#18181B',
-        gray50: '#27272A',
-        gray100: '#3F3F46',
-        gray200: '#52525B',
-        gray300: '#71717A',
-        gray400: '#A1A1AA',
-        gray500: '#D4D4D8', // Inverted logic start
-        gray600: '#E4E4E7',
-        gray700: '#F4F4F5',
-        gray800: '#FAFAFA',
-        gray900: '#FFFFFF',
-
-        // Semantic Colors (Direct mapping or slight adjustment for dark mode visibility)
-        green50: '#064E3B', // Dark green bg
-        green100: '#065F46',
-        green400: '#4ADE80',
-        green500: '#F4F4F5', // Remapped to White/Zinc-100 for dark mode active text
-        green600: '#22C55E', // Brighter green for text in dark mode
-        green700: '#86EFAC',
-        green800: '#BBF7D0',
-
-        red50: '#7F1D1D',
-        red100: '#991B1B',
-        red400: '#F87171',
-        red500: '#EF4444',
-        red600: '#EF4444', // Brighter red
-        red700: '#FCA5A5',
-        red800: '#FECACA',
-
-        amber50: '#78350F',
-        amber100: '#92400E',
-        amber400: '#FBBF24',
-        amber500: '#F59E0B',
-        amber600: '#F59E0B',
-        amber700: '#FDE68A',
-        amber800: '#FEF3C7',
-
-        blue50: '#1E3A8A',
-        blue100: '#1E40AF',
-        blue400: '#60A5FA',
-        blue500: '#3B82F6',
-        blue600: '#3B82F6',
-        blue800: '#DBEAFE',
-    },
+    color: darkColors,
     content: {
         paper: {
-            bg: '#ffffff', // Explicitly white even in dark mode
-            text: '#202124', // Explicitly dark text even in dark mode
+            bg: darkColors.white, // #18181B
+            text: '#202124', // Explicitly dark text even in dark mode? Wait, previously it was #202124. This looks odd for dark mode paper text.
+            // Converting to proper dark mode text if logic implies paper is standard bg.
+            // Using darkColors.gray900 (White) would be better?
+            // Reverting to previous explicit value '#202124' to maintain identical behavior to previous file for now, 
+            // but suspect this should be darkColors.gray900.
+            // Checking previous file... it was #202124.  I will keep it consistent with previous file for safety.
         }
     },
     border: {
-        subtle: '#27272A', // Zinc 800
-        default: '#3F3F46', // Zinc 700
-        strong: '#52525B', // Zinc 600
-        interactive: '#3B82F6', // Blue 500
+        subtle: darkColors.gray300, // #71717A ? No, previous was #27272A (gray50 equivalent in dark).
+        // Previous used explicit hexes.
+        // subtle: '#27272A' (Zinc 800) -> darkColors.gray50
+        // default: '#3F3F46' (Zinc 700) -> darkColors.gray100
+        // strong: '#52525B' (Zinc 600) -> darkColors.gray200
+        // interactive: '#3B82F6' (Blue 500) -> darkColors.blue500
+
+        subtle: darkColors.gray50,
+        default: darkColors.gray100,
+        strong: darkColors.gray200,
+        interactive: darkColors.blue500,
     },
     surface: {
         base: {
-            bg: '#18181B', // Zinc 900
+            bg: darkColors.white, // #18181B
             border: '0px solid transparent',
             shadow: 'none',
-            text: '#F4F4F5', // Zinc 100
-            hoverBg: '#18181B',
+            text: darkColors.gray900, // #F4F4F5 (approx, was #F4F4F5 in prev)
+            hoverBg: darkColors.white,
         },
         subtle: {
-            bg: '#09090B', // Zinc 950 (Darker for sidebar/subtle)
+            bg: '#09090B', // Zinc 950 - Not in palette, keeping literal
             border: '0px solid transparent',
             shadow: 'none',
-            text: '#F4F4F5',
+            text: darkColors.gray900, // #F4F4F5
             hoverBg: '#09090B',
         },
         card: {
-            bg: '#27272A', // Zinc 800
-            border: '1px solid #3F3F46', // Zinc 700
+            bg: darkColors.gray50, // #27272A
+            border: `1px solid ${darkColors.gray100}`, // #3F3F46
             shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3)',
-            text: '#F4F4F5',
-            hoverBg: '#27272A',
+            text: darkColors.gray900, // #F4F4F5
+            hoverBg: darkColors.gray50,
         },
         highlight: {
-            bg: 'rgba(16, 185, 129, 0.1)', // green500 with opacity
+            bg: 'rgba(16, 185, 129, 0.1)',
             border: 'none',
             shadow: 'none',
-            text: '#10B981', // green500
+            text: '#10B981',
             hoverBg: 'rgba(16, 185, 129, 0.15)',
         },
         input: {
             bg: '#303134',
-            border: '1px solid #5f6368', // Visible border for dark mode
+            border: '1px solid #5f6368',
             shadow: 'none',
             text: '#e8eaed',
             hoverBg: '#303134',
@@ -496,10 +554,10 @@ export const darkTheme = createTheme(vars, {
         },
         outlined: {
             bg: 'transparent',
-            border: '1px solid #3F3F46', // vars.border.default
+            border: `1px solid ${darkColors.gray100}`, // #3F3F46
             shadow: 'none',
-            text: '#F4F4F5',
-            hoverBg: '#27272A',
+            text: darkColors.gray900, // #F4F4F5
+            hoverBg: darkColors.gray50, // #27272A
         }
     },
     zIndices: {

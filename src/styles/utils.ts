@@ -15,14 +15,37 @@ export const subgrid = (axis: 'x' | 'y' | 'both' = 'both', width: string = '1 / 
 
 type SurfaceType = keyof typeof vars.surface;
 
-export const surface = (type: SurfaceType): StyleRule => ({
+const surfaceBase = (type: SurfaceType): StyleRule => ({
     backgroundColor: vars.surface[type].bg,
     color: vars.surface[type].text,
     border: vars.surface[type].border,
     boxShadow: vars.surface[type].shadow,
+    // Base surface is static, no default hover interactions unless specified by composition
+});
+
+const surfaceInteractive = (type: SurfaceType): StyleRule => ({
+    ...surfaceBase(type),
+    cursor: 'pointer',
+    transition: 'background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s',
     ':hover': {
         backgroundColor: vars.surface[type].hoverBg,
+    },
+    // Future expansion:
+    // ':active': { transform: 'scale(0.98)' },
+    // ':focus-visible': { outline: `2px solid ${vars.border.interactive}` },
+    selectors: {
+        '&[disabled], &:disabled': {
+            opacity: 0.6,
+            cursor: 'not-allowed',
+            pointerEvents: 'none',
+        }
     }
+});
+
+// Hybrid export: surface('card') works, and surface.interactive('card') also works.
+export const surface = Object.assign(surfaceBase, {
+    base: surfaceBase,
+    interactive: surfaceInteractive
 });
 // ... surface code
 

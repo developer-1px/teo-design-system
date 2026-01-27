@@ -10,7 +10,9 @@ import { SegmentedControl } from '../../components/primitives/SegmentedControl';
 import { Badge } from '../../components/ui/Badge';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from '../../components/ui/Table';
 import { prose } from '../../styles/prose.css';
-import { Mail, Lock } from 'lucide-react';
+
+import { Mail, Lock, Plus, ArrowRight } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
 
 export default function ComponentShowcasePage() {
     const [switchVal, setSwitchVal] = useState(false);
@@ -158,6 +160,48 @@ export default function ComponentShowcasePage() {
                 </div>
 
 
+
+
+                <h2 className={styles.sectionTitle}>Interactive Primitives</h2>
+                <div className={styles.grid}>
+                    <div className={styles.card} style={{ gridColumn: 'span 2' }}>
+                        <h2 className={styles.cardTitle}>Buttons</h2>
+
+                        <div className={styles.label}>Intents & Variants</div>
+                        <div className={styles.componentRow}>
+                            <Button intent="primary">Primary</Button>
+                            <Button intent="secondary" variant="outline">Secondary</Button>
+                            <Button intent="danger">Danger</Button>
+                            <Button intent="neutral" variant="ghost">Ghost</Button>
+                            <Button variant="link">Link Button</Button>
+                        </div>
+
+                        <div className={styles.label}>Sizes</div>
+                        <div className={styles.componentRow}>
+                            <Button size="xs">XS</Button>
+                            <Button size="sm">Small</Button>
+                            <Button size="md">Medium</Button>
+                            <Button size="lg">Large</Button>
+                            <Button size="icon" variant="outline"><Plus size={16} /></Button>
+                        </div>
+
+                        <div className={styles.label}>States & Icons</div>
+                        <div className={styles.componentRow}>
+                            <Button loading>Loading</Button>
+                            <Button disabled>Disabled</Button>
+                            <Button leftIcon={<Mail size={16} />}>Email</Button>
+                            <Button rightIcon={<ArrowRight size={16} />} intent="neutral" variant="outline">Next</Button>
+                        </div>
+
+                        <div className={styles.label}>Enhancements</div>
+                        <div className={styles.componentRow}>
+                            <Button as="a" href="#" intent="primary" rightIcon={<ArrowRight size={16} />}>Link Button</Button>
+                            <Button shape="circle" size="icon" intent="secondary" variant="outline"><Mail size={16} /></Button>
+                            <Button shape="pill" intent="danger" variant="outline">Pill Shape</Button>
+                            <Button disabled as="a" href="#" intent="neutral">Disabled Link</Button>
+                        </div>
+                    </div>
+                </div>
 
                 <h2 className={styles.sectionTitle}>Data Display</h2>
                 <div className={styles.grid}>
