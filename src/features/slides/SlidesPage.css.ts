@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { surface, ui, typography } from '../../styles/utils';
+import { surface, ui, textStyle } from '../../styles/utils';
 
 // Main Container
 export const layout = style([
@@ -156,7 +156,7 @@ export const slideTitle = style([
         color: vars.content.paper.text,
         marginBottom: '20px'
     },
-    typography({ size: '4xl', weight: 'bold', height: 'tight', spacing: 'tight' }),
+    textStyle({ size: '4xl', weight: 'bold', height: 'tight', spacing: 'tight' }),
 ]);
 
 export const slideBody = style([
@@ -169,7 +169,7 @@ export const slideBody = style([
     // 'color: vars.content.paper.text' is #202124 (gray800 equiv).
     // Let's make it slightly lighter.
     { color: 'rgba(32, 33, 36, 0.7)' }, // 70% opacity of dark text
-    typography({ size: '3xl', height: 'standard' }),
+    textStyle({ size: '3xl', height: 'standard' }),
 ]);
 
 export const slideElement = style({
@@ -185,7 +185,7 @@ export const slideElement = style({
 
 export const slideElementText = style([
     { color: vars.color.green500 },
-    typography({ weight: 'bold' })
+    textStyle({ weight: 'bold' })
 ]);
 
 

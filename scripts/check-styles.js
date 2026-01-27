@@ -36,11 +36,24 @@ files.forEach(file => {
 
     // Check for Vanilla Extract imports
     // Matches: import ... from '@vanilla-extract/css'
+    // But ignore: import type ...
     if (content.includes('@vanilla-extract/css')) {
-        console.error(`\n❌ Error in: ${path.relative(process.cwd(), file)}`);
-        console.error('   Reason: Vanilla Extract styles must be defined in *.css.ts files.');
-        console.error('   Found import from "@vanilla-extract/css" in a standard TS/TSX file.');
-        hasError = true;
+        // Simple heuristic: if the line with import contains 'type ', it might be ok.
+        // But better is to check if there are ANY non-type imports.
+        const lines = content.split('\n');
+        const invalidLines = lines.filter(line =>
+            line.includes('@vanilla-extract/css') &&
+            !line.includes('import type') &&
+            !line.includes('import { type')
+        );
+
+        if (invalidLines.length > 0) {
+            console.error(`\n❌ Error in: ${path.relative(process.cwd(), file)}`);
+            console.error('   Reason: Vanilla Extract styles must be defined in *.css.ts files.');
+            console.error('   Found import from "@vanilla-extract/css" in a standard TS/TSX file:');
+            invalidLines.forEach(l => console.error(`   > ${l.trim()}`));
+            hasError = true;
+        }
     }
 });
 

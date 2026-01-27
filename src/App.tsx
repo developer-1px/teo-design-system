@@ -8,6 +8,7 @@ import { EditorPage } from './features/editor/EditorPage';
 import { SlidesPage } from './features/slides/SlidesPage';
 import BuilderPage from './features/admin/BuilderPage';
 import StoryblokPage from './features/storyblok/StoryblokPage';
+import ComponentShowcasePage from './features/showcase/ComponentShowcasePage';
 
 import { ListPage } from './features/admin/ListPage';
 import { AdminLayout } from './features/admin/AdminLayout';
@@ -37,6 +38,7 @@ function AppContent() {
           </Route>
 
           <Route path="storyblok" element={<StoryblokPage />} />
+          <Route path="components" element={<ComponentShowcasePage />} />
 
           <Route path="docs" element={<DocsLayout />}>
             {docsRoutes.length > 0 && (

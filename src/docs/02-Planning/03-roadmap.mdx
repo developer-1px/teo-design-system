@@ -22,33 +22,37 @@ category: Reading material
   - **Positioning Layers**: Sticky, Fixed, Absolute
   - **Semantic Overlays**: Modal, Drawer, Tooltip
   - Z-Index & Elevation 토큰화 완료
+- [x] **Interaction Primitives**
+  - **VisualFrame**: Hover/Select/Badge 공통 인터랙션 추출 완료
 - [x] **DevTools**
   - Vite Plugin Inspector (Meta+D)
   - Source Code Jump 기능
 
 ## 2. 진행 중 (In Progress)
 
-### Layout System (Tier 1)
-- [ ] **Spacing & Rhythm**
-  - `vars.spacing` 토큰 재정비 (4px 그리드 시스템 강화)
-  - 모바일/데스크탑 반응형 간격 정의
-- [ ] **Grid & Stack**
-  - Layout Primitive 컴포넌트 (`<Box>`, `<Stack>`, `<Grid>`)
-  - CSS Subgrid 활용 패턴
+### Component Library (Tier 1)
+- [/] **Form Elements** (Admin UI 필수)
+  - [x] **TextInput System**: Size variants (Standard, Dense), States (Error, Disabled)
+  - [x] **Selection Controls**: Checkbox, Switch, Radio
+  - [x] **Select/Dropdown**: Native & Custom variants
+- [ ] **Data Display**
+  - [ ] **Table System**: Admin List View, Density variants
+  - [ ] **Status Badges**: Semantic colors (Success, Warning, etc.)
 
-## 3. 예정됨 (Backlog)
+## 3. 보류됨 (On Hold)
+
+### Layout System
+> [!NOTE]
+> `<Box>`, `<Stack>` 등의 추상화 컴포넌트는 디버깅 복잡도를 높일 수 있어, Vanilla Extract CSS 파일을 직접 사용하는 방식을 유지합니다. 필요시 CSS Utility 패턴만 정의합니다.
+
+- [ ] **Layout Patterns**: Utility-first CSS (`sprinkles` 도입 여부 재검토)
+
+## 4. 예정됨 (Backlog)
 
 ### Motion System (Tier 2)
 - [ ] **Transition Tokens**
   - `vars.duration`, `vars.easing` 정의
   - 감각적인 마이크로 인터랙션 (Hover, Press, Dialog Enter/Exit)
-
-### Component Library
-- [ ] **Form Elements**
-  - Input, Select, Checkbox, Switch (제어 컴포넌트)
-  - Validation State (Error, Success)
-- [ ] **Data Display**
-  - Table, List, Tag, Badge
 
 ---
 

@@ -28,7 +28,7 @@ export const surface = (type: SurfaceType): StyleRule => ({
 
 
 
-export const typography = ({
+export const textStyle = ({
     size = 'md',
     weight = 'regular',
     variant = 'body',
@@ -51,35 +51,35 @@ export const typography = ({
 // System UI Typography Presets
 export const ui = {
     // Labels for inputs, section headers (Medium weight, tight spacing)
-    label: (size: 'xs' | 'sm' | 'md' = 'sm'): StyleRule => typography({
+    label: (size: 'xs' | 'sm' | 'md' = 'sm'): StyleRule => textStyle({
         size,
         weight: 'medium',
         height: 'tight',
         spacing: 'normal'
     }),
     // Descriptions, help text (Regular weight, standard height)
-    caption: (): StyleRule => typography({
+    caption: (): StyleRule => textStyle({
         size: 'xs',
         weight: 'regular',
         height: 'standard',
         spacing: 'normal'
     }),
     // Compact menu items or list items
-    menu: (): StyleRule => typography({
+    menu: (): StyleRule => textStyle({
         size: 'sm',
         weight: 'medium',
         height: 'snug',
         spacing: 'normal'
     }),
     // Heavy headings for panels (Uppercase, wide spacing) -> "Overline" logic
-    overline: (): StyleRule => typography({
+    overline: (): StyleRule => textStyle({
         size: 'xs',
         weight: 'bold',
         height: 'tight',
         spacing: 'wide' // Uppercase often used with wide spacing
     }),
     // Code snippets
-    code: (size: 'xs' | 'sm' | 'md' = 'sm'): StyleRule => typography({
+    code: (size: 'xs' | 'sm' | 'md' = 'sm'): StyleRule => textStyle({
         size,
         weight: 'regular',
         variant: 'code',

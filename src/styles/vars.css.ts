@@ -64,10 +64,45 @@ export const vars = createThemeContract({
         gray100: null,
         gray200: null,
         gray300: null,
+        gray400: null,
+        gray500: null,
         gray600: null,
+        gray700: null,
         gray800: null,
-        green500: null,
+        gray900: null,
+
+        // Semantic Colors
         green50: null,
+        green100: null,
+        green400: null,
+        green500: null,
+        green600: null,
+        green700: null,
+        green800: null,
+
+        red50: null,
+        red100: null,
+        red400: null,
+        red500: null,
+        red600: null,
+        red700: null,
+        red800: null,
+
+        amber50: null,
+        amber100: null,
+        amber400: null,
+        amber500: null,
+        amber600: null,
+        amber700: null,
+        amber800: null,
+
+        blue50: null,
+        blue100: null,
+        blue400: null,
+        blue500: null,
+        blue600: null,
+        blue700: null,
+        blue800: null,
     },
     content: {
         paper: {
@@ -196,10 +231,49 @@ const lightColors = {
     gray100: '#F4F4F5', // Zinc 100
     gray200: '#E4E4E7', // Zinc 200
     gray300: '#D4D4D8', // Zinc 300
+    gray400: '#A1A1AA', // Zinc 400
+    gray500: '#71717A', // Zinc 500
     gray600: '#52525B', // Zinc 600
-    gray800: '#18181B', // Zinc 900
-    green500: '#18181B', // Zinc 900 (Black) - Active Text
-    green50: '#F4F4F5',  // Zinc 100 - Active Background
+    gray700: '#3F3F46', // Zinc 700
+    gray800: '#27272A', // Zinc 800
+    gray900: '#18181B', // Zinc 900
+
+    // Semantic Colors
+    // Green (Success)
+    green50: '#F0FDF4',
+    green100: '#DCFCE7',
+    green400: '#4ADE80',
+    green500: '#22C55E',
+    green600: '#16A34A',
+    green700: '#15803D',
+    green800: '#166534',
+
+    // Red (Danger)
+    red50: '#FEF2F2',
+    red100: '#FEE2E2',
+    red400: '#F87171',
+    red500: '#EF4444',
+    red600: '#DC2626',
+    red700: '#B91C1C',
+    red800: '#991B1B',
+
+    // Amber (Warning)
+    amber50: '#FFFBEB',
+    amber100: '#FEF3C7',
+    amber400: '#FBBF24',
+    amber500: '#F59E0B',
+    amber600: '#D97706',
+    amber700: '#B45309',
+    amber800: '#92400E',
+
+    // Blue (Info)
+    blue50: '#EFF6FF',
+    blue100: '#DBEAFE',
+    blue400: '#60A5FA',
+    blue500: '#3B82F6',
+    blue600: '#2563EB',
+    blue700: '#1D4ED8',
+    blue800: '#1E40AF',
 };
 
 const lightBorders = {
@@ -326,10 +400,44 @@ export const darkTheme = createTheme(vars, {
         gray100: '#3F3F46',
         gray200: '#52525B',
         gray300: '#71717A',
-        gray600: '#A1A1AA',
-        gray800: '#F4F4F5',
+        gray400: '#A1A1AA',
+        gray500: '#D4D4D8', // Inverted logic start
+        gray600: '#E4E4E7',
+        gray700: '#F4F4F5',
+        gray800: '#FAFAFA',
+        gray900: '#FFFFFF',
+
+        // Semantic Colors (Direct mapping or slight adjustment for dark mode visibility)
+        green50: '#064E3B', // Dark green bg
+        green100: '#065F46',
+        green400: '#4ADE80',
         green500: '#F4F4F5', // Remapped to White/Zinc-100 for dark mode active text
-        green50: '#27272A', // Remapped to Zinc-800 for dark mode active bg
+        green600: '#22C55E', // Brighter green for text in dark mode
+        green700: '#86EFAC',
+        green800: '#BBF7D0',
+
+        red50: '#7F1D1D',
+        red100: '#991B1B',
+        red400: '#F87171',
+        red500: '#EF4444',
+        red600: '#EF4444', // Brighter red
+        red700: '#FCA5A5',
+        red800: '#FECACA',
+
+        amber50: '#78350F',
+        amber100: '#92400E',
+        amber400: '#FBBF24',
+        amber500: '#F59E0B',
+        amber600: '#F59E0B',
+        amber700: '#FDE68A',
+        amber800: '#FEF3C7',
+
+        blue50: '#1E3A8A',
+        blue100: '#1E40AF',
+        blue400: '#60A5FA',
+        blue500: '#3B82F6',
+        blue600: '#3B82F6',
+        blue800: '#DBEAFE',
     },
     content: {
         paper: {
