@@ -1,42 +1,16 @@
-import { style, styleVariants } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
 
-export const overlay = style({
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
-    zIndex: vars.zIndices.modal,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-});
-
-export const backdrop = style({
+// Base style for the floating content
+// We don't enforce visual styles (bg color, shadow) here, only structural.
+// Visuals should be passed via className from the Composition (Dropdown, etc).
+export const content = style({
     position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.02)', // Minimal dimming
-    zIndex: 0, // Base layer of the overlay
-    backdropFilter: 'none', // Removed distraction
-});
-
-export const container = styleVariants({
-    modal: {
-        zIndex: 1, // On top of backdrop
-        position: 'relative',
-    },
-    drawer: {
-        zIndex: 1, // On top of backdrop
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        height: '100%',
-    },
-    unmounted: {
-        display: 'none',
-    }
+    zIndex: vars.zIndices.popover,
+    // We assume the user builds their own inner container style (card, menu surface etc).
+    // But setting a sensible default constraints is good.
+    maxWidth: '100vw',
+    maxHeight: '100vh',
+    // Prevent focus outline on container usually
+    outline: 'none',
 });

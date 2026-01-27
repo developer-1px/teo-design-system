@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../styles/vars.css';
-import { ui } from '../styles/utils.css';
+import { ui } from '../styles/utils';
 
 export const container = style([
     {

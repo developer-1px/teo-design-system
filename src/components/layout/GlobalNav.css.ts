@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { surface } from '../../styles/utils.css';
+import { surface } from '../../styles/utils';
 
 export const navContainer = style([
     surface('base'), // Back to white/base surface

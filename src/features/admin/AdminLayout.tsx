@@ -1,5 +1,5 @@
 import { Outlet, NavLink } from 'react-router-dom';
-import { Users, Hammer, Settings, LayoutDashboard } from 'lucide-react';
+import { Users, Hammer, Settings } from 'lucide-react';
 import * as styles from './AdminLayout.css';
 
 
@@ -29,13 +29,7 @@ export function AdminLayout() {
                         <span>Builder</span>
                     </NavLink>
 
-                    <NavLink
-                        to="/dashboard"
-                        className={({ isActive }) => `${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
-                    >
-                        <LayoutDashboard size={16} />
-                        <span>Dashboard</span>
-                    </NavLink>
+
 
                     <NavLink
                         to="/admin/settings"

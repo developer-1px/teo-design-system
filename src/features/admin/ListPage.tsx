@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Search, Plus, Filter, Download, Trash2, MoreHorizontal } from 'lucide-react';
+import { Plus, Download, Trash2, MoreHorizontal } from 'lucide-react';
 import * as styles from './ListPage.css';
 import { DataTable } from './DataTable';
+import { SmartFilter } from './SmartFilter';
 import { Drawer } from '../../components/overlay/Drawer';
 import { vars } from '../../styles/vars.css';
 
@@ -26,7 +27,7 @@ const MOCK_DATA: DataRow[] = Array.from({ length: 50 }).map((_, i) => ({
 
 export function ListPage() {
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery] = useState('');
     const [activeRowId, setActiveRowId] = useState<string | null>(null);
 
     // Filter Logic
@@ -83,34 +84,7 @@ export function ListPage() {
                 </div>
 
                 <div className={styles.filterBar}>
-                    <div className={styles.searchInputWrapper}>
-                        <Search size={14} className={styles.searchIcon} />
-                        <input
-                            className={styles.searchInput}
-                            placeholder="Search users..."
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                        />
-                    </div>
-                    {/* Add Filter Buttons later */}
-                    <button style={{
-                        display: 'flex', alignItems: 'center', gap: 6,
-                        padding: '8px 12px', borderRadius: 6,
-                        border: `1px solid transparent`,
-                        fontSize: 13, color: vars.color.gray600, cursor: 'pointer',
-                        background: 'transparent'
-                    }}>
-                        <Filter size={14} /> Role
-                    </button>
-                    <button style={{
-                        display: 'flex', alignItems: 'center', gap: 6,
-                        padding: '8px 12px', borderRadius: 6,
-                        border: `1px solid transparent`,
-                        fontSize: 13, color: vars.color.gray600, cursor: 'pointer',
-                        background: 'transparent'
-                    }}>
-                        <Filter size={14} /> Status
-                    </button>
+                    <SmartFilter />
                 </div>
             </div>
 

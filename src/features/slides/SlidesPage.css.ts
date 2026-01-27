@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { surface, ui, typography } from '../../styles/utils.css';
+import { surface, ui, typography } from '../../styles/utils';
 
 // Main Container
 export const layout = style([

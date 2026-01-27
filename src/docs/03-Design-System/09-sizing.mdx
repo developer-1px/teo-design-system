@@ -1,0 +1,60 @@
+---
+title: Sizing
+description: Layout and component dimension tokens for consistent density.
+order: 9
+category: Design System
+---
+
+# Sizing
+
+Scale values for strict layout consistency. Instead of arbitrary pixels, use these semantic tokens to define the "density" of the interface.
+
+## Primitive Scale
+We use a 4px grid system, but for layout composition, we rely on semantic aliases.
+
+## Semantic Layout Tokens
+
+### Sidebar
+Widths for navigation panels.
+
+| Token | Value | Usage |
+| :--- | :--- | :--- |
+| `vars.sizing.sidebar.width` | **240px** | Standard Sidebar width |
+| `vars.sizing.sidebar.collapsedWidth` | **48px** | Icon-only collapsed state |
+
+### Header
+Heights for top navigation bars.
+
+| Token | Value | Usage |
+| :--- | :--- | :--- |
+| `vars.sizing.header.height` | **48px** | Standard application header height |
+
+### Control & Item Heights
+Consistent heights for interactive elements, inputs, and list items.
+
+| Token | Value | Usage |
+| :--- | :--- | :--- |
+| `vars.sizing.item.dense` | **24px** | High-density data grids |
+| `vars.sizing.item.compact` | **28px** | Sidebar lists, secondary menus |
+| `vars.sizing.item.standard` | **32px** | **Default** Inputs, Buttons |
+| `vars.sizing.item.medium` | **36px** | Prominent Buttons |
+| `vars.sizing.item.large` | **40px** | Hero search bars |
+| `vars.sizing.item.touch` | **44px** | Mobile touch targets |
+
+## Usage Principles
+
+### 1. Match Height to Density
+Choose the height based on the information density of the context.
+- **Admin/Data**: Use `compact (28px)` or `standard (32px)`.
+- **Consumer/Marketing**: Use `medium (36px)` or `large (40px)`.
+
+### 2. Button Alignment
+Ensure `Input` and `Button` elements sharing a row use the same sizing token.
+
+```tsx
+// ✅ Correct
+<div style={{ height: vars.sizing.header.height }}>
+  <input style={{ height: vars.sizing.item.standard }} />
+  <button style={{ height: vars.sizing.item.standard }} />
+</div>
+```

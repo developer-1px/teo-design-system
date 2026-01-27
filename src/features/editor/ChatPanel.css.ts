@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { surface } from '../../styles/utils.css';
+import { surface } from '../../styles/utils';
 
 export const panel = style([
     surface('subtle'),

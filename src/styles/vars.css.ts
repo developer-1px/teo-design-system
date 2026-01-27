@@ -105,6 +105,25 @@ export const vars = createThemeContract({
         overlay: null,
         modal: null,
         popover: null,
+    },
+    sizing: {
+        // Layout
+        sidebar: {
+            width: null,
+            collapsedWidth: null, // 48px
+        },
+        header: {
+            height: null, // 48px standard
+        },
+        // Components (Button, Input, Item Heights)
+        item: {
+            dense: null,    // 24px (Very dense lists)
+            compact: null,  // 28px (Sidebar items)
+            standard: null, // 32px (Buttons, Inputs)
+            medium: null,   // 36px (Medium Buttons)
+            large: null,    // 40px (Large Inputs)
+            touch: null,    // 44px (Mobile Standard)
+        }
     }
 });
 
@@ -274,6 +293,23 @@ export const lightTheme = createTheme(vars, {
         modal: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
         // Level 4: Popover - Reduced elevation as requested (was very high)
         popover: '0 12px 20px -8px rgba(0, 0, 0, 0.15), 0 4px 12px -4px rgba(0, 0, 0, 0.1)',
+    },
+    sizing: {
+        sidebar: {
+            width: '240px',
+            collapsedWidth: '48px',
+        },
+        header: {
+            height: '48px',
+        },
+        item: {
+            dense: '24px',
+            compact: '28px',
+            standard: '32px',
+            medium: '36px',
+            large: '40px',
+            touch: '44px',
+        }
     }
 });
 
@@ -373,5 +409,22 @@ export const darkTheme = createTheme(vars, {
         overlay: '0 8px 16px rgba(0,0,0,0.4)',
         modal: '0 12px 32px rgba(0,0,0,0.5)',
         popover: '0 16px 36px rgba(0,0,0,0.4)',
+    },
+    sizing: {
+        sidebar: {
+            width: '240px',
+            collapsedWidth: '48px',
+        },
+        header: {
+            height: '48px',
+        },
+        item: {
+            dense: '24px',
+            compact: '28px',
+            standard: '32px',
+            medium: '36px',
+            large: '40px',
+            touch: '44px',
+        }
     }
 });

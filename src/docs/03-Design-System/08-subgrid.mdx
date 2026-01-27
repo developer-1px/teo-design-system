@@ -45,10 +45,10 @@ Label과 Input이 서로 다른 컨테이너에 있어도, 전체 폼의 라벨 
 
 ## Mixin: Subgrid in Vanilla Extract
 
-`subgrid`를 쉽게 사용하기 위한 Mixin입니다 (`src/styles/utils.css.ts`).
+`subgrid`를 쉽게 사용하기 위한 Mixin입니다 (`src/styles/utils.ts`).
 
 ```typescript
-// src/styles/utils.css.ts
+// src/styles/utils.ts
 export const subgrid = (axis: 'x' | 'y' | 'both' = 'both', width: string = '1 / -1'): StyleRule => ({
     display: 'grid',
     gridColumn: width,
@@ -62,7 +62,7 @@ export const subgrid = (axis: 'x' | 'y' | 'both' = 'both', width: string = '1 / 
 ```typescript
 // styles.css.ts
 import { style } from '@vanilla-extract/css';
-import { subgrid } from '../../styles/utils.css';
+import { subgrid } from '../../styles/utils';
 
 export const parent = style({
   display: 'grid',

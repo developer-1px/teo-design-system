@@ -1,6 +1,6 @@
 import { style, styleVariants } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { subgrid } from '../../styles/utils.css';
+import { subgrid } from '../../styles/utils';
 
 export const row = style([
     subgrid('x'),

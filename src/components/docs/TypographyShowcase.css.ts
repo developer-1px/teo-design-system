@@ -78,7 +78,7 @@ export const meta = style({
 export const tokenName = style({
     fontSize: vars.fontSize.sm,
     fontWeight: vars.weight.bold,
-    color: vars.color.blue500,
+    color: vars.border.interactive, // Using interactive color (~blue500)
     fontFamily: vars.font.code,
 });
 

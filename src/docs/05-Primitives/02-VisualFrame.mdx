@@ -1,0 +1,35 @@
+# VisualFrame
+The `VisualFrame` primitive is a low-level interaction wrapper designed for building "Visual Editor" interfaces. It abstracts the complexity of selection states, hover outlines, and inspector labeling.
+
+## Pattern: The Visual Bridge
+This component is the core building block of the **Visual Bridge** pattern, which connects a data tree (Sidebar) to a visual representation (Canvas). It provides immediate visual feedback (dashed outlines, chips) to indicate that an element is editable.
+
+## Usage
+
+```tsx
+import { VisualFrame } from '../components/primitives/VisualFrame';
+
+<VisualFrame
+    label="Hero Component"
+    isSelected={isSelected}
+    isHovered={isHovered}
+    onClick={handleSelect}
+    onMouseEnter={handleHover}
+>
+    <MyComponent />
+</VisualFrame>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `label` | `string` | The text to display in the "Inspector Chip" (e.g., component name). |
+| `isSelected` | `boolean` | If true, shows a solid interactive border and persistent label. |
+| `isHovered` | `boolean` | If true, shows a dashed interactive border and label. |
+| `onClick` | `fn` | Handler for selection. |
+
+## Visual States
+- **Hover**: Dashed outline (Interactive Color), Label fade-in.
+- **Selected**: Solid outline (Interactive Color), Label persistent.
+- **Idle**: Transparent outline (no layout shift).

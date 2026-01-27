@@ -1,0 +1,89 @@
+---
+title: Overlay Primitive
+description: Headless components for managing floating layers (Tooltips, Popovers, Menus).
+order: 1
+category: Primitives
+---
+
+import { PopoverDemo, DrawerDemo, ModalDemo } from '../../docs/examples/OverlayDemo';
+
+# Overlay Primitive
+
+The `Overlay` primitive provides the foundational logic for all floating UI elements in the application. It handles **positioning**, **visibility state**, **click-outside detection**, and **portal rendering** without imposing any specific visual styles.
+
+This is a **Headless** component designed to be composed into higher-level components like `<DropdownMenu>`, `<Tooltip>`, `<ContextMenu>`, and `<Select>`.
+
+## Live Examples
+
+### 1. Popover (Non-Blocking)
+A standard popover that floats next to the trigger.
+
+<PopoverDemo />
+
+```tsx
+<Overlay>
+    <OverlayTrigger>
+        <button>Click me</button>
+    </OverlayTrigger>
+    <OverlayContent side="bottom" align="start">
+        <div className="card">Content...</div>
+    </OverlayContent>
+</Overlay>
+```
+
+### 2. Drawer (Modal / Blocking)
+A modal drawer that blocks interaction with the page behind it.
+
+<DrawerDemo />
+
+```tsx
+// Drawer internally uses Overlay + Portal + Backdrop
+<Drawer isOpen={open} onClose={() => setOpen(false)}>
+    Content...
+</Drawer>
+```
+
+### 3. Modal (Dialog / Blocking)
+A centered dialog for alerts or confirmations.
+
+<ModalDemo />
+
+```tsx
+<Modal 
+    isOpen={open} 
+    onClose={() => setOpen(false)} 
+    title="Confirm"
+    footer={<button>OK</button>}
+>
+    Are you sure?
+</Modal>
+```
+
+## Architecture
+
+We use a Compound Component pattern to separate concerns:
+
+-   **`Overlay`**: Manages the open/closed state and provides Context.
+-   **`OverlayTrigger`**: The element that toggles the overlay (e.g., a Button).
+-   **`OverlayContent`**: The floating container that positions itself relative to the trigger.
+-   **`OverlayPortal`**: (Optional) Renders the content into `document.body` to break out of overflow constraints.
+
+## API Reference
+
+### `<Overlay>`
+Root component that holds the state.
+- `open` (optional): Controlled state.
+- `defaultOpen` (optional): Uncontrolled initial state.
+- `onOpenChange`: Callback when state changes.
+
+### `<OverlayTrigger>`
+Wraps the trigger element.
+- `asChild` (boolean): If true, clones the child element instead of rendering a wrapper `div`.
+
+### `<OverlayContent>`
+The floating container.
+- `side`: `'top' | 'right' | 'bottom' | 'left'` (Default: `'bottom'`)
+- `align`: `'start' | 'center' | 'end'` (Default: `'center'`)
+- `sideOffset`: Distance from the trigger in pixels.
+- `alignOffset`: Skew along the alignment axis.
+- `collisionPadding`: Minimum distance from viewport edges.

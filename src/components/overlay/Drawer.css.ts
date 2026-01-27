@@ -1,6 +1,29 @@
-import { style } from '@vanilla-extract/css';
+import { style, keyframes } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { surface } from '../../styles/utils.css';
+import { surface } from '../../styles/utils';
+
+const fadeIn = keyframes({
+    '0%': { opacity: 0 },
+    '100%': { opacity: 1 }
+});
+
+const slideIn = keyframes({
+    '0%': { transform: 'translateX(100%)' },
+    '100%': { transform: 'translateX(0)' }
+});
+
+export const backdrop = style({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dimmed background
+    zIndex: vars.zIndices.modal, // High z-index
+    display: 'flex',
+    justifyContent: 'flex-end', // Align drawer to right
+    animation: `${fadeIn} 0.2s ease-out`,
+});
 
 export const drawer = style([
     surface('card'),
@@ -13,6 +36,7 @@ export const drawer = style([
         flexDirection: 'column',
         gap: vars.spacing[16],
         boxShadow: vars.shadow.overlay,
+        animation: `${slideIn} 0.2s cubic-bezier(0.16, 1, 0.3, 1)`, // Apple-like slide
     }
 ]);
 

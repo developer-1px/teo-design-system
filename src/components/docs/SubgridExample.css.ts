@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { subgrid, surface } from '../../styles/utils.css';
+import { subgrid, surface } from '../../styles/utils';
 
 // 1. Parent Grid
 export const container = style({

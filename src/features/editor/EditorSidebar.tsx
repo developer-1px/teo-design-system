@@ -22,7 +22,7 @@ export function EditorSidebar() {
         '/src/**/*.{ts,tsx,css.ts,mdx,json}',
         '/vite-plugins/**/*.{ts,tsx}',
         '/*.{ts,json,js,html}'
-    ]);
+    ], { query: '?raw', import: 'default' });
 
     const fileTree = useMemo(() => {
         const root: FolderNode = { name: 'root', path: '', type: 'folder', children: {} };

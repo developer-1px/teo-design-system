@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Mail, Code2, Book, Presentation, LayoutList, LayoutDashboard } from 'lucide-react';
+import { Mail, Code2, Book, Presentation, LayoutList } from 'lucide-react';
 import * as styles from './GlobalNav.css';
 import { ThemeToggle } from '../ThemeToggle';
 
@@ -10,8 +10,9 @@ export function GlobalNav() {
             <NavItem to="/mail" icon={Mail} label="Mail" />
             <NavItem to="/editor" icon={Code2} label="Editor" />
             <NavItem to="/slides" icon={Presentation} label="Slides" />
-            <NavItem to="/dashboard" icon={LayoutDashboard} label="Dash" />
+
             <NavItem to="/admin" icon={LayoutList} label="Admin" />
+            <NavItem to="/storyblok" icon={Code2} label="CMS" />
 
             <div className={styles.bottomSpacer}>
                 <ThemeToggle />

@@ -7,7 +7,8 @@ import { MailPage } from './features/mail/MailPage';
 import { EditorPage } from './features/editor/EditorPage';
 import { SlidesPage } from './features/slides/SlidesPage';
 import BuilderPage from './features/admin/BuilderPage';
-import { DashboardPage } from './features/admin/DashboardPage';
+import StoryblokPage from './features/storyblok/StoryblokPage';
+
 import { ListPage } from './features/admin/ListPage';
 import { AdminLayout } from './features/admin/AdminLayout';
 import './App.css'; // Just for global side effects
@@ -34,7 +35,9 @@ function AppContent() {
             <Route index element={<ListPage />} />
             <Route path="builder" element={<BuilderPage />} />
           </Route>
-          <Route path="dashboard" element={<DashboardPage />} />
+
+          <Route path="storyblok" element={<StoryblokPage />} />
+
           <Route path="docs" element={<DocsLayout />}>
             {docsRoutes.length > 0 && (
               <Route index element={<Navigate to={docsRoutes[0].path!} replace />} />

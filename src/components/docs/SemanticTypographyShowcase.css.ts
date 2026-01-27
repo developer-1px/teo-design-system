@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { surface, ui } from '../../styles/utils.css';
+import { surface, ui } from '../../styles/utils';
 
 // 1. Panel Container (The "Real World" Context)
 export const panel = style([
@@ -38,7 +38,7 @@ export const menuItem = style([
         color: vars.color.gray600,
         ':hover': {
             backgroundColor: vars.color.gray200,
-            color: vars.color.gray900,
+            color: vars.color.gray800,
         }
     }
 ]);
@@ -47,7 +47,7 @@ export const activeMenuItem = style([
     menuItem,
     {
         backgroundColor: vars.color.white,
-        color: vars.color.gray900,
+        color: vars.color.gray800,
         boxShadow: vars.shadow.raised,
         fontWeight: vars.weight.bold,
     }
@@ -67,7 +67,7 @@ export const content = style({
 export const sectionTitle = style([
     ui.overline(),
     {
-        color: vars.color.gray500,
+        color: vars.color.gray600,
         paddingBottom: vars.spacing[8],
         borderBottom: `1px solid ${vars.border.subtle}`,
         marginBottom: vars.spacing[16],
@@ -94,14 +94,14 @@ export const input = style([
         width: '100%',
         padding: '8px 12px',
         borderRadius: vars.borderRadius.sm,
-        color: vars.color.gray900,
+        color: vars.color.gray800,
     }
 ]);
 
 export const helperText = style([
     ui.caption(),
     {
-        color: vars.color.gray500,
+        color: vars.color.gray600,
     }
 ]);
 
@@ -111,7 +111,7 @@ export const codeBlock = style([
         backgroundColor: vars.color.gray100,
         padding: '2px 6px',
         borderRadius: '4px',
-        color: vars.color.pink500, // Accent color for code
+        color: vars.color.green500, // Accent color for code
         border: `1px solid ${vars.color.gray200}`,
     }
 ]);
