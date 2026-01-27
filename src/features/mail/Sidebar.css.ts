@@ -7,64 +7,73 @@ export const sidebar = style({
     gridRow: '2',
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: vars.spacing[8],
+    paddingTop: vars.spacing[16], // Increased breathing room
+    paddingLeft: vars.spacing[8], // Add slight left padding for floating feel
+    paddingRight: vars.spacing[8],
 });
 
 export const composeBtn = style([
-    surface('highlight'),
+    surface('card'), // Use card surface for a clean, elevated look instead of highlight
     {
         height: '56px',
         minWidth: '56px',
         width: 'fit-content',
-        padding: `0 ${vars.spacing[24]} 0 ${vars.spacing[16]}`, // Asymmetric padding
-
+        padding: `0 ${vars.spacing[24]} 0 ${vars.spacing[16]}`,
         display: 'flex',
         alignItems: 'center',
         gap: vars.spacing[12],
-        borderRadius: '16px',
-        border: 'none',
-        boxShadow: vars.shadow.raised,
-        marginLeft: vars.spacing[8],
-        marginBottom: vars.spacing[16],
+        borderRadius: '16px', // Rounded sqaure/rect
         cursor: 'pointer',
-        fontSize: '14px',
-        fontWeight: 500,
-        transition: 'box-shadow 0.2s',
+        fontSize: vars.fontSize.md,
+        fontWeight: vars.weight.medium,
+        color: vars.color.gray800,
+        transition: 'all 0.2s ease',
+        boxShadow: vars.shadow.raised,
+        marginBottom: vars.spacing[24],
         ':hover': {
             boxShadow: vars.shadow.overlay,
+            transform: 'translateY(-1px)',
+        },
+        ':active': {
+            transform: 'translateY(0)',
+            boxShadow: vars.shadow.raised,
         }
     }
 ]);
 
 export const navGroup = style({
-    display: 'grid',
-    gridTemplateColumns: '56px 1fr min-content',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px', // Tight gap for items
 });
 
 export const navItemParent = style({
-    gridColumn: '1 / -1', // Spans all 3 columns
-    display: 'grid',
-    gridTemplateColumns: 'subgrid', // Inherits the 56px 1fr min-content
-    height: '32px',
+    display: 'flex',
     alignItems: 'center',
-    paddingRight: vars.spacing[24],
-    borderTopRightRadius: '16px',
-    borderBottomRightRadius: '16px',
+    height: '32px',
+    padding: `0 ${vars.spacing[16]} 0 ${vars.spacing[16]}`,
+    borderRadius: vars.borderRadius.full, // Pill shape
     cursor: 'pointer',
-    color: vars.color.gray800,
-    fontSize: '14px',
-    fontWeight: 400,
+    color: vars.color.gray600,
+    fontSize: vars.fontSize.sm,
+    fontWeight: vars.weight.medium,
     textDecoration: 'none',
+    gap: vars.spacing[12],
+    transition: 'background-color 0.1s ease, color 0.1s ease',
     ':hover': {
-        backgroundColor: vars.color.gray50, // Slight hover
+        backgroundColor: vars.color.gray100,
+        color: vars.color.gray800,
     }
 });
 
 export const itemState = styleVariants({
     active: {
-        ...surface('highlight'),
-        fontWeight: 700,
-        ':hover': { backgroundColor: vars.surface.highlight.bg }
+        backgroundColor: vars.surface.highlight.bg,
+        color: vars.surface.highlight.text,
+        fontWeight: vars.weight.bold,
+        ':hover': {
+            backgroundColor: vars.surface.highlight.hoverBg
+        }
     },
     inactive: {}
 });

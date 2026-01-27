@@ -1,6 +1,18 @@
 import type { StyleRule } from '@vanilla-extract/css';
 import { vars } from './vars.css';
 
+/**
+ * Mixin for CSS subgrid
+ * @param axis - The axis to apply subgrid to ('x', 'y', or 'both')
+ * @param width - The grid-column property (default: '1 / -1' to span full width)
+ */
+export const subgrid = (axis: 'x' | 'y' | 'both' = 'both', width: string = '1 / -1'): StyleRule => ({
+    display: 'grid',
+    gridColumn: width,
+    ...(axis === 'x' || axis === 'both' ? { gridTemplateColumns: 'subgrid' } : {}),
+    ...(axis === 'y' || axis === 'both' ? { gridTemplateRows: 'subgrid' } : {})
+});
+
 type SurfaceType = keyof typeof vars.surface;
 
 export const surface = (type: SurfaceType): StyleRule => ({
@@ -60,11 +72,19 @@ export const ui = {
         height: 'snug',
         spacing: 'normal'
     }),
-    // Heavy headings for panels
-    panelHeading: (): StyleRule => typography({
+    // Heavy headings for panels (Uppercase, wide spacing) -> "Overline" logic
+    overline: (): StyleRule => typography({
         size: 'xs',
         weight: 'bold',
         height: 'tight',
         spacing: 'wide' // Uppercase often used with wide spacing
+    }),
+    // Code snippets
+    code: (): StyleRule => typography({
+        size: 'sm',
+        weight: 'regular',
+        variant: 'code',
+        height: 'snug',
+        spacing: 'normal'
     })
 };

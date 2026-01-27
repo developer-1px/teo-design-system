@@ -26,12 +26,10 @@ function NavItem({ icon: Icon, label, count, active }: { icon: any, label: strin
     const variantClass = active ? styles.itemState.active : styles.itemState.inactive;
 
     return (
-        <div className={`${styles.navItemParent} ${variantClass}`}>
-            <div style={{ justifySelf: 'center', display: 'flex' }}>
-                <Icon size={20} />
-            </div>
-            <span>{label}</span>
+        <a href="#" className={`${styles.navItemParent} ${variantClass}`} onClick={(e) => e.preventDefault()}>
+            <Icon size={20} />
+            <span style={{ flex: 1 }}>{label}</span>
             {count && <span style={{ fontSize: '12px', fontWeight: active ? 700 : 500 }}>{count}</span>}
-        </div>
+        </a>
     )
 }

@@ -12,25 +12,27 @@ The `surface` token is the primary unit of styling for UI elements. It is not ju
 
 **Do NOT** assign background colors manually. Always use the `surface()` utility.
 
-### Style Composition
-Use **Array Syntax** for `style()` to compose the base surface with component-specific overrides.
+### Style Composition (Mixins)
+Use **Array Syntax** for `style()` when using Mixins (functions that return style objects like `surface` or `subgrid`). This ensures a clear separation between **Behavior/Theme** (Mixin) and **Structure/Layout** (Local Styles).
 
 ```typescript
-// ✅ Good
-import { surface } from '../styles/utils.css';
+// ✅ Good: Array Syntax
+import { surface, subgrid } from '../styles/utils.css';
 
-export const card = style([
-    surface('card'), // Applies bg, text, border, shadow, AND hover transition
+export const row = style([
+    subgrid('x'),      // Behavior 1: Subgrid Layout
+    surface('card'),   // Behavior 2: Surface Theme
     {
-        padding: '16px',
-        // ... overrides
+        height: '40px', // Structure: Local overrides
+        alignItems: 'center'
     }
 ]);
 
-// ❌ Bad
-export const card = style({
-    backgroundColor: vars.surface.card.bg, // Missing interaction and other props
-    color: vars.surface.card.text,
+// ❌ Bad: Spread Syntax
+export const row = style({
+    ...subgrid('x'),   // Hard to distinguish layer hierarchy
+    ...surface('card'),
+    height: '40px',
 });
 ```
 

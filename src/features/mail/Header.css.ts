@@ -1,14 +1,16 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
+import { surface } from '../../styles/utils.css';
 
 export const header = style({
     gridColumn: '1 / -1',
     gridRow: '1',
     display: 'grid',
-    gridTemplateColumns: 'subgrid',
+    gridTemplateColumns: 'inherit', // Uses the standard 256px 1fr grid
     alignItems: 'center',
     paddingRight: vars.spacing[16],
     backgroundColor: vars.surface.base.bg,
+    borderBottom: `1px solid ${vars.color.gray100}`,
 });
 
 export const logoSection = style({
@@ -16,79 +18,183 @@ export const logoSection = style({
     display: 'flex',
     alignItems: 'center',
     paddingLeft: vars.spacing[16],
-    gap: vars.spacing[16],
+    gap: vars.spacing[12],
+    height: '100%',
 });
 
-export const searchSection = style({
+export const menuBtn = style({
+    padding: vars.spacing[12],
+    borderRadius: '50%',
+    cursor: 'pointer',
+    border: 'none',
+    backgroundColor: 'transparent',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: vars.color.gray600,
+    ':hover': {
+        backgroundColor: vars.color.gray100,
+    }
+});
+
+export const logoText = style({
+    fontSize: '22px',
+    color: vars.color.gray600,
+    fontWeight: vars.weight.medium,
+    lineHeight: 1,
+    position: 'relative',
+    top: '-1px', // Visual adjustment
+});
+
+export const logo = style({
+    display: 'flex',
+    alignItems: 'center',
+    gap: vars.spacing[8],
+    userSelect: 'none',
+    cursor: 'pointer',
+});
+
+// New Container for Search + Actions in the second column
+export const headerRightArea = style({
     gridColumn: '2',
     display: 'flex',
     alignItems: 'center',
-    maxWidth: '720px',
-    padding: `${vars.spacing[8]} 0`,
+    height: '100%',
+    justifyContent: 'space-between', // Push Search left/center, Actions right
+    paddingLeft: vars.spacing[8],
 });
 
-// ... imports
-import { surface } from '../../styles/utils.css';
+export const searchBarContainer = style({
+    flex: '1 1 auto', // Grow, but respect max width
+    maxWidth: '720px',
+    display: 'flex',
+    alignItems: 'center',
+});
 
-// ... other styles
-
+// Refined Search Bar
 export const searchBar = style([
-    surface('input'),
+    surface('subtle'),
     {
         display: 'flex',
         alignItems: 'center',
-        flex: 1,
+        width: '100%',
         height: '48px',
-        borderRadius: '24px',
-        padding: `0 ${vars.spacing[16]}`,
-        gap: vars.spacing[16],
-        transition: 'background-color 0.2s, box-shadow 0.2s',
+        borderRadius: vars.borderRadius.full,
+        padding: `0 ${vars.spacing[8]}`,
+        transition: 'background-color 0.2s, box-shadow 0.2s, max-width 0.2s',
+        border: '1px solid transparent',
         ':focus-within': {
             backgroundColor: vars.color.white,
+            boxShadow: vars.shadow.raised,
+            borderColor: vars.color.gray200,
+        },
+        ':hover': {
+            backgroundColor: vars.color.gray100,
             boxShadow: vars.shadow.raised,
         }
     }
 ]);
 
-// ... input style
 export const input = style({
     border: 'none',
     background: 'transparent',
     flex: 1,
     height: '100%',
-    fontSize: '16px',
+    fontSize: vars.fontSize.lg, // 16px
     color: vars.color.gray800,
     outline: 'none',
+    padding: `0 ${vars.spacing[8]}`,
     '::placeholder': {
         color: vars.color.gray600,
+        fontWeight: vars.weight.regular,
+    }
+});
+
+export const searchIconBtn = style({
+    padding: vars.spacing[8],
+    borderRadius: '50%',
+    cursor: 'pointer',
+    border: 'none',
+    background: 'transparent',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: vars.color.gray600,
+    ':hover': {
+        backgroundColor: 'rgba(0,0,0,0.05)',
+        color: vars.color.gray800,
+    }
+});
+
+export const tuneIconBtn = style({
+    padding: vars.spacing[8],
+    borderRadius: '50%',
+    cursor: 'pointer',
+    border: 'none',
+    background: 'transparent',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: vars.color.gray600,
+    marginRight: vars.spacing[4],
+    ':hover': {
+        backgroundColor: 'rgba(0,0,0,0.05)',
+        color: vars.color.gray800,
     }
 });
 
 export const actions = style({
-    marginLeft: 'auto',
     display: 'flex',
     alignItems: 'center',
-    gap: vars.spacing[8],
+    gap: vars.spacing[4], // Tight gap between groups
+    paddingLeft: vars.spacing[12],
 });
 
-export const iconBtn = style([
-    surface('ghost'),
-    {
-        padding: vars.spacing[8],
-        borderRadius: '50%',
-        cursor: 'pointer',
-        border: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-]);
-
-export const logo = style({
-    fontSize: '22px',
-    color: vars.color.gray600, // Placeholder
-    fontWeight: 500,
-    letterSpacing: '-0.5px',
+export const actionGroup = style({
     display: 'flex',
-    gap: '8px'
+    alignItems: 'center',
+    gap: vars.spacing[4],
+});
+
+// Generic icon button for header actions
+export const iconBtn = style({
+    padding: vars.spacing[12],
+    borderRadius: '50%',
+    cursor: 'pointer',
+    border: 'none',
+    backgroundColor: 'transparent',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: vars.color.gray600,
+    transition: 'background-color 0.1s',
+    ':hover': {
+        backgroundColor: vars.color.gray100,
+        color: vars.color.gray800,
+    }
+});
+
+export const avatarBtn = style({
+    padding: vars.spacing[4],
+    borderRadius: '50%',
+    cursor: 'pointer',
+    border: 'none',
+    backgroundColor: 'transparent',
+    marginLeft: vars.spacing[4],
+    ':hover': {
+        backgroundColor: vars.color.gray100,
+    }
+});
+
+export const avatarFallback = style({
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    backgroundColor: '#0b57d0', // Standard Google Blue
+    color: vars.color.white,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: vars.fontSize.lg,
+    fontWeight: vars.weight.medium,
 });

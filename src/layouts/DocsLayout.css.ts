@@ -77,7 +77,7 @@ export const navLink = style({
     color: vars.surface.base.text,
     textDecoration: 'none',
     borderRadius: '4px', // Reduced radius
-    transition: 'all 0.2s',
+    // transition: 'all 0.2s', // Removed animation as requested
     ':hover': {
         backgroundColor: vars.surface.subtle.bg,
     },

@@ -206,7 +206,7 @@ export const propertiesPanel = style([
 ]);
 
 export const sectionTitle = style([
-    ui.panelHeading(),
+    ui.overline(),
     {
         textTransform: 'uppercase',
         marginTop: vars.spacing[16],

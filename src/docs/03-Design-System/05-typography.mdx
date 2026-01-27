@@ -53,34 +53,36 @@ import { TypographyShowcase } from '../../components/docs/TypographyShowcase';
 import { style } from '@vanilla-extract/css';
 import { typography } from '../../styles/utils.css';
 
-export const paletteLabel = style({
-    ...typography({
+export const paletteLabel = style([
+    typography({
         size: 'sm',
         weight: 'medium',
         height: 'tight', // 공간 절약을 위해 타이트하게
         spacing: 'normal'
     }),
-    color: vars.color.gray600
-});
+    {
+        color: vars.color.gray600
+    }
+]);
 ```
 
 ### Content / Headings
 문서의 본문이나 큰 제목은 읽기 편하도록 여유 있는 공간을 줍니다.
 
 ```typescript
-export const heroTitle = style({
-    ...typography({
+export const heroTitle = style([
+    typography({
         size: '4xl',
         weight: 'bold',
         height: 'tight',
         spacing: 'tight' // 큰 글씨는 자간을 좁혀 응집력 있게
     })
-});
+]);
 
-export const articleBody = style({
-    ...typography({
+export const articleBody = style([
+    typography({
         size: 'lg',
         height: 'relaxed' // 긴 글은 줄간격을 넓게
     })
-});
+]);
 ```

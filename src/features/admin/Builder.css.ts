@@ -151,7 +151,7 @@ export const canvasWidget = style({
             outline: `2px solid #22c55e`, // Retool green
             zIndex: 10,
         },
-        ':hover': {
+        '&:hover': {
             outline: `1px solid #22c55e`, // Hover hint
         }
     }

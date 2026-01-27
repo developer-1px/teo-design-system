@@ -4,6 +4,8 @@ order: 8
 category: Design System
 ---
 
+import { SubgridExample } from '../../components/docs/SubgridExample';
+
 # CSS Subgrid Patterns
 
 `subgrid`는 부모 그리드의 트랙(행/열)을 자식 요소가 그대로 상속받아 사용하는 강력한 기능입니다.
@@ -25,63 +27,42 @@ Subgrid를 사용하면 자식 요소가 부모(또는 조상)의 그리드 트�
 ```tsx
 // Parent Grid
 display: 'grid',
-gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-gap: '24px'
+gridTemplateColumns: 'repeat(3, 1fr)',
+gridTemplateRows: 'auto auto 1fr', // Header, Content, Footer tracks
 
-// Card (Child)
-display: 'grid',
-gridTemplateRows: 'subgrid', // 높이 트랙을 부모로부터 상속 (실제로는 부모가 spanning 해야 함)
+// Card (Child) using Mixin
+export const card = style([
+    subgrid('y'), // Inherit rows
+    {
+        gridRow: 'span 3' // Span across the 3 tracks
+    }
+]);
 ```
-
-> [!NOTE]
-> Card 예제는 보통 부모 그리드에서 `grid-template-rows`를 명시적으로 제어하거나, 카드가 `grid-row: span 3` 처럼 여러 트랙을 차지하도록 설정해야 `subgrid`가 유효합니다.
 
 ### 2. Form Layouts
 
 Label과 Input이 서로 다른 컨테이너에 있어도, 전체 폼의 라벨 너비를 통일할 수 있습니다.
 
-### 3. Complex Data Grids
+## Mixin: Subgrid in Vanilla Extract
 
-헤더와 데이터 행이 별도 컴포넌트여도 컬럼 너비를 공유할 수 있습니다.
-
-## Recipe: Subgrid in Vanilla Extract
-
-Subgrid를 쉽게 사용하기 위한 레시피입니다.
+`subgrid`를 쉽게 사용하기 위한 Mixin입니다 (`src/styles/utils.css.ts`).
 
 ```typescript
-import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
-
-// 1. Utility Style
-export const subgrid = style({
-  display: 'grid',
-  gridTemplateColumns: 'subgrid',
-  gridTemplateRows: 'subgrid'
-});
-
-// 2. Axis-Specific
-export const subgridAxis = recipe({
-  variants: {
-    axis: {
-      x: { gridTemplateColumns: 'subgrid' },
-      y: { gridTemplateRows: 'subgrid' },
-      both: { 
-        gridTemplateColumns: 'subgrid',
-        gridTemplateRows: 'subgrid'
-      }
-    }
-  },
-  defaultVariants: {
-    axis: 'both'
-  }
+// src/styles/utils.css.ts
+export const subgrid = (axis: 'x' | 'y' | 'both' = 'both', width: string = '1 / -1'): StyleRule => ({
+    display: 'grid',
+    gridColumn: width,
+    ...(axis === 'x' || axis === 'both' ? { gridTemplateColumns: 'subgrid' } : {}),
+    ...(axis === 'y' || axis === 'both' ? { gridTemplateRows: 'subgrid' } : {})
 });
 ```
 
-## Code Example
+## Usage Example
 
 ```typescript
 // styles.css.ts
 import { style } from '@vanilla-extract/css';
+import { subgrid } from '../../styles/utils.css';
 
 export const parent = style({
   display: 'grid',
@@ -89,10 +70,21 @@ export const parent = style({
   gap: '16px'
 });
 
-export const childItem = style({
-  // 이 요소의 자식들은 부모(parent)의 3개 컬럼을 그대로 사용함
-  display: 'grid',
-  gridColumn: '1 / -1',
-  gridTemplateColumns: 'subgrid',
-});
+export const childItem = style([
+  // subgrid('x')를 배열로 합성 (기본값: 전체 너비)
+  subgrid('x'),
+  {
+      // ... local overrides
+      padding: '16px'
+  }
+]);
 ```
+
+## Live Example
+
+아래 예시는 `subgrid('y')`를 사용하여 헤더, 본문, 푸터의 높이를 카드 간에 동기화한 모습입니다.
+가운데 카드의 본문이 길어지면, 좌우 카드의 본문 영격도 함께 늘어나 **푸터의 위치가 항상 일치**하게 됩니다.
+
+<div style={{ padding: '20px', backgroundColor: 'rgba(0,0,0,0.02)', borderRadius: '8px', marginTop: '20px' }}>
+    <SubgridExample />
+</div>

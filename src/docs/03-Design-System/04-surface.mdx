@@ -43,16 +43,20 @@ import { surface } from '../../styles/utils.css';
 
 // 1. Using Base Surface
 // surface()는 bg, color, border, shadow를 한 번에 적용합니다.
-export const appContainer = style({
-    ...surface('base'),
-    color: vars.color.gray800 // 텍스트 컬러 오버라이드 (Optional)
-});
+export const appContainer = style([
+    surface('base'),
+    {
+        color: vars.color.gray800 // 텍스트 컬러 오버라이드 (Optional)
+    }
+]);
 
 // 2. Using Card Surface (Includes border & shadow automatically)
-export const card = style({
-    ...surface('card'), // bg + border + shadow + default text color
-    padding: vars.spacing[16]
-});
+export const card = style([
+    surface('card'), // bg + border + shadow + default text color
+    {
+        padding: vars.spacing[16]
+    }
+]);
 
 ```
 

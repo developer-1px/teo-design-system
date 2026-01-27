@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css';
 import { vars } from '../styles/vars.css';
 
 export const toggleBtn = style({
-    padding: vars.spacing[8],
+    padding: vars.spacing[12], // Match header icon padding
     borderRadius: '50%',
     cursor: 'pointer',
     color: vars.color.gray600,
@@ -11,7 +11,8 @@ export const toggleBtn = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    transition: 'background-color 0.1s',
     ':hover': {
-        backgroundColor: 'rgba(60,64,67,0.08)',
+        backgroundColor: vars.color.gray100,
     }
 });

@@ -1,5 +1,4 @@
-import { vars } from '../../styles/vars.css';
-import { Menu, Search, Settings, HelpCircle, Grip, User } from 'lucide-react';
+import { Menu, Search, Settings, HelpCircle, Grip, SlidersHorizontal, Mail } from 'lucide-react';
 import * as styles from './Header.css';
 import { ThemeToggle } from '../../components/ThemeToggle';
 
@@ -7,34 +6,51 @@ export function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.logoSection}>
-                <button className={styles.iconBtn}>
+                <button className={styles.menuBtn}>
                     <Menu size={24} />
                 </button>
                 <div className={styles.logo}>
-                    {/* Simple logo text representation for replica */}
-                    <span style={{ color: '#4285f4' }}>G</span>
-                    <span style={{ color: '#ea4335' }}>m</span>
-                    <span style={{ color: '#fbbc04' }}>a</span>
-                    <span style={{ color: '#4285f4' }}>i</span>
-                    <span style={{ color: '#34a853' }}>l</span>
+                    <Mail size={24} color="#EA4335" />
+                    <span className={styles.logoText}>Gmail</span>
                 </div>
             </div>
 
-            <div className={styles.searchSection}>
-                <div className={styles.searchBar}>
-                    <Search size={20} color={vars.color.gray600} />
-                    <input className={styles.input} placeholder="Search mail" />
-                    <div style={{ display: 'flex', gap: vars.spacing[8] }}>
-                        {/* Tune icon placeholder */}
+            <div className={styles.headerRightArea}>
+                <div className={styles.searchBarContainer}>
+                    <div className={styles.searchBar}>
+                        <button className={styles.searchIconBtn}>
+                            <Search size={20} />
+                        </button>
+                        <input className={styles.input} placeholder="Search in mail" />
+                        <button className={styles.tuneIconBtn}>
+                            <SlidersHorizontal size={18} />
+                        </button>
                     </div>
                 </div>
 
                 <div className={styles.actions}>
-                    <ThemeToggle />
-                    <button className={styles.iconBtn}><HelpCircle size={24} /></button>
-                    <button className={styles.iconBtn}><Settings size={24} /></button>
-                    <button className={styles.iconBtn}><Grip size={24} /></button>
-                    <button className={styles.iconBtn}><User size={32} /></button>
+                    {/* Status Indicator (Offline/Online) could go here */}
+                    <div className={styles.actionGroup}>
+                        <ThemeToggle />
+                    </div>
+
+                    <div className={styles.actionGroup}>
+                        <button className={styles.iconBtn} title="Support">
+                            <HelpCircle size={22} />
+                        </button>
+                        <button className={styles.iconBtn} title="Settings">
+                            <Settings size={22} />
+                        </button>
+                    </div>
+
+                    <div className={styles.actionGroup}>
+                        <button className={styles.iconBtn} title="Google Apps">
+                            <Grip size={22} />
+                        </button>
+                        <button className={styles.avatarBtn} title="Google Account">
+                            <div className={styles.avatarFallback}>U</div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </header>

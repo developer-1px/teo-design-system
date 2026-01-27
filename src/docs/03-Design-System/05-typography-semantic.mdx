@@ -1,0 +1,63 @@
+---
+title: Semantic Typography
+order: 5
+category: Design System
+---
+
+import { SemanticTypographyShowcase } from '../../components/docs/SemanticTypographyShowcase';
+
+# Semantic Typography
+
+기본적인 Heading/Body 스케일 외에, **특정한 목적(Semantic Purpose)**을 가진 타이포그래피 변형들입니다.
+`ui.*` 유틸리티를 사용하여 일관된 의미를 전달합니다.
+
+## Why Semantic?
+
+"폰트 크기 12px"보다는 **"이것은 캡션이다"**라고 정의하는 것이 유지보수에 유리합니다.
+디자인 변경 시 `caption`의 정의만 바꾸면 앱 전체에 반영되기 때문입니다.
+
+## UI Variants
+
+`src/styles/utils.css.ts`의 `ui` 객체를 통해 접근할 수 있습니다.
+
+| Variant | Purpose | Default Settings |
+| :--- | :--- | :--- |
+| **ui.label** | 입력 필드 라벨, 섹션 헤더 | `sm`, `medium`, `tight height` |
+| **ui.caption** | 도움말, 하단 설명 텍스트 | `xs`, `regular` |
+| **ui.menu** | 드롭다운 메뉴 아이템, 네비게이션 | `sm`, `medium`, `snug height` |
+| **ui.overline** | 사이드바/패널의 소제목 | `xs`, `bold`, `wide spacing`, `uppercase` |
+| **ui.code** | 인라인 코드 스니펫 | `sm`, `code font` |
+
+## Live Showcase
+
+<SemanticTypographyShowcase />
+
+## Usage
+
+```typescript
+import { style } from '@vanilla-extract/css';
+import { ui } from '../../styles/utils.css';
+
+// 1. Label Style
+export const inputLabel = style(ui.label()); 
+// Override size if needed: ui.label('md')
+
+// 2. Section Title (Overline)
+export const sidebarTitle = style([
+    ui.overline(),
+    {
+        marginBottom: '8px',
+        color: vars.color.gray500
+    }
+]);
+
+
+// 3. Inline Code
+export const codeSnippet = style([
+    ui.code(),
+    {
+        backgroundColor: vars.surface.subtle.bg,
+        borderRadius: '4px'
+    }
+]);
+```

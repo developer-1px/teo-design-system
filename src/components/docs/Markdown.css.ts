@@ -77,7 +77,6 @@ globalStyle(`${prose} h3`, {
 });
 
 globalStyle(`${prose} h4`, {
-    fontSize: '1rem', // 16px
     fontWeight: '600',
     color: '#444',
     marginTop: '1.5rem',
