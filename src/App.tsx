@@ -12,8 +12,8 @@ import { ListPage } from './features/admin/ListPage';
 import { AdminLayout } from './features/admin/AdminLayout';
 import './App.css'; // Just for global side effects
 
-// Auto-import all MDX files
-const mdxPages = import.meta.glob('/src/docs/*.mdx', { eager: true });
+// Auto-import all MDX files recursively
+const mdxPages = import.meta.glob('/src/docs/**/*.mdx', { eager: true });
 
 const docsRoutes = Object.keys(mdxPages).map((path) => {
   const slug = path.split('/').pop()?.replace('.mdx', '');

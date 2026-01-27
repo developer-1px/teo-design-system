@@ -4,7 +4,7 @@ order: 4
 category: Design System
 ---
 
-import { SurfaceShowcase } from '../components/docs/SurfaceShowcase';
+import { SurfaceShowcase } from '../../components/docs/SurfaceShowcase';
 
 # Surface System
 
@@ -37,9 +37,9 @@ Base보다는 약간 구분이 필요한, 은은한 배경입니다. 사이드�
 `vars`를 직접 호출하는 것보다 `surface()` 헬퍼를 사용하는 것이 권장됩니다.
 
 ```typescript
-import { vars } from '../styles/vars.css';
+import { vars } from '../../styles/vars.css';
 import { style } from '@vanilla-extract/css';
-import { surface } from '../styles/utils.css';
+import { surface } from '../../styles/utils.css';
 
 // 1. Using Base Surface
 // surface()는 bg, color, border, shadow를 한 번에 적용합니다.
