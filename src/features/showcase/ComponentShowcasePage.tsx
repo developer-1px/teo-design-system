@@ -157,107 +157,108 @@ export default function ComponentShowcasePage() {
 
                 </div>
 
-            </div>
 
-            <h2 className={styles.sectionTitle}>Data Display</h2>
-            <div className={styles.grid}>
-                <div className={styles.card}>
-                    <h2 className={styles.cardTitle}>Badges</h2>
 
-                    <div className={styles.label}>Intents (Subtle)</div>
-                    <div className={styles.componentRow}>
-                        <Badge intent="neutral" variant="subtle">Neutral</Badge>
-                        <Badge intent="success" variant="subtle">Success</Badge>
-                        <Badge intent="warning" variant="subtle">Warning</Badge>
-                        <Badge intent="danger" variant="subtle">Danger</Badge>
-                        <Badge intent="info" variant="subtle">Info</Badge>
+                <h2 className={styles.sectionTitle}>Data Display</h2>
+                <div className={styles.grid}>
+                    <div className={styles.card}>
+                        <h2 className={styles.cardTitle}>Badges</h2>
+
+                        <div className={styles.label}>Intents (Subtle)</div>
+                        <div className={styles.componentRow}>
+                            <Badge intent="neutral" variant="subtle">Neutral</Badge>
+                            <Badge intent="success" variant="subtle">Success</Badge>
+                            <Badge intent="warning" variant="subtle">Warning</Badge>
+                            <Badge intent="danger" variant="subtle">Danger</Badge>
+                            <Badge intent="info" variant="subtle">Info</Badge>
+                        </div>
+
+                        <div className={styles.label}>Solid</div>
+                        <div className={styles.componentRow}>
+                            <Badge intent="neutral" variant="solid">Neutral</Badge>
+                            <Badge intent="success" variant="solid">Success</Badge>
+                            <Badge intent="warning" variant="solid">Warning</Badge>
+                            <Badge intent="danger" variant="solid">Danger</Badge>
+                            <Badge intent="info" variant="solid">Info</Badge>
+                        </div>
+
+                        <div className={styles.label}>Outline</div>
+                        <div className={styles.componentRow}>
+                            <Badge intent="neutral" variant="outline">Neutral</Badge>
+                            <Badge intent="success" variant="outline">Success</Badge>
+                            <Badge intent="warning" variant="outline">Warning</Badge>
+                            <Badge intent="danger" variant="outline">Danger</Badge>
+                            <Badge intent="info" variant="outline">Info</Badge>
+                        </div>
                     </div>
 
-                    <div className={styles.label}>Solid</div>
-                    <div className={styles.componentRow}>
-                        <Badge intent="neutral" variant="solid">Neutral</Badge>
-                        <Badge intent="success" variant="solid">Success</Badge>
-                        <Badge intent="warning" variant="solid">Warning</Badge>
-                        <Badge intent="danger" variant="solid">Danger</Badge>
-                        <Badge intent="info" variant="solid">Info</Badge>
+                    <div className={styles.card} style={{ gridColumn: 'span 2' }}>
+                        <h2 className={styles.cardTitle}>Table (Compact)</h2>
+                        <Table density="compact">
+                            <TableCaption>Recent Users</TableCaption>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Name</TableHead>
+                                    <TableHead>Status</TableHead>
+                                    <TableHead>Role</TableHead>
+                                    <TableHead className="text-right">Amount</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>Alice Smith</TableCell>
+                                    <TableCell><Badge intent="success">Active</Badge></TableCell>
+                                    <TableCell>Admin</TableCell>
+                                    <TableCell className="text-right">$250.00</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Bob Jones</TableCell>
+                                    <TableCell><Badge intent="warning">Pending</Badge></TableCell>
+                                    <TableCell>User</TableCell>
+                                    <TableCell className="text-right">$100.00</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Charlie Brown</TableCell>
+                                    <TableCell><Badge intent="danger">Suspended</Badge></TableCell>
+                                    <TableCell>User</TableCell>
+                                    <TableCell className="text-right">$0.00</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
                     </div>
 
-                    <div className={styles.label}>Outline</div>
-                    <div className={styles.componentRow}>
-                        <Badge intent="neutral" variant="outline">Neutral</Badge>
-                        <Badge intent="success" variant="outline">Success</Badge>
-                        <Badge intent="warning" variant="outline">Warning</Badge>
-                        <Badge intent="danger" variant="outline">Danger</Badge>
-                        <Badge intent="info" variant="outline">Info</Badge>
-                    </div>
                 </div>
 
-                <div className={styles.card} style={{ gridColumn: 'span 2' }}>
-                    <h2 className={styles.cardTitle}>Table (Compact)</h2>
-                    <Table density="compact">
-                        <TableCaption>Recent Users</TableCaption>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Name</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Role</TableHead>
-                                <TableHead className="text-right">Amount</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>Alice Smith</TableCell>
-                                <TableCell><Badge intent="success">Active</Badge></TableCell>
-                                <TableCell>Admin</TableCell>
-                                <TableCell className="text-right">$250.00</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Bob Jones</TableCell>
-                                <TableCell><Badge intent="warning">Pending</Badge></TableCell>
-                                <TableCell>User</TableCell>
-                                <TableCell className="text-right">$100.00</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Charlie Brown</TableCell>
-                                <TableCell><Badge intent="danger">Suspended</Badge></TableCell>
-                                <TableCell>User</TableCell>
-                                <TableCell className="text-right">$0.00</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </div>
+                <h2 className={styles.sectionTitle}>Typography</h2>
+                <div className={styles.grid}>
+                    <div className={styles.card} style={{ gridColumn: 'span 2' }}>
+                        <h2 className={styles.cardTitle}>Prose Typography</h2>
+                        <div className={prose}>
+                            <h1>Heading 1</h1>
+                            <p>This is a standard paragraph demonstrating the <strong>body typography</strong>. It includes <em>italic text</em>, <a href="#">links</a>, and <code>inline code</code>.</p>
 
-            </div>
+                            <h3>Lists & Blockquotes</h3>
+                            <ul>
+                                <li>Unordered list item one</li>
+                                <li>Unordered list item two with nested list:
+                                    <ul>
+                                        <li>Nested item A</li>
+                                        <li>Nested item B</li>
+                                    </ul>
+                                </li>
+                            </ul>
 
-            <h2 className={styles.sectionTitle}>Typography</h2>
-            <div className={styles.grid}>
-                <div className={styles.card} style={{ gridColumn: 'span 2' }}>
-                    <h2 className={styles.cardTitle}>Prose Typography</h2>
-                    <div className={prose}>
-                        <h1>Heading 1</h1>
-                        <p>This is a standard paragraph demonstrating the <strong>body typography</strong>. It includes <em>italic text</em>, <a href="#">links</a>, and <code>inline code</code>.</p>
+                            <blockquote>
+                                "Design is not just what it looks like and feels like. Design is how it works."
+                            </blockquote>
 
-                        <h3>Lists & Blockquotes</h3>
-                        <ul>
-                            <li>Unordered list item one</li>
-                            <li>Unordered list item two with nested list:
-                                <ul>
-                                    <li>Nested item A</li>
-                                    <li>Nested item B</li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <blockquote>
-                            "Design is not just what it looks like and feels like. Design is how it works."
-                        </blockquote>
-
-                        <h3>Code Block</h3>
-                        <pre><code>
-                            {`function hello() {
+                            <h3>Code Block</h3>
+                            <pre><code>
+                                {`function hello() {
   console.log("Hello, World!");
 }`}
-                        </code></pre>
+                            </code></pre>
+                        </div>
                     </div>
                 </div>
             </div>
