@@ -93,6 +93,7 @@ export const prose = style({
     color: vars.color.gray800,
     letterSpacing: '-0.01em',
     maxWidth: '65ch',
+    margin: '0 auto', // Center container
 });
 
 // H1
