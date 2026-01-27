@@ -1,12 +1,9 @@
 
-import { style, keyframes } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
 import { surface } from '../../styles/utils.css';
 
-const slideIn = keyframes({
-    '0%': { transform: 'translateY(100%)', opacity: 0 },
-    '100%': { transform: 'translateY(0)', opacity: 1 },
-});
+
 
 export const toastContainer = style({
     position: 'fixed',
@@ -30,7 +27,6 @@ export const toast = style([
         alignItems: 'center',
         justifyContent: 'space-between',
         pointerEvents: 'auto', // Re-enable pointer events for the toast itself
-        animation: `${slideIn} 0.3s ease-out`,
         fontSize: vars.fontSize.md,
         gap: vars.spacing[12],
     }

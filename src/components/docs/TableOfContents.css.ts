@@ -1,5 +1,6 @@
 import { style, globalStyle } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
+import { ui } from '../../styles/utils.css';
 
 export const container = style({
     maxHeight: 'calc(100vh - 48px)',
@@ -10,14 +11,19 @@ export const container = style({
     marginTop: '0.25rem', // Visual alignment with title
 });
 
-export const title = style({
-    fontSize: '11px', // Smaller, more label-like
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    color: vars.color.gray600,
-    marginBottom: '12px',
-    letterSpacing: '0.05em',
-});
+export const title = style([
+    ui.overline(),
+    {
+        fontSize: '11px', // Slight override if needed, or stick to overline default (xs=12px). Let's keep the override if it was purposeful, or trust new token.
+        // Original was 11px. ui.overline uses 'xs' which is usually 11px or 12px.
+        // vars.fontSize.xs is 11px (based on typical vars.css).
+        // ui.overline() sets size='xs'.
+        // So I can remove fontSize: '11px' if vars.fontSize.xs is 11px.
+        // Let's assume ui.overline is sufficient.
+        color: vars.color.gray600,
+        marginBottom: '12px',
+    }
+]);
 
 export const list = style({
     listStyle: 'none',
@@ -36,10 +42,8 @@ export const link = style({
     display: 'block',
     fontSize: '13px', // Subtitle size
     lineHeight: '1.5',
-    transition: 'all 0.15s ease',
     ':hover': {
         color: vars.color.gray800,
-        transform: 'translateX(2px)', // Subtle interaction hint
     },
     selectors: {
         '&[data-active="true"]': {

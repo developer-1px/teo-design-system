@@ -30,9 +30,7 @@ export const demoBox = style({
     alignItems: 'center',
     justifyContent: 'center',
     boxShadow: vars.shadow.raised,
-    transition: 'transform 0.2s',
     ':hover': {
-        transform: 'scale(1.05)',
         boxShadow: vars.shadow.popover,
     }
 });

@@ -33,7 +33,6 @@ export const menuItem = style([
         display: 'flex',
         alignItems: 'center',
         gap: vars.spacing[8],
-        transition: 'background-color 0.1s',
         color: vars.color.gray800,
         textDecoration: 'none',
     }

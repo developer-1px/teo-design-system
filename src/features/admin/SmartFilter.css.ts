@@ -9,7 +9,6 @@ export const filterBar = style({
     borderRadius: '6px',
     backgroundColor: vars.surface.subtle.bg, // Gray background for input area
     border: `1px solid transparent`,
-    transition: 'all 0.1s ease',
     width: '100%',
     maxWidth: '600px',
     ':focus-within': {

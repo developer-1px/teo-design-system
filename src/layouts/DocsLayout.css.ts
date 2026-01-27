@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../styles/vars.css';
+import { ui } from '../styles/utils.css';
 
 export const container = style([
     {
@@ -90,17 +91,17 @@ export const navLink = style({
     }
 });
 
-export const sectionTitle = style({
-    fontSize: '12px',
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    color: '#6b7280',
-    marginTop: vars.spacing[40],
-    marginBottom: vars.spacing[8],
-    paddingLeft: vars.spacing[8],
-    selectors: {
-        '&:first-child': {
-            marginTop: 0,
+export const sectionTitle = style([
+    ui.overline(),
+    {
+        color: '#6b7280',
+        marginTop: vars.spacing[40],
+        marginBottom: vars.spacing[8],
+        paddingLeft: vars.spacing[8],
+        selectors: {
+            '&:first-child': {
+                marginTop: 0,
+            }
         }
     }
-});
+]);

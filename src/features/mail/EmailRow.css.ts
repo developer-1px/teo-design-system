@@ -11,7 +11,6 @@ export const row = style([
         cursor: 'pointer',
         paddingRight: vars.spacing[16],
         backgroundColor: vars.surface.base.bg,
-        transition: 'box-shadow 0.2s ease, background-color 0.1s ease',
         ':hover': {
             boxShadow: vars.shadow.raised,
             zIndex: vars.zIndices.elevated,

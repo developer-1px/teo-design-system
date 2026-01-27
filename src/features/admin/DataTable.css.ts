@@ -35,7 +35,6 @@ export const th = style({
 export const tr = style({
     borderBottom: `1px solid ${vars.border.subtle}`,
     cursor: 'pointer',
-    transition: 'background-color 0.05s',
     ':hover': {
         backgroundColor: vars.surface.subtle.bg,
     },

@@ -11,7 +11,6 @@ export const toggleBtn = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    transition: 'background-color 0.1s',
     ':hover': {
         backgroundColor: vars.color.gray100,
     }

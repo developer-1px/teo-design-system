@@ -167,7 +167,6 @@ export const iconBtn = style({
     alignItems: 'center',
     justifyContent: 'center',
     color: vars.color.gray600,
-    transition: 'background-color 0.1s',
     ':hover': {
         backgroundColor: vars.color.gray100,
         color: vars.color.gray800,

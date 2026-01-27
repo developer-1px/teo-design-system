@@ -23,11 +23,10 @@ export const tooltip = style({
     pointerEvents: 'none',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
     opacity: 0,
-    transition: 'opacity 0.2s, transform 0.2s',
+
     selectors: {
         [`${container}:hover &`]: {
             opacity: 1,
-            transform: 'translateX(-50%) translateY(-2px)',
         }
     }
 });

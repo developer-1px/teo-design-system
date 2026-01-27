@@ -1,7 +1,7 @@
 // ... imports
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
-import { surface, typography } from '../../styles/utils.css';
+import { surface, ui } from '../../styles/utils.css';
 
 export const container = style({
     gridColumn: '2',
@@ -13,7 +13,7 @@ export const container = style({
 
 export const codeArea = style([
     surface('base'),
-    typography({ variant: 'code', size: 'md' }),
+    ui.code('md'),
     {
         gridRow: '1',
         borderBottom: `1px solid ${vars.border.default}`,
@@ -34,7 +34,7 @@ export const lineVal = style({
 // Terminal
 export const terminal = style([
     surface('card'),
-    typography({ variant: 'code', size: 'sm' }), // Console size
+    ui.code('sm'), // Console size
     {
         gridRow: '2',
         backgroundColor: vars.color.gray800,
@@ -47,18 +47,18 @@ export const terminal = style([
     }
 ]);
 
-export const terminalHeader = style({
-    height: '32px',
-    display: 'flex',
-    alignItems: 'center',
-    padding: `0 ${vars.spacing[16]}`,
-    borderBottom: `1px solid ${vars.border.strong}`,
-    fontWeight: vars.weight.bold,
-    fontSize: vars.fontSize.xs,
-    gap: vars.spacing[16],
-    textTransform: 'uppercase',
-    color: vars.color.gray300,
-});
+export const terminalHeader = style([
+    ui.overline(),
+    {
+        height: '32px',
+        display: 'flex',
+        alignItems: 'center',
+        padding: `0 ${vars.spacing[16]}`,
+        borderBottom: `1px solid ${vars.border.strong}`,
+        gap: vars.spacing[16],
+        color: vars.color.gray300,
+    }
+]);
 
 export const terminalBody = style({
     flex: 1,

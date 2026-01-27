@@ -27,15 +27,12 @@ export const composeBtn = style([
         fontSize: vars.fontSize.md,
         fontWeight: vars.weight.medium,
         color: vars.color.gray800,
-        transition: 'all 0.2s ease',
         boxShadow: vars.shadow.raised,
         marginBottom: vars.spacing[24],
         ':hover': {
             boxShadow: vars.shadow.overlay,
-            transform: 'translateY(-1px)',
         },
         ':active': {
-            transform: 'translateY(0)',
             boxShadow: vars.shadow.raised,
         }
     }
@@ -59,7 +56,6 @@ export const navItemParent = style({
     fontWeight: vars.weight.medium,
     textDecoration: 'none',
     gap: vars.spacing[12],
-    transition: 'background-color 0.1s ease, color 0.1s ease',
     ':hover': {
         backgroundColor: vars.color.gray100,
         color: vars.color.gray800,

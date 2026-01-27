@@ -91,7 +91,6 @@ export const thumbnailItem = style([
         borderRadius: vars.borderRadius.md,
         cursor: 'pointer',
         position: 'relative',
-        transition: 'all 0.2s ease',
         ':hover': {
             // Overrides are handled by surface('outlined') or can be added here
             borderColor: vars.color.green500,

@@ -20,7 +20,6 @@ export const surface = (type: SurfaceType): StyleRule => ({
     color: vars.surface[type].text,
     border: vars.surface[type].border,
     boxShadow: vars.surface[type].shadow,
-    transition: 'background-color 0.2s',
     ':hover': {
         backgroundColor: vars.surface[type].hoverBg,
     }
@@ -80,8 +79,8 @@ export const ui = {
         spacing: 'wide' // Uppercase often used with wide spacing
     }),
     // Code snippets
-    code: (): StyleRule => typography({
-        size: 'sm',
+    code: (size: 'xs' | 'sm' | 'md' = 'sm'): StyleRule => typography({
+        size,
         weight: 'regular',
         variant: 'code',
         height: 'snug',
