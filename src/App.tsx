@@ -25,11 +25,12 @@ import LandingPage from './features/home/LandingPage';
 // Auto-import all MDX files recursively
 const mdxPages = import.meta.glob('/src/docs/**/*.mdx', { eager: true });
 
-const docsRoutes = Object.keys(mdxPages).map((path) => {
-  const slug = path.split('/').pop()?.replace('.mdx', '');
+const docsRoutes = Object.keys(mdxPages).sort().map((path) => {
+  const filename = path.split('/').pop()?.replace('.mdx', '') || '';
+  const slug = filename.replace(/^\d+-/, '');
   const Component = (mdxPages[path] as any).default;
   return { path: slug, Component };
-}).sort((a, b) => (a.path || '').localeCompare(b.path || ''));
+});
 
 function AppContent() {
   return (

@@ -120,7 +120,7 @@ export default function FlowPage2() {
                             ))}
                         </div>
                         <div style={{ padding: '0 24px' }}>
-                            {processedResult.data.map((row: any, i: number) => (
+                            {(Array.isArray(processedResult.data) ? processedResult.data : [processedResult.data]).map((row: any, i: number) => (
                                 <div key={i} style={{ display: 'flex', borderTop: `1px solid ${styles.zinc[100]}` }}>
                                     {DESIGN_SPEC.columns.map(col => {
                                         const mappedField = mappings[col.id];

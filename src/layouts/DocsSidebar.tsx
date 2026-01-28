@@ -12,8 +12,8 @@ const files: RouteInfo[] = Object.keys(mdxFiles).map((path) => {
     const filename = parts.pop() || '';
     const folder = parts.pop() || 'Uncategorized'; // e.g., "01-Overview"
 
-    // slug: "00-prd"
-    const slug = filename.replace('.mdx', '');
+    // slug: "00-prd" -> "prd"
+    const slug = filename.replace('.mdx', '').replace(/^\d+-/, '');
     const module = mdxFiles[path] as any;
     const title = module.frontmatter?.title || slug?.toUpperCase();
     const order = module.frontmatter?.order ?? 999;
