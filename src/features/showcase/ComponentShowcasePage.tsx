@@ -11,6 +11,9 @@ import { Badge } from '../../components/ui/Badge';
 import { Avatar } from '../../components/ui/Avatar';
 import { Progress } from '../../components/ui/Progress';
 import { Tabs } from '../../components/ui/Tabs';
+import { Accordion } from '../../components/ui/Accordion';
+import { Tree } from '../../components/ui/Tree';
+import { vars } from '../../styles/vars.css';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from '../../components/ui/Table';
 import { prose } from '../../styles/prose.css';
 
@@ -110,7 +113,7 @@ export default function ComponentShowcasePage() {
                     </div>
 
                     {/* Input Section */}
-                    <div className={`${styles.card} ${styles.spanTwo}`}>
+                    <div className={`${styles.card} ${styles.spanTwo} `}>
                         <h2 className={styles.cardTitle}>Text Input</h2>
                         <div className={styles.inputStack}>
                             <TextInput
@@ -138,7 +141,7 @@ export default function ComponentShowcasePage() {
                     </div>
 
                     {/* Search & Select Section */}
-                    <div className={`${styles.card} ${styles.spanTwo}`}>
+                    <div className={`${styles.card} ${styles.spanTwo} `}>
                         <h2 className={styles.cardTitle}>Search & Select</h2>
                         <div className={styles.inputStack}>
                             <SearchBar
@@ -168,7 +171,7 @@ export default function ComponentShowcasePage() {
 
                 <h2 className={styles.sectionTitle}>Interactive Primitives</h2>
                 <div className={styles.grid}>
-                    <div className={`${styles.card} ${styles.spanTwo}`}>
+                    <div className={`${styles.card} ${styles.spanTwo} `}>
                         <h2 className={styles.cardTitle}>Buttons</h2>
 
                         <div className={styles.label}>Intents & Variants</div>
@@ -259,7 +262,7 @@ export default function ComponentShowcasePage() {
                         </div>
                     </div>
 
-                    <div className={`${styles.card} ${styles.spanTwo}`}>
+                    <div className={`${styles.card} ${styles.spanTwo} `}>
                         <h2 className={styles.cardTitle}>Table (Compact)</h2>
                         <Table density="compact">
                             <TableCaption>Recent Users</TableCaption>
@@ -362,9 +365,75 @@ export default function ComponentShowcasePage() {
 
                 </div>
 
+                <h2 className={styles.sectionTitle}>Navigation & Tree</h2>
+                <div className={styles.grid}>
+                    <div className={styles.card}>
+                        <h2 className={styles.cardTitle}>Accordion</h2>
+                        <Accordion
+                            allowMultiple
+                            items={[
+                                {
+                                    id: 'item-1',
+                                    title: 'Pro Tool Integration',
+                                    content: 'Seamlessly integrate complex state management with high-performance UI components.'
+                                },
+                                {
+                                    id: 'item-2',
+                                    title: 'Design System Governance',
+                                    content: 'Enforce visual consistency across diverse application scales with vanilla-extract tokens.'
+                                },
+                                {
+                                    id: 'item-3',
+                                    title: 'Headless Logic',
+                                    content: 'Separate interaction patterns from visual implementation for maximum flexibility.'
+                                }
+                            ]}
+                        />
+                    </div>
+
+                    <div className={styles.card}>
+                        <h2 className={styles.cardTitle}>Tree Navigation</h2>
+                        <div style={{ maxHeight: '320px', overflow: 'auto', border: `1px solid ${vars.color.border} `, borderRadius: vars.borderRadius.sm, backgroundColor: vars.color.white }}>
+                            <Tree
+                                data={[
+                                    {
+                                        id: 'src',
+                                        label: 'src',
+                                        isExpanded: true,
+                                        children: [
+                                            {
+                                                id: 'components',
+                                                label: 'components',
+                                                children: [
+                                                    { id: 'ui', label: 'ui' },
+                                                    { id: 'layout', label: 'layout' }
+                                                ]
+                                            },
+                                            {
+                                                id: 'features',
+                                                label: 'features',
+                                                children: [
+                                                    { id: 'admin', label: 'admin' },
+                                                    { id: 'mail', label: 'mail' },
+                                                    {
+                                                        id: 'editor', label: 'editor', isExpanded: true, children: [
+                                                            { id: 'EditorPage.tsx', label: 'EditorPage.tsx' },
+                                                            { id: 'EditorSidebar.tsx', label: 'EditorSidebar.tsx' }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]}
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 <h2 className={styles.sectionTitle}>Typography</h2>
                 <div className={styles.grid}>
-                    <div className={`${styles.card} ${styles.spanTwo}`}>
+                    <div className={`${styles.card} ${styles.spanTwo} `}>
                         <h2 className={styles.cardTitle}>Prose Typography</h2>
                         <div className={prose}>
                             <h1>Heading 1</h1>
@@ -388,8 +457,8 @@ export default function ComponentShowcasePage() {
                             <h3>Code Block</h3>
                             <pre><code>
                                 {`function hello() {
-  console.log("Hello, World!");
-}`}
+    console.log("Hello, World!");
+} `}
                             </code></pre>
                         </div>
                     </div>
