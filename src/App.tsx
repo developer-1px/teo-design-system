@@ -7,6 +7,11 @@ import { MailPage } from './features/mail/MailPage';
 import { EditorPage } from './features/editor/EditorPage';
 import { SlidesPage } from './features/slides/SlidesPage';
 import BuilderPage from './features/admin/BuilderPage';
+import StudioPage from './features/admin/StudioPage';
+import FlowPage from './features/admin/FlowPage';
+import FlowPage2 from './features/admin/FlowPage2';
+import TemplateStudioPage from './features/admin/TemplateStudioPage';
+import TableDesignerPage from './features/admin/TableDesignerPage';
 import StoryblokPage from './features/storyblok/StoryblokPage';
 import ComponentShowcasePage from './features/showcase/ComponentShowcasePage';
 
@@ -32,10 +37,6 @@ function AppContent() {
           <Route path="mail" element={<MailPage />} />
           <Route path="editor" element={<EditorPage />} />
           <Route path="slides" element={<SlidesPage />} />
-          <Route path="admin" element={<AdminLayout />}>
-            <Route index element={<ListPage />} />
-            <Route path="builder" element={<BuilderPage />} />
-          </Route>
 
           <Route path="storyblok" element={<StoryblokPage />} />
           <Route path="components" element={<ComponentShowcasePage />} />
@@ -48,6 +49,19 @@ function AppContent() {
               <Route key={path} path={path} element={<Component />} />
             ))}
           </Route>
+
+          {/* Admin Pro Tool Shell */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<ListPage />} />
+            <Route path="builder" element={<BuilderPage />} />
+          </Route>
+
+          {/* Standalone Admin Tools (Full Canvas) */}
+          <Route path="/admin/studio" element={<StudioPage />} />
+          <Route path="/admin/studio/templates" element={<TemplateStudioPage />} />
+          <Route path="/admin/studio/designer" element={<TableDesignerPage />} />
+          <Route path="/admin/flow" element={<FlowPage />} />
+          <Route path="/admin/flow2" element={<FlowPage2 />} />
         </Route>
       </Routes>
     </BrowserRouter>

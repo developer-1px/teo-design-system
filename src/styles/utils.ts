@@ -30,9 +30,6 @@ const surfaceInteractive = (type: SurfaceType): StyleRule => ({
     ':hover': {
         backgroundColor: vars.surface[type].hoverBg,
     },
-    // Future expansion:
-    // ':active': { transform: 'scale(0.98)' },
-    // ':focus-visible': { outline: `2px solid ${vars.border.interactive}` },
     selectors: {
         '&[disabled], &:disabled': {
             opacity: 0.6,
@@ -42,10 +39,35 @@ const surfaceInteractive = (type: SurfaceType): StyleRule => ({
     }
 });
 
+const surfaceField: StyleRule = {
+    outline: 'none',
+    transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+    selectors: {
+        '&:focus': {
+            borderColor: vars.color.gray800,
+            boxShadow: `0 0 0 1px ${vars.color.gray800}`,
+            backgroundColor: vars.color.white,
+        },
+        '&:disabled': {
+            opacity: 0.6,
+            cursor: 'not-allowed',
+        },
+        '&[data-invalid="true"]': {
+            borderColor: vars.color.red500,
+            boxShadow: 'none',
+        },
+        '&[data-invalid="true"]:focus': {
+            borderColor: vars.color.red500,
+            boxShadow: `0 0 0 1px ${vars.color.red500}`,
+        }
+    }
+};
+
 // Hybrid export: surface('card') works, and surface.interactive('card') also works.
 export const surface = Object.assign(surfaceBase, {
     base: surfaceBase,
-    interactive: surfaceInteractive
+    interactive: surfaceInteractive,
+    field: surfaceField
 });
 // ... surface code
 

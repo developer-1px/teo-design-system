@@ -9,7 +9,7 @@ export interface SelectOption {
 }
 
 interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
-    size?: 'default' | 'dense';
+    size?: 'default' | 'dense' | 'compact';
     options?: SelectOption[];
     placeholder?: string;
 }

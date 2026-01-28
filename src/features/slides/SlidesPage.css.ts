@@ -2,32 +2,6 @@ import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
 import { surface, ui, textStyle } from '../../styles/utils';
 
-// Main Container
-export const layout = style([
-    surface('base'),
-    {
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-    }
-]);
-
-// Top Navigation Bar
-export const topBar = style([
-    surface('base'),
-    {
-        height: '56px',
-        display: 'flex',
-        alignItems: 'center',
-        padding: `0 ${vars.spacing[16]}`,
-        borderBottom: `1px solid ${vars.border.default}`,
-        justifyContent: 'space-between',
-        flexShrink: 0,
-        zIndex: vars.zIndices.elevated,
-    }
-]);
-
 // Top Bar Elements
 export const figmaLogo = style({
     width: 24,
@@ -53,35 +27,16 @@ export const shareButton = style({
     }
 });
 
-export const profileAvatar = style({
-    width: 24,
-    height: 24,
-    borderRadius: '50%',
-    background: '#ff00ff' // Placeholder
-});
-
-
-// Main Workspace Area
-export const workspace = style({
+export const canvasContainer = style({
     flex: 1,
     display: 'flex',
-    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
     position: 'relative',
+    overflow: 'hidden',
+    height: '100%',
+    backgroundColor: vars.surface.subtle.bg,
 });
-
-// Left Panel: Slide Thumbnails
-export const thumbnailPanel = style([
-    surface('base'),
-    {
-        width: '240px',
-        height: '100%',
-        borderRight: `1px solid ${vars.border.default}`,
-        display: 'flex',
-        flexDirection: 'column',
-        overflowY: 'auto',
-        flexShrink: 0,
-    }
-]);
 
 export const thumbnailItem = style([
     surface('outlined'),
@@ -105,6 +60,8 @@ export const activeThumbnail = style([
     }
 ]);
 
+
+
 // Duplicate activeThumbnail removed
 
 // Thumbnail internals removed as per request
@@ -112,27 +69,7 @@ export const activeThumbnail = style([
 
 
 // Center Canvas
-export const canvasArea = style({
-    flex: 1,
-    backgroundColor: vars.border.subtle, // Example of using subtle border color as a very light bg, or better keep purely separate. 
-    // Actually, user said solve coloring via surface. 
-    // Let's use a surface token or keep using the semantic placeholder if defined.
-    // vars.surface.subtle.bg is gray50 equivalent. vars.color.gray100 was used. 
-    // Let's rely on surfaces. 
-    // But canvas is usually darker than base. 
-    // Let's use `vars.color.gray100` but rename it? 
-    // Wait, the instruction is to use surface.
-    // Let's use surface('subtle') background explicitly? 
-    // Or just use `vars.border.subtle` which is f1f3f4 (close to gray100).
-    // Let's stick to semantic token: vars.surface.subtle.bg
-    // But surface subtle bg is #f6f8fc. Gray100 is #f3f6fc. Close enough.
-    ...surface('subtle'),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    overflow: 'hidden',
-});
+
 
 // The Slide Paper itself
 // The Slide Paper itself
@@ -190,19 +127,7 @@ export const slideElementText = style([
 
 
 // Right Panel: Properties
-export const propertiesPanel = style([
-    surface('base'),
-    {
-        width: '280px',
-        height: '100%',
-        borderLeft: `1px solid ${vars.border.default}`,
-        display: 'flex',
-        flexDirection: 'column',
-        overflowY: 'auto',
-        flexShrink: 0,
-        padding: vars.spacing[16],
-    }
-]);
+// Properties Panel Removed - using Panel primitive
 
 export const sectionTitle = style([
     ui.overline(),

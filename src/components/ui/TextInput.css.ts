@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../../styles/vars.css';
+import { surface } from '../../styles/utils';
 
 export const container = style({
     position: 'relative',
@@ -10,38 +11,19 @@ export const container = style({
 });
 
 export const input = recipe({
-    base: {
-        width: '100%',
-        fontFamily: vars.font.body,
-        outline: 'none',
-        border: `1px solid ${vars.color.gray300}`,
-        borderRadius: vars.borderRadius.sm,
-        backgroundColor: vars.surface.input.bg,
-        color: vars.surface.input.text,
-        transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
-        '::placeholder': {
-            color: vars.color.gray600,
-            opacity: 0.7,
-        },
-        selectors: {
-            '&:focus': {
-                borderColor: vars.color.gray800,
-                boxShadow: `0 0 0 1px ${vars.color.gray800}`,
-            },
-            '&:disabled': {
-                backgroundColor: vars.color.gray100,
-                cursor: 'not-allowed',
+    base: [
+        surface.base('input'),
+        surface.field,
+        {
+            width: '100%',
+            fontFamily: vars.font.body,
+            borderRadius: vars.borderRadius.sm,
+            '::placeholder': {
+                color: vars.color.gray600,
                 opacity: 0.7,
             },
-            '&[data-invalid="true"]': {
-                borderColor: 'red', // Semantic error color needed in vars, using red fallback
-                boxShadow: 'none',
-            },
-            '&[data-invalid="true"]:focus': {
-                boxShadow: `0 0 0 1px red`,
-            }
-        },
-    },
+        }
+    ],
     variants: {
         size: {
             default: {
@@ -53,6 +35,11 @@ export const input = recipe({
                 height: 32,
                 padding: '0 8px',
                 fontSize: vars.fontSize.sm
+            },
+            compact: {
+                height: 28,
+                padding: '0 8px', // Tighter padding
+                fontSize: vars.fontSize.xs
             },
             large: {
                 height: 48,
@@ -75,6 +62,14 @@ export const input = recipe({
         {
             variants: { size: 'dense', hasRightIcon: true },
             style: { paddingRight: 32 }
+        },
+        {
+            variants: { size: 'compact', hasLeftIcon: true },
+            style: { paddingLeft: 26 }
+        },
+        {
+            variants: { size: 'compact', hasRightIcon: true },
+            style: { paddingRight: 26 }
         }
     ],
     defaultVariants: {

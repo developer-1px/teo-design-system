@@ -1,11 +1,37 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
+import { ui } from '../../styles/utils';
+
+export const wrapper = style({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: vars.spacing[32],
+    marginTop: vars.spacing[24],
+});
+
+export const sectionTitle = style([
+    ui.label('md'),
+    {
+        marginBottom: vars.spacing[16],
+        borderBottom: `1px solid ${vars.border.default}`,
+        paddingBottom: vars.spacing[8],
+        color: vars.color.gray500,
+        textTransform: 'uppercase'
+    }
+]);
 
 export const grid = style({
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-    gap: vars.spacing[24],
-    marginTop: vars.spacing[24],
+    gap: vars.spacing[16],
+});
+
+export const componentRow = style({
+    display: 'flex',
+    gap: vars.spacing[16],
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+    marginBottom: vars.spacing[16]
 });
 
 const cardBase = style({

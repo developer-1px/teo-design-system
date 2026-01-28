@@ -1,0 +1,96 @@
+---
+title: Shell Primitive
+description: The core application layout engine implementing the "Pro Tool" slot architecture.
+order: 0
+category: Primitives
+---
+
+import { Shell } from '../../components/layout/Shell';
+
+# Shell Primitive
+
+The `Shell` component is the high-level layout primitive that defines the application's structural grid. It implements the "Pro Shell Architecture," a standardized slot-based system designed for high-density, IDE-like interfaces.
+
+It uses **Compound Components** (`Shell.Sidebar`, `Shell.Main`, etc.) to map content to specific CSS Grid Areas, ensuring a consistent and responsive layout structure across the application.
+
+## Layout Architecture
+
+The Shell divides the viewport into a 5x4 CSS Grid:
+
+| Navbar | Navbar | Navbar | Navbar | Navbar |
+| :--- | :--- | :--- | :--- | :--- |
+| **Activity** | **Sidebar** | **Main** | **Aux** | **Right** |
+| **Activity** | **Sidebar** | **Bottom** | **Aux** | **Right** |
+| **Status** | **Status** | **Status** | **Status** | **Status** |
+
+## Generic Usage
+
+Use the Compound Components to place content into the corresponding grid slots. You do not need to use all slots; empty slots will collapse automatically (depending on grid definitions) or simply remain empty.
+
+```tsx
+import { Shell } from '@/components/layout/Shell';
+import { TopBar } from '@/components/layout/TopBar';
+import { Panel } from '@/components/layout/Panel';
+
+export function AppLayout() {
+    return (
+        <Shell sidebarWidth="280px">
+            <Shell.Navbar>
+                <TopBar title="My Application" />
+            </Shell.Navbar>
+
+            <Shell.Sidebar>
+                <Panel surface="subtle">
+                    <Panel.Body>Sidebar Content</Panel.Body>
+                </Panel>
+            </Shell.Sidebar>
+
+            <Shell.Main>
+                <h1>Main Canvas</h1>
+            </Shell.Main>
+
+            <Shell.AuxPanel>
+                <Panel surface="base">
+                    <Panel.Body>Inspector</Panel.Body>
+                </Panel>
+            </Shell.AuxPanel>
+        </Shell>
+    );
+}
+```
+
+## API Reference
+
+### `<Shell>`
+The root container that establishes the CSS Grid context.
+
+**Props:**
+*   `children`: Must contain the Shell's sub-components (`Shell.Navbar`, `Shell.Main`, etc.).
+*   `className`: Optional class for overriding the root container style (e.g. background color).
+*   `style`: Inline styles.
+
+**Dimension Props (Variables):**
+*   `headerHeight` (string): Height of the top navigation bar. Default: `48px`.
+*   `sidebarWidth` (string): Width of the left primary sidebar. Default: `240px`.
+*   `activityBarWidth` (string): Width of the left activity bar. Default: `48px`.
+*   `auxPanelWidth` (string): Width of the right auxiliary panel. Default: `280px`.
+*   `bottomPanelHeight` (string): Height of the bottom panel area. Default: `200px`.
+
+### Sub-Components
+These components render into specific `grid-area` slots.
+
+*   `<Shell.Navbar>`: Top navigation area.
+*   `<Shell.ActivityBar>`: Narrow strip on the far left (VS Code style).
+*   `<Shell.Sidebar>`: Primary collapsible sidebar.
+*   `<Shell.Main>`: The central workspace area. Auto-fills remaining space.
+*   `<Shell.BottomPanel>`: Area below Main (e.g. Terminal, Console).
+*   `<Shell.AuxPanel>`: Right-side inspector or properties panel.
+*   `<Shell.StatusBar>`: Bottom-most bar for status information.
+
+## Design Patterns
+
+### Panel Surfaces
+The `Shell` works in tandem with the `Panel` primitive. By default, `Shell` has a white (`surface.base`) background.
+
+*   **Standard Admin**: Use `surface="subtle"` for Sidebars and `surface="base"` (default) for Main content (Card-like).
+*   **Editor / Canvas**: Use `className={styles.slidesShell}` to make `Shell` gray (`surface.subtle`), then use floating panels (`surface="base"`) in Sidebar/Aux slots for the "Floating Island" effect (Visual Continuity).

@@ -497,12 +497,7 @@ export const darkTheme = createTheme(vars, {
         }
     },
     border: {
-        subtle: darkColors.gray300, // #71717A ? No, previous was #27272A (gray50 equivalent in dark).
-        // Previous used explicit hexes.
-        // subtle: '#27272A' (Zinc 800) -> darkColors.gray50
-        // default: '#3F3F46' (Zinc 700) -> darkColors.gray100
-        // strong: '#52525B' (Zinc 600) -> darkColors.gray200
-        // interactive: '#3B82F6' (Blue 500) -> darkColors.blue500
+
 
         subtle: darkColors.gray50,
         default: darkColors.gray100,

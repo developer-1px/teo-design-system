@@ -12,49 +12,58 @@ category: Reading material
 
 ### Foundation (Tier 1)
 - [x] **Surface System**
-  - Base, Subtle, Card, Highlight, Ghost 계층 정의
-  - Light/Dark 모드 완벽 지원
-  - `vars.surface` 토큰화 완료
+  - **Hybrid Approach**: `surface.base` (Static) vs `surface.interactive` (Dynamic Mixin)
+  - `vars.surface` 토큰화 및 Light/Dark 모드 지원
+- [x] **Semantic Color System**
+  - **Zinc Palette Mapping**: 모든 컬러를 Zinc 스케일로 통일
+  - **Semantic Aliases**: `primary`, `secondary`, `destructive`, `muted`, `accent` 등의 의미론적 토큰 도입
 - [x] **Typography System**
-  - Semantic Scale (Title, Subtitle, Body, Caption)
+  - **Refactor**: 순수 타이포그래피 스케일 (`textStyle`)과 문서 레이아웃 (`.prose`) 분리
   - `vars.fontSize`, `vars.weight`, `vars.lineHeight` 토큰화
-- [x] **Layer System** (ex. Overlay)
-  - **Positioning Layers**: Sticky, Fixed, Absolute
-  - **Semantic Overlays**: Modal, Drawer, Tooltip
-  - Z-Index & Elevation 토큰화 완료
+
+### Layout Architecture (Pro Shell)
+- [x] **Shell Primitive**
+  - VS Code 스타일의 "Pro Tool" Grid 레이아웃 (Navbar, Sidebar, AuxPanel, BottomPanel 등 슬롯 지원)
+- [x] **Layout Primitives**
+  - **Panel**: 공용 사이드바/패널 컴포넌트
+  - **TopBar**: 표준화된 헤더 컴포넌트
+- [x] **Reference Implementations**
+  - **AdminLayout**: `/admin` 라우트용 쉘
+  - **SlidesPage**: 복잡한 디자인 도구 레이아웃에 `Shell` 적용 완료
+
+### Core Components
+- [x] **Button System**
+  - `@vanilla-extract/recipes` 기반
+  - **Variants**: Solid, Ghost, Outline, Link
+  - **Features**: Polymorphism (`as` prop), Loading State, Shapes (Square/Circle)
+- [x] **Form Elements**
+  - TextInput, Select, Checkbox, Switch, SearchBar
 - [x] **Interaction Primitives**
-  - **VisualFrame**: Hover/Select/Badge 공통 인터랙션 추출 완료
-- [x] **DevTools**
-  - Vite Plugin Inspector (Meta+D)
-  - Source Code Jump 기능
+  - **VisualFrame**: Hover/Select/Badge 공통 인터랙션 (Storyblok Editor 등에서 사용)
 
 ## 2. 진행 중 (In Progress)
 
-### Component Library (Tier 1)
-- [/] **Form Elements** (Admin UI 필수)
-  - [x] **TextInput System**: Size variants (Standard, Dense), States (Error, Disabled)
-  - [x] **Selection Controls**: Checkbox, Switch, Radio
-  - [x] **Select/Dropdown**: Native & Custom variants
-- [ ] **Data Display**
-  - [ ] **Table System**: Admin List View, Density variants
-  - [ ] **Status Badges**: Semantic colors (Success, Warning, etc.)
+### Admin Data Experience (Tier 2)
+관리자 대시보드를 위한 고밀도 데이터 처리 컴포넌트.
+- [ ] **Data Table**
+  - Density Variants (Compact/Standard)
+  - Sortable Headers, Row Selection, Pagination
+- [ ] **Smart Filter**
+  - Chip 기반의 필터링 시스템
+- [ ] **Detail Drawer**
+  - 리스트 아이템 클릭 시 우측에서 슬라이드되는 상세 정보 패널
 
-## 3. 보류됨 (On Hold)
+## 3. 예정됨 (Backlog)
 
-### Layout System
-> [!NOTE]
-> `<Box>`, `<Stack>` 등의 추상화 컴포넌트는 디버깅 복잡도를 높일 수 있어, Vanilla Extract CSS 파일을 직접 사용하는 방식을 유지합니다. 필요시 CSS Utility 패턴만 정의합니다.
+### Feedback System
+- [ ] **Toast System** (Sonner Style)
+- [ ] **Dialogs & Alerts** (Semantic Colors 적용)
 
-- [ ] **Layout Patterns**: Utility-first CSS (`sprinkles` 도입 여부 재검토)
-
-## 4. 예정됨 (Backlog)
-
-### Motion System (Tier 2)
-- [ ] **Transition Tokens**
-  - `vars.duration`, `vars.easing` 정의
-  - 감각적인 마이크로 인터랙션 (Hover, Press, Dialog Enter/Exit)
+### Motion System
+- [ ] **Transition Tokens**: `vars.duration`, `vars.easing`
+- [ ] **Micro-interactions**: 컴포넌트 상태 변화에 대한 세밀한 애니메이션
 
 ---
 
 > [!NOTE]
-> 이 로드맵은 프로젝트 진행 상황에 따라 유동적으로 변경될 수 있습니다.
+> 이 로드맵은 프로젝트 진행 상황에 따라 유동적으로 변경될 수 있습니다. 특히 **Admin Data Experience**가 현재 최우선 순위입니다.

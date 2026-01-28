@@ -31,33 +31,80 @@ Base보다는 약간 구분이 필요한, 은은한 배경입니다. 사이드�
 *   **Highlight:**강조 영역 (Selected state 등)
 *   **Ghost:**평소엔 투명하지만 호버 시 나타나는 인터랙티브 요소
 
-## Usage
+## Architecture & Composition
 
-우리는 **Utility Function**을 사용하여 일관된 스타일링을 강제합니다.
-`vars`를 직접 호출하는 것보다 `surface()` 헬퍼를 사용하는 것이 권장됩니다.
+Surface 시스템은 단순한 스타일 헬퍼를 넘어, **상태(State)와 인터랙션(Interaction)**을 관리하는 레이어로 확장되었습니다.
+컴포넌트의 성격에 따라 필요한 기능을 조립(Composition)하여 사용할 수 있습니다.
+
+### 1. `surface.base(type)`
+가장 기본적인 정적 스타일(배경, 테두리, 그림자, 텍스트 색상)만 적용합니다.
+*   **Use case:** `div`, `section`, `article` 등 정적인 컨테이너.
+
+### 2. `surface.interactive(type)`
+`surface.base`에 **인터랙션(Hover, Transition, Cursor)**을 추가합니다.
+*   **Features:**
+    *   `cursor: pointer` 자동 적용
+    *   Hover 시 `vars.surface[type].hoverBg` 적용
+    *   부드러운 색상 전환 Transition
+*   **Use case:** `button`, `list item`, `clickable card`.
+
+### 3. `surface.field` (Mixin)
+입력 필드(Input)에 필요한 **상태 로직(Focus, Disabled, Invalid)**을 담고 있는 믹스인입니다.
+특정 색상을 강제하지 않고, 시스템 표준 Focus Ring과 에러 처리를 주입합니다.
+*   **Features:**
+    *   `outline: none` (Reset)
+    *   Standard Focus Ring (Blue/Gray based on theme)
+    *   Error State (Red border/ring)
+    *   Disabled State (Opacity adjustment)
+
+---
+
+## Usage Examples
+
+### Basic Container
+기본적인 컨테이너 배경으로 사용할 때:
 
 ```typescript
-import { vars } from '../../styles/vars.css';
 import { style } from '@vanilla-extract/css';
-import { surface } from '../../styles/utils';
+import { surface } from '@/styles/utils';
 
-// 1. Using Base Surface
-// surface()는 bg, color, border, shadow를 한 번에 적용합니다.
-export const appContainer = style([
-    surface('base'),
-    {
-        color: vars.color.gray800 // 텍스트 컬러 오버라이드 (Optional)
-    }
-]);
-
-// 2. Using Card Surface (Includes border & shadow automatically)
 export const card = style([
-    surface('card'), // bg + border + shadow + default text color
+    surface.base('card'),
+    { padding: '16px' }
+]);
+```
+
+### Interactive Element
+클릭 가능한 카드나 버튼 만들 때:
+
+```typescript
+export const clickableCard = style([
+    surface.interactive('card'), // Hover & Cursor & Transition included
     {
-        padding: vars.spacing[16]
+        /* layout styles */
     }
 ]);
+```
 
+### Input Field (Advanced Composition)
+`surface.base`로 디자인 토큰을 가져오고, `surface.field`로 동작 로직을 결합합니다.
+이 패턴을 통해 Input 컴포넌트는 "어떤 색을 쓸지(Token)"와 "어떻게 동작할지(Logic)"를 분리하여 관리합니다.
+
+```typescript
+export const textInput = style([
+    // 1. Apply Tokens (Bg, Border, Color from 'input' surface)
+    surface.base('input'),
+
+    // 2. Apply Logic (Focus ring, Invalid state, Disabled opacity)
+    surface.field,
+
+    // 3. Component Specific Layout
+    {
+        width: '100%',
+        borderRadius: '4px',
+        padding: '0 12px'
+    }
+]);
 ```
 
 ## Tokens Inspection

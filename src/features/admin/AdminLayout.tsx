@@ -1,57 +1,37 @@
-import { Outlet, NavLink } from 'react-router-dom';
-import { Users, Hammer, Settings } from 'lucide-react';
-import * as styles from './AdminLayout.css';
-
+import { Outlet } from 'react-router-dom';
+import { Shell } from '../../components/layout/Shell';
+import { TopBar } from '../../components/layout/TopBar';
+import { AdminSidebar } from './AdminSidebar';
+import { Button } from '../../components/ui/Button'; // Assuming Button exists from previous tasks
+import { Bell, Search, User } from 'lucide-react';
 
 export function AdminLayout() {
     return (
-        <div className={styles.container}>
-            <aside className={styles.sidebar}>
-                <div className={styles.header}>
-                    <div className={styles.brand}>Admin Panel</div>
-                </div>
+        <Shell>
+            <Shell.Sidebar>
+                <AdminSidebar />
+            </Shell.Sidebar>
 
-                <nav className={styles.nav}>
-                    <NavLink
-                        to="/admin"
-                        end
-                        className={({ isActive }) => `${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
-                    >
-                        <Users size={16} />
-                        <span>Users</span>
-                    </NavLink>
+            <Shell.Navbar>
+                <TopBar
+                    left={<div style={{ fontWeight: 500 }}>Admin</div>} // Placeholder for Breadcrumbs
+                    center={
+                        <Button variant="outline" size="sm" leftIcon={<Search size={16} />} style={{ width: '300px', justifyContent: 'flex-start', color: '#888' }}>
+                            Search...
+                        </Button>
+                    }
+                    right={
+                        <>
+                            <Button variant="ghost" size="icon"><Bell size={18} /></Button>
+                            <Button variant="ghost" size="icon"><User size={18} /></Button>
+                        </>
+                    }
+                />
+            </Shell.Navbar>
 
-                    <NavLink
-                        to="/admin/builder"
-                        className={({ isActive }) => `${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
-                    >
-                        <Hammer size={16} />
-                        <span>Builder</span>
-                    </NavLink>
-
-
-
-                    <NavLink
-                        to="/admin/settings"
-                        className={({ isActive }) => `${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
-                    >
-                        <Settings size={16} />
-                        <span>Settings</span>
-                    </NavLink>
-                </nav>
-
-                <div className={styles.userSection}>
-                    <div className={styles.avatar} />
-                    <div className={styles.userInfo}>
-                        <div className={styles.userName}>Admin User</div>
-                        <div className={styles.userRole}>Super Admin</div>
-                    </div>
-                </div>
-            </aside>
-
-            <main className={styles.content}>
+            <Shell.Main>
                 <Outlet />
-            </main>
-        </div>
+            </Shell.Main>
+        </Shell>
     );
 }

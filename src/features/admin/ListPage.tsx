@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plus, Download, Trash2, MoreHorizontal } from 'lucide-react';
+import { Plus, Download, Trash2, MoreHorizontal, ChevronDown } from 'lucide-react';
 import * as styles from './ListPage.css';
 import { DataTable } from './DataTable';
 import { SmartFilter } from './SmartFilter';
@@ -178,4 +178,4 @@ function StatusSelect({ current }: { current: string }) {
     )
 }
 
-import { ChevronDown } from 'lucide-react';
+

@@ -2,7 +2,7 @@ import React from 'react';
 import * as styles from './TextInput.css';
 
 export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
-    size?: 'default' | 'dense' | 'large';
+    size?: 'default' | 'dense' | 'compact' | 'large';
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
     error?: boolean;
