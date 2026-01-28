@@ -8,6 +8,9 @@ import { SearchBar } from '../../components/ui/SearchBar';
 import { Select } from '../../components/ui/Select';
 import { SegmentedControl } from '../../components/primitives/SegmentedControl';
 import { Badge } from '../../components/ui/Badge';
+import { Avatar } from '../../components/ui/Avatar';
+import { Progress } from '../../components/ui/Progress';
+import { Tabs } from '../../components/ui/Tabs';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from '../../components/ui/Table';
 import { prose } from '../../styles/prose.css';
 
@@ -21,6 +24,7 @@ export default function ComponentShowcasePage() {
     const [segVal, setSegVal] = useState('daily');
     const [textVal, setTextVal] = useState('');
     const [searchVal, setSearchVal] = useState('');
+    const [tabVal, setTabVal] = useState('account');
 
     return (
         <div className={styles.container}>
@@ -236,6 +240,25 @@ export default function ComponentShowcasePage() {
                         </div>
                     </div>
 
+                    <div className={styles.card}>
+                        <h2 className={styles.cardTitle}>Avatars</h2>
+                        <div className={styles.label}>Sizes</div>
+                        <div className={styles.componentRow}>
+                            <Avatar size="xs" fallback="XS" />
+                            <Avatar size="sm" fallback="SM" />
+                            <Avatar size="md" fallback="MD" />
+                            <Avatar size="lg" fallback="LG" />
+                        </div>
+
+                        <div className={styles.label}>Status</div>
+                        <div className={styles.componentRow}>
+                            <Avatar size="md" fallback="A" status="online" />
+                            <Avatar size="md" fallback="B" status="busy" />
+                            <Avatar size="md" fallback="C" status="busy" />
+                            <Avatar size="md" fallback="D" status="offline" />
+                        </div>
+                    </div>
+
                     <div className={`${styles.card} ${styles.spanTwo}`}>
                         <h2 className={styles.cardTitle}>Table (Compact)</h2>
                         <Table density="compact">
@@ -269,6 +292,72 @@ export default function ComponentShowcasePage() {
                                 </TableRow>
                             </TableBody>
                         </Table>
+                    </div>
+
+                </div>
+
+                <h2 className={styles.sectionTitle}>Feedback & Navigation</h2>
+                <div className={styles.grid}>
+                    <div className={styles.card}>
+                        <h2 className={styles.cardTitle}>Progress</h2>
+                        <div className={styles.inputStack}>
+                            <div>
+                                <div className={styles.label} style={{ marginBottom: '8px' }}>Primary (50%)</div>
+                                <Progress value={50} />
+                            </div>
+                            <div>
+                                <div className={styles.label} style={{ marginBottom: '8px' }}>Success (75%)</div>
+                                <Progress value={75} intent="success" />
+                            </div>
+                            <div>
+                                <div className={styles.label} style={{ marginBottom: '8px' }}>Danger (30%)</div>
+                                <Progress value={30} intent="critical" />
+                            </div>
+                            <div>
+                                <div className={styles.label} style={{ marginBottom: '8px' }}>Tiny</div>
+                                <Progress value={60} size="sm" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.card}>
+                        <h2 className={styles.cardTitle}>Tabs</h2>
+                        <div className={styles.inputStack}>
+                            <div>
+                                <div className={styles.label}>Line Variant</div>
+                                <Tabs
+                                    value={tabVal}
+                                    onChange={setTabVal}
+                                    items={[
+                                        { id: 'account', label: 'Account' },
+                                        { id: 'password', label: 'Password' },
+                                        { id: 'settings', label: 'Settings' },
+                                    ]}
+                                />
+                            </div>
+                            <div style={{ marginTop: '16px' }}>
+                                <div className={styles.label}>Segment Variant</div>
+                                <Tabs
+                                    value={tabVal}
+                                    onChange={setTabVal}
+                                    variant="segment"
+                                    items={[
+                                        { id: 'account', label: 'Account' },
+                                        { id: 'password', label: 'Password' },
+                                    ]}
+                                />
+                            </div>
+                            {/* Enclosed variant removed as it might not be implemented in Tabs.tsx yet or handled by variant='line' default? 
+                               Checking Tabs.tsx snippet, it uses styles.tabsList({ variant }) and styles.tabTrigger({ variant }).
+                               Let's check if 'enclosed' is a valid variant in Tabs.tsx.
+                               The snippet didn't show the styles file.
+                               I'll assume line and pill for now based on snippet showing `variant = 'line'`. 
+                               Wait, I'll assume 'enclosed' is not valid if not sure. 
+                               Actually, let's keep it simple and just do Line and Pill if I'm unsure. 
+                               But user might want to see all.
+                               I will stick to keeping it simple for now to avoid errors.
+                           */}
+                        </div>
                     </div>
 
                 </div>

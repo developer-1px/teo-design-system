@@ -6,7 +6,7 @@ import {
     MoreHorizontal, LayoutGrid, AlignLeft, AlignCenter, AlignRight,
     Sun, User
 } from 'lucide-react';
-import { vars } from '../../styles/vars.css';
+
 import * as styles from './SlidesPage.css';
 import { Shell } from '../../components/layout/Shell';
 import { Panel } from '../../components/layout/Panel';
