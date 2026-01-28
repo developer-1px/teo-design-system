@@ -3,8 +3,8 @@ import { Plus, Download, Trash2, MoreHorizontal, ChevronDown } from 'lucide-reac
 import * as styles from './ListPage.css';
 import { DataTable } from './DataTable';
 import { SmartFilter } from './SmartFilter';
-import { Drawer } from '../../components/overlay/Drawer';
-import { vars } from '../../styles/vars.css';
+import { Drawer } from '@/components/overlay/Drawer';
+import { vars } from '@/styles/vars.css';
 
 // Mock Data: Users (CRM Style)
 interface DataRow {

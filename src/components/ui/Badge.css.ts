@@ -65,7 +65,7 @@ export const badge = recipe({
         },
         {
             variants: { intent: 'warning', variant: 'solid' },
-            style: { backgroundColor: vars.color.amber500, color: vars.color.black }, // Amber text needs contrast
+            style: { backgroundColor: vars.color.amber500, color: vars.color.gray900 }, // Amber text needs contrast
         },
         {
             variants: { intent: 'danger', variant: 'solid' },

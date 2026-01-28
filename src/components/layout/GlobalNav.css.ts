@@ -3,41 +3,55 @@ import { vars } from '../../styles/vars.css';
 import { surface } from '../../styles/utils';
 
 export const navContainer = style([
-    surface('base'), // Back to white/base surface
+    surface('base'),
     {
-        width: '48px', // Ultra compact
+        width: '48px',
         height: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        paddingTop: vars.spacing[8], // Reduced padding
-        gap: vars.spacing[4], // Tighter gap
+        padding: `${vars.spacing[8]} 0`,
         borderRight: `1px solid ${vars.border.subtle}`,
         zIndex: vars.zIndices.floating,
     }
 ]);
 
+export const navGroup = style({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: vars.spacing[4],
+    alignItems: 'center',
+    width: '100%',
+});
+
+export const divider = style({
+    width: '20px',
+    height: '1px',
+    background: vars.border.subtle,
+    margin: `${vars.spacing[4]} 0`,
+});
+
 export const navItem = style([
     surface('ghost'),
     {
-        width: '36px', // Reduced from 40px
-        height: '36px', // Square alignment
-        borderRadius: '6px', // Tighter radius
+        width: '32px',
+        height: '32px',
+        borderRadius: '6px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'pointer',
         textDecoration: 'none',
         flexDirection: 'column',
-        // Removed gap/font size since we hide labels usually in compact mode
+        transition: 'all 0.1s',
     }
 ]);
 
 export const activeNavItem = style([
     surface('highlight'),
     {
-        color: vars.color.gray800,
-        backgroundColor: vars.color.gray200, // Slightly stronger active state
+        color: vars.color.primary,
+        backgroundColor: vars.color.gray100,
     }
 ]);
 

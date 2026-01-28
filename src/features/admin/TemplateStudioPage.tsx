@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as styles from './TemplateStudioPage.css';
 import {
-    Layout,
     Type,
     Image as ImageIcon,
     BadgeCheck,
@@ -10,8 +9,6 @@ import {
     Play,
     Zap,
     Settings2,
-    Info,
-    ChevronRight,
     MousePointer2
 } from 'lucide-react';
 

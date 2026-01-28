@@ -7,29 +7,30 @@ export const container = style({
     display: 'flex',
     flexDirection: 'column',
     overflowY: 'auto',
-    backgroundColor: vars.color.gray50, // Ensure background fills scroll area
+    backgroundColor: vars.color.gray50,
 });
 
-// Wrapper to center content with max-width
 export const contentWrapper = style({
     width: '100%',
-    maxWidth: '1000px', // Restrict width for readability
+    maxWidth: '1000px',
     margin: '0 auto',
     padding: vars.spacing[32],
     display: 'flex',
     flexDirection: 'column',
+    // Removed global gap to allow specific spacing control
 });
 
 export const header = style({
-    marginBottom: vars.spacing[48],
-    // textAlign: 'center', // Left align
+    marginBottom: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: vars.spacing[16],
 });
 
 export const title = style([
     typography.h1,
     {
-        marginBottom: vars.spacing[16],
-        // textAlign: 'center', // Removed to align with Prose left-alignment
+        marginBottom: 0,
     }
 ]);
 
@@ -38,14 +39,16 @@ export const subtitle = style([
     {
         fontSize: vars.fontSize.lg,
         color: vars.color.gray600,
-        // textAlign: 'center', // Removed
     }
 ]);
 
 export const sectionTitle = style([
     typography.h2,
     {
-        borderBottom: `1px solid ${vars.border.default}`, // Keep existing solid border if desired
+        borderBottom: `1px solid ${vars.border.default}`,
+        paddingBottom: vars.spacing[8],
+        marginTop: vars.spacing[48],
+        marginBottom: vars.spacing[24],
     }
 ]);
 
@@ -66,6 +69,10 @@ export const card = style({
     gap: vars.spacing[16],
 });
 
+export const spanTwo = style({
+    gridColumn: 'span 2',
+});
+
 export const cardTitle = style({
     fontSize: vars.fontSize.lg,
     fontWeight: vars.weight.medium,
@@ -80,6 +87,29 @@ export const componentRow = style({
     alignItems: 'center',
     gap: vars.spacing[16],
     flexWrap: 'wrap',
+});
+
+export const controlGroup = style({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: vars.spacing[8],
+});
+
+export const controlRow = style({
+    display: 'flex',
+    alignItems: 'center',
+    gap: vars.spacing[8],
+});
+
+export const inputStack = style({
+    display: 'grid',
+    gap: vars.spacing[16],
+});
+
+export const inputGrid = style({
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: vars.spacing[16],
 });
 
 export const label = style({

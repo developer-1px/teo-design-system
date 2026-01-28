@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as styles from './FlowPage.css';
 import {
     Play, Database, ArrowRight, Settings2,

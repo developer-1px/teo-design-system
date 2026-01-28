@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '../../styles/vars.css';
-import { surface } from '../../styles/utils';
+import { vars } from '@/styles/vars.css';
+import { surface } from '@/styles/utils';
 
 export const header = style({
     gridColumn: '1 / -1',

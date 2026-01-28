@@ -1,4 +1,5 @@
 import { defineConfig, type UserConfig } from 'vite'
+import path from 'path';
 import react from '@vitejs/plugin-react'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 import mdx from '@mdx-js/rollup';
@@ -33,6 +34,10 @@ export default defineConfig(async (): Promise<UserConfig> => {
       }),
       vanillaExtractPlugin()
     ],
-
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src')
+      }
+    }
   }
 })

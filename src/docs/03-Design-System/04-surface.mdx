@@ -8,119 +8,31 @@ import { SurfaceShowcase } from '../../components/docs/SurfaceShowcase';
 
 # Surface System
 
-`Surface`는 디자인 시스템에서 가장 기초가 되는 "배경"과 그 위에 올라가는 "계층(Layer)"을 정의합니다.
-이 시스템은 단순한 배경색이 아니라, **배경색(bg) + 테두리(border) + 그림자(shadow) + 텍스트 색상(text)**이 하나의 세트로 동작하는 **Contract**입니다.
+`Surface`는 디자인 시스템의 기초가 되는 배경색과 계층(Elevation) 구조를 정의합니다.
+본 시스템은 단순히 배경색을 지정하는 것이 아니라, **배경색(bg) + 테두리(border) + 그림자(shadow) + 텍스트 색상(text)**을 하나의 계약(Contract)으로 묶어 관리합니다.
 
-## Concepts
+## 핵심 개념
 
 ### 1. Base
-가장 바닥이 되는 레이어입니다. 일반적으로 전체 앱의 배경이나 기본 컨테이너의 배경으로 사용됩니다.
-*   **Usage:** `App Background`, `Main Layout`
+최하단 레이어입니다. 애플리케이션의 전체 배경이나 메인 컨테이너의 기본 배경으로 활용됩니다.
+- **주요 용도:** `App Background`, `Main Layout`
 
-### 2. Subtle
-Base보다는 약간 구분이 필요한, 은은한 배경입니다. 사이드바나 보조 영역에 주로 쓰입니다.
-*   **Usage:** `Sidebar`, `Toolbar`, `Section Divider`
-
-### 3. Card
-명확한 컨텐츠 영역을 구분할 때 사용합니다. Card는 보통 Border나 Shadow를 동반하여 Base/Subtle 위에서 "떠있는" 느낌을 줍니다.
-*   **Usage:** `Dialog`, `Popover`, `Content Card`
-
-### 4. Input / Highlight / Ghost
-특수한 목적을 가진 Surface들입니다.
-*   **Input:**입력 필드 전용
-*   **Highlight:**강조 영역 (Selected state 등)
-*   **Ghost:**평소엔 투명하지만 호버 시 나타나는 인터랙티브 요소
-
-## Architecture & Composition
-
-Surface 시스템은 단순한 스타일 헬퍼를 넘어, **상태(State)와 인터랙션(Interaction)**을 관리하는 레이어로 확장되었습니다.
-컴포넌트의 성격에 따라 필요한 기능을 조립(Composition)하여 사용할 수 있습니다.
-
-### 1. `surface.base(type)`
-가장 기본적인 정적 스타일(배경, 테두리, 그림자, 텍스트 색상)만 적용합니다.
-*   **Use case:** `div`, `section`, `article` 등 정적인 컨테이너.
-
-### 2. `surface.interactive(type)`
-`surface.base`에 **인터랙션(Hover, Transition, Cursor)**을 추가합니다.
-*   **Features:**
-    *   `cursor: pointer` 자동 적용
-    *   Hover 시 `vars.surface[type].hoverBg` 적용
-    *   부드러운 색상 전환 Transition
-*   **Use case:** `button`, `list item`, `clickable card`.
-
-### 3. `surface.field` (Mixin)
-입력 필드(Input)에 필요한 **상태 로직(Focus, Disabled, Invalid)**을 담고 있는 믹스인입니다.
-특정 색상을 강제하지 않고, 시스템 표준 Focus Ring과 에러 처리를 주입합니다.
-*   **Features:**
-    *   `outline: none` (Reset)
-    *   Standard Focus Ring (Blue/Gray based on theme)
-    *   Error State (Red border/ring)
-    *   Disabled State (Opacity adjustment)
-
----
-
-## Usage Examples
-
-### Basic Container
-기본적인 컨테이너 배경으로 사용할 때:
-
-```typescript
-import { style } from '@vanilla-extract/css';
-import { surface } from '@/styles/utils';
-
-export const card = style([
-    surface.base('card'),
-    { padding: '16px' }
-]);
-```
-
-### Interactive Element
-클릭 가능한 카드나 버튼 만들 때:
-
-```typescript
-export const clickableCard = style([
-    surface.interactive('card'), // Hover & Cursor & Transition included
-    {
-        /* layout styles */
-    }
-]);
-```
-
-### Input Field (Advanced Composition)
-`surface.base`로 디자인 토큰을 가져오고, `surface.field`로 동작 로직을 결합합니다.
-이 패턴을 통해 Input 컴포넌트는 "어떤 색을 쓸지(Token)"와 "어떻게 동작할지(Logic)"를 분리하여 관리합니다.
-
-```typescript
-export const textInput = style([
-    // 1. Apply Tokens (Bg, Border, Color from 'input' surface)
-    surface.base('input'),
-
-    // 2. Apply Logic (Focus ring, Invalid state, Disabled opacity)
-    surface.field,
-
-    // 3. Component Specific Layout
-    {
-        width: '100%',
-        borderRadius: '4px',
         padding: '0 12px'
     }
 ]);
 ```
 
-## Tokens Inspection
+## 토큰 기술 명세
 
-| Token | Light Mode | Dark Mode | Reference |
+| 토큰 | Light Mode | Dark Mode | Reference |
 | :--- | :--- | :--- | :--- |
-| **base** | White | #202124 | `vars.surface.base` |
-| **subtle** | #f6f8fc | #202124 | `vars.surface.subtle` |
-| **card** | White (with Border) | #303134 | `vars.surface.card` |
+| **base** | White | #18181B | `vars.surface.base` |
+| **subtle** | #F4F4F5 | #09090B | `vars.surface.subtle` |
+| **card** | White | #27272A | `vars.surface.card` |
 
+## 실시간 쇼케이스
 
-
-## Live Showcase
-
-아래 컴포넌트는 `SurfaceShowcase.tsx`를 렌더링한 결과입니다.
-테마 스위처를 눌러 Dark Mode에서의 변화를 확인해보세요.
+`SurfaceShowcase` 컴포넌트를 통해 각 Surface 유형별 시각적 차이와 테마 대응을 확인할 수 있습니다.
 
 <div style={{ padding: '20px', backgroundColor: 'rgba(0,0,0,0.02)', borderRadius: '8px', marginTop: '20px' }}>
     <SurfaceShowcase />

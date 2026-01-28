@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { getDebugSource } from './utils'
 import './DebugManager.css'
 import { InspectorOverlay } from './InspectorOverlay'
+// @ts-ignore - Importing from src outside of vite-plugins context
+import { DesignLinterOverlay } from '../../../src/lib/design-lint/DesignLinterOverlay'
 
 export const DebugManager: React.FC = () => {
   const [isDebugMode, setIsDebugMode] = useState(false)
@@ -88,7 +90,12 @@ export const DebugManager: React.FC = () => {
 
   return (
     <>
-      {isDebugMode && <InspectorOverlay />}
+      {isDebugMode && (
+        <>
+          <InspectorOverlay />
+          <DesignLinterOverlay />
+        </>
+      )}
       {toastMessage && (
         <div className="debug-toast">
           <span className="debug-toast-icon" />

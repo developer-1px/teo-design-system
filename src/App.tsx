@@ -12,6 +12,7 @@ import FlowPage from './features/admin/FlowPage';
 import FlowPage2 from './features/admin/FlowPage2';
 import TemplateStudioPage from './features/admin/TemplateStudioPage';
 import TableDesignerPage from './features/admin/TableDesignerPage';
+import FormBuilderPage from './features/admin/FormBuilderPage';
 import StoryblokPage from './features/storyblok/StoryblokPage';
 import ComponentShowcasePage from './features/showcase/ComponentShowcasePage';
 
@@ -57,6 +58,8 @@ function AppContent() {
           </Route>
 
           {/* Standalone Admin Tools (Full Canvas) */}
+          <Route path="/admin/builder" element={<BuilderPage />} />
+          <Route path="/admin/form-builder" element={<FormBuilderPage />} />
           <Route path="/admin/studio" element={<StudioPage />} />
           <Route path="/admin/studio/templates" element={<TemplateStudioPage />} />
           <Route path="/admin/studio/designer" element={<TableDesignerPage />} />

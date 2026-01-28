@@ -1,4 +1,4 @@
-import { style, keyframes } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 
 const zinc = {
     50: '#fafafa',
@@ -248,10 +248,7 @@ export const previewBody = style({
 });
 
 // Animated flow line
-const flowAnim = keyframes({
-    '0%': { backgroundPosition: '0% 50%' },
-    '100%': { backgroundPosition: '100% 50%' }
-});
+
 
 export const flowStatus = style({
     fontSize: '11px',

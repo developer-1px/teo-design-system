@@ -1,24 +1,45 @@
-import { NavLink } from 'react-router-dom';
-import { Mail, Code2, Book, Presentation, LayoutList, Blocks, Database, GitMerge, Layout } from 'lucide-react';
+import { NavLink, useLocation } from 'react-router-dom';
+import {
+    Mail,
+    Book,
+    Presentation,
+    LayoutList,
+    Component as ComponentIcon,
+    AppWindow,
+    CircuitBoard,
+    Palette,
+    SquarePen
+} from 'lucide-react';
 import * as styles from './GlobalNav.css';
 import { ThemeToggle } from '../ThemeToggle';
 
 export function GlobalNav() {
     return (
         <nav className={styles.navContainer}>
-            <NavItem to="/docs" icon={Book} label="Docs" />
-            <NavItem to="/components" icon={Blocks} label="Components" />
-            <NavItem to="/mail" icon={Mail} label="Mail" />
-            <NavItem to="/editor" icon={Code2} label="Editor" />
-            <NavItem to="/slides" icon={Presentation} label="Slides" />
+            {/* GROUP 1: SYSTEM & DOCS (Priority #1) */}
+            <div className={styles.navGroup}>
+                <NavItem to="/docs" icon={Book} label="Documentation" />
+                <NavItem to="/components" icon={ComponentIcon} label="Showcase" />
+            </div>
 
-            <NavItem to="/admin" icon={LayoutList} label="Admin" />
-            <NavItem to="/admin/studio" icon={Database} label="Studio" />
-            <NavItem to="/admin/studio/designer" icon={Layout} label="Designer" />
-            <NavItem to="/admin/studio/templates" icon={Blocks} label="Templates" />
-            <NavItem to="/admin/flow" icon={GitMerge} label="Flow" />
-            <NavItem to="/admin/flow2" icon={GitMerge} label="F2 (List)" />
-            <NavItem to="/storyblok" icon={Code2} label="CMS" />
+            <div className={styles.divider} />
+
+            {/* GROUP 2: FEATURE APPLICATIONS */}
+            <div className={styles.navGroup}>
+                <NavItem to="/mail" icon={Mail} label="Mail" />
+                <NavItem to="/slides" icon={Presentation} label="Slides" />
+                <NavItem to="/storyblok" icon={AppWindow} label="CMS" />
+            </div>
+
+            <div className={styles.divider} />
+
+            {/* GROUP 3: ADMIN & STUDIO (Expert Tools) */}
+            <div className={styles.navGroup}>
+                <NavItem to="/admin" icon={LayoutList} label="Admin List" activeMatch="/admin" end />
+                <NavItem to="/admin/form-builder" icon={SquarePen} label="Form Builder" activeMatch="/admin/form-builder" />
+                <NavItem to="/admin/studio/designer" icon={Palette} label="Table Designer" activeMatch="/admin/studio" />
+                <NavItem to="/admin/flow2" icon={CircuitBoard} label="Flow Editor" activeMatch="/admin/flow" />
+            </div>
 
             <div className={styles.bottomSpacer}>
                 <ThemeToggle />
@@ -27,13 +48,29 @@ export function GlobalNav() {
     );
 }
 
-function NavItem({ to, icon: Icon }: { to: string, icon: any, label: string }) {
+interface NavItemProps {
+    to: string;
+    icon: any;
+    label: string;
+    activeMatch?: string;
+    end?: boolean;
+}
+
+function NavItem({ to, icon: Icon, label, activeMatch, end }: NavItemProps) {
+    const location = useLocation();
+
+    // Custom active logic for nested tools
+    const isActiveLink = activeMatch ? location.pathname.startsWith(activeMatch) : false;
+
     return (
         <NavLink
             to={to}
-            className={({ isActive }) =>
-                `${styles.navItem} ${isActive ? styles.activeNavItem : ''}`
-            }
+            end={end}
+            title={label}
+            className={({ isActive }) => {
+                const active = isActive || isActiveLink;
+                return [styles.navItem, active ? styles.activeNavItem : ''].join(' ');
+            }}
         >
             <Icon size={18} strokeWidth={2} />
         </NavLink>

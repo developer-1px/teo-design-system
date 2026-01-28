@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '../../styles/vars.css';
-import { surface, ui, textStyle } from '../../styles/utils';
+import { vars } from '@/styles/vars.css';
+import { surface, ui, textStyle } from '@/styles/utils';
 
 // Top Bar Elements
 export const figmaLogo = style({
@@ -13,6 +13,17 @@ export const figmaLogo = style({
 export const displayTitle = style([
     ui.label('md')
 ]);
+
+export const headerTitleGroup = style({
+    display: 'flex',
+    alignItems: 'center',
+    gap: vars.spacing[12]
+});
+
+export const headerActionsGroup = style({
+    display: 'flex',
+    gap: vars.spacing[8]
+});
 
 export const shareButton = style({
     backgroundColor: vars.color.green500,
@@ -52,6 +63,24 @@ export const thumbnailItem = style([
         }
     }
 ]);
+
+export const alignmentToolbar = style({
+    display: 'flex', // Already in iconButtonRow? Refine here.
+    justifyContent: 'space-between',
+    paddingBottom: vars.spacing[8],
+    borderBottom: `1px solid ${vars.border.subtle}`,
+    paddingLeft: vars.spacing[16],
+    paddingRight: vars.spacing[16],
+    // Reset iconButtonRow if used? No, we will replace usage.
+    alignItems: 'center',
+    gap: vars.spacing[4], // preserve existing gap from iconButtonRow if needed
+});
+
+export const verticalSeparator = style({
+    width: 1,
+    height: 16,
+    backgroundColor: vars.border.default,
+});
 
 export const activeThumbnail = style([
     {
@@ -105,8 +134,11 @@ export const slideBody = style([
     // Or just re-use hex for Body text on paper.
     // 'color: vars.content.paper.text' is #202124 (gray800 equiv).
     // Let's make it slightly lighter.
-    { color: 'rgba(32, 33, 36, 0.7)' }, // 70% opacity of dark text
+    { color: 'rgba(32, 33, 36, 0.7)' },
     textStyle({ size: '3xl', height: 'standard' }),
+    {
+        marginBottom: vars.spacing[24],
+    }
 ]);
 
 export const slideElement = style({
@@ -122,7 +154,17 @@ export const slideElement = style({
 
 export const slideElementText = style([
     { color: vars.color.green500 },
-    textStyle({ weight: 'bold' })
+    textStyle({ weight: 'bold' }),
+    {
+        // Fix No Spacing on "Element" trace
+        // It is inside `slideElement`.
+        // `slideElement` is flex, center/center.
+        // Gap? None.
+        // Fix: Add no margin needed if we trust centering? 
+        // But linter is strict.
+        // Let's add padding to the text span itself? Or margin.
+        padding: `0 ${vars.spacing[4]}`
+    }
 ]);
 
 
@@ -205,6 +247,10 @@ export const effectPreview = style([
         flex: 1,
         padding: vars.spacing[8],
         borderRadius: '4px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: vars.spacing[8],
     }
 ]);
 

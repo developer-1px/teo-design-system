@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as styles from './StudioPage.css';
 import {
-    Play, Save, Plus, MoreHorizontal,
-    Database, Layout, Code, FileJson,
-    ArrowRight, Check, Monitor, Smartphone
+    Play, Save, Plus,
+    Database, Layout, FileJson,
+    ArrowRight, Monitor, Smartphone
 } from 'lucide-react';
 
 const MOCK_SCHEMA = [

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as styles from './FlowPage2.css';
 import {
     Play, Database, Settings2,
-    Type, Hash, Calendar, Layers, ChevronLeft, ChevronRight, DollarSign,
+    Type, Calendar, Layers, ChevronLeft, ChevronRight, DollarSign,
     Eye, EyeOff, GripVertical, Image as ImageIcon, BarChart
 } from 'lucide-react';
 

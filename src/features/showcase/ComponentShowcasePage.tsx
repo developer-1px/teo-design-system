@@ -38,16 +38,16 @@ export default function ComponentShowcasePage() {
                     <div className={styles.card}>
                         <h2 className={styles.cardTitle}>Switch</h2>
                         <div className={styles.componentRow}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <div className={styles.controlGroup}>
+                                <div className={styles.controlRow}>
                                     <Switch checked={switchVal} onCheckedChange={setSwitchVal} />
                                     <span className={styles.label}>{switchVal ? 'On' : 'Off'}</span>
                                 </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <div className={styles.controlRow}>
                                     <Switch disabled checked={true} />
                                     <span className={styles.label}>Disabled On</span>
                                 </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <div className={styles.controlRow}>
                                     <Switch size="sm" />
                                     <span className={styles.label}>Small</span>
                                 </div>
@@ -59,12 +59,12 @@ export default function ComponentShowcasePage() {
                     <div className={styles.card}>
                         <h2 className={styles.cardTitle}>Checkbox</h2>
                         <div className={styles.componentRow}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <div className={styles.controlGroup}>
+                                <div className={styles.controlRow}>
                                     <Checkbox checked={checkVal} onCheckedChange={setCheckVal} />
                                     <span className={styles.label}>{checkVal ? 'Checked' : 'Unchecked'}</span>
                                 </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <div className={styles.controlRow}>
                                     <Checkbox disabled checked />
                                     <span className={styles.label}>Disabled</span>
                                 </div>
@@ -76,15 +76,15 @@ export default function ComponentShowcasePage() {
                     <div className={styles.card}>
                         <h2 className={styles.cardTitle}>Radio Group</h2>
                         <RadioGroup value={radioVal} onValueChange={setRadioVal}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <div className={styles.controlRow}>
                                 <RadioGroupItem value="option1" id="r1" />
                                 <label htmlFor="r1" className={styles.label}>Default</label>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <div className={styles.controlRow}>
                                 <RadioGroupItem value="option2" id="r2" />
                                 <label htmlFor="r2" className={styles.label}>Comfortable</label>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <div className={styles.controlRow}>
                                 <RadioGroupItem value="option3" id="r3" />
                                 <label htmlFor="r3" className={styles.label}>Compact</label>
                             </div>
@@ -106,15 +106,15 @@ export default function ComponentShowcasePage() {
                     </div>
 
                     {/* Input Section */}
-                    <div className={styles.card} style={{ gridColumn: 'span 2' }}>
+                    <div className={`${styles.card} ${styles.spanTwo}`}>
                         <h2 className={styles.cardTitle}>Text Input</h2>
-                        <div style={{ display: 'grid', gap: 16 }}>
+                        <div className={styles.inputStack}>
                             <TextInput
                                 placeholder="Standard Input"
                                 value={textVal}
                                 onChange={(e) => setTextVal(e.target.value)}
                             />
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                            <div className={styles.inputGrid}>
                                 <TextInput
                                     placeholder="With Icon"
                                     leftIcon={<Mail size={16} />}
@@ -125,7 +125,7 @@ export default function ComponentShowcasePage() {
                                     rightIcon={<Lock size={16} />}
                                 />
                             </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                            <div className={styles.inputGrid}>
                                 <TextInput size="dense" placeholder="Dense Input" />
                                 <TextInput error placeholder="Error State" defaultValue="Invalid Value" />
                             </div>
@@ -134,16 +134,16 @@ export default function ComponentShowcasePage() {
                     </div>
 
                     {/* Search & Select Section */}
-                    <div className={styles.card} style={{ gridColumn: 'span 2' }}>
+                    <div className={`${styles.card} ${styles.spanTwo}`}>
                         <h2 className={styles.cardTitle}>Search & Select</h2>
-                        <div style={{ display: 'grid', gap: 16 }}>
+                        <div className={styles.inputStack}>
                             <SearchBar
                                 placeholder="Search users..."
                                 value={searchVal}
                                 onChange={(e) => setSearchVal(e.target.value)}
                                 onClear={() => setSearchVal('')}
                             />
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                            <div className={styles.inputGrid}>
                                 <Select placeholder="Select a role...">
                                     <option value="admin">Administrator</option>
                                     <option value="user">User</option>
@@ -164,7 +164,7 @@ export default function ComponentShowcasePage() {
 
                 <h2 className={styles.sectionTitle}>Interactive Primitives</h2>
                 <div className={styles.grid}>
-                    <div className={styles.card} style={{ gridColumn: 'span 2' }}>
+                    <div className={`${styles.card} ${styles.spanTwo}`}>
                         <h2 className={styles.cardTitle}>Buttons</h2>
 
                         <div className={styles.label}>Intents & Variants</div>
@@ -236,7 +236,7 @@ export default function ComponentShowcasePage() {
                         </div>
                     </div>
 
-                    <div className={styles.card} style={{ gridColumn: 'span 2' }}>
+                    <div className={`${styles.card} ${styles.spanTwo}`}>
                         <h2 className={styles.cardTitle}>Table (Compact)</h2>
                         <Table density="compact">
                             <TableCaption>Recent Users</TableCaption>
@@ -275,7 +275,7 @@ export default function ComponentShowcasePage() {
 
                 <h2 className={styles.sectionTitle}>Typography</h2>
                 <div className={styles.grid}>
-                    <div className={styles.card} style={{ gridColumn: 'span 2' }}>
+                    <div className={`${styles.card} ${styles.spanTwo}`}>
                         <h2 className={styles.cardTitle}>Prose Typography</h2>
                         <div className={prose}>
                             <h1>Heading 1</h1>

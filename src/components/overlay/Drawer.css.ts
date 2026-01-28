@@ -1,6 +1,6 @@
 import { style, keyframes } from '@vanilla-extract/css';
-import { vars } from '../../styles/vars.css';
-import { surface } from '../../styles/utils';
+import { vars } from '@/styles/vars.css';
+import { surface } from '@/styles/utils';
 
 const fadeIn = keyframes({
     '0%': { opacity: 0 },

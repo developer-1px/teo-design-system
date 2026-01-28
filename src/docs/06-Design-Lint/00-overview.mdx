@@ -1,0 +1,52 @@
+---
+title: Design Lint
+order: 10
+---
+
+# Design Lint
+
+Design Lint is a programmatic visual governance tool built directly into the application. It runs in the browser and analyzes the DOM tree in real-time to enforce design system "Physics" and "Hygiene".
+
+## Usage
+
+Content Engineers and Developers can toggle the Linter via the **Global Debug Mode**:
+
+- **Shortcut**: `Cmd + D` (Mac) or `Ctrl + D` (Windows)
+- **Visuals**: Violations appear as red overlays on the screen.
+
+## Core Rules
+
+The Linter currently enforces a strict "Content Physics" model to prevent "Layout Rot" and "Spaghetti CSS".
+
+### 1. No Spacing ("The Brick Rule")
+**Violation**: `No Spacing (or use margin)`
+
+Any non-inline element (e.g., `div`, `p`, `h1-h6`) that contains **Direct Text** must have defined spacing.
+- It must have `padding` (Internal Breathing Room) **OR** `margin` (External Breathing Room).
+- **Exemption**: If the parent container controls spacing via `gap` (Flex/Grid), individual children are exempt.
+
+**Why?**
+Text elements with 0 padding and 0 margin are "Bricks" that stack tightly, causing poor readability and visual crowding. Design systems require rhythm.
+
+### 2. Inline Style Inspection
+**Violation**: `[Inline Style] Avoid inline styles for...`
+
+Using `style={{ ... }}` for design token properties is strictly forbidden.
+- **Flagged**: `padding`, `margin`, `color`, `background`, `fontSize`, `fontWeight`, `border`, `borderRadius`, `gap`, `boxShadow`.
+- **Allowed**: `transform`, `display`, `top/left/right/bottom` (dynamic positioning).
+
+**Why?**
+Inline styles bypass the Design System (Theming, Dark Mode, Responsive Tokens). Always use `*.css.ts` (Vanilla Extract) or utility classes.
+
+## Console Integration
+
+For easier debugging, the Linter logs all violations to the Browser Console.
+
+```
+🎨 Design Lint: 5 Detection(s)
+[No Spacing] No Spacing (or use margin).
+📍 /src/features/slides/SlidesPage.tsx:153:37  <span ...>
+```
+
+- **Clickable Source**: deeply integrated with Vite and React Fiber to provide the source file path and line number.
+- **Element Reference**: Logs the actual DOM element for immediate inspection.

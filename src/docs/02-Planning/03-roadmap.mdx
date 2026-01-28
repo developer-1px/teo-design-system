@@ -6,64 +6,72 @@ category: Reading material
 
 # Design System Roadmap
 
-현재 디자인 시스템의 구현 상태와 앞으로의 계획입니다.
+디자인 시스템의 현재 구현 상태 및 향후 개발 계획을 명시합니다.
 
-## 1. 완료된 기능 (Implemented)
+## 1. 완료된 항목 (Implemented)
 
 ### Foundation (Tier 1)
 - [x] **Surface System**
-  - **Hybrid Approach**: `surface.base` (Static) vs `surface.interactive` (Dynamic Mixin)
-  - `vars.surface` 토큰화 및 Light/Dark 모드 지원
+  - `surface.base` (정적) 및 `surface.interactive` (동적) 하이브리드 아키텍처 수립
+  - `vars.surface` 토큰 정의 및 테마(Light/Dark) 대응
 - [x] **Semantic Color System**
-  - **Zinc Palette Mapping**: 모든 컬러를 Zinc 스케일로 통일
-  - **Semantic Aliases**: `primary`, `secondary`, `destructive`, `muted`, `accent` 등의 의미론적 토큰 도입
+  - **Zinc Palette Mapping**: Zinc 스케일을 기반으로 한 단일 컬러 체계 구축
+  - **Semantic Aliases**: 의미론적 토큰(`primary`, `secondary` 등) 도입
 - [x] **Typography System**
-  - **Refactor**: 순수 타이포그래피 스케일 (`textStyle`)과 문서 레이아웃 (`.prose`) 분리
-  - `vars.fontSize`, `vars.weight`, `vars.lineHeight` 토큰화
+  - 타이포그래피 스케일(`textStyle`)과 문서 레이아웃(`prose`) 관리 체계 분리
+  - 글꼴 크기, 두께, 행간 토큰화 완료
+- [x] **CSS Reset (Hard Reset)**
+  - `globalStyle`을 활용한 엄격한 브라우저 스타일 초기화
 
 ### Layout Architecture (Pro Shell)
 - [x] **Shell Primitive**
-  - VS Code 스타일의 "Pro Tool" Grid 레이아웃 (Navbar, Sidebar, AuxPanel, BottomPanel 등 슬롯 지원)
+  - 고밀도 도구용 Grid 레이아웃 아키텍처 구축 (Multi-slot 지원)
 - [x] **Layout Primitives**
-  - **Panel**: 공용 사이드바/패널 컴포넌트
-  - **TopBar**: 표준화된 헤더 컴포넌트
+  - `Panel`, `TopBar` 등 공용 레이아웃 컴포넌트 표준화
 - [x] **Reference Implementations**
-  - **AdminLayout**: `/admin` 라우트용 쉘
-  - **SlidesPage**: 복잡한 디자인 도구 레이아웃에 `Shell` 적용 완료
-
-### Core Components
-- [x] **Button System**
-  - `@vanilla-extract/recipes` 기반
-  - **Variants**: Solid, Ghost, Outline, Link
-  - **Features**: Polymorphism (`as` prop), Loading State, Shapes (Square/Circle)
-- [x] **Form Elements**
-  - TextInput, Select, Checkbox, Switch, SearchBar
-- [x] **Interaction Primitives**
-  - **VisualFrame**: Hover/Select/Badge 공통 인터랙션 (Storyblok Editor 등에서 사용)
-
-## 2. 진행 중 (In Progress)
+  - Admin, Slides, Mail 등 복합 레이아웃 실증 완료
 
 ### Admin Data Experience (Tier 2)
-관리자 대시보드를 위한 고밀도 데이터 처리 컴포넌트.
-- [ ] **Data Table**
-  - Density Variants (Compact/Standard)
-  - Sortable Headers, Row Selection, Pagination
-- [ ] **Smart Filter**
-  - Chip 기반의 필터링 시스템
-- [ ] **Detail Drawer**
-  - 리스트 아이템 클릭 시 우측에서 슬라이드되는 상세 정보 패널
+- [x] **Table Designer**
+  - Core 7 패턴(Profile, Badge, Boolean, Progress 등) 렌더링 구현
+  - **Selection Logic**: Multi/Single/None 선택 모드 및 전역 상태 관리
+  - **Toolbar Builder**: 검색, 필터, 액션 버튼의 동적 구성 시스템
 
-## 3. 예정됨 (Backlog)
+## 2. 개발 진행 중 (In Progress)
 
-### Feedback System
-- [ ] **Toast System** (Sonner Style)
-- [ ] **Dialogs & Alerts** (Semantic Colors 적용)
+### Missing Primitives (Tier 1.5)
+Flow Engine 등 복잡한 도구를 만들기 위해 선행되어야 할 기본 빌딩 블록을 확충합니다.
+현재 ad-hoc(일회성)으로 구현된 요소들을 정식 컴포넌트로 승격시킵니다.
 
-### Motion System
-- [ ] **Transition Tokens**: `vars.duration`, `vars.easing`
-- [ ] **Micro-interactions**: 컴포넌트 상태 변화에 대한 세밀한 애니메이션
+- [ ] **Tabs**
+  - Segmented Control (배경 있는 타입) 및 Line Tab (밑줄 타입) 지원
+  - `Admin Sidebar` 및 `Properties Panel`에서 사용 중인 패턴 표준화
+- [ ] **Avatar**
+  - 이미지, 이니셜(Fallback), 상태(Online/Offline) 뱃지 통합
+- [ ] **Badge & Tag**
+  - `StatusBadge` (Dot + Text) 및 `CounterBadge` (숫자)
+  - Table Cell 내부 및 필터 칩으로 활용
+- [ ] **Progress**
+  - Linear (Stock Level 등) 및 Circular (Loading) 변형
+- [ ] **Callout / Alert**
+  - 인라인 피드백을 위한 경고/정보 박스 (Info, Warning, Critical)
+
+## 3. 예정 항목 (Backlog)
+
+### Logical Architecture (Tier 3)
+- [ ] **Flow Engine (Logic Designer)**
+  - **Node-based Editor**: `React Flow` 기반의 로직 그래프
+  - **Inspector Integration**: 노드 속성 편집 패널
+- [ ] **Template Studio**
+  - **Preset Gallery**: Admin 패턴 템플릿화
+  - **Theme Injection**: 브랜드 테마 주입 시스템
+
+### Feedback & Motion
+- [ ] **Toast System**: 알림 및 피드백 시스템 구축 (Sonner 스타일)
+- [ ] **Micro-interactions**: 노드 연결, 데이터 변경 시의 미세 애니메이션
+- [ ] **Command Palette**: `Cmd+K` 기반의 전역 액션 실행기
 
 ---
 
 > [!NOTE]
-> 이 로드맵은 프로젝트 진행 상황에 따라 유동적으로 변경될 수 있습니다. 특히 **Admin Data Experience**가 현재 최우선 순위입니다.
+> **우선순위 변경**: Flow Engine 구현에 앞서, 디자인 시스템의 기초 체력인 **Primitive Components** 확충을 최우선으로 진행합니다. 이를 통해 상위 레벨 컴포넌트의 복잡도를 낮추고 일관성을 확보합니다.

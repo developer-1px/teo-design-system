@@ -6,107 +6,89 @@ order: 1
 
 # Common Patterns
 
-Based on the development of the Admin, Mail, and Slides applications, we have identified several recurring UI patterns. These should be standardized into reusable components to ensure consistency and speed up future development.
+본 섹션에서는 Admin, Mail, Slides 등 실증 애플리케이션 개발 과정에서 도출된 반복적인 UI 패턴과 이를 표준화하기 위한 설계 방안을 정리합니다.
 
 ## 1. PageShell (Layout)
 
-A standardized application shell that manages the high-level layout of specific tool-like interfaces.
+특정 도구(Tool) 지향적 인터페이스의 고수준 레이아웃을 관리하는 표준 애플리케이션 쉘입니다.
 
-- **Current Usage**:
-  - `AdminLayout.tsx`: Sidebar + Header + Content
-  - `MailPage.tsx`: Sidebar + Header + Content
-  - `EditorLayout.tsx`: Sidebar + Canvas + Properties
-- **Proposal**:
-  - Create a `<PageShell>` component.
-  - **Slots**: `sidebar`, `header`, `content`, `rightPanel` (optional).
-  - **Features**:
-    - Automatic handling of full-height flex layouts.
-    - Integrated responsive controls (e.g., mobile sidebar toggle).
-    - Consistent background colors (`surface.sunken` vs `surface.base`).
+- **현재 적용 사례:**
+  - `AdminLayout.tsx`: Sidebar + Header + Content 구성
+  - `MailPage.tsx`: 사이드바 중심의 메일 뷰
+  - `EditorLayout.tsx`: Sidebar + Canvas + Properties 구조
+- **설계 제안:**
+  - `<PageShell>` 컴포넌트로 규격화
+  - **Slots:** `sidebar`, `header`, `content`, `rightPanel` (선택적 레이아웃 지원)
+  - **기능:** 
+    - Full-height flex 레이아웃 자동 제어
+    - 반응형 대응 로직(Mobile Sidebar toggle 등) 내장
+    - 계층 간 표면 색상(`surface.sunken` vs `surface.base`) 일관성 확보
 
 ## 2. SmartTable (Data Grid)
 
-A high-density, interactive table component for displaying collection data.
+컬렉션 데이터를 표시하기 위한 고밀도 인터랙티브 테이블 컴포넌트입니다.
 
-- **Current Usage**:
-  - `DataTable.tsx` (Admin): User management with selection and status.
-  - `EmailList.tsx` (Mail): Email rows with selection and hover actions.
-- **Proposal**:
-  - Create a `<SmartTable>` or `<DataGrid>` component.
-  - **Features**:
-    - **Selection**: Checkbox column with "Select All" support.
-    - **Density**: Configurable row height (Compact, Standard, Relaxed).
-    - **Sticky Header**: Keep column names visible on scroll.
-    - **Custom Actions**: Row-level actions (Edit, Delete) vs Bulk actions.
-    - **Status Support**: Built-in support for status rendering.
+- **현재 적용 사례:**
+  - `DataTable.tsx` (Admin): 사용자 관리 및 상태 제어
+  - `EmailList.tsx` (Mail): 행 기반 선택 및 호버 액션 지원
+- **설계 제안:**
+  - `<SmartTable>` 혹은 `<DataGrid>` 컴포넌트화
+  - **주요 기능:**
+    - **Selection:** 전체 선택 포함 체크박스 컬럼 지원
+    - **Density:** 행 높이 옵션(Compact, Standard, Relaxed) 제공
+    - **Sticky Header:** 스크롤 시 열 제목 고정
+    - **Custom Actions:** 행 단위 액션 및 Bulk 액션 처리 로직
 
 ## 3. SearchFilterBar
 
-A complex input component that handles both text search and structured filter tags.
+텍스트 검색과 구조화된 필터 태그를 동시에 처리하는 복합 입력 컴포넌트입니다.
 
-- **Current Usage**:
-  - `SmartFilter.tsx` (Admin): Tag-based filtering (Status: Active).
-  - `Header.tsx` (Mail): Search bar with "tune" options.
-- **Proposal**:
-  - Create a `<SearchFilterBar>` input.
-  - **Features**:
-    - **Tokenized Inputs**: Pressing Enter creates a search chip/tag.
-    - **Autocomplete**: Suggest keys (e.g., `is:`, `from:`) and values.
-    - **Clearable**: Easy way to reset filters.
-    - **Visuals**: Unified look similar to the admin filter bar.
+- **현재 적용 사례:**
+  - `SmartFilter.tsx` (Admin): 칩 기반 필터링 시스템
+  - `Header.tsx` (Mail): 옵션 조절 기능이 포함된 검색 바
+- **설계 제안:**
+  - **주요 기능:**
+    - **Tokenized Inputs:** 입력 데이터의 칩(Tag) 전환 처리
+    - **Autocomplete:** 필터 키(예: `is:`, `from:`) 및 값 제안
+    - **Visuals:** 어드민 표준 필터 바와 디자인 일관성 유지
 
 ## 4. ResizablePanel
 
-A layout primitive that allows users to adjust the width of sidebars or panels.
+사용자가 사이드바나 패널의 너비를 조정할 수 있게 하는 레이아웃 프리미티브입니다.
 
-- **Current Usage**:
-  - `useResizable.ts` (Editor): Custom hook for resizing the left sidebar.
-  - *Wanted in*: Mail sidebar, Admin detail drawer.
-- **Proposal**:
-  - Create a `<ResizablePanel>` component or hook library.
-  - **Features**:
-    - Drag handle styling (invisible usually, visible on hover/active).
-    - Min/Max width constraints.
-    - `onResizeEnd` callback for persisting preference to local storage.
+- **현재 적용 사례:**
+  - `Editor`: 좌측 사이드바 너비 조절 기능 (`useResizable.ts`)
+- **설계 제안:**
+  - 컴포넌트 혹은 훅(Hook) 라이브러리 형태의 제공
+  - **주요 기능:**
+    - 드래그 핸들 가시성 제어 (Hover 시 노출 등)
+    - 최소/최대 가로 너비 제약 설정
+    - `onResizeEnd` 콜백을 통한 상태 유지(Persistence) 지원
 
 ## 5. StatusBadge
 
-A visual indicator for state (Active, Offline, Error, etc.).
+상태(Active, Offline, Error 등)를 시각적으로 나타내는 인디케이터입니다.
 
-- **Current Usage**:
-  - `DataTable.tsx` (Admin): Shows User status (Active/Pending).
-  - *Wanted in*: Mail (labels), Editor (connection status).
-- **Proposal**:
-  - Create a `<StatusBadge>` atom.
-  - **Variants**: `neutral`, `success`, `warning`, `critical`, `info`.
-  - **Design**: Small dot + Text label, or pill shape.
+- **설계 제안:**
+  - **Variants:** `neutral`, `success`, `warning`, `critical`, `info`
+  - **디자인:** 심볼(Dot) + 텍스트 레이블 혹은 필(Pill) 형태 지원
 
 ## 6. Toolbar
 
-A horizontal or vertical container for action buttons.
+액션 버튼들을 배치하는 수평/수직 컨테이너입니다.
 
-- **Current Usage**:
-  - `Header.tsx` (Mail): Actions like Settings, Support.
-  - `EditorSurface.tsx` (Editor): Formatting tools.
-- **Proposal**:
-  - Create `<Toolbar>` and `<Toolbar.Item>` components.
-  - **Features**:
-    - Consistent spacing and sizing.
-    - Built-in tooltip support for items.
-    - Divider support.
-    - Toggle state support (pressed/active).
+- **주요 기능:**
+  - 일관된 여백 및 크기 체계 적용
+  - 툴팁 지원 및 구분선(Divider) 활용
+  - 토글 상태(Pressed/Active) 시각화
 
 ## 7. Modal / Drawer
 
-Overlay surfaces for secondary tasks.
+보조 작업을 수행하기 위한 오버레이 레이어입니다.
 
-- **Current Usage**:
-  - `Admin`: Needs "Detail Drawer" for editing users.
-  - `Mail`: Needs "Compose" modal.
-- **Proposal**:
-  - Create `<Drawer>` (side sheet) and `<Modal>` (center dialog) sharing a common `<Overlay>` primitive.
-  - **Features**:
-    - Backdrop blur/dimming.
-    - Focus trapping.
-    - Esc key close.
-    - Animations (slide-in / fade-in).
+- **설계 제안:**
+  - 공통 `<Overlay>` 프리미티브를 공유하는 `<Drawer>` 및 `<Modal>` 구축
+  - **주요 기능:**
+    - 배경 블러(Backdrop blur) 및 암전 효과
+    - 포커스 트래핑(Focus trapping) 및 Esc 키 닫기 등 웹 접근성 지원
+    - 진입/퇴장 애니메이션(Slide-in / Fade-in) 표준화

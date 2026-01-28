@@ -346,8 +346,8 @@ export const lightTheme = createTheme(vars, {
         },
         card: {
             bg: lightColors.white,
-            border: `1px solid #e1e3e1`, // Keeping custom slightly different gray for now or map to gray200?
-            shadow: '0 2px 4px rgba(0,0,0,0.02), 0 1px 6px rgba(0,0,0,0.03)',
+            border: `1px solid ${lightColors.gray200}`, // Was #e1e3e1, now #E4E4E7 for lighter/softer look
+            shadow: '0 4px 12px rgba(0,0,0,0.03)', // Diffuse shadow: increased blur (12px), single layer to avoid clumping
             text: '#202124',
             hoverBg: lightColors.white,
         },
@@ -360,7 +360,7 @@ export const lightTheme = createTheme(vars, {
         },
         input: {
             bg: '#f9f9f9', // Slightly off white, keeping literal or map to gray50?
-            border: `1px solid #e1e3e1`,
+            border: `1px solid ${lightColors.gray200}`, // Was #e1e3e1
             shadow: 'none',
             text: '#202124',
             hoverBg: lightColors.white,
@@ -522,7 +522,7 @@ export const darkTheme = createTheme(vars, {
         card: {
             bg: darkColors.gray50, // #27272A
             border: `1px solid ${darkColors.gray100}`, // #3F3F46
-            shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3)',
+            shadow: '0 4px 12px rgba(0,0,0,0.3)', // Larger blur for smoother gradient in dark mode
             text: darkColors.gray900, // #F4F4F5
             hoverBg: darkColors.gray50,
         },

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import {
     Play, MousePointer2, Type, Square, Image as ImageIcon,
     MoreHorizontal, LayoutGrid, AlignLeft, AlignCenter, AlignRight,
-    Plus, Sun, User
+    Sun, User
 } from 'lucide-react';
 import { vars } from '../../styles/vars.css';
 import * as styles from './SlidesPage.css';
@@ -24,13 +24,13 @@ export function SlidesPage() {
             <Shell.Navbar>
                 <TopBar
                     left={
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <div className={styles.headerTitleGroup}>
                             <div className={styles.figmaLogo}></div>
                             <span className={styles.displayTitle}>Untitled Presentation</span>
                         </div>
                     }
                     right={
-                        <div style={{ display: 'flex', gap: '8px' }}>
+                        <div className={styles.headerActionsGroup}>
                             <Button variant="ghost" size="icon" title="Present"><Play size={18} /></Button>
                             <Button variant="solid" color="primary" size="sm">Share</Button>
                             <Button variant="ghost" size="icon"><User size={18} /></Button>
@@ -57,11 +57,11 @@ export function SlidesPage() {
                 <Panel surface="base" side="right">
                     <Panel.Body>
                         {/* Alignment Row */}
-                        <div className={styles.iconButtonRow} style={{ justifyContent: 'space-between', paddingBottom: '8px', borderBottom: `1px solid ${vars.border.subtle}`, paddingLeft: '16px', paddingRight: '16px' }}>
+                        <div className={styles.alignmentToolbar}>
                             <Button variant="ghost" size="icon"><AlignLeft size={16} /></Button>
                             <Button variant="ghost" size="icon"><AlignCenter size={16} /></Button>
                             <Button variant="ghost" size="icon"><AlignRight size={16} /></Button>
-                            <div style={{ width: 1, height: 16, background: vars.border.default }} />
+                            <div className={styles.verticalSeparator} />
                             <Button variant="ghost" size="icon"><LayoutGrid size={16} /></Button>
                             <Button variant="ghost" size="icon"><MoreHorizontal size={16} /></Button>
                         </div>
@@ -137,10 +137,10 @@ export function SlidesPage() {
                         <Panel.Section label="Fill">
                             <div className={styles.propertyRow}>
                                 <div className={styles.colorPreview} />
-                                <div style={{ flex: 1, marginLeft: 8 }}>
+                                <div style={{ flex: 1 }}>
                                     <TextInput size="compact" defaultValue="FFFFFF" />
                                 </div>
-                                <div style={{ width: 48, marginLeft: 8 }}>
+                                <div style={{ width: 48 }}>
                                     <TextInput size="compact" defaultValue="100%" />
                                 </div>
                             </div>
@@ -149,7 +149,7 @@ export function SlidesPage() {
                         {/* Effects Section */}
                         <Panel.Section label="Effects">
                             <div className={styles.propertyRow}>
-                                <div className={styles.effectPreview} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div className={styles.effectPreview}>
                                     <span>Drop Shadow</span>
                                     <Button variant="ghost" size="icon"><Sun size={12} /></Button>
                                 </div>

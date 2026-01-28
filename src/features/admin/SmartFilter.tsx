@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import { Search, X, Circle, User, Shield, ListFilter } from 'lucide-react';
 import * as styles from './SmartFilter.css';
-// import { StackMenu, type MenuItem } from '../../components/overlay/StackMenu';
-import { CascadingMenu, type CascadingMenuItem } from '../../components/overlay/CascadingMenu';
-import { Overlay, OverlayTrigger, OverlayContent } from '../../components/overlay/Overlay';
+// import { StackMenu, type MenuItem } from '@/components/overlay/StackMenu';
+import { CascadingMenu, type CascadingMenuItem } from '@/components/overlay/CascadingMenu';
+import { Overlay, OverlayTrigger, OverlayContent } from '@/components/overlay/Overlay';
 
 interface FilterTag {
     id: string;

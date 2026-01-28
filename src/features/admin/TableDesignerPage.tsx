@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import * as styles from './TableDesignerPage.css';
 import { faker, fakerKO } from '@faker-js/faker';
 import {
@@ -7,18 +7,12 @@ import {
     Plus,
     Save,
     DownloadCloud,
-    Type,
-    BarChart2,
-    BadgeCheck,
     Search,
-    ChevronDown,
     Layout,
     CheckCircle2,
     XCircle,
     TrendingUp,
     TrendingDown,
-    UserCircle,
-    CircleDashed,
     Filter,
     PlusCircle,
     Trash2,
@@ -31,6 +25,10 @@ import {
     Square,
     CheckSquare
 } from 'lucide-react';
+import { Tabs } from '../../components/ui/Tabs';
+import { Avatar } from '../../components/ui/Avatar';
+import { Badge } from '../../components/ui/Badge';
+import { Progress } from '../../components/ui/Progress';
 
 /**
  * 1. TYPES & DEFAULTS
@@ -220,8 +218,8 @@ export default function TableDesignerPage() {
                                         return (
                                             <div key={`${row.id}-${col.id}`} className={cellClasses} onClick={() => setSelectedColId(col.id)}>
                                                 {col.uiType === 'Profile' && (
-                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                        <div className={styles.avatar} style={{ backgroundImage: `url(${row.product.image})` }} />
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                                        <Avatar src={row.product.image} fallback={row.product.name} size="sm" />
                                                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                                                             <span style={{ fontWeight: 600, color: '#18181b' }}>{row.product.name}</span>
                                                             <span style={{ fontSize: '11px', color: '#a1a1aa' }}>{row.product.sku}</span>
@@ -229,7 +227,7 @@ export default function TableDesignerPage() {
                                                     </div>
                                                 )}
                                                 {col.uiType === 'Single' && <span style={{ color: '#18181b' }}>{String(raw)}</span>}
-                                                {col.uiType === 'Badge' && <span className={styles.badge} style={{ background: '#f4f4f5', color: '#71717a' }}>{String(raw)}</span>}
+                                                {col.uiType === 'Badge' && <Badge intent="neutral" variant="subtle" size="sm">{String(raw)}</Badge>}
                                                 {col.uiType === 'Boolean' && (
                                                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                                                         {raw ? <CheckCircle2 size={18} color="#10b981" fill="#d1fae5" /> : <XCircle size={18} color="#f43f5e" fill="#ffe4e6" />}
@@ -241,7 +239,7 @@ export default function TableDesignerPage() {
                                                             <span style={{ fontWeight: 600 }}>{row.inventory.stock} Items</span>
                                                             <span style={{ color: '#a1a1aa' }}>{row.inventory.percent}%</span>
                                                         </div>
-                                                        <div className={styles.progressBarBg}><div className={styles.progressBarFill} style={{ width: `${row.inventory.percent}%` }} /></div>
+                                                        <Progress value={row.inventory.percent} size="sm" intent="primary" />
                                                     </div>
                                                 )}
                                                 {col.uiType === 'Trend' && (
@@ -274,13 +272,17 @@ export default function TableDesignerPage() {
 
                 {/* INSPECTOR */}
                 <aside className={styles.sidebar}>
-                    <div style={{ display: 'flex', background: '#f4f4f5', padding: '2px', borderRadius: '8px', marginBottom: 24 }}>
-                        {(['General', 'Columns', 'Toolbar'] as const).map(tab => (
-                            <button key={tab} onClick={() => setActiveTab(tab)} style={{
-                                flex: 1, padding: '8px', fontSize: '11px', border: 'none', borderRadius: '6px', cursor: 'pointer',
-                                background: activeTab === tab ? '#fff' : 'transparent', fontWeight: activeTab === tab ? 700 : 500
-                            }}>{tab}</button>
-                        ))}
+                    <div style={{ marginBottom: 24 }}>
+                        <Tabs
+                            items={[
+                                { id: 'General', label: 'General' },
+                                { id: 'Columns', label: 'Columns' },
+                                { id: 'Toolbar', label: 'Toolbar' }
+                            ]}
+                            value={activeTab}
+                            onChange={(val) => setActiveTab(val as any)}
+                            variant="segment"
+                        />
                     </div>
 
                     {activeTab === 'General' && (
