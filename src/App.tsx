@@ -20,6 +20,8 @@ import { ListPage } from './features/admin/ListPage';
 import { AdminLayout } from './features/admin/AdminLayout';
 import './App.css'; // Just for global side effects
 
+import LandingPage from './features/home/LandingPage';
+
 // Auto-import all MDX files recursively
 const mdxPages = import.meta.glob('/src/docs/**/*.mdx', { eager: true });
 
@@ -34,7 +36,7 @@ function AppContent() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RootLayout />}>
-          <Route index element={<Navigate to="/mail" replace />} />
+          <Route index element={<LandingPage />} />
           <Route path="mail" element={<MailPage />} />
           <Route path="editor" element={<EditorPage />} />
           <Route path="slides" element={<SlidesPage />} />

@@ -16,10 +16,14 @@ import { Tree } from '../../components/ui/Tree';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from '../../components/ui/Table';
 import { SearchFilterBar, type FilterTag } from '../../components/ui/SearchFilterBar';
 import { StatusBadge } from '../../components/ui/StatusBadge';
+import { TextArea } from '../../components/ui/TextArea';
+import { Combobox } from '../../components/ui/Combobox';
+import { Alert } from '../../components/ui/Alert';
+import { EmptyState } from '../../components/ui/EmptyState';
+import { ResizablePanel } from '../../components/ui/ResizablePanel';
 import { Toolbar, ToolbarSeparator } from '../../components/ui/Toolbar';
-import { Circle, Shield, User, Settings, Archive, Star, Bell } from 'lucide-react';
+import { Circle, Shield, User, CheckCircle, Search } from 'lucide-react';
 import { prose } from '../../styles/prose.css';
-
 import { Mail, Lock, Plus, ArrowRight } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 
@@ -148,6 +152,16 @@ export default function ComponentShowcasePage() {
                         </div>
                     </div>
 
+                    {/* TextArea Section */}
+                    <div className={styles.card}>
+                        <h2 className={styles.cardTitle}>Text Area</h2>
+                        <div className={styles.inputStack}>
+                            <TextArea placeholder="Basic Text Area" />
+                            <TextArea placeholder="No Resize" resize="none" />
+                            <TextArea placeholder="Error State" error defaultValue="Invalid content" />
+                        </div>
+                    </div>
+
                     {/* Search & Select Section */}
                     <div className={`${styles.card} ${styles.spanTwo} `}>
                         <h2 className={styles.cardTitle}>Search & Select</h2>
@@ -168,6 +182,23 @@ export default function ComponentShowcasePage() {
                                     <option value="1">Option 1</option>
                                     <option value="2">Option 2</option>
                                 </Select>
+                            </div>
+                            <div className={styles.inputGrid} style={{ marginTop: 16 }}>
+                                <Combobox
+                                    placeholder="Combobox (Select Item)"
+                                    items={[
+                                        { label: 'Next.js', value: 'nextjs' },
+                                        { label: 'React', value: 'react' },
+                                        { label: 'Vue', value: 'vue' },
+                                        { label: 'Angular', value: 'angular' },
+                                        { label: 'Svelte', value: 'svelte' },
+                                    ]}
+                                />
+                                <Combobox
+                                    disabled
+                                    placeholder="Disabled Combobox"
+                                    items={[]}
+                                />
                             </div>
 
                             <div className={styles.label} style={{ marginTop: 8 }}>SearchFilterBar (Smart Tokens)</div>
@@ -471,6 +502,67 @@ export default function ComponentShowcasePage() {
                                     }
                                 ]}
                             />
+                        </div>
+                    </div>
+                </div>
+
+                <h2 className={styles.sectionTitle}>Feedback</h2>
+                <div className={styles.grid}>
+                    <div className={`${styles.card} ${styles.spanTwo}`}>
+                        <h2 className={styles.cardTitle}>Alerts</h2>
+                        <div className={styles.inputStack}>
+                            <Alert intent="info" title="Information">
+                                This is a standard info alert to notify the user.
+                            </Alert>
+                            <Alert intent="success" title="Success" icon={CheckCircle}>
+                                Operation completed successfully.
+                            </Alert>
+                            <Alert intent="warning" title="Warning" variant="outline">
+                                Please check your inputs before proceeding (Outline variant).
+                            </Alert>
+                            <Alert intent="danger" title="Error">
+                                Critical system failure detected.
+                            </Alert>
+                        </div>
+                    </div>
+
+                    <div className={`${styles.card} ${styles.spanTwo}`}>
+                        <h2 className={styles.cardTitle}>Empty States</h2>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                            <EmptyState
+                                title="No Projects"
+                                description="You haven't created any projects yet. Start by creating your first one."
+                                action={<Button intent="primary" size="sm" leftIcon={<Plus size={16} />}>Create Project</Button>}
+                            />
+                            <EmptyState
+                                icon={Search}
+                                title="No Results Found"
+                                description="We couldn't find any items matching your search query."
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <h2 className={styles.sectionTitle}>Layout Primitives</h2>
+                <div className={styles.grid}>
+                    <div className={`${styles.card} ${styles.spanTwo}`} style={{ height: '350px' }}>
+                        <h2 className={styles.cardTitle}>Resizable Panel</h2>
+                        <div style={{ border: '1px solid #e4e4e7', borderRadius: '8px', height: '250px', overflow: 'hidden' }}>
+                            <ResizablePanel initialSplit={40}>
+                                <div style={{ padding: '16px', background: '#fafafa', height: '100%' }}>
+                                    Left Pane (40%)
+                                </div>
+                                <div style={{ height: '100%' }}>
+                                    <ResizablePanel direction="vertical" initialSplit={50}>
+                                        <div style={{ padding: '16px', background: '#ffffff', height: '100%' }}>
+                                            Top Right Pane (50%)
+                                        </div>
+                                        <div style={{ padding: '16px', background: '#f4f4f5', height: '100%' }}>
+                                            Bottom Right Pane (50%)
+                                        </div>
+                                    </ResizablePanel>
+                                </div>
+                            </ResizablePanel>
                         </div>
                     </div>
                 </div>
