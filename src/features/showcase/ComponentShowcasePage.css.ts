@@ -117,3 +117,27 @@ export const label = style({
     color: vars.color.gray600,
     minWidth: '80px',
 });
+
+export const labelWithMargin = style([
+    label,
+    {
+        marginBottom: vars.spacing[8],
+        display: 'block',
+    }
+]);
+
+export const tabGroup = style({
+    marginTop: vars.spacing[16],
+    display: 'flex',
+    flexDirection: 'column',
+    gap: vars.spacing[8],
+});
+
+export const treeContainer = style({
+    maxHeight: '320px',
+    overflow: 'auto',
+    border: `1px solid ${vars.color.border}`,
+    borderRadius: vars.borderRadius.sm,
+    backgroundColor: vars.color.white,
+    padding: vars.spacing[8], // Add padding to avoid contact
+});

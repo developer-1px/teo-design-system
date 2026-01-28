@@ -13,8 +13,11 @@ import { Progress } from '../../components/ui/Progress';
 import { Tabs } from '../../components/ui/Tabs';
 import { Accordion } from '../../components/ui/Accordion';
 import { Tree } from '../../components/ui/Tree';
-import { vars } from '../../styles/vars.css';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from '../../components/ui/Table';
+import { SearchFilterBar, type FilterTag } from '../../components/ui/SearchFilterBar';
+import { StatusBadge } from '../../components/ui/StatusBadge';
+import { Toolbar, ToolbarSeparator } from '../../components/ui/Toolbar';
+import { Circle, Shield, User, Settings, Archive, Star, Bell } from 'lucide-react';
 import { prose } from '../../styles/prose.css';
 
 import { Mail, Lock, Plus, ArrowRight } from 'lucide-react';
@@ -28,6 +31,9 @@ export default function ComponentShowcasePage() {
     const [textVal, setTextVal] = useState('');
     const [searchVal, setSearchVal] = useState('');
     const [tabVal, setTabVal] = useState('account');
+    const [filterTags, setFilterTags] = useState<FilterTag[]>([
+        { id: '1', key: 'status', value: 'active' }
+    ]);
 
     return (
         <div className={styles.container}>
@@ -126,11 +132,13 @@ export default function ComponentShowcasePage() {
                                     placeholder="With Icon"
                                     leftIcon={<Mail size={16} />}
                                 />
-                                <TextInput
-                                    type="password"
-                                    placeholder="With Right Icon"
-                                    rightIcon={<Lock size={16} />}
-                                />
+                                <form onSubmit={(e) => e.preventDefault()}>
+                                    <TextInput
+                                        type="password"
+                                        placeholder="With Right Icon"
+                                        rightIcon={<Lock size={16} />}
+                                    />
+                                </form>
                             </div>
                             <div className={styles.inputGrid}>
                                 <TextInput size="dense" placeholder="Dense Input" />
@@ -161,6 +169,33 @@ export default function ComponentShowcasePage() {
                                     <option value="2">Option 2</option>
                                 </Select>
                             </div>
+
+                            <div className={styles.label} style={{ marginTop: 8 }}>SearchFilterBar (Smart Tokens)</div>
+                            <SearchFilterBar
+                                tags={filterTags}
+                                onTagsChange={setFilterTags}
+                                placeholder="Filter by status:active or type search..."
+                                filterMenu={[
+                                    {
+                                        id: 'status',
+                                        label: 'Status',
+                                        icon: Circle,
+                                        children: [
+                                            { id: 'status-active', label: 'Active', icon: Circle },
+                                            { id: 'status-pending', label: 'Pending', icon: Circle },
+                                        ]
+                                    },
+                                    {
+                                        id: 'role',
+                                        label: 'Role',
+                                        icon: Shield,
+                                        children: [
+                                            { id: 'role-admin', label: 'Admin', icon: User },
+                                            { id: 'role-user', label: 'User', icon: User },
+                                        ]
+                                    }
+                                ]}
+                            />
                         </div>
                     </div>
 
@@ -241,6 +276,15 @@ export default function ComponentShowcasePage() {
                             <Badge intent="danger" variant="outline">Danger</Badge>
                             <Badge intent="info" variant="outline">Info</Badge>
                         </div>
+
+                        <div className={styles.label} style={{ marginTop: 16 }}>Status Badges (Dot)</div>
+                        <div className={styles.componentRow}>
+                            <StatusBadge status="success">Active</StatusBadge>
+                            <StatusBadge status="warning">Pending</StatusBadge>
+                            <StatusBadge status="critical">Error</StatusBadge>
+                            <StatusBadge status="info">Processing</StatusBadge>
+                            <StatusBadge status="neutral">Offline</StatusBadge>
+                        </div>
                     </div>
 
                     <div className={styles.card}>
@@ -305,19 +349,19 @@ export default function ComponentShowcasePage() {
                         <h2 className={styles.cardTitle}>Progress</h2>
                         <div className={styles.inputStack}>
                             <div>
-                                <div className={styles.label} style={{ marginBottom: '8px' }}>Primary (50%)</div>
+                                <div className={styles.labelWithMargin}>Primary (50%)</div>
                                 <Progress value={50} />
                             </div>
                             <div>
-                                <div className={styles.label} style={{ marginBottom: '8px' }}>Success (75%)</div>
+                                <div className={styles.labelWithMargin}>Success (75%)</div>
                                 <Progress value={75} intent="success" />
                             </div>
                             <div>
-                                <div className={styles.label} style={{ marginBottom: '8px' }}>Danger (30%)</div>
+                                <div className={styles.labelWithMargin}>Danger (30%)</div>
                                 <Progress value={30} intent="critical" />
                             </div>
                             <div>
-                                <div className={styles.label} style={{ marginBottom: '8px' }}>Tiny</div>
+                                <div className={styles.labelWithMargin}>Tiny</div>
                                 <Progress value={60} size="sm" />
                             </div>
                         </div>
@@ -327,7 +371,7 @@ export default function ComponentShowcasePage() {
                         <h2 className={styles.cardTitle}>Tabs</h2>
                         <div className={styles.inputStack}>
                             <div>
-                                <div className={styles.label}>Line Variant</div>
+                                <div className={styles.labelWithMargin}>Line Variant</div>
                                 <Tabs
                                     value={tabVal}
                                     onChange={setTabVal}
@@ -338,8 +382,8 @@ export default function ComponentShowcasePage() {
                                     ]}
                                 />
                             </div>
-                            <div style={{ marginTop: '16px' }}>
-                                <div className={styles.label}>Segment Variant</div>
+                            <div className={styles.tabGroup}>
+                                <div className={styles.labelWithMargin}>Segment Variant</div>
                                 <Tabs
                                     value={tabVal}
                                     onChange={setTabVal}
@@ -393,7 +437,7 @@ export default function ComponentShowcasePage() {
 
                     <div className={styles.card}>
                         <h2 className={styles.cardTitle}>Tree Navigation</h2>
-                        <div style={{ maxHeight: '320px', overflow: 'auto', border: `1px solid ${vars.color.border} `, borderRadius: vars.borderRadius.sm, backgroundColor: vars.color.white }}>
+                        <div className={styles.treeContainer}>
                             <Tree
                                 data={[
                                     {

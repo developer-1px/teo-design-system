@@ -21,9 +21,10 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                 <select
                     ref={ref}
                     className={`${styles.select({ size })} ${className || ''}`}
+                    defaultValue={props.value === undefined && props.defaultValue === undefined ? "" : undefined}
                     {...props}
                 >
-                    {placeholder && <option value="" disabled selected>{placeholder}</option>}
+                    {placeholder && <option value="" disabled>{placeholder}</option>}
                     {options ? (
                         options.map((opt) => (
                             <option key={opt.value} value={opt.value} disabled={opt.disabled}>

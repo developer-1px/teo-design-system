@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Plus, Download, Trash2, MoreHorizontal, ChevronDown } from 'lucide-react';
 import * as styles from './ListPage.css';
 import { DataTable } from './DataTable';
-import { SmartFilter } from './SmartFilter';
+import { SearchFilterBar, type FilterTag } from '@/components/ui/SearchFilterBar';
 import { Drawer } from '@/components/overlay/Drawer';
 import { vars } from '@/styles/vars.css';
 
@@ -27,10 +27,10 @@ const MOCK_DATA: DataRow[] = Array.from({ length: 50 }).map((_, i) => ({
 
 export function ListPage() {
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-    const [searchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filterTags, setFilterTags] = useState<FilterTag[]>([]);
     const [activeRowId, setActiveRowId] = useState<string | null>(null);
 
-    // Filter Logic
     // Filter Logic
     const filteredData = MOCK_DATA.filter(row =>
         row.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -84,7 +84,12 @@ export function ListPage() {
                 </div>
 
                 <div className={styles.filterBar}>
-                    <SmartFilter />
+                    <SearchFilterBar
+                        tags={filterTags}
+                        onTagsChange={setFilterTags}
+                        onSearch={setSearchQuery}
+                        placeholder="Search users by name or email..."
+                    />
                 </div>
             </div>
 
@@ -109,11 +114,6 @@ export function ListPage() {
             )}
 
             {/* Table Area */}
-            {/* 
-                NOTE: For the "Checkbox" support, we would ideally extend DataTable props. 
-                For now, I'll pass the data directly or implement a wrapper.
-                Since DataTable is reused, let's update DataTable to support selection.
-            */}
             <DataTable
                 data={filteredData}
                 selectedIds={selectedIds}
@@ -177,5 +177,3 @@ function StatusSelect({ current }: { current: string }) {
         </div>
     )
 }
-
-

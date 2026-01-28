@@ -1,0 +1,54 @@
+---
+title: Tabs
+description: Switch between views within the same context.
+order: 15
+---
+
+import { Tabs } from '../../components/ui/Tabs';
+
+# Tabs
+
+Organize content into separate views.
+
+<div style={{ padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)', maxWidth: '400px' }}>
+    <Tabs 
+        value="account" 
+        onChange={() => {}}
+        items={[
+            { id: 'account', label: 'Account' },
+            { id: 'password', label: 'Password' },
+            { id: 'settings', label: 'Settings', disabled: true },
+        ]} 
+    />
+</div>
+
+## Usage
+
+```tsx
+import { Tabs } from '@/components/ui/Tabs';
+import { useState } from 'react';
+
+const [tab, setTab] = useState('account');
+
+<Tabs 
+    value={tab} 
+    onChange={setTab}
+    items={[
+        { id: 'account', label: 'Account' },
+        { id: 'password', label: 'Password' },
+    ]}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `items` | `TabItem[]` | - | Array of tab items. |
+| `value` | `string` | - | Current active tab ID. |
+| `onChange` | `(value: string) => void` | - | Callback when tab changes. |
+| `variant` | `line` \| `segment` | `line` | Visual style. |
+| `size` | `sm` \| `md` \| `lg` | `md` | Size of the tabs. |
+| `fullWidth` | `boolean` | `true` | Whether tabs take full width. |
+
+`TabItem` Type: `id`, `label`, `disabled?`.

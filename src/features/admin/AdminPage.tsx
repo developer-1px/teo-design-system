@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as styles from './AdminPage.css';
-import { SmartFilter } from './SmartFilter';
+import { SearchFilterBar } from '../../components/ui/SearchFilterBar';
 import { DataTable } from './DataTable';
 import { Drawer } from '../../components/overlay/Drawer';
 import { vars } from '../../styles/vars.css';
@@ -12,7 +12,9 @@ export default function AdminPage() {
         <div className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.title}>Issues</div>
-                <SmartFilter />
+                <div style={{ width: 400 }}>
+                    <SearchFilterBar placeholder="Filter issues..." />
+                </div>
             </header>
 
             <main className={styles.main}>

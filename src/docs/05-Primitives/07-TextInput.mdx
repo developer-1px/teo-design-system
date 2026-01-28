@@ -1,0 +1,42 @@
+---
+title: TextInput
+description: A fundamental component for accepting single-line text input.
+order: 7
+---
+
+import { TextInput } from '../../components/ui/TextInput';
+import { Search, Mail } from 'lucide-react';
+
+# TextInput
+
+Standard input field for text data.
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)', maxWidth: '400px' }}>
+    <TextInput placeholder="Default Input" />
+    <TextInput placeholder="With Icon" leftIcon={<Search size={16} />} />
+    <TextInput placeholder="Error State" error defaultValue="Invalid Entry" />
+    <TextInput placeholder="Dense Size" size="dense" />
+</div>
+
+## Usage
+
+```tsx
+import { TextInput } from '@/components/ui/TextInput';
+import { Search } from 'lucide-react';
+
+<TextInput 
+    placeholder="Search..." 
+    leftIcon={<Search size={16} />} 
+    onChange={(e) => console.log(e.target.value)}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `default` \| `dense` \| `compact` \| `large` | `default` | Controls the height and padding. |
+| `leftIcon` | `ReactNode` | - | Icon displayed on the left side. |
+| `rightIcon` | `ReactNode` | - | Icon displayed on the right side. |
+| `error` | `boolean` | `false` | Applies error styling. |
+| `...props` | `InputHTMLAttributes` | - | detailed props for HTML input. |

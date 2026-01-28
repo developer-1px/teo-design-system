@@ -18,6 +18,7 @@ export const trigger = style({
     justifyContent: 'space-between',
     width: '100%',
     padding: `${vars.spacing[12]} ${vars.spacing[16]}`,
+    gap: vars.spacing[12],
     backgroundColor: 'transparent',
     border: 'none',
     cursor: 'pointer',

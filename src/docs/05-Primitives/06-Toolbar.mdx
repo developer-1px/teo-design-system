@@ -1,0 +1,37 @@
+---
+title: Toolbar
+description: A horizontal container for action buttons and controls.
+order: 6
+---
+
+import { Toolbar, ToolbarSeparator } from '../../components/ui/Toolbar';
+import { Button } from '../../components/ui/Button';
+import { Settings, Archive, Star, Bell } from 'lucide-react';
+
+# Toolbar
+
+The `Toolbar` is a container for grouping related actions. It provides consistent spacing, background, and separators for a high-density "Pro Tool" interface.
+
+<div style={{ padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+    <Toolbar>
+        <Button size="icon" variant="ghost"><Settings size={14} /></Button>
+        <Button size="icon" variant="ghost"><Archive size={14} /></Button>
+        <ToolbarSeparator />
+        <Button size="icon" variant="ghost"><Star size={14} /></Button>
+        <Button size="icon" variant="ghost"><Bell size={14} /></Button>
+    </Toolbar>
+</div>
+
+## Usage
+
+```tsx
+import { Toolbar, ToolbarSeparator } from '@/components/ui/Toolbar';
+import { Button } from '@/components/ui/Button';
+
+<Toolbar>
+  <Button size="icon" variant="ghost"><Bold /></Button>
+  <Button size="icon" variant="ghost"><Italic /></Button>
+  <ToolbarSeparator />
+  <Button size="icon" variant="ghost"><Link /></Button>
+</Toolbar>
+```

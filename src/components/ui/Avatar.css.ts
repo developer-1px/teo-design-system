@@ -45,6 +45,7 @@ export const fallback = style({
     fontWeight: vars.weight.bold,
     textTransform: 'uppercase',
     letterSpacing: '0.025em',
+    padding: vars.spacing[4],
 });
 
 export const statusIndicator = recipe({

@@ -1,0 +1,48 @@
+---
+title: Button
+description: Interactive element for triggering actions.
+order: 3
+---
+
+import { Button } from '../../components/ui/Button';
+import { Mail, ArrowRight } from 'lucide-react';
+
+# Button
+
+Buttons allow users to take actions, and make choices, with a single tap.
+
+<div style={{ display: 'flex', gap: '8px', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)', flexWrap: 'wrap' }}>
+    <Button intent="primary">Primary</Button>
+    <Button intent="secondary">Secondary</Button>
+    <Button intent="danger">Danger</Button>
+    <Button variant="ghost">Ghost</Button>
+</div>
+
+## Usage
+
+```tsx
+import { Button } from '@/components/ui/Button';
+import { Mail } from 'lucide-react';
+
+<Button intent="primary" onClick={handleClick}>
+    Save Changes
+</Button>
+
+<Button variant="ghost" leftIcon={<Mail />}>
+    Email
+</Button>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `intent` | `primary` \| `secondary` \| `danger` \| `neutral` | `primary` | Visual intent of the button. |
+| `variant` | `solid` \| `outline` \| `ghost` | `solid` | Visual style variant. |
+| `size` | `default` \| `sm` \| `xs` | `default` | Size of the button. |
+| `shape` | `default` \| `pill` \| `square` | `default` | Shape of the button corners. |
+| `loading` | `boolean` | `false` | Shows a loading spinner and disables interaction. |
+| `disabled` | `boolean` | `false` | Disables the button. |
+| `leftIcon` | `ReactNode` | - | Icon to display before the label. |
+| `rightIcon` | `ReactNode` | - | Icon to display after the label. |
+| `as` | `ElementType` | `button` | Polymorphic prop to render as another element (e.g. `a`). |

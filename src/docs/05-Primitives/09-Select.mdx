@@ -1,0 +1,55 @@
+---
+title: Select
+description: Text input with distinct options.
+order: 9
+---
+
+import { Select } from '../../components/ui/Select';
+
+# Select
+
+Displays a list of options for the user to pick from—triggered by a button.
+
+<div style={{ display: 'flex', gap: '16px', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)', maxWidth: '400px' }}>
+    <Select 
+        placeholder="Select a fruit"
+        options={[
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange', disabled: true },
+        ]} 
+    />
+</div>
+
+## Usage
+
+```tsx
+import { Select } from '@/components/ui/Select';
+
+<Select 
+    placeholder="Choose role..."
+    options={[
+        { label: 'Admin', value: 'admin' },
+        { label: 'User', value: 'user' },
+    ]}
+/>
+```
+
+Or using children:
+
+```tsx
+<Select>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+</Select>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `default` \| `dense` \| `compact` | `default` | Controls the height. |
+| `options` | `SelectOption[]` | - | Array of options to render. |
+| `placeholder` | `string` | - | Placeholder text. |
+| `value` | `string` \| `number` | - | Value of the select. |
+| `disabled` | `boolean` | `false` | Disables interaction. |

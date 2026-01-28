@@ -1,0 +1,36 @@
+---
+title: StatusBadge
+description: A semantic version of the Badge component with a status dot.
+order: 5
+---
+
+import { StatusBadge } from '../../components/ui/StatusBadge';
+
+# StatusBadge
+
+The `StatusBadge` is used to represent the lifecycle or health of an entity (e.g., Active, Error, Offline). It combines a `Badge` with a semantic "Pulse" dot.
+
+<div style={{ display: 'flex', gap: '8px', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+    <StatusBadge status="success">Active</StatusBadge>
+    <StatusBadge status="warning">Pending</StatusBadge>
+    <StatusBadge status="critical">Failed</StatusBadge>
+    <StatusBadge status="info">Processing</StatusBadge>
+    <StatusBadge status="neutral">Offline</StatusBadge>
+</div>
+
+## Usage
+
+```tsx
+import { StatusBadge } from '@/components/ui/StatusBadge';
+
+<StatusBadge status="success">Live</StatusBadge>
+<StatusBadge status="critical" showDot={false}>Blocked</StatusBadge>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `status` | `string` | One of `neutral`, `success`, `warning`, `critical`, `info`. |
+| `showDot` | `boolean` | Whether to display the status dot. Defaults to `true`. |
+| `...props` | `BadgeProps` | Inherits all props from the base `Badge` component. |

@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style, createVar } from '@vanilla-extract/css';
 import { vars } from '../../styles/vars.css';
 
 export const treeRoot = style({
@@ -11,10 +11,14 @@ export const nodeWrapper = style({
     flexDirection: 'column',
 });
 
+export const indent = createVar();
+
 export const nodeItem = style({
     display: 'flex',
     alignItems: 'center',
     height: vars.sizing.item.compact,
+    paddingLeft: indent,
+    gap: vars.spacing[8],
     cursor: 'pointer',
     fontSize: vars.fontSize.sm,
     color: vars.color.gray700,
@@ -40,7 +44,6 @@ export const iconWrapper = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 8,
 });
 
 export const label = style({

@@ -1,0 +1,102 @@
+---
+title: Selection Controls
+description: Checkbox, Radio, and Switch components for selection and toggling.
+order: 8
+---
+
+import { Checkbox } from '../../components/ui/Checkbox';
+import { Switch } from '../../components/ui/Switch';
+import { RadioGroup, RadioGroupItem } from '../../components/ui/Radio';
+
+# Selection Controls
+
+Components for user selection and toggling states.
+
+## Checkbox
+
+Used for multiple selection or binary states.
+
+<div style={{ display: 'flex', gap: '16px', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <Checkbox id="c1" />
+        <label htmlFor="c1" style={{ fontSize: '14px' }}>Accept Terms</label>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <Checkbox id="c2" defaultChecked />
+        <label htmlFor="c2" style={{ fontSize: '14px' }}>Subscribed</label>
+    </div>
+</div>
+
+```tsx
+import { Checkbox } from '@/components/ui/Checkbox';
+
+<Checkbox checked={isChecked} onCheckedChange={setIsChecked} />
+```
+
+### Checkbox Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `checked` | `boolean` | - | Controlled checked state. |
+| `defaultChecked` | `boolean` | `false` | Initial checked state. |
+| `onCheckedChange` | `(checked: boolean) => void` | - | Callback when state changes. |
+| `size` | `default` \| `sm` | `default` | Size of the checkbox. |
+| `disabled` | `boolean` | `false` | Disables interaction. |
+
+---
+
+## Switch
+
+Used for immediate activation/deactivation of settings.
+
+<div style={{ display: 'flex', gap: '16px', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+    <Switch />
+    <Switch defaultChecked />
+</div>
+
+```tsx
+import { Switch } from '@/components/ui/Switch';
+
+<Switch onCheckedChange={(val) => console.log(val)} />
+```
+
+### Switch Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `checked` | `boolean` | - | Controlled checked state. |
+| `defaultChecked` | `boolean` | `false` | Initial checked state. |
+| `onCheckedChange` | `(checked: boolean) => void` | - | Callback when state changes. |
+| `size` | `default` \| `sm` | `default` | Size of the switch. |
+
+---
+
+## Radio Group
+
+Used for single selection from a set of options.
+
+<div style={{ display: 'flex', gap: '16px', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+    <RadioGroup defaultValue="1" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <RadioGroupItem value="1" id="r1" />
+            <label htmlFor="r1" style={{ fontSize: '14px' }}>Option 1</label>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <RadioGroupItem value="2" id="r2" />
+            <label htmlFor="r2" style={{ fontSize: '14px' }}>Option 2</label>
+        </div>
+    </RadioGroup>
+</div>
+
+```tsx
+import { RadioGroup, RadioGroupItem } from '@/components/ui/Radio';
+
+<RadioGroup defaultValue="apple" onValueChange={setValue}>
+    <div className="flex gap-2">
+        <RadioGroupItem value="apple" id="apple" />
+        <label htmlFor="apple">Apple</label>
+    </div>
+    <div className="flex gap-2">
+        <RadioGroupItem value="pear" id="pear" />
+        <label htmlFor="pear">Pear</label>
+    </div>
+</RadioGroup>
+```

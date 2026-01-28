@@ -3,6 +3,7 @@ import { ChevronDown, ChevronRight, File, Folder, FolderOpen } from 'lucide-reac
 import * as styles from './Tree.css.ts';
 import { clsx } from 'clsx';
 import { vars } from '../../styles/vars.css';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 export interface TreeNode {
     id: string;
@@ -55,7 +56,7 @@ function TreeNodeItem({ node, level, onNodeClick }: { node: TreeNode, level: num
         <div className={styles.nodeWrapper}>
             <div
                 className={styles.nodeItem}
-                style={{ paddingLeft: level * 12 + 8 }}
+                style={assignInlineVars({ [styles.indent]: `${level * 12 + 8}px` })}
                 onClick={handleClick}
             >
                 <div className={styles.chevronWrapper} onClick={handleToggle}>

@@ -1,0 +1,44 @@
+---
+title: Accordion
+description: Vertically stacked interactive sections.
+order: 12
+---
+
+import { Accordion } from '../../components/ui/Accordion';
+
+# Accordion
+
+Organizes content into collapsible sections.
+
+<div style={{ padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)', maxWidth: '400px' }}>
+    <Accordion 
+        items={[
+            { id: '1', title: 'Is it accessible?', content: 'Yes. It adheres to the WAI-ARIA design pattern.' },
+            { id: '2', title: 'Is it styled?', content: 'Yes. It comes with default styles that matches the other components.' },
+            { id: '3', title: 'Is it animated?', content: 'Yes. It animates height changes.', disabled: true },
+        ]} 
+    />
+</div>
+
+## Usage
+
+```tsx
+import { Accordion } from '@/components/ui/Accordion';
+
+const items = [
+    { id: 'item-1', title: 'Section 1', content: 'Content 1' },
+    { id: 'item-2', title: 'Section 2', content: 'Content 2' },
+];
+
+<Accordion items={items} allowMultiple />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `items` | `AccordionItem[]` | - | Array of accordion items. |
+| `allowMultiple` | `boolean` | `false` | Allow multiple items to be open at once. |
+| `defaultOpenIds` | `string[]` | `[]` | IDs of items open by default. |
+
+`AccordionItem` Type: `id: string`, `title: ReactNode`, `content: ReactNode`, `disabled?: boolean`.

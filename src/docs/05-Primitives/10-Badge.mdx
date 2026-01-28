@@ -1,0 +1,37 @@
+---
+title: Badge
+description: Small status descriptors for UI elements.
+order: 10
+---
+
+import { Badge } from '../../components/ui/Badge';
+
+# Badge
+
+Used to highlight status, tags, or small counts.
+
+<div style={{ display: 'flex', gap: '8px', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+    <Badge intent="neutral">Neutral</Badge>
+    <Badge intent="success">Success</Badge>
+    <Badge intent="warning">Warning</Badge>
+    <Badge intent="critical">Critical</Badge>
+    <Badge intent="info" variant="outline">Info Outline</Badge>
+</div>
+
+## Usage
+
+```tsx
+import { Badge } from '@/components/ui/Badge';
+
+<Badge intent="success">Completed</Badge>
+<Badge variant="outline">Draft</Badge>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `intent` | `neutral` \| `success` \| `warning` \| `critical` \| `info` | `neutral` | Semantic color intent. |
+| `variant` | `solid` \| `outline` \| `soft` | `soft` | Visual style. |
+| `size` | `default` \| `sm` | `default` | Size of the badge. |
+| `interactive` | `boolean` | `false` | Adds hover states if clickable. |

@@ -1,0 +1,36 @@
+---
+title: Avatar
+description: User profile image with fallback.
+order: 11
+---
+
+import { Avatar } from '../../components/ui/Avatar';
+
+# Avatar
+
+Represents a user or entity. Handles image loading and fallbacks.
+
+<div style={{ display: 'flex', gap: '16px', alignItems: 'center', padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+    <Avatar fallback="JD" status="online" />
+    <Avatar fallback="AB" status="busy" size="lg" />
+    <Avatar size="sm" />
+</div>
+
+## Usage
+
+```tsx
+import { Avatar } from '@/components/ui/Avatar';
+
+<Avatar src="/path/to/image.jpg" fallback="JD" />
+<Avatar fallback="AB" status="online" />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | `string` | - | Image source URL. |
+| `alt` | `string` | `Avatar` | Alt text. |
+| `fallback` | `string` | - | Initials to show if image fails or missing. |
+| `size` | `xs` \| `sm` \| `md` \| `lg` \| `xl` | `md` | Size of the avatar. |
+| `status` | `online` \| `offline` \| `busy` | - | Status indicator. |

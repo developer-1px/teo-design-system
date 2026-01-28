@@ -1,0 +1,58 @@
+---
+title: Tree
+description: Hierarchical list structure.
+order: 13
+---
+
+import { Tree } from '../../components/ui/Tree';
+
+# Tree
+
+Displays hierarchical data.
+
+<div style={{ padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)', maxWidth: '300px' }}>
+    <Tree 
+        data={[
+            {
+                id: '1',
+                label: 'src',
+                children: [
+                    { id: '1-1', label: 'components', children: [{ id: '1-1-1', label: 'ui' }] },
+                    { id: '1-2', label: 'hooks' }
+                ],
+                isExpanded: true
+            },
+            {
+                id: '2',
+                label: 'package.json'
+            }
+        ]}
+    />
+</div>
+
+## Usage
+
+```tsx
+import { Tree } from '@/components/ui/Tree';
+
+const data = [
+    {
+        id: '1',
+        label: 'Folder',
+        children: [
+            { id: '2', label: 'File.ts' }
+        ]
+    }
+];
+
+<Tree data={data} onNodeClick={(node) => console.log(node)} />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `data` | `TreeNode[]` | - | Recursive data structure. |
+| `onNodeClick` | `(node: TreeNode) => void` | - | Callback when a node is clicked. |
+
+`TreeNode` Type: `id`, `label`, `icon?`, `children?`, `isExpanded?`, `data?`.

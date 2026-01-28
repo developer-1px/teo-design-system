@@ -1,0 +1,35 @@
+---
+title: SearchBar
+description: Text input optimized for search queries with clear functionality.
+order: 17
+---
+
+import { SearchBar } from '../../components/ui/SearchBar';
+
+# SearchBar
+
+A specialized input for search actions.
+
+<div style={{ padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)', maxWidth: '400px' }}>
+    <SearchBar placeholder="Search documentation..." />
+</div>
+
+## Usage
+
+```tsx
+import { SearchBar } from '@/components/ui/SearchBar';
+
+<SearchBar 
+    value={query} 
+    onChange={(e) => setQuery(e.target.value)} 
+    onClear={() => setQuery('')}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `onClear` | `() => void` | - | Callback when clear button is clicked. |
+| `onSearch` | `(value: string) => void` | - | Callback for search (optional). |
+| `...props` | `TextInputProps` | - | Inherits all TextInput props (except icons). |

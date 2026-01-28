@@ -1,0 +1,51 @@
+---
+title: SearchFilterBar
+description: A compound input component for text search and tokenized filtering.
+order: 4
+---
+
+import { SearchFilterBarShowcase } from '../../components/docs/SearchFilterBarShowcase';
+
+# SearchFilterBar
+
+The `SearchFilterBar` is a sophisticated input component used primarily in data-heavy interfaces (like Admin panels or Mail clients). It combines free-form text search with structured filtering via tokens (chips).
+
+<SearchFilterBarShowcase />
+
+## Features
+
+- **Tokenized Inputs**: Automatically converts `key:value` patterns into interactive tags when the user presses Enter.
+- **Smart Deletion**: Backspace on an empty input removes the last tag, allowing for fluid keyboard navigation.
+- **Menu Integration**: Supports an optional filter menu (via `CascadingMenu`) for discovering available filter keys.
+- **Visual Feedback**: Subtle animations and focus states that match the Pro Tool aesthetic.
+
+## Usage
+
+```tsx
+import { SearchFilterBar } from '@/components/ui/SearchFilterBar';
+
+const [tags, setTags] = useState([]);
+
+<SearchFilterBar 
+  tags={tags}
+  onTagsChange={setTags}
+  placeholder="Filter by status:active..."
+/>
+```
+
+## Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `tags` | `FilterTag[]` | Array of active filter objects `{ id, key, value }`. |
+| `onTagsChange` | `fn` | Callback triggered when tags are added or removed. |
+| `onSearch` | `fn` | Callback triggered on every keystroke in the search field. |
+| `filterMenu` | `CascadingMenuItem[]` | Items for the optional dropdown filter menu. |
+| `placeholder` | `string` | Text to show when no tags are present. |
+
+## Interaction Pattern
+
+1. **Typing**: User types `is:active`.
+2. **Commit**: User presses `Enter`. The input text is cleared and a tag `is: active` is rendered.
+3. **Refine**: User clicks the `X` on a tag to remove it, or presses `Backspace` while the input is empty.
+4. **Discover**: User clicks the filter icon (if provided) to see a list of available structured filters.

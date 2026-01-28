@@ -1,0 +1,63 @@
+---
+title: Table
+description: Rows and columns for structured data.
+order: 14
+---
+
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from '../../components/ui/Table';
+
+# Table
+
+Responsive table with density controls.
+
+<div style={{ padding: '24px', background: 'var(--surface-base-bg)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+    <Table>
+        <TableCaption>Recent Invoices</TableCaption>
+        <TableHeader>
+            <TableRow>
+                <TableHead>Invoice</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Amount</TableHead>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            <TableRow>
+                <TableCell>INV001</TableCell>
+                <TableCell>Paid</TableCell>
+                <TableCell>$250.00</TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell>INV002</TableCell>
+                <TableCell>Pending</TableCell>
+                <TableCell>$150.00</TableCell>
+            </TableRow>
+        </TableBody>
+    </Table>
+</div>
+
+## Usage
+
+```tsx
+import { 
+    Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption 
+} from '@/components/ui/Table';
+
+<Table density="compact">
+    <TableHeader>
+        <TableRow>
+            <TableHead>Header</TableHead>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        <TableRow>
+            <TableCell>Cell</TableCell>
+        </TableRow>
+    </TableBody>
+</Table>
+```
+
+## Props (Table)
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `density` | `standard` \| `compact` | `standard` | Controls cell padding. |
