@@ -23,8 +23,10 @@
     "framer-motion": "^12.29.2",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.563.0",
+    "mermaid": "^11.12.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.13.0",
     "rehype-highlight": "^7.0.2"
   },

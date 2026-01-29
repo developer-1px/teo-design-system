@@ -9,8 +9,8 @@ export const header = style({
     gridTemplateColumns: 'inherit', // Uses the standard 256px 1fr grid
     alignItems: 'center',
     paddingRight: vars.spacing[16],
-    backgroundColor: vars.surface.base.bg,
-    borderBottom: `1px solid ${vars.color.gray100}`,
+    backgroundColor: 'transparent', // Blends with Sidebar
+    // borderBottom: `1px solid ${vars.color.gray100}`, // Removed for cleaner look
 });
 
 export const logoSection = style({
@@ -46,6 +46,10 @@ export const logoText = style({
     top: '-1px', // Visual adjustment
 });
 
+export const mailIcon = style({
+    color: vars.color.primary,
+});
+
 export const logo = style({
     display: 'flex',
     alignItems: 'center',
@@ -73,7 +77,7 @@ export const searchBarContainer = style({
 
 // Refined Search Bar
 export const searchBar = style([
-    surface('subtle'),
+    surface('base'), // White on Gray
     {
         display: 'flex',
         alignItems: 'center',
@@ -189,11 +193,11 @@ export const avatarFallback = style({
     width: '32px',
     height: '32px',
     borderRadius: '50%',
-    backgroundColor: '#0b57d0', // Standard Google Blue
+    backgroundColor: vars.color.primary, // Theme Consistent
     color: vars.color.white,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: vars.fontSize.lg,
+    fontSize: vars.fontSize.sm, // Slightly smaller text for 32px avatar
     fontWeight: vars.weight.medium,
 });

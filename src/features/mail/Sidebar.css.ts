@@ -13,27 +13,43 @@ export const sidebar = style({
 });
 
 export const composeBtn = style([
-    surface('card'), // Use card surface for a clean, elevated look instead of highlight
+    surface.interactive('base'), // Base interaction
     {
-        height: '56px',
-        minWidth: '56px',
-        width: 'fit-content',
-        padding: `0 ${vars.spacing[24]} 0 ${vars.spacing[16]}`,
+        height: '44px', // Sleeker height
+        minWidth: 'fit-content', // Remove forced large width or reduce it
+        // OR keep specific min-width but smaller
+        // minWidth: '120px', 
+        padding: `0 ${vars.spacing[16]} 0 ${vars.spacing[12]}`, // Align icon (left) but give space for text
+        // Actually, if we want exact alignment with NavItem (padding 16), valid.
+        // But NavItem has Icon then text.
+        // Let's do paddingLeft 16px to match NavItem.
+        paddingLeft: vars.spacing[16],
+        paddingRight: vars.spacing[24],
+
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'flex-start', // Left align content like NavItems? No, button usually centered or left.
+        // If users says "grid alignment", left-aligning the icon with the list icons below is key.
+
         gap: vars.spacing[12],
-        borderRadius: '16px', // Rounded sqaure/rect
-        cursor: 'pointer',
+        borderRadius: vars.borderRadius.full,
+        // Primary Action Look
+        backgroundColor: vars.color.primary,
+        color: vars.color.white,
+
         fontSize: vars.fontSize.md,
         fontWeight: vars.weight.medium,
-        color: vars.color.gray800,
-        boxShadow: vars.shadow.raised,
-        marginBottom: vars.spacing[24],
+
+        marginBottom: vars.spacing[16], // Tighter spacing
+        transition: 'all 0.2s ease',
+
         ':hover': {
-            boxShadow: vars.shadow.overlay,
+            opacity: 0.9,
+            transform: 'translateY(-1px)',
+            boxShadow: vars.shadow.raised,
         },
         ':active': {
-            boxShadow: vars.shadow.raised,
+            transform: 'translateY(0)',
         }
     }
 ]);

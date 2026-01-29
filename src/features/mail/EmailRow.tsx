@@ -12,19 +12,19 @@ interface EmailData {
     selected?: boolean;
 }
 
-export function EmailRow({ data, onToggleSelect }: { data: EmailData, onToggleSelect: () => void }) {
+export function EmailRow({ data, onToggleSelect, onClick }: { data: EmailData, onToggleSelect: () => void, onClick?: () => void }) {
     const bgClass = data.selected ? styles.rowState.selected : (data.isRead ? styles.rowState.read : styles.rowState.unread);
     const weightClass = data.isRead ? styles.textWeight.normal : styles.textWeight.bold;
 
     return (
-        <div className={`${styles.row} ${bgClass}`}>
+        <div className={`${styles.row} ${bgClass}`} onClick={onClick}>
             {/* 1. Checkbox */}
             <div className={styles.iconCell} onClick={(e) => { e.stopPropagation(); onToggleSelect(); }}>
                 {data.selected ? <CheckSquare size={20} /> : <Square size={20} />}
             </div>
 
             {/* 2. Star */}
-            <div className={styles.iconCell}>
+            <div className={styles.iconCell} onClick={(e) => e.stopPropagation()}>
                 {data.isStarred ? <Star size={20} fill="#fbbc04" stroke="#fbbc04" /> : <Star size={20} />}
             </div>
 

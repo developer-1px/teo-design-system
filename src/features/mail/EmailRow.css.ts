@@ -7,14 +7,19 @@ export const row = style([
     {
         height: '40px',
         alignItems: 'center',
-        borderBottom: `1px solid ${vars.color.gray100}`, // Subtle separator
+        borderBottom: `1px solid ${vars.color.gray100}`,
+        // borderRadius: vars.borderRadius.md, // Removed for flat list
         cursor: 'pointer',
         paddingRight: vars.spacing[16],
-        backgroundColor: vars.surface.base.bg,
+        // backgroundColor: vars.surface.base.bg, // Inherited from container
+        backgroundColor: 'transparent',
+        transition: 'background-color 0.1s',
+
         ':hover': {
-            boxShadow: vars.shadow.raised,
-            zIndex: vars.zIndices.elevated,
-            borderBottomColor: 'transparent',
+            backgroundColor: vars.color.gray50, // Simple highlight
+            // boxShadow: vars.shadow.raised, // Removed noisy shadow
+            // zIndex: vars.zIndices.elevated,
+            // borderBottomColor: 'transparent',
         }
     }
 ]);
@@ -72,7 +77,8 @@ export const rowState = styleVariants({
     read: { backgroundColor: vars.surface.base.bg },
     unread: { backgroundColor: vars.surface.base.bg }, // Could add a subtle background if needed
     selected: {
-        backgroundColor: vars.surface.highlight.bg, // Uses the green highlight usually, or modify to blue
+        backgroundColor: vars.surface.highlight.bg,
+        borderLeft: `2px solid ${vars.color.primary}`, // Clear indicator
         ':hover': { backgroundColor: vars.surface.highlight.hoverBg }
     }
 });

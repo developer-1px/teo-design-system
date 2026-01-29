@@ -1,0 +1,43 @@
+---
+title: Interaction Kernel
+order: 4
+category: Planning
+---
+
+import { Mermaid } from '../../components/docs/Mermaid';
+
+# Interaction Kernel Architecture
+
+This diagram illustrates the core event loop and command dispatch system of the Headless App Engine.
+
+<Mermaid chart={`
+graph TD
+    %% Hardware Layer
+    User[User Input] -->|Keydown/Click| EventLoop
+    
+    %% Kernel Layer (The Brain)
+    subgraph "Interaction Kernel"
+        FocusManager[Focus Manager]
+        CommandRegistry[Command Registry]
+        
+        FocusManager --"1. Check Active Zone"--> ZoneConfig
+        ZoneConfig --"2. Resolve Binding"--> CommandID
+        CommandID --"3. Lookup Executable"--> CommandRegistry
+    end
+    
+    %% Sync Layer
+    FocusManager -.->|Sync DOM Focus| DOM[document.activeElement]
+    
+    %% Application Layer
+    subgraph "Application User Space"
+        CanvasZone[Zone: Canvas]
+        SidebarZone[Zone: Sidebar]
+        InputZone[Zone: Property Input]
+    end
+    
+    CanvasZone -.->|Register| FocusManager
+    SidebarZone -.->|Register| FocusManager
+    
+    EventLoop --> FocusManager
+    CommandRegistry -->|Execute| Payload[Action Payload]
+`} />

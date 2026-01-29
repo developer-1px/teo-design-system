@@ -28,10 +28,16 @@ import LandingPage from './features/home/LandingPage';
 const mdxPages = import.meta.glob('/src/docs/**/*.mdx', { eager: true });
 
 const docsRoutes = Object.keys(mdxPages).sort().map((path) => {
-  const filename = path.split('/').pop()?.replace('.mdx', '') || '';
+  // path: "/src/docs/01-Overview/00-prd.mdx"
+  const parts = path.split('/');
+  const filename = parts.pop()?.replace('.mdx', '') || '';
+  const folder = parts.pop() || 'Uncategorized';
+
   const slug = filename.replace(/^\d+-/, '');
   const Component = (mdxPages[path] as any).default;
-  return { path: slug, Component };
+
+  // Use folder/slug as the path
+  return { path: `${folder}/${slug}`, Component };
 });
 
 function AppContent() {

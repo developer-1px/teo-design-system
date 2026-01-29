@@ -5,7 +5,7 @@ export function Sidebar() {
     return (
         <aside className={styles.sidebar}>
             <button className={styles.composeBtn}>
-                <Plus size={24} />
+                <Plus size={20} />
                 Compose
             </button>
 

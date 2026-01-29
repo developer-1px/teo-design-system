@@ -1,107 +1,97 @@
 import { style } from '@vanilla-extract/css';
 import { vars } from '../styles/vars.css';
-import { ui } from '../styles/utils';
 
-export const container = style([
-    {
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-        backgroundColor: vars.surface.base.bg, // Cleaner white/dark background
-        overflow: 'hidden',
-    }
-]);
-
-// Keyline: 48px from top for all sections
-
-export const sidebar = style({
-    width: '240px', // Slightly wider for better breathing room
-    borderRight: '1px solid rgba(0,0,0,0.04)', // Subtle separator
+export const container = style({
+    display: 'flex',
+    minHeight: '100vh',
+    width: '100%',
     backgroundColor: vars.surface.base.bg,
-    padding: `${vars.spacing[48]} ${vars.spacing[16]} ${vars.spacing[16]}`, // Top padding 48px
-    flexShrink: 0,
-    overflowY: 'auto',
+    // Ensure it fills the screen
+    position: 'relative'
 });
 
 export const content = style({
     flex: 1,
-    overflowY: 'auto',
-    height: '100%',
-    scrollBehavior: 'smooth',
+    display: 'flex',
+    flexDirection: 'column',
+    overflowY: 'auto', // Allow scrolling for the main content
 });
 
-// Main Content Layout using CSS Grid/Subgrid Pattern
-// [ Sidebar (Fixed) ] [ . . . . . . Main Content Area . . . . . . ]
-//                     [ Gap ] [ Content (Prose) ] [ Gap ] [ TOC ]
-
-// Main Content Layout
 export const contentInner = style({
-    maxWidth: '1400px', // Wider to accommodate TOC and breakout content
-    margin: '0 auto',
-    padding: `${vars.spacing[48]} ${vars.spacing[32]}`,
-
-    display: 'flex', // Back to Flex for sidebar/content separation
-    gap: '64px', // More space between content and TOC
-    alignItems: 'flex-start',
-    justifyContent: 'center', // Center the whole block
-});
-
-export const article = style({
+    display: 'flex',
     flex: 1,
-    minWidth: 0,
-    // No conflicting display: grid here. Let Markdown.css.ts handle the prose grid.
+    maxWidth: '1200px', // Limit reading width
+    margin: '0 auto',
+    width: '100%',
+    padding: vars.spacing[24], // large
+    gap: vars.spacing[32] // xlarge
 });
 
-export const tocWrapper = style({
-    width: '240px',
-    flexShrink: 0,
+export const sidebar = style({
+    width: '220px', // slightly more compact
+    borderRight: `1px solid ${vars.color.border}`,
+    padding: vars.spacing[16], // compact padding
+    overflowY: 'auto',
+    height: '100vh',
     position: 'sticky',
-    top: vars.spacing[48],
+    top: 0,
+    backgroundColor: vars.surface.subtle.bg,
+    flexShrink: 0
+});
 
-    '@media': {
-        'screen and (max-width: 1280px)': {
-            display: 'none', // Hide TOC earlier if screen is too narrow
-        }
+export const sectionTitle = style({
+    fontSize: vars.fontSize.xs, // 11px
+    fontWeight: 600,
+    textTransform: 'uppercase',
+    color: vars.color.mutedForeground,
+    marginBottom: vars.spacing[4], // 4px
+    marginTop: vars.spacing[16], // 16px instead of 24px
+    letterSpacing: '0.05em',
+    ':first-child': {
+        marginTop: 0
     }
 });
 
 export const navList = style({
     listStyle: 'none',
     padding: 0,
-    margin: 0,
+    margin: 0
 });
 
 export const navLink = style({
     display: 'block',
-    padding: `${vars.spacing[4]} ${vars.spacing[8]}`, // Reduced from 8 12
-    fontSize: vars.fontSize.sm, // Smaller font for compact look
-    color: vars.surface.base.text,
+    padding: `${vars.spacing[4]} ${vars.spacing[8]}`, // even tighter padding
+    color: vars.color.mutedForeground,
     textDecoration: 'none',
-    borderRadius: '4px', // Reduced radius
-    // transition: 'all 0.2s', // Removed animation as requested
+    borderRadius: vars.borderRadius.sm, // smaller radius for tighter items
+    marginBottom: '1px',
+    fontSize: vars.fontSize.sm, // 12px
+    transition: 'all 0.1s ease',
     ':hover': {
-        backgroundColor: vars.surface.subtle.bg,
+        color: vars.color.primary,
+        backgroundColor: vars.color.accent
     },
     selectors: {
         '&.active': {
-            backgroundColor: vars.color.gray100, // Monochrome Active BG
-            color: vars.color.gray800, // Monochrome Active Text (Black/Zinc-900)
-            fontWeight: vars.weight.medium,
+            color: vars.color.primary,
+            backgroundColor: vars.color.accent,
+            fontWeight: 500
         }
     }
 });
 
-export const sectionTitle = style([
-    ui.overline(),
-    {
-        color: '#6b7280',
-        marginTop: vars.spacing[40],
-        marginBottom: vars.spacing[8],
-        paddingLeft: vars.spacing[8],
-        selectors: {
-            '&:first-child': {
-                marginTop: 0,
-            }
+export const article = style({
+    flex: 1,
+    minWidth: 0, // Flex child fix
+    paddingBottom: '100px'
+});
+
+export const tocWrapper = style({
+    width: '240px',
+    flexShrink: 0,
+    '@media': {
+        'screen and (max-width: 1024px)': {
+            display: 'none'
         }
     }
-]);
+});

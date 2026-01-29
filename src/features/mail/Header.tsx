@@ -10,8 +10,8 @@ export function Header() {
                     <Menu size={24} />
                 </button>
                 <div className={styles.logo}>
-                    <Mail size={24} color="#EA4335" />
-                    <span className={styles.logoText}>Gmail</span>
+                    <Mail size={24} className={styles.mailIcon} />
+                    <span className={styles.logoText}>Mail</span>
                 </div>
             </div>
 
