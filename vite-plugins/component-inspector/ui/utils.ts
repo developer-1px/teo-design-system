@@ -1,15 +1,18 @@
 
-export function getDebugSource(el: HTMLElement | null): { fileName: string; lineNumber: number; columnNumber: number } | null {
+export function getDebugSource(el: HTMLElement | null): { fileName: string; lineNumber: number; columnNumber: number; loc?: number } | null {
     if (!el) return null;
 
     // 1. Check for explicit data attribute (fastest)
     const inspectorLine = el.getAttribute('data-inspector-line')
+    const locAttr = el.getAttribute('data-inspector-loc')
+
     if (inspectorLine) {
         const [fileName, line, col] = inspectorLine.split(':')
         return {
             fileName,
             lineNumber: parseInt(line, 10),
-            columnNumber: parseInt(col, 10)
+            columnNumber: parseInt(col, 10),
+            loc: locAttr ? parseInt(locAttr, 10) : undefined
         }
     }
 
@@ -30,22 +33,57 @@ export function getDebugSource(el: HTMLElement | null): { fileName: string; line
     let fiber = el[key];
 
     while (fiber) {
-        if (fiber._debugSource) return fiber._debugSource;
-        if (fiber._debugInfo) return fiber._debugInfo;
-
-        // Also check owner (component that created this)
-        // Often describing the component is more useful than the host node
-        // But for the overlay we might want the exact host node's source if available
-        // For now, let's stick to the closest debug source in the tree.
-
-        if (fiber._debugOwner && fiber._debugOwner._debugSource) {
-            // return fiber._debugOwner._debugSource;
-            // Note: Using owner might jump to the parent component.
-            // Standard React DevTools inspector logic is complex.
-            // Let's use the simple traversal for now.
+        if (fiber._debugSource) {
+            // Fiber doesn't have locAttr easily, but we can return fiber._debugSource
+            return fiber._debugSource;
         }
+        if (fiber._debugInfo) return fiber._debugInfo;
 
         fiber = fiber.return;
     }
     return null;
+}
+
+export function getComponentStack(el: HTMLElement | null): string[] {
+    if (!el) return [];
+
+    let key: string | undefined;
+    for (const k in el) {
+        if (k.startsWith('__reactFiber$')) {
+            key = k;
+            break;
+        }
+    }
+
+    if (!key) return [];
+
+    // @ts-ignore
+    let fiber = el[key];
+    const stack: string[] = [];
+
+    while (fiber) {
+        const type = fiber.type;
+        let name = '';
+
+        if (typeof type === 'function') {
+            name = type.displayName || type.name || 'Anonymous';
+        } else if (typeof type === 'string') {
+            // Skip host components (div, span, etc) if we only want React Components
+            // but keep primitives like 'Box' or 'Flex' if they have data attributes
+        } else if (type && typeof type === 'object' && type.$$typeof) {
+            // Handle Memo, ForwardRef, etc.
+            const wrappedType = type.type || type.render;
+            if (wrappedType) {
+                name = wrappedType.displayName || wrappedType.name || '';
+            }
+        }
+
+        if (name && name !== 'Anonymous' && !stack.includes(name)) {
+            stack.unshift(name);
+        }
+
+        fiber = fiber.return;
+    }
+
+    return stack;
 }

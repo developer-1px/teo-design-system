@@ -9,10 +9,6 @@ import {
     DownloadCloud,
     Search,
     Layout,
-    CheckCircle2,
-    XCircle,
-    TrendingUp,
-    TrendingDown,
     Filter,
     PlusCircle,
     Trash2,
@@ -23,17 +19,21 @@ import {
     ArrowRight,
     ArrowLeft,
     Square,
-    CheckSquare
+    CheckSquare,
+    Type,
+    Hash,
+    Calendar,
+    Tag,
+    MoreHorizontal,
+    User,
+    Image as ImageIcon
 } from 'lucide-react';
 import { Tabs } from '../../components/ui/Tabs';
-import { Avatar } from '../../components/ui/Avatar';
-import { Badge } from '../../components/ui/Badge';
-import { Progress } from '../../components/ui/Progress';
 
 /**
  * 1. TYPES & DEFAULTS
  */
-type UIType = 'Profile' | 'Badge' | 'Boolean' | 'Stack' | 'Single' | 'Progress' | 'Trend';
+type UIType = 'Text' | 'Number' | 'Date' | 'Status' | 'Person' | 'Image';
 type ToolbarItemType = 'Search' | 'Filter' | 'Action' | 'View';
 type SelectionType = 'None' | 'Single' | 'Multiple';
 
@@ -42,6 +42,7 @@ interface ColumnConfig {
     label: string;
     uiType: UIType;
     width?: string;
+    format?: string;
 }
 
 interface ToolbarConfig {
@@ -51,36 +52,51 @@ interface ToolbarConfig {
 }
 
 const CORE_COLUMNS: ColumnConfig[] = [
-    { id: 'product', label: 'Product', uiType: 'Profile', width: 'minmax(240px, 2fr)' },
-    { id: 'category', label: 'Category', uiType: 'Badge', width: 'minmax(120px, 1fr)' },
-    { id: 'inventory', label: 'Stock', uiType: 'Progress', width: 'minmax(150px, 1.2fr)' },
-    { id: 'performance', label: 'Sales', uiType: 'Trend', width: 'minmax(130px, 1fr)' },
-    { id: 'is_active', label: 'Status', uiType: 'Boolean', width: '80px' },
+    { id: 'image', label: 'Asset', uiType: 'Image', width: '80px' },
+    { id: 'product', label: 'Product Name', uiType: 'Text', width: 'minmax(200px, 2fr)' },
+    { id: 'assignee', label: 'Assignee', uiType: 'Person', width: 'minmax(150px, 1.2fr)' },
+    { id: 'status', label: 'Fulfillment', uiType: 'Status', width: 'minmax(120px, 1fr)' },
+    { id: 'date', label: 'Created At', uiType: 'Date', width: 'minmax(120px, 1fr)' },
+    { id: 'amount', label: 'Total Amount', uiType: 'Number', format: 'currency', width: 'minmax(120px, 1fr)' },
 ];
 
 const INITIAL_TOOLBAR: ToolbarConfig[] = [
     { id: 't1', type: 'Search', label: 'Search records...' },
-    { id: 't2', type: 'Filter', label: 'All Categories' },
+    { id: 't2', type: 'Filter', label: 'Status' },
 ];
 
 /**
  * 2. MOCK DATA
  */
 const KO_PRODUCTS = ['Premium Wallet', 'NC Headset', 'Eco Kit', 'Curved Monitor', 'Jeju Tea', 'Smart Purifier', 'Keyboard'];
+const STATUS_PRESETS = ['Ready', 'Shipped', 'Processing', 'Cancelled'];
+
 const generateMockRows = (count: number, locale: 'en' | 'ko') => {
     const f = locale === 'ko' ? fakerKO : faker;
-    return Array.from({ length: count }).map(() => ({
-        id: f.string.uuid(),
-        product: {
-            name: locale === 'ko' ? f.helpers.arrayElement(KO_PRODUCTS) : f.commerce.productName(),
-            sku: f.string.alphanumeric(8).toUpperCase(),
-            image: f.image.urlPicsumPhotos({ width: 64, height: 64 })
-        },
-        category: f.commerce.department(),
-        inventory: { stock: f.number.int({ min: 0, max: 200 }), percent: f.number.int({ min: 10, max: 100 }) },
-        performance: { value: parseFloat(f.commerce.price({ min: 100, max: 5000 })), change: f.number.int({ min: -20, max: 40 }) },
-        is_active: f.datatype.boolean()
-    }));
+    return Array.from({ length: count }).map(() => {
+        const personName = f.person.fullName();
+        return {
+            id: f.string.uuid(),
+            sku: `#ORD-${f.string.numeric(4)}`,
+            product: {
+                title: locale === 'ko' ? f.helpers.arrayElement(KO_PRODUCTS) : f.commerce.productName(),
+                subtitle: f.commerce.productAdjective() + ' series'
+            },
+            status: f.helpers.arrayElement(STATUS_PRESETS),
+            date: f.date.recent({ days: 30 }).toISOString().split('T')[0],
+            amount: parseFloat(f.commerce.price({ min: 100, max: 5000 })),
+            assignee: {
+                name: personName,
+                email: f.internet.email({
+                    firstName: personName.split(' ')[0],
+                    lastName: personName.split(' ').slice(1).join(' '),
+                    provider: 'teodesign.io'
+                }).toLowerCase(),
+                avatar: f.image.avatar(),
+            },
+            image: f.image.urlPicsumPhotos({ width: 240, height: 160 }),
+        };
+    });
 };
 
 /**
@@ -88,7 +104,7 @@ const generateMockRows = (count: number, locale: 'en' | 'ko') => {
  */
 export default function TableDesignerPage() {
     const [locale, setLocale] = useState<'en' | 'ko'>('ko');
-    const [tableName, setTableName] = useState('Product Management');
+    const [tableName, setTableName] = useState('Order Management');
     const [selectionType, setSelectionType] = useState<SelectionType>('Multiple');
     const [showPagination, setShowPagination] = useState(true);
     const [columns, setColumns] = useState<ColumnConfig[]>(CORE_COLUMNS);
@@ -96,7 +112,7 @@ export default function TableDesignerPage() {
     const [toolbarItems, setToolbarItems] = useState<ToolbarConfig[]>(INITIAL_TOOLBAR);
     const [activeTab, setActiveTab] = useState<'General' | 'Columns' | 'Toolbar'>('General');
 
-    const mockData = useMemo(() => generateMockRows(5, locale), [locale]);
+    const mockData = useMemo(() => generateMockRows(12, locale), [locale]);
 
     // Grid Template Calculation including Checkbox Column
     const checkboxWidth = selectionType !== 'None' ? '48px ' : '';
@@ -128,7 +144,7 @@ export default function TableDesignerPage() {
                     <div style={{ background: '#18181b', color: '#fff', padding: '6px', borderRadius: '6px' }}><TableIcon size={18} /></div>
                     <div>
                         <h1 style={{ fontSize: '15px', fontWeight: 800 }}>Table Builder</h1>
-                        <p style={{ fontSize: '11px', color: '#71717a' }}>Define patterns for high-density data</p>
+                        <p style={{ fontSize: '11px', color: '#71717a' }}>Universal Admin Table Patterns</p>
                     </div>
                 </div>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -193,10 +209,23 @@ export default function TableDesignerPage() {
                             {columns.map(col => {
                                 const isSelected = selectedColId === col.id;
                                 const headerClasses = [styles.headerCell, isSelected ? styles.selectedHeader : ''].join(' ');
+
+                                const TypeIcon =
+                                    col.uiType === 'Text' ? Type :
+                                        col.uiType === 'Number' ? Hash :
+                                            col.uiType === 'Date' ? Calendar :
+                                                col.uiType === 'Status' ? Tag :
+                                                    col.uiType === 'Person' ? User : ImageIcon;
+
                                 return (
                                     <div key={col.id} className={headerClasses} onClick={() => setSelectedColId(col.id)}>
-                                        <span>{col.label}</span>
-                                        <div className={styles.patternBadge}>{col.uiType.toUpperCase()}</div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1 }}>
+                                            <TypeIcon size={12} color={isSelected ? '#3b82f6' : '#a1a1aa'} />
+                                            <span>{col.label}</span>
+                                        </div>
+                                        <div className={styles.shyTrigger} style={{ opacity: isSelected ? 1 : 0 }}>
+                                            <MoreHorizontal size={14} />
+                                        </div>
                                     </div>
                                 );
                             })}
@@ -212,43 +241,91 @@ export default function TableDesignerPage() {
                                         </div>
                                     )}
                                     {columns.map(col => {
-                                        const raw = (row as any)[col.id];
+                                        // Dynamic Mock Mapping: Determine what data to show based on the UI Type
+                                        let data = (row as any)[col.id];
+                                        if (col.uiType === 'Person') data = row.assignee;
+                                        if (col.uiType === 'Image') data = row.image;
+                                        if (col.uiType === 'Date' && typeof data !== 'string') data = row.date;
+                                        if (col.uiType === 'Number' && typeof data !== 'number') data = row.amount;
+                                        if (col.uiType === 'Status' && typeof data !== 'string') data = row.status;
+                                        if (col.uiType === 'Text' && typeof data === 'string') data = { title: data, subtitle: row.sku };
+
                                         const isSelected = selectedColId === col.id;
                                         const cellClasses = [styles.cell, isSelected ? styles.selectedCell : ''].join(' ');
+
                                         return (
-                                            <div key={`${row.id}-${col.id}`} className={cellClasses} onClick={() => setSelectedColId(col.id)}>
-                                                {col.uiType === 'Profile' && (
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                                                        <Avatar src={row.product.image} fallback={row.product.name} size="sm" />
-                                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                                            <span style={{ fontWeight: 600, color: '#18181b' }}>{row.product.name}</span>
-                                                            <span style={{ fontSize: '11px', color: '#a1a1aa' }}>{row.product.sku}</span>
+                                            <div key={`${row.id}-${col.id}`} className={cellClasses} onClick={() => setSelectedColId(col.id)} style={{ justifyContent: col.uiType === 'Number' ? 'flex-end' : 'flex-start' }}>
+                                                {col.uiType === 'Text' && (
+                                                    <div className={styles.textStack}>
+                                                        <span className={styles.primaryText}>
+                                                            {typeof data === 'string' ? data : data?.title || data?.name || String(data)}
+                                                        </span>
+                                                        {(col.format === 'double' || !col.format) && (
+                                                            <span className={styles.secondaryText}>
+                                                                {data?.subtitle || data?.email || 'Secondary Label'}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {col.uiType === 'Number' && (
+                                                    <span style={{ fontFamily: 'monospace', letterSpacing: '-0.02em', color: '#18181b', fontWeight: 600 }}>
+                                                        {col.format === 'currency' ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(data)) :
+                                                            col.format === 'percent' ? `${(Number(data) / 5000 * 100).toFixed(1)}%` :
+                                                                Number(data).toLocaleString()}
+                                                    </span>
+                                                )}
+
+                                                {col.uiType === 'Date' && (
+                                                    <span style={{ color: '#71717a', fontSize: '12px', fontWeight: 500 }}>
+                                                        {col.format === 'relative' ? '2 days ago' :
+                                                            col.format === 'datetime' ? `${String(data)} 14:30` :
+                                                                String(data)}
+                                                    </span>
+                                                )}
+
+                                                {col.uiType === 'Status' && (
+                                                    <>
+                                                        {col.format === 'indicator' ? (
+                                                            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                                                <div style={{ width: 6, height: 6, borderRadius: '50%', background: data === 'Cancelled' ? '#ef4444' : '#10b981' }} />
+                                                                <span style={{ fontSize: '12px', fontWeight: 600, color: '#18181b' }}>{String(data)}</span>
+                                                            </div>
+                                                        ) : (
+                                                            <div className={styles.badge} style={{
+                                                                backgroundColor:
+                                                                    data === 'Shipped' ? '#ecfdf5' :
+                                                                        data === 'Cancelled' ? '#fef2f2' :
+                                                                            data === 'Processing' ? '#eff6ff' : '#f4f4f5',
+                                                                color:
+                                                                    data === 'Shipped' ? '#059669' :
+                                                                        data === 'Cancelled' ? '#dc2626' :
+                                                                            data === 'Processing' ? '#2563eb' : '#52525b'
+                                                            }}>
+                                                                {String(data)}
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                )}
+
+                                                {col.uiType === 'Person' && (
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                                        {(col.format === 'avatar' || !col.format) && <img src={data.avatar} className={styles.avatar} alt="" />}
+                                                        {col.format === 'initial' && (
+                                                            <div className={styles.avatar} style={{ background: '#3b82f6', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 800 }}>
+                                                                {data.name.charAt(0)}
+                                                            </div>
+                                                        )}
+                                                        <div className={styles.textStack}>
+                                                            <span className={styles.primaryText} style={{ fontSize: '12px' }}>{data.name}</span>
+                                                            <span className={styles.secondaryText}>{data.email}</span>
                                                         </div>
                                                     </div>
                                                 )}
-                                                {col.uiType === 'Single' && <span style={{ color: '#18181b' }}>{String(raw)}</span>}
-                                                {col.uiType === 'Badge' && <Badge intent="neutral" variant="subtle" size="sm">{String(raw)}</Badge>}
-                                                {col.uiType === 'Boolean' && (
-                                                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                                                        {raw ? <CheckCircle2 size={18} color="#10b981" fill="#d1fae5" /> : <XCircle size={18} color="#f43f5e" fill="#ffe4e6" />}
-                                                    </div>
-                                                )}
-                                                {col.uiType === 'Progress' && (
-                                                    <div style={{ width: '100%', paddingRight: 20 }}>
-                                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: 4 }}>
-                                                            <span style={{ fontWeight: 600 }}>{row.inventory.stock} Items</span>
-                                                            <span style={{ color: '#a1a1aa' }}>{row.inventory.percent}%</span>
-                                                        </div>
-                                                        <Progress value={row.inventory.percent} size="sm" intent="primary" />
-                                                    </div>
-                                                )}
-                                                {col.uiType === 'Trend' && (
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                                        <span style={{ fontWeight: 700 }}>${row.performance.value.toLocaleString()}</span>
-                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 2, padding: '2px 6px', borderRadius: 4, fontSize: '10px', fontWeight: 700, background: row.performance.change > 0 ? '#dcfce7' : '#fee2e2', color: row.performance.change > 0 ? '#166534' : '#991b1b' }}>
-                                                            {row.performance.change > 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
-                                                            {Math.abs(row.performance.change)}%
-                                                        </div>
+
+                                                {col.uiType === 'Image' && (
+                                                    <div className={styles.assetThumb}>
+                                                        <img src={data} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
                                                     </div>
                                                 )}
                                             </div>
@@ -260,7 +337,7 @@ export default function TableDesignerPage() {
                         {/* PAGINATION */}
                         {showPagination && (
                             <div className={styles.pagination}>
-                                <div>Showing 1 - 5 of 250 records</div>
+                                <div>Showing 1 - 12 of 250 records</div>
                                 <div style={{ display: 'flex', gap: 8 }}>
                                     <button className={styles.chip} disabled><ArrowLeft size={14} /></button>
                                     <button className={styles.chip}><ArrowRight size={14} /></button>
@@ -327,15 +404,114 @@ export default function TableDesignerPage() {
                                 <>
                                     <div className={styles.sectionLabel}>Display Name</div>
                                     <input className={styles.selectField} value={selectedColumn.label} onChange={(e) => updateCol(selectedColumn.id, { label: e.target.value })} />
-                                    <div className={styles.sectionLabel}>Patterns</div>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
-                                        {['Profile', 'Single', 'Badge', 'Boolean', 'Progress', 'Trend'].map(type => (
-                                            <button key={type} onClick={() => updateCol(selectedColumn.id, { uiType: type as UIType })} className={styles.paletteItem} style={{
-                                                flexDirection: 'column', padding: '12px 8px',
+
+                                    <div className={styles.sectionLabel}>Universal Type</div>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+                                        {(['Text', 'Number', 'Date', 'Status', 'Person', 'Image'] as UIType[]).map(type => (
+                                            <button key={type} onClick={() => updateCol(selectedColumn.id, { uiType: type, format: undefined })} className={styles.paletteItem} style={{
+                                                flexDirection: 'column', padding: '8px 4px', fontSize: '10px',
                                                 borderColor: selectedColumn.uiType === type ? '#3b82f6' : '#e4e4e7',
-                                                background: selectedColumn.uiType === type ? '#3b82f608' : '#fff', fontSize: '10px'
-                                            }}>{type}</button>
+                                                background: selectedColumn.uiType === type ? '#3b82f608' : '#fff',
+                                            }}>
+                                                {type === 'Text' && <Type size={14} />}
+                                                {type === 'Number' && <Hash size={14} />}
+                                                {type === 'Date' && <Calendar size={14} />}
+                                                {type === 'Status' && <Tag size={14} />}
+                                                {type === 'Person' && <User size={14} />}
+                                                {type === 'Image' && <ImageIcon size={14} />}
+                                                <span style={{ marginTop: 4 }}>{type}</span>
+                                            </button>
                                         ))}
+                                    </div>
+
+                                    <div className={styles.sectionLabel}>Detailed Format</div>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                                        {selectedColumn.uiType === 'Number' && (
+                                            <>
+                                                {['decimal', 'currency', 'percent'].map(f => (
+                                                    <button key={f} onClick={() => updateCol(selectedColumn.id, { format: f })} className={styles.paletteItem} style={{
+                                                        justifyContent: 'flex-start',
+                                                        background: selectedColumn.format === f ? '#f8fafc' : '#fff',
+                                                        borderColor: selectedColumn.format === f ? '#3b82f6' : '#e4e4e7'
+                                                    }}>
+                                                        <div style={{ width: 14, height: 14, borderRadius: '50%', border: `1px solid ${selectedColumn.format === f ? '#3b82f6' : '#cbd5e1'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            {selectedColumn.format === f && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#3b82f6' }} />}
+                                                        </div>
+                                                        <span style={{ textTransform: 'capitalize' }}>{f}</span>
+                                                    </button>
+                                                ))}
+                                            </>
+                                        )}
+                                        {selectedColumn.uiType === 'Date' && (
+                                            <>
+                                                {['absolute', 'relative', 'datetime'].map(f => (
+                                                    <button key={f} onClick={() => updateCol(selectedColumn.id, { format: f })} className={styles.paletteItem} style={{
+                                                        justifyContent: 'flex-start',
+                                                        background: selectedColumn.format === f ? '#f8fafc' : '#fff',
+                                                        borderColor: selectedColumn.format === f ? '#3b82f6' : '#e4e4e7'
+                                                    }}>
+                                                        <div style={{ width: 14, height: 14, borderRadius: '50%', border: `1px solid ${selectedColumn.format === f ? '#3b82f6' : '#cbd5e1'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            {selectedColumn.format === f && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#3b82f6' }} />}
+                                                        </div>
+                                                        <span style={{ textTransform: 'capitalize' }}>{f}</span>
+                                                    </button>
+                                                ))}
+                                            </>
+                                        )}
+                                        {selectedColumn.uiType === 'Text' && (
+                                            <>
+                                                {['single', 'double'].map(f => (
+                                                    <button key={f} onClick={() => updateCol(selectedColumn.id, { format: f })} className={styles.paletteItem} style={{
+                                                        justifyContent: 'flex-start',
+                                                        background: selectedColumn.format === f || (!selectedColumn.format && f === 'double') ? '#f8fafc' : '#fff',
+                                                        borderColor: selectedColumn.format === f || (!selectedColumn.format && f === 'double') ? '#3b82f6' : '#e4e4e7'
+                                                    }}>
+                                                        <div style={{ width: 14, height: 14, borderRadius: '50%', border: `1px solid (selectedColumn.format === f || (!selectedColumn.format && f === 'double')) ? '#3b82f6' : '#cbd5e1'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            {(selectedColumn.format === f || (!selectedColumn.format && f === 'double')) && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#3b82f6' }} />}
+                                                        </div>
+                                                        <span style={{ textTransform: 'capitalize' }}>{f === 'double' ? 'Entity (Title + Sub)' : 'Plain Text'}</span>
+                                                    </button>
+                                                ))}
+                                            </>
+                                        )}
+                                        {selectedColumn.uiType === 'Status' && (
+                                            <>
+                                                {['badge', 'indicator'].map(f => (
+                                                    <button key={f} onClick={() => updateCol(selectedColumn.id, { format: f })} className={styles.paletteItem} style={{
+                                                        justifyContent: 'flex-start',
+                                                        background: selectedColumn.format === f || (!selectedColumn.format && f === 'badge') ? '#f8fafc' : '#fff',
+                                                        borderColor: selectedColumn.format === f || (!selectedColumn.format && f === 'badge') ? '#3b82f6' : '#e4e4e7'
+                                                    }}>
+                                                        <div style={{ width: 14, height: 14, borderRadius: '50%', border: `1px solid (selectedColumn.format === f || (!selectedColumn.format && f === 'badge')) ? '#3b82f6' : '#cbd5e1'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            {(selectedColumn.format === f || (!selectedColumn.format && f === 'badge')) && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#3b82f6' }} />}
+                                                        </div>
+                                                        <span style={{ textTransform: 'capitalize' }}>{f}</span>
+                                                    </button>
+                                                ))}
+                                            </>
+                                        )}
+                                        {selectedColumn.uiType === 'Person' && (
+                                            <>
+                                                {['avatar', 'initial', 'text'].map(f => (
+                                                    <button key={f} onClick={() => updateCol(selectedColumn.id, { format: f })} className={styles.paletteItem} style={{
+                                                        justifyContent: 'flex-start',
+                                                        background: selectedColumn.format === f || (!selectedColumn.format && f === 'avatar') ? '#f8fafc' : '#fff',
+                                                        borderColor: selectedColumn.format === f || (!selectedColumn.format && f === 'avatar') ? '#3b82f6' : '#e4e4e7'
+                                                    }}>
+                                                        <div style={{ width: 14, height: 14, borderRadius: '50%', border: `1px solid ${(selectedColumn.format === f || (!selectedColumn.format && f === 'avatar')) ? '#3b82f6' : '#cbd5e1'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            {(selectedColumn.format === f || (!selectedColumn.format && f === 'avatar')) && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#3b82f6' }} />}
+                                                        </div>
+                                                        <span style={{ textTransform: 'capitalize' }}>
+                                                            {f === 'avatar' ? 'Full (Avatar + Info)' : f === 'initial' ? 'Initial Circle' : 'Plain Meta (No Avatar)'}
+                                                        </span>
+                                                    </button>
+                                                ))}
+                                            </>
+                                        )}
+                                        {/* Fallback for others */}
+                                        {(!['Number', 'Date', 'Text', 'Status', 'Person'].includes(selectedColumn.uiType)) && (
+                                            <p style={{ fontSize: '11px', color: '#a1a1aa', textAlign: 'center', padding: '12px 0' }}>No specific formats available for this type</p>
+                                        )}
                                     </div>
                                 </>
                             ) : (

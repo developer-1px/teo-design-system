@@ -29,3 +29,35 @@ export const violationLabel = {
     whiteSpace: 'nowrap' as const,
     boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
 };
+
+export const statusPanel = {
+    position: 'fixed' as const,
+    bottom: 12,
+    right: 12,
+    background: '#18181b', // inc-900 like dark gray
+    color: 'white',
+    padding: '8px 12px',
+    borderRadius: '6px',
+    fontSize: '12px',
+    fontWeight: 500,
+    pointerEvents: 'auto' as const,
+    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+    border: '1px solid #27272a',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    fontFamily: 'Inter, system-ui, sans-serif',
+};
+
+export const checkboxLabel = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    cursor: 'pointer',
+    userSelect: 'none' as const,
+};
+
+export const checkboxInput = {
+    cursor: 'pointer',
+    accentColor: '#3b82f6', // blue-500
+};

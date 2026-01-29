@@ -78,6 +78,7 @@ export const gridTable = style({
 });
 
 export const headerCell = style({
+    position: 'relative',
     padding: '12px 16px',
     background: '#fafafa',
     borderBottom: `1px solid ${zinc[200]}`,
@@ -99,23 +100,27 @@ export const headerCell = style({
     }
 });
 
-export const patternBadge = style({
-    background: '#3b82f611',
-    padding: '2px 4px',
-    borderRadius: 3,
-    fontSize: '9px',
-    fontWeight: 800,
-    color: '#3b82f6',
+export const shyTrigger = style({
     opacity: 0,
-    transform: 'translateX(4px)',
-    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: 'opacity 0.2s',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '24px',
+    height: '24px',
+    borderRadius: '4px',
+    marginLeft: 'auto',
+    ':hover': {
+        background: 'rgba(0,0,0,0.05)',
+    },
     selectors: {
         [`${headerCell}:hover &`]: {
             opacity: 1,
-            transform: 'translateX(0)',
         }
     }
 });
+
+
 
 
 export const bodyRow = style({
@@ -172,35 +177,57 @@ export const checkbox = style({
 
 
 // Atomic Components within table
-export const avatar = style({
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    marginRight: 12,
-    background: zinc[200],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-});
-
 export const badge = style({
     padding: '2px 8px',
-    borderRadius: 99,
+    borderRadius: 6,
     fontSize: '11px',
     fontWeight: 600,
+    display: 'inline-flex',
+    alignItems: 'center',
 });
 
-export const progressBarBg = style({
-    flex: 1,
-    height: 6,
+export const avatar = style({
+    width: 28,
+    height: 28,
+    borderRadius: '50%',
     background: zinc[100],
-    borderRadius: 3,
-    overflow: 'hidden',
-    marginTop: 8,
+    objectFit: 'cover',
+    flexShrink: 0,
 });
 
-export const progressBarFill = style({
-    height: '100%',
-    background: '#3b82f6',
+export const assetThumb = style({
+    width: 56,
+    height: 40,
+    borderRadius: 6,
+    overflow: 'hidden',
+    background: zinc[100],
+    border: `1px solid ${zinc[200]}`,
+    display: 'flex',
+    flexShrink: 0,
+});
+
+export const textStack = style({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    overflow: 'hidden',
+});
+
+export const primaryText = style({
+    fontWeight: 600,
+    color: zinc[900],
+    fontSize: '13px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+});
+
+export const secondaryText = style({
+    fontSize: '11px',
+    color: zinc[400],
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
 });
 
 // Inspector UI

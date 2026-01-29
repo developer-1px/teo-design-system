@@ -9,7 +9,8 @@ import {
     CircuitBoard,
     Palette,
     SquarePen,
-    Code
+    Code,
+    FileDiff
 } from 'lucide-react';
 import * as styles from './GlobalNav.css';
 import { ThemeToggle } from '../ThemeToggle';
@@ -41,6 +42,7 @@ export function GlobalNav() {
                 <NavItem to="/admin/form-builder" icon={SquarePen} label="Form Builder" activeMatch="/admin/form-builder" />
                 <NavItem to="/admin/studio/designer" icon={Palette} label="Table Designer" activeMatch="/admin/studio" />
                 <NavItem to="/admin/flow2" icon={CircuitBoard} label="Flow Editor" activeMatch="/admin/flow" />
+                <NavItem to="/concept/schema-doc" icon={FileDiff} label="Schema Doc Concept" />
             </div>
 
             <div className={styles.bottomSpacer}>

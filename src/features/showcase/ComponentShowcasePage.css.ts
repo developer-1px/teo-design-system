@@ -8,6 +8,15 @@ export const container = style({
     flexDirection: 'column',
     overflowY: 'auto',
     backgroundColor: vars.color.gray50,
+    scrollSnapType: 'y mandatory',
+    scrollPaddingTop: vars.spacing[32],
+});
+
+export const sectionWrapper = style({
+    scrollSnapAlign: 'start',
+    scrollMarginTop: vars.spacing[32],
+    minHeight: 'fit-content',
+    marginBottom: vars.spacing[64],
 });
 
 export const contentWrapper = style({

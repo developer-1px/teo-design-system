@@ -6,6 +6,7 @@ import * as styles from './DesignLinterOverlay.styles';
 
 export function DesignLinterOverlay({ isEnabled = true }: { isEnabled?: boolean }) {
     const [violations, setViolations] = useState<Violation[]>([]);
+    const [showOverlay, setShowOverlay] = useState(true);
 
     const checkDocs = useCallback(() => {
         if (!isEnabled) return;
@@ -13,6 +14,10 @@ export function DesignLinterOverlay({ isEnabled = true }: { isEnabled?: boolean 
         // We scan the entire body for now, but in a real app might scope to the #root
         const root = document.getElementById('root') || document.body;
         const results = runDesignLint({ root });
+
+        // Expose to window for AI Agent Verification
+        // @ts-ignore
+        window.__DESIGN_LINT_VIOLATIONS__ = results;
 
         // Log to console for debugging
         if (results.length > 0) {
@@ -71,11 +76,11 @@ export function DesignLinterOverlay({ isEnabled = true }: { isEnabled?: boolean 
         };
     }, [isEnabled, checkDocs]);
 
-    if (!isEnabled || violations.length === 0) return null;
+    if (!isEnabled) return null;
 
     return (
         <div style={styles.overlayContainer} data-design-lint-ignore="true">
-            {violations.map((v, i) => (
+            {showOverlay && violations.map((v, i) => (
                 <div
                     key={i}
                     style={{
@@ -92,21 +97,21 @@ export function DesignLinterOverlay({ isEnabled = true }: { isEnabled?: boolean 
                 </div>
             ))}
 
-            {/* Status Indicator */}
-            <div style={{
-                position: 'fixed',
-                bottom: 12,
-                right: 12,
-                background: '#ff0000',
-                color: 'white',
-                padding: '4px 8px',
-                borderRadius: '4px',
-                fontSize: '12px',
-                fontWeight: 'bold',
-                pointerEvents: 'auto',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
-            }}>
-                Design Lint: {violations.length} Violations
+            {/* Status Panel / Debug Controls */}
+            <div style={styles.statusPanel}>
+                <div style={{ fontWeight: 'bold', color: violations.length > 0 ? '#ef4444' : '#22c55e' }}>
+                    {violations.length} Violations
+                </div>
+                <div style={{ width: '1px', height: '16px', background: '#3f3f46' }} />
+                <label style={styles.checkboxLabel}>
+                    <input
+                        type="checkbox"
+                        checked={showOverlay}
+                        onChange={(e) => setShowOverlay(e.target.checked)}
+                        style={styles.checkboxInput}
+                    />
+                    Lint Overlay
+                </label>
             </div>
         </div>
     );

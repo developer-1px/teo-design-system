@@ -1,0 +1,53 @@
+# Resizable (PanelGroup)
+
+IDE-grade resizable layouts for Pro Tool orchestration. Unlike basic splitters, this system supports multiple nested or flat panels with deterministic percentage-based sizing and persistent border-drag interactions.
+
+## Key Features
+
+-   **Group-Panel-Handle Pattern**: Decoupled components for maximum flexibility.
+-   **N-Way Splitting**: Supports 2, 3, or $N$ columns without nested component hell.
+-   **Precision Physics**: 1px visible borders with 8px invisible hit areas for perfect ergonomics.
+-   **Stateful Persistence**: Built-in ratio management that reacts to container size.
+
+## Components
+
+### `<PanelGroup />`
+The orchestration container.
+- `direction`: `horizontal` | `vertical` (Default: `horizontal`)
+
+### `<Panel />`
+The content wrapper.
+- `id`: Unique identifier for size tracking.
+- `defaultSize`: Initial percentage width/height (0-100).
+
+### `<PanelHandle />`
+The actual interactive border.
+- `id`: Handle index (formatted as `handle-X`).
+
+---
+
+## 4-Column Pipeline Example (Wowed)
+
+This is how we build the high-fidelity data pipeline in the Admin Studio.
+
+```tsx
+import { PanelGroup, Panel, PanelHandle } from '@/components/ui/Resizable';
+
+export const Pipeline = () => (
+  <PanelGroup direction="horizontal">
+    <Panel id="source" defaultSize={20}> <SourceStage /> </Panel>
+    <PanelHandle id="handle-0" />
+    <Panel id="transform" defaultSize={30}> <LogicStage /> </Panel>
+    <PanelHandle id="handle-1" />
+    <Panel id="output" defaultSize={25}> <LiveStage /> </Panel>
+    <PanelHandle id="handle-2" />
+    <Panel id="target" defaultSize={25}> <SchemaStage /> </Panel>
+  </PanelGroup>
+);
+```
+
+## Best Practices
+
+1.  **Border First**: Resizing should always feel like dragging a physical boundary.
+2.  **Minimum Constraints**: It is recommended to keep panels at a minimum of 5-10% to prevent content occlusion.
+3.  **Visual Feedback**: Handles change to the primary brand color (Indigo) during interaction to provide operational confidence.

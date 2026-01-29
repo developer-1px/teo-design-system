@@ -12,9 +12,11 @@ import FlowPage from './features/admin/FlowPage';
 import FlowPage2 from './features/admin/FlowPage2';
 import TemplateStudioPage from './features/admin/TemplateStudioPage';
 import TableDesignerPage from './features/admin/TableDesignerPage';
+import TableDesignerConcept from './features/admin/TableDesignerConcept';
 import FormBuilderPage from './features/admin/FormBuilderPage';
 import StoryblokPage from './features/storyblok/StoryblokPage';
 import ComponentShowcasePage from './features/showcase/ComponentShowcasePage';
+import SchemaDocPage from './features/schema-doc/SchemaDocPage';
 
 import { ListPage } from './features/admin/ListPage';
 import { AdminLayout } from './features/admin/AdminLayout';
@@ -44,6 +46,7 @@ function AppContent() {
 
           <Route path="storyblok" element={<StoryblokPage />} />
           <Route path="components" element={<ComponentShowcasePage />} />
+          <Route path="concept/schema-doc" element={<SchemaDocPage />} />
 
           <Route path="docs" element={<DocsLayout />}>
             {docsRoutes.length > 0 && (
@@ -66,6 +69,7 @@ function AppContent() {
           <Route path="/admin/studio" element={<StudioPage />} />
           <Route path="/admin/studio/templates" element={<TemplateStudioPage />} />
           <Route path="/admin/studio/designer" element={<TableDesignerPage />} />
+          <Route path="/admin/studio/concept" element={<TableDesignerConcept />} />
           <Route path="/admin/flow" element={<FlowPage />} />
           <Route path="/admin/flow2" element={<FlowPage2 />} />
         </Route>
@@ -73,6 +77,7 @@ function AppContent() {
     </BrowserRouter>
   );
 }
+
 
 function App() {
   return (

@@ -43,7 +43,7 @@ export default function LandingPage() {
                     <span className={styles.sectionTitle}>01 — The Paradox</span>
                     <p className={styles.philosophyText}>
                         "AI 시대, 엔터프라이즈 앱을 위한 디자인 시스템은 어떻게 달라야 할까요?<br />
-                        우리는 AI가 <strong>디자인 능력을 100% 발휘</strong>하면서도,
+                        우리는 AI가 <strong>디자인 제안을 자유롭게</strong>하면서도,
                         <strong>시스템의 정합성</strong>을 유지할 수 있는
                         <strong>'투명한 제약(Transparent Constraints)'</strong>을 설계했습니다."
                     </p>
@@ -81,7 +81,7 @@ export default function LandingPage() {
                             <h3 className={styles.conceptTitle}>Implanted Instinct</h3>
                             <p className={styles.conceptText}>
                                 디자인 시스템이 단순한 라이브러리가 되어선 안 됩니다.<br />
-                                AI가 코드를 작성하는 순간, <strong>숙련된 디자이너의 직관</strong>이
+                                AI가 코드를 작성하는 순간, <strong>사전에 정의된 디자인 규칙</strong>이
                                 자동으로 코드에 이식되도록 구조를 설계했습니다.
                             </p>
                         </div>
@@ -96,8 +96,8 @@ export default function LandingPage() {
                             <h3 className={styles.conceptTitle}>Strengths (강점)</h3>
                             <p className={styles.conceptText}>
                                 <strong>Safety & Consistency.</strong><br />
-                                타입 시스템이 모든 디자인 토큰을 검증하므로, AI가 실수로 엉뚱한 값을 사용할 확률이 0%입니다.
-                                디자이너의 의도가 100% 코드로 보존됩니다.
+                                타입 시스템이 유효하지 않은 디자인 토큰 사용을 빌드 타임에 차단합니다.
+                                설계된 디자인 의도가 코드로 정확하게 전달됩니다.
                             </p>
                         </div>
                         <div className={styles.conceptItem}>
@@ -113,7 +113,7 @@ export default function LandingPage() {
                             <p className={styles.conceptText}>
                                 <strong>AI Scalability.</strong><br />
                                 에이전트의 수가 늘어나도 디자인 일관성은 유지됩니다.
-                                LLM이 더 똑똑해질수록, 이 시스템은 더 복잡한 UI를 더 완벽하게 통제할 것입니다.
+                                LLM이 더 똑똑해질수록, 이 시스템은 더 복잡한 UI를 더 일관성 있게 관리할 수 있을 것입니다.
                             </p>
                         </div>
                         <div className={styles.conceptItem}>
@@ -144,8 +144,8 @@ export default function LandingPage() {
                             <h3 className={styles.conceptTitle}>Phase 2: Components</h3>
                             <div className={styles.conceptText}>
                                 <ul style={{ paddingLeft: 20, margin: 0 }}>
-                                    <li><strong>SmartTable</strong>: 고밀도 데이터 그리드</li>
-                                    <li><strong>Modal / Drawer</strong>: 표준 오버레이 시스템</li>
+                                    <li><strong>Data Grid (Basic)</strong>: 기본 테이블 구조</li>
+                                    <li><strong>Overlay System (Preview)</strong>: 표준 오버레이 (Drawer/Modal)</li>
                                 </ul>
                             </div>
                         </div>
@@ -153,7 +153,7 @@ export default function LandingPage() {
                             <h3 className={styles.conceptTitle}>Phase 3: Polish</h3>
                             <div className={styles.conceptText}>
                                 <ul style={{ paddingLeft: 20, margin: 0 }}>
-                                    <li><strong>Command Bar</strong>: Spotlight 스타일 검색</li>
+                                    <li><strong>Search & Filter</strong>: 필터링 가능한 검색 바</li>
                                     <li><strong>Empty State</strong>: 표준 가이드 컴포넌트</li>
                                 </ul>
                             </div>
@@ -174,7 +174,7 @@ export default function LandingPage() {
                 <footer className={styles.footer}>
                     <div>Project Antigravity &copy; 2026</div>
                     <div style={{ display: 'flex', gap: 24 }}>
-                        <span style={{ opacity: 0.5 }}>v2.0.0-beta</span>
+                        <span style={{ opacity: 0.5 }}>v0.1.0-alpha</span>
                     </div>
                 </footer>
             </div>
