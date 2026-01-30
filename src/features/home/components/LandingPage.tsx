@@ -136,7 +136,7 @@ export default function LandingPage() {
                             <div className={styles.conceptText}>
                                 <ul style={{ paddingLeft: 20, margin: 0 }}>
                                     <li><strong>PageShell</strong>: 표준 레이아웃 시스템</li>
-                                    <li><strong>ResizablePanel</strong>: 가변 레이아웃</li>
+                                    <li><strong>PanelGroup</strong>: 가변 레이아웃</li>
                                 </ul>
                             </div>
                         </div>

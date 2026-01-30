@@ -20,7 +20,7 @@ import { TextArea } from '../../../components/primitives/TextArea';
 import { Combobox } from '../../../components/composites/Combobox';
 import { Alert } from '../../../components/composites/Alert';
 import { EmptyState } from '../../../components/composites/EmptyState';
-import { ResizablePanel } from '../../../components/composites/ResizablePanel';
+
 import { PanelGroup, Panel, PanelHandle } from '../../../components/ui/Resizable/index';
 // import { Toolbar, ToolbarSeparator } from '../../../components/composites/Toolbar';
 import { Circle, Shield, User, CheckCircle, Search } from 'lucide-react';
@@ -562,20 +562,7 @@ export default function ComponentShowcasePage() {
                 <section className={styles.sectionWrapper}>
                     <h2 className={styles.sectionTitle}>Layout Primitives</h2>
                     <div className={styles.grid}>
-                        {/* Legacy ResizablePanel (New Internals) */}
-                        <div className={styles.card} style={{ height: '350px' }}>
-                            <h2 className={styles.cardTitle}>Resizable Panel (Legacy API)</h2>
-                            <div style={{ border: '1px solid #e4e4e7', borderRadius: '8px', height: '250px', overflow: 'hidden' }}>
-                                <ResizablePanel initialSplit={40}>
-                                    <div style={{ padding: '16px', background: '#fafafa', height: '100%', fontSize: '11px', fontWeight: 600 }}>
-                                        Left Pane (Legacy 40%)
-                                    </div>
-                                    <div style={{ padding: '16px', background: '#ffffff', height: '100%', fontSize: '11px', fontWeight: 600 }}>
-                                        Right Pane (Legacy 60%)
-                                    </div>
-                                </ResizablePanel>
-                            </div>
-                        </div>
+
 
                         {/* New PanelGroup - The "Wowed" Demo */}
                         <div className={`${styles.card} ${styles.spanTwo}`} style={{ height: '350px' }}>

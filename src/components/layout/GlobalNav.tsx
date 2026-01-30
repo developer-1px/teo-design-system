@@ -10,7 +10,6 @@ import {
     Palette,
     SquarePen,
     Code,
-    FileDiff,
     Webhook
 } from 'lucide-react';
 import * as styles from './GlobalNav.css';
@@ -42,8 +41,7 @@ export function GlobalNav() {
                 <NavItem to="/admin" icon={LayoutList} label="Admin List" activeMatch="/admin" end />
                 <NavItem to="/admin/form-builder" icon={SquarePen} label="Form Builder" activeMatch="/admin/form-builder" />
                 <NavItem to="/admin/studio/designer" icon={Palette} label="Table Designer" activeMatch="/admin/studio" />
-                <NavItem to="/admin/flow2" icon={CircuitBoard} label="Flow Editor" activeMatch="/admin/flow" />
-                <NavItem to="/concept/schema-doc" icon={FileDiff} label="Schema Doc Concept" />
+                <NavItem to="/admin/flow" icon={CircuitBoard} label="Flow Editor" />
                 <NavItem to="/api-docs" icon={Webhook} label="API Docs" />
             </div>
 
