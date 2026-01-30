@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SearchFilterBar, type FilterTag } from '../ui/SearchFilterBar';
+import { SearchFilterBar, type FilterTag } from '../composites/SearchFilterBar';
 import * as styles from './SearchFilterBarShowcase.css';
 import { Circle, User, Shield } from 'lucide-react';
 import type { CascadingMenuItem } from '../overlay/CascadingMenu';

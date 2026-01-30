@@ -1,0 +1,85 @@
+---
+title: Typography System
+order: 5
+category: Design System
+---
+
+import { TypographyShowcase } from '@/components/docs/TypographyShowcase';
+
+# Typography System
+
+본 프로젝트의 타이포그래피 시스템은 **정보 가독성(Readability)**과 **시각적 계층 구조(Hierarchy)** 확립을 최우선 목표로 합니다.
+`vars.css.ts`에 정의된 토큰 라이브러리를 통해 글꼴 크기, 두께, 행간, 자간을 체계적으로 관리합니다.
+
+## 실시간 기술 명세 및 소스 코드
+
+하단 컴포넌트는 타이포그래피 토큰의 실제 렌더링 결과와 `vars.css.ts` 소스 코드를 실시간으로 제공합니다.
+
+<div style={{ marginTop: '20px' }}>
+    <TypographyShowcase />
+</div>
+
+## 설계 가이드라인
+
+### 1. Font Size Scale
+명확한 계층 분리를 위해 8단계의 사이즈 스케일을 정의합니다.
+- **System UI:** `xs(11px)`, `sm(12px)`, `md(13px)`
+- **Content:** `lg(14px)`, `xl(16px)`
+- **Headings:** `xxl(20px)`, `3xl(24px)`, `4xl(32px)`
+
+### 2. Line Height (Vertical Rhythm)
+콘텐츠의 성격에 적합한 행간을 적용하여 가독성을 최적화합니다.
+- **none (1):** 아이콘 결합 텍스트 및 단일 행 레이블
+- **tight (1.2):** 제목(Headings) 및 짧은 문구
+- **snug (1.35):** UI 컴포넌트 내부 데이터 텍스트
+- **standard (1.6):** 본문(Body) 문단
+- **relaxed (1.75):** 장문 읽기 모드
+
+### 3. Letter Spacing (Tracking)
+- **tighter:** 대형 제목용
+- **tight:** 일반 제목용
+- **normal:** 기본 본문용
+- **wide:** 소제목 및 강조 텍스트 (Uppercase 조합 권장)
+
+## 스타일 구현 패턴
+
+### Application UI (System Panels)
+복잡한 설정 패널이나 리스트 메뉴 등 **System UI** 환경에서는 `sm` 사이즈와 `tight` 행간을 사용하여 정보 밀도를 높입니다.
+
+```typescript
+import { style } from '@vanilla-extract/css';
+import { typography } from '@/styles/utils';
+
+export const paletteLabel = style([
+    typography({
+        size: 'sm',
+        weight: 'medium',
+        height: 'tight', 
+        spacing: 'normal'
+    }),
+    { color: vars.color.gray600 }
+]);
+```
+
+### Content & Headings
+기술 문서 본문이나 대형 타이틀은 시각적 여유를 확보하여 가독성을 증대시킵니다.
+
+```typescript
+// 대형 제목: 자간을 좁혀 시각적 응집력 확보
+export const heroTitle = style([
+    typography({
+        size: '4xl',
+        weight: 'bold',
+        height: 'tight',
+        spacing: 'tight' 
+    })
+]);
+
+// 본문: 행간을 넓혀 장문 가독성 확보
+export const articleBody = style([
+    typography({
+        size: 'lg',
+        height: 'relaxed' 
+    })
+]);
+```

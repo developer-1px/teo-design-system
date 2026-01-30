@@ -1,7 +1,7 @@
 
 import * as styles from './SurfaceShowcase.css';
-import { TextInput } from '../ui/TextInput';
-import { Select } from '../ui/Select';
+import { TextInput } from '../primitives/TextInput';
+import { Select } from '../composites/Select';
 
 export function SurfaceShowcase() {
     return (

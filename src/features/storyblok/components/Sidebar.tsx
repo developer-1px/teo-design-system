@@ -1,5 +1,5 @@
-import * as styles from '../StoryblokLayout.css';
-import { type StoryblokComponent, COMPONENT_TYPES } from '../types';
+import * as styles from './StoryblokLayout.css';
+import { type StoryblokComponent, COMPONENT_TYPES } from '../model/types';
 import { Box, Layers, Layout, Type, Plus } from 'lucide-react';
 
 interface SidebarProps {

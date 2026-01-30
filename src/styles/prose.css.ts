@@ -212,3 +212,69 @@ globalStyle(`${prose} pre`, {
     fontFamily: vars.font.code,
     boxShadow: vars.shadow.raised,
 });
+
+// Tables
+// Tables
+globalStyle(`${prose} table`, {
+    width: '100%',
+    borderCollapse: 'separate',
+    borderSpacing: 0,
+    fontSize: vars.fontSize.sm, // 12px
+    marginBottom: '2rem',
+    borderRadius: vars.borderRadius.lg,
+    border: `1px solid ${vars.color.gray200}`,
+    backgroundColor: vars.color.white,
+    overflow: 'hidden', // to assist with border radius
+});
+
+globalStyle(`${prose} thead`, {
+    backgroundColor: vars.color.gray50,
+});
+
+globalStyle(`${prose} th`, {
+    textAlign: 'left',
+    fontFamily: vars.font.body,
+    fontWeight: vars.weight.medium,
+    color: vars.color.gray600,
+    borderBottom: `1px solid ${vars.color.gray200}`,
+    padding: '8px 12px', // density: compact
+    whiteSpace: 'nowrap',
+    userSelect: 'none',
+    verticalAlign: 'bottom',
+    fontSize: vars.fontSize.sm,
+});
+
+globalStyle(`${prose} tr`, {
+    transition: 'background-color 0.1s ease',
+});
+
+// Row hover effect
+globalStyle(`${prose} tr:hover`, {
+    backgroundColor: vars.color.gray50,
+});
+
+globalStyle(`${prose} td`, {
+    padding: '12px 16px', // density: standard
+    color: vars.color.gray800,
+    borderBottom: `1px solid ${vars.color.gray100}`,
+    verticalAlign: 'middle',
+    fontSize: vars.fontSize.sm,
+});
+
+globalStyle(`${prose} tr:last-child td`, {
+    borderBottom: 'none',
+});
+
+// Markdown specific: Type column styling convention
+// Often the second column in API docs is Type, or inline code.
+globalStyle(`${prose} td code`, {
+    fontSize: '11px',
+    color: vars.color.amber600, // Matching the previous "Type" color intent
+    backgroundColor: vars.color.amber50,
+    padding: '2px 6px',
+    borderRadius: '4px',
+    border: `1px solid ${vars.color.amber100}`,
+    fontFamily: vars.font.code,
+    fontWeight: 500,
+});
+

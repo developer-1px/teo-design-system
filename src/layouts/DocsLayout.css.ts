@@ -3,11 +3,12 @@ import { vars } from '../styles/vars.css';
 
 export const container = style({
     display: 'flex',
-    minHeight: '100vh',
+    height: '100vh',
     width: '100%',
     backgroundColor: vars.surface.base.bg,
     // Ensure it fills the screen
-    position: 'relative'
+    position: 'relative',
+    overflow: 'hidden' // Root container of the layout shouldn't scroll
 });
 
 export const content = style({

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import mermaid from 'mermaid';
 import { useTheme } from '../../contexts/ThemeContext';
 

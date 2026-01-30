@@ -13,9 +13,9 @@ export function SpaceSidebar() {
 
     const handleSpaceClick = (spaceId: string) => {
         if (spaceId === 'guide') {
-            navigate('/docs/01-Overview/prd');
+            navigate('/docs/01-Overview/00-prd');
         } else if (spaceId === 'components') {
-            navigate('/docs/05-Primitives/box');
+            navigate('/docs/00-Overview/index');
         }
     };
 

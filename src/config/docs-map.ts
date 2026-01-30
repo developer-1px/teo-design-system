@@ -17,15 +17,18 @@ export const DOCS_SPACES: DocSpace[] = [
             '03-Design-System',
             '04-Patterns',
             '06-Design-Lint',
-            'examples', // Adding examples to Guide for now
-            'Uncategorized' // Catch-all
+            'examples',
+            'Uncategorized'
         ]
     },
     {
         id: 'components',
         label: 'Components',
         icon: 'Component',
-        folders: ['05-Primitives']
+        folders: [
+            '00-Overview', // New Overview for Components space
+            '05-Primitives'
+        ]
     }
 ];
 

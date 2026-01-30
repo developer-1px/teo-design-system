@@ -3,26 +3,27 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { RootLayout } from './layouts/RootLayout';
 import { DocsLayout } from './layouts/DocsLayout';
 import 'highlight.js/styles/github-dark.css';
-import { MailPage } from './features/mail/MailPage';
-import { EditorPage } from './features/editor/EditorPage';
-import { SlidesPage } from './features/slides/SlidesPage';
-import BuilderPage from './features/admin/BuilderPage';
-import StudioPage from './features/admin/StudioPage';
-import FlowPage from './features/admin/FlowPage';
-import FlowPage2 from './features/admin/FlowPage2';
-import TemplateStudioPage from './features/admin/TemplateStudioPage';
-import TableDesignerPage from './features/admin/TableDesignerPage';
-import TableDesignerConcept from './features/admin/TableDesignerConcept';
-import FormBuilderPage from './features/admin/FormBuilderPage';
-import StoryblokPage from './features/storyblok/StoryblokPage';
-import ComponentShowcasePage from './features/showcase/ComponentShowcasePage';
-import SchemaDocPage from './features/schema-doc/SchemaDocPage';
+import { MailPage } from './features/mail/components/MailPage';
+import { EditorPage } from './features/editor/components/EditorPage';
+import { SlidesPage } from './features/slides/components/SlidesPage';
+import BuilderPage from './features/admin/components/BuilderPage';
+import StudioPage from './features/admin/components/StudioPage';
+import FlowPage from './features/admin/components/FlowPage';
+import FlowPage2 from './features/admin/components/FlowPage2';
+import TemplateStudioPage from './features/admin/components/TemplateStudioPage';
+import TableDesignerPage from './features/admin/components/TableDesignerPage';
+import TableDesignerConcept from './features/admin/components/TableDesignerConcept';
+import FormBuilderPage from './features/admin/components/FormBuilderPage';
+import StoryblokPage from './features/storyblok/components/StoryblokPage';
+import ComponentShowcasePage from './features/showcase/components/ComponentShowcasePage';
+import SchemaDocPage from './features/schema-doc/components/SchemaDocPage';
+import { ApiDocsPage } from './features/api-docs/components/ApiDocsPage';
 
-import { ListPage } from './features/admin/ListPage';
-import { AdminLayout } from './features/admin/AdminLayout';
+import { ListPage } from './features/admin/components/ListPage';
+import { AdminLayout } from './features/admin/components/AdminLayout';
 import './App.css'; // Just for global side effects
 
-import LandingPage from './features/home/LandingPage';
+import LandingPage from './features/home/components/LandingPage';
 
 // Auto-import all MDX files recursively
 const mdxPages = import.meta.glob('/src/docs/**/*.mdx', { eager: true });
@@ -33,7 +34,7 @@ const docsRoutes = Object.keys(mdxPages).sort().map((path) => {
   const filename = parts.pop()?.replace('.mdx', '') || '';
   const folder = parts.pop() || 'Uncategorized';
 
-  const slug = filename.replace(/^\d+-/, '');
+  const slug = filename.replace(/^\d+-/, '').toLowerCase();
   const Component = (mdxPages[path] as any).default;
 
   // Use folder/slug as the path
@@ -46,7 +47,9 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<LandingPage />} />
-          <Route path="mail" element={<MailPage />} />
+          <Route path="mail" element={<MailPage />}>
+            <Route path=":id" element={<MailPage />} />
+          </Route>
           <Route path="editor" element={<EditorPage />} />
           <Route path="slides" element={<SlidesPage />} />
 
@@ -78,6 +81,7 @@ function AppContent() {
           <Route path="/admin/studio/concept" element={<TableDesignerConcept />} />
           <Route path="/admin/flow" element={<FlowPage />} />
           <Route path="/admin/flow2" element={<FlowPage2 />} />
+          <Route path="/api-docs" element={<ApiDocsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

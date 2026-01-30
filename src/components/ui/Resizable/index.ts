@@ -1,1 +1,1 @@
-export * from './Resizable';
+export * from '../../composites/Resizable';

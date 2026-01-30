@@ -1,5 +1,5 @@
-import * as styles from '../StoryblokLayout.css';
-import { type StoryblokComponent } from '../types';
+import * as styles from './StoryblokLayout.css';
+import { type StoryblokComponent } from '../model/types';
 import { Trash2 } from 'lucide-react';
 
 interface ConfigPanelProps {
