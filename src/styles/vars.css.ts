@@ -402,7 +402,7 @@ export const lightTheme = createTheme(vars, {
             collapsedWidth: '48px',
         },
         header: {
-            height: '48px',
+            height: '64px',
         },
         item: {
             dense: '24px',
@@ -577,7 +577,7 @@ export const darkTheme = createTheme(vars, {
             collapsedWidth: '48px',
         },
         header: {
-            height: '48px',
+            height: '64px',
         },
         item: {
             dense: '24px',

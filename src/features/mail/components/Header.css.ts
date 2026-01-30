@@ -4,7 +4,7 @@ import { surface } from '@/styles/utils';
 
 export const header = style({
     width: '100%',
-    height: '64px', // Fixed height matching original grid row
+    height: vars.sizing.header.height, // Sync with dynamic system standard
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',

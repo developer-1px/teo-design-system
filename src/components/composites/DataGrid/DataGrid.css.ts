@@ -35,15 +35,28 @@ export const th = style({
 export const tr = style({
     borderBottom: `1px solid ${vars.border.subtle}`,
     cursor: 'pointer',
+    position: 'relative',
+    transition: 'background-color 0.1s',
     ':hover': {
         backgroundColor: vars.surface.subtle.bg,
     },
     selectors: {
         '&:last-child': {
             borderBottom: 'none',
+        },
+        '&[data-selected="true"]': {
+            backgroundColor: vars.color.blue50,
+        },
+        '&[data-focused="true"]': {
+            boxShadow: `inset 2px 0 0 ${vars.color.blue500}`,
+            backgroundColor: vars.surface.subtle.bg,
+        },
+        '&[data-selected="true"][data-focused="true"]': {
+            backgroundColor: '#e0f2fe',
         }
     }
 });
+
 
 export const td = style({
     padding: `${vars.spacing[8]} ${vars.spacing[16]}`, // Compact padding (8px vertical)

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Download, Trash2, MoreHorizontal, ChevronDown } from 'lucide-react';
 import * as styles from './ListPage.css';
 import { DataTable } from './DataTable';
@@ -45,6 +45,25 @@ export function ListPage() {
             setSelectedIds(new Set());
         }
     };
+
+    // Global keyboard shortcuts
+    useEffect(() => {
+        const handleGlobalKeyDown = (e: KeyboardEvent) => {
+            const isMod = e.metaKey || e.ctrlKey;
+            if (isMod && e.key.toLowerCase() === 'a') {
+                // Check if focus is in an input or textarea
+                const active = document.activeElement;
+                if (active?.tagName === 'INPUT' || active?.tagName === 'TEXTAREA') return;
+
+                e.preventDefault();
+                handleSelectAll(true);
+            }
+        };
+
+        window.addEventListener('keydown', handleGlobalKeyDown);
+        return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+    }, [filteredData]); // Re-bind if filtered data changes
+
 
     const handleRowSelect = (id: string, checked: boolean) => {
         const newSet = new Set(selectedIds);

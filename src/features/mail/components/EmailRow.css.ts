@@ -78,7 +78,8 @@ export const rowState = styleVariants({
     unread: { backgroundColor: vars.surface.base.bg }, // Could add a subtle background if needed
     selected: {
         backgroundColor: vars.surface.highlight.bg,
-        borderLeft: `2px solid ${vars.color.primary}`, // Clear indicator
+        // ✨ Fix: Use inset shadow instead of border to prevent 2px horizontal layout shift
+        boxShadow: `inset 2px 0 0 0 ${vars.color.primary}`,
         ':hover': { backgroundColor: vars.surface.highlight.hoverBg }
     }
 });

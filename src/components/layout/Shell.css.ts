@@ -42,7 +42,7 @@ export const shellContainer = style({
 
     // Rows: Header | Main | Bottom | Status
     gridTemplateRows: `
-        ${headerHeightVar} 
+        auto 
         1fr 
         auto 
         ${statusBarHeightVar}

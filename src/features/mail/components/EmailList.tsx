@@ -40,7 +40,7 @@ export function EmailList({
                 <div className={styles.headerCell}></div>
                 <div className={styles.headerCell}>From</div>
                 <div className={styles.headerCell}>Subject</div>
-                <div className={styles.headerCell}>Date</div>
+                <div className={styles.dateHeaderCell}>Date</div>
             </div>
 
             {emails.map(email => (
