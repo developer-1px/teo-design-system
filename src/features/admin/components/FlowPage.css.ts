@@ -1,33 +1,53 @@
 import { style } from '@vanilla-extract/css';
 
-// Re-exporting common styles from FlowPage to keep consistent theme
-// In a real app, these would be in a shared `flow.css.ts`
-import {
-    container, topBar, methodBadge, urlText, playButton,
-    flowContainer, sourceCol, logicCol, previewCol,
-    colHeader, scrollArea, jsonNode, jsonKey, jsonVal,
-    cardTitle, propertyRow, select,
-    previewStage, previewCard, previewHeader, previewBody
-} from './FlowPage.css';
-
-// Export inherited styles
-// specific exclusions to avoid conflicts with overrides
-export {
-    container, topBar, methodBadge, urlText, playButton,
-    flowContainer, sourceCol, logicCol, previewCol,
-    colHeader, scrollArea, jsonNode, jsonKey, jsonVal,
-    cardTitle, propertyRow, select,
-    previewStage, previewCard, previewHeader, previewBody
-};
-
 export const zinc = {
     100: '#f4f4f5',
     200: '#e4e4e7',
+    400: '#a1a1aa',
     500: '#71717a',
+    800: '#27272a',
     900: '#18181b',
 };
 
+export const container = style({
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+});
+
+export const topBar = style({
+    height: '48px',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 16px',
+    borderBottom: `1px solid ${zinc[200]}`,
+    background: '#fff',
+    zIndex: 10,
+    flexShrink: 0,
+    justifyContent: 'space-between',
+});
+
+export const methodBadge = style({
+    fontSize: '10px',
+    fontWeight: 700,
+    padding: '2px 6px',
+    borderRadius: '4px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em',
+});
+
+export const urlText = style({
+    fontSize: '13px',
+    fontFamily: '"JetBrains Mono", "Fira Code", monospace',
+    fontWeight: 500,
+});
+
 // ... (Previous styles remain same until overrides)
+
 
 // New Styles specific to Flow 2 (List/Table)
 

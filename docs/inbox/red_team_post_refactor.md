@@ -1,65 +1,65 @@
 # 🛡️ Red Team Audit Report: Post-Refactoring Status
 
-**Date**: 2026-01-29
-**Status**: ✅ **RESOLVED** (Previously 🔴 Critical)
+**Date**: 2026-01-29 (Updated: 2026-02-06)
+**Status**: 🟡 **PARTIALLY RESOLVED** (Previously 🔴 Critical)
 **Scope**: Project Architecture & Folder Structure
 
 ## 1. Executive Summary
 
-Following the critical findings in the *Red Team Structure Analysis*, a comprehensive automated refactoring campaign was executed. The project has successfully transitioned from a flat, UI-coupled structure to a **Tiered Architecture** that strictly separates Logic, Shell, and Components.
-
-All changes were applied using AST-based automation (`ts-morph`) to guarantee 100% import integrity.
+Following the critical findings in the *Red Team Structure Analysis*, a comprehensive refactoring campaign was executed. The project has transitioned from a flat, UI-coupled structure to a **Tiered Architecture** in the components layer. However, some aspects of the original plan remain incomplete.
 
 ## 2. Resolution of Critical Findings
 
 | Grade | Finding | Status | Resolution Detail |
 | :--- | :--- | :--- | :--- |
-| 🔴 | **Missing Kernel** (No hooks/utils) | ✅ **Fixed** | Created top-level `src/hooks`, `src/utils`, `src/types` to host pure business logic. |
-| 🟡 | **Component Bloat** (Flat UI folder) | ✅ **Fixed** | Split `src/components/ui` into **Types 1 (Primitives)** and **Tier 2 (Composites)**. |
-| 🟢 | **Inconsistent Features** | ✅ **Fixed** | All features (`mail`, `admin`, etc.) now possess standardized `components/`, `model/`, `hooks/` sub-directories. |
+| 🔴 | **Missing Kernel** (No hooks/utils) | 🟡 **Partial** | Created top-level `src/hooks`, `src/utils`, `src/types` folders, but they contain only `.gitkeep` (empty). Active hooks exist within feature directories (e.g., `features/admin/hooks/`). |
+| 🟡 | **Component Bloat** (Flat UI folder) | ✅ **Fixed** | Split `src/components/ui` into **Tier 1 (Primitives)** and **Tier 2 (Composites)**. Also added `layout/` and `overlay/` tiers. |
+| 🟢 | **Inconsistent Features** | 🟡 **Partial** | `admin` feature has full standardized structure (`components/`, `model/`, `hooks/`, `utils/`). However, `mail` feature still only has `components/` sub-directory. |
 
-## 3. New Architecture Map
+## 3. Current Architecture Map
 
-### 3.1. Layered Component System
-Components are now classified by complexity, preventing circular dependencies and clarifying usage:
+### 3.1. Layered Component System ✅
+Components are now classified by complexity, preventing circular dependencies:
 
 ```
 src/components/
-├── primitives/       # Atoms (Button, Badge, TextInput...)
+├── primitives/       # 12 Atoms (Button, Badge, TextInput, Avatar...)
 │   └── [Zero Dependencies]
-├── composites/       # Molecules (SearchFilterBar, Table, Alert...)
+├── composites/       # 13 Molecules (SearchFilterBar, Table, Tree, DataGrid...)
 │   └── [Depends on Primitives]
-└── layout/           # Shells (Sidebar, PageLayout...)
+├── layout/           # 4 Shells (Shell, Panel, TopBar, GlobalNav)
+└── overlay/          # 9 Overlays (Modal, Toast, Tooltip, ContextMenu, Drawer...)
 ```
 
-### 3.2. Standardized Feature Anatomy
-Every domain module now follows a strict Separation of Concerns (SoC):
+### 3.2. Feature Anatomy Status
+Not all features follow the standard structure:
 
-```
-src/features/mail/
-├── components/       # View Layer (React only)
-├── hooks/            # Logic Helper (Custom Hooks)
-├── model/            # Data Layer (Types, Constants)
-└── index.ts          # Public API
-```
+| Feature | components/ | hooks/ | model/ | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| `admin` | ✅ | ✅ | ✅ | **Compliant** |
+| `mail` | ✅ | ❌ | ❌ | **Non-compliant** |
+| Others | ⚠️ Varies | ⚠️ Varies | ⚠️ Varies | **Review needed** |
 
-### 3.3. Logic Kernel
-The home for "Headless" code:
-- `src/hooks/`: Global behavioral hooks.
-- `src/utils/`: Pure functions.
-- `src/types/`: Shared domain models.
+### 3.3. Logic Kernel Status
+Placeholder folders exist but lack content:
+- `src/hooks/`: Contains only `.gitkeep` (empty)
+- `src/utils/`: Contains only `.gitkeep` (empty)
+- `src/types/`: Contains only `.gitkeep` (empty)
 
-## 4. Verification Results
+**Note**: Business logic currently resides in feature-specific directories (e.g., `features/admin/hooks/useTableBuilder.ts`).
 
-- **Build Integrity**: `npm run build` ✅ Passed (Clean Build)
-- **Type Safety**: `tsc` ✅ Passed (0 Errors)
-- **Reference Integrity**: Automigration successfully updated 6,600+ module references.
+## 4. Remaining Technical Debt
+
+1. **Populate Global Kernel**: Extract reusable hooks/utils from features to top-level directories.
+2. **Standardize All Features**: Apply `components/hooks/model` structure to `mail` and other features.
+3. **Remove Empty Placeholders**: Either populate `.gitkeep` folders or remove them if a distributed approach is preferred.
 
 ## 5. Next Steps for Development Team
 
-1.  **Strict Placement**: When creating new files, strictly adhere to the `primitives` vs `composites` distinction.
-2.  **Logic First**: Before writing a `.tsx` component, ask "Can this logic live in `src/hooks` or `feature/hooks`?"
-3.  **Documentation**: Update storybook/docs references to point to the new paths (Completed for internal MDX).
+1.  **Strict Placement**: Adhere to `primitives` vs `composites` vs `overlay` distinction.
+2.  **Logic First**: Before writing a `.tsx` component, ask "Can this logic live in `feature/hooks`?"
+3.  **Review Feature Structure**: When adding new features, use `admin` as the reference pattern.
 
 ---
 *Signed, Antigravity Agent (Red Team Lead)*
+*Last Updated: 2026-02-06*

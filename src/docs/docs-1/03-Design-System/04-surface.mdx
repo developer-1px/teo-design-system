@@ -17,8 +17,30 @@ import { SurfaceShowcase } from '@/components/docs/SurfaceShowcase';
 최하단 레이어입니다. 애플리케이션의 전체 배경이나 메인 컨테이너의 기본 배경으로 활용됩니다.
 - **주요 용도:** `App Background`, `Main Layout`
 
-        padding: '0 12px'
-    }
+### 2. Subtle
+Base 위에 올라가는 미묘하게 다른 레이어입니다. 사이드바나 패널의 배경으로 활용됩니다.
+- **주요 용도:** `Sidebar`, `Panel Background`
+
+### 3. Card
+콘텐츠를 감싸는 카드나 모달의 배경으로 활용됩니다.
+- **주요 용도:** `Card`, `Modal`, `Dropdown`
+
+## 사용법
+
+```typescript
+import { style } from '@vanilla-extract/css';
+import { surface } from '@/styles/utils';
+
+// 기본 사용 (정적)
+export const panel = style([
+    surface('card'),
+    { padding: '16px' }
+]);
+
+// 인터랙티브 사용 (호버 효과 포함)
+export const button = style([
+    surface.interactive('primary'),
+    { padding: '8px 16px' }
 ]);
 ```
 
@@ -37,3 +59,4 @@ import { SurfaceShowcase } from '@/components/docs/SurfaceShowcase';
 <div style={{ padding: '20px', backgroundColor: 'rgba(0,0,0,0.02)', borderRadius: '8px', marginTop: '20px' }}>
     <SurfaceShowcase />
 </div>
+
