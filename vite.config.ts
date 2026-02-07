@@ -37,7 +37,7 @@ export default defineConfig(async (): Promise<UserConfig> => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
-        '@surface': path.resolve(__dirname, './packages')
+        '@surface': path.resolve(__dirname, './packages/surface')
       }
     }
   }
