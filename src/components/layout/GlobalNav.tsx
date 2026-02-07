@@ -10,7 +10,8 @@ import {
     Palette,
     SquarePen,
     Code,
-    Webhook
+    Webhook,
+    ListTodo
 } from 'lucide-react';
 import * as styles from './GlobalNav.css';
 import { ThemeToggle } from '../ThemeToggle';
@@ -31,6 +32,7 @@ export function GlobalNav() {
                 <NavItem to="/mail" icon={Mail} label="Mail" />
                 <NavItem to="/slides" icon={Presentation} label="Slides" />
                 <NavItem to="/editor" icon={Code} label="Editor" />
+                <NavItem to="/issues" icon={ListTodo} label="Issues" />
                 <NavItem to="/storyblok" icon={AppWindow} label="CMS" />
             </div>
 

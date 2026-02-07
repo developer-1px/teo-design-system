@@ -1,43 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { lightTheme, darkTheme } from '../styles/vars.css';
-
-type Theme = 'light' | 'dark';
-
-interface ThemeContextType {
-    theme: Theme;
-    toggleTheme: () => void;
-    themeClass: string;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export function ThemeProvider({ children }: { children: ReactNode }) {
-    // Default to light
-    const [theme, setTheme] = useState<Theme>('light');
-
-    const toggleTheme = () => {
-        setTheme(prev => prev === 'light' ? 'dark' : 'light');
-    };
-
-    const themeClass = theme === 'light' ? lightTheme : darkTheme;
-
-    // Sync theme to body so Portals (Modals/Drawers) get the vars
-    useEffect(() => {
-        document.body.className = themeClass;
-        // Optionally preserve other classes if needed, but here we assume body just needs theme
-    }, [themeClass]);
-
-    return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, themeClass }}>
-            {children}
-        </ThemeContext.Provider>
-    );
-}
-
-export function useTheme() {
-    const context = useContext(ThemeContext);
-    if (!context) {
-        throw new Error('useTheme must be used within a ThemeProvider');
-    }
-    return context;
-}
+// Bridge: re-exports from @packages/theme
+// 기존 import 호환성을 위한 re-export
+// 새 코드에서는 import { ThemeProvider, useTheme } from '@packages/theme' 를 사용하세요.
+export { ThemeProvider, useTheme } from '@packages/theme';

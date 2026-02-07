@@ -15,6 +15,7 @@ import FormBuilderPage from './features/admin/components/FormBuilderPage';
 import StoryblokPage from './features/storyblok/components/StoryblokPage';
 import ComponentShowcasePage from './features/showcase/components/ComponentShowcasePage';
 import { ApiDocsPage } from './features/api-docs/components/ApiDocsPage';
+import { IssueTrackerPage } from './features/issues/components/IssueTrackerPage';
 
 import { ListPage } from './features/admin/components/ListPage';
 import { AdminLayout } from './features/admin/components/AdminLayout';
@@ -49,6 +50,7 @@ function AppContent() {
           </Route>
           <Route path="editor" element={<EditorPage />} />
           <Route path="slides" element={<SlidesPage />} />
+          <Route path="issues" element={<IssueTrackerPage />} />
 
           <Route path="storyblok" element={<StoryblokPage />} />
           <Route path="components" element={<ComponentShowcasePage />} />
