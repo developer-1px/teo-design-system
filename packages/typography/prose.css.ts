@@ -1,5 +1,5 @@
 import { style, globalStyle, type StyleRule } from '@vanilla-extract/css';
-import { vars } from '@packages/tokens';
+import { vars } from '@surface/tokens';
 
 // 1. typography: Pure Typography Scale (Font properties only)
 // No margins, padding, or structural borders (unless intrinsic).

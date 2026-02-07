@@ -1,5 +1,5 @@
 import type { StyleRule } from '@vanilla-extract/css';
-import { vars } from '@packages/tokens';
+import { vars } from '@surface/tokens';
 
 type SurfaceType = keyof typeof vars.surface;
 

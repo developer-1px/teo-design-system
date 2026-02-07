@@ -1,4 +1,4 @@
-// @packages/typography — Typography Barrel Export
+// @surface/typography — Typography Barrel Export
 // Typography scale, prose layout, and UI presets
 
 export { typography, prose } from './prose.css';

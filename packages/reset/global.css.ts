@@ -1,5 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css';
-import { vars } from '@packages/tokens';
+import { vars } from '@surface/tokens';
 
 // 1. HARD RESET
 globalStyle('*, *:before, *:after', {

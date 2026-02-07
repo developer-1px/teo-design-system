@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { lightTheme, darkTheme } from '@packages/tokens';
+import { lightTheme, darkTheme } from '@surface/tokens';
 
 type Theme = 'light' | 'dark';
 
